@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Decorators: A Complete Guide for 2026 - BytePane</title>
+  <meta name="description" content="Partial, Pick, Omit, Record and custom utility types explained.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/typescript-decorators-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; TypeScript Decorators: A Complete Guide for 2026
+  </nav>
+
+  <article>
+    <h1>TypeScript Decorators: A Complete Guide for 2026</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/typescript-decorators-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const relatedArticles = [
+   slug: 'typescript-utility-types', title: 'TypeScript Utility Types', description: 'Partial, Pick, Omit, Record and custom utility types explained.' ,
+   slug: 'typescript-generics-guide', title: 'TypeScript Generics Guide', description: 'From basic generic functions to advanced conditional types.' ,
+   slug: 'json-schema-validation-guide', title: 'JSON Schema Validation', description: 'Validate data structures with JSON Schema and TypeScript.' ,
+   slug: 'rest-api-design-principles', title: 'REST API Design Principles', description: 'Build clean APIs that pair perfectly with typed decorators.' ,
+]
+
+  
+    
+      /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'TypeScript Decorators: A Complete Guide for 2026',
+            description: 'Learn TypeScript decorators from basics to advanced patterns. Class, method, property, and parameter decorators with practical examples.',
+            datePublished: '2026-03-09',
+            dateModified: '2026-03-09',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/typescript-decorators-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/typescript-decorators-guide/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'TypeScript Decorators Guide' ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        TypeScript Decorators Guide
+      
+
+      /* Article Header */
+      
+        <h2>
+          TypeScript Decorators: A Complete Guide for 2026
+        </h2>
+        
+          TypeScript
+          <time dateTime="2026-03-09">March 9, 2026</time>
+          15 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>What Are Decorators?</h2>
+          <p>
+            Decorators are a way to add metadata or modify the behavior of classes, methods, properties, and parameters using a declarative syntax. They use the <code >@expression</code> syntax placed immediately before the declaration they modify. If you have used frameworks like Angular, NestJS, or TypeORM, you have already been using decorators.
+          </p>
+          <p>
+            TypeScript 5.0 introduced native support for the TC39 Stage 3 decorator proposal, which differs from the legacy experimental decorators that TypeScript has supported since version 1.5. In 2026, the TC39 standard is the recommended approach for all new projects. Legacy decorators remain available via the <code >experimentalDecorators</code> flag for backward compatibility.
+          </p>
+          <p>
+            At their core, decorators are functions. A decorator receives information about the thing it decorates and can optionally return a replacement. This simple concept enables powerful patterns like dependency injection, logging, validation, access control, and memoization.
+          </p>
+        
+
+        
+          <h2>Setting Up Decorators in Your Project</h2>
+          <p>
+            To use TC39 standard decorators, you need TypeScript 5.0 or later. No special compiler flags are required. For legacy decorators (used by Angular and NestJS as of early 2026), you need to enable the experimental flag.
+          </p>
+          <p>
+            <code >`// tsconfig.json for TC39 standard decorators (recommended)
+
+  "compilerOptions": 
+    "target": "ES2022",
+    "module": "ES2022",
+    "strict": true
+    // No special flag needed — decorators work out of the box
+  
+
+// tsconfig.json for legacy (experimental) decorators
+
+  "compilerOptions": 
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true  // Required by some frameworks
+  
+`</code>
+          </pre>
+          <p >
+            You can validate your <code >tsconfig.json</code> structure by pasting it into our <a href="/json-formatter/">JSON Formatter</a> to catch syntax errors before they cause cryptic compiler failures.
+          </p>
+        
+
+        
+          <h2>Class Decorators</h2>
+          <p>
+            A class decorator is applied to the class constructor. It receives the class itself (the constructor function) and an optional context object. Class decorators can modify the class, replace it, or add metadata.
+          </p>
+          <p>
+            <code >`// TC39 Standard Class Decorator
+function sealed(target: Function, context: ClassDecoratorContext) 
+  Object.seal(target);
+  Object.seal(target.prototype);
+  console.log(\`Class \$String(context.name) has been sealed\`);
+
+@sealed
+class UserService 
+  getUser(id: number) 
+    return  id, name: "Alice" ;
+  
+
+// Decorator with arguments (decorator factory)
+function entity(tableName: string) 
+  return function (target: Function, context: ClassDecoratorContext) 
+    (target as any).tableName = tableName;
+  ;
+
+@entity("users")
+class User 
+  id!: number;
+  name!: string;
+
+console.log((User as any).tableName); // "users"`</code>
+          </pre>
+          <p >
+            The decorator factory pattern (a function that returns a decorator) is essential when you need to pass configuration to your decorator. This is how frameworks like NestJS implement <code >@Controller('/users')</code> and TypeORM implements <code >@Entity('users')</code>.
+          </p>
+        
+
+        
+          <h2>Method Decorators</h2>
+          <p>
+            Method decorators are the most commonly used type. They wrap a method to add behavior before, after, or around its execution. In the TC39 standard, a method decorator receives the original method and a context object, and can return a replacement method.
+          </p>
+          <p>
+            <code >`// Logging decorator
+function log(
+  originalMethod: Function,
+  context: ClassMethodDecoratorContext
+) 
+  return function (this: any, ...args: any[]) 
+    console.log(\`Calling \$String(context.name) with args:\`, args);
+    const result = originalMethod.apply(this, args);
+    console.log(\`\$String(context.name) returned:\`, result);
+    return result;
+  ;
+
+class Calculator 
+  @log
+  add(a: number, b: number): number 
+    return a + b;
+  
+
+const calc = new Calculator();
+calc.add(2, 3);
+// Logs: Calling add with args: [2, 3]
+// Logs: add returned: 5`</code>
+          </pre>
+
+          <h3>Memoization Decorator</h3>
+          <p >
+            A practical example is a memoization decorator that caches the results of expensive function calls.
+          </p>
+          <p>
+            <code >`function memoize(
+  originalMethod: Function,
+  context: ClassMethodDecoratorContext
+) 
+  const cache = new Map<string, any>();
+
+  return function (this: any, ...args: any[]) 
+    const key = JSON.stringify(args);
+    if (cache.has(key)) 
+      return cache.get(key);
+    
+    const result = originalMethod.apply(this, args);
+    cache.set(key, result);
+    return result;
+  ;
+
+class DataService 
+  @memoize
+  fetchExpensiveData(query: string): object 
+    // Simulated expensive operation
+    console.log("Computing...");
+    return  query, timestamp: Date.now() ;
+  
+
+const svc = new DataService();
+svc.fetchExpensiveData("users"); // Logs "Computing..."
+svc.fetchExpensiveData("users"); // Returns cached result, no log`</code>
+          </pre>
+        
+
+        
+          <h2>Property Decorators</h2>
+          <p >
+            Property decorators let you intercept property access and assignment. In TC39 decorators, they work through accessor decorators using the <code >accessor</code> keyword, which creates auto-accessors (getter/setter pairs backed by a private field).
+          </p>
+          <p>
+            <code >`// Validation decorator for properties
+function minLength(min: number) 
+  return function (
+    target: ClassAccessorDecoratorTarget<any, string>,
+    context: ClassAccessorDecoratorContext
+  ) 
+    return 
+      set(this: any, value: string) 
+        if (value.length < min) 
+          throw new Error(
+            \`\$String(context.name) must be at least \$min characters\`
+          );
+        
+        target.set.call(this, value);
+      ,
+      get(this: any) 
+        return target.get.call(this);
+      ,
+     as ClassAccessorDecoratorResult<any, string>;
+  ;
+
+class UserProfile 
+  @minLength(3)
+  accessor username: string = "guest";
+
+  @minLength(8)
+  accessor password: string = "defaultpw";
+
+const profile = new UserProfile();
+profile.username = "Al"; // Error: username must be at least 3 characters
+profile.username = "Alice"; // OK`</code>
+          </pre>
+        
+
+        
+          <h2>Parameter Decorators</h2>
+          <p >
+            Parameter decorators annotate individual method parameters. They are widely used in dependency injection frameworks to mark parameters that should be automatically resolved from a container. Note that TC39 standard decorators do not include parameter decorators -- this feature remains exclusive to the legacy <code >experimentalDecorators</code> mode.
+          </p>
+          <p>
+            <code >`// Parameter decorator (legacy/experimental only)
+function Inject(token: string) 
+  return function (
+    target: Object,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ) 
+    const existingInjections: Array< index: number; token: string > =
+      Reflect.getMetadata("injections", target, propertyKey) || [];
+
+    existingInjections.push( index: parameterIndex, token );
+    Reflect.defineMetadata(
+      "injections",
+      existingInjections,
+      target,
+      propertyKey
+    );
+  ;
+
+class OrderController 
+  constructor(
+    @Inject("OrderService") private orderService: any,
+    @Inject("Logger") private logger: any
+  ) 
+`</code>
+          </pre>
+          <p >
+            If your project uses NestJS or Angular, you are already using parameter decorators via <code >@Inject()</code>. These frameworks currently require <code >experimentalDecorators: true</code> in your tsconfig.
+          </p>
+        
+
+        
+          <h2>Decorator Composition and Execution Order</h2>
+          <p>
+            Multiple decorators can be applied to a single declaration. They are evaluated top-to-bottom but executed bottom-to-top (like function composition). This order matters when decorators depend on each other.
+          </p>
+          <p>
+            <code >`function first(
+  originalMethod: Function,
+  context: ClassMethodDecoratorContext
+) 
+  console.log("first() evaluated");
+  return function (this: any, ...args: any[]) 
+    console.log("first() executed");
+    return originalMethod.apply(this, args);
+  ;
+
+function second(
+  originalMethod: Function,
+  context: ClassMethodDecoratorContext
+) 
+  console.log("second() evaluated");
+  return function (this: any, ...args: any[]) 
+    console.log("second() executed");
+    return originalMethod.apply(this, args);
+  ;
+
+class Example 
+  @first
+  @second
+  method() 
+    return "result";
+  
+
+// Evaluation order: first() evaluated → second() evaluated
+// Execution order:  first() executed → second() executed → method()
+// (first wraps second, second wraps the original method)`</code>
+          </pre>
+        
+
+        
+          <h2>Practical Patterns: Building a REST API Framework</h2>
+          <p >
+            Decorators shine in framework design. Here is a simplified example showing how NestJS-style route decorators work under the hood. This pattern combines class, method, and factory decorators to build a declarative routing system.
+          </p>
+          <p>
+            <code >`// Route metadata storage
+const routes: Array<
+  method: string;
+  path: string;
+  handler: Function;
+  controller: string;
+> = [];
+
+// Controller decorator (class level)
+function Controller(basePath: string) 
+  return function (target: Function, context: ClassDecoratorContext) 
+    (target as any).__basePath = basePath;
+  ;
+
+// HTTP method decorators (method level)
+function Get(path: string) 
+  return function (
+    originalMethod: Function,
+    context: ClassMethodDecoratorContext
+  ) 
+    routes.push(
+      method: "GET",
+      path,
+      handler: originalMethod,
+      controller: String(context.name),
+    );
+    return originalMethod;
+  ;
+
+function Post(path: string) 
+  return function (
+    originalMethod: Function,
+    context: ClassMethodDecoratorContext
+  ) 
+    routes.push(
+      method: "POST",
+      path,
+      handler: originalMethod,
+      controller: String(context.name),
+    );
+    return originalMethod;
+  ;
+
+// Usage
+@Controller("/api/users")
+class UserController 
+  @Get("/")
+  getAllUsers() 
+    return [ id: 1, name: "Alice" ];
+  
+
+  @Get("/:id")
+  getUserById(id: string) 
+    return  id, name: "Alice" ;
+  
+
+  @Post("/")
+  createUser(body: any) 
+    return  id: 2, ...body ;
+  
+
+// routes array now contains all registered endpoints
+console.log(routes);`</code>
+          </pre>
+          <p >
+            This pattern is the foundation of how frameworks like NestJS, routing-controllers, and tsoa work. If you are building a REST API, our <a href="/blog/rest-api-design-principles/">REST API Design Principles</a> guide covers the design patterns that complement decorator-based routing.
+          </p>
+        
+
+        
+          <h2>TC39 Standard vs Legacy Decorators</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >TC39 Standard (TS 5.0+)</th>
+                  <th >Legacy (experimentalDecorators)</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Status</td><td >Stage 3 (stable)</td><td >Deprecated path</td></tr>
+                <tr ><td >tsconfig flag</td><td >None needed</td><td >experimentalDecorators: true</td></tr>
+                <tr ><td >Class decorators</td><td >Yes</td><td >Yes</td></tr>
+                <tr ><td >Method decorators</td><td >Yes</td><td >Yes</td></tr>
+                <tr ><td >Property decorators</td><td >Via accessor keyword</td><td >Direct property decoration</td></tr>
+                <tr ><td >Parameter decorators</td><td >Not supported</td><td >Yes</td></tr>
+                <tr><td >Metadata reflection</td><td >Not built in</td><td >Via emitDecoratorMetadata</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            For new projects in 2026, use TC39 standard decorators unless your framework explicitly requires the legacy version. Angular is migrating to TC39 decorators, and NestJS has announced support as well. Check your framework's documentation for the current recommendation.
+          </p>
+        
+
+        
+          <h2>Performance Considerations</h2>
+          <p>
+            Decorators add a thin wrapper around the decorated element, which introduces a small runtime overhead. For most applications, this overhead is negligible. However, there are cases where you should be mindful of performance.
+          </p>
+          <ul>
+            <li><strong>Hot paths</strong> -- Avoid decorators on methods that are called thousands of times per second in tight loops. The wrapper function call adds up.</li>
+            <li><strong>Stacked decorators</strong> -- Each decorator adds another function call in the chain. Five decorators on one method means five extra function calls per invocation.</li>
+            <li><strong>Initialization cost</strong> -- Class decorators run once when the class is defined, not on each instantiation. This is a one-time cost that is almost always acceptable.</li>
+            <li><strong>Memoization and caching decorators</strong> -- These typically improve performance overall because the cache hit avoids the expensive computation. Just be careful about memory growth.</li>
+          </ul>
+          <p>
+            To measure the impact of decorators on your application, profile your code using Chrome DevTools or Node.js <code >--prof</code> flag. See our <a href="/blog/web-performance-checklist-2026/">Web Performance Checklist</a> for more profiling techniques. For quick code formatting before profiling, use the <a href="/js-beautifier/">JavaScript Beautifier</a>.
+          </p>
+        
+
+        
+          <h2>Best Practices for Using Decorators</h2>
+          <ol>
+            <li><strong>Keep decorators focused</strong> -- Each decorator should do one thing well. Use composition instead of building monolithic decorators.</li>
+            <li><strong>Name decorators clearly</strong> -- Use descriptive names like <code >@Cacheable</code>, <code >@Validate</code>, <code >@Authorize</code> that make their purpose obvious at a glance.</li>
+            <li><strong>Document execution order</strong> -- When multiple decorators are stacked, document which order they run in and any dependencies between them.</li>
+            <li><strong>Use decorator factories for configuration</strong> -- If a decorator needs parameters, always use the factory pattern: <code >@Cache(60)</code> rather than magic defaults.</li>
+            <li><strong>Test decorators in isolation</strong> -- Write unit tests for decorator functions independently of the classes they decorate.</li>
+            <li><strong>Prefer TC39 standard</strong> -- For new codebases, use the standardized decorator syntax. Only use legacy decorators when required by your framework.</li>
+            <li><strong>Avoid side effects in decorators</strong> -- Decorators that modify global state or make network calls are hard to test and reason about. Keep side effects in the method body.</li>
+          </ol>
+        
+
+        /* CTA Section */
+        
+          <h2>Format Your TypeScript Code</h2>
+          <p>
+            Keep your TypeScript code clean and readable. Use our free JavaScript Beautifier to format TypeScript, JavaScript, and JSX code with consistent indentation and style.
+          </p>
+          <a href="/js-beautifier/">
+            Open JS Beautifier
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((a) => (
+              <Link key=a.slug href=`/blog/$a.slug/` >
+                <h3>a.title</h3>
+                <p>a.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/typescript-decorators-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
