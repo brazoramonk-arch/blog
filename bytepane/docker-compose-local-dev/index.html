@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker Compose for Local Development: Complete Guide - BytePane</title>
+  <meta name="description" content="Containers, images, and Dockerfile fundamentals.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/docker-compose-local-dev/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Docker Compose for Local Development: Complete Guide
+  </nav>
+
+  <article>
+    <h1>Docker Compose for Local Development: Complete Guide</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/docker-compose-local-dev/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const relatedArticles = [
+   slug: 'docker-for-developers', title: 'Docker for Developers', description: 'Containers, images, and Dockerfile fundamentals.' ,
+   slug: 'docker-container-best-practices', title: 'Docker Container Best Practices', description: 'Dockerfile optimization, security, and multi-stage builds.' ,
+   slug: 'environment-variables-guide', title: 'Environment Variables Guide', description: 'Manage env vars across dev, staging, and production.' ,
+   slug: 'ci-cd-pipeline-guide', title: 'CI/CD Pipeline Guide', description: 'Integrate Docker Compose into your CI/CD workflow.' ,
+]
+
+  
+    
+      /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Docker Compose for Local Development: Complete Guide',
+            description: 'Set up Docker Compose for local development with multi-container apps. Services, volumes, networks, hot reloading, and debugging.',
+            datePublished: '2026-03-09',
+            dateModified: '2026-03-09',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/docker-compose-local-dev/',
+            mainEntityOfPage: 'https://bytepane.com/blog/docker-compose-local-dev/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Docker Compose for Local Dev' ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Docker Compose for Local Dev
+      
+
+      /* Article Header */
+      
+        <h2>
+          Docker Compose for Local Development: Complete Guide
+        </h2>
+        
+          Docker
+          <time dateTime="2026-03-09">March 9, 2026</time>
+          15 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>Why Docker Compose for Local Development?</h2>
+          <p>
+            Modern applications rarely run in isolation. A typical web app might need a Node.js server, a PostgreSQL database, a Redis cache, and perhaps an Elasticsearch instance. Docker Compose lets you define all of these services in a single YAML file and start them with one command: <code >docker compose up</code>.
+          </p>
+          <p>
+            The key benefits for local development are reproducibility (every developer gets the exact same environment), isolation (no conflicting versions of PostgreSQL or Node.js installed globally), and simplicity (new team members run one command instead of following a 20-step setup guide).
+          </p>
+          <p>
+            As of 2026, Docker Compose V2 is the standard. It is integrated into the Docker CLI as <code >docker compose</code> (no hyphen). The older <code >docker-compose</code> (with hyphen) is deprecated. All examples in this guide use the V2 syntax.
+          </p>
+        
+
+        
+          <h2>Your First docker-compose.yml</h2>
+          <p>
+            A Compose file defines services, networks, and volumes. Here is a minimal example for a Node.js app with PostgreSQL and Redis.
+          </p>
+          <p>
+            <code >`# docker-compose.yml
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules    # Prevent overwriting container's node_modules
+    environment:
+      - DATABASE_URL=postgres://postgres:secret@db:5432/myapp
+      - REDIS_URL=redis://cache:6379
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_started
+
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: myapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  cache:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  pgdata:`</code>
+          </pre>
+          <p >
+            You can validate the YAML syntax of your Compose file by converting it to JSON with our <a href="/json-formatter/">JSON Formatter</a> (paste the YAML output of <code >docker compose config</code>). For a deeper comparison of YAML and JSON formats, see our <a href="/blog/yaml-vs-json-comparison/">YAML vs JSON guide</a>.
+          </p>
+        
+
+        
+          <h2>Development-Optimized Dockerfile</h2>
+          <p>
+            Your development Dockerfile should prioritize fast rebuilds and hot reloading, not production optimization. Use a separate <code >Dockerfile.dev</code> for development.
+          </p>
+          <p>
+            <code >`# Dockerfile.dev
+FROM node:22-alpine
+
+WORKDIR /app
+
+# Install dependencies first (cached layer)
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# Copy source code (changes frequently, so this layer is rebuilt often)
+COPY . .
+
+# Use nodemon or tsx for hot reloading
+CMD ["npx", "tsx", "watch", "src/index.ts"]`</code>
+          </pre>
+          <p >
+            The key optimization is separating <code >package.json</code> installation from source code copying. Docker caches layers, so if your dependencies have not changed, <code >npm ci</code> will be skipped on subsequent builds. For production Dockerfiles with multi-stage builds, see our <a href="/blog/docker-container-best-practices/">Docker Container Best Practices</a> guide.
+          </p>
+        
+
+        
+          <h2>Volumes and Hot Reloading</h2>
+          <p>
+            The most important feature for local development is hot reloading. You want your code changes to be reflected inside the container instantly, without rebuilding the image. Bind mounts make this possible.
+          </p>
+          <p>
+            <code >`services:
+  app:
+    volumes:
+      # Bind mount: host directory → container directory
+      - .:/app
+
+      # Anonymous volume: preserve container's node_modules
+      # (prevents host node_modules from overwriting container's)
+      - /app/node_modules
+
+      # Named volume for build cache
+      - build_cache:/app/.next
+
+  # For frontend with Vite:
+  frontend:
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      # Vite needs this for HMR to work through Docker
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+
+volumes:
+  build_cache:`</code>
+          </pre>
+          <p >
+            On macOS and Windows, bind mount performance can be slow because Docker Desktop uses a virtual machine. Docker Desktop 4.x+ includes VirtioFS, which dramatically improves file system performance. Ensure it is enabled in Docker Desktop settings under "General" and "Use VirtioFS."
+          </p>
+
+          <h3>Docker Compose Watch (2026 Recommended)</h3>
+          <p>
+            Docker Compose 2.22+ introduced <code >docker compose watch</code>, which is now the recommended approach for development. It syncs files, rebuilds on dependency changes, and restarts services automatically.
+          </p>
+          <p>
+            <code >`services:
+  app:
+    build: .
+    develop:
+      watch:
+        # Sync source code changes without rebuild
+        - action: sync
+          path: ./src
+          target: /app/src
+
+        # Rebuild when dependencies change
+        - action: rebuild
+          path: package.json
+
+        # Restart on config changes
+        - action: sync+restart
+          path: ./config
+          target: /app/config
+
+# Run with:
+# docker compose watch`</code>
+          </pre>
+        
+
+        
+          <h2>Networking Between Services</h2>
+          <p >
+            Docker Compose creates a default network for all services in the Compose file. Services can reach each other by their service name as the hostname. For example, the <code >app</code> service can connect to PostgreSQL at <code >db:5432</code> and Redis at <code >cache:6379</code>.
+          </p>
+          <p>
+            <code >`services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend-net
+
+  api:
+    build: ./api
+    ports:
+      - "4000:4000"
+    networks:
+      - frontend-net
+      - backend-net
+
+  db:
+    image: postgres:16-alpine
+    networks:
+      - backend-net
+    # No ports exposed to host — only accessible from backend-net
+
+networks:
+  frontend-net:
+  backend-net:
+
+# frontend can reach api, but NOT db
+# api can reach both frontend and db
+# db can only be reached from backend-net`</code>
+          </pre>
+          <p >
+            Custom networks let you isolate services. In this example, the frontend cannot directly access the database, which mirrors a production architecture. For DNS-related configuration, check our <a href="/blog/dns-records-explained/">DNS Records Explained</a> guide.
+          </p>
+        
+
+        
+          <h2>Environment Variables and Secrets</h2>
+          <p>
+            Docker Compose supports multiple ways to pass environment variables to your services. For local development, <code >.env</code> files are the most convenient approach.
+          </p>
+          <p>
+            <code >`# .env file (automatically loaded by Docker Compose)
+POSTGRES_DB=myapp
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=secret
+NODE_ENV=development
+API_PORT=4000
+
+# docker-compose.yml
+services:
+  api:
+    build: .
+    env_file:
+      - .env              # Default env vars
+      - .env.local         # Local overrides (gitignored)
+    environment:
+      # Inline vars override env_file
+      - DEBUG=true
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: \$POSTGRES_DB
+      POSTGRES_USER: \$POSTGRES_USER
+      POSTGRES_PASSWORD: \$POSTGRES_PASSWORD`</code>
+          </pre>
+          <p >
+            Always add <code >.env.local</code> to your <code >.gitignore</code>. Commit a <code >.env.example</code> with placeholder values so new developers know which variables to set. For a deeper dive, read our <a href="/blog/environment-variables-guide/">Environment Variables Guide</a>.
+          </p>
+        
+
+        
+          <h2>Database Seeding and Migrations</h2>
+          <p>
+            Starting with an empty database is rarely useful for development. Docker Compose makes it easy to seed initial data and run migrations automatically.
+          </p>
+          <p>
+            <code >`services:
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Files in this directory run on first container creation
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
+
+  # Run migrations as a one-off service
+  migrate:
+    build: .
+    command: npx prisma migrate deploy
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+      - setup    # Only runs when explicitly requested
+
+# Run setup:
+# docker compose --profile setup up migrate
+
+# Reset database (destroy and recreate):
+# docker compose down -v   # -v removes named volumes
+# docker compose up`</code>
+          </pre>
+          <p >
+            The <code >profiles</code> feature is useful for services that should not run by default. Migration services, test runners, and one-off scripts can be placed in profiles and invoked only when needed.
+          </p>
+        
+
+        
+          <h2>Debugging Inside Containers</h2>
+          <p>
+            Debugging containerized applications requires exposing debug ports and configuring your IDE to attach to the container's debugger.
+          </p>
+          <p>
+            <code >`services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+      - "9229:9229"   # Node.js debug port
+    command: node --inspect=0.0.0.0:9229 src/index.js
+    # Or for tsx:
+    # command: npx tsx --inspect=0.0.0.0:9229 watch src/index.ts
+
+# VS Code launch.json for attaching to container:
+# 
+#   "type": "node",
+#   "request": "attach",
+#   "name": "Docker: Attach",
+#   "port": 9229,
+#   "address": "localhost",
+#   "localRoot": "\$workspaceFolder",
+#   "remoteRoot": "/app",
+#   "restart": true
+# 
+
+# Shell into a running container for manual debugging:
+# docker compose exec app sh
+# docker compose exec db psql -U postgres -d myapp`</code>
+          </pre>
+          <p >
+            The <code >docker compose exec</code> command is invaluable for troubleshooting. You can open a shell, run database queries, check logs, or test network connectivity from inside any container.
+          </p>
+        
+
+        
+          <h2>Essential Docker Compose Commands</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Command</th>
+                  <th >Purpose</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >docker compose up -d</td><td >Start all services in detached mode</td></tr>
+                <tr ><td >docker compose down</td><td >Stop and remove containers (keeps volumes)</td></tr>
+                <tr ><td >docker compose down -v</td><td >Stop, remove containers AND volumes (full reset)</td></tr>
+                <tr ><td >docker compose logs -f app</td><td >Follow logs for a specific service</td></tr>
+                <tr ><td >docker compose exec app sh</td><td >Open a shell inside a running container</td></tr>
+                <tr ><td >docker compose build --no-cache</td><td >Rebuild images without cache</td></tr>
+                <tr ><td >docker compose ps</td><td >List running services and their ports</td></tr>
+                <tr><td >docker compose watch</td><td >Start with file sync and auto-rebuild</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Common Service Recipes</h2>
+          <p>
+            Here are ready-to-use Compose configurations for popular development dependencies.
+          </p>
+
+          <h3>MongoDB</h3>
+          <p>
+            <code >`  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    volumes:
+      - mongodata:/data/db`</code>
+          </pre>
+
+          <h3>Elasticsearch</h3>
+          <pre >
+            <code >`  elasticsearch:
+    image: elasticsearch:8.15.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data`</code>
+          </pre>
+
+          <h3>Mailpit (Email Testing)</h3>
+          <pre >
+            <code >`  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "8025:8025"   # Web UI
+      - "1025:1025"   # SMTP
+    # Point your app's SMTP to mailpit:1025
+    # View caught emails at http://localhost:8025`</code>
+          </pre>
+        
+
+        
+          <h2>Best Practices Summary</h2>
+          <ol>
+            <li><strong>Use separate Dockerfiles</strong> -- <code >Dockerfile.dev</code> for development, <code >Dockerfile</code> for production.</li>
+            <li><strong>Use healthchecks on dependencies</strong> -- Ensure your app does not start before the database is ready.</li>
+            <li><strong>Pin image versions</strong> -- Use <code >postgres:16-alpine</code> not <code >postgres:latest</code> for reproducibility.</li>
+            <li><strong>Use named volumes for data persistence</strong> -- Anonymous volumes are lost when containers are removed.</li>
+            <li><strong>Use .dockerignore</strong> -- Exclude <code >node_modules</code>, <code >.git</code>, and build artifacts from the Docker build context.</li>
+            <li><strong>Commit docker-compose.yml</strong> -- This file is documentation for your development environment and should be version-controlled.</li>
+            <li><strong>Use Docker Compose Watch</strong> -- Prefer <code >docker compose watch</code> over bind mounts for better cross-platform performance.</li>
+            <li><strong>Document the setup</strong> -- Include a "Getting Started" section in your project README with the exact commands to run.</li>
+          </ol>
+        
+
+        /* CTA Section */
+        
+          <h2>Validate Your Configuration Files</h2>
+          <p >
+            Docker Compose YAML files are prone to indentation errors. Use our JSON Formatter to validate configuration, or check your environment variable syntax with our developer tools.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((a) => (
+              <Link key=a.slug href=`/blog/$a.slug/` >
+                <h3>a.title</h3>
+                <p>a.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/docker-compose-local-dev/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
