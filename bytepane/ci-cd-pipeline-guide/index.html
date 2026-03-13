@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CI/CD Pipeline Guide: GitHub Actions, Jenkins &amp; GitLab CI Compared - BytePane</title>
+  <meta name="description" content="Build robust CI/CD pipelines with GitHub Actions, Jenkins, and GitLab CI. Pipeline stages, testing, deployment, and best practices.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/ci-cd-pipeline-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; CI/CD Pipeline Guide: GitHub Actions, Jenkins &amp; GitLab CI Compared
+  </nav>
+
+  <article>
+    <h1>CI/CD Pipeline Guide: GitHub Actions, Jenkins &amp; GitLab CI Compared</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/ci-cd-pipeline-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'What is the difference between CI and CD?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Continuous Integration (CI) automatically builds and tests code every time a developer pushes changes, catching bugs early before they reach the main branch. Continuous Delivery (CD) extends CI by automatically preparing releases for deployment, requiring a manual approval step. Continuous Deployment goes further by automatically deploying every change that passes all tests to production without manual intervention. Most teams start with CI, add Continuous Delivery, and only adopt full Continuous Deployment after building confidence in their test suite.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Which CI/CD tool should I use: GitHub Actions, Jenkins, or GitLab CI?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Choose GitHub Actions if your code is on GitHub and you want zero-setup CI/CD with generous free tier (2,000 minutes/month for public repos, unlimited). Choose Jenkins if you need maximum customization, self-hosted infrastructure, or have complex enterprise requirements with hundreds of plugins. Choose GitLab CI if you use GitLab for source control and want fully integrated CI/CD with built-in container registry, security scanning, and deployment environments. For most teams starting out, GitHub Actions offers the best developer experience with the least configuration overhead.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How long should a CI/CD pipeline take?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Target under 10 minutes for the full pipeline. CI (lint + test + build) should complete in 5-7 minutes. Deployment should take 2-3 minutes. If your pipeline exceeds 15 minutes, developers will stop waiting for results and merge without feedback. Optimization strategies include: parallelizing test suites, caching dependencies (node_modules, Docker layers), running only affected tests on PRs, using faster runners (larger VMs or self-hosted), and splitting the pipeline into fast checks (lint, type-check) and slower checks (integration tests, e2e tests).',
+        ,
+      ,
+    ],
+  
+
+  
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'CI/CD Pipeline Guide: GitHub Actions, Jenkins & GitLab CI Compared',
+            description: 'Build robust CI/CD pipelines with GitHub Actions, Jenkins, and GitLab CI. Pipeline stages, testing, deployment, and best practices.',
+            datePublished: '2026-03-08',
+            dateModified: '2026-03-08',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/ci-cd-pipeline-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/ci-cd-pipeline-guide/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'CI/CD Pipeline Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+      />
+
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        CI/CD Pipeline Guide
+      
+
+      
+        <h2>
+          CI/CD Pipeline Guide: GitHub Actions, Jenkins & GitLab CI Compared
+        </h2>
+        
+          DevOps
+          <time dateTime="2026-03-08">March 8, 2026</time>
+          15 min read
+        
+      
+
+      
+
+        
+          <h2>What CI/CD Solves</h2>
+          <p>
+            Without CI/CD, deploying software involves manual steps: running tests locally (maybe), building artifacts by hand, uploading files to servers, and hoping nothing breaks. This process is slow, error-prone, and does not scale beyond a single developer.
+          </p>
+          <p>
+            CI/CD automates the entire pipeline from code push to production deployment. Every change is built, tested, and optionally deployed automatically, giving teams confidence that their main branch is always deployable and bugs are caught within minutes of introduction.
+          </p>
+          <p>
+            <code >`# Typical CI/CD pipeline stages:
+#
+# 1. TRIGGER     → Push to branch or PR created
+# 2. INSTALL     → Install dependencies (npm ci, pip install)
+# 3. LINT        → Code style checks (ESLint, Prettier)
+# 4. TYPE CHECK  → Static analysis (TypeScript, mypy)
+# 5. UNIT TESTS  → Fast isolated tests
+# 6. BUILD       → Compile/bundle the application
+# 7. INT. TESTS  → Integration tests (API, database)
+# 8. E2E TESTS   → End-to-end browser tests (Cypress, Playwright)
+# 9. DEPLOY      → Ship to staging or production
+# 10. NOTIFY     → Slack/email notification`</code>
+          </pre>
+        
+
+        
+          <h2>GitHub Actions: Full Pipeline Example</h2>
+          <p >
+            GitHub Actions is the most popular CI/CD platform for open-source and GitHub-hosted projects. Workflows are defined in YAML files inside <code >.github/workflows/</code>.
+          </p>
+          <p>
+            <code >`# .github/workflows/ci.yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint-and-typecheck
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: \$ matrix.node-version 
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test -- --coverage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-\$ matrix.node-version 
+          path: coverage/
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: dist/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: dist/
+      - name: Deploy to server
+        env:
+          SSH_KEY: \$ secrets.SSH_DEPLOY_KEY 
+        run: |
+          mkdir -p ~/.ssh
+          echo "\$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          rsync -avz -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \\
+            dist/ deploy@server.example.com:/var/www/app/`</code>
+          </pre>
+        
+
+        
+          <h2>GitLab CI: Pipeline Configuration</h2>
+          <p >
+            GitLab CI uses a single <code >.gitlab-ci.yml</code> file at the repository root. It has built-in support for environments, container registries, and security scanning.
+          </p>
+          <p>
+            <code >`# .gitlab-ci.yml
+stages:
+  - lint
+  - test
+  - build
+  - deploy
+
+variables:
+  NODE_ENV: production
+
+cache:
+  key: \$CI_COMMIT_REF_SLUG
+  paths:
+    - node_modules/
+
+lint:
+  stage: lint
+  image: node:20-alpine
+  script:
+    - npm ci --cache .npm
+    - npm run lint
+    - npm run typecheck
+
+test:
+  stage: test
+  image: node:20-alpine
+  script:
+    - npm ci --cache .npm
+    - npm test -- --coverage
+  coverage: '/Lines\\s*:\\s*(\\d+\\.\\d+)%/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+
+build:
+  stage: build
+  image: node:20-alpine
+  script:
+    - npm ci --cache .npm
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+deploy_production:
+  stage: deploy
+  environment:
+    name: production
+    url: https://myapp.com
+  script:
+    - apt-get update && apt-get install -y rsync
+    - rsync -avz dist/ deploy@server.example.com:/var/www/app/
+  only:
+    - main
+  when: manual  # Requires manual click to deploy`</code>
+          </pre>
+        
+
+        
+          <h2>Jenkins: Declarative Pipeline</h2>
+          <p >
+            Jenkins is the most flexible CI/CD tool, with over 1,800 plugins. It runs on your own servers, giving you full control over the build environment. Jenkins pipelines are defined in a <code >Jenkinsfile</code>.
+          </p>
+          <p>
+            <code >`// Jenkinsfile (Declarative Pipeline)
+pipeline 
+    agent 
+        docker  image 'node:20-alpine' 
+    
+
+    environment 
+        NODE_ENV = 'production'
+        NPM_TOKEN = credentials('npm-token')
+    
+
+    stages 
+        stage('Install') 
+            steps 
+                sh 'npm ci'
+            
+        
+        stage('Lint & Type Check') 
+            parallel 
+                stage('Lint') 
+                    steps  sh 'npm run lint' 
+                
+                stage('Type Check') 
+                    steps  sh 'npm run typecheck' 
+                
+            
+        
+        stage('Test') 
+            steps 
+                sh 'npm test -- --coverage'
+            
+            post 
+                always 
+                    junit 'test-results/*.xml'
+                    publishHTML(target: [
+                        reportDir: 'coverage/lcov-report',
+                        reportFiles: 'index.html',
+                        reportName: 'Coverage Report'
+                    ])
+                
+            
+        
+        stage('Build') 
+            steps  sh 'npm run build' 
+        
+        stage('Deploy') 
+            when  branch 'main' 
+            steps 
+                sshagent(['deploy-key']) 
+                    sh 'rsync -avz dist/ deploy@server:/var/www/app/'
+                
+            
+        
+    
+
+    post 
+        failure 
+            slackSend channel: '#deploys',
+                      message: "Build FAILED: \$env.JOB_NAME #\$env.BUILD_NUMBER"
+        
+    
+`</code>
+          </pre>
+        
+
+        
+          <h2>Platform Comparison</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >GitHub Actions</th>
+                  <th >GitLab CI</th>
+                  <th >Jenkins</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Hosting</td><td >Cloud (self-hosted runners available)</td><td >Cloud + self-hosted</td><td >Self-hosted only</td></tr>
+                <tr ><td >Config format</td><td >YAML</td><td >YAML</td><td >Groovy (Jenkinsfile)</td></tr>
+                <tr ><td >Free tier</td><td >2,000 min/month</td><td >400 min/month</td><td >Free (self-hosted)</td></tr>
+                <tr ><td >Marketplace</td><td >20,000+ actions</td><td >Templates + components</td><td >1,800+ plugins</td></tr>
+                <tr ><td >Container registry</td><td >GHCR (separate)</td><td >Built-in</td><td >Plugin required</td></tr>
+                <tr><td >Learning curve</td><td >Low</td><td >Medium</td><td >High</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Caching and Speed Optimization</h2>
+          <p >
+            Pipeline speed directly impacts developer productivity. Caching dependencies is the single biggest optimization you can make. Without caching, every build downloads all packages from scratch.
+          </p>
+          <p>
+            <code >`# GitHub Actions: Cache node_modules
+- uses: actions/setup-node@v4
+  with:
+    node-version: 20
+    cache: 'npm'  # Automatically caches ~/.npm
+
+# For Docker builds: Cache layers
+- uses: docker/build-push-action@v5
+  with:
+    cache-from: type=gha
+    cache-to: type=gha,mode=max
+
+# Parallel jobs: Run independent steps simultaneously
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps: [...]  # Runs in parallel with 'test'
+  test:
+    runs-on: ubuntu-latest
+    steps: [...]  # Runs in parallel with 'lint'
+  build:
+    needs: [lint, test]  # Waits for both to pass
+    steps: [...]
+
+# Skip unnecessary work with path filters
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'package-lock.json'
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'`</code>
+          </pre>
+          <p >
+            CI/CD pipelines generate configuration in YAML and JSON formats. Validate your pipeline configuration files with our <a href="/yaml-to-json/">YAML to JSON Converter</a> to catch syntax errors before pushing.
+          </p>
+        
+
+        
+          <h2>Deployment Strategies</h2>
+          <p>
+            How you deploy is as important as what you deploy. Different strategies offer different trade-offs between safety, speed, and complexity.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Strategy</th>
+                  <th >How It Works</th>
+                  <th >Risk Level</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Rolling</td><td >Replace instances one by one</td><td >Low</td></tr>
+                <tr ><td >Blue/Green</td><td >Full parallel environment, instant switch</td><td >Very Low</td></tr>
+                <tr ><td >Canary</td><td >Route 5-10% traffic to new version first</td><td >Very Low</td></tr>
+                <tr ><td >Feature Flags</td><td >Deploy code, toggle features independently</td><td >Low</td></tr>
+                <tr><td >Big Bang</td><td >Replace everything at once</td><td >High</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Secrets Management in Pipelines</h2>
+          <p>
+            Never hardcode secrets in pipeline configuration files. Every CI/CD platform provides secure secret storage that injects values at runtime and masks them in logs.
+          </p>
+          <p>
+            <code >`# GitHub Actions: Repository Secrets
+# Settings → Secrets and Variables → Actions → New repository secret
+
+# Use in workflow:
+env:
+  DATABASE_URL: \$ secrets.DATABASE_URL 
+  API_KEY: \$ secrets.API_KEY 
+
+# Environment-specific secrets (staging vs production):
+deploy:
+  environment: production  # Uses production secrets
+  env:
+    DATABASE_URL: \$ secrets.PROD_DATABASE_URL 
+
+# OIDC: Passwordless cloud auth (no stored secrets!)
+permissions:
+  id-token: write
+steps:
+  - uses: aws-actions/configure-aws-credentials@v4
+    with:
+      role-to-assume: arn:aws:iam::123456789:role/deploy
+      aws-region: us-east-1
+  # No AWS keys stored — uses short-lived OIDC tokens`</code>
+          </pre>
+          <p >
+            For a comprehensive guide on managing secrets across environments, see our <a href="/blog/environment-variables-guide/">environment variables guide</a>.
+          </p>
+        
+
+        
+          <h2>Pipeline Best Practices</h2>
+          <ol>
+            <li><strong>Fail fast</strong> -- Run the quickest checks first (lint, type check). If code style fails, skip the 10-minute test suite.</li>
+            <li><strong>Make pipelines deterministic</strong> -- Use <code >npm ci</code> not <code >npm install</code>, pin action versions with SHA, and use exact Docker image tags.</li>
+            <li><strong>Keep the main branch deployable</strong> -- Every merge to main should produce a shippable artifact. Use feature flags for incomplete features.</li>
+            <li><strong>Test in production-like environments</strong> -- Use the same Node version, OS, and dependency versions as production.</li>
+            <li><strong>Monitor pipeline health</strong> -- Track build success rate, average duration, and flaky test frequency. Alert when build times regress.</li>
+            <li><strong>Use branch protection rules</strong> -- Require all CI checks to pass before merging. No exceptions.</li>
+          </ol>
+        
+
+        /* CTA Section */
+        
+          <h2>Validate Your Pipeline Config with BytePane</h2>
+          <p>
+            Convert and validate CI/CD configuration files with our <a href="/yaml-to-json/">YAML to JSON Converter</a>. Schedule <a href="/cron-builder/">cron expressions</a> for timed pipeline triggers. Compare deployment configs with the <a href="/diff-checker/">Diff Checker</a>.
+          </p>
+          <a href="/yaml-to-json/">
+            Open YAML to JSON Converter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/docker-container-best-practices/">
+              <h3>Docker Container Best Practices</h3>
+              <p>Build optimized Docker images for CI/CD pipelines.</p>
+            </a>
+            <a href="/blog/git-branching-strategies/">
+              <h3>Git Branching Strategies</h3>
+              <p>GitFlow, GitHub Flow, and trunk-based development.</p>
+            </a>
+            <a href="/blog/environment-variables-guide/">
+              <h3>Environment Variables Guide</h3>
+              <p>Manage secrets and config across deployment environments.</p>
+            </a>
+            <a href="/blog/cron-jobs-tutorial/">
+              <h3>Cron Jobs Tutorial</h3>
+              <p>Schedule pipeline triggers and automated tasks.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/ci-cd-pipeline-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
