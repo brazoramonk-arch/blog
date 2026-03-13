@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regular Expressions Cheat Sheet: Patterns Every Developer Needs - BytePane</title>
+  <meta name="description" content="Complete regex cheat sheet with syntax tables, common patterns, and practical examples.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/regex-cheat-sheet/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Regular Expressions Cheat Sheet: Patterns Every Developer Needs
+  </nav>
+
+  <article>
+    <h1>Regular Expressions Cheat Sheet: Patterns Every Developer Needs</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/regex-cheat-sheet/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Regular Expressions Cheat Sheet: Patterns Every Developer Needs',
+            description: 'Complete regex cheat sheet with syntax tables, common patterns, and practical examples.',
+            datePublished: '2026-03-06',
+            dateModified: '2026-03-06',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/regex-cheat-sheet/',
+            mainEntityOfPage: 'https://bytepane.com/blog/regex-cheat-sheet/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Regex Cheat Sheet' ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Regex Cheat Sheet
+      
+
+      /* Article Header */
+      
+        <h2>
+          Regular Expressions Cheat Sheet: Patterns Every Developer Needs
+        </h2>
+        
+          Text Processing
+          <time dateTime="2026-03-06">March 6, 2026</time>
+          14 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>What Are Regular Expressions?</h2>
+          <p>
+            Regular expressions (regex or regexp) are sequences of characters that define search patterns. They are used in virtually every programming language for string searching, matching, validation, and replacement. A regular expression can match a simple word, validate an email address, or extract structured data from unstructured text.
+          </p>
+          <p>
+            Regex is one of the most powerful tools in a developer&apos;s arsenal, but it has a steep learning curve. This cheat sheet provides a comprehensive reference that you can bookmark and return to whenever you need to write or debug a regular expression. To test patterns in real time, use our <a href="/regex-tester/">Regex Tester</a> tool.
+          </p>
+        
+
+        
+          <h2>Basic Metacharacters</h2>
+          <p>
+            Metacharacters are the building blocks of regular expressions. Each metacharacter has a special meaning that goes beyond its literal character value. Understanding these is the foundation for writing effective regex patterns.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Pattern</th>
+                  <th >Description</th>
+                  <th >Example</th>
+                  <th >Matches</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >.</td><td >Any character except newline</td><td >h.t</td><td >hat, hot, hit</td></tr>
+                <tr ><td >^</td><td >Start of string/line</td><td >^Hello</td><td >&quot;Hello world&quot;</td></tr>
+                <tr ><td >$</td><td >End of string/line</td><td >world$</td><td >&quot;Hello world&quot;</td></tr>
+                <tr ><td >*</td><td >Zero or more of previous</td><td >ab*c</td><td >ac, abc, abbc</td></tr>
+                <tr ><td >+</td><td >One or more of previous</td><td >ab+c</td><td >abc, abbc (not ac)</td></tr>
+                <tr ><td >?</td><td >Zero or one of previous</td><td >colou?r</td><td >color, colour</td></tr>
+                <tr ><td >\</td><td >Escape special character</td><td >\.</td><td >Literal dot</td></tr>
+                <tr><td >|</td><td >Alternation (OR)</td><td >cat|dog</td><td >cat or dog</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Character Classes</h2>
+          <p>
+            Character classes let you match any one character from a specific set. They are defined using square brackets and can include ranges, negation, and shorthand notations that dramatically simplify common patterns.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Pattern</th>
+                  <th >Description</th>
+                  <th >Equivalent</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >[abc]</td><td >Any of a, b, or c</td><td >-</td></tr>
+                <tr ><td >[^abc]</td><td >Any character NOT a, b, or c</td><td >-</td></tr>
+                <tr ><td >[a-z]</td><td >Any lowercase letter</td><td >-</td></tr>
+                <tr ><td >[A-Z]</td><td >Any uppercase letter</td><td >-</td></tr>
+                <tr ><td >[0-9]</td><td >Any digit</td><td >\d</td></tr>
+                <tr ><td >\d</td><td >Any digit</td><td >[0-9]</td></tr>
+                <tr ><td >\D</td><td >Any non-digit</td><td >[^0-9]</td></tr>
+                <tr ><td >\w</td><td >Word character</td><td >[a-zA-Z0-9_]</td></tr>
+                <tr ><td >\W</td><td >Non-word character</td><td >[^a-zA-Z0-9_]</td></tr>
+                <tr ><td >\s</td><td >Whitespace</td><td >[ \t\n\r\f\v]</td></tr>
+                <tr><td >\S</td><td >Non-whitespace</td><td >[^ \t\n\r\f\v]</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Quantifiers</h2>
+          <p>
+            Quantifiers specify how many times a preceding element must occur for the pattern to match. They are essential for defining patterns that match variable-length strings, from optional characters to repeated sequences.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Quantifier</th>
+                  <th >Description</th>
+                  <th >Example</th>
+                  <th >Matches</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >'*'</td><td >0 or more (greedy)</td><td >a*</td><td >&quot;&quot;, a, aaa</td></tr>
+                <tr ><td >+</td><td >1 or more (greedy)</td><td >a+</td><td >a, aa, aaa</td></tr>
+                <tr ><td >?</td><td >0 or 1 (optional)</td><td >a?</td><td >&quot;&quot;, a</td></tr>
+                <tr ><td >'n'</td><td >Exactly n times</td><td >'a3'</td><td >aaa</td></tr>
+                <tr ><td >'n,'</td><td >n or more times</td><td >'a2,'</td><td >aa, aaa, aaaa</td></tr>
+                <tr ><td >'n,m'</td><td >Between n and m times</td><td >'a2,4'</td><td >aa, aaa, aaaa</td></tr>
+                <tr ><td >*?</td><td >0 or more (lazy)</td><td >a*?</td><td >Matches as few as possible</td></tr>
+                <tr><td >+?</td><td >1 or more (lazy)</td><td >a+?</td><td >Matches as few as possible</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The difference between greedy and lazy quantifiers is critical. Greedy quantifiers (default) match as much as possible, while lazy quantifiers (with <code >?</code> suffix) match as little as possible. This distinction matters most when working with HTML or nested delimiters.
+          </p>
+        
+
+        
+          <h2>Groups and Backreferences</h2>
+          <p>
+            Groups let you treat multiple characters as a single unit, apply quantifiers to complex patterns, and capture matched text for extraction or backreferencing. They are essential for sophisticated search-and-replace operations.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Pattern</th>
+                  <th >Description</th>
+                  <th >Example</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >(abc)</td><td >Capturing group</td><td >(ha)+ matches &quot;haha&quot;</td></tr>
+                <tr ><td >(?:abc)</td><td >Non-capturing group</td><td >(?:ha)+ groups without capture</td></tr>
+                <tr ><td >'(?<name>abc)'</td><td >Named capturing group</td><td >'(?<year>\\d4)'</td></tr>
+                <tr ><td >\1</td><td >Backreference to group 1</td><td >(a)\1 matches &quot;aa&quot;</td></tr>
+                <tr><td >\k&lt;name&gt;</td><td >Named backreference</td><td >\k&lt;year&gt; re-matches captured year</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// JavaScript: Extract date components
+const dateRegex = /(?<year>\\d4)-(?<month>\\d2)-(?<day>\\d2)/;
+const match = "2026-03-06".match(dateRegex);
+console.log(match.groups.year);  // "2026"
+console.log(match.groups.month); // "03"
+console.log(match.groups.day);   // "06"
+
+// Find duplicate words
+const dupeRegex = /\\b(\\w+)\\s+\\1\\b/gi;
+"the the quick brown fox".match(dupeRegex); // ["the the"]`</code>
+          </pre>
+        
+
+        
+          <h2>Lookaheads and Lookbehinds</h2>
+          <p >
+            Lookaheads and lookbehinds (collectively called lookarounds) let you match a pattern only if it is followed by or preceded by another pattern, without including the lookaround in the match itself. These are zero-width assertions, meaning they do not consume characters in the string.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Pattern</th>
+                  <th >Type</th>
+                  <th >Description</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >(?=abc)</td><td >Positive lookahead</td><td >Match if followed by abc</td></tr>
+                <tr ><td >(?!abc)</td><td >Negative lookahead</td><td >Match if NOT followed by abc</td></tr>
+                <tr ><td >'(?<=abc)'</td><td >Positive lookbehind</td><td >Match if preceded by abc</td></tr>
+                <tr><td >'(?<!abc)'</td><td >Negative lookbehind</td><td >Match if NOT preceded by abc</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// Match a number followed by "px" (without capturing "px")
+/\\d+(?=px)/g.exec("font-size: 16px");  // ["16"]
+
+// Match "USD" NOT followed by a digit
+/USD(?!\\d)/.test("USD amount");  // true
+/USD(?!\\d)/.test("USD100");      // false
+
+// Match a number preceded by "$"
+/(?<=\\$)\\d+/.exec("Price: $42"); // ["42"]
+
+// Password validation: at least 1 uppercase, 1 digit, 8+ chars
+/^(?=.*[A-Z])(?=.*\\d).8,$/`</code>
+          </pre>
+        
+
+        
+          <h2>Regex Flags</h2>
+          <p >
+            Flags (also called modifiers) change how the regex engine interprets the pattern. Different languages use slightly different flag names, but the core set of flags is consistent across JavaScript, Python, PHP, and most other languages.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Flag</th>
+                  <th >Name</th>
+                  <th >Effect</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >g</td><td >Global</td><td >Find all matches, not just the first</td></tr>
+                <tr ><td >i</td><td >Case-insensitive</td><td >Match regardless of case</td></tr>
+                <tr ><td >m</td><td >Multiline</td><td >^ and $ match line boundaries</td></tr>
+                <tr ><td >s</td><td >Dotall</td><td >. matches newline characters too</td></tr>
+                <tr ><td >u</td><td >Unicode</td><td >Enable Unicode matching</td></tr>
+                <tr><td >y</td><td >Sticky</td><td >Match at exact position (lastIndex)</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Common Regex Patterns for Validation</h2>
+          <p>
+            Below are battle-tested regex patterns for the most common validation tasks. These patterns balance strictness with practical usability. You can test any of these patterns immediately in our <a href="/regex-tester/">Regex Tester</a>.
+          </p>
+
+          <h3>Email Validation</h3>
+          <p>
+            <code >`// Simple but effective email regex
+/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]2,$/
+
+// Test cases:
+// user@example.com       ✓
+// user.name+tag@test.co  ✓
+// user@.com              ✗
+// @example.com           ✗`</code>
+          </pre>
+
+          <h3>URL Validation</h3>
+          <pre >
+            <code >`// URL with optional protocol
+/^(https?:\\/\\/)?([\\w-]+\\.)+[\\w-]+(\\/[\\w-./?%&=]*)?$/
+
+// Strict HTTPS URL
+/^https:\\/\\/([\\w-]+\\.)+[\\w-]+(\\/[\\w-./?%&=]*)?$/`</code>
+          </pre>
+
+          <h3>Phone Number (US)</h3>
+          <pre >
+            <code >`// US phone with optional country code and formatting
+/^(\\+1[- ]?)?\\(?\\d3\\)?[- ]?\\d3[- ]?\\d4$/
+
+// Matches: +1-555-123-4567, (555) 123-4567, 5551234567`</code>
+          </pre>
+
+          <h3>IPv4 Address</h3>
+          <pre >
+            <code >`// IPv4 validation (strict - checks 0-255 range)
+/^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.)3(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$/
+
+// Matches: 192.168.1.1, 10.0.0.0, 255.255.255.255
+// Rejects: 256.1.1.1, 192.168.1`</code>
+          </pre>
+
+          <h3>Strong Password</h3>
+          <pre >
+            <code >`// Min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special
+/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]8,$/`</code>
+          </pre>
+
+          <h3>Date (YYYY-MM-DD)</h3>
+          <pre >
+            <code >`// ISO date format
+/^\\d4-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$/
+
+// Matches: 2026-03-06, 2025-12-31
+// Rejects: 2026-13-01, 2026-00-15`</code>
+          </pre>
+
+          <h3>Hex Color Code</h3>
+          <pre >
+            <code >`// 3 or 6 digit hex color
+/^#([0-9A-Fa-f]3|[0-9A-Fa-f]6)$/
+
+// Matches: #fff, #FF5733, #0a0a0a`</code>
+          </pre>
+          <p >
+            Need to convert hex colors to other formats? Try our <a href="/color-converter/">Color Converter</a> or <a href="/color-picker/">Color Picker</a> tools.
+          </p>
+        
+
+        
+          <h2>Regex in Different Programming Languages</h2>
+          <p>
+            While regex syntax is largely universal, each programming language has its own API for using regular expressions. Here are quick references for the most popular languages.
+          </p>
+
+          <h3>JavaScript</h3>
+          <p>
+            <code >`// Literal syntax
+const regex = /pattern/flags;
+
+// Constructor syntax
+const regex2 = new RegExp("pattern", "flags");
+
+// Methods
+"hello".match(/h(e)(l)/);        // Match with groups
+"hello".replace(/l/g, "r");      // "herro"
+/^test/.test("test string");      // true
+"a1b2".matchAll(/[a-z](\\d)/g);   // Iterator of matches`</code>
+          </pre>
+
+          <h3>Python</h3>
+          <pre >
+            <code >`import re
+
+# Search and match
+re.search(r"\\d+", "abc 123 def")       # Match object for "123"
+re.match(r"^abc", "abc def")            # Matches at start
+re.findall(r"\\d+", "a1 b2 c3")         # ["1", "2", "3"]
+re.sub(r"\\d", "X", "a1b2c3")           # "aXbXcX"
+
+# Compiled patterns (faster for repeated use)
+pattern = re.compile(r"[A-Z][a-z]+")
+pattern.findall("Hello World Test")     # ["Hello", "World", "Test"]`</code>
+          </pre>
+
+          <p >
+            For counting words and analyzing text that you have processed with regex, our <a href="/word-counter/">Word Counter</a> can give you detailed statistics. And if you need to compare regex outputs, the <a href="/diff-checker/">Diff Checker</a> is ideal for spotting differences between two text blocks.
+          </p>
+        
+
+        
+          <h2>Regex Performance Tips</h2>
+          <p>
+            Poorly written regex patterns can cause catastrophic backtracking, where the regex engine takes exponential time to evaluate certain inputs. This is a common source of ReDoS (Regular Expression Denial of Service) vulnerabilities. Following these performance guidelines will keep your patterns efficient and safe.
+          </p>
+          <ol>
+            <li><strong>Be specific</strong> -- Use <code >[a-z]</code> instead of <code >.</code> when you know the expected character set.</li>
+            <li><strong>Avoid nested quantifiers</strong> -- Patterns like <code >(a+)+</code> can cause catastrophic backtracking.</li>
+            <li><strong>Use atomic groups or possessive quantifiers</strong> -- When available, these prevent backtracking into subexpressions.</li>
+            <li><strong>Anchor your patterns</strong> -- Use <code >^</code> and <code >$</code> to avoid unnecessary scanning.</li>
+            <li><strong>Compile once, use many</strong> -- Compile regex patterns outside of loops for better performance.</li>
+            <li><strong>Use non-capturing groups</strong> -- Use <code >(?:...)</code> when you do not need the captured value.</li>
+            <li><strong>Set time limits</strong> -- In production code, set regex execution timeouts to prevent ReDoS.</li>
+          </ol>
+        
+
+        /* CTA Section */
+        
+          <h2>Test Your Regex Patterns</h2>
+          <p>
+            Stop guessing whether your regex works. Paste your pattern and test string into our Regex Tester for instant matching with highlighted results, group extraction, and flag support.
+          </p>
+          <a href="/regex-tester/">
+            Open Regex Tester
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/json-formatting-guide/">
+              <h3>How to Format JSON</h3>
+              <p>Complete guide to JSON formatting, validation, and best practices.</p>
+            </a>
+            <a href="/blog/base64-encoding-explained/">
+              <h3>Base64 Encoding Explained</h3>
+              <p>When and why to use Base64 encoding in your projects.</p>
+            </a>
+            <a href="/blog/http-status-codes-guide/">
+              <h3>HTTP Status Codes Guide</h3>
+              <p>Complete reference for every HTTP status code with examples.</p>
+            </a>
+            <a href="/blog/linux-file-permissions/">
+              <h3>Linux File Permissions</h3>
+              <p>Master chmod, chown, and the Linux permission model.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/regex-cheat-sheet/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
