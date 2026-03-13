@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time-of-Use Electricity Rates: How They Work &amp;amp; How to Save - JouleIO</title>
+  <meta name="description" content="Understand time-of-use (TOU) electricity rates — peak vs off-peak pricing, how to shift usage to save 20-40%, smart device scheduling, and utility plan comparison.">
+  <link rel="canonical" href="https://www.jouleio.com/blog/time-of-use-rates-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/jouleio/">JouleIO</a> &rarr; Time-of-Use Electricity Rates: How They Work &amp;amp; How to Save
+  </nav>
+
+  <article>
+    <h1>Time-of-Use Electricity Rates: How They Work &amp;amp; How to Save</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.jouleio.com/blog/time-of-use-rates-guide/">jouleio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    'use client';
+
+const articleSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Time-of-Use Electricity Rates: How They Work & How to Save',
+  description: 'Understand time-of-use (TOU) electricity rates — peak vs off-peak pricing, how to shift usage to save 20-40%, smart device scheduling, and utility plan comparison.',
+  datePublished: '2026-03-08',
+  dateModified: '2026-03-08',
+  author: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+  ,
+  publisher: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+    logo:  '@type': 'ImageObject', url: 'https://jouleio.com/favicon.svg' ,
+  ,
+  mainEntityOfPage: 'https://jouleio.com/blog/time-of-use-rates-guide/',
+;
+
+const breadcrumbSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+     '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jouleio.com/' ,
+     '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://jouleio.com/blog/' ,
+     '@type': 'ListItem', position: 3, name: 'Time-of-Use Rates Guide', item: 'https://jouleio.com/blog/time-of-use-rates-guide/' ,
+  ],
+;
+
+const faqSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    
+      '@type': 'Question',
+      name: 'What are time-of-use electricity rates?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Time-of-use (TOU) rates are electricity pricing plans where the cost per kilowatt-hour varies based on the time of day. Electricity costs more during peak demand periods (typically 4-9 PM on weekdays) and less during off-peak hours (late night through early morning). This pricing structure reflects the actual cost of generating and delivering electricity, which fluctuates with demand throughout the day.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How much can I save with time-of-use rates?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Households that actively shift energy usage to off-peak hours can save 20-40% on their electricity bills compared to flat-rate plans. The savings depend on how much usage you can shift, the price differential between peak and off-peak rates, and your utility provider. Homes with EVs, battery storage, or smart appliances tend to save the most because they can automate load shifting.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'What appliances should I run during off-peak hours?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'The best appliances to shift to off-peak hours are those with flexible scheduling: dishwashers, clothes washers and dryers, electric vehicle chargers, pool pumps, and water heaters. These appliances account for roughly 40-50% of household electricity use and can easily be programmed to run during cheaper off-peak periods without affecting your daily routine.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Are time-of-use rates good for solar panel owners?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'TOU rates can be excellent for solar panel owners, especially those with battery storage. Solar panels generate electricity during the day when rates are moderate, and battery storage allows you to use stored solar energy during expensive peak evening hours instead of buying from the grid. Without battery storage, TOU rates still benefit solar owners who can shift discretionary usage to midday when their panels are producing excess energy.',
+      ,
+    ,
+  ],
+;
+
+  
+    <>
+      <Header />
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Time-of-Use Rates Guide</li>
+          </ol>
+        
+
+        
+          /* Header */
+          
+            Energy
+            <h2>
+              Time-of-Use Electricity Rates: How They Work &amp; How to Save
+            </h2>
+            <p>
+              Time-of-use (TOU) electricity rates charge different prices depending on when you use energy. By shifting your heaviest electricity usage to off-peak hours, you can save 20-40% on your monthly bill. This guide explains how TOU pricing works, which utilities offer it, and practical strategies to maximize your savings.
+            </p>
+            
+              <time dateTime="2026-03-08">March 8, 2026</time>
+              12 min read
+            
+          
+
+          /* Table of Contents */
+          
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#what-are-tou-rates" >1. What Are Time-of-Use Rates?</a></li>
+              <li><a href="#how-tou-pricing-works" >2. How TOU Pricing Works</a></li>
+              <li><a href="#typical-rate-schedules" >3. Typical TOU Rate Schedules</a></li>
+              <li><a href="#who-benefits" >4. Who Benefits Most from TOU Rates</a></li>
+              <li><a href="#shifting-usage" >5. Strategies for Shifting Usage</a></li>
+              <li><a href="#smart-devices" >6. Smart Devices for TOU Optimization</a></li>
+              <li><a href="#tou-and-solar" >7. TOU Rates and Solar Panels</a></li>
+              <li><a href="#ev-charging-tou" >8. EV Charging on TOU Plans</a></li>
+              <li><a href="#choosing-plan" >9. How to Choose the Right Plan</a></li>
+              <li><a href="#faq" >10. Frequently Asked Questions</a></li>
+            </ol>
+          
+
+          /* Content */
+          
+            
+              <h2>What Are Time-of-Use Rates?</h2>
+              <p>
+                Time-of-use (TOU) rates are electricity pricing plans where the cost per kilowatt-hour (kWh) changes based on the time of day and sometimes the day of the week or season. Unlike flat-rate plans that charge a constant price regardless of when you use electricity, TOU rates reflect the actual cost of generating and delivering power during different demand periods.
+              </p>
+              <p>
+                During periods of high demand — typically weekday afternoons and evenings when air conditioners, appliances, and lighting are running simultaneously — the grid is under stress, and electricity is more expensive to produce. TOU pricing passes this cost difference to consumers, incentivizing them to shift usage to cheaper periods.
+              </p>
+              <p>
+                As of 2026, over 60% of U.S. utilities offer TOU rate plans, and several states including California, Arizona, and Connecticut have made TOU the default rate structure for new customers. Use our <a href="/electricity-cost-calculator/">Electricity Cost Calculator</a> to compare your current flat-rate costs with potential TOU savings.
+              </p>
+            
+
+            
+              <h2>How TOU Pricing Works</h2>
+              <p>
+                TOU rate plans divide the day into two or three pricing tiers. The specifics vary by utility, but the general structure includes peak, off-peak, and sometimes mid-peak or shoulder periods.
+              </p>
+              <ul>
+                <li><strong>Peak hours:</strong> The most expensive period, typically 4:00 PM to 9:00 PM on weekdays. Rates can be 2-3x higher than off-peak.</li>
+                <li><strong>Off-peak hours:</strong> The cheapest period, usually late night through early morning (9:00 PM to 8:00 AM). Rates are 30-60% lower than flat-rate plans.</li>
+                <li><strong>Mid-peak/Shoulder hours:</strong> Moderate pricing between peak and off-peak, often covering morning and early afternoon.</li>
+              </ul>
+              <p>
+                Weekends and holidays are typically classified as off-peak for the entire day, giving you significant flexibility. Some utilities also have seasonal variations, with higher peak rates during summer months when air conditioning drives up demand.
+              </p>
+            
+
+            
+              <h2>Typical TOU Rate Schedules</h2>
+              <p>
+                Here is how TOU rates compare across major U.S. utilities. The price differential between peak and off-peak determines how much you can save by shifting usage.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Utility</th>
+                      <th >Off-Peak ($/kWh)</th>
+                      <th >Mid-Peak ($/kWh)</th>
+                      <th >Peak ($/kWh)</th>
+                      <th >Peak Hours</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >SCE (CA)</td><td >$0.22</td><td >$0.35</td><td >$0.55</td><td >4-9 PM</td></tr>
+                    <tr ><td >PG&amp;E (CA)</td><td >$0.28</td><td >$0.38</td><td >$0.52</td><td >4-9 PM</td></tr>
+                    <tr ><td >APS (AZ)</td><td >$0.07</td><td >$0.10</td><td >$0.24</td><td >3-8 PM</td></tr>
+                    <tr ><td >Duke (NC)</td><td >$0.07</td><td >—</td><td >$0.22</td><td >6-9 PM</td></tr>
+                    <tr><td >ComEd (IL)</td><td >$0.03</td><td >—</td><td >$0.14</td><td >2-7 PM</td></tr>
+                  </tbody>
+                </table>
+              
+
+              
+                <p>
+                  <strong>Note:</strong> Rates shown are approximate summer rates as of 2026 and vary by plan tier. Contact your utility for current rates or check your most recent bill for your exact rate schedule.
+                </p>
+              
+            
+
+            
+              <h2>Who Benefits Most from TOU Rates</h2>
+              <p>
+                TOU rates are not ideal for everyone. They work best for households that can genuinely shift a significant portion of their electricity usage away from peak hours. The best candidates include:
+              </p>
+              <ul>
+                <li><strong>EV owners:</strong> Charging overnight at off-peak rates can save $30-60/month compared to peak charging</li>
+                <li><strong>Solar + battery owners:</strong> Store solar energy and use it during peak hours instead of buying expensive grid power</li>
+                <li><strong>Work-from-home professionals:</strong> Run heavy appliances during midday or late evening</li>
+                <li><strong>Smart home adopters:</strong> Automated scheduling handles usage shifting without manual effort</li>
+                <li><strong>Pool owners:</strong> Pool pumps run 6-8 hours daily and can easily be scheduled for off-peak hours</li>
+              </ul>
+              <p>
+                Households with inflexible schedules — such as families who cook, do laundry, and run appliances heavily between 4-9 PM — may not benefit or could even pay more on TOU plans. Track your usage patterns with our <a href="/home-energy-audit/">Home Energy Audit Tool</a> before switching.
+              </p>
+            
+
+            
+              <h2>Strategies for Shifting Usage</h2>
+              <p>
+                The key to saving with TOU rates is moving your most energy-intensive tasks to off-peak hours. Here are the highest-impact strategies:
+              </p>
+
+              <h3>Laundry and Dishes (Save $8-15/month)</h3>
+              <p>
+                A clothes dryer uses 2,500-5,000 watts per cycle and a dishwasher uses 1,200-2,400 watts. Running these appliances after 9 PM instead of at 6 PM can cut the cost of each load by 40-60%. Most modern appliances have delay-start timers built in.
+              </p>
+
+              <h3>Pre-Cooling Your Home (Save $15-30/month)</h3>
+              <p>
+                Pre-cool your home to 68-70°F before peak hours start, then let the thermostat rise to 76-78°F during peak. Well-insulated homes can coast for 3-4 hours without the AC cycling on. This single strategy can reduce peak-hour HVAC costs by 60-80%.
+              </p>
+
+              <h3>Water Heating (Save $10-20/month)</h3>
+              <p>
+                If you have an electric water heater, install a timer to heat water during off-peak hours. A well-insulated tank holds temperature for 8-12 hours. Heat pump water heaters are especially efficient for TOU optimization, using 60-70% less energy than standard electric models.
+              </p>
+            
+
+            
+              <h2>Smart Devices for TOU Optimization</h2>
+              <p>
+                Smart home technology makes TOU optimization nearly effortless. These devices automatically schedule energy-intensive tasks during off-peak hours based on your utility&apos;s rate schedule.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Device</th>
+                      <th >Cost</th>
+                      <th >Annual Savings</th>
+                      <th >TOU Feature</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Smart Thermostat</td><td >$130-$250</td><td >$150-$300</td><td >Auto pre-cool/heat scheduling</td></tr>
+                    <tr ><td >Smart EV Charger</td><td >$500-$800</td><td >$360-$720</td><td >Off-peak charge scheduling</td></tr>
+                    <tr ><td >Smart Plugs</td><td >$10-$25 each</td><td >$20-$50 each</td><td >Scheduled on/off per device</td></tr>
+                    <tr ><td >Energy Monitor</td><td >$150-$300</td><td >$100-$200</td><td >Real-time rate awareness</td></tr>
+                    <tr><td >Smart Water Heater</td><td >$1,200-$2,000</td><td >$200-$400</td><td >Off-peak heating cycles</td></tr>
+                  </tbody>
+                </table>
+              
+            
+
+            
+              <h2>TOU Rates and Solar Panels</h2>
+              <p>
+                TOU rates create an interesting dynamic for solar panel owners. Solar panels produce the most electricity during midday, but peak TOU rates are typically in the late afternoon and evening — after solar production has started to decline. This means that without battery storage, you may be exporting cheap solar energy during midday and buying expensive grid power during peak evening hours.
+              </p>
+              <p>
+                The solution is battery storage. A home battery (like the Tesla Powerwall) stores excess solar energy generated during the day and discharges it during peak evening hours. This eliminates peak-rate purchases entirely for most households, turning a $0.55/kWh expense into a $0.00/kWh one. Calculate your potential savings with our <a href="/solar-savings-calculator/">Solar Savings Calculator</a> and <a href="/solar-battery-calculator/">Solar Battery Calculator</a>.
+              </p>
+              <p>
+                Even without batteries, solar owners on TOU plans can benefit by shifting discretionary loads (EV charging, laundry, pool pumps) to midday hours when their panels are producing excess power. This self-consumption strategy avoids the unfavorable export-vs-import rate difference.
+              </p>
+            
+
+            
+              <h2>EV Charging on TOU Plans</h2>
+              <p>
+                Electric vehicle charging is one of the biggest wins for TOU rate plans. A typical EV uses 3,000-4,500 kWh per year. On a flat rate of $0.16/kWh, that costs $480-$720 annually. But on a TOU plan, charging overnight at $0.07/kWh drops the annual cost to $210-$315 — a savings of $270-$405 per year.
+              </p>
+              <p>
+                Most smart EV chargers and all modern EVs support scheduled charging. Simply set your car to start charging at 11 PM or whenever your off-peak window begins. Some utilities even offer dedicated EV TOU rates with rock-bottom overnight pricing as low as $0.03-$0.05/kWh. Use our <a href="/ev-charging-cost/">EV Charging Cost Calculator</a> to compare TOU vs flat-rate charging costs for your specific vehicle.
+              </p>
+            
+
+            
+              <h2>How to Choose the Right Plan</h2>
+              <p>
+                Before switching to a TOU plan, analyze your current electricity usage patterns. Most utilities provide hourly usage data through their online portal or smart meter app. Look at the past 3-6 months to identify what percentage of your usage falls during peak hours.
+              </p>
+              <ul>
+                <li>If less than 30% of your usage is during peak hours, TOU rates will almost certainly save you money</li>
+                <li>If 30-50% is during peak, savings depend on the rate differential — run the numbers</li>
+                <li>If over 50% is during peak, consider whether you can shift enough usage before switching</li>
+              </ul>
+              <p>
+                Many utilities allow you to switch back to a flat rate within 60-90 days if TOU does not work for you. For help financing energy upgrades that complement TOU savings — such as solar panels or home batteries — explore <a href="https://amortio.com/solar-loan-calculator/" target="_blank" rel="noopener" >solar loan options on Amortio</a>.
+              </p>
+            
+
+            /* FAQ Section */
+            
+              <h2>Frequently Asked Questions</h2>
+
+              
+                
+                  <h3>What are time-of-use electricity rates?</h3>
+                  <p>
+                    Time-of-use (TOU) rates are electricity pricing plans where the cost per kilowatt-hour varies based on the time of day. Electricity costs more during peak demand periods (typically 4-9 PM on weekdays) and less during off-peak hours (late night through early morning). This pricing structure reflects the actual cost of generating and delivering electricity, which fluctuates with demand.
+                  </p>
+                
+
+                
+                  <h3>How much can I save with time-of-use rates?</h3>
+                  <p>
+                    Households that actively shift energy usage to off-peak hours can save 20-40% on their electricity bills. The savings depend on how much usage you can shift, the price differential between peak and off-peak rates, and your utility provider. Homes with EVs, battery storage, or smart appliances tend to save the most.
+                  </p>
+                
+
+                
+                  <h3>What appliances should I run during off-peak hours?</h3>
+                  <p>
+                    The best appliances to shift to off-peak hours are dishwashers, clothes washers and dryers, electric vehicle chargers, pool pumps, and water heaters. These account for roughly 40-50% of household electricity use and can easily be programmed to run during cheaper off-peak periods. Use our <a href="/electricity-cost-calculator/">Electricity Cost Calculator</a> to estimate per-appliance costs.
+                  </p>
+                
+
+                
+                  <h3>Are time-of-use rates good for solar panel owners?</h3>
+                  <p>
+                    TOU rates can be excellent for solar panel owners, especially those with battery storage. Battery systems store excess solar energy generated during the day and discharge it during expensive peak evening hours. Even without batteries, solar owners benefit by shifting discretionary loads to midday when panels produce excess power.
+                  </p>
+                
+              
+            
+          
+
+          /* CTA */
+          
+            <h2>Calculate Your Energy Costs</h2>
+            <p>Use our free tools to compare TOU vs flat-rate pricing for your household.</p>
+            
+              <a href="/electricity-cost-calculator/">
+                Electricity Cost Calculator
+              </a>
+              <a href="/solar-battery-calculator/">
+                Solar Battery Calculator
+              </a>
+            
+          
+
+          /* Related Articles */
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/smart-thermostat-savings/">
+                HVAC
+                <h3>How Much Do Smart Thermostats Save?</h3>
+                <p>Real data on smart thermostat savings and how they optimize TOU rate schedules.</p>
+              </a>
+              <a href="/blog/home-battery-storage-guide/">
+                Solar
+                <h3>Home Battery Storage Guide</h3>
+                <p>Maximize TOU savings with home battery storage systems.</p>
+              </a>
+            
+          
+        
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+        />
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.jouleio.com/blog/time-of-use-rates-guide/">JouleIO</a>.
+      Explore more free tools at <a href="https://www.jouleio.com/">jouleio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.jouleio.com/">JouleIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
