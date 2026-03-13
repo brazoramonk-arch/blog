@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Response Codes Best Practices: HTTP Status Codes for REST APIs - BytePane</title>
+  <meta name="description" content="Learn how to use HTTP status codes correctly in REST APIs. Error formats, pagination, rate limiting, and design patterns.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/api-response-codes-best-practices/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; API Response Codes Best Practices: HTTP Status Codes for REST APIs
+  </nav>
+
+  <article>
+    <h1>API Response Codes Best Practices: HTTP Status Codes for REST APIs</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/api-response-codes-best-practices/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'API Response Codes Best Practices: HTTP Status Codes for REST APIs',
+            description: 'Learn how to use HTTP status codes correctly in REST APIs. Error formats, pagination, rate limiting, and design patterns.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/api-response-codes-best-practices/',
+            mainEntityOfPage: 'https://bytepane.com/blog/api-response-codes-best-practices/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'API Response Codes Best Practices' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'Should I return 200 with an error object or a proper 4xx/5xx status code?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Always use proper HTTP status codes. Returning 200 for errors (sometimes called "200 OK with error body") breaks HTTP semantics, confuses monitoring tools, prevents proper caching, and makes client-side error handling more complex. Use 4xx for client errors and 5xx for server errors, with a structured error body that provides additional context like error codes, messages, and documentation links.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'When should I use 400 Bad Request vs 422 Unprocessable Entity?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Use 400 Bad Request when the request is syntactically malformed -- for example, invalid JSON, missing required headers, or wrong Content-Type. Use 422 Unprocessable Entity when the request is syntactically correct but semantically invalid -- for example, an email field that contains a valid string but is not a valid email address, or a date range where the start date is after the end date. In practice, many APIs use 400 for both cases, which is acceptable.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How should I handle rate limiting in my API?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Return 429 Too Many Requests when a client exceeds the rate limit. Include a Retry-After header indicating how many seconds the client should wait before retrying. Also include rate limit headers (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset) in every response so clients can proactively manage their request rate. Use the IETF draft standard RateLimit header fields when possible.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        API Response Codes Best Practices
+      
+
+      /* Article Header */
+      
+        <h2>
+          API Response Codes Best Practices: HTTP Status Codes for REST APIs
+        </h2>
+        
+          Web Development
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          14 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>Why HTTP Status Codes Matter for APIs</h2>
+          <p>
+            HTTP status codes are the backbone of client-server communication in REST APIs. They tell clients whether a request succeeded, failed due to client error, or failed due to server error -- before the client even reads the response body. Proper use of status codes enables automatic retry logic, correct caching behavior, accurate monitoring dashboards, and consistent error handling across all API consumers.
+          </p>
+          <p>
+            Despite their importance, status codes are one of the most commonly misused aspects of API design. Many APIs return <code >200 OK</code> for everything, including errors. Others use <code >400 Bad Request</code> as a catch-all for any client mistake. This guide covers the correct status codes for every common API scenario, with real-world examples and error response formats.
+          </p>
+          <p>
+            For a quick reference of all HTTP status codes, check our <a href="/http-status-codes/">HTTP Status Codes</a> lookup tool, or read the comprehensive <a href="/blog/http-status-codes-guide/">HTTP Status Codes Guide</a> for detailed explanations of each code.
+          </p>
+        
+
+        
+          <h2>Success Codes (2xx): When Things Go Right</h2>
+          <p>
+            The 2xx family indicates that the request was received, understood, and processed successfully. Most APIs need only four success codes.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Name</th>
+                  <th >When to Use</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >200</td><td >OK</td><td >GET, PUT, PATCH that returns data</td></tr>
+                <tr ><td >201</td><td >Created</td><td >POST that creates a new resource</td></tr>
+                <tr ><td >204</td><td >No Content</td><td >DELETE, PUT/PATCH with no response body</td></tr>
+                <tr><td >202</td><td >Accepted</td><td >Async operations (queued for processing)</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// 200 OK - Successful GET
+GET /api/users/123
+Response: 200 OK
+
+  "id": 123,
+  "name": "Jane Doe",
+  "email": "jane@example.com"
+
+// 201 Created - Resource created via POST
+POST /api/users
+Request:  "name": "Jane Doe", "email": "jane@example.com" 
+Response: 201 Created
+Location: /api/users/123
+
+  "id": 123,
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "createdAt": "2026-03-07T10:00:00Z"
+
+// 204 No Content - Successful DELETE
+DELETE /api/users/123
+Response: 204 No Content
+(empty body)
+
+// 202 Accepted - Async operation
+POST /api/reports/generate
+Response: 202 Accepted
+
+  "jobId": "rpt-456",
+  "status": "processing",
+  "statusUrl": "/api/jobs/rpt-456"
+`</code>
+          </pre>
+          <p >
+            A common mistake is using <code >200</code> for POST requests that create resources. Use <code >201 Created</code> instead, and include a <code >Location</code> header pointing to the newly created resource. For DELETE operations, <code >204 No Content</code> is the correct response because there is nothing to return.
+          </p>
+        
+
+        
+          <h2>Client Error Codes (4xx): The Client Did Something Wrong</h2>
+          <p>
+            The 4xx family indicates that the error was caused by the client. The request contained invalid data, was missing authentication, or targeted a resource that does not exist. Choosing the right 4xx code tells the client exactly what went wrong and whether retrying with the same request would ever succeed.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Name</th>
+                  <th >When to Use</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >400</td><td >Bad Request</td><td >Malformed syntax, invalid JSON, missing required fields</td></tr>
+                <tr ><td >401</td><td >Unauthorized</td><td >Missing or invalid authentication credentials</td></tr>
+                <tr ><td >403</td><td >Forbidden</td><td >Authenticated but insufficient permissions</td></tr>
+                <tr ><td >404</td><td >Not Found</td><td >Resource does not exist</td></tr>
+                <tr ><td >409</td><td >Conflict</td><td >Duplicate resource, version conflict</td></tr>
+                <tr ><td >422</td><td >Unprocessable Entity</td><td >Valid syntax but semantic validation failure</td></tr>
+                <tr><td >429</td><td >Too Many Requests</td><td >Rate limit exceeded</td></tr>
+              </tbody>
+            </table>
+          
+
+          <h3>400 vs 422: When to Use Each</h3>
+          <p>
+            <code >`// 400 Bad Request - Syntactically malformed request
+POST /api/users
+Content-Type: application/json
+Body:  invalid json here
+
+Response: 400 Bad Request
+
+  "error": 
+    "code": "INVALID_JSON",
+    "message": "Request body is not valid JSON",
+    "details": "Unexpected token 'i' at position 2"
+  
+
+// 422 Unprocessable Entity - Valid syntax, invalid data
+POST /api/users
+Content-Type: application/json
+Body:  "email": "not-an-email", "age": -5 
+
+Response: 422 Unprocessable Entity
+
+  "error": 
+    "code": "VALIDATION_ERROR",
+    "message": "Request body failed validation",
+    "fields": [
+       "field": "email", "message": "Must be a valid email address" ,
+       "field": "age", "message": "Must be a positive integer" 
+    ]
+  
+`</code>
+          </pre>
+
+          <h3>401 vs 403: Authentication vs Authorization</h3>
+          <p >
+            This is one of the most commonly confused pairs. <code >401 Unauthorized</code> means "I do not know who you are" (missing or invalid credentials). <code >403 Forbidden</code> means "I know who you are, but you are not allowed to do this" (insufficient permissions). A <code >401</code> response should include a <code >WWW-Authenticate</code> header. A <code >403</code> should not, because re-authenticating will not help.
+          </p>
+          <p>
+            For API authentication best practices, including JWT tokens vs session cookies, see our <a href="/blog/jwt-vs-session-cookies-authentication/">JWT vs Session Cookies</a> comparison guide. You can inspect JWT tokens with our <a href="/jwt-decoder/">JWT Decoder</a> tool.
+          </p>
+        
+
+        
+          <h2>Server Error Codes (5xx): Something Broke on Your End</h2>
+          <p>
+            The 5xx family indicates that the server failed to fulfill a valid request. The client did nothing wrong, and retrying the same request later might succeed. Unlike 4xx errors, 5xx errors should trigger alerts in your monitoring system.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Name</th>
+                  <th >When to Use</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >500</td><td >Internal Server Error</td><td >Unhandled exception, unexpected failure</td></tr>
+                <tr ><td >502</td><td >Bad Gateway</td><td >Upstream service returned invalid response</td></tr>
+                <tr ><td >503</td><td >Service Unavailable</td><td >Server overloaded, maintenance mode</td></tr>
+                <tr><td >504</td><td >Gateway Timeout</td><td >Upstream service did not respond in time</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// 500 Internal Server Error
+Response: 500 Internal Server Error
+
+  "error": 
+    "code": "INTERNAL_ERROR",
+    "message": "An unexpected error occurred",
+    "requestId": "req-abc-123"
+  
+
+// NEVER expose stack traces, SQL queries, or internal details in production
+
+// 503 Service Unavailable (planned maintenance)
+Response: 503 Service Unavailable
+Retry-After: 3600
+
+  "error": 
+    "code": "MAINTENANCE",
+    "message": "Service is undergoing scheduled maintenance",
+    "estimatedResolution": "2026-03-07T12:00:00Z"
+  
+`</code>
+          </pre>
+          <p >
+            For 5xx errors, never expose internal details like stack traces, database queries, or file paths. Instead, log the full error server-side with a <code >requestId</code> and return only the ID to the client. This enables debugging without creating security vulnerabilities. Include a <code >Retry-After</code> header with <code >503</code> responses so clients know when to try again.
+          </p>
+        
+
+        
+          <h2>Designing a Consistent Error Response Format</h2>
+          <p>
+            A consistent error format across all endpoints is critical for API usability. Every error response should include the same top-level structure so client code can handle errors uniformly without checking which endpoint returned the error.
+          </p>
+          <p>
+            <code >`// RFC 7807: Problem Details for HTTP APIs (recommended standard)
+
+  "type": "https://api.example.com/errors/validation-error",
+  "title": "Validation Error",
+  "status": 422,
+  "detail": "The request body contains invalid field values",
+  "instance": "/api/users",
+  "errors": [
+    
+      "field": "email",
+      "code": "INVALID_FORMAT",
+      "message": "Must be a valid email address"
+    ,
+    
+      "field": "age",
+      "code": "OUT_OF_RANGE",
+      "message": "Must be between 1 and 150"
+    
+  ],
+  "requestId": "req-abc-123",
+  "timestamp": "2026-03-07T10:30:00Z"
+
+// Content-Type for RFC 7807
+Content-Type: application/problem+json`</code>
+          </pre>
+          <p >
+            The RFC 7807 format is becoming the industry standard for API error responses. It provides a structured way to communicate errors with machine-readable type URIs and human-readable detail messages. Even if you do not adopt RFC 7807 fully, your error format should include at minimum: an error code, a human-readable message, and a request ID for debugging. Validate your error response JSON with our <a href="/json-formatter/">JSON Formatter</a>.
+          </p>
+        
+
+        
+          <h2>Pagination Response Patterns</h2>
+          <p>
+            List endpoints must implement pagination to avoid returning unbounded result sets. There are three common pagination strategies, each with different trade-offs for performance, usability, and real-time data consistency.
+          </p>
+          <p>
+            <code >`// Offset-based pagination (simple, common)
+GET /api/users?page=2&limit=25
+Response: 200 OK
+
+  "data": [...],
+  "pagination": 
+    "page": 2,
+    "limit": 25,
+    "totalItems": 150,
+    "totalPages": 6,
+    "hasMore": true
+  
+
+// Cursor-based pagination (better for large datasets)
+GET /api/users?cursor=eyJpZCI6MTAwfQ&limit=25
+Response: 200 OK
+
+  "data": [...],
+  "pagination": 
+    "nextCursor": "eyJpZCI6MTI1fQ",
+    "prevCursor": "eyJpZCI6NzV9",
+    "hasMore": true,
+    "limit": 25
+  
+
+// Link header pagination (GitHub style)
+Link: <https://api.example.com/users?page=3&limit=25>; rel="next",
+      <https://api.example.com/users?page=6&limit=25>; rel="last",
+      <https://api.example.com/users?page=1&limit=25>; rel="first"`</code>
+          </pre>
+          <p >
+            Cursor-based pagination is preferred for large, frequently-updated datasets because it avoids the "shifting window" problem where items are skipped or duplicated when data changes between page requests. The cursor is typically a <a href="/blog/base64-encoding-explained/">Base64-encoded</a> value containing the sort key of the last item on the current page.
+          </p>
+        
+
+        
+          <h2>Rate Limiting Headers</h2>
+          <p>
+            Every public API should implement rate limiting and communicate limits clearly through response headers. This prevents abuse, ensures fair usage, and lets clients self-regulate their request rate.
+          </p>
+          <p>
+            <code >`// Rate limit headers (include in EVERY response)
+X-RateLimit-Limit: 1000          // Max requests per window
+X-RateLimit-Remaining: 847       // Requests remaining
+X-RateLimit-Reset: 1709812800    // Unix timestamp when window resets
+
+// IETF draft standard (newer, preferred)
+RateLimit-Limit: 1000
+RateLimit-Remaining: 847
+RateLimit-Reset: 153              // Seconds until reset (not timestamp)
+
+// When rate limit is exceeded
+Response: 429 Too Many Requests
+Retry-After: 153
+
+  "error": 
+    "code": "RATE_LIMIT_EXCEEDED",
+    "message": "Too many requests. Please retry after 153 seconds.",
+    "limit": 1000,
+    "window": "1h",
+    "retryAfter": 153
+  
+`</code>
+          </pre>
+          <p >
+            Include rate limit headers in every response, not just <code >429</code> responses. This allows clients to track their usage proactively. The <code >Retry-After</code> header should contain seconds (not a date) for easier client-side processing. Consider implementing different rate limits for different endpoints, authentication levels, and pricing tiers.
+          </p>
+        
+
+        
+          <h2>Status Codes for CRUD Operations</h2>
+          <p>
+            Here is a quick-reference mapping of HTTP methods to status codes for standard CRUD operations. This covers the most common API patterns.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Operation</th>
+                  <th >Method</th>
+                  <th >Success</th>
+                  <th >Common Errors</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >List all</td><td >GET /items</td><td >200</td><td >401, 403</td></tr>
+                <tr ><td >Get one</td><td >GET /items/:id</td><td >200</td><td >401, 403, 404</td></tr>
+                <tr ><td >Create</td><td >POST /items</td><td >201</td><td >400, 401, 409, 422</td></tr>
+                <tr ><td >Full update</td><td >PUT /items/:id</td><td >200</td><td >400, 401, 403, 404, 422</td></tr>
+                <tr ><td >Partial update</td><td >PATCH /items/:id</td><td >200</td><td >400, 401, 403, 404, 422</td></tr>
+                <tr><td >Delete</td><td >DELETE /items/:id</td><td >204</td><td >401, 403, 404</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            For a complete reference of all HTTP status codes, use our <a href="/http-status-codes/">HTTP Status Codes</a> tool to look up any code instantly.
+          </p>
+        
+
+        
+          <h2>Implementing Error Handling in Express.js</h2>
+          <p>
+            <code >`// Custom API error class
+class ApiError extends Error 
+  constructor(statusCode, code, message, details = null) 
+    super(message);
+    this.statusCode = statusCode;
+    this.code = code;
+    this.details = details;
+  
+
+// Validation middleware
+function validateUser(req, res, next) 
+  const errors = [];
+  if (!req.body.email) 
+    errors.push( field: 'email', message: 'Email is required' );
+  
+  if (req.body.email && !isValidEmail(req.body.email)) 
+    errors.push( field: 'email', message: 'Must be a valid email' );
+  
+  if (errors.length > 0) 
+    throw new ApiError(422, 'VALIDATION_ERROR', 'Validation failed', errors);
+  
+  next();
+
+// Global error handler (must be last middleware)
+app.use((err, req, res, next) => 
+  const statusCode = err.statusCode || 500;
+  const response = 
+    error: 
+      code: err.code || 'INTERNAL_ERROR',
+      message: statusCode === 500
+        ? 'An unexpected error occurred'
+        : err.message,
+      requestId: req.id,
+    ,
+  ;
+  if (err.details) response.error.fields = err.details;
+  if (statusCode === 500) console.error(err.stack);
+  res.status(statusCode).json(response);
+);`</code>
+          </pre>
+          <p >
+            Use a centralized error handler to ensure all errors are formatted consistently. Never let unhandled exceptions leak internal details like stack traces or database errors to the client. Validate request parameters early using regex patterns -- our <a href="/regex-tester/">Regex Tester</a> and <a href="/blog/regex-validation-patterns-email-url/">validation patterns guide</a> can help you build robust input validation.
+          </p>
+        
+
+        
+          <h2>API Response Best Practices Checklist</h2>
+          <ol>
+            <li><strong>Use the correct status code for every response</strong> -- Do not return <code >200</code> for errors. Use the specific 4xx/5xx code that matches the situation.</li>
+            <li><strong>Return consistent error formats</strong> -- Use RFC 7807 or a similar structured format across all endpoints. Include error code, message, and request ID.</li>
+            <li><strong>Include rate limit headers in every response</strong> -- Not just in <code >429</code> responses. Let clients track their usage proactively.</li>
+            <li><strong>Never expose internal details in production errors</strong> -- Stack traces, SQL queries, and file paths are security vulnerabilities. Log them server-side with a request ID instead.</li>
+            <li><strong>Use 201 for resource creation</strong> -- Include a <code >Location</code> header pointing to the new resource URI.</li>
+            <li><strong>Use 204 for operations with no response body</strong> -- DELETE and PUT/PATCH that do not return updated data.</li>
+            <li><strong>Implement idempotency for POST/PATCH</strong> -- Accept an <code >Idempotency-Key</code> header to prevent duplicate operations from network retries.</li>
+            <li><strong>Document every possible response code per endpoint</strong> -- Use OpenAPI/Swagger to document all success and error responses with example bodies.</li>
+            <li><strong>Version your API</strong> -- Use URL versioning (<code >/v1/</code>) or header versioning so you can evolve error formats without breaking existing clients.</li>
+            <li><strong>Test error paths as thoroughly as success paths</strong> -- Most API bugs live in error handling code. Write tests for every 4xx and 5xx scenario.</li>
+          </ol>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <h3>Should I return 200 with an error object or a proper 4xx/5xx status code?</h3>
+          <p>
+            Always use proper HTTP status codes. Returning 200 for errors (sometimes called "200 OK with error body") breaks HTTP semantics, confuses monitoring tools, prevents proper caching, and makes client-side error handling more complex. Use 4xx for client errors and 5xx for server errors, with a structured error body that provides additional context like error codes, messages, and documentation links.
+          </p>
+
+          <h3>When should I use 400 Bad Request vs 422 Unprocessable Entity?</h3>
+          <p>
+            Use <code >400</code> when the request is syntactically malformed -- invalid JSON, missing required headers, or wrong Content-Type. Use <code >422</code> when the request is syntactically correct but semantically invalid -- an email field that is not a valid email address, or a date range where the start is after the end. In practice, many APIs use 400 for both cases, which is acceptable.
+          </p>
+
+          <h3>How should I handle rate limiting in my API?</h3>
+          <p>
+            Return <code >429 Too Many Requests</code> when a client exceeds the rate limit. Include a <code >Retry-After</code> header indicating how many seconds to wait. Also include rate limit headers (<code >X-RateLimit-Limit</code>, <code >X-RateLimit-Remaining</code>, <code >X-RateLimit-Reset</code>) in every response so clients can proactively manage their request rate.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Look Up Any HTTP Status Code</h2>
+          <p>
+            Quickly find the meaning, use case, and best practices for any HTTP status code. Our free reference tool covers every code from 100 to 599 with developer-friendly explanations.
+          </p>
+          <a href="/http-status-codes/">
+            Open HTTP Status Codes Reference
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/http-status-codes-guide/">
+              <h3>HTTP Status Codes Guide</h3>
+              <p>Every HTTP status code explained with real-world context.</p>
+            </a>
+            <a href="/blog/jwt-vs-session-cookies-authentication/">
+              <h3>JWT vs Session Cookies</h3>
+              <p>Authentication methods compared for APIs and web apps.</p>
+            </a>
+            <a href="/blog/json-formatting-guide/">
+              <h3>JSON Formatting Guide</h3>
+              <p>Format, validate, and minify JSON API responses.</p>
+            </a>
+            <a href="/blog/regex-validation-patterns-email-url/">
+              <h3>Regex Validation Patterns</h3>
+              <p>Production-ready patterns for email, URL, phone validation.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/api-response-codes-best-practices/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
