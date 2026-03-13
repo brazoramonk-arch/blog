@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI Calculator: Check Your Body Mass Index Instantly - Calorique</title>
+  <meta name="description" content="Understand how to calculate your BMI, what the categories mean, and the limitations of Body Mass Index. Includes healthy ranges, waist circumference, and next steps.">
+  <link rel="canonical" href="https://www.calorique.io/blog/bmi-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/calorique/">Calorique</a> &rarr; BMI Calculator: Check Your Body Mass Index Instantly
+  </nav>
+
+  <article>
+    <h1>BMI Calculator: Check Your Body Mass Index Instantly</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.calorique.io/blog/bmi-calculator/">calorique.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'BMI Calculator: Check Your Body Mass Index Instantly',
+    description: 'Understand how to calculate your BMI, what the categories mean, and the limitations of Body Mass Index. Includes healthy ranges, waist circumference, and next steps.',
+    author:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    publisher:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    mainEntityOfPage: 'https://calorique.io/blog/bmi-calculator/',
+    datePublished: '2026-03-11',
+    dateModified: '2026-03-11',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://calorique.io/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://calorique.io/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'BMI Calculator Guide', item: 'https://calorique.io/blog/bmi-calculator/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'What is a healthy BMI?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The World Health Organization classifies a BMI of 18.5–24.9 as "Normal weight" for adults. A BMI below 18.5 is underweight, 25.0–29.9 is overweight, and 30.0 or above is obese. These thresholds apply to adults 18 and older regardless of age or sex, though their accuracy varies by ethnicity and body composition.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do I calculate my BMI?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'BMI = weight (kg) ÷ height² (m²). In imperial units: BMI = [weight (lb) ÷ height² (in²)] × 703. For example, a person weighing 70 kg at 1.75 m tall has a BMI of 70 ÷ (1.75 × 1.75) = 22.9. Use our free BMI calculator to get your result instantly.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is BMI accurate for athletes?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'No. BMI does not distinguish between fat mass and lean mass. Athletes with high muscle mass frequently fall into the "overweight" or even "obese" BMI categories despite having very low body fat percentages. For athletes, body fat percentage measurement (DEXA, skinfold calipers, or Navy method) is a far more meaningful metric.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does BMI differ by age or sex?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Standard adult BMI thresholds do not change with age or sex, but body fat percentage at a given BMI does. Older adults and women tend to carry more body fat at the same BMI compared to younger adults and men respectively. The CDC recommends using BMI as a screening tool only, not a diagnostic measure, and pairing it with waist circumference.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is a dangerous BMI level?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A BMI below 17.5 is associated with serious health risks including malnutrition, bone density loss, and immune suppression, and may indicate an eating disorder. A BMI of 40 or above is classified as Class III (severe) obesity and is associated with substantially elevated risk of type 2 diabetes, cardiovascular disease, sleep apnea, and several cancers.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What waist circumference is healthy?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The CDC recommends a waist circumference below 35 inches (88 cm) for women and below 40 inches (102 cm) for men to minimise visceral fat-related health risk. Waist circumference above these thresholds increases risk of metabolic syndrome, type 2 diabetes, and cardiovascular disease regardless of BMI category.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Can I have a normal BMI but still be unhealthy?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Yes. The concept of "normal weight obesity" — a normal BMI with excess body fat and low muscle mass — is well documented in research. A 2010 study in the European Heart Journal found that normal-weight individuals with high waist-to-height ratios had elevated cardiovascular risk comparable to those with overweight BMI. Fitness, muscle mass, waist size, and blood markers together give a much fuller health picture than BMI alone.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is BMI different for Asian populations?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Yes. Research has shown that people of Asian descent tend to carry more body fat and face higher metabolic risk at lower BMI values compared to people of European descent. The WHO recommends additional cut-off points for Asian populations: overweight at BMI ≥ 23 and obese at BMI ≥ 27.5, compared to the standard 25 and 30.',
+        ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          BMI Calculator Guide
+        
+
+        
+          
+            Body &amp; Weight
+            13 min read
+          
+          <h2>BMI Calculator: Check Your Body Mass Index Instantly</h2>
+          <p>
+            Body Mass Index is the most widely used screening tool for weight status worldwide — but it is frequently misunderstood and misapplied. This guide explains how BMI is calculated, what your number actually tells you, where it falls short, and what to do with the result.
+          </p>
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <p>Key Takeaways</p>
+            <ul>
+              <li>BMI = weight (kg) ÷ height² (m²). The WHO&apos;s normal range is 18.5–24.9 for adults.</li>
+              <li>BMI is a population-level screening tool — not a diagnostic measure of individual health.</li>
+              <li>Athletes and highly muscular individuals commonly register as &quot;overweight&quot; despite low body fat.</li>
+              <li>Waist circumference adds critical information about visceral fat that BMI cannot capture.</li>
+              <li>Asian populations face elevated metabolic risk at lower BMI values; adjusted thresholds apply.</li>
+              <li>A normal BMI does not guarantee good health; body composition, fitness, and metabolic markers matter equally.</li>
+            </ul>
+          
+
+          <h2>What Is BMI and Where Did It Come From?</h2>
+          <p>
+            Body Mass Index was developed by Belgian statistician Adolphe Quetelet in the 1830s as a tool to describe the average body proportions of the general population — not to assess individual health. The formula, originally called the Quetelet Index, was popularised for clinical and public health use by physiologist Ancel Keys in 1972, who coined the term &quot;Body Mass Index&quot; in a landmark paper in the <em>Journal of Chronic Diseases</em>.
+          </p>
+          <p>
+            Today, BMI is used by the World Health Organization, the CDC, and virtually every national health authority as a first-line screening metric for weight-related health risk. Its appeal is its simplicity: it requires only a scale and a measuring tape. Its limitation is exactly the same: it ignores body composition, fat distribution, muscle mass, bone density, age, sex, and ethnicity.
+          </p>
+          <p>
+            Understanding both the utility and the limitations of your BMI result allows you to use it as one piece of evidence — alongside body fat percentage, waist circumference, and metabolic blood markers — rather than as a definitive verdict on your health. Use our <a href="/bmi-calculator/">BMI calculator</a> to find your number instantly, then read on to interpret it correctly.
+          </p>
+
+          <h2>How to Calculate BMI: The Formula</h2>
+          <p>
+            The BMI formula is straightforward and identical for adults of all ages and sexes:
+          </p>
+          
+            <p>BMI Formula</p>
+            <p><strong>Metric:</strong> BMI = weight (kg) ÷ height² (m²)</p>
+            <p><strong>Imperial:</strong> BMI = [weight (lb) ÷ height² (inches²)] × 703</p>
+            <p>Source: World Health Organization. <em>BMI Classification.</em> Global Database on Body Mass Index. Geneva: WHO, 2006.</p>
+          
+          <p>
+            <strong>Worked example (metric).</strong> A person weighing 80 kg at 1.78 m tall: BMI = 80 ÷ (1.78 × 1.78) = 80 ÷ 3.1684 = <strong>25.2</strong> (overweight category).
+          </p>
+          <p>
+            <strong>Worked example (imperial).</strong> A person weighing 175 lb at 5&apos;9&quot; (69 inches): BMI = [175 ÷ (69 × 69)] × 703 = [175 ÷ 4,761] × 703 = 0.03676 × 703 = <strong>25.8</strong> (overweight category).
+          </p>
+
+          <h2>BMI Categories: WHO Classification for Adults</h2>
+          <p>
+            The World Health Organization&apos;s standard adult BMI classification (applicable to ages 18 and above) defines the following categories. These thresholds are identical regardless of age or sex for standard adult classification:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >BMI Range</th>
+                  <th >Category</th>
+                  <th >Health Risk</th>
+                  <th >Example (5&apos;7&quot; / 170 cm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >Below 16.0</td>
+                  <td >Severely underweight</td>
+                  <td >Very high</td>
+                  <td >Below 97 lb / 44 kg</td>
+                </tr>
+                <tr >
+                  <td >16.0–17.9</td>
+                  <td >Moderately underweight</td>
+                  <td >High</td>
+                  <td >97–109 lb / 44–49 kg</td>
+                </tr>
+                <tr>
+                  <td >18.0–18.4</td>
+                  <td >Mildly underweight</td>
+                  <td >Moderate</td>
+                  <td >109–112 lb / 49–51 kg</td>
+                </tr>
+                <tr >
+                  <td >18.5–24.9</td>
+                  <td >Normal weight</td>
+                  <td >Low (reference)</td>
+                  <td >112–150 lb / 51–68 kg</td>
+                </tr>
+                <tr>
+                  <td >25.0–29.9</td>
+                  <td >Overweight</td>
+                  <td >Mildly increased</td>
+                  <td >150–180 lb / 68–82 kg</td>
+                </tr>
+                <tr >
+                  <td >30.0–34.9</td>
+                  <td >Obese — Class I</td>
+                  <td >Moderate</td>
+                  <td >180–210 lb / 82–95 kg</td>
+                </tr>
+                <tr>
+                  <td >35.0–39.9</td>
+                  <td >Obese — Class II</td>
+                  <td >Severe</td>
+                  <td >210–241 lb / 95–109 kg</td>
+                </tr>
+                <tr >
+                  <td >40.0 and above</td>
+                  <td >Obese — Class III</td>
+                  <td >Very severe</td>
+                  <td >Above 241 lb / 109 kg</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            For a deeper look at what these ranges mean in practice, our <a href="/blog/bmi-chart-explained/">BMI chart explained</a> article covers the epidemiological evidence behind each threshold and common misconceptions.
+          </p>
+
+          <h2>BMI and Health Risk: What the Research Shows</h2>
+          <p>
+            At the population level, BMI is a strong predictor of several chronic diseases. A systematic review published in <em>The Lancet</em> (2016), which pooled data from 239 studies covering over 10 million adults, found that both underweight (BMI &lt; 18.5) and obesity (BMI ≥ 30) were associated with significantly higher all-cause mortality compared to the normal-weight range. The relationship follows a J-shaped curve, with the lowest mortality risk observed at BMI 20–25.
+          </p>
+          <p>
+            Conditions strongly associated with elevated BMI include type 2 diabetes (risk increases ~7-fold at BMI 30–35 versus normal weight), cardiovascular disease, hypertension, obstructive sleep apnea, non-alcoholic fatty liver disease, osteoarthritis of weight-bearing joints, and several cancers (endometrial, colorectal, breast, kidney, and oesophageal). The CDC estimates that obesity-related conditions cost the US healthcare system over $170 billion annually.
+          </p>
+          <p>
+            Underweight BMI carries its own risks: bone density loss, immune suppression, anemia, hormonal disruption (including loss of menstrual function in women), and — at BMI below 17.5 — potential indicators of eating disorders requiring clinical evaluation.
+          </p>
+
+          <h2>The Six Major Limitations of BMI</h2>
+
+          <p>
+            <strong>1. BMI cannot distinguish fat from muscle.</strong> This is the most cited limitation. A 200 lb person who is 15% body fat and a 200 lb person who is 35% body fat will have the exact same BMI despite dramatically different health profiles. Athletes — NFL linemen, powerlifters, sprinters — frequently appear in the &quot;obese&quot; BMI category by this formula alone.
+          </p>
+          <p>
+            <strong>2. BMI ignores fat distribution.</strong> Visceral fat — the deep abdominal fat surrounding organs — is metabolically far more dangerous than subcutaneous fat stored under the skin. Two people can have identical BMIs with one carrying fat primarily in the hips (lower risk) and the other carrying it in the abdomen (higher risk). Waist circumference or waist-to-height ratio captures this distinction; BMI does not.
+          </p>
+          <p>
+            <strong>3. BMI is less accurate for older adults.</strong> Aging is associated with muscle loss (sarcopenia) and bone density decline, meaning older adults can carry proportionally more body fat at a given BMI than younger adults. A 70-year-old with a BMI of 22 may have a higher body fat percentage than a 30-year-old at the same BMI. For more context, see our <a href="/blog/body-fat-percentage-chart-by-age-gender/">body fat percentage chart by age and gender</a>.
+          </p>
+          <p>
+            <strong>4. BMI varies in accuracy by ethnicity.</strong> Multiple large studies have found that people of Asian descent carry more body fat and face greater metabolic risk at a given BMI compared to people of European descent. The WHO has recommended lower BMI thresholds for Asian populations: overweight at ≥ 23 and obese at ≥ 27.5, compared to the standard 25 and 30.
+          </p>
+          <p>
+            <strong>5. BMI does not account for sex differences.</strong> At any given BMI, women typically have 10–12% more body fat than men due to essential fat stores required for hormonal function and reproduction. Standard BMI thresholds do not adjust for this difference.
+          </p>
+          <p>
+            <strong>6. BMI is not designed for children or adolescents.</strong> For those under 20, the CDC uses BMI-for-age percentiles rather than absolute cutoffs, because healthy BMI changes substantially as children develop. Learn about body fat measurement methods in our <a href="/blog/how-to-calculate-body-fat/">body fat calculation guide</a>.
+          </p>
+
+          <h2>Beyond BMI: Better Measures of Body Composition</h2>
+          <p>
+            Because of BMI&apos;s limitations, clinicians and fitness professionals routinely use complementary measurements to build a fuller picture of body composition and health risk.
+          </p>
+          <p>
+            <strong>Waist circumference</strong> directly measures central adiposity — the abdominal fat most strongly linked to metabolic disease. The CDC recommends women maintain a waist circumference below 35 inches (88 cm) and men below 40 inches (102 cm). Waist circumference can be elevated even in a &quot;normal&quot; BMI individual — this pattern, called normal-weight central obesity, carries cardiovascular risk equivalent to overtly overweight BMI.
+          </p>
+          <p>
+            <strong>Waist-to-height ratio (WHtR)</strong> adjusts waist circumference for height and performs similarly to or better than BMI in predicting cardiometabolic risk. A WHtR below 0.5 (i.e., your waist circumference is less than half your height) is the commonly cited target for reduced metabolic risk.
+          </p>
+          <p>
+            <strong>Body fat percentage</strong> directly quantifies what BMI tries to infer. Methods range from DEXA scanning (gold standard, ~2% error) to hydrostatic weighing, air displacement plethysmography (Bod Pod), skinfold calipers, bioelectrical impedance (BIA), and the Navy tape method. Each has different accuracy, cost, and accessibility trade-offs.
+          </p>
+          <p>
+            <strong>Blood metabolic markers</strong> — fasting glucose, HbA1c, fasting insulin, lipid panel (LDL, HDL, triglycerides), and blood pressure — provide direct evidence of metabolic health that BMI cannot. A person with a &quot;normal&quot; BMI but elevated fasting glucose, high triglycerides, and low HDL may be at greater cardiometabolic risk than someone with a BMI of 27 who has optimal blood markers.
+          </p>
+
+          <h2>BMI and Ethnicity: Adjusted Thresholds</h2>
+          <p>
+            The standard WHO BMI classifications were derived primarily from studies of European populations. Subsequent research, particularly from Asia and South Asia, has consistently shown that metabolic complications (insulin resistance, type 2 diabetes, hypertension) occur at significantly lower BMI values in Asian populations.
+          </p>
+          <p>
+            A comprehensive WHO expert consultation in 2004 concluded there was sufficient evidence to recommend additional cut-off points for Asian populations: a BMI of 23.0–27.4 as &quot;increased risk&quot; and 27.5 and above as &quot;high risk&quot; — lower than the standard 25.0 and 30.0 thresholds. Several Asian countries (including China, Japan, Singapore, and India) have adopted these adjusted guidelines for national health screening programmes.
+          </p>
+          <p>
+            Conversely, research suggests Pacific Islander populations may face lower cardiometabolic risk at BMI values above 25 compared to Europeans, highlighting that BMI thresholds need population-specific calibration.
+          </p>
+
+          <h2>What to Do With Your BMI Result</h2>
+
+          <h3>If Your BMI Is in the Normal Range (18.5–24.9)</h3>
+          <p>
+            A normal BMI is a positive indicator but not a health guarantee. Assess your waist circumference, physical fitness, strength, and blood markers. Maintain your weight through a balanced diet with adequate protein (0.6–0.8 g per lb body weight for general health), regular physical activity meeting the ACSM&apos;s recommendation of 150 min/week of moderate aerobic activity plus 2 days of strength training, and consistent sleep.
+          </p>
+
+          <h3>If Your BMI Is Overweight (25.0–29.9)</h3>
+          <p>
+            Overweight BMI alone does not indicate poor health, particularly if your waist circumference is within range, your blood markers are healthy, and you exercise regularly. However, if combined with elevated waist circumference or abnormal metabolic markers, a modest weight loss of 5–10% of body weight has been shown in multiple trials to significantly reduce blood pressure, improve insulin sensitivity, and lower triglycerides.
+          </p>
+          <p>
+            A calorie deficit of 300–500 calories below TDEE is the evidence-backed starting point. Our <a href="/blog/calorie-deficit-guide/">calorie deficit guide</a> covers exactly how to set this up. Use our <a href="/calorie-calculator/">calorie calculator</a> to get your personalised daily target.
+          </p>
+
+          <h3>If Your BMI Is Obese (30.0+)</h3>
+          <p>
+            A BMI in the obese range warrants clinical evaluation and a structured, evidence-based weight management plan. Consult your physician or a registered dietitian before making significant dietary changes. Initial goals typically focus on lifestyle modifications: dietary changes to achieve a moderate energy deficit, increased physical activity (starting with low-impact options such as walking or swimming), and sleep optimisation.
+          </p>
+          <p>
+            Metabolic and bariatric surgery is considered for adults with BMI ≥ 40 (or ≥ 35 with obesity-related comorbidities) who have not achieved sufficient results with behavioural interventions. GLP-1 receptor agonist medications (such as semaglutide) have shown clinically significant weight loss in recent large trials and are increasingly part of physician-supervised weight management programmes.
+          </p>
+
+          <h3>If Your BMI Is Underweight (Below 18.5)</h3>
+          <p>
+            Underweight BMI should be evaluated by a healthcare provider to identify the cause: inadequate nutrition, high metabolic rate, malabsorptive conditions, thyroid overactivity, or psychological factors. A structured plan to increase calorie intake — with a focus on nutrient-dense whole foods and adequate protein — combined with progressive resistance training can help achieve a healthy weight and rebuild lean mass. Understanding your metabolism is the first step — our <a href="/blog/understanding-metabolism/">metabolism guide</a> explains what drives calorie expenditure.
+          </p>
+
+          <h2>Exercise Prescription Based on Your BMI Category</h2>
+          <p>
+            Regardless of your BMI, the ACSM and CDC recommend a combination of aerobic and resistance training. The specific approach should be tailored to your current fitness level, joint health, and goals.
+          </p>
+          
+            <p>Evidence-Based Exercise Template by BMI Category</p>
+            
+              
+                <p>Normal BMI — Maintenance &amp; Performance</p>
+                <ul>
+                  <li>Cardio: 150–300 min/week moderate intensity (Zone 2) or 75–150 min vigorous</li>
+                  <li>Strength: 3–4× per week — compound lifts (squat, deadlift, bench, row, press)</li>
+                  <li>Each session: 3–4 sets × 6–12 reps, progressive overload weekly</li>
+                  <li>Daily steps: 8,000–10,000</li>
+                </ul>
+              
+              
+                <p>Overweight BMI — Fat Loss Focus</p>
+                <ul>
+                  <li>Cardio: 200–300 min/week moderate intensity (brisk walking, cycling, swimming)</li>
+                  <li>Strength: 3× per week — full-body circuits, 3 sets × 10–15 reps</li>
+                  <li>Sample circuit: Goblet Squat × 12, Push-Up × 10, Dumbbell Row × 12 each, Hip Bridge × 15 — repeat 3×</li>
+                  <li>Daily steps: 10,000 minimum</li>
+                </ul>
+              
+              
+                <p>Obese BMI — Low-Impact Entry Point</p>
+                <ul>
+                  <li>Start: 20–30 min daily walking, progressing by 5 min each week</li>
+                  <li>Strength: 2–3× per week — seated or supported exercises (leg press, seated row, chest press machine)</li>
+                  <li>Each session: 2–3 sets × 12–15 reps, focus on form over load</li>
+                  <li>Progress to standing compound movements as fitness improves</li>
+                </ul>
+              
+            
+          
+
+          <h2>Nutrition Support for Your BMI Goal</h2>
+          <p>
+            Regardless of your BMI category, prioritising protein is the single most effective nutritional strategy. High protein intake (0.7–1 g per lb body weight) supports muscle preservation during fat loss, muscle building during a bulk, and — in underweight individuals — tissue repair and weight restoration. Our <a href="/blog/protein-intake-guide/">protein intake guide</a> provides detailed targets by body weight and goal.
+          </p>
+          <p>
+            For those working to reduce BMI: structure meals around lean protein (chicken, fish, eggs, Greek yogurt, legumes), fibre-rich vegetables (for volume and satiety per calorie), and complex carbohydrates (oats, brown rice, sweet potato) timed around physical activity. Limit ultra-processed foods — research consistently shows they promote overconsumption beyond simple calorie density, partly through effects on satiety signalling and reward pathways in the brain (Hall et al., 2019, <em>Cell Metabolism</em>).
+          </p>
+          <p>
+            Knowing your total calorie needs is essential before setting up a dietary plan. Use our <a href="/calorie-calculator/">free calorie calculator</a> to determine your TDEE, then apply the appropriate deficit or surplus based on your BMI-informed goals. Women over 40 should also consult our <a href="/blog/safe-calorie-deficit-for-women-over-40/">guide to safe calorie deficits for women over 40</a>, as hormonal changes meaningfully affect calorie needs and fat distribution.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>What is a healthy BMI?</h3>
+              <p>The WHO classifies a BMI of 18.5–24.9 as &quot;Normal weight&quot; for adults. Below 18.5 is underweight, 25.0–29.9 is overweight, and 30.0 or above is obese. These thresholds apply to adults 18 and older, though accuracy varies by ethnicity and body composition.</p>
+            
+            
+              <h3>How do I calculate my BMI?</h3>
+              <p>BMI = weight (kg) ÷ height² (m²). In imperial units: BMI = [weight (lb) ÷ height² (in²)] × 703. For example, a person weighing 70 kg at 1.75 m tall has a BMI of 70 ÷ (1.75 × 1.75) = 22.9. Use our free BMI calculator to get your result instantly.</p>
+            
+            
+              <h3>Is BMI accurate for athletes?</h3>
+              <p>No. BMI does not distinguish between fat mass and lean mass. Athletes with high muscle mass frequently fall into the &quot;overweight&quot; or &quot;obese&quot; categories despite very low body fat. For athletes, body fat percentage measurement (DEXA, skinfold calipers, or Navy method) is a far more meaningful metric.</p>
+            
+            
+              <h3>Does BMI differ by age or sex?</h3>
+              <p>Standard adult BMI thresholds don&apos;t change with age or sex, but body fat percentage at a given BMI does. Older adults and women tend to carry more body fat at the same BMI. The CDC recommends using BMI as a screening tool only, paired with waist circumference.</p>
+            
+            
+              <h3>What is a dangerous BMI level?</h3>
+              <p>A BMI below 17.5 is associated with serious health risks including malnutrition, bone density loss, and immune suppression. A BMI of 40 or above is Class III (severe) obesity, associated with substantially elevated risk of type 2 diabetes, cardiovascular disease, sleep apnea, and several cancers.</p>
+            
+            
+              <h3>What waist circumference is healthy?</h3>
+              <p>The CDC recommends a waist circumference below 35 inches (88 cm) for women and below 40 inches (102 cm) for men to minimise visceral fat-related health risk. Waist circumference above these thresholds increases risk of metabolic syndrome regardless of BMI category.</p>
+            
+            
+              <h3>Can I have a normal BMI but still be unhealthy?</h3>
+              <p>Yes. &quot;Normal weight obesity&quot; — normal BMI with excess body fat and low muscle mass — is well documented. A 2010 study in the <em>European Heart Journal</em> found normal-weight individuals with high waist-to-height ratios had elevated cardiovascular risk comparable to those with overweight BMI.</p>
+            
+            
+              <h3>Is BMI different for Asian populations?</h3>
+              <p>Yes. Research shows people of Asian descent tend to carry more body fat and face higher metabolic risk at lower BMI values. The WHO recommends adjusted cut-off points: overweight at BMI ≥ 23 and obese at BMI ≥ 27.5 for Asian populations, compared to the standard 25 and 30.</p>
+            
+          
+
+          /* CTA */
+          
+            <h2>Check Your BMI Instantly</h2>
+            <p>Use our free BMI calculator to find your body mass index and see what it means for your health — with personalised next steps.</p>
+            
+              <a href="/bmi-calculator/">
+                BMI Calculator
+              </a>
+              <a href="/calorie-calculator/">
+                Calorie Calculator
+              </a>
+            
+          
+
+          
+            <h2>Explore More Tools</h2>
+            
+              <a href="https://salario.io/cost-of-living/" target="_blank" rel="noopener" >
+                Salario
+                <h3>Cost of Living Calculator</h3>
+                <p>Compare grocery and food costs across cities to plan your healthy eating budget.</p>
+              </a>
+            
+          
+
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/bmi-chart-explained/">
+              <h3>BMI Chart Explained</h3>
+              <p>Decode BMI ranges and understand what your number really means.</p>
+            </a>
+            <a href="/blog/body-fat-percentage-chart-by-age-gender/">
+              <h3>Body Fat Percentage Chart</h3>
+              <p>Healthy body fat ranges by age and gender — a better metric than BMI.</p>
+            </a>
+            <a href="/blog/calorie-deficit-guide/">
+              <h3>Calorie Deficit Guide</h3>
+              <p>How to safely create a calorie deficit to reduce your BMI.</p>
+            </a>
+            <a href="/blog/how-to-calculate-body-fat/">
+              <h3>How to Calculate Body Fat</h3>
+              <p>Five methods for measuring body fat percentage compared.</p>
+            </a>
+          
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.calorique.io/blog/bmi-calculator/">Calorique</a>.
+      Explore more free tools at <a href="https://www.calorique.io/">calorique.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.calorique.io/">Calorique</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
