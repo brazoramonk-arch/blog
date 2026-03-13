@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Encoding Guide: When &amp;amp; Why to Encode URLs - BytePane</title>
+  <meta name="description" content="Learn how URL encoding (percent-encoding) works, which characters need encoding, and how to avoid common pitfalls.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/url-encoding-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; URL Encoding Guide: When &amp;amp; Why to Encode URLs
+  </nav>
+
+  <article>
+    <h1>URL Encoding Guide: When &amp;amp; Why to Encode URLs</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/url-encoding-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'URL Encoding Guide: When & Why to Encode URLs',
+            description: 'Learn how URL encoding (percent-encoding) works, which characters need encoding, and how to avoid common pitfalls.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/url-encoding-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/url-encoding-guide/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'URL Encoding Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What is the difference between encodeURI and encodeURIComponent?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'encodeURI encodes a full URI but preserves characters like :, /, ?, #, and & that have structural meaning in URLs. encodeURIComponent encodes everything except unreserved characters (letters, digits, -, _, ., ~), making it the correct choice for encoding individual query parameter values, path segments, or fragment identifiers.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Why do spaces become %20 or + in URLs?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Spaces are not allowed in URLs per RFC 3986. In percent-encoding, a space becomes %20. However, the application/x-www-form-urlencoded format (used in HTML form submissions) encodes spaces as + instead. Both represent a space, but %20 is the standard for URL paths while + is specific to form data in query strings.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Which characters need to be URL encoded?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'All characters outside the unreserved set (A-Z, a-z, 0-9, -, _, ., ~) should be percent-encoded when used as data in URLs. Reserved characters like :, /, ?, #, [, ], @, !, $, &, \', (, ), *, +, ,, ;, and = must be encoded when they appear inside a query parameter value or path segment rather than serving their structural purpose.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        URL Encoding Guide
+      
+
+      /* Article Header */
+      
+        <h2>
+          URL Encoding Guide: When &amp; Why to Encode URLs
+        </h2>
+        
+          Encoding
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          13 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>What Is URL Encoding and Why Does It Exist?</h2>
+          <p>
+            URL encoding, formally called percent-encoding, is the mechanism defined by RFC 3986 for representing arbitrary data inside the components of a Uniform Resource Identifier. URLs can only contain a limited set of ASCII characters. When you need to include characters outside that safe set -- spaces, Unicode letters, ampersands, question marks used as literal data rather than delimiters -- they must be converted to a percent-encoded representation.
+          </p>
+          <p>
+            The encoding works by replacing each unsafe byte with a percent sign (<code >%</code>) followed by two hexadecimal digits representing the byte value. For example, a space (ASCII 32, hex 20) becomes <code >%20</code>, and an ampersand (ASCII 38, hex 26) becomes <code >%26</code>.
+          </p>
+          <p>
+            Without URL encoding, a query string like <code >?search=rock & roll</code> would be ambiguous. Is the <code >&</code> a parameter separator or part of the search term? Percent-encoding removes all ambiguity: <code >?search=rock%20%26%20roll</code>. If you need to encode or decode a URL right now, try our <a href="/url-encode-decode/">URL Encode/Decode</a> tool -- it runs entirely in your browser.
+          </p>
+        
+
+        
+          <h2>The Anatomy of a URL</h2>
+          <p>
+            Before diving into encoding rules, it helps to understand the structure of a URL. Each component has different encoding requirements because different characters serve as delimiters in different parts.
+          </p>
+          <p>
+            <code >`  scheme://authority/path?query#fragment
+
+  https://api.example.com:8080/users/john%20doe?role=admin&active=true#section-2
+  ├─────┤ ├──────────────────┤├──────────────┤├──────────────────────┤├────────┤
+  scheme        authority           path              query            fragment`</code>
+          </pre>
+          <p >
+            The <strong>path</strong> uses <code >/</code> as a segment separator, so slashes must not be encoded in the path (but must be encoded inside a path segment if they are literal data). The <strong>query</strong> uses <code >&</code> and <code >=</code> as delimiters, so those characters must be encoded when they appear as data within parameter values. The <strong>fragment</strong> uses <code >#</code> as its prefix, so hash signs must be encoded everywhere else.
+          </p>
+        
+
+        
+          <h2>Reserved vs Unreserved Characters</h2>
+          <p>
+            RFC 3986 divides characters into two categories. Understanding this distinction is fundamental to knowing when encoding is required.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Category</th>
+                  <th >Characters</th>
+                  <th >Encoding Rule</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Unreserved</td>
+                  <td >A-Z a-z 0-9 - _ . ~</td>
+                  <td >Never encode these</td>
+                </tr>
+                <tr >
+                  <td >Reserved (gen-delims)</td>
+                  <td >': / ? # [ ] @'</td>
+                  <td >Encode when used as data, not as delimiters</td>
+                </tr>
+                <tr>
+                  <td >Reserved (sub-delims)</td>
+                  <td >"! $ & ' ( ) * + , ; ="</td>
+                  <td >Encode when used as data, not as delimiters</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Everything else -- spaces, Unicode characters, control characters, and any byte outside the ASCII printable range -- must always be percent-encoded. For multi-byte UTF-8 characters, each byte is encoded separately. For example, the euro sign (U+20AC) is encoded as <code >%E2%82%AC</code> (three bytes in UTF-8).
+          </p>
+        
+
+        
+          <h2>Common Percent-Encoded Characters Reference</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Character</th>
+                  <th >Encoded</th>
+                  <th >Common Use Case</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Space</td><td >%20 or +</td><td >Search queries, file names</td></tr>
+                <tr ><td >&amp;</td><td >%26</td><td >Value containing ampersand</td></tr>
+                <tr ><td >=</td><td >%3D</td><td >Value containing equals sign</td></tr>
+                <tr ><td >?</td><td >%3F</td><td >Question mark in path/value</td></tr>
+                <tr ><td >#</td><td >%23</td><td >Hash in query parameters</td></tr>
+                <tr ><td >/</td><td >%2F</td><td >Slash inside a path segment</td></tr>
+                <tr ><td >@</td><td >%40</td><td >Email addresses in URLs</td></tr>
+                <tr ><td >+</td><td >%2B</td><td >Plus sign in query values</td></tr>
+                <tr><td >%</td><td >%25</td><td >Literal percent sign</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Bookmark our <a href="/url-encode-decode/">URL Encode/Decode</a> for quick lookups. Paste any string and see the encoded output instantly.
+          </p>
+        
+
+        
+          <h2>JavaScript: encodeURI vs encodeURIComponent</h2>
+          <p>
+            JavaScript provides two built-in functions for URL encoding, and using the wrong one is one of the most common bugs in web development. Understanding the difference is essential for building correct URLs programmatically.
+          </p>
+
+          <h3>encodeURIComponent (Use This for Values)</h3>
+          <p>
+            This function encodes everything except unreserved characters. Use it when encoding individual components such as query parameter values, path segments, or fragment identifiers.
+          </p>
+          <p>
+            <code >`// Encoding a query parameter value
+const searchTerm = 'rock & roll';
+const url = \`https://api.example.com/search?q=\$encodeURIComponent(searchTerm)\`;
+// Result: https://api.example.com/search?q=rock%20%26%20roll
+
+// Encoding a path segment
+const fileName = 'my report (final).pdf';
+const downloadUrl = \`/files/\$encodeURIComponent(fileName)\`;
+// Result: /files/my%20report%20(final).pdf
+
+// Encoding a value that contains special URL characters
+const callback = 'https://mysite.com/callback?token=abc';
+const redirect = \`/login?redirect=\$encodeURIComponent(callback)\`;
+// Result: /login?redirect=https%3A%2F%2Fmysite.com%2Fcallback%3Ftoken%3Dabc`</code>
+          </pre>
+
+          <h3>encodeURI (Use This for Full URIs)</h3>
+          <p >
+            This function preserves characters that have structural meaning in a complete URI (<code >: / ? # & =</code>). Use it only when encoding an entire URI that already has the correct structure but may contain unsafe characters in its components.
+          </p>
+          <p>
+            <code >`// Encoding a full URI with spaces
+const uri = 'https://example.com/my path/file name.html';
+const encoded = encodeURI(uri);
+// Result: https://example.com/my%20path/file%20name.html
+// Note: slashes and colons are preserved
+
+// WRONG: Using encodeURIComponent on a full URL
+const broken = encodeURIComponent(uri);
+// Result: https%3A%2F%2Fexample.com%2Fmy%20path%2Ffile%20name.html
+// This is NOT a valid URL anymore!`</code>
+          </pre>
+
+          <h3>Decoding Functions</h3>
+          <pre >
+            <code >`// Decode a component
+decodeURIComponent('rock%20%26%20roll'); // 'rock & roll'
+
+// Decode a full URI
+decodeURI('https://example.com/my%20path/'); // 'https://example.com/my path/'
+
+// Handle double-encoded strings (common bug)
+const doubleEncoded = 'rock%2520%2526%2520roll';
+decodeURIComponent(doubleEncoded);                    // 'rock%20%26%20roll'
+decodeURIComponent(decodeURIComponent(doubleEncoded)); // 'rock & roll'`</code>
+          </pre>
+        
+
+        
+          <h2>URL Encoding in Other Languages</h2>
+
+          <h3>Python</h3>
+          <pre >
+            <code >`from urllib.parse import quote, quote_plus, unquote, urlencode
+
+# Encode a path segment (spaces become %20)
+quote('rock & roll')           # 'rock%20%26%20roll'
+
+# Encode for form data (spaces become +)
+quote_plus('rock & roll')      # 'rock+%26+roll'
+
+# Build a complete query string
+params = 'q': 'rock & roll', 'page': '1'
+urlencode(params)              # 'q=rock+%26+roll&page=1'
+
+# Decode
+unquote('rock%20%26%20roll')   # 'rock & roll'`</code>
+          </pre>
+
+          <h3>Go</h3>
+          <pre >
+            <code >`import "net/url"
+
+// Encode a query parameter
+encoded := url.QueryEscape("rock & roll")  // "rock+%26+roll"
+
+// Encode a path segment
+pathEncoded := url.PathEscape("rock & roll")  // "rock%20&%20roll"
+
+// Build a URL with query parameters
+params := url.Values
+params.Set("q", "rock & roll")
+params.Set("page", "1")
+queryString := params.Encode()  // "page=1&q=rock+%26+roll"`</code>
+          </pre>
+
+          <h3>PHP</h3>
+          <pre >
+            <code >`// Encode for query strings (spaces become +)
+urlencode('rock & roll');        // "rock+%26+roll"
+
+// Encode per RFC 3986 (spaces become %20)
+rawurlencode('rock & roll');     // "rock%20%26%20roll"
+
+// Build query string from array
+http_build_query(['q' => 'rock & roll', 'page' => 1]);
+// "q=rock+%26+roll&page=1"`</code>
+          </pre>
+        
+
+        
+          <h2>Spaces: %20 vs + (The Eternal Confusion)</h2>
+          <p >
+            One of the most confusing aspects of URL encoding is that spaces can be represented as either <code >%20</code> or <code >+</code>. The difference comes from two different standards.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Standard</th>
+                  <th >Space Encoding</th>
+                  <th >Used In</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >RFC 3986 (percent-encoding)</td>
+                  <td >%20</td>
+                  <td >URL paths, fragments, general URIs</td>
+                </tr>
+                <tr>
+                  <td >application/x-www-form-urlencoded</td>
+                  <td >+</td>
+                  <td >HTML form submissions, query strings</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            In practice, most web servers and frameworks accept both <code >%20</code> and <code >+</code> in query strings. However, in URL paths, only <code >%20</code> is correct -- a literal <code >+</code> in a path is interpreted as a plus sign, not a space. This distinction has caused countless bugs in REST APIs.
+          </p>
+        
+
+        
+          <h2>Common URL Encoding Pitfalls</h2>
+
+          <h3>1. Double Encoding</h3>
+          <p>
+            The most common bug is encoding a string that has already been encoded. This turns <code >%20</code> into <code >%2520</code> (the percent sign gets encoded again). Always check whether your input has already been encoded before applying encoding functions.
+          </p>
+          <p>
+            <code >`// BUG: Double encoding
+const alreadyEncoded = 'hello%20world';
+encodeURIComponent(alreadyEncoded);
+// 'hello%2520world' -- WRONG! The % got encoded to %25
+
+// FIX: Decode first, then re-encode if needed
+encodeURIComponent(decodeURIComponent(alreadyEncoded));
+// 'hello%20world' -- Correct`</code>
+          </pre>
+
+          <h3>2. Encoding the Entire URL Instead of Components</h3>
+          <pre >
+            <code >`// WRONG: Encoding the full URL with encodeURIComponent
+const url = 'https://api.example.com/search?q=hello world';
+encodeURIComponent(url);
+// 'https%3A%2F%2Fapi.example.com%2Fsearch%3Fq%3Dhello%20world'
+// This is NOT a valid URL!
+
+// CORRECT: Only encode the parameter value
+const baseUrl = 'https://api.example.com/search';
+const query = 'hello world';
+\`\$baseUrl?q=\$encodeURIComponent(query)\`;
+// 'https://api.example.com/search?q=hello%20world'`</code>
+          </pre>
+
+          <h3>3. Forgetting to Encode Hash and Ampersand</h3>
+          <p >
+            If a parameter value contains <code >#</code> or <code >&</code>, failure to encode truncates the URL. The browser interprets <code >#</code> as a fragment start and <code >&</code> as a parameter separator, silently dropping the rest of your value.
+          </p>
+
+          <h3>4. Not Encoding Unicode Characters</h3>
+          <p>
+            <code >`// Unicode characters MUST be encoded
+const city = 'Sao Paulo';
+encodeURIComponent(city);      // 'Sao%20Paulo'
+
+const japanese = 'Tokyo';
+encodeURIComponent(japanese);  // 'Tokyo' (ASCII, no encoding needed)
+
+const kanji = '\u6771\u4EAC';
+encodeURIComponent(kanji);     // '%E6%9D%B1%E4%BA%AC'`</code>
+          </pre>
+        
+
+        
+          <h2>URL Encoding for REST APIs</h2>
+          <p >
+            When building REST APIs, URL encoding is critical for constructing correct requests. Different parts of the URL have different encoding requirements. Here is how encoding interacts with common API patterns.
+          </p>
+          <p>
+            <code >`// Building API URLs with the URL constructor (recommended)
+const url = new URL('https://api.example.com/v2/users');
+
+// Query parameters are automatically encoded
+url.searchParams.set('name', 'John & Jane');
+url.searchParams.set('role', 'admin/manager');
+url.searchParams.set('q', 'status=active');
+
+console.log(url.toString());
+// https://api.example.com/v2/users?name=John+%26+Jane&role=admin%2Fmanager&q=status%3Dactive
+
+// Path segments need manual encoding
+const userId = 'user@example.com';
+const apiUrl = \`https://api.example.com/v2/users/\$encodeURIComponent(userId)/profile\`;
+// https://api.example.com/v2/users/user%40example.com/profile`</code>
+          </pre>
+          <p >
+            The <code >URL</code> constructor and <code >URLSearchParams</code> API handle query parameter encoding automatically, making them the safest approach for building URLs in JavaScript. For more on REST API conventions, see our guide on <a href="/blog/api-response-codes-best-practices/">API Response Codes Best Practices</a>, and test your API status codes with our <a href="/http-status-codes/">HTTP Status Codes</a> reference tool.
+          </p>
+        
+
+        
+          <h2>URL Encoding and Base64: When to Use Each</h2>
+          <p>
+            Developers sometimes confuse URL encoding with <a href="/blog/base64-encoding-explained/">Base64 encoding</a>. They serve different purposes. URL encoding makes strings safe for URLs by encoding individual unsafe characters. Base64 encoding converts arbitrary binary data into an ASCII string representation. When you need to pass binary data (like an image or encrypted token) in a URL, you typically Base64-encode it first, then URL-encode the result (or use URL-safe Base64).
+          </p>
+          <p>
+            <code >`// Standard Base64 contains + and / which need URL encoding
+const base64Token = 'eyJhbGci+OiJI/UzI1NiJ9';
+encodeURIComponent(base64Token);
+// 'eyJhbGci%2BOiJI%2FUzI1NiJ9'
+
+// URL-safe Base64 replaces + with - and / with _
+// No additional URL encoding needed!
+const urlSafeBase64 = 'eyJhbGci-OiJI_UzI1NiJ9';`</code>
+          </pre>
+          <p >
+            You can convert between standard and URL-safe Base64 using our <a href="/base64/">Base64 Encoder/Decoder</a>. For JWT tokens, which use URL-safe Base64, check out our <a href="/jwt-decoder/">JWT Decoder</a> to inspect the header and payload without any encoding headaches.
+          </p>
+        
+
+        
+          <h2>URL Encoding Best Practices</h2>
+          <ol>
+            <li><strong>Always use encodeURIComponent for parameter values</strong> -- Never concatenate raw user input into URLs. Always encode individual values, not the full URL.</li>
+            <li><strong>Use the URL/URLSearchParams API</strong> -- Let the browser handle encoding for query strings. It is more reliable than manual string concatenation.</li>
+            <li><strong>Decode on the server, not the client</strong> -- Most web frameworks automatically decode URL parameters. Avoid manually decoding on the client side unless you have a specific reason.</li>
+            <li><strong>Watch for double encoding</strong> -- If you see <code >%25</code> in your URLs, something is being encoded twice. Trace the encoding pipeline to find the duplicate step.</li>
+            <li><strong>Use URL-safe Base64 for tokens</strong> -- When passing <a href="/blog/jwt-tokens-guide/">JWT tokens</a> or other Base64-encoded data in URLs, use the URL-safe variant to avoid extra encoding.</li>
+            <li><strong>Test with edge cases</strong> -- Always test URLs containing <code >&</code>, <code >#</code>, <code >%</code>, <code >+</code>, Unicode characters, and empty strings. Use our <a href="/url-encode-decode/">URL Encoder</a> to verify encoding is correct.</li>
+            <li><strong>Validate and sanitize inputs</strong> -- URL encoding prevents parsing errors but does not prevent injection attacks. Always validate that decoded values match expected patterns using <a href="/regex-tester/">regex validation</a>.</li>
+          </ol>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <h3>What is the difference between encodeURI and encodeURIComponent?</h3>
+          <p>
+            <code >encodeURI</code> encodes a full URI but preserves characters like <code >:</code>, <code >/</code>, <code >?</code>, <code >#</code>, and <code >&</code> that have structural meaning in URLs. <code >encodeURIComponent</code> encodes everything except unreserved characters (letters, digits, <code >-</code>, <code >_</code>, <code >.</code>, <code >~</code>), making it the correct choice for encoding individual query parameter values, path segments, or fragment identifiers.
+          </p>
+
+          <h3>Why do spaces become %20 or + in URLs?</h3>
+          <p>
+            Spaces are not allowed in URLs per RFC 3986. In percent-encoding, a space becomes <code >%20</code>. However, the <code >application/x-www-form-urlencoded</code> format (used in HTML form submissions) encodes spaces as <code >+</code> instead. Both represent a space, but <code >%20</code> is the standard for URL paths while <code >+</code> is specific to form data in query strings.
+          </p>
+
+          <h3>Which characters need to be URL encoded?</h3>
+          <p>
+            All characters outside the unreserved set (<code >A-Z</code>, <code >a-z</code>, <code >0-9</code>, <code >-</code>, <code >_</code>, <code >.</code>, <code >~</code>) should be percent-encoded when used as data in URLs. Reserved characters like <code >: / ? # & =</code> must be encoded when they appear inside a query parameter value or path segment rather than serving their delimiter purpose.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Encode &amp; Decode URLs Instantly</h2>
+          <p>
+            Stop guessing which characters need encoding. Paste any string into our free URL Encode/Decode and get correct percent-encoded output instantly. Supports full Unicode, runs entirely in your browser, no data sent to any server.
+          </p>
+          <a href="/url-encode-decode/">
+            Open URL Encode/Decode
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/base64-encoding-explained/">
+              <h3>Base64 Encoding Explained</h3>
+              <p>When and why to use Base64 encoding in your projects.</p>
+            </a>
+            <a href="/blog/http-status-codes-guide/">
+              <h3>HTTP Status Codes Guide</h3>
+              <p>Every HTTP status code explained with real-world context.</p>
+            </a>
+            <a href="/blog/jwt-tokens-guide/">
+              <h3>JWT Tokens Explained</h3>
+              <p>Deep dive into JSON Web Token structure and security.</p>
+            </a>
+            <a href="/blog/hash-functions-explained/">
+              <h3>Hash Functions Explained</h3>
+              <p>MD5, SHA-256, bcrypt and when to use each one.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/url-encoding-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
