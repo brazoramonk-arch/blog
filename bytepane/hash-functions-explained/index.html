@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hash Functions Explained: MD5, SHA-256, bcrypt &amp;amp; More - BytePane</title>
+  <meta name="description" content="Understand hash functions from MD5 to bcrypt. When to use each for passwords, checksums, and data integrity.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/hash-functions-explained/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Hash Functions Explained: MD5, SHA-256, bcrypt &amp;amp; More
+  </nav>
+
+  <article>
+    <h1>Hash Functions Explained: MD5, SHA-256, bcrypt &amp;amp; More</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/hash-functions-explained/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Hash Functions Explained: MD5, SHA-256, bcrypt & More',
+            description: 'Understand hash functions from MD5 to bcrypt. When to use each for passwords, checksums, and data integrity.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/hash-functions-explained/',
+            mainEntityOfPage: 'https://bytepane.com/blog/hash-functions-explained/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Hash Functions Explained' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'Is MD5 still safe to use?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'MD5 is cryptographically broken and should never be used for security purposes like password hashing, digital signatures, or certificate verification. Collision attacks against MD5 are practical and can be performed in seconds on modern hardware. However, MD5 is still acceptable for non-security checksums like verifying file download integrity (where an attacker cannot modify the file) or generating non-critical cache keys.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the best hash function for passwords in 2026?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Argon2id is the recommended password hashing function as of 2026. It won the Password Hashing Competition (PHC) in 2015 and is recommended by OWASP. Argon2id combines resistance to both GPU attacks (memory-hard) and side-channel attacks. If Argon2id is not available in your framework, use bcrypt with a work factor of 12 or higher. Never use SHA-256 or MD5 for passwords -- they are too fast to compute and lack built-in salting.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between hashing and encryption?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Hashing is a one-way function that produces a fixed-size digest from any input. You cannot reverse a hash to get the original data. Encryption is a two-way function that transforms data using a key, and the original data can be recovered using the decryption key. Use hashing for passwords, data integrity verification, and digital signatures. Use encryption when you need to store or transmit data that must be retrieved in its original form.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Hash Functions Explained
+      
+
+      /* Article Header */
+      
+        <h2>
+          Hash Functions Explained: MD5, SHA-256, bcrypt &amp; More
+        </h2>
+        
+          Security
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          14 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>What Is a Hash Function?</h2>
+          <p>
+            A hash function takes an input of any size -- a password, a file, or an entire database -- and produces a fixed-size output called a hash, digest, or checksum. The same input always produces the same output, but even a tiny change in the input produces a completely different hash. This deterministic, one-way transformation is the foundation of password storage, data integrity verification, digital signatures, and dozens of other security mechanisms.
+          </p>
+          <p>
+            Unlike encryption, hashing is irreversible by design. You cannot take a hash and recover the original input. This is exactly what makes hashing perfect for passwords: even if a database is breached, the attacker gets hashes, not plaintext passwords.
+          </p>
+          <p>
+            <code >`Input: "hello"
+MD5:    5d41402abc4b2a76b9719d911017c592
+SHA-256: 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+
+Input: "hello!"  (one character added)
+MD5:    9b71d224bd62f3785d96d46ad3ea3d73
+SHA-256: ce06092fb948d9ffac7d1a376e404b26b7575bcc11ee05a4615fef4fec3a308b
+
+// Completely different outputs -- this is the "avalanche effect"`</code>
+          </pre>
+          <p >
+            To generate hashes instantly, try our <a href="/hash-generator/">Hash Generator</a> tool. It computes MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes entirely in your browser -- your data is never sent to any server.
+          </p>
+        
+
+        
+          <h2>Properties of Cryptographic Hash Functions</h2>
+          <p>
+            A cryptographic hash function must satisfy five properties to be considered secure. Understanding these properties helps you choose the right algorithm for your use case.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Property</th>
+                  <th >Meaning</th>
+                  <th >Why It Matters</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Deterministic</td><td >Same input always gives same output</td><td >Password verification, checksums</td></tr>
+                <tr ><td >Pre-image resistance</td><td >Cannot reverse a hash to find the input</td><td >Protects stored passwords</td></tr>
+                <tr ><td >Second pre-image resistance</td><td >Cannot find a different input with the same hash</td><td >Prevents file substitution attacks</td></tr>
+                <tr ><td >Collision resistance</td><td >Cannot find any two inputs with the same hash</td><td >Digital signatures, certificates</td></tr>
+                <tr><td >Avalanche effect</td><td >Tiny input change produces drastically different output</td><td >Prevents pattern analysis</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Hash Algorithm Comparison</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Algorithm</th>
+                  <th >Output Size</th>
+                  <th >Security Status</th>
+                  <th >Best For</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >MD5</td><td >128 bits (32 hex)</td><td >Broken</td><td >Non-security checksums only</td></tr>
+                <tr ><td >SHA-1</td><td >160 bits (40 hex)</td><td >Deprecated</td><td >Legacy compatibility only</td></tr>
+                <tr ><td >SHA-256</td><td >256 bits (64 hex)</td><td >Secure</td><td >Data integrity, signatures, HMAC</td></tr>
+                <tr ><td >SHA-384</td><td >384 bits (96 hex)</td><td >Secure</td><td >Higher security requirements</td></tr>
+                <tr ><td >SHA-512</td><td >512 bits (128 hex)</td><td >Secure</td><td >Maximum security, faster on 64-bit CPUs</td></tr>
+                <tr ><td >SHA-3</td><td >Variable</td><td >Secure</td><td >Future-proofing, different design from SHA-2</td></tr>
+                <tr ><td >bcrypt</td><td >184 bits</td><td >Secure</td><td >Password hashing</td></tr>
+                <tr ><td >scrypt</td><td >Variable</td><td >Secure</td><td >Password hashing (memory-hard)</td></tr>
+                <tr><td >Argon2id</td><td >Variable</td><td >Best</td><td >Password hashing (recommended)</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Generate hashes with any of the SHA-family algorithms using our <a href="/hash-generator/">Hash Generator</a>. For password-specific hashing, use bcrypt or Argon2id -- never a general-purpose hash like SHA-256.
+          </p>
+        
+
+        
+          <h2>MD5: Fast but Broken</h2>
+          <p>
+            MD5 was designed by Ronald Rivest in 1991 and produces a 128-bit (32-character hex) hash. It was widely used for password storage and file verification until collision attacks were demonstrated in 2004. By 2008, researchers created a rogue SSL certificate using an MD5 collision, proving the practical danger. Today, MD5 collisions can be generated in seconds on a standard laptop.
+          </p>
+          <p>
+            <code >`// JavaScript (Node.js) - MD5 for non-security checksum
+const crypto = require('crypto');
+const hash = crypto.createHash('md5').update('hello world').digest('hex');
+// '5eb63bbbe01eeed093cb22bb8f5acdc3'
+
+// Python
+
+hashlib.md5(b'hello world').hexdigest()
+# '5eb63bbbe01eeed093cb22bb8f5acdc3'
+
+// Command line
+echo -n "hello world" | md5sum
+# 5eb63bbbe01eeed093cb22bb8f5acdc3  -`</code>
+          </pre>
+          <p >
+            <strong>Use MD5 only for:</strong> non-security checksums (verifying a downloaded file matches the source), cache key generation, deduplication. <strong>Never use MD5 for:</strong> password hashing, digital signatures, certificate verification, or any security-critical application.
+          </p>
+        
+
+        
+          <h2>SHA-256: The Current Standard</h2>
+          <p>
+            SHA-256 is part of the SHA-2 family designed by the NSA and published by NIST in 2001. It produces a 256-bit (64-character hex) hash and remains unbroken as of 2026. SHA-256 is used in Bitcoin mining, TLS certificates, code signing, Git (since 2023), and most modern integrity verification systems.
+          </p>
+          <p>
+            <code >`// JavaScript (Node.js)
+const crypto = require('crypto');
+const hash = crypto.createHash('sha256').update('hello world').digest('hex');
+// 'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9'
+
+// JavaScript (browser - Web Crypto API)
+async function sha256(message) 
+  const encoder = new TextEncoder();
+  const data = encoder.encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+await sha256('hello world');
+
+// Python
+
+hashlib.sha256(b'hello world').hexdigest()
+
+// Go
+
+    "crypto/sha256"
+    "fmt"
+)
+hash := sha256.Sum256([]byte("hello world"))
+fmt.Sprintf("%x", hash)
+
+// Command line
+echo -n "hello world" | sha256sum`</code>
+          </pre>
+          <p >
+            SHA-256 is the best general-purpose hash for data integrity, digital signatures, and HMAC authentication. It is fast, widely supported, and has no known vulnerabilities. However, its speed makes it unsuitable for password hashing -- an attacker with a GPU can compute billions of SHA-256 hashes per second, making brute-force attacks practical.
+          </p>
+        
+
+        
+          <h2>Password Hashing: bcrypt, scrypt, and Argon2</h2>
+          <p>
+            Passwords require special hash functions that are intentionally slow to compute. General-purpose hashes like SHA-256 are designed to be fast, which is exactly what you do not want for passwords. An attacker who can compute 10 billion SHA-256 hashes per second can brute-force an 8-character password in hours. Password hashing functions solve this by being deliberately expensive in terms of CPU time and memory.
+          </p>
+
+          <h3>bcrypt</h3>
+          <p>
+            bcrypt was designed in 1999 and remains one of the most widely used password hashing functions. It includes a built-in salt (random data added to the password before hashing) and a configurable work factor that controls computation time. Each increment of the work factor doubles the time required.
+          </p>
+          <p>
+            <code >`// Node.js with bcrypt
+const bcrypt = require('bcrypt');
+
+// Hash a password (work factor 12 = ~250ms)
+const saltRounds = 12;
+const hash = await bcrypt.hash('myPassword123', saltRounds);
+// '$2b$12$LJ3m4ys3dRYoXMxKBqE5T.6qZB0DKFK2vZ7lXQ4KeqUCY.ZR7pGS'
+
+// Verify a password
+const isMatch = await bcrypt.compare('myPassword123', hash);
+// true
+
+// Python
+
+hashed = bcrypt.hashpw(b'myPassword123', bcrypt.gensalt(rounds=12))
+bcrypt.checkpw(b'myPassword123', hashed)  # True`</code>
+          </pre>
+
+          <h3>Argon2id (Recommended)</h3>
+          <p >
+            Argon2 won the Password Hashing Competition (PHC) in 2015. The <code >Argon2id</code> variant combines resistance to GPU attacks (memory-hard like scrypt) with resistance to side-channel attacks (like Argon2i). OWASP recommends Argon2id as the primary choice for password hashing in 2026.
+          </p>
+          <p>
+            <code >`// Node.js with argon2
+const argon2 = require('argon2');
+
+// Hash with Argon2id (recommended settings)
+const hash = await argon2.hash('myPassword123', 
+  type: argon2.argon2id,
+  memoryCost: 65536,    // 64 MB memory
+  timeCost: 3,          // 3 iterations
+  parallelism: 4,       // 4 threads
+);
+
+// Verify
+const isValid = await argon2.verify(hash, 'myPassword123');
+
+// Python
+from argon2 import PasswordHasher
+ph = PasswordHasher()
+hash = ph.hash("myPassword123")
+ph.verify(hash, "myPassword123")  # True`</code>
+          </pre>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >bcrypt</th>
+                  <th >scrypt</th>
+                  <th >Argon2id</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Year</td><td >1999</td><td >2009</td><td >2015</td></tr>
+                <tr ><td >Built-in salt</td><td >Yes</td><td >Yes</td><td >Yes</td></tr>
+                <tr ><td >Memory-hard</td><td >No</td><td >Yes</td><td >Yes</td></tr>
+                <tr ><td >GPU resistant</td><td >Moderate</td><td >High</td><td >High</td></tr>
+                <tr ><td >Max input length</td><td >72 bytes</td><td >Unlimited</td><td >Unlimited</td></tr>
+                <tr><td >OWASP recommended</td><td >Fallback</td><td >Acceptable</td><td >Primary</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>HMACs: Hash-Based Message Authentication</h2>
+          <p >
+            An HMAC (Hash-based Message Authentication Code) combines a hash function with a secret key to verify both the integrity and authenticity of a message. While a plain hash proves that data has not been modified, an HMAC proves that it has not been modified <em>and</em> that it was created by someone who knows the secret key.
+          </p>
+          <p>
+            <code >`// JavaScript (Node.js) - HMAC-SHA256
+const crypto = require('crypto');
+const hmac = crypto.createHmac('sha256', 'my-secret-key')
+  .update('message to authenticate')
+  .digest('hex');
+// 'a1b2c3d4...'
+
+// Python
+
+signature = hmac.new(
+    b'my-secret-key',
+    b'message to authenticate',
+    hashlib.sha256
+).hexdigest()
+
+// Common HMAC use cases:
+// 1. API webhook signature verification (Stripe, GitHub)
+// 2. JWT signature (HS256 = HMAC-SHA256)
+// 3. Session cookie signing
+// 4. API request authentication`</code>
+          </pre>
+          <p >
+            HMACs are used extensively in <a href="/blog/jwt-tokens-guide/">JWT tokens</a> (the HS256 algorithm is HMAC-SHA256), webhook signature verification, and API authentication. You can decode and inspect JWT tokens with our <a href="/jwt-decoder/">JWT Decoder</a> to see the HMAC signature in action.
+          </p>
+        
+
+        
+          <h2>Checksums for File Integrity</h2>
+          <p>
+            One of the most practical uses of hash functions is verifying file integrity. When downloading software, the publisher provides a hash (usually SHA-256) of the file. After downloading, you compute the hash of the downloaded file and compare it to the published value. If they match, the file is authentic and complete.
+          </p>
+          <p>
+            <code >`# Verify a downloaded file (Linux/macOS)
+sha256sum downloaded-file.tar.gz
+# Compare with published hash
+
+# Generate checksums for distribution
+sha256sum myapp-v1.0.tar.gz > SHA256SUMS
+sha256sum myapp-v1.0.zip >> SHA256SUMS
+
+# Verify multiple files at once
+sha256sum -c SHA256SUMS
+
+# Windows (PowerShell)
+Get-FileHash downloaded-file.zip -Algorithm SHA256
+
+# Python - hash a large file in chunks
+
+def file_hash(filepath, algorithm='sha256'):
+    h = hashlib.new(algorithm)
+    with open(filepath, 'rb') as f:
+        while chunk := f.read(8192):
+            h.update(chunk)
+    return h.hexdigest()`</code>
+          </pre>
+          <p >
+            For quick hash generation without the command line, use our <a href="/hash-generator/">Hash Generator</a> tool. It computes MD5, SHA-1, SHA-256, SHA-384, and SHA-512 in your browser. For verifying data transmitted via APIs, combine hashing with proper <a href="/blog/api-response-codes-best-practices/">API response handling</a>.
+          </p>
+        
+
+        
+          <h2>Hash Functions in Practice: When to Use What</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Use Case</th>
+                  <th >Recommended</th>
+                  <th >Never Use</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Password storage</td><td >Argon2id, bcrypt</td><td >MD5, SHA-*</td></tr>
+                <tr ><td >File integrity / checksum</td><td >SHA-256</td><td >MD5 (for security)</td></tr>
+                <tr ><td >Digital signatures</td><td >SHA-256, SHA-384</td><td >MD5, SHA-1</td></tr>
+                <tr ><td >HMAC / API auth</td><td >HMAC-SHA256</td><td >HMAC-MD5</td></tr>
+                <tr ><td >JWT signing</td><td >RS256, ES256, HS256</td><td >None (algorithm)</td></tr>
+                <tr ><td >Cache keys / dedup</td><td >MD5, SHA-256</td><td >N/A (not security)</td></tr>
+                <tr><td >Content addressing (Git)</td><td >SHA-256 (new), SHA-1 (legacy)</td><td >MD5</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Common Security Mistakes with Hashing</h2>
+          <ol>
+            <li><strong>Using SHA-256 for passwords</strong> -- SHA-256 is too fast. GPUs can compute billions of hashes per second. Use bcrypt or Argon2id, which are intentionally slow.</li>
+            <li><strong>Not using a salt</strong> -- Without a unique salt per password, identical passwords produce identical hashes, enabling rainbow table attacks. bcrypt and Argon2 include salting automatically.</li>
+            <li><strong>Storing passwords with MD5</strong> -- MD5 is broken and fast. A database of MD5-hashed passwords can be cracked almost instantly using precomputed lookup tables.</li>
+            <li><strong>Rolling your own hash scheme</strong> -- Constructions like <code >sha256(salt + sha256(password))</code> do not improve security and may introduce vulnerabilities. Use established password hashing libraries.</li>
+            <li><strong>Comparing hashes with == instead of constant-time comparison</strong> -- String comparison with <code >==</code> is vulnerable to timing attacks. Use <code >crypto.timingSafeEqual()</code> in Node.js or <code >hmac.compare_digest()</code> in Python.</li>
+            <li><strong>Not upgrading hash algorithms</strong> -- If your database still uses MD5 or SHA-1 for passwords, implement a migration strategy: re-hash passwords with bcrypt/Argon2 at login time.</li>
+          </ol>
+        
+
+        
+          <h2>Hashing vs Encryption: Know the Difference</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >Hashing</th>
+                  <th >Encryption</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Direction</td><td >One-way (irreversible)</td><td >Two-way (reversible with key)</td></tr>
+                <tr ><td >Output size</td><td >Fixed (e.g., 256 bits)</td><td >Same as input (plus overhead)</td></tr>
+                <tr ><td >Key required</td><td >No (except HMAC)</td><td >Yes</td></tr>
+                <tr ><td >Purpose</td><td >Verify integrity, store passwords</td><td >Protect data confidentiality</td></tr>
+                <tr><td >Examples</td><td >SHA-256, bcrypt</td><td >AES-256, RSA, ChaCha20</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Use hashing when you need to verify data without storing the original (passwords, checksums). Use encryption when you need to store data securely and retrieve it later (database fields, file storage, network communication). For encoding (not security), see our guides on <a href="/blog/base64-encoding-explained/">Base64 encoding</a> and <a href="/blog/url-encoding-guide/">URL encoding</a>.
+          </p>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <h3>Is MD5 still safe to use?</h3>
+          <p>
+            MD5 is cryptographically broken and should never be used for security purposes like password hashing, digital signatures, or certificate verification. Collision attacks against MD5 are practical and can be performed in seconds on modern hardware. However, MD5 is still acceptable for non-security checksums like verifying file download integrity (where an attacker cannot modify the source) or generating cache keys.
+          </p>
+
+          <h3>What is the best hash function for passwords in 2026?</h3>
+          <p>
+            Argon2id is the recommended password hashing function as of 2026. It won the Password Hashing Competition in 2015 and is recommended by OWASP. Argon2id combines resistance to both GPU attacks (memory-hard) and side-channel attacks. If Argon2id is not available in your framework, use bcrypt with a work factor of 12 or higher. Never use SHA-256 or MD5 for passwords -- they are too fast and lack built-in salting.
+          </p>
+
+          <h3>What is the difference between hashing and encryption?</h3>
+          <p>
+            Hashing is a one-way function that produces a fixed-size digest from any input. You cannot reverse a hash to get the original data. Encryption is a two-way function that transforms data using a key, and the original data can be recovered with the decryption key. Use hashing for passwords, data integrity, and digital signatures. Use encryption for data that must be retrieved in its original form.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Generate Hashes Instantly</h2>
+          <p>
+            Compute MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes for any text or file. Our free Hash Generator runs entirely in your browser -- your data never leaves your machine.
+          </p>
+          <a href="/hash-generator/">
+            Open Hash Generator
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/jwt-tokens-guide/">
+              <h3>JWT Tokens Explained</h3>
+              <p>Deep dive into JWT structure, HMAC signatures, and security.</p>
+            </a>
+            <a href="/blog/base64-encoding-explained/">
+              <h3>Base64 Encoding Explained</h3>
+              <p>When and why to use Base64 encoding in your projects.</p>
+            </a>
+            <a href="/blog/url-encoding-guide/">
+              <h3>URL Encoding Guide</h3>
+              <p>Percent-encoding, reserved characters, and common pitfalls.</p>
+            </a>
+            <a href="/blog/jwt-vs-session-cookies-authentication/">
+              <h3>JWT vs Session Cookies</h3>
+              <p>Compare authentication methods for APIs and web apps.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/hash-functions-explained/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
