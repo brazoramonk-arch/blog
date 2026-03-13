@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Cheat Sheet: Complete Syntax Guide - BytePane</title>
+  <meta name="description" content="The complete Markdown reference with headings, lists, links, images, tables, code blocks, and GFM extensions.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/markdown-cheat-sheet/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Markdown Cheat Sheet: Complete Syntax Guide
+  </nav>
+
+  <article>
+    <h1>Markdown Cheat Sheet: Complete Syntax Guide</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/markdown-cheat-sheet/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Markdown Cheat Sheet: Complete Syntax Guide',
+            description: 'The complete Markdown reference with headings, lists, links, images, tables, code blocks, and GFM extensions.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/markdown-cheat-sheet/',
+            mainEntityOfPage: 'https://bytepane.com/blog/markdown-cheat-sheet/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Markdown Cheat Sheet' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What is the difference between Markdown and GitHub Flavored Markdown (GFM)?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Standard Markdown (CommonMark) defines the basic syntax for headings, paragraphs, links, images, emphasis, code, and blockquotes. GitHub Flavored Markdown (GFM) extends CommonMark with tables, task lists (checkboxes), strikethrough text, autolinked URLs, syntax-highlighted fenced code blocks, and footnotes. GFM is used on GitHub, GitLab, and many documentation platforms.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do I create a table in Markdown?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Use pipes (|) to separate columns and hyphens (-) to create the header row separator. For alignment, add colons: :--- for left-align, :---: for center, ---: for right-align. Example: | Header 1 | Header 2 | followed by | --- | --- | and then | Cell 1 | Cell 2 |. Tables are a GFM extension and are supported on most platforms.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Can I use HTML inside Markdown?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Yes, most Markdown parsers allow inline HTML for features that Markdown does not support natively, such as <details> for collapsible sections, <kbd> for keyboard shortcuts, or complex table layouts with colspan. However, security-conscious platforms like GitHub sanitize HTML and remove script tags, event handlers, and certain elements. Raw HTML reduces portability across Markdown renderers.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Markdown Cheat Sheet
+      
+
+      /* Article Header */
+      
+        <h2>
+          Markdown Cheat Sheet: Complete Syntax Guide
+        </h2>
+        
+          Text Processing
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          15 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>What Is Markdown and Why Use It?</h2>
+          <p>
+            Markdown is a lightweight markup language created by John Gruber in 2004 that lets you write formatted text using plain text syntax. Instead of clicking toolbar buttons or writing HTML tags, you use simple characters like <code >#</code> for headings, <code >**</code> for bold, and <code >-</code> for lists. The syntax is designed to be readable even as raw text.
+          </p>
+          <p>
+            Markdown has become the standard for developer documentation, README files, blog posts, technical writing, and note-taking. It is used on GitHub, GitLab, Stack Overflow, Reddit, Notion, Obsidian, Jupyter notebooks, and thousands of other platforms. Learning Markdown is one of the highest-leverage skills a developer can acquire.
+          </p>
+          <p>
+            To practice and preview Markdown as you type, use our <a href="/markdown-preview/">Markdown Preview</a> tool. It renders your Markdown in real time, entirely in your browser.
+          </p>
+        
+
+        
+          <h2>Headings</h2>
+          <p>
+            Use hash symbols (<code >#</code>) to create headings. The number of hashes determines the heading level (1-6). Always leave a space between the hash and the heading text. Good practice is to use only one H1 per document.
+          </p>
+          <p>
+            <code >`# Heading 1 (H1)
+## Heading 2 (H2)
+### Heading 3 (H3)
+#### Heading 4 (H4)
+##### Heading 5 (H5)
+###### Heading 6 (H6)
+
+<!-- Alternative syntax for H1 and H2 -->
+Heading 1
+=========
+
+Heading 2
+---------`</code>
+          </pre>
+        
+
+        
+          <h2>Text Formatting (Emphasis)</h2>
+          <pre >
+            <code >`*Italic text* or _italic text_
+**Bold text** or __bold text__
+***Bold and italic*** or ___bold and italic___
+~~Strikethrough text~~ (GFM extension)
+==Highlighted text== (some parsers)
+
+<!-- Inline code -->
+Use the \`console.log()\` function.
+
+<!-- Subscript / Superscript (some parsers) -->
+H~2~O (subscript)
+X^2^ (superscript)`</code>
+          </pre>
+          <p >
+            Prefer <code >*</code> for italic and <code >**</code> for bold. The underscore variants can cause issues mid-word (e.g., <code >file_name_here</code> might be parsed as italic in some renderers). Strikethrough with <code >~~</code> is a GitHub Flavored Markdown (GFM) extension supported on most platforms.
+          </p>
+        
+
+        
+          <h2>Links and Images</h2>
+          <p>
+            <code >`<!-- Inline link -->
+[BytePane](https://bytepane.com/)
+[BytePane](https://bytepane.com/ "Developer Tools")  <!-- with title -->
+
+<!-- Reference-style link -->
+[BytePane][1]
+[1]: https://bytepane.com/ "Developer Tools"
+
+<!-- Autolink (GFM) -->
+https://bytepane.com/  <!-- automatically becomes a link -->
+
+<!-- Image -->
+![Alt text](image.png)
+![Alt text](image.png "Optional title")
+
+<!-- Linked image -->
+[![Alt text](image.png)](https://bytepane.com/)
+
+<!-- Image with reference -->
+![Logo][logo]
+[logo]: /images/logo.png "BytePane Logo"`</code>
+          </pre>
+          <p >
+            Always include descriptive alt text for images -- it improves accessibility and SEO. Reference-style links are useful in documents with many URLs because they keep the body text clean and make link management easier. If your URLs contain special characters, remember to <a href="/blog/url-encoding-guide/">URL-encode</a> them.
+          </p>
+        
+
+        
+          <h2>Lists</h2>
+          <p>
+            <code >`<!-- Unordered list (use -, *, or +) -->
+- Item 1
+- Item 2
+  - Nested item 2a
+  - Nested item 2b
+    - Deeply nested
+- Item 3
+
+<!-- Ordered list -->
+1. First item
+2. Second item
+3. Third item
+   1. Sub-item 3a
+   2. Sub-item 3b
+
+<!-- The actual numbers don't matter in most parsers -->
+1. First
+1. Second (still renders as 2)
+1. Third (still renders as 3)
+
+<!-- Task list / Checkbox (GFM) -->
+- [x] Write the article
+- [x] Add code examples
+- [ ] Review and publish
+- [ ] Promote on social media
+
+<!-- Definition list (some parsers) -->
+Term
+: Definition of the term`</code>
+          </pre>
+          <p >
+            Nest list items by indenting with 2 or 4 spaces (depending on the parser). Task lists with checkboxes are a GFM extension and are widely used in GitHub issues, pull request descriptions, and project management. For numbered lists, using <code >1.</code> for every item makes reordering easier since you do not need to renumber.
+          </p>
+        
+
+        
+          <h2>Code Blocks and Syntax Highlighting</h2>
+          <p>
+            Inline code uses single backticks. Code blocks use triple backticks (fenced code blocks) or 4-space indentation. Fenced code blocks support syntax highlighting by specifying the language after the opening backticks.
+          </p>
+          <p>
+            <code >`<!-- Inline code -->
+Run \`npm install\` to install dependencies.
+
+<!-- Fenced code block with syntax highlighting -->
+\`\`\`javascript
+function greet(name) 
+  return \`Hello, \$name!\`;
+
+\`\`\`
+
+\`\`\`python
+def greet(name):
+    return f"Hello, name!"
+\`\`\`
+
+\`\`\`json
+
+  "name": "BytePane",
+  "tools": 50,
+  "free": true
+
+\`\`\`
+
+<!-- Indented code block (4 spaces) -->
+    function oldStyle() 
+        return "no syntax highlighting";
+    
+
+<!-- Diff syntax highlighting -->
+\`\`\`diff
+- const old = "removed line";
++ const new = "added line";
+\`\`\``</code>
+          </pre>
+          <p >
+            Popular language identifiers include: <code >javascript</code>, <code >typescript</code>, <code >python</code>, <code >bash</code>, <code >json</code>, <code >html</code>, <code >css</code>, <code >sql</code>, <code >yaml</code>, <code >go</code>, <code >rust</code>, <code >diff</code>. For JSON-specific formatting, our <a href="/json-formatter/">JSON Formatter</a> provides more features than basic code blocks. Compare code differences with our <a href="/diff-checker/">Diff Checker</a>.
+          </p>
+        
+
+        
+          <h2>Tables</h2>
+          <p>
+            Tables are a GFM extension. Use pipes (<code >|</code>) to separate columns and hyphens (<code >-</code>) to create the header separator. Control alignment with colons in the separator row.
+          </p>
+          <p>
+            <code >`<!-- Basic table -->
+| Tool | Category | Link |
+| --- | --- | --- |
+| JSON Formatter | Data | [Open](/json-formatter/) |
+| Regex Tester | Text | [Open](/regex-tester/) |
+| Color Converter | Design | [Open](/color-converter/) |
+
+<!-- Aligned columns -->
+| Left-aligned | Center-aligned | Right-aligned |
+| :--- | :---: | ---: |
+| Text | Text | Text |
+| More text | More text | $99.99 |
+
+<!-- Formatting inside table cells -->
+| Feature | Supported |
+| --- | --- |
+| **Bold** text | Yes |
+| \`inline code\` | Yes |
+| [Links](/) | Yes |
+| Images | Yes |
+| Lists | No |
+| Nested tables | No |`</code>
+          </pre>
+          <p >
+            Tables do not need to be perfectly aligned in the source -- most renderers normalize the spacing. For complex data, consider linking to a JSON representation instead. Our <a href="/json-formatter/">JSON Formatter</a> can help format the data for embedding.
+          </p>
+        
+
+        
+          <h2>Blockquotes and Horizontal Rules</h2>
+          <p>
+            <code >`<!-- Blockquote -->
+> This is a blockquote.
+> It can span multiple lines.
+
+> Nested blockquotes:
+>> This is a nested quote.
+>>> Three levels deep.
+
+> **Tip:** You can use formatting inside blockquotes,
+> including \`code\`, **bold**, and [links](/).
+
+<!-- Horizontal rule (any of these work) -->
+---
+***
+___`</code>
+          </pre>
+          <p >
+            Blockquotes are commonly used for quoting external sources, callout boxes, and important notes. GitHub renders blockquotes with special styling when they start with keywords like <code >[!NOTE]</code>, <code >[!WARNING]</code>, or <code >[!TIP]</code>.
+          </p>
+          <p>
+            <code >`<!-- GitHub Alert syntax -->
+> [!NOTE]
+> This is a note with special styling on GitHub.
+
+> [!WARNING]
+> This is a warning callout.
+
+> [!TIP]
+> This is a helpful tip.
+
+> [!IMPORTANT]
+> Critical information goes here.
+
+> [!CAUTION]
+> Proceed with care.`</code>
+          </pre>
+        
+
+        
+          <h2>HTML in Markdown</h2>
+          <p >
+            Most Markdown parsers allow raw HTML for features that Markdown does not support natively. This is useful for collapsible sections, keyboard shortcuts, complex layouts, and custom styling.
+          </p>
+          <p>
+            <code >`<!-- Collapsible section -->
+<details>
+<summary>Click to expand</summary>
+
+Hidden content goes here.
+You can use **Markdown** inside HTML blocks.
+
+</details>
+
+<!-- Keyboard shortcuts -->
+Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy.
+
+<!-- Centered text -->
+
+  <h3>Centered Heading</h3>
+  <p>Centered paragraph text.</p>
+
+<!-- Colored text (limited platform support) -->
+Colored text
+
+<!-- Line break without a new paragraph -->
+Line one<br>
+Line two (same paragraph)`</code>
+          </pre>
+          <p>
+            Be aware that HTML support varies across platforms. GitHub sanitizes HTML and removes <code >&lt;script&gt;</code> tags and event handlers. If you are writing HTML-heavy content, consider using our <a href="/html-formatter/">HTML Formatter</a> to optimize the output.
+          </p>
+        
+
+        
+          <h2>Footnotes, Abbreviations, and Advanced Syntax</h2>
+          <p>
+            <code >`<!-- Footnotes (GFM and many parsers) -->
+This claim needs a source[^1].
+Another referenced fact[^note].
+
+[^1]: Source: RFC 7231, Section 6.
+[^note]: This is a longer footnote with multiple paragraphs.
+
+    Indent continuation lines with 4 spaces.
+
+<!-- Abbreviation (some parsers) -->
+The HTML specification is maintained by the W3C.
+
+*[HTML]: HyperText Markup Language
+*[W3C]: World Wide Web Consortium
+
+<!-- Emoji (GFM) -->
+:rocket: :fire: :thumbsup: :warning:
+
+<!-- Table of Contents (auto-generated by some platforms) -->
+[[toc]]
+<!-- or -->
+[TOC]
+
+<!-- Escape special characters -->
+\\*Not italic\\*
+\\# Not a heading
+\\[Not a link\\]()`</code>
+          </pre>
+          <p >
+            Footnotes are part of the GFM specification and are supported on GitHub, GitLab, and most static site generators. They automatically create numbered references at the bottom of the document with back-links. Emoji shortcodes are replaced with actual emoji characters on platforms that support them.
+          </p>
+        
+
+        
+          <h2>Markdown for README Files</h2>
+          <p>
+            A well-structured README is the front door to any open-source project. Here is a template that covers all the essential sections using the Markdown syntax from this guide.
+          </p>
+          <p>
+            <code >`# Project Name
+
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.0.0-green)
+
+> Brief description of the project in one or two sentences.
+
+## Features
+
+- Feature one with **bold** emphasis
+- Feature two with \`code\` highlighting
+- Feature three with [link to docs](/)
+
+## Installation
+
+\`\`\`bash
+npm install project-name
+\`\`\`
+
+## Usage
+
+\`\`\`javascript
+
+feature.run();
+\`\`\`
+
+## API Reference
+
+| Method | Parameters | Returns |
+| --- | --- | --- |
+| \`run()\` | \`options: Object\` | \`Promise<Result>\` |
+| \`stop()\` | none | \`void\` |
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Submit a pull request
+
+## License
+
+MIT`</code>
+          </pre>
+          <p >
+            Test your README rendering with our <a href="/markdown-preview/">Markdown Preview</a> tool before pushing to GitHub. You can also validate any <a href="/json-formatter/">JSON configuration files</a> referenced in your project documentation.
+          </p>
+        
+
+        
+          <h2>Markdown Editors and Tools</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool</th>
+                  <th >Type</th>
+                  <th >Best For</th>
+                  <th >Platform</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >VS Code</td><td >IDE</td><td >Code + docs workflow</td><td >All</td></tr>
+                <tr ><td >Obsidian</td><td >Notes app</td><td >Knowledge base, PKM</td><td >All</td></tr>
+                <tr ><td >Typora</td><td >WYSIWYG editor</td><td >Long-form writing</td><td >All</td></tr>
+                <tr ><td >BytePane Preview</td><td >Online</td><td >Quick preview, no install</td><td >Browser</td></tr>
+                <tr ><td >StackEdit</td><td >Online</td><td >Collaborative editing</td><td >Browser</td></tr>
+                <tr><td >pandoc</td><td >CLI</td><td >Format conversion</td><td >All</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            For quick previews without installing anything, our <a href="/markdown-preview/">Markdown Preview</a> tool renders your Markdown in real time with GFM support. It is perfect for testing README files, documentation drafts, and blog posts before publishing.
+          </p>
+        
+
+        
+          <h2>Markdown Best Practices</h2>
+          <ol>
+            <li><strong>Use ATX headings consistently</strong> -- Stick to <code >#</code> syntax rather than underline syntax. It is clearer, more widely supported, and easier to search.</li>
+            <li><strong>Leave blank lines around blocks</strong> -- Put a blank line before and after headings, code blocks, lists, and blockquotes. This prevents parsing ambiguities across different Markdown engines.</li>
+            <li><strong>Use fenced code blocks with language identifiers</strong> -- Always specify the language for syntax highlighting. It makes code dramatically more readable.</li>
+            <li><strong>Keep lines under 120 characters</strong> -- While Markdown wraps automatically, shorter lines make diffs cleaner and the source easier to read in editors.</li>
+            <li><strong>Use reference-style links for long documents</strong> -- They keep the body text clean and make link updates easier since each URL appears only once.</li>
+            <li><strong>Always add alt text to images</strong> -- This improves accessibility, SEO, and provides context when images fail to load.</li>
+            <li><strong>Test across renderers</strong> -- Different platforms parse Markdown slightly differently. Preview your content on the target platform before publishing. Use our <a href="/markdown-preview/">Markdown Preview</a> for quick testing.</li>
+            <li><strong>Use a linter</strong> -- Tools like markdownlint enforce consistent style and catch common errors like duplicate headings, trailing spaces, and missing blank lines.</li>
+          </ol>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <h3>What is the difference between Markdown and GitHub Flavored Markdown (GFM)?</h3>
+          <p>
+            Standard Markdown (CommonMark) defines the basic syntax for headings, paragraphs, links, images, emphasis, code, and blockquotes. GitHub Flavored Markdown (GFM) extends CommonMark with tables, task lists (checkboxes), strikethrough text, autolinked URLs, syntax-highlighted fenced code blocks, and footnotes. GFM is used on GitHub, GitLab, and many documentation platforms.
+          </p>
+
+          <h3>How do I create a table in Markdown?</h3>
+          <p>
+            Use pipes (<code >|</code>) to separate columns and hyphens (<code >-</code>) to create the header row separator. For alignment, add colons: <code >:---</code> for left-align, <code >:---:</code> for center, <code >---:</code> for right-align. Tables are a GFM extension and are supported on most platforms including GitHub, GitLab, and many static site generators.
+          </p>
+
+          <h3>Can I use HTML inside Markdown?</h3>
+          <p>
+            Yes, most Markdown parsers allow inline HTML for features that Markdown does not support natively, such as <code >&lt;details&gt;</code> for collapsible sections, <code >&lt;kbd&gt;</code> for keyboard shortcuts, or complex table layouts. However, security-conscious platforms like GitHub sanitize HTML and remove script tags and event handlers. Raw HTML reduces portability across Markdown renderers.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Preview Your Markdown Now</h2>
+          <p>
+            Write Markdown on the left, see the rendered output on the right. Our free Markdown Preview tool supports GFM tables, code highlighting, task lists, and more. No signup, no data collection, everything runs in your browser.
+          </p>
+          <a href="/markdown-preview/">
+            Open Markdown Preview
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/json-formatting-guide/">
+              <h3>JSON Formatting Guide</h3>
+              <p>Format, validate, and minify JSON like a pro.</p>
+            </a>
+            <a href="/blog/regex-cheat-sheet/">
+              <h3>Regex Cheat Sheet</h3>
+              <p>Regular expression patterns every developer needs.</p>
+            </a>
+            <a href="/blog/color-formats-hex-rgb-hsl/">
+              <h3>Color Formats Explained</h3>
+              <p>HEX, RGB, HSL and when to use each format.</p>
+            </a>
+            <a href="/blog/http-status-codes-guide/">
+              <h3>HTTP Status Codes Guide</h3>
+              <p>Every HTTP status code explained with real-world context.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/markdown-cheat-sheet/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
