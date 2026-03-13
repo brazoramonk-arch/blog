@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Performance Optimization: Core Web Vitals &amp;amp; Loading Speed Guide - BytePane</title>
+  <meta name="description" content="Efficient layout systems that minimize layout shifts.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/web-performance-optimization/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Web Performance Optimization: Core Web Vitals &amp;amp; Loading Speed Guide
+  </nav>
+
+  <article>
+    <h1>Web Performance Optimization: Core Web Vitals &amp;amp; Loading Speed Guide</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/web-performance-optimization/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const relatedArticles = [
+   slug: 'css-grid-vs-flexbox', title: 'CSS Grid vs Flexbox', description: 'Efficient layout systems that minimize layout shifts.' ,
+   slug: 'http-status-codes-guide', title: 'HTTP Status Codes Guide', description: 'Caching headers, redirects, and status codes that affect speed.' ,
+   slug: 'docker-for-developers', title: 'Docker for Developers', description: 'Containerize your build pipeline for consistent performance.' ,
+]
+
+  
+    
+      /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Web Performance Optimization: Core Web Vitals & Loading Speed Guide',
+            description: 'Optimize LCP, INP, and CLS for better SEO and user experience. Practical techniques for lazy loading, code splitting, and caching.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/web-performance-optimization/',
+            mainEntityOfPage: 'https://bytepane.com/blog/web-performance-optimization/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Web Performance Optimization' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What are the three Core Web Vitals metrics?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'The three Core Web Vitals are: Largest Contentful Paint (LCP) measuring loading speed (target: under 2.5 seconds), Interaction to Next Paint (INP) measuring responsiveness (target: under 200 milliseconds), and Cumulative Layout Shift (CLS) measuring visual stability (target: under 0.1). These metrics are used by Google as ranking signals and directly impact user experience. INP replaced First Input Delay (FID) in March 2024.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do Core Web Vitals affect SEO rankings?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Core Web Vitals are a confirmed Google ranking signal as part of the Page Experience update. Pages that pass all three Core Web Vitals thresholds receive a ranking boost compared to pages that fail. However, content relevance and authority remain stronger signals. Think of CWV as a tiebreaker: among equally relevant pages, the faster one ranks higher. Google uses field data from Chrome User Experience Report (CrUX) for ranking, not lab data from Lighthouse.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the fastest way to improve LCP?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'The fastest LCP improvements come from: (1) Preloading the LCP element (hero image or heading font) with <li>, (2) Using a CDN to reduce server response time (TTFB), (3) Serving images in WebP/AVIF format with srcset for responsive sizes, (4) Eliminating render-blocking CSS and JavaScript from the critical path, and (5) Using fetchpriority="high" on the LCP image element. These changes can reduce LCP by 1-3 seconds on typical pages.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Web Performance Optimization
+      
+
+      /* Article Header */
+      
+        <h2>
+          Web Performance Optimization: Core Web Vitals &amp; Loading Speed Guide
+        </h2>
+        
+          Performance
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          12 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>Why Performance Matters</h2>
+          <p>
+            Web performance directly impacts revenue, user experience, and search rankings. Amazon found that every 100ms of added latency costs 1% in sales. Google confirmed that Core Web Vitals are a ranking signal. A 1-second delay in page load increases bounce rate by 32%. Performance is not a feature -- it is the feature.
+          </p>
+          <p>
+            This guide covers the three Core Web Vitals metrics, how to measure them, and the highest-impact optimizations you can make today. Every technique includes code examples you can implement immediately.
+          </p>
+        
+
+        
+          <h2>Core Web Vitals Explained</h2>
+          <p>
+            Core Web Vitals are three metrics that Google uses to measure real-world user experience. They replaced older metrics like First Contentful Paint and First Input Delay with more meaningful measurements of loading, interactivity, and visual stability.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Metric</th>
+                  <th >Measures</th>
+                  <th >Good</th>
+                  <th >Needs Work</th>
+                  <th >Poor</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >LCP (Largest Contentful Paint)</td><td >Loading speed</td><td >&le; 2.5s</td><td >&le; 4.0s</td><td >&gt; 4.0s</td></tr>
+                <tr ><td >INP (Interaction to Next Paint)</td><td >Responsiveness</td><td >&le; 200ms</td><td >&le; 500ms</td><td >&gt; 500ms</td></tr>
+                <tr><td >CLS (Cumulative Layout Shift)</td><td >Visual stability</td><td >&le; 0.1</td><td >&le; 0.25</td><td >&gt; 0.25</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Optimizing LCP (Largest Contentful Paint)</h2>
+          <p>
+            LCP measures when the largest visible element (usually a hero image, video, or heading) finishes rendering. The target is under 2.5 seconds. LCP is typically the most impactful metric to improve because it determines the perceived loading speed.
+          </p>
+
+          <h3>Preload Critical Resources</h3>
+          <p>
+            <code >`<!-- Preload the LCP image -->
+<link rel="preload" as="image" href="/hero.webp"
+      fetchpriority="high"
+      type="image/webp" />
+
+<!-- Preload critical font -->
+<link rel="preload" as="font" href="/fonts/inter-var.woff2"
+      type="font/woff2" crossorigin />
+
+<!-- Preconnect to CDN/API origins -->
+<link rel="preconnect" href="https://cdn.example.com" />
+<link rel="dns-prefetch" href="https://api.example.com" />
+
+<!-- LCP image with fetchpriority -->
+<img src="/hero.webp"
+     alt="Hero banner"
+     width="1200"
+     height="600"
+     fetchpriority="high"
+     decoding="async" />`</code>
+          </pre>
+
+          <h3>Optimize Images</h3>
+          <pre >
+            <code >`<!-- Responsive images with modern formats -->
+<picture>
+  <source srcset="/hero.avif" type="image/avif" />
+  <source srcset="/hero.webp" type="image/webp" />
+  <img src="/hero.jpg"
+       alt="Hero"
+       width="1200"
+       height="600"
+       loading="eager"
+       fetchpriority="high" />
+</picture>
+
+<!-- Responsive srcset for different screen sizes -->
+<img srcset="/hero-480.webp 480w,
+             /hero-768.webp 768w,
+             /hero-1200.webp 1200w"
+     sizes="(max-width: 480px) 480px,
+            (max-width: 768px) 768px,
+            1200px"
+     src="/hero-1200.webp"
+     alt="Hero"
+     width="1200"
+     height="600" />
+
+<!-- Next.js Image component (handles all of this automatically) -->
+
+<Image
+  src="/hero.webp"
+  alt="Hero"
+  width=1200
+  height=600
+  priority          // preloads, sets fetchpriority="high"
+  sizes="100vw"
+/>`</code>
+          </pre>
+
+          <h3>Reduce Server Response Time (TTFB)</h3>
+          <ul>
+            <li>Use a CDN (Cloudflare, Vercel Edge, CloudFront) to serve content from the nearest edge location</li>
+            <li>Enable server-side caching with appropriate <code >Cache-Control</code> headers</li>
+            <li>Use static site generation (SSG) or incremental static regeneration (ISR) in Next.js</li>
+            <li>Compress responses with Brotli (10-15% smaller than gzip)</li>
+            <li>Optimize database queries and add connection pooling</li>
+          </ul>
+        
+
+        
+          <h2>Optimizing INP (Interaction to Next Paint)</h2>
+          <p >
+            INP measures how long it takes for the page to respond visually after a user interaction (click, tap, or keypress). The target is under 200ms. INP replaced FID in March 2024 because FID only measured the first interaction, while INP tracks the worst interaction throughout the page lifecycle.
+          </p>
+
+          <h3>Break Up Long Tasks</h3>
+          <p>
+            <code >`// BAD: long task blocks the main thread (> 50ms)
+function processLargeList(items) 
+  items.forEach(item => 
+    // Heavy computation for each item
+    heavyCalculation(item);
+    updateDOM(item);
+  );
+
+// GOOD: yield to the main thread between chunks
+async function processLargeList(items) 
+  const CHUNK_SIZE = 50;
+
+  for (let i = 0; i < items.length; i += CHUNK_SIZE) 
+    const chunk = items.slice(i, i + CHUNK_SIZE);
+    chunk.forEach(item => 
+      heavyCalculation(item);
+      updateDOM(item);
+    );
+
+    // Yield to allow browser to handle user input
+    await scheduler.yield();  // or: await new Promise(r => setTimeout(r, 0));
+  
+
+// BETTER: use scheduler.postTask for priority-aware scheduling
+async function handleClick() 
+  // High priority: immediate visual feedback
+  showLoadingSpinner();
+
+  // Low priority: heavy work in background
+  await scheduler.postTask(() => 
+    processLargeList(data);
+  ,  priority: 'background' );
+
+  hideLoadingSpinner();
+`</code>
+          </pre>
+
+          <h3>Reduce JavaScript Bundle Size</h3>
+          <pre >
+            <code >`// Code splitting with dynamic imports (React)
+
+// Load component only when needed
+const HeavyChart = lazy(() => import('./HeavyChart'));
+const SettingsPanel = lazy(() => import('./SettingsPanel'));
+
+function Dashboard() 
+  
+    
+      <MainContent />
+      <Suspense fallback=Loading chart...>
+        <HeavyChart />
+      </Suspense>
+    
+  );
+
+// Next.js: dynamic import with no SSR
+
+const MapComponent = dynamic(() => import('./Map'), 
+  ssr: false,
+  loading: () => Loading map...,
+);
+
+// Tree-shaking: import only what you use
+// BAD: imports entire library
+
+_.debounce(fn, 300);
+
+// GOOD: import only the function
+
+debounce(fn, 300);`</code>
+          </pre>
+        
+
+        
+          <h2>Optimizing CLS (Cumulative Layout Shift)</h2>
+          <p >
+            CLS measures unexpected layout shifts during the page lifecycle. Elements that move after the initial render (ads loading, images without dimensions, dynamic content injected above the viewport) create a poor user experience. The target is a CLS score under 0.1.
+          </p>
+
+          <h3>Set Explicit Dimensions</h3>
+          <p>
+            <code >`<!-- BAD: no dimensions = layout shift when image loads -->
+<img src="/photo.webp" alt="Photo" />
+
+<!-- GOOD: explicit width and height prevent layout shift -->
+<img src="/photo.webp" alt="Photo" width="800" height="450" />
+
+<!-- GOOD: CSS aspect ratio for responsive images -->
+<style>
+.responsive-img 
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+
+</style>
+<img class="responsive-img" src="/photo.webp" alt="Photo" />
+
+<!-- Reserve space for ads -->
+
+  <!-- Ad loads here without shifting content below -->
+
+<!-- Reserve space for embeds / iframes -->
+
+  <iframe src="..." style="width: 100%; height: 100%;"></iframe>
+`</code>
+          </pre>
+
+          <h3>Font Loading Strategy</h3>
+          <pre >
+            <code >`/* Prevent FOUT/FOIT (flash of unstyled/invisible text) */
+@font-face 
+  font-family: 'Inter';
+  src: url('/fonts/inter-var.woff2') format('woff2');
+  font-display: swap;        /* show fallback, then swap */
+  font-weight: 100 900;
+  font-style: normal;
+
+/* Optional: size-adjust to minimize layout shift on swap */
+@font-face 
+  font-family: 'Inter-fallback';
+  src: local('Arial');
+  size-adjust: 107%;          /* match Inter's character width */
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+
+body 
+  font-family: 'Inter', 'Inter-fallback', sans-serif;
+
+/* Next.js: use next/font for zero-CLS font loading */
+
+const inter = Inter( subsets: ['latin'] )
+// Automatically handles font-display, preloading, and fallback matching`</code>
+          </pre>
+          <p >
+            Layout shifts are often caused by CSS layout choices. Choosing the right layout system helps prevent shifts -- our guide on <a href="/blog/css-grid-vs-flexbox/">CSS Grid vs Flexbox</a> covers stable layout patterns.
+          </p>
+        
+
+        
+          <h2>Caching Strategies</h2>
+          <p>
+            Proper caching can eliminate repeat requests entirely. The goal is to serve static assets from the browser cache and dynamic content from a CDN edge cache.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Resource Type</th>
+                  <th >Cache-Control Header</th>
+                  <th >Reason</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Hashed static files (.js, .css)</td><td >max-age=31536000, immutable</td><td >Hash changes on update, cache forever</td></tr>
+                <tr ><td >Images (with versioned URLs)</td><td >max-age=31536000, immutable</td><td >URL changes on update</td></tr>
+                <tr ><td >HTML pages</td><td >max-age=0, must-revalidate</td><td >Always serve latest version</td></tr>
+                <tr ><td >API responses</td><td >max-age=60, stale-while-revalidate=600</td><td >Serve stale while fetching fresh</td></tr>
+                <tr><td >Fonts</td><td >max-age=31536000, immutable</td><td >Fonts rarely change</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// Next.js: headers in next.config.js
+module.exports = 
+  async headers() 
+    return [
+      
+        source: '/_next/static/:path*',
+        headers: [
+          
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          ,
+        ],
+      ,
+      
+        source: '/fonts/:path*',
+        headers: [
+          
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          ,
+        ],
+      ,
+    ];
+  ,
+;`</code>
+          </pre>
+          <p >
+            Understanding <a href="/blog/http-status-codes-guide/">HTTP status codes</a> is essential for caching -- 304 Not Modified responses avoid re-downloading unchanged resources.
+          </p>
+        
+
+        
+          <h2>Performance Budget</h2>
+          <p>
+            A performance budget sets hard limits on page weight and metric thresholds. Without budgets, performance degrades gradually as features accumulate. Set these thresholds and fail CI builds when they are exceeded.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Budget Metric</th>
+                  <th >Target</th>
+                  <th >Rationale</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Total JS bundle</td><td >&lt; 200 KB (gzipped)</td><td >Parse time on mobile devices</td></tr>
+                <tr ><td >Total CSS</td><td >&lt; 50 KB (gzipped)</td><td >Render-blocking resource</td></tr>
+                <tr ><td >Total page weight</td><td >&lt; 1.5 MB</td><td >Mobile data budgets</td></tr>
+                <tr ><td >LCP</td><td >&lt; 2.5s</td><td >Core Web Vital threshold</td></tr>
+                <tr ><td >INP</td><td >&lt; 200ms</td><td >Core Web Vital threshold</td></tr>
+                <tr><td >CLS</td><td >&lt; 0.1</td><td >Core Web Vital threshold</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Measuring Performance</h2>
+          <p>
+            Use both lab tools (controlled environment) and field data (real users) to get a complete picture of your site's performance.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool</th>
+                  <th >Type</th>
+                  <th >Best For</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Lighthouse (DevTools)</td><td >Lab</td><td >Detailed audits, debugging, CI integration</td></tr>
+                <tr ><td >PageSpeed Insights</td><td >Lab + Field</td><td >CrUX field data + Lighthouse lab data</td></tr>
+                <tr ><td >Chrome DevTools Performance</td><td >Lab</td><td >Flame charts, long task identification</td></tr>
+                <tr ><td >Web Vitals JS library</td><td >Field (RUM)</td><td >Track real user metrics in production</td></tr>
+                <tr><td >Google Search Console</td><td >Field</td><td >Core Web Vitals pass/fail per URL group</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// Track Core Web Vitals with the web-vitals library
+
+function sendToAnalytics(metric) 
+  const body = JSON.stringify(
+    name: metric.name,
+    value: metric.value,
+    rating: metric.rating,     // 'good' | 'needs-improvement' | 'poor'
+    delta: metric.delta,
+    id: metric.id,
+    page: window.location.pathname,
+  );
+
+  // Use sendBeacon for reliability (survives page unload)
+  navigator.sendBeacon('/api/analytics', body);
+
+onLCP(sendToAnalytics);
+onINP(sendToAnalytics);
+onCLS(sendToAnalytics);`</code>
+          </pre>
+          <p >
+            For financial applications like <a href="https://amortio.com/"  target="_blank" rel="noopener noreferrer">mortgage calculators</a> or <a href="https://jouleio.com/"  target="_blank" rel="noopener noreferrer">energy cost calculators</a>, performance is especially critical since users expect instant results from calculation tools.
+          </p>
+        
+
+        
+          <h2>Quick Wins Checklist</h2>
+          <ol>
+            <li><strong>Serve images in WebP/AVIF</strong> -- reduces image size by 25-50% compared to JPEG/PNG.</li>
+            <li><strong>Add width and height to all images</strong> -- prevents CLS. Use <code >aspect-ratio</code> CSS for responsive containers.</li>
+            <li><strong>Lazy-load below-the-fold images</strong> -- <code >loading="lazy"</code> defers loading until the user scrolls near them.</li>
+            <li><strong>Preload the LCP element</strong> -- add <code >'<link rel="preload">'</code> for the hero image or font.</li>
+            <li><strong>Enable Brotli compression</strong> -- 10-15% smaller than gzip for text resources.</li>
+            <li><strong>Use a CDN</strong> -- serve assets from the nearest edge location to reduce TTFB.</li>
+            <li><strong>Code-split your JavaScript</strong> -- only load the JS needed for the current page.</li>
+            <li><strong>Self-host fonts</strong> -- eliminates a round-trip to Google Fonts and gives you full caching control.</li>
+            <li><strong>Defer non-critical scripts</strong> -- use <code >defer</code> or <code >async</code> on script tags. Move analytics and chat widgets to load after the page is interactive.</li>
+            <li><strong>Audit with Lighthouse regularly</strong> -- run Lighthouse in CI to catch regressions before they ship.</li>
+          </ol>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <details >
+            <summary >
+              What are the three Core Web Vitals metrics?
+            </summary>
+            
+              The three Core Web Vitals are: Largest Contentful Paint (LCP) measuring loading speed (target: under 2.5 seconds), Interaction to Next Paint (INP) measuring responsiveness (target: under 200 milliseconds), and Cumulative Layout Shift (CLS) measuring visual stability (target: under 0.1). These metrics are used by Google as ranking signals and directly impact user experience. INP replaced First Input Delay (FID) in March 2024.
+            
+          </details>
+
+          <details >
+            <summary >
+              How do Core Web Vitals affect SEO rankings?
+            </summary>
+            
+              Core Web Vitals are a confirmed Google ranking signal as part of the Page Experience update. Pages that pass all three thresholds receive a ranking boost compared to pages that fail. However, content relevance and authority remain stronger signals. Think of CWV as a tiebreaker: among equally relevant pages, the faster one ranks higher. Google uses field data from Chrome User Experience Report (CrUX) for ranking, not lab data from Lighthouse.
+            
+          </details>
+
+          <details >
+            <summary >
+              What is the fastest way to improve LCP?
+            </summary>
+            
+              The fastest LCP improvements come from: (1) Preloading the LCP element (hero image or heading font) with <code >'<link rel="preload">'</code>, (2) Using a CDN to reduce server response time (TTFB), (3) Serving images in WebP/AVIF format with srcset for responsive sizes, (4) Eliminating render-blocking CSS and JavaScript from the critical path, and (5) Using <code >fetchpriority="high"</code> on the LCP image element. These changes can reduce LCP by 1-3 seconds on typical pages.
+            
+          </details>
+        
+
+        /* CTA Section */
+        
+          <h2>Optimize Your Developer Workflow</h2>
+          <p>
+            Fast tools make fast developers. Format JSON configs, test regex patterns, generate hashes, and encode data -- all free, all running in your browser with zero latency.
+          </p>
+          
+            <a href="/json-formatter/">
+              JSON Formatter
+            </a>
+            <a href="/base64/">
+              Base64 Encoder
+            </a>
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                <h3>article.title</h3>
+                <p>article.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/web-performance-optimization/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
