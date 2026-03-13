@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Environment Variables: Best Practices for Dev, Staging &amp; Production - BytePane</title>
+  <meta name="description" content="Master environment variables across development, staging, and production. .env files, secrets, Docker, CI/CD, and security.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/environment-variables-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Environment Variables: Best Practices for Dev, Staging &amp; Production
+  </nav>
+
+  <article>
+    <h1>Environment Variables: Best Practices for Dev, Staging &amp; Production</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/environment-variables-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'What is the difference between .env, .env.local, and .env.production?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: '.env is the base configuration file with default values shared across all environments. .env.local contains machine-specific overrides that should never be committed to version control (it is gitignored by default in Next.js and Create React App). .env.production holds production-specific values that override .env when NODE_ENV=production. The loading order is: .env → .env.local → .env.[NODE_ENV] → .env.[NODE_ENV].local, with later files overriding earlier ones.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Should I commit .env files to Git?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Never commit .env files containing real secrets (API keys, database passwords, tokens). Commit a .env.example file with placeholder values so new developers know which variables are needed. Some teams commit .env files with non-sensitive defaults (APP_NAME, LOG_LEVEL) but keep .env.local with secrets gitignored. For production, use your hosting platform\'s secret management (Vercel Environment Variables, AWS Secrets Manager, GitHub Actions Secrets) instead of files.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do environment variables work in Docker containers?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Docker supports environment variables through multiple mechanisms: the -e flag (docker run -e DB_HOST=localhost), env_file directive in docker-compose.yml, ENV instruction in Dockerfile (for build-time defaults), and ARG for build-time only variables. Best practice is to use docker-compose.yml env_file for development and Kubernetes Secrets or cloud provider secret managers for production. Never bake secrets into Docker images using ENV — they become part of the image layer history.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Why do I need NEXT_PUBLIC_ prefix in Next.js environment variables?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Next.js requires the NEXT_PUBLIC_ prefix for environment variables that should be accessible in browser-side (client) code. Variables without this prefix are only available on the server (API routes, getServerSideProps, Server Components). This is a security feature: it prevents accidentally exposing database passwords or API secrets to the browser. Only prefix variables with NEXT_PUBLIC_ if they are safe to be visible in the browser\'s JavaScript bundle, such as public API URLs or analytics IDs.',
+        ,
+      ,
+    ],
+  
+
+  
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Environment Variables: Best Practices for Dev, Staging & Production',
+            description: 'Master environment variables across development, staging, and production. .env files, secrets, Docker, CI/CD, and security.',
+            datePublished: '2026-03-08',
+            dateModified: '2026-03-08',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/environment-variables-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/environment-variables-guide/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Environment Variables Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+      />
+
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Environment Variables Guide
+      
+
+      
+        <h2>
+          Environment Variables: Best Practices for Dev, Staging & Production
+        </h2>
+        
+          DevOps
+          <time dateTime="2026-03-08">March 8, 2026</time>
+          13 min read
+        
+      
+
+      
+
+        
+          <h2>Why Environment Variables Matter</h2>
+          <p>
+            Environment variables separate configuration from code, following the third factor of the <a href="https://12factor.net/config"  target="_blank" rel="noopener noreferrer">Twelve-Factor App</a> methodology. They allow the same application code to run in development, staging, and production with different database URLs, API keys, and feature flags without changing a single line of source code.
+          </p>
+          <p>
+            Hardcoding configuration leads to three problems: secrets get committed to version control and leaked, you need different code branches for different environments, and changing a configuration value requires a code change and redeployment. Environment variables solve all three.
+          </p>
+          <p>
+            <code >`// BAD: Hardcoded configuration
+const db = connect("postgres://admin:s3cret@prod-db.example.com:5432/myapp")
+const apiKey = "sk_live_abc123xyz789"
+
+// GOOD: Environment variables
+const db = connect(process.env.DATABASE_URL)
+const apiKey = process.env.STRIPE_API_KEY
+
+// The same code works everywhere:
+// Dev:  DATABASE_URL=postgres://localhost:5432/myapp_dev
+// Staging: DATABASE_URL=postgres://staging-db:5432/myapp_staging
+// Prod: DATABASE_URL=postgres://prod-db:5432/myapp_prod`</code>
+          </pre>
+        
+
+        
+          <h2>The .env File Ecosystem</h2>
+          <p >
+            The <code >dotenv</code> pattern popularized by Ruby and Node.js loads environment variables from files into <code >process.env</code>. Most modern frameworks (Next.js, Vite, Create React App, Laravel, Django) support this natively with a specific loading order.
+          </p>
+          <p>
+            <code >`# .env — Base defaults (committed to Git)
+APP_NAME=MyApp
+LOG_LEVEL=info
+API_TIMEOUT=30000
+
+# .env.local — Local overrides (NEVER committed)
+DATABASE_URL=postgres://localhost:5432/myapp_dev
+STRIPE_API_KEY=sk_test_local123
+SECRET_KEY=dev-secret-not-for-prod
+
+# .env.production — Production overrides (may be committed)
+LOG_LEVEL=warn
+API_TIMEOUT=10000
+NEXT_PUBLIC_API_URL=https://api.myapp.com
+
+# .env.production.local — Prod secrets (NEVER committed)
+DATABASE_URL=postgres://prod-db:5432/myapp
+STRIPE_API_KEY=sk_live_prod789
+
+# Loading order (later files override earlier):
+# .env → .env.local → .env.[NODE_ENV] → .env.[NODE_ENV].local`</code>
+          </pre>
+          <p >
+            Always create a <code >.env.example</code> file with placeholder values and commit it to your repository. This documents which variables are required without exposing real values.
+          </p>
+        
+
+        
+          <h2>Framework-Specific Patterns</h2>
+          <p>
+            Each framework has its own conventions for environment variable access. Understanding these patterns prevents common mistakes like exposing secrets to the browser.
+          </p>
+          <p>
+            <code >`// Next.js: NEXT_PUBLIC_ prefix for client-side access
+// Server-only (API routes, Server Components):
+process.env.DATABASE_URL        // ✓ Available
+process.env.STRIPE_SECRET_KEY   // ✓ Available
+
+// Client-side (browser):
+process.env.NEXT_PUBLIC_API_URL    // ✓ Available (has prefix)
+process.env.DATABASE_URL           // ✗ undefined (no prefix)
+
+// Vite: VITE_ prefix for client-side access
+import.meta.env.VITE_API_URL      // ✓ Available
+import.meta.env.DB_PASSWORD        // ✗ undefined
+
+// Create React App: REACT_APP_ prefix
+process.env.REACT_APP_API_URL     // ✓ Available
+process.env.SECRET_KEY             // ✗ undefined`</code>
+          </pre>
+          <p >
+            When working with JSON configuration files alongside environment variables, use our <a href="/json-formatter/">JSON Formatter</a> to validate the structure of your config objects before deployment.
+          </p>
+        
+
+        
+          <h2>Environment Variables in Docker</h2>
+          <p>
+            Docker provides multiple ways to pass environment variables to containers. The right approach depends on whether the variable is a build-time setting or a runtime secret.
+          </p>
+          <p>
+            <code >`# Dockerfile: Build-time variables (NOT for secrets!)
+ARG NODE_ENV=production
+ENV NODE_ENV=\$NODE_ENV
+
+# docker run: Runtime variables
+docker run -e DATABASE_URL=postgres://db:5432/app myapp
+docker run --env-file .env.production myapp
+
+# docker-compose.yml: Multiple approaches
+services:
+  api:
+    image: myapp
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=warn
+    env_file:
+      - .env.production
+    # Interpolate host env vars
+    environment:
+      - DATABASE_URL=\$DATABASE_URL
+
+# NEVER do this — secrets become part of the image!
+# Dockerfile
+ENV DATABASE_URL=postgres://admin:password@db/app  # BAD
+# Anyone who pulls the image can see this:
+# docker history myapp --no-trunc`</code>
+          </pre>
+          <p >
+            For Docker best practices including multi-stage builds and image security, see our <a href="/blog/docker-container-best-practices/">Docker container best practices</a> guide.
+          </p>
+        
+
+        
+          <h2>CI/CD Pipeline Configuration</h2>
+          <p>
+            CI/CD platforms provide secure ways to store and inject environment variables during builds and deployments. Never store secrets in pipeline configuration files; use the platform's secret management features.
+          </p>
+          <p>
+            <code >`# GitHub Actions: Use repository secrets
+# Settings → Secrets and Variables → Actions → New secret
+
+# .github/workflows/deploy.yml
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        env:
+          DATABASE_URL: \$ secrets.DATABASE_URL 
+          STRIPE_KEY: \$ secrets.STRIPE_KEY 
+        run: npm run build
+
+      - name: Deploy
+        env:
+          DEPLOY_KEY: \$ secrets.SSH_DEPLOY_KEY 
+        run: ./deploy.sh
+
+# GitLab CI: Settings → CI/CD → Variables
+# .gitlab-ci.yml
+deploy:
+  script:
+    - echo "DB is $DATABASE_URL"  # Masked in logs
+  variables:
+    NODE_ENV: production
+  # $DATABASE_URL comes from GitLab CI/CD Variables`</code>
+          </pre>
+        
+
+        
+          <h2>Validation and Type Safety</h2>
+          <p >
+            Environment variables are always strings. Without validation, missing or malformed variables cause silent failures at runtime. Validate and parse environment variables at application startup to fail fast with clear error messages.
+          </p>
+          <p>
+            <code >`// config.ts — Validate env vars at startup
+
+const envSchema = z.object(
+  NODE_ENV: z.enum(['development', 'staging', 'production']),
+  DATABASE_URL: z.string().url(),
+  REDIS_URL: z.string().url().optional(),
+  PORT: z.coerce.number().default(3000),
+  LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
+  STRIPE_SECRET_KEY: z.string().startsWith('sk_'),
+  JWT_SECRET: z.string().min(32),
+  CORS_ORIGINS: z.string().transform(s => s.split(',')),
+)
+
+// Throws immediately if any variable is missing or invalid
+export const config = envSchema.parse(process.env)
+
+// TypeScript now knows the exact types:
+// config.PORT is number (not string!)
+// config.CORS_ORIGINS is string[]
+// config.REDIS_URL is string | undefined`</code>
+          </pre>
+          <p >
+            Libraries like <code >zod</code>, <code >envalid</code>, and <code >@t3-oss/env-nextjs</code> provide schema validation for environment variables. This catches configuration errors at startup instead of in production at 3 AM.
+          </p>
+        
+
+        
+          <h2>Secrets Management in Production</h2>
+          <p>
+            For production systems, .env files are insufficient. Use dedicated secrets management services that provide encryption at rest, access control, audit logging, and automatic rotation.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Service</th>
+                  <th >Best For</th>
+                  <th >Key Feature</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >AWS Secrets Manager</td><td >AWS-native apps</td><td >Automatic rotation</td></tr>
+                <tr ><td >HashiCorp Vault</td><td >Multi-cloud</td><td >Dynamic secrets</td></tr>
+                <tr ><td >Google Secret Manager</td><td >GCP apps</td><td >IAM integration</td></tr>
+                <tr ><td >Vercel Env Variables</td><td >Vercel deployments</td><td >Per-branch secrets</td></tr>
+                <tr><td >Doppler</td><td >Team collaboration</td><td >Universal sync</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Naming Conventions and Organization</h2>
+          <p>
+            Consistent naming makes environment variables self-documenting and prevents collisions between services. Follow these conventions for maintainable configuration.
+          </p>
+          <p>
+            <code >`# Use SCREAMING_SNAKE_CASE (universal convention)
+DATABASE_URL=postgres://localhost:5432/myapp
+REDIS_URL=redis://localhost:6379
+
+# Prefix with service name for clarity
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+SENDGRID_API_KEY=SG.xxx
+AWS_ACCESS_KEY_ID=AKIA...
+AWS_SECRET_ACCESS_KEY=...
+
+# Group related variables with common prefixes
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=myapp
+DB_USER=admin
+DB_PASSWORD=secret
+
+# Boolean conventions (pick one and be consistent)
+FEATURE_NEW_UI=true        # "true"/"false" strings
+ENABLE_CACHING=1           # "1"/"0"
+DEBUG=                     # empty = falsy
+
+# Never use spaces around = in .env files
+# WRONG: DATABASE_URL = postgres://localhost
+# RIGHT: DATABASE_URL=postgres://localhost`</code>
+          </pre>
+        
+
+        
+          <h2>Security Checklist</h2>
+          <p >
+            A single leaked environment variable can compromise your entire infrastructure. Follow this checklist to prevent credential exposure.
+          </p>
+          <ol>
+            <li><strong>Add .env* to .gitignore</strong> -- Except .env.example. Check <code >git log</code> to verify secrets were never committed.</li>
+            <li><strong>Use framework prefixes correctly</strong> -- Only prefix variables with NEXT_PUBLIC_, VITE_, or REACT_APP_ if they are safe to expose in browser JavaScript.</li>
+            <li><strong>Rotate leaked secrets immediately</strong> -- If a secret was ever committed to Git, consider it compromised even after removing it. Regenerate the credential.</li>
+            <li><strong>Use different secrets per environment</strong> -- Dev, staging, and production should never share API keys or database credentials.</li>
+            <li><strong>Audit access regularly</strong> -- Review who has access to production secrets in your CI/CD platform and cloud provider.</li>
+            <li><strong>Never log environment variables</strong> -- Mask secrets in log output. Libraries like <code >pino</code> support redaction patterns.</li>
+          </ol>
+          <p>
+            Tools like <a href="https://eyesift.com/"  target="_blank" rel="noopener noreferrer">EyeSift</a> can help detect AI-generated phishing attempts that target developers to steal credentials, adding another layer of security awareness to your workflow.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Validate Your Configuration with BytePane</h2>
+          <p>
+            Format and validate your JSON config files with our <a href="/json-formatter/">JSON Formatter</a>. Convert between YAML and JSON configuration formats with the <a href="/yaml-to-json/">YAML to JSON Converter</a>. Generate secure passwords for your environment secrets with the <a href="/password-generator/">Password Generator</a>.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/docker-container-best-practices/">
+              <h3>Docker Container Best Practices</h3>
+              <p>Dockerfile, security, and optimization for production containers.</p>
+            </a>
+            <a href="/blog/ci-cd-pipeline-guide/">
+              <h3>CI/CD Pipeline Guide</h3>
+              <p>GitHub Actions, Jenkins, and GitLab CI pipeline configuration.</p>
+            </a>
+            <a href="/blog/ssh-keys-guide/">
+              <h3>SSH Keys Guide</h3>
+              <p>Key generation, management, and security best practices.</p>
+            </a>
+            <a href="/blog/yaml-vs-json-comparison/">
+              <h3>YAML vs JSON Comparison</h3>
+              <p>Syntax, use cases, and choosing the right config format.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/environment-variables-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
