@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Net Metering Explained: How Solar Credits Work State by State - JouleIO</title>
+  <meta name="description" content="Complete guide to net metering — how solar credits work, state-by-state policies, NEM 2.0 vs NEM 3.0, compensation rates, and how to maximize your solar bill savings.">
+  <link rel="canonical" href="https://www.jouleio.com/blog/net-metering-explained/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/jouleio/">JouleIO</a> &rarr; Net Metering Explained: How Solar Credits Work State by State
+  </nav>
+
+  <article>
+    <h1>Net Metering Explained: How Solar Credits Work State by State</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.jouleio.com/blog/net-metering-explained/">jouleio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    'use client';
+
+const articleSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Net Metering Explained: How Solar Credits Work State by State',
+  description: 'Complete guide to net metering — how solar credits work, state-by-state policies, NEM 2.0 vs NEM 3.0, compensation rates, and how to maximize your solar bill savings.',
+  datePublished: '2026-03-08',
+  dateModified: '2026-03-08',
+  author: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+  ,
+  publisher: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+    logo:  '@type': 'ImageObject', url: 'https://jouleio.com/favicon.svg' ,
+  ,
+  mainEntityOfPage: 'https://jouleio.com/blog/net-metering-explained/',
+;
+
+const breadcrumbSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+     '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jouleio.com/' ,
+     '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://jouleio.com/blog/' ,
+     '@type': 'ListItem', position: 3, name: 'Net Metering Explained', item: 'https://jouleio.com/blog/net-metering-explained/' ,
+  ],
+;
+
+const faqSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    
+      '@type': 'Question',
+      name: 'What is net metering and how does it work?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Net metering is a billing arrangement that allows solar panel owners to send excess electricity back to the grid in exchange for credits on their utility bill. When your solar panels produce more electricity than you use, the surplus flows to the grid and your meter effectively runs backward. At the end of the billing period, you only pay for your net consumption — the difference between what you used and what you exported.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Do all states have net metering?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'As of 2026, approximately 40 states plus Washington D.C. have mandatory net metering policies. However, the specifics vary significantly between states. Some states offer full retail-rate credits, while others compensate at wholesale or avoided-cost rates. States like California have transitioned to newer net billing programs (NEM 3.0) with reduced export rates. Check your state utility commission for current policies.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'What is the difference between NEM 2.0 and NEM 3.0?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'NEM 2.0 credits solar exports at close to the full retail electricity rate, making it very favorable for solar owners. NEM 3.0 (also called Net Billing), adopted by California in 2023, credits exports at much lower rates based on the avoided cost of electricity — roughly 75% less than retail. NEM 3.0 strongly incentivizes battery storage to self-consume solar energy rather than export it, and shifts solar economics toward systems paired with batteries.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Can I still save money with solar if my state does not have net metering?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes, solar can still save money without traditional net metering. You save on every kilowatt-hour you self-consume (use directly), which offsets grid purchases at the full retail rate. Adding battery storage allows you to store excess solar energy and use it later. Some states without net metering offer alternative programs like feed-in tariffs, buy-all/sell-all arrangements, or value-of-solar rates that still compensate solar production.',
+      ,
+    ,
+  ],
+;
+
+  
+    <>
+      <Header />
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Net Metering Explained</li>
+          </ol>
+        
+
+        
+          
+            Solar
+            <h2>
+              Net Metering Explained: How Solar Credits Work State by State
+            </h2>
+            <p>
+              Net metering is one of the most important financial incentives for solar panel owners. It lets you earn credits for excess electricity your panels send to the grid, dramatically reducing your utility bills. This guide explains how net metering works, compares state policies, and shows you how to maximize your solar savings.
+            </p>
+            
+              <time dateTime="2026-03-08">March 8, 2026</time>
+              13 min read
+            
+          
+
+          
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#how-net-metering-works" >1. How Net Metering Works</a></li>
+              <li><a href="#types-of-net-metering" >2. Types of Net Metering Programs</a></li>
+              <li><a href="#state-by-state" >3. Net Metering Policies by State</a></li>
+              <li><a href="#nem-3" >4. NEM 2.0 vs NEM 3.0: What Changed</a></li>
+              <li><a href="#financial-impact" >5. Financial Impact on Solar ROI</a></li>
+              <li><a href="#battery-storage" >6. Net Metering and Battery Storage</a></li>
+              <li><a href="#system-sizing" >7. Optimal System Sizing for Net Metering</a></li>
+              <li><a href="#alternatives" >8. Alternatives to Net Metering</a></li>
+              <li><a href="#maximizing-credits" >9. Maximizing Your Solar Credits</a></li>
+              <li><a href="#faq" >10. Frequently Asked Questions</a></li>
+            </ol>
+          
+
+          
+            
+              <h2>How Net Metering Works</h2>
+              <p>
+                Net metering is a billing mechanism that credits solar energy system owners for the electricity they add to the grid. When your solar panels produce more electricity than your home needs — typically during sunny midday hours — the excess flows back to the utility grid. Your electric meter tracks both the energy you consume from the grid and the energy you export to it.
+              </p>
+              <p>
+                At the end of your billing period, you are billed only for your &quot;net&quot; energy use — the difference between what you pulled from the grid and what you sent back. If you exported more than you consumed, the surplus carries forward as a credit to the next billing period. Some utilities settle excess credits annually at a reduced rate or pay you a small amount for the surplus.
+              </p>
+              <p>
+                A bidirectional meter (also called a net meter) is required for net metering. Your utility typically installs this at no cost when your solar system is interconnected. The meter records energy flow in both directions, giving you and your utility an accurate picture of your energy balance. Use our <a href="/solar-savings-calculator/">Solar Savings Calculator</a> to model your net metering savings based on your location and usage.
+              </p>
+            
+
+            
+              <h2>Types of Net Metering Programs</h2>
+              <p>
+                Not all net metering programs are created equal. The compensation rate and structure vary significantly, directly impacting the value of your solar investment.
+              </p>
+
+              <h3>Full Retail Net Metering</h3>
+              <p>
+                The most favorable type for solar owners. Every kWh you export earns a credit at the full retail electricity rate — the same price you pay to buy electricity. If your retail rate is $0.15/kWh, each exported kWh saves you $0.15. States with full retail net metering include New Jersey, Massachusetts, New York, and Maryland.
+              </p>
+
+              <h3>Net Billing (Reduced Rate)</h3>
+              <p>
+                Under net billing programs, exports are credited at a rate lower than retail — often the wholesale or &quot;avoided cost&quot; rate. California&apos;s NEM 3.0 is a prominent example, where export credits average $0.05-$0.08/kWh compared to retail rates of $0.30-$0.55/kWh. Net billing makes battery storage financially essential.
+              </p>
+
+              <h3>Feed-In Tariffs (FIT)</h3>
+              <p>
+                Feed-in tariffs pay a fixed rate for all solar electricity produced, regardless of how much you self-consume. FIT rates are set by contract (often 10-20 years) and vary from $0.08-$0.20/kWh depending on the program. FITs are common in Hawaii and some municipal utilities.
+              </p>
+            
+
+            
+              <h2>Net Metering Policies by State</h2>
+              <p>
+                Net metering policies vary dramatically across the United States. Here is a comparison of key states as of 2026:
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >State</th>
+                      <th >Policy Type</th>
+                      <th >Export Credit Rate</th>
+                      <th >System Cap</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >California</td><td >Net Billing (NEM 3.0)</td><td >$0.05-$0.08/kWh</td><td >No cap</td></tr>
+                    <tr ><td >New York</td><td >Full Retail NM</td><td >Full retail rate</td><td >25 kW residential</td></tr>
+                    <tr ><td >New Jersey</td><td >Full Retail NM</td><td >Full retail rate</td><td >No cap</td></tr>
+                    <tr ><td >Texas</td><td >Varies by utility</td><td >Wholesale rate</td><td >Varies</td></tr>
+                    <tr ><td >Florida</td><td >Full Retail NM</td><td >Full retail rate</td><td >2 MW</td></tr>
+                    <tr ><td >Arizona</td><td >Reduced Rate NM</td><td >~$0.03-$0.04/kWh</td><td >No cap</td></tr>
+                    <tr><td >Massachusetts</td><td >Full Retail NM</td><td >Full retail rate</td><td >25 kW residential</td></tr>
+                  </tbody>
+                </table>
+              
+            
+
+            
+              <h2>NEM 2.0 vs NEM 3.0: What Changed</h2>
+              <p>
+                California&apos;s transition from NEM 2.0 to NEM 3.0 in April 2023 marked the most significant net metering policy change in U.S. history. The shift reduced export compensation by approximately 75% and fundamentally changed solar economics in the state.
+              </p>
+              <p>
+                Under NEM 2.0, solar exports were credited at near-retail rates ($0.25-$0.40/kWh). NEM 3.0 uses an &quot;Avoided Cost Calculator&quot; that values exports based on the utility&apos;s avoided generation costs, typically $0.05-$0.08/kWh. The result: solar-only systems have a payback period of 9-12 years under NEM 3.0 versus 5-7 years under NEM 2.0.
+              </p>
+              <p>
+                However, NEM 3.0 strongly incentivizes battery storage. A solar-plus-battery system under NEM 3.0 can achieve a 6-8 year payback by storing midday solar energy and using it during expensive peak evening hours (which can exceed $0.55/kWh on TOU rates). For detailed savings projections, try our <a href="/solar-panel-calculator/">Solar Panel Calculator</a>.
+              </p>
+            
+
+            
+              <h2>Financial Impact on Solar ROI</h2>
+              <p>
+                The type of net metering policy in your state has a massive impact on your solar return on investment. Here is how payback periods compare for a typical 8 kW residential system costing $22,000 before the 30% ITC:
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Net Metering Type</th>
+                      <th >Annual Savings</th>
+                      <th >Payback Period</th>
+                      <th >25-Year ROI</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Full Retail</td><td >$1,800-$2,400</td><td >6-8 years</td><td >$45,000-$60,000</td></tr>
+                    <tr ><td >Reduced Rate</td><td >$1,200-$1,800</td><td >8-12 years</td><td >$30,000-$45,000</td></tr>
+                    <tr><td >No Net Metering</td><td >$900-$1,400</td><td >11-15 years</td><td >$22,000-$35,000</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                Even in states without favorable net metering, solar remains a strong investment thanks to the 30% federal tax credit and rising electricity rates (averaging 3-4% annual increases). For financing options, see <a href="https://amortio.com/" target="_blank" rel="noopener" >Amortio&apos;s loan calculators</a> to compare solar loan terms.
+              </p>
+            
+
+            
+              <h2>Net Metering and Battery Storage</h2>
+              <p>
+                Battery storage has become increasingly important as net metering policies evolve. In states with reduced export rates, a battery system lets you store excess solar energy and use it during peak evening hours when grid electricity is most expensive — instead of exporting it for a fraction of its value.
+              </p>
+              <p>
+                A 13.5 kWh battery (like the Tesla Powerwall) stores enough energy to power a typical home for 4-6 peak hours. In a state like California under NEM 3.0, this means avoiding $0.50+/kWh peak rates by using stored solar energy worth only $0.05-$0.08/kWh if exported. The annual savings from this rate arbitrage alone can be $600-$1,200, making the battery payback period 6-10 years. Calculate your battery economics with our <a href="/solar-battery-calculator/">Solar Battery Calculator</a>.
+              </p>
+            
+
+            
+              <h2>Optimal System Sizing for Net Metering</h2>
+              <p>
+                With full retail net metering, the optimal strategy is to size your system to offset 100% of your annual electricity usage. Any excess production carries forward as credits, and most utilities settle annually. Under-sizing means you leave savings on the table, while over-sizing beyond your annual usage offers diminishing returns since surplus credits are typically paid out at a lower wholesale rate.
+              </p>
+              <p>
+                In states with reduced export rates, the strategy shifts toward matching your system size to your daytime self-consumption plus battery capacity. This maximizes the value of each kWh by ensuring most solar production is consumed on-site rather than exported at low rates. Use our <a href="/solar-panel-calculator/">Solar Panel Calculator</a> to determine the ideal system size for your usage pattern.
+              </p>
+            
+
+            
+              <h2>Alternatives to Net Metering</h2>
+              <p>
+                If your state or utility does not offer favorable net metering, several alternatives can still make solar worthwhile:
+              </p>
+              <ul>
+                <li><strong>Self-consumption:</strong> Size your system to match daytime usage and add battery storage for evening hours</li>
+                <li><strong>Community solar:</strong> Subscribe to a shared solar farm and receive bill credits (available in 20+ states)</li>
+                <li><strong>Virtual net metering:</strong> Share solar credits across multiple meters or properties (available in some states)</li>
+                <li><strong>SRECs:</strong> Sell Solar Renewable Energy Certificates for $10-$400+ per MWh depending on state markets</li>
+                <li><strong>Feed-in tariffs:</strong> Fixed-rate contracts for all production, available in select markets</li>
+              </ul>
+            
+
+            
+              <h2>Maximizing Your Solar Credits</h2>
+              <p>
+                To get the most value from net metering, implement these strategies:
+              </p>
+              <ul>
+                <li>Monitor your system with a solar monitoring app to track production vs consumption in real time</li>
+                <li>Shift heavy loads (EV charging, laundry, dishwasher) to midday when solar production is highest</li>
+                <li>Pair solar with TOU rates to maximize the value of stored energy during peak hours</li>
+                <li>Add battery storage in states with reduced export rates to keep energy value on-site</li>
+                <li>Keep panels clean and shade-free to maintain maximum production year-round</li>
+              </ul>
+              <p>
+                Track your home&apos;s energy efficiency alongside solar production using our <a href="/home-energy-audit/">Home Energy Audit Tool</a> and <a href="/carbon-footprint-calculator/">Carbon Footprint Calculator</a>.
+              </p>
+            
+
+            
+              <h2>Frequently Asked Questions</h2>
+
+              
+                
+                  <h3>What is net metering and how does it work?</h3>
+                  <p>
+                    Net metering credits solar panel owners for excess electricity sent back to the grid. Your meter tracks both energy consumed and exported, and you only pay for the net difference. Surplus credits carry forward to future billing periods.
+                  </p>
+                
+
+                
+                  <h3>Do all states have net metering?</h3>
+                  <p>
+                    Approximately 40 states plus Washington D.C. have mandatory net metering policies as of 2026. However, compensation rates vary widely — some states offer full retail credits while others use reduced wholesale rates. Check your state utility commission for current policies.
+                  </p>
+                
+
+                
+                  <h3>What is the difference between NEM 2.0 and NEM 3.0?</h3>
+                  <p>
+                    NEM 2.0 credits solar exports at near-retail rates, while NEM 3.0 (California&apos;s new policy) credits at much lower avoided-cost rates — roughly 75% less. NEM 3.0 makes battery storage essential for maximizing solar savings.
+                  </p>
+                
+
+                
+                  <h3>Can I still save money without net metering?</h3>
+                  <p>
+                    Yes. You save on every kWh you self-consume, and battery storage lets you use excess solar energy later. Alternative programs like SRECs, feed-in tariffs, and community solar also provide value. Use our <a href="/solar-savings-calculator/">Solar Savings Calculator</a> to model your specific scenario.
+                  </p>
+                
+              
+            
+          
+
+          
+            <h2>Calculate Your Solar Savings</h2>
+            <p>See how net metering impacts your solar ROI with our free calculators.</p>
+            
+              <a href="/solar-savings-calculator/">
+                Solar Savings Calculator
+              </a>
+              <a href="/solar-panel-calculator/">
+                Solar Panel Calculator
+              </a>
+            
+          
+
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/solar-panel-guide/">
+                Solar
+                <h3>Solar Panel Guide 2026</h3>
+                <p>Complete guide to solar panel types, costs, and installation process.</p>
+              </a>
+              <a href="/blog/solar-incentives-tax-credits-2026/">
+                Solar
+                <h3>Solar Incentives &amp; Tax Credits 2026</h3>
+                <p>Every solar incentive available — federal ITC, state rebates, SRECs, and more.</p>
+              </a>
+            
+          
+        
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+        />
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.jouleio.com/blog/net-metering-explained/">JouleIO</a>.
+      Explore more free tools at <a href="https://www.jouleio.com/">jouleio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.jouleio.com/">JouleIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
