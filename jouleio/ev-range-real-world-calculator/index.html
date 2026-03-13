@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EV Range Calculator: EPA vs Real-World Driving in Cold Weather - JouleIO</title>
+  <meta name="description" content="Why your EV gets less range than the EPA rating. Understand how cold weather, highway speed, HVAC, and driving style affect real-world electric vehicle range.">
+  <link rel="canonical" href="https://www.jouleio.com/blog/ev-range-real-world-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/jouleio/">JouleIO</a> &rarr; EV Range Calculator: EPA vs Real-World Driving in Cold Weather
+  </nav>
+
+  <article>
+    <h1>EV Range Calculator: EPA vs Real-World Driving in Cold Weather</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.jouleio.com/blog/ev-range-real-world-calculator/">jouleio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'EV Range Calculator: EPA vs Real-World Driving in Cold Weather',
+  description: 'Why your EV gets less range than the EPA rating. Understand how cold weather, highway speed, HVAC, and driving style affect real-world electric vehicle range.',
+  datePublished: '2026-03-06',
+  dateModified: '2026-03-06',
+  author: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+  ,
+  publisher: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+    logo:  '@type': 'ImageObject', url: 'https://jouleio.com/favicon.svg' ,
+  ,
+  mainEntityOfPage: 'https://jouleio.com/blog/ev-range-real-world-calculator/',
+;
+
+const breadcrumbSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+     '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jouleio.com/' ,
+     '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://jouleio.com/blog/' ,
+     '@type': 'ListItem', position: 3, name: 'EV Range: EPA vs Real-World', item: 'https://jouleio.com/blog/ev-range-real-world-calculator/' ,
+  ],
+;
+
+const faqSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    
+      '@type': 'Question',
+      name: 'How much range does an EV lose in cold weather?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'EVs typically lose 20-40% of their EPA-rated range in cold weather. At 20°F (-7°C), expect about 25-30% range loss. At 0°F (-18°C), range can drop 35-40%. The loss comes from battery chemistry changes, cabin heating demand, and increased rolling resistance from cold tires.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Why is real-world EV range less than the EPA rating?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'EPA range tests use a standardized cycle at moderate temperatures (68-86°F) with minimal HVAC use and average speeds of 48 mph. Real-world driving involves highway speeds, extreme temperatures, HVAC use, cargo weight, wind resistance, and terrain changes — all of which reduce actual range below the EPA number.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Does highway driving reduce EV range more than city driving?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes, significantly. EVs are most efficient at 25-45 mph. At 70 mph, air resistance increases energy consumption by 40-50% compared to 55 mph. A Tesla Model 3 rated at 358 miles EPA may achieve only 240-270 miles at sustained 75 mph highway driving. This is the opposite of gas cars, which get better highway mileage.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How can I maximize my EV range in winter?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Precondition the cabin while plugged in, use heated seats and steering wheel instead of cabin heating, keep the battery between 20-80%, park in a garage, reduce highway speed by 5-10 mph, check tire pressure (cold reduces it), and plan charging stops more frequently on long trips.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'What is the most efficient speed for an EV?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Most EVs achieve peak efficiency between 25-45 mph. At these speeds, aerodynamic drag is low and the electric motor operates near optimal efficiency. Every 10 mph increase above 50 mph reduces range by approximately 10-15%. Driving at 55 mph instead of 75 mph can increase range by 25-30%.',
+      ,
+    ,
+  ],
+;
+
+  
+    <>
+      <Header />
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>EV Range: EPA vs Real-World</li>
+          </ol>
+        
+
+        
+          /* Header */
+          
+            EV
+            <h2>
+              EV Range Calculator: EPA vs Real-World Driving in Cold Weather
+            </h2>
+            <p>
+              Your electric vehicle&apos;s EPA range rating is measured under ideal conditions that rarely exist in real life. Cold weather, highway speeds, cabin heating, and driving style can reduce your actual range by 20-40%. This guide explains exactly why real-world range falls short, how much range you lose by temperature and speed, and practical strategies to maximize every mile.
+            </p>
+            
+              <time dateTime="2026-03-06">March 6, 2026</time>
+              12 min read
+            
+          
+
+          /* Table of Contents */
+          
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#epa-testing" >1. How the EPA Tests EV Range</a></li>
+              <li><a href="#temperature-effect" >2. Temperature Effect on Battery Range</a></li>
+              <li><a href="#speed-impact" >3. Highway Speed Impact on Range</a></li>
+              <li><a href="#hvac-drain" >4. HVAC and Cabin Heating Drain</a></li>
+              <li><a href="#other-factors" >5. Other Factors: Terrain, Tires, Cargo</a></li>
+              <li><a href="#real-world-examples" >6. Real-World Range by Popular Model</a></li>
+              <li><a href="#maximize-range" >7. How to Maximize Your EV Range</a></li>
+              <li><a href="#route-planning" >8. Route Planning Tips for Long Trips</a></li>
+              <li><a href="#faq" >9. Frequently Asked Questions</a></li>
+            </ol>
+          
+
+          /* Content */
+          
+            
+              <h2>How the EPA Tests EV Range</h2>
+              <p>
+                The EPA (Environmental Protection Agency) range rating is the number you see on the window sticker of every new EV. It represents the estimated miles the vehicle can travel on a full charge. However, the testing conditions are tightly controlled and may not reflect your daily driving.
+              </p>
+              <p>
+                EPA testing uses a dynamometer (essentially a treadmill for cars) in a controlled environment at 68-86°F (20-30°C). The test combines city and highway driving cycles with an average speed of about 48 mph. The AC and heater are off. There are no hills, no wind, no rain, and no cargo. The EPA applies a 30% correction factor to account for real-world conditions, but this adjustment is often insufficient.
+              </p>
+              <p>
+                In practice, most EV owners report achieving 85-95% of the EPA range in mild weather with mixed city/highway driving. In cold weather or at sustained highway speeds, actual range can drop to 60-75% of the EPA number. Understanding these gaps helps you plan trips more accurately. Try our <a href="/ev-range-calculator/">EV Range Calculator</a> to estimate your real-world range based on your specific conditions.
+              </p>
+            
+
+            
+              <h2>Temperature Effect on Battery Range</h2>
+              <p>
+                Temperature is the single largest factor affecting EV range. Lithium-ion batteries have an optimal operating temperature of 60-80°F (15-27°C). Below this range, the chemical reactions that produce electricity slow down, reducing the battery&apos;s available capacity and power output.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Temperature</th>
+                      <th >Range Loss (no HVAC)</th>
+                      <th >Range Loss (with heat)</th>
+                      <th >300-mi EV Actual Range</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >70°F (21°C)</td><td >0%</td><td >0%</td><td >285-300 mi</td></tr>
+                    <tr ><td >50°F (10°C)</td><td >5-8%</td><td >8-12%</td><td >264-276 mi</td></tr>
+                    <tr ><td >32°F (0°C)</td><td >10-15%</td><td >20-25%</td><td >225-240 mi</td></tr>
+                    <tr ><td >20°F (-7°C)</td><td >15-20%</td><td >25-35%</td><td >195-225 mi</td></tr>
+                    <tr ><td >0°F (-18°C)</td><td >20-25%</td><td >35-45%</td><td >165-195 mi</td></tr>
+                    <tr><td >-10°F (-23°C)</td><td >25-30%</td><td >40-50%</td><td >150-180 mi</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                The range loss has two components: battery chemistry degradation (which occurs even without HVAC) and the energy required for cabin heating. EVs with heat pumps (Tesla Model 3/Y, Hyundai Ioniq 5, Kia EV6) experience less heating-related range loss than those using resistive heaters, because heat pumps move heat instead of generating it — the same principle that makes them efficient for homes.
+              </p>
+            
+
+            
+              <h2>Highway Speed Impact on Range</h2>
+              <p>
+                Unlike gas cars, EVs get worse mileage on the highway than in the city. This is because aerodynamic drag increases with the square of speed, and EVs cannot recover energy through regenerative braking at constant highway speeds. Additionally, EVs are highly efficient at low speeds thanks to the electric motor&apos;s flat torque curve.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Speed</th>
+                      <th >Energy Use vs 55 mph</th>
+                      <th >300-mi EV Actual Range</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >35 mph (city)</td><td >-20% (most efficient)</td><td >340-360 mi</td></tr>
+                    <tr ><td >55 mph</td><td >Baseline</td><td >280-300 mi</td></tr>
+                    <tr ><td >65 mph</td><td >+15%</td><td >250-270 mi</td></tr>
+                    <tr ><td >75 mph</td><td >+35%</td><td >210-240 mi</td></tr>
+                    <tr><td >85 mph</td><td >+55%</td><td >180-210 mi</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                The impact is dramatic: driving at 75 mph instead of 55 mph uses 35% more energy, effectively reducing a 300-mile EV to a 210-240 mile range vehicle. For long road trips, reducing speed by just 5-10 mph can add 20-40 miles of range, potentially eliminating a charging stop. Calculate your driving costs at different speeds with our <a href="/ev-charging-cost/">EV Charging Cost Calculator</a>.
+              </p>
+            
+
+            
+              <h2>HVAC and Cabin Heating Drain</h2>
+              <p>
+                In a gas car, cabin heat is essentially free — it uses waste heat from the engine. An EV has no engine waste heat, so it must use battery energy to heat the cabin. This is the main reason cold weather hits EV range so hard.
+              </p>
+
+              <h3>Heating Systems</h3>
+              <ul>
+                <li><strong>Resistive heater:</strong> Uses 3-5 kW continuously. On a 75 kWh battery, this consumes 4-7% of the battery per hour of driving. Older EVs and some budget models use this method.</li>
+                <li><strong>Heat pump:</strong> Uses 1-2 kW for the same heating output. Reduces heating-related range loss by 40-60%. Most EVs from 2023 onward include heat pumps as standard.</li>
+                <li><strong>Heated seats/wheel:</strong> Use only 50-100 watts each. Far more efficient than heating the entire cabin and keep occupants comfortable at lower thermostat settings.</li>
+              </ul>
+
+              <h3>Air Conditioning</h3>
+              <p>
+                AC has a smaller impact on range than heating — typically 5-10% range reduction on hot days. EV AC compressors are electrically driven and use about 1-2 kW. In extreme heat (100°F+), the battery cooling system also runs, adding another 0.5-1 kW of energy draw. Hot weather is much kinder to EV range than cold weather.
+              </p>
+            
+
+            
+              <h2>Other Factors: Terrain, Tires, Cargo</h2>
+
+              <h3>Terrain and Elevation</h3>
+              <p>
+                Climbing hills uses significantly more energy. Ascending 1,000 feet of elevation in a 4,500 lb EV requires about 1.5 kWh of energy. A mountain pass with 3,000 feet of climbing can consume 4-5 kWh — equivalent to 15-20 miles of flat-road range. The good news is that EVs recover much of this energy on the descent through regenerative braking. A round trip over a mountain pass may only cost 30-40% of the energy consumed on the ascent.
+              </p>
+
+              <h3>Tires</h3>
+              <p>
+                Tire choice affects EV range more than most owners realize. Low-rolling-resistance (LRR) tires, which most EVs ship with, are optimized for efficiency. Switching to standard all-season tires can reduce range by 3-5%. Winter tires reduce range by 5-10% due to higher rolling resistance and softer compounds. Underinflated tires (common in cold weather as air contracts) add another 2-3% range loss. Check tire pressure monthly, especially when temperatures drop.
+              </p>
+
+              <h3>Cargo and Passengers</h3>
+              <p>
+                Every 100 pounds of additional weight reduces range by approximately 1-2%. A roof rack (even empty) increases aerodynamic drag by 5-10%, reducing highway range accordingly. A roof box or bike rack can add 10-25% drag. Remove roof accessories when not in use to maximize range.
+              </p>
+            
+
+            
+              <h2>Real-World Range by Popular Model</h2>
+              <p>
+                Here is how popular EVs perform in real-world conditions compared to their EPA ratings. These estimates assume mixed driving at 65-70 mph average speed in moderate (60-75°F) weather.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Model</th>
+                      <th >EPA Range</th>
+                      <th >Real-World (Mild)</th>
+                      <th >Real-World (Cold)</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Tesla Model 3 LR</td><td >358 mi</td><td >300-330 mi</td><td >215-260 mi</td></tr>
+                    <tr ><td >Tesla Model Y LR</td><td >310 mi</td><td >260-290 mi</td><td >190-230 mi</td></tr>
+                    <tr ><td >Hyundai Ioniq 5 LR</td><td >303 mi</td><td >255-280 mi</td><td >185-225 mi</td></tr>
+                    <tr ><td >Ford Mustang Mach-E ER</td><td >312 mi</td><td >260-290 mi</td><td >190-235 mi</td></tr>
+                    <tr ><td >Chevy Equinox EV</td><td >319 mi</td><td >270-295 mi</td><td >195-240 mi</td></tr>
+                    <tr><td >Rivian R1S</td><td >321 mi</td><td >260-290 mi</td><td >195-240 mi</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                As a rule of thumb, expect 85-93% of EPA range in mild weather and 60-75% in cold weather with heating. Tesla models tend to achieve a higher percentage of their EPA rating because Tesla&apos;s efficiency claims are generally more conservative than some competitors. Use our <a href="/ev-range-calculator/">EV Range Calculator</a> to input your specific model and driving conditions.
+              </p>
+            
+
+            
+              <h2>How to Maximize Your EV Range</h2>
+              <p>
+                These practical strategies can recover 10-30% of lost range, especially in cold weather and highway driving scenarios.
+              </p>
+
+              <h3>Cold Weather Strategies</h3>
+              <ul>
+                <li><strong>Precondition while plugged in:</strong> Warm up the cabin and battery before unplugging. This uses grid electricity instead of battery power and can recover 10-15% of cold-weather range loss.</li>
+                <li><strong>Use seat heaters over cabin heat:</strong> Heated seats and steering wheel use 50-100W each vs 3,000-5,000W for cabin heating. Set the cabin to 65°F and rely on seat heat for comfort.</li>
+                <li><strong>Park in a garage:</strong> Even an unheated garage is 10-20°F warmer than outside, reducing battery cooling and preconditioning energy.</li>
+                <li><strong>Keep the battery above 20%:</strong> Cold batteries are less efficient. Charging to 80% and staying above 20% keeps the battery in its optimal temperature and voltage range.</li>
+              </ul>
+
+              <h3>Highway Driving Strategies</h3>
+              <ul>
+                <li><strong>Reduce speed by 5-10 mph:</strong> Dropping from 75 to 65 mph can increase range by 15-20%. The time cost on a 200-mile trip is only 15-20 minutes.</li>
+                <li><strong>Use cruise control:</strong> Smooth, constant speed is more efficient than speed variations. Adaptive cruise control is ideal.</li>
+                <li><strong>Draft behind trucks:</strong> Following a semi at a safe distance (3-4 seconds) reduces aerodynamic drag. However, safety always comes first — never follow too closely.</li>
+                <li><strong>Remove roof accessories:</strong> An empty roof rack reduces range by 5-10%. A roof box can reduce it by 10-25%.</li>
+              </ul>
+
+              <p>
+                Compare your driving costs with a gas vehicle to see the savings even with range adjustments, using our <a href="/ev-savings-calculator/">EV Savings Calculator</a>.
+              </p>
+            
+
+            
+              <h2>Route Planning Tips for Long Trips</h2>
+              <p>
+                Long-distance EV trips require more planning than gas car trips, but the gap is narrowing as charging infrastructure expands. Here are practical tips for stress-free road tripping.
+              </p>
+              <ul>
+                <li><strong>Plan with real-world range:</strong> Use 70-80% of EPA range as your planning range, or 55-65% in cold weather. Never plan to arrive at a charger below 10%.</li>
+                <li><strong>Charge to 80%, not 100%:</strong> Charging from 80% to 100% takes as long as charging from 10% to 80%. It is faster to make shorter, more frequent charging stops.</li>
+                <li><strong>Use A Better Route Planner (ABRP):</strong> This free app accounts for weather, elevation, speed, and your specific vehicle to plan optimal charging stops.</li>
+                <li><strong>Have a backup charger:</strong> Always know where the next charger is after your planned stop, in case it is occupied or out of service.</li>
+                <li><strong>Arrive at chargers with 10-20% battery:</strong> DC fast chargers are fastest when the battery is low. Arriving at 10% means shorter total charging time than arriving at 40%.</li>
+              </ul>
+
+              
+                <p>
+                  <strong>Pro Tip:</strong> On a winter road trip, add 30-40% to your expected energy consumption when planning. If a segment would normally use 50% of your battery, plan for 65-70%. This buffer accounts for cold weather, heating, and potential detours. Better to arrive at the charger with extra range than to experience range anxiety.
+                </p>
+              
+            
+
+            /* FAQ Section */
+            
+              <h2>Frequently Asked Questions</h2>
+
+              
+                
+                  <h3>How much range does an EV lose in cold weather?</h3>
+                  <p>
+                    EVs typically lose 20-40% of EPA-rated range in cold weather. At 20°F, expect 25-30% loss. At 0°F, range can drop 35-40% due to battery chemistry changes, cabin heating, and cold tire resistance.
+                  </p>
+                
+
+                
+                  <h3>Why is real-world EV range less than the EPA rating?</h3>
+                  <p>
+                    EPA tests use controlled conditions at 68-86°F with minimal HVAC and average 48 mph speeds. Real-world driving involves highway speeds, extreme temperatures, HVAC use, cargo, wind, and terrain — all of which reduce actual range.
+                  </p>
+                
+
+                
+                  <h3>Does highway driving reduce EV range more than city driving?</h3>
+                  <p>
+                    Yes. EVs are most efficient at 25-45 mph. At 70 mph, air resistance increases consumption 40-50% vs 55 mph. A 300-mile EPA EV may only achieve 210-240 miles at sustained 75 mph. Use our <a href="/ev-range-calculator/">EV Range Calculator</a> to see the impact.
+                  </p>
+                
+
+                
+                  <h3>How can I maximize my EV range in winter?</h3>
+                  <p>
+                    Precondition while plugged in, use heated seats instead of cabin heat, keep battery between 20-80%, park in a garage, reduce highway speed by 5-10 mph, and check tire pressure monthly.
+                  </p>
+                
+
+                
+                  <h3>What is the most efficient speed for an EV?</h3>
+                  <p>
+                    Most EVs peak at 25-45 mph. Every 10 mph above 50 mph reduces range by about 10-15%. Driving 55 mph instead of 75 mph can increase range by 25-30% on highway trips.
+                  </p>
+                
+              
+            
+          
+
+          /* CTA */
+          
+            <h2>Estimate Your Real-World EV Range</h2>
+            <p>Input your vehicle, temperature, and driving style to see your actual range.</p>
+            
+              <a href="/ev-range-calculator/">
+                EV Range Calculator
+              </a>
+              <a href="/ev-charging-cost/">
+                EV Charging Cost Calculator
+              </a>
+            
+          
+
+          /* Explore More Tools */
+          
+            <h2>Explore More Tools</h2>
+            
+              <a href="https://hammerio.com/garage-calculator/" target="_blank" rel="noopener" >
+                HammerIO
+                <h3>Garage Calculator</h3>
+                <p>Estimate garage costs — parking inside helps preserve EV range in winter.</p>
+              </a>
+              <a href="https://hammerio.com/electrical-cost-calculator/" target="_blank" rel="noopener" >
+                HammerIO
+                <h3>Electrical Cost Calculator</h3>
+                <p>Plan your home EV charger installation and electrical upgrade costs.</p>
+              </a>
+            
+          
+
+          /* Related Articles */
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/ev-charging-guide/">
+                EV
+                <h3>EV Charging Guide: Costs, Levels &amp; Home Setup</h3>
+                <p>Everything about EV charging — Level 1 vs 2 vs 3, home setup, and costs.</p>
+              </a>
+              <a href="/blog/solar-panel-roi-ev-charging/">
+                Solar + EV
+                <h3>Solar Panels + EV Charging: Combined ROI and Payback</h3>
+                <p>How pairing solar with EV charging accelerates your payback and maximizes savings.</p>
+              </a>
+            
+          
+        
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+        />
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.jouleio.com/blog/ev-range-real-world-calculator/">JouleIO</a>.
+      Explore more free tools at <a href="https://www.jouleio.com/">jouleio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.jouleio.com/">JouleIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
