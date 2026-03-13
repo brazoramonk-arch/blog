@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Is College Worth It? ROI Analysis by Major - DegreeCalc</title>
+  <meta name="description" content="Data-driven analysis of whether college is worth the investment. Compare earnings by major, explore trade school alternatives, and calculate your debt-to-income ratio.">
+  <link rel="canonical" href="https://www.degreecalc.com/blog/is-college-worth-it/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/degreecalc/">DegreeCalc</a> &rarr; Is College Worth It? ROI Analysis by Major
+  </nav>
+
+  <article>
+    <h1>Is College Worth It? ROI Analysis by Major</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.degreecalc.com/blog/is-college-worth-it/">degreecalc.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Is College Worth It? ROI Analysis by Major',
+    description: 'Data-driven analysis of whether college is worth the investment. Compare earnings by major, explore trade school alternatives, and calculate your debt-to-income ratio.',
+    datePublished: '2026-03-06',
+    dateModified: '2026-03-06',
+    author: 
+      '@type': 'Organization',
+      name: 'DegreeCalc',
+      url: 'https://degreecalc.com/',
+    ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'DegreeCalc',
+      url: 'https://degreecalc.com/',
+      logo: 
+        '@type': 'ImageObject',
+        url: 'https://degreecalc.com/favicon.svg',
+      ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://degreecalc.com/blog/is-college-worth-it/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://degreecalc.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://degreecalc.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Is College Worth It?', item: 'https://degreecalc.com/blog/is-college-worth-it/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'Is a college degree still worth it in 2026?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'On average, yes. College graduates earn approximately $1.2 million more over their lifetime compared to high school graduates. However, ROI varies significantly by major, institution, and debt level. STEM and business degrees typically offer the highest ROI, while some humanities and arts degrees may not justify the investment at expensive private schools.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Which college majors have the highest ROI?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The highest ROI majors are typically in STEM and business: Computer Science (median salary $100,000+), Engineering ($85,000-$110,000), Finance ($75,000-$95,000), Nursing ($77,000), and Information Technology ($80,000+). These majors offer strong starting salaries relative to college costs and have high employment rates.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is trade school a better investment than college?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For some individuals, yes. Skilled trades like electrician ($61K), plumber ($60K), and dental hygienist ($81K) offer solid salaries with 1-2 years of training and minimal debt. Trade school costs $5,000-$30,000 compared to $120,000+ for a four-year degree. For students who prefer hands-on work, trade school can provide faster ROI.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is a good debt-to-income ratio for student loans?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Financial experts recommend total student loan debt should not exceed your expected first-year salary (ratio of 1.0 or less). Monthly payments should be no more than 8-10% of gross monthly income. For example, on a $50,000 salary, monthly payments should stay under $417-$521. A ratio above 1.5 can cause significant financial stress.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does the college you attend affect your earnings?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Somewhat, but less than most people assume. Research shows that for most students, what you study and whether you graduate matters more than where you attend. Elite university graduates earn about 10-15% more than graduates of less selective schools in the same major. The exception is for first-generation and low-income students, who benefit more from attending selective institutions.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+      <Header />
+      
+        
+          /* Breadcrumb */
+          
+            <a href="/">Home</a>
+            /
+            <a href="/blog/">Blog</a>
+            /
+            Is College Worth It?
+          
+
+          /* Header */
+          
+            Education ROI
+            <h2>
+              Is College Worth It? ROI Analysis by Major
+            </h2>
+            
+              <time dateTime="2026-03-06">March 6, 2026</time>
+              15 min read
+            
+          
+
+          /* Content */
+          
+            <p>
+              The question &quot;Is college worth it?&quot; has become one of the most debated topics in American education. With student loan debt surpassing $1.7 trillion and tuition costs outpacing inflation for decades, the automatic assumption that everyone should attend a four-year university is being challenged. This article takes a data-driven approach, examining lifetime earnings by major, comparing college to alternatives like trade schools and bootcamps, and helping you calculate whether a degree makes financial sense for your specific situation.
+            </p>
+
+            <h2>The College Earnings Premium: What the Data Shows</h2>
+            <p>
+              On average, the data strongly favors a college degree. According to the Bureau of Labor Statistics and Georgetown University&apos;s Center on Education and the Workforce, workers with a bachelor&apos;s degree earn approximately 65% more than those with only a high school diploma over their careers.
+            </p>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Education Level</th>
+                    <th >Median Annual Earnings</th>
+                    <th >Lifetime Earnings</th>
+                    <th >Unemployment</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr><td >High School Diploma</td><td >$40,600</td><td >$1.3M</td><td >4.8%</td></tr>
+                  <tr><td >Some College, No Degree</td><td >$43,300</td><td >$1.5M</td><td >4.4%</td></tr>
+                  <tr><td >Associate&apos;s Degree</td><td >$48,800</td><td >$1.7M</td><td >3.5%</td></tr>
+                  <tr><td >Bachelor&apos;s Degree</td><td >$67,900</td><td >$2.5M</td><td >2.7%</td></tr>
+                  <tr><td >Master&apos;s Degree</td><td >$80,300</td><td >$2.9M</td><td >2.2%</td></tr>
+                  <tr><td >Professional Degree (MD, JD)</td><td >$112,400</td><td >$3.6M</td><td >1.4%</td></tr>
+                  <tr><td >Doctoral Degree</td><td >$100,400</td><td >$3.3M</td><td >1.5%</td></tr>
+                </tbody>
+              </table>
+            
+            <p>
+              The $1.2 million lifetime earnings gap between a bachelor&apos;s degree and a high school diploma appears to strongly favor college. Graduates with a bachelor&apos;s degree earn a median salary of $65,000 — compare salaries across fields with <a href="https://salario.io/salary-calculator/" target="_blank" rel="noopener">Salario&apos;s Salary Calculator</a>. College graduates also enjoy significantly lower unemployment rates and greater job stability during economic downturns. However, this average masks enormous variation between majors, schools, and individual circumstances.
+            </p>
+
+            <h2>ROI by Major: Not All Degrees Are Created Equal</h2>
+            <p>
+              The overall college earnings premium masks dramatic variation between majors. Some degrees generate returns exceeding $1 million over 20 years, while others barely break even financially. Here are the numbers using median salary data and accounting for average tuition and opportunity costs:
+            </p>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Major</th>
+                    <th >Median Starting</th>
+                    <th >Median Mid-Career</th>
+                    <th >20-Year ROI</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr><td >Computer Science</td><td >$85,000</td><td >$135,000</td><td >$1.1M+</td></tr>
+                  <tr><td >Engineering</td><td >$75,000</td><td >$120,000</td><td >$900K+</td></tr>
+                  <tr><td >Economics / Finance</td><td >$62,000</td><td >$105,000</td><td >$750K+</td></tr>
+                  <tr><td >Nursing (BSN)</td><td >$65,000</td><td >$85,000</td><td >$650K+</td></tr>
+                  <tr><td >Accounting</td><td >$56,000</td><td >$92,000</td><td >$600K+</td></tr>
+                  <tr><td >Business Administration</td><td >$55,000</td><td >$90,000</td><td >$550K+</td></tr>
+                  <tr><td >Biology</td><td >$45,000</td><td >$75,000</td><td >$350K</td></tr>
+                  <tr><td >Communications</td><td >$43,000</td><td >$72,000</td><td >$280K</td></tr>
+                  <tr><td >Psychology</td><td >$40,000</td><td >$68,000</td><td >$200K</td></tr>
+                  <tr><td >Education</td><td >$40,000</td><td >$58,000</td><td >$100K</td></tr>
+                  <tr><td >Fine Arts</td><td >$38,000</td><td >$55,000</td><td >$50K or less</td></tr>
+                </tbody>
+              </table>
+            
+            <p>
+              The spread is striking — a computer science graduate can expect over $1.1 million in 20-year ROI, while a fine arts graduate may see $50,000 or less. This does not mean you should avoid lower-ROI majors entirely (passion, aptitude, and job satisfaction matter), but you should go in with realistic financial expectations and manage costs accordingly.
+            </p>
+            <p>
+              Use our <a href="/degree-roi-calculator/">degree ROI calculator</a> to model your specific situation — factoring in your target school, major, expected aid, and career trajectory.
+            </p>
+
+            <h2>The Opportunity Cost of College</h2>
+            <p>
+              When calculating college ROI, most people focus on tuition costs and future earnings. But there is a critical third factor: opportunity cost. Opportunity cost represents the earnings you forgo by attending college instead of working full-time.
+            </p>
+            <p>
+              If a high school graduate earns $30,000 per year, four years of college represents approximately $120,000 in foregone earnings on top of tuition and fees. This makes the true cost of a $50,000/year private education closer to $320,000 ($200,000 tuition plus $120,000 opportunity cost), not just the $200,000 sticker price.
+            </p>
+            <p>
+              This is why the break-even point matters. For most bachelor&apos;s degree holders, it takes 10 to 15 years of post-graduation work to fully recoup the total investment (direct costs plus opportunity cost). For high-ROI majors like engineering and computer science, the break-even point can be as early as 6 to 8 years. For lower-paying fields, it may take 20 years or more.
+            </p>
+            <p>
+              The age factor is important here. Starting college at 18 gives you roughly 43 working years to earn the premium before retirement. Starting at 25 after working for several years means the opportunity cost is higher (you are giving up a higher salary) and you have fewer years to earn the premium back. This time-value-of-money effect is often underestimated in college ROI discussions.
+            </p>
+
+            <p>
+              To see exactly how the numbers play out for your situation, model different scenarios with our <a href="/degree-roi-calculator/">degree ROI calculator</a>, which factors in opportunity cost alongside direct costs and projected earnings.
+            </p>
+
+            <h2>The Dropout Risk: When College Becomes a Bad Investment</h2>
+            <p>
+              The college ROI discussion almost always focuses on graduates. But approximately 40% of students who start a bachelor&apos;s degree do not complete it within six years. For these students, the financial outcome is often the worst of all worlds: they accumulate significant debt without earning the degree that would boost their earnings.
+            </p>
+            <p>
+              Students with &quot;some college, no degree&quot; earn only $43,300 annually — just $2,700 more than high school graduates — while often carrying $10,000 to $20,000 in student loan debt. Research from the Federal Reserve shows that college dropouts have higher loan default rates than any other group, including those who never attended college at all.
+            </p>
+            <p>
+              The dropout risk is highest for students who are academically underprepared, first-generation college students, students attending for-profit institutions, and students who work more than 20 hours per week while studying. If you fall into any of these categories, it is not a reason to avoid college — but it is a reason to choose carefully, build support systems, and consider starting at community college to test the waters at lower cost.
+            </p>
+
+            <h2>Trade Schools and Alternative Paths</h2>
+            <p>
+              A four-year degree is not the only path to a well-paying career. Skilled trades and vocational programs offer strong returns with lower investment:
+            </p>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Trade / Path</th>
+                    <th >Training Time</th>
+                    <th >Training Cost</th>
+                    <th >Median Salary</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr><td >Electrician</td><td >4-5 years (apprentice)</td><td >$1,000-$10,000</td><td >$61,000</td></tr>
+                  <tr><td >Plumber</td><td >4-5 years (apprentice)</td><td >$1,000-$10,000</td><td >$60,000</td></tr>
+                  <tr><td >HVAC Technician</td><td >6 months-2 years</td><td >$5,000-$15,000</td><td >$53,000</td></tr>
+                  <tr><td >Dental Hygienist</td><td >2-3 years</td><td >$20,000-$40,000</td><td >$81,000</td></tr>
+                  <tr><td >Web Developer (Bootcamp)</td><td >3-6 months</td><td >$10,000-$20,000</td><td >$77,000</td></tr>
+                  <tr><td >Welding</td><td >7 months-2 years</td><td >$5,000-$15,000</td><td >$47,000</td></tr>
+                  <tr><td >CDL Truck Driver</td><td >3-8 weeks</td><td >$3,000-$7,000</td><td >$49,000</td></tr>
+                </tbody>
+              </table>
+            
+            <p>
+              Skilled trades offer several advantages: lower training costs, no (or minimal) student debt, earn-while-you-learn apprenticeships, high demand in a labor shortage, and the ability to start a business. Electricians and plumbers who start their own businesses can earn $80,000 to $150,000 or more per year.
+            </p>
+            <p>
+              The key disadvantage is an earnings ceiling that typically caps below that of top-performing college graduates. While an experienced electrician may earn $75,000 to $95,000, a mid-career engineer earns $120,000+ with more upward mobility into management. The trade-off is stability and a guaranteed floor versus a higher but less certain ceiling.
+            </p>
+
+            <h2>The Debt-to-Income Ratio: Your Most Important Metric</h2>
+            <p>
+              Your debt-to-income ratio is one of the best indicators of whether your college investment was financially sound. The formula is straightforward: total student loan debt divided by annual gross salary.
+            </p>
+            
+              <p>Debt-to-Income Benchmarks</p>
+              <ul>
+                <li><strong>Excellent (under 0.5):</strong> $25,000 debt on a $50,000 salary. Manageable payments, strong financial position.</li>
+                <li><strong>Good (0.5-1.0):</strong> $40,000 debt on a $50,000 salary. Standard repayment. The recommended maximum.</li>
+                <li><strong>Concerning (1.0-1.5):</strong> $65,000 debt on a $50,000 salary. May need income-driven repayment. Limited financial flexibility.</li>
+                <li><strong>High risk (over 1.5):</strong> $80,000+ debt on a $50,000 salary. Likely requires IDR plans. Significant financial stress.</li>
+              </ul>
+            
+            <p>
+              Financial experts widely recommend keeping total student loan debt below your expected first-year salary. Monthly loan payments should not exceed 8-10% of your gross monthly income for long-term financial health. Our <a href="/student-loan-calculator/">student loan calculator</a> can help you project monthly payments and see where you fall on this spectrum.
+            </p>
+
+            <h2>How School Selectivity Affects ROI</h2>
+            <p>
+              Does it matter where you go? The short answer is: somewhat, but less than most people assume. Research by economists Stacy Dale and Alan Krueger found that for most students, attending a more selective school did not significantly increase earnings compared to attending a less selective school. What mattered more was the student&apos;s own ability and ambition.
+            </p>
+            <p>
+              There are important exceptions. For first-generation and low-income students, attending an elite institution does appear to provide a meaningful earnings boost — likely because it grants access to networks and opportunities that would otherwise be unavailable. And certain fields like investment banking, management consulting, and big law heavily recruit from top-ranked schools.
+            </p>
+            <p>
+              For the typical student choosing between a state flagship and a more expensive private university, the financial ROI is usually comparable. The state school may even win on ROI if the cost difference is substantial. Use our <a href="/college-comparison/">college comparison tool</a> to evaluate schools side by side on cost, outcomes, and financial aid.
+            </p>
+
+            <h2>When College Is Clearly Worth It</h2>
+            <p>
+              Despite the nuances, there are scenarios where a college degree is almost always a strong financial investment:
+            </p>
+            <ul>
+              <li><strong>High-ROI majors at affordable schools.</strong> Studying engineering, computer science, nursing, or finance at an in-state public university is one of the best investments you can make.</li>
+              <li><strong>Full or near-full scholarships.</strong> If you can attend college with minimal debt (under $20,000), the financial risk is low even for lower-earning majors.</li>
+              <li><strong>Professional degree requirements.</strong> Fields like medicine, law, pharmacy, and accounting require specific degrees. The investment is part of the career entry cost. Home ownership is a major wealth builder — plan your future <a href="https://amortio.com/" target="_blank" rel="noopener">mortgage payments</a> with the right degree and salary.</li>
+              <li><strong>Elite institution with generous aid.</strong> Schools like Harvard, Princeton, and Stanford meet 100% of demonstrated financial need. If you get in, you can typically afford it.</li>
+              <li><strong>Career fields where a degree is a strict requirement.</strong> Many corporate, government, and non-profit jobs require a bachelor&apos;s degree just to apply, regardless of the position.</li>
+            </ul>
+
+            <h2>When to Think Twice About College</h2>
+            <p>
+              Conversely, the financial case weakens in these scenarios:
+            </p>
+            <ul>
+              <li><strong>Expensive private school for a low-earning major.</strong> Paying $200,000+ for a degree that leads to a $40,000 starting salary creates a difficult debt-to-income ratio.</li>
+              <li><strong>Attending without a clear plan.</strong> Students who are &quot;figuring it out&quot; at $40,000+/year risk accumulating debt without a clear path to repayment. Consider community college or a gap year to clarify goals first.</li>
+              <li><strong>High dropout risk.</strong> Only 64% of students at four-year institutions graduate within six years. Dropping out with debt and no degree is the worst financial outcome of all.</li>
+              <li><strong>Interest in trades or entrepreneurship.</strong> If your career goal is better served by hands-on training, apprenticeships, or starting a business, four years of college may delay your progress and add unnecessary debt.</li>
+              <li><strong>Already established in a career.</strong> If you are already earning well in a field that does not require a degree, the opportunity cost of returning to school full-time may outweigh the benefits.</li>
+            </ul>
+
+            <h2>The Non-Financial Value of College</h2>
+            <p>
+              Financial ROI is not the only factor. College provides genuine non-monetary benefits that are harder to quantify but real:
+            </p>
+            <ul>
+              <li><strong>Critical thinking and communication skills</strong> that apply across all careers and life situations.</li>
+              <li><strong>Professional networks</strong> built through classmates, professors, alumni, and internships that create opportunities for decades.</li>
+              <li><strong>Lower unemployment rates.</strong> Bachelor&apos;s degree holders face 2.7% unemployment versus 4.8% for high school graduates — a significant buffer during recessions.</li>
+              <li><strong>Better health outcomes.</strong> Research links higher education to longer life expectancy, lower rates of obesity and smoking, and better access to healthcare.</li>
+              <li><strong>Greater civic engagement.</strong> Graduates are more likely to vote, volunteer, and participate in community organizations.</li>
+              <li><strong>Career flexibility.</strong> A degree provides more options for career changes and advancement later in life, serving as a foundation for pivots you cannot predict at 18.</li>
+              <li><strong>Intergenerational effects.</strong> Children of college graduates are more likely to attend and complete college themselves, creating a positive cycle of opportunity.</li>
+            </ul>
+
+            <h2>How to Maximize Your College ROI</h2>
+            <ol>
+              <li><strong>Choose your major strategically.</strong> Research salary data for your intended career before committing. Our <a href="/degree-roi-calculator/">degree ROI calculator</a> makes this analysis easy.</li>
+              <li><strong>Minimize costs.</strong> Start at community college, choose in-state public universities, apply for every scholarship, and live frugally. Use our <a href="/college-comparison/">college comparison tool</a> to compare options.</li>
+              <li><strong>Graduate on time.</strong> Every extra semester costs tuition plus delayed earnings. Take a full course load, plan your schedule carefully, and use summer courses if needed.</li>
+              <li><strong>Build experience during school.</strong> Internships, research, and part-time work in your field dramatically improve starting salaries and employment rates after graduation.</li>
+              <li><strong>Limit borrowing.</strong> Follow the debt-to-income guideline: borrow no more than your expected first-year salary. Track your total debt with our <a href="/student-loan-calculator/">student loan calculator</a>.</li>
+              <li><strong>Negotiate your first salary.</strong> The starting salary sets the trajectory for your entire career. Research market rates and negotiate — even a $5,000 difference compounds significantly over decades.</li>
+            </ol>
+
+            /* FAQ Section */
+            <h2>Frequently Asked Questions</h2>
+
+            
+              
+                <h3>Is a college degree still worth it in 2026?</h3>
+                <p>
+                  On average, yes. College graduates earn approximately $1.2 million more over their lifetime. However, ROI varies significantly by major, institution, and debt level. STEM and business degrees at affordable schools offer the strongest returns. Use our <a href="/degree-roi-calculator/">degree ROI calculator</a> to run the numbers for your situation.
+                </p>
+              
+              
+                <h3>Which college majors have the highest ROI?</h3>
+                <p>
+                  The highest ROI majors are Computer Science ($85K starting, $135K mid-career, $1.1M+ 20-year ROI), Engineering ($75K starting, $900K+ ROI), Economics/Finance ($62K starting, $750K+ ROI), Nursing ($65K starting, $650K+ ROI), and Accounting ($56K starting, $600K+ ROI).
+                </p>
+              
+              
+                <h3>Is trade school a better investment than college?</h3>
+                <p>
+                  It depends on the trade and your goals. Skilled trades like electrician ($61K), plumber ($60K), and dental hygienist ($81K) offer solid salaries with 1-2 years of training and minimal debt. For students who prefer hands-on work and want to start earning quickly, trade school can offer faster ROI than many four-year degrees.
+                </p>
+              
+              
+                <h3>What is a good debt-to-income ratio for student loans?</h3>
+                <p>
+                  Keep total student loan debt below your expected first-year salary (ratio under 1.0). Monthly payments should be no more than 8-10% of gross monthly income. On a $50,000 salary, that means payments under $417-$521/month. A ratio above 1.5 indicates significant financial stress. Model your scenario with our <a href="/student-loan-calculator/">student loan calculator</a>.
+                </p>
+              
+              
+                <h3>Does the college you attend affect your earnings?</h3>
+                <p>
+                  Somewhat, but less than most people assume. Research shows that what you study and whether you graduate matters more than where you attend. Elite university graduates earn about 10-15% more in the same major. The exception is for first-generation students, who benefit more from selective institutions. Compare schools with our <a href="/college-comparison/">college comparison tool</a>.
+                </p>
+              
+            
+
+            /* CTA */
+            
+              <h2>Calculate Your Degree ROI</h2>
+              <p>
+                Enter your major, costs, and expected salary to see whether your degree investment pays off — and by how much. Free, private, no sign-up required.
+              </p>
+              <a href="/degree-roi-calculator/">
+                Open Degree ROI Calculator
+              </a>
+            
+
+            /* Explore More Tools */
+            
+              <h2>Explore More Tools</h2>
+              
+                <a href="https://salario.io/salary-calculator/" target="_blank" rel="noopener" >
+                  Salario
+                  <h3>Salary Calculator</h3>
+                  <p>Compare salaries across fields and see how your degree choice affects lifetime earnings.</p>
+                </a>
+                <a href="https://salario.io/net-pay-calculator/" target="_blank" rel="noopener" >
+                  Salario
+                  <h3>Net Pay Calculator</h3>
+                  <p>Calculate your take-home pay after taxes and deductions for any salary level.</p>
+                </a>
+              
+            
+
+            /* Related Articles */
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/college-cost-breakdown/">
+                <h3>College Cost Breakdown 2026</h3>
+                <p>What you really pay for college — tuition, fees, room, and more.</p>
+              </a>
+              <a href="/blog/student-loan-guide/">
+                <h3>Student Loan Guide 2026</h3>
+                <p>Federal vs private loans, repayment plans, and forgiveness options.</p>
+              </a>
+              <a href="/blog/scholarship-tips/">
+                <h3>Scholarship Search Tips</h3>
+                <p>How to find and win free college money for your education.</p>
+              </a>
+              <a href="/blog/gpa-calculator-guide/">
+                <h3>GPA Calculator Guide</h3>
+                <p>How to calculate your GPA and strategies to raise it.</p>
+              </a>
+            
+          
+        
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.degreecalc.com/blog/is-college-worth-it/">DegreeCalc</a>.
+      Explore more free tools at <a href="https://www.degreecalc.com/">degreecalc.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.degreecalc.com/">DegreeCalc</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
