@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Essential Regex Patterns Cheat Sheet: 30+ Patterns Every Developer Needs - BytePane</title>
+  <meta name="description" content="Copy-paste ready regex patterns for email, URL, password, IP, phone, and date validation with real-world examples.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/regex-patterns-cheat-sheet/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Essential Regex Patterns Cheat Sheet: 30+ Patterns Every Developer Needs
+  </nav>
+
+  <article>
+    <h1>Essential Regex Patterns Cheat Sheet: 30+ Patterns Every Developer Needs</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/regex-patterns-cheat-sheet/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Essential Regex Patterns Cheat Sheet: 30+ Patterns Every Developer Needs',
+            description: 'Copy-paste ready regex patterns for email, URL, password, IP, phone, and date validation with real-world examples.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/regex-patterns-cheat-sheet/',
+            mainEntityOfPage: 'https://bytepane.com/blog/regex-patterns-cheat-sheet/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Regex Patterns Cheat Sheet' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What is the best regex pattern for email validation?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'For most applications, the pattern /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]2,$/ provides a good balance between strictness and usability. It validates the general structure without being overly restrictive. The full RFC 5322 email regex is over 6,000 characters and catches edge cases that almost never occur in practice. For production systems, validate the format with a simple regex, then confirm the email exists by sending a verification link.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do I make a regex case-insensitive?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Use the i flag after your regex pattern. In JavaScript: /pattern/i. In Python: re.compile(pattern, re.IGNORECASE) or use the inline flag (?i) at the start of the pattern. In Go: use (?i) at the start of the pattern since Go does not support flags outside the pattern string. The i flag makes every letter in the pattern match both its uppercase and lowercase variants.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between .* and .*? in regex?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: '.* is a greedy quantifier that matches as many characters as possible, while .*? is a lazy (non-greedy) quantifier that matches as few characters as possible. For example, given the string "<b>hello</b> <b>world</b>", the greedy pattern <b>.*</b> matches the entire string from the first <b> to the last </b>, while the lazy pattern <b>.*?</b> matches only <b>hello</b> and <b>world</b> separately. Use lazy quantifiers when you want the shortest possible match.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Regex Patterns Cheat Sheet
+      
+
+      /* Article Header */
+      
+        <h2>
+          Essential Regex Patterns Cheat Sheet: 30+ Patterns Every Developer Needs
+        </h2>
+        
+          Text Processing
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          16 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>Why Every Developer Needs a Regex Cheat Sheet</h2>
+          <p>
+            Regular expressions are one of the most powerful tools in a developer&apos;s toolkit, but they are also one of the easiest to forget. You write a complex lookahead pattern on Monday, and by Friday you are staring at it wondering what it does. This cheat sheet gives you 30+ production-ready regex patterns that you can copy, paste, and adapt for real projects -- covering everything from email validation to log parsing.
+          </p>
+          <p>
+            Every pattern in this guide has been tested across JavaScript, Python, and Go. Where syntax differs between engines, the differences are noted. To test any of these patterns interactively, use our <a href="/regex-tester/">Regex Tester</a> tool -- it highlights matches in real time and explains each part of your pattern.
+          </p>
+        
+
+        
+          <h2>Quick Reference: Regex Syntax Fundamentals</h2>
+          <p>
+            Before diving into specific patterns, here is a compact reference of the building blocks you will use in every regex.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Symbol</th>
+                  <th >Meaning</th>
+                  <th >Example</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >.</td><td >Any character except newline</td><td >a.c matches &quot;abc&quot;, &quot;a1c&quot;</td></tr>
+                <tr ><td >^</td><td >Start of string (or line with m flag)</td><td >^Hello</td></tr>
+                <tr ><td >$</td><td >End of string (or line with m flag)</td><td >world$</td></tr>
+                <tr ><td >*</td><td >0 or more of previous</td><td >ab*c matches &quot;ac&quot;, &quot;abc&quot;, &quot;abbc&quot;</td></tr>
+                <tr ><td >+</td><td >1 or more of previous</td><td >ab+c matches &quot;abc&quot;, &quot;abbc&quot;</td></tr>
+                <tr ><td >?</td><td >0 or 1 of previous (optional)</td><td >colou?r matches &quot;color&quot;, &quot;colour&quot;</td></tr>
+                <tr ><td >`n,m`</td><td >Between n and m of previous</td><td >`a2,4` matches &quot;aa&quot;, &quot;aaa&quot;, &quot;aaaa&quot;</td></tr>
+                <tr ><td >[abc]</td><td >Character class (any of a, b, c)</td><td >[aeiou] matches any vowel</td></tr>
+                <tr ><td >[^abc]</td><td >Negated class (not a, b, or c)</td><td >[^0-9] matches non-digits</td></tr>
+                <tr ><td >\d</td><td >Digit [0-9]</td><td >\d+ matches &quot;123&quot;</td></tr>
+                <tr ><td >\w</td><td >Word character [a-zA-Z0-9_]</td><td >\w+ matches &quot;hello_world&quot;</td></tr>
+                <tr ><td >\s</td><td >Whitespace (space, tab, newline)</td><td >\s+ matches spaces between words</td></tr>
+                <tr ><td >\b</td><td >Word boundary</td><td >\bcat\b matches &quot;cat&quot; not &quot;catfish&quot;</td></tr>
+                <tr ><td >(abc)</td><td >Capturing group</td><td >(abc)+ matches &quot;abcabc&quot;</td></tr>
+                <tr><td >(?:abc)</td><td >Non-capturing group</td><td >(?:abc)+ groups without capturing</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Email Validation Patterns</h2>
+          <p>
+            Email validation is the most common regex use case. The challenge is balancing strictness with practicality. The full RFC 5322 specification allows bizarre addresses like <code >&quot;spaces allowed&quot;@example.com</code>, but no real user enters those. Here are three patterns ranked by strictness.
+          </p>
+
+          <h3>Basic Email (covers 99% of cases)</h3>
+          <p>
+            <code >`// JavaScript
+const emailBasic = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]2,$/;
+
+emailBasic.test('user@example.com');      // true
+emailBasic.test('user+tag@sub.domain.co'); // true
+emailBasic.test('@example.com');           // false
+emailBasic.test('user@.com');              // false`</code>
+          </pre>
+
+          <h3>Strict Email (no consecutive dots, limited TLD)</h3>
+          <pre >
+            <code >`// Prevents ".." in local part, requires 2-63 char TLD
+const emailStrict = /^[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)*\\.[a-zA-Z]2,63$/;
+
+emailStrict.test('user@example.com');    // true
+emailStrict.test('u..ser@example.com');  // false (consecutive dots)
+emailStrict.test('.user@example.com');   // false (starts with dot)`</code>
+          </pre>
+
+          <h3>HTML5 Email (browser standard)</h3>
+          <pre >
+            <code >`// This is exactly what browsers use for <input type="email">
+const emailHTML5 = /^[a-zA-Z0-9.!#$%&'*+/=?^_\`|~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]0,61[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]0,61[a-zA-Z0-9])?)*$/;`</code>
+          </pre>
+          <p >
+            For production applications, the basic pattern is usually sufficient. The real validation happens when you send a confirmation email. Test these patterns in our <a href="/regex-tester/">Regex Tester</a> with your own test addresses.
+          </p>
+        
+
+        
+          <h2>URL and Domain Patterns</h2>
+
+          <h3>URL with Protocol</h3>
+          <p>
+            <code >`// Matches http:// and https:// URLs
+const url = /^https?:\\/\\/(?:www\\.)?[a-zA-Z0-9-]+(?:\\.[a-zA-Z]2,)+(?:\\/[^\\s]*)?$/;
+
+url.test('https://example.com');           // true
+url.test('http://sub.example.co.uk/path'); // true
+url.test('ftp://example.com');             // false (no ftp)
+url.test('example.com');                   // false (no protocol)`</code>
+          </pre>
+
+          <h3>Domain Name Only</h3>
+          <pre >
+            <code >`// Matches domain names without protocol
+const domain = /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]0,61[a-zA-Z0-9])?\\.)+[a-zA-Z]2,$/;
+
+domain.test('example.com');       // true
+domain.test('sub.example.co.uk'); // true
+domain.test('-example.com');      // false (starts with hyphen)`</code>
+          </pre>
+
+          <h3>URL Slug (Kebab Case)</h3>
+          <pre >
+            <code >`// Matches URL-safe slugs like "my-blog-post"
+const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+slug.test('my-blog-post');    // true
+slug.test('post123');         // true
+slug.test('My-Post');         // false (uppercase)
+slug.test('-leading-dash');   // false`</code>
+          </pre>
+          <p >
+            URL encoding can add complexity to URL validation. If you are working with encoded URLs, check our <a href="/url-encode-decode/">URL Encoder/Decoder</a> to understand how special characters are handled, and read our <a href="/blog/url-encoding-guide/">URL Encoding Guide</a> for the full picture.
+          </p>
+        
+
+        
+          <h2>Password Strength Patterns</h2>
+          <p>
+            Password validation is best done with multiple checks rather than a single monolithic regex. However, a combined pattern is useful for client-side form validation.
+          </p>
+
+          <h3>Individual Checks (Recommended)</h3>
+          <p>
+            <code >`// Check each requirement separately for better error messages
+const hasUppercase = /[A-Z]/;
+const hasLowercase = /[a-z]/;
+const hasDigit = /[0-9]/;
+const hasSpecial = /[!@#$%^&*()_+\\-=\\[\\];':"\\\\|,.<>\\/?]/;
+const minLength = /.8,/;
+
+function validatePassword(password) 
+  const errors = [];
+  if (!hasUppercase.test(password)) errors.push('Need uppercase letter');
+  if (!hasLowercase.test(password)) errors.push('Need lowercase letter');
+  if (!hasDigit.test(password)) errors.push('Need a digit');
+  if (!hasSpecial.test(password)) errors.push('Need a special character');
+  if (!minLength.test(password)) errors.push('Need at least 8 characters');
+  return errors;
+`</code>
+          </pre>
+
+          <h3>Combined Pattern (All-in-One)</h3>
+          <pre >
+            <code >`// Single regex: 8+ chars, 1 uppercase, 1 lowercase, 1 digit, 1 special
+const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*]).8,$/;
+
+strongPassword.test('MyP@ss1!');    // true
+strongPassword.test('weakpass');     // false (no upper, digit, special)
+strongPassword.test('SHORT1!');     // false (less than 8 chars)`</code>
+          </pre>
+          <p >
+            Need to generate strong passwords for testing? Our <a href="/password-generator/">Password Generator</a> creates cryptographically random passwords that satisfy any strength requirement. For hashing passwords securely after validation, see our <a href="/blog/hash-functions-explained/">Hash Functions guide</a>.
+          </p>
+        
+
+        
+          <h2>IP Address Patterns</h2>
+
+          <h3>IPv4 Address</h3>
+          <p>
+            <code >`// Validates 0.0.0.0 to 255.255.255.255
+const ipv4 = /^(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.)3(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$/;
+
+ipv4.test('192.168.1.1');    // true
+ipv4.test('10.0.0.0');       // true
+ipv4.test('256.1.1.1');      // false (256 > 255)
+ipv4.test('192.168.1');      // false (only 3 octets)`</code>
+          </pre>
+
+          <h3>IPv4 with CIDR Notation</h3>
+          <pre >
+            <code >`// IPv4 + optional /0 to /32 subnet mask
+const ipv4Cidr = /^(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.)3(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(?:\\/(?:3[0-2]|[12]?\\d))?$/;
+
+ipv4Cidr.test('10.0.0.0/8');       // true
+ipv4Cidr.test('192.168.1.0/24');   // true
+ipv4Cidr.test('10.0.0.0/33');      // false (max is /32)`</code>
+          </pre>
+        
+
+        
+          <h2>Date and Time Patterns</h2>
+
+          <h3>ISO 8601 Date (YYYY-MM-DD)</h3>
+          <pre >
+            <code >`// Basic format validation (doesn't check valid day/month combos)
+const isoDate = /^\\d4-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])$/;
+
+isoDate.test('2026-03-07');  // true
+isoDate.test('2026-13-01');  // false (month 13)
+isoDate.test('2026-1-1');    // false (needs zero-padding)`</code>
+          </pre>
+
+          <h3>ISO 8601 DateTime with Timezone</h3>
+          <pre >
+            <code >`// Matches: 2026-03-07T14:30:00Z, 2026-03-07T14:30:00+05:30
+const isoDateTime = /^\\d4-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-](?:[01]\\d|2[0-3]):[0-5]\\d)$/;
+
+isoDateTime.test('2026-03-07T14:30:00Z');        // true
+isoDateTime.test('2026-03-07T14:30:00+05:30');   // true
+isoDateTime.test('2026-03-07T25:00:00Z');        // false (hour 25)`</code>
+          </pre>
+
+          <h3>US Date Format (MM/DD/YYYY)</h3>
+          <pre >
+            <code >`const usDate = /^(?:0[1-9]|1[0-2])\\/(?:0[1-9]|[12]\\d|3[01])\\/\\d4$/;
+
+usDate.test('03/07/2026');  // true
+usDate.test('12/31/2025');  // true
+usDate.test('13/01/2026');  // false (month 13)`</code>
+          </pre>
+          <p >
+            When working with Unix timestamps instead of date strings, our <a href="/timestamp-converter/">Timestamp Converter</a> handles conversions between Unix epochs and human-readable formats.
+          </p>
+        
+
+        
+          <h2>Number and Currency Patterns</h2>
+          <p>
+            <code >`// Integer (positive or negative)
+const integer = /^-?\\d+$/;
+
+// Decimal number (optional decimal part)
+const decimal = /^-?\\d+(?:\\.\\d+)?$/;
+
+// Number with commas (US format: 1,234,567.89)
+const numberWithCommas = /^-?\\d1,3(?:,\\d3)*(?:\\.\\d+)?$/;
+
+// US Currency ($1,234.56)
+const usCurrency = /^\\$\\d1,3(?:,\\d3)*(?:\\.\\d2)?$/;
+
+// Percentage (0-100 with optional decimal)
+const percentage = /^(?:100(?:\\.0+)?|\\d1,2(?:\\.\\d+)?)%$/;
+
+// Hex number (0xFF, #FF)
+const hexNumber = /^(?:0x|#)?[0-9a-fA-F]+$/;
+
+// Scientific notation (1.23e-4, 5E10)
+const scientific = /^-?\\d+(?:\\.\\d+)?[eE][+-]?\\d+$/;`</code>
+          </pre>
+          <p >
+            For hex-to-decimal and other base conversions, use our <a href="/number-converter/">Number Converter</a>. For hex color codes specifically, try the <a href="/color-converter/">Color Converter</a>.
+          </p>
+        
+
+        
+          <h2>Phone Number Patterns</h2>
+          <p>
+            <code >`// US phone number (flexible format)
+// Matches: (123) 456-7890, 123-456-7890, 123.456.7890, 1234567890
+const usPhone = /^(?:\\+1\\s?)?(?:\\(?\\d3\\)?[\\s.-]?)?\\d3[\\s.-]?\\d4$/;
+
+usPhone.test('(555) 123-4567');   // true
+usPhone.test('555-123-4567');     // true
+usPhone.test('+1 555 123 4567'); // true
+usPhone.test('5551234567');       // true
+
+// International phone (E.164 format)
+// Matches: +1234567890 to +123456789012345
+const e164 = /^\\+[1-9]\\d6,14$/;
+
+e164.test('+14155551234');   // true
+e164.test('+442071234567');  // true
+e164.test('+0123456789');    // false (starts with 0 after +)`</code>
+          </pre>
+        
+
+        
+          <h2>Code and Development Patterns</h2>
+
+          <h3>Identifiers and Variables</h3>
+          <pre >
+            <code >`// Valid variable name (most languages)
+const variableName = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+
+// camelCase
+const camelCase = /^[a-z][a-zA-Z0-9]*$/;
+
+// PascalCase
+const pascalCase = /^[A-Z][a-zA-Z0-9]*$/;
+
+// snake_case
+const snakeCase = /^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$/;
+
+// SCREAMING_SNAKE_CASE (constants)
+const screamingSnake = /^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*$/;
+
+// kebab-case (CSS classes, URLs)
+const kebabCase = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;`</code>
+          </pre>
+
+          <h3>Semantic Versioning</h3>
+          <pre >
+            <code >`// SemVer: MAJOR.MINOR.PATCH with optional pre-release and build
+const semver = /^v?(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(?:-[\\da-zA-Z-]+(?:\\.[\\da-zA-Z-]+)*)?(?:\\+[\\da-zA-Z-]+(?:\\.[\\da-zA-Z-]+)*)?$/;
+
+semver.test('1.0.0');              // true
+semver.test('v2.3.4');             // true
+semver.test('1.0.0-alpha.1');      // true
+semver.test('1.0.0+build.123');    // true
+semver.test('1.0');                // false (missing patch)`</code>
+          </pre>
+
+          <h3>UUID v4</h3>
+          <pre >
+            <code >`// UUID v4 format: 8-4-4-4-12 hex characters
+const uuidV4 = /^[0-9a-f]8-[0-9a-f]4-4[0-9a-f]3-[89ab][0-9a-f]3-[0-9a-f]12$/i;
+
+uuidV4.test('550e8400-e29b-41d4-a716-446655440000'); // true
+uuidV4.test('not-a-uuid');                            // false
+
+// Any UUID version (v1-v5)
+const anyUuid = /^[0-9a-f]8-[0-9a-f]4-[1-5][0-9a-f]3-[89ab][0-9a-f]3-[0-9a-f]12$/i;`</code>
+          </pre>
+          <p >
+            Generate valid UUIDs instantly with our <a href="/uuid-generator/">UUID Generator</a>. For formatting JSON that contains UUIDs and other structured data, try the <a href="/json-formatter/">JSON Formatter</a>.
+          </p>
+        
+
+        
+          <h2>HTML and Markup Patterns</h2>
+          <p>
+            <code >`// HTML tag (opening, closing, or self-closing)
+const htmlTag = /<\\/?[a-zA-Z][a-zA-Z0-9]*(?:\\s+[a-zA-Z-]+(?:="[^"]*")?)*\\s*\\/?>/;
+
+// Strip HTML tags (use with .replace())
+const stripHtml = /<[^>]*>/g;
+'<p>Hello <b>world</b></p>'.replace(stripHtml, '');
+// "Hello world"
+
+// HTML entity (named or numeric)
+const htmlEntity = /&(?:#x?[0-9a-fA-F]+|[a-zA-Z]+);/;
+
+// Hex color code (#RGB or #RRGGBB)
+const hexColor = /^#(?:[0-9a-fA-F]3)1,2$/;
+
+// CSS class selector
+const cssClass = /^\\.[a-zA-Z_-][a-zA-Z0-9_-]*$/;`</code>
+          </pre>
+          <p>
+            For working with HTML entities, our <a href="/html-entities/">HTML Entities</a> tool encodes and decodes named and numeric entities. For formatting messy HTML, use the <a href="/html-formatter/">HTML Formatter</a>.
+          </p>
+        
+
+        
+          <h2>Advanced Patterns: Lookaheads and Lookbehinds</h2>
+          <p>
+            Lookaheads and lookbehinds let you assert that something exists before or after your match without including it in the result. They are essential for complex validation like password strength, or for extracting text that is surrounded by specific markers.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Pattern</th>
+                  <th >Name</th>
+                  <th >Meaning</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >(?=...)</td><td >Positive lookahead</td><td >Followed by ...</td></tr>
+                <tr ><td >(?!...)</td><td >Negative lookahead</td><td >NOT followed by ...</td></tr>
+                <tr ><td >`(?<=...)`</td><td >Positive lookbehind</td><td >Preceded by ...</td></tr>
+                <tr><td >`(?<!...)`</td><td >Negative lookbehind</td><td >NOT preceded by ...</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// Extract price amount without the $ sign
+const price = /(?<=\\$)\\d+(?:\\.\\d2)?/g;
+'Items: $19.99, $5.00, $120'.match(price);
+// ["19.99", "5.00", "120"]
+
+// Match "foo" only if NOT followed by "bar"
+const notFollowedBy = /foo(?!bar)/g;
+'foobar foobaz foo'.match(notFollowedBy);
+// ["foo", "foo"] (matches foobaz and standalone foo)
+
+// Match digits only if preceded by #
+const afterHash = /(?<=#)\\d+/g;
+'Issue #123, PR #456, plain 789'.match(afterHash);
+// ["123", "456"]`</code>
+          </pre>
+        
+
+        
+          <h2>Log Parsing and Data Extraction Patterns</h2>
+          <pre >
+            <code >`// Common Log Format (Apache/Nginx)
+const logLine = /^(\\S+) \\S+ \\S+ \\[([^\\]]+)\\] "(\\S+) (\\S+) \\S+" (\\d3) (\\d+|-)/;
+const match = '127.0.0.1 - - [07/Mar/2026:14:30:00 +0000] "GET /api/users HTTP/1.1" 200 1234'.match(logLine);
+// match[1] = "127.0.0.1" (IP)
+// match[2] = "07/Mar/2026:14:30:00 +0000" (timestamp)
+// match[3] = "GET" (method)
+// match[4] = "/api/users" (path)
+// match[5] = "200" (status)
+
+// Extract key=value pairs
+const keyValue = /([\\w-]+)=(?:"([^"]*)"|([^\\s,]+))/g;
+const input = 'name="John Doe" age=30 city=NYC';
+[...input.matchAll(keyValue)].map(m => ( key: m[1], value: m[2] || m[3] ));
+// [ key: "name", value: "John Doe" ,  key: "age", value: "30" , ...]
+
+// JSON string value extraction
+const jsonString = /"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"/g;
+
+// Stack trace file:line extraction
+const stackTrace = /at\\s+(?:\\S+\\s+)?\\(?([^:]+):(\\d+):(\\d+)\\)?/g;`</code>
+          </pre>
+          <p >
+            When parsing HTTP responses that contain status codes, our <a href="/http-status-codes/">HTTP Status Codes</a> reference helps decode what each code means. Read the full <a href="/blog/http-status-codes-guide/">HTTP Status Codes Guide</a> for in-depth explanations.
+          </p>
+        
+
+        
+          <h2>Search and Replace Patterns</h2>
+          <p>
+            <code >`// Remove extra whitespace
+const multipleSpaces = /\\s2,/g;
+'too   many    spaces'.replace(multipleSpaces, ' ');
+// "too many spaces"
+
+// Trim leading/trailing whitespace (regex version of .trim())
+const trim = /^\\s+|\\s+$/g;
+
+// Convert camelCase to kebab-case
+function camelToKebab(str) 
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+
+camelToKebab('backgroundColor');  // "background-color"
+camelToKebab('XMLParser');        // "x-m-l-parser" (careful!)
+
+// Capitalize first letter of each word
+function titleCase(str) 
+  return str.replace(/\\b\\w/g, c => c.toUpperCase());
+
+titleCase('hello world');  // "Hello World"
+
+// Mask sensitive data (keep first/last 2 chars)
+function maskEmail(email) 
+  return email.replace(/^(.2)(.*)(@.*)$/, (_, start, mid, end) =>
+    start + '*'.repeat(mid.length) + end
+  );
+
+maskEmail('john.doe@example.com');  // "jo******@example.com"`</code>
+          </pre>
+          <p >
+            For case conversions without regex, our <a href="/case-converter/">Case Converter</a> handles camelCase, PascalCase, snake_case, kebab-case, and more with a single paste.
+          </p>
+        
+
+        
+          <h2>Cross-Language Regex Syntax Differences</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >JavaScript</th>
+                  <th >Python</th>
+                  <th >Go</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Flags</td><td >/pattern/gi</td><td >re.IGNORECASE</td><td >(?i) inline only</td></tr>
+                <tr ><td >Named groups</td><td >`(?<name>...)`</td><td >`(?P<name>...)`</td><td >`(?P<name>...)`</td></tr>
+                <tr ><td >Lookbehind</td><td >Yes (variable length)</td><td >Fixed length only</td><td >Not supported</td></tr>
+                <tr ><td >Backreferences</td><td >\1</td><td >\1</td><td >Not supported (RE2)</td></tr>
+                <tr><td >Unicode property</td><td >`\\pL` (with u flag)</td><td >Limited</td><td >`\\pL`</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Go uses the RE2 engine, which guarantees linear-time matching but does not support backreferences or lookbehinds. If you need these features in Go, consider preprocessing with string operations. Python&apos;s <code >re</code> module supports most PCRE features but requires fixed-width lookbehinds. The newer <code >regex</code> third-party module supports variable-width lookbehinds.
+          </p>
+        
+
+        
+          <h2>Performance Tips for Regex</h2>
+          <ol>
+            <li><strong>Anchor your patterns</strong> -- Use <code >^</code> and <code >$</code> when matching full strings. Without anchors, the engine tries the pattern at every position in the string.</li>
+            <li><strong>Be specific</strong> -- <code >[0-9]</code> is faster than <code >.</code> because the engine does not need to backtrack as often.</li>
+            <li><strong>Avoid catastrophic backtracking</strong> -- Patterns like <code >(a+)+b</code> cause exponential time on inputs like &quot;aaaaaac&quot;. Use atomic groups or possessive quantifiers where available.</li>
+            <li><strong>Compile once, use many times</strong> -- In Python, use <code >re.compile()</code> for patterns used in loops. In JavaScript, define the regex outside the loop.</li>
+            <li><strong>Use non-capturing groups</strong> -- <code >(?:...)</code> is slightly faster than <code >(...)</code> when you do not need the captured value.</li>
+            <li><strong>Prefer string methods for simple tasks</strong> -- <code >str.includes()</code>, <code >str.startsWith()</code>, and <code >str.endsWith()</code> are faster than equivalent regex patterns.</li>
+          </ol>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <h3>What is the best regex pattern for email validation?</h3>
+          <p>
+            For most applications, the pattern <code >`/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]2,$/`</code> provides a good balance between strictness and usability. It validates the general structure without being overly restrictive. The full RFC 5322 email regex is over 6,000 characters long and catches edge cases that rarely occur in practice. For production systems, validate with a simple regex first, then send a verification email to confirm it exists.
+          </p>
+
+          <h3>How do I make a regex case-insensitive?</h3>
+          <p>
+            Use the <code >i</code> flag after your regex pattern. In JavaScript: <code >/pattern/i</code>. In Python: <code >re.compile(pattern, re.IGNORECASE)</code> or the inline flag <code >(?i)</code> at the start. In Go, use the inline <code >(?i)</code> flag since Go does not support flags outside the pattern string. The flag makes every letter match both uppercase and lowercase.
+          </p>
+
+          <h3>What is the difference between .* and .*? in regex?</h3>
+          <p>
+            <code >.*</code> is greedy and matches as many characters as possible, while <code >.*?</code> is lazy (non-greedy) and matches as few characters as possible. Given the HTML <code >`<b>hello</b> <b>world</b>`</code>, the greedy <code >`<b>.*</b>`</code> matches the entire string from first to last tag, while lazy <code >`<b>.*?</b>`</code> matches each tag pair separately. Use lazy quantifiers when extracting the shortest possible match.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Test Your Regex Patterns Instantly</h2>
+          <p>
+            Paste any pattern from this cheat sheet into our free Regex Tester. It highlights matches in real time, shows capture groups, and explains every part of your expression.
+          </p>
+          <a href="/regex-tester/">
+            Open Regex Tester
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/regex-cheat-sheet/">
+              <h3>Regex Cheat Sheet</h3>
+              <p>Comprehensive regex syntax reference with tables and advanced features.</p>
+            </a>
+            <a href="/blog/regex-validation-patterns-email-url/">
+              <h3>Regex Validation Patterns</h3>
+              <p>Production-ready patterns for email, URL, phone, and date validation.</p>
+            </a>
+            <a href="/blog/url-encoding-guide/">
+              <h3>URL Encoding Guide</h3>
+              <p>Percent-encoding, reserved characters, and common pitfalls.</p>
+            </a>
+            <a href="/blog/hash-functions-explained/">
+              <h3>Hash Functions Explained</h3>
+              <p>MD5, SHA-256, bcrypt -- when to use each hash algorithm.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/regex-patterns-cheat-sheet/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
