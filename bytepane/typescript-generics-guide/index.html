@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Generics Guide: From Basics to Advanced Patterns - BytePane</title>
+  <meta name="description" content="Learn TypeScript generics from the ground up: generic functions, interfaces, classes, constraints, conditional types, mapped types, and utility types with practical examples.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/typescript-generics-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; TypeScript Generics Guide: From Basics to Advanced Patterns
+  </nav>
+
+  <article>
+    <h1>TypeScript Generics Guide: From Basics to Advanced Patterns</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/typescript-generics-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'TypeScript Generics Guide: From Basics to Advanced Patterns',
+            description: 'Learn TypeScript generics from the ground up: generic functions, interfaces, classes, constraints, conditional types, mapped types, and utility types with practical examples.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/typescript-generics-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/typescript-generics-guide/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'TypeScript Generics Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What are generics in TypeScript?',
+                acceptedAnswer:  '@type': 'Answer', text: 'Generics allow you to write functions, classes, and interfaces that work with any type while preserving type safety. Instead of using "any", generics capture the actual type passed by the caller, enabling the compiler to enforce correct usage throughout the code.' ,
+              ,
+              
+                '@type': 'Question',
+                name: 'When should I use generics vs union types?',
+                acceptedAnswer:  '@type': 'Answer', text: 'Use generics when the return type depends on the input type (preserving the relationship). Use union types when you need to accept a fixed set of types without needing to track which one was passed. Generics maintain type flow, while unions flatten to any of the listed types.' ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between extends and implements with generics?',
+                acceptedAnswer:  '@type': 'Answer', text: '"extends" in a generic constraint means the type parameter must be assignable to the constraint type. "implements" is for classes implementing interfaces. You use extends in generic constraints like <T extends HasId> to restrict what types T can be.' ,
+              ,
+            ],
+          ),
+        
+      />
+
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        TypeScript Generics Guide
+      
+
+      
+        <h2>
+          TypeScript Generics Guide: From Basics to Advanced Patterns
+        </h2>
+        
+          TypeScript
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          15 min read
+        
+      
+
+      
+
+        
+          <h2>Why Generics Matter</h2>
+          <p>
+            Generics are TypeScript&apos;s most powerful feature for writing reusable, type-safe code. They let you create functions, classes, and interfaces that work with multiple types without sacrificing the compiler&apos;s ability to catch errors. Instead of falling back to <code >any</code>, generics preserve the actual type flowing through your code.
+          </p>
+          <p>
+            Without generics, you face a constant trade-off: write type-specific code that is safe but rigid, or use <code >any</code> for flexibility and lose type checking entirely. Generics eliminate this dilemma by parameterizing types just like functions parameterize values.
+          </p>
+          <p>
+            This guide covers generics from basic syntax through advanced patterns like conditional types, mapped types, and utility type construction. Every concept includes runnable code examples you can paste into your editor.
+          </p>
+        
+
+        
+          <h2>Generic Functions: The Foundation</h2>
+          <p>
+            The simplest generic is a function that captures its argument type and uses it in the return type. The type parameter (conventionally named <code >T</code>) acts as a placeholder that gets filled in when the function is called.
+          </p>
+          <p>
+            <code >`// Without generics: loses type information
+function firstElement(arr: any[]): any 
+  return arr[0];
+
+// With generics: preserves the exact type
+function firstElement<T>(arr: T[]): T | undefined 
+  return arr[0];
+
+const num = firstElement([1, 2, 3]);    // type: number
+const str = firstElement(["a", "b"]);   // type: string
+const obj = firstElement([ id: 1 ]);  // type:  id: number `</code>
+          </pre>
+          <p >
+            TypeScript infers the type parameter from the argument, so you rarely need to specify it explicitly. When the compiler cannot infer, you can provide it manually:
+          </p>
+          <p>
+            <code >`// Explicit type argument
+const result = firstElement<string>(["hello", "world"]);
+
+// Multiple type parameters
+function pair<A, B>(first: A, second: B): [A, B] 
+  return [first, second];
+
+const p = pair("age", 30); // type: [string, number]`</code>
+          </pre>
+        
+
+        
+          <h2>Generic Constraints with extends</h2>
+          <p >
+            Unconstrained generics accept any type, which means you cannot access properties on the type parameter. Constraints narrow the set of allowed types so you can safely access specific properties or methods.
+          </p>
+          <p>
+            <code >`// Error: Property 'length' does not exist on type 'T'
+function getLength<T>(item: T): number 
+  return item.length; // TS error
+
+// Fixed with constraint
+function getLength<T extends  length: number >(item: T): number 
+  return item.length; // OK - T must have .length
+
+getLength("hello");     // OK: string has .length
+getLength([1, 2, 3]);   // OK: array has .length
+getLength(42);          // Error: number has no .length`</code>
+          </pre>
+          <p >
+            A common pattern is constraining to an interface to ensure objects have required fields:
+          </p>
+          <p>
+            <code >`interface HasId 
+  id: string | number;
+
+function findById<T extends HasId>(items: T[], id: T["id"]): T | undefined 
+  return items.find(item => item.id === id);
+
+interface User extends HasId  id: number; name: string; 
+interface Product extends HasId  id: string; title: string; 
+
+const users: User[] = [ id: 1, name: "Alice" ];
+const found = findById(users, 1); // type: User | undefined`</code>
+          </pre>
+        
+
+        
+          <h2>Generic Interfaces and Type Aliases</h2>
+          <p >
+            Generics are not limited to functions. Interfaces and type aliases can be generic too, which is how you create reusable data structures like API responses, collections, and state containers.
+          </p>
+          <p>
+            <code >`// Generic API response wrapper
+interface ApiResponse<T> 
+  data: T;
+  status: number;
+  message: string;
+  timestamp: string;
+
+// Usage - the type parameter fills in 'data'
+type UserResponse = ApiResponse<User>;
+//  data: User; status: number; message: string; timestamp: string; 
+
+type ProductListResponse = ApiResponse<Product[]>;
+//  data: Product[]; status: number; ... 
+
+// Generic result type (like Rust's Result)
+type Result<T, E = Error> =
+  |  ok: true; value: T 
+  |  ok: false; error: E ;
+
+function parseJSON<T>(json: string): Result<T> 
+  try 
+    return  ok: true, value: JSON.parse(json) ;
+   catch (e) 
+    return  ok: false, error: e as Error ;
+  
+`</code>
+          </pre>
+        
+
+        
+          <h2>Generic Classes</h2>
+          <p >
+            Generic classes are essential for building type-safe data structures. The type parameter is available to all instance methods and properties.
+          </p>
+          <p>
+            <code >`class Stack<T> 
+  private items: T[] = [];
+
+  push(item: T): void 
+    this.items.push(item);
+  
+
+  pop(): T | undefined 
+    return this.items.pop();
+  
+
+  peek(): T | undefined 
+    return this.items[this.items.length - 1];
+  
+
+  get size(): number 
+    return this.items.length;
+  
+
+const numberStack = new Stack<number>();
+numberStack.push(1);
+numberStack.push(2);
+const top = numberStack.pop(); // type: number | undefined
+
+// TypeScript infers generic from constructor args
+class Pair<A, B> 
+  constructor(public first: A, public second: B) 
+
+  swap(): Pair<B, A> 
+    return new Pair(this.second, this.first);
+  
+
+const p = new Pair("hello", 42);
+const swapped = p.swap(); // Pair<number, string>`</code>
+          </pre>
+        
+
+        
+          <h2>The keyof Operator and Indexed Access Types</h2>
+          <p >
+            The <code >keyof</code> operator produces a union of all property names of a type. Combined with generics, it enables type-safe property access patterns.
+          </p>
+          <p>
+            <code >`// keyof creates a union of property names
+type UserKeys = keyof User; // "id" | "name"
+
+// Type-safe property getter
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] 
+  return obj[key];
+
+const user: User =  id: 1, name: "Alice" ;
+const name = getProperty(user, "name");  // type: string
+const id = getProperty(user, "id");      // type: number
+getProperty(user, "email");              // Error: not a key of User
+
+// Type-safe pick function
+function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> 
+  const result =  as Pick<T, K>;
+  keys.forEach(key =>  result[key] = obj[key]; );
+  return result;
+
+const partial = pick(user, ["name"]); //  name: string `</code>
+          </pre>
+        
+
+        
+          <h2>Conditional Types</h2>
+          <p >
+            Conditional types select one of two types based on a condition, using the syntax <code >T extends U ? X : Y</code>. They are the type-level equivalent of ternary expressions and unlock powerful type transformations.
+          </p>
+          <p>
+            <code >`// Basic conditional type
+type IsString<T> = T extends string ? true : false;
+type A = IsString<"hello">; // true
+type B = IsString<42>;      // false
+
+// Practical: extract array element type
+type ElementOf<T> = T extends (infer E)[] ? E : never;
+type NumEl = ElementOf<number[]>;  // number
+type StrEl = ElementOf<string[]>;  // string
+
+// Extract return type (simplified ReturnType)
+type Return<T> = T extends (...args: any[]) => infer R ? R : never;
+type FnReturn = Return<() => string>; // string
+
+// Distributive conditional types
+type NonNullable<T> = T extends null | undefined ? never : T;
+type Clean = NonNullable<string | null | undefined>; // string`</code>
+          </pre>
+        
+
+        
+          <h2>Mapped Types</h2>
+          <p >
+            Mapped types iterate over the keys of a type and transform each property. They are the backbone of utility types like <code >Partial</code>, <code >Required</code>, <code >Readonly</code>, and <code >Record</code>.
+          </p>
+          <p>
+            <code >`// How Partial works internally
+type MyPartial<T> = 
+  [K in keyof T]?: T[K];
+;
+
+// How Readonly works internally
+type MyReadonly<T> = 
+  readonly [K in keyof T]: T[K];
+;
+
+// Custom: make all properties nullable
+type Nullable<T> = 
+  [K in keyof T]: T[K] | null;
+;
+
+interface Config 
+  host: string;
+  port: number;
+  debug: boolean;
+
+type NullableConfig = Nullable<Config>;
+//  host: string | null; port: number | null; debug: boolean | null; 
+
+// Key remapping with 'as' (TS 4.1+)
+type Getters<T> = 
+  [K in keyof T as \`get\$Capitalize<string & K>\`]: () => T[K];
+;
+
+type ConfigGetters = Getters<Config>;
+//  getHost: () => string; getPort: () => number; getDebug: () => boolean; `</code>
+          </pre>
+        
+
+        
+          <h2>Template Literal Types</h2>
+          <p >
+            Template literal types combine string literals with type parameters to create powerful string pattern types. They enable type-safe CSS class names, API routes, event handlers, and more.
+          </p>
+          <p>
+            <code >`// Event handler type
+type EventName = "click" | "focus" | "blur";
+type Handler = \`on\$Capitalize<EventName>\`;
+// "onClick" | "onFocus" | "onBlur"
+
+// API route builder
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+type ApiRoute = \`/api/\$string\`;
+
+// Type-safe CSS class builder
+type Size = "sm" | "md" | "lg";
+type Color = "red" | "blue" | "green";
+type ClassName = \`text-\$Size\` | \`bg-\$Color\`;`</code>
+          </pre>
+        
+
+        
+          <h2>Real-World Patterns</h2>
+          <p >
+            Here are generic patterns you will use repeatedly in production TypeScript codebases.
+          </p>
+
+          <h3>Type-Safe Event Bus</h3>
+          <p>
+            <code >`type EventMap = 
+  "user:login":  userId: string; timestamp: number ;
+  "user:logout":  userId: string ;
+  "cart:add":  productId: string; quantity: number ;
+;
+
+class TypedEventBus<Events extends Record<string, any>> 
+  private handlers = new Map<string, Set<Function>>();
+
+  on<K extends keyof Events>(
+    event: K,
+    handler: (data: Events[K]) => void
+  ): void 
+    if (!this.handlers.has(event as string)) 
+      this.handlers.set(event as string, new Set());
+    
+    this.handlers.get(event as string)!.add(handler);
+  
+
+  emit<K extends keyof Events>(event: K, data: Events[K]): void 
+    this.handlers.get(event as string)?.forEach(fn => fn(data));
+  
+
+const bus = new TypedEventBus<EventMap>();
+bus.on("user:login", (data) => 
+  console.log(data.userId); // fully typed
+);`</code>
+          </pre>
+
+          <h3>Type-Safe API Client</h3>
+          <pre >
+            <code >`// Define API shape
+interface ApiEndpoints 
+  "/users":  response: User[]; params:  page?: number  ;
+  "/users/:id":  response: User; params:  id: number  ;
+  "/products":  response: Product[]; params:  category?: string  ;
+
+// Type-safe fetch wrapper
+async function api<T extends keyof ApiEndpoints>(
+  endpoint: T,
+  params?: ApiEndpoints[T]["params"]
+): Promise<ApiEndpoints[T]["response"]> 
+  const url = new URL(endpoint, "https://api.example.com");
+  if (params) 
+    Object.entries(params).forEach(([k, v]) => 
+      url.searchParams.set(k, String(v));
+    );
+  
+  const res = await fetch(url.toString());
+  return res.json();
+
+// Usage - fully typed responses
+const users = await api("/users",  page: 1 ); // User[]
+const user = await api("/users/:id",  id: 42 ); // User`</code>
+          </pre>
+        
+
+        
+          <h2>Common Mistakes and How to Avoid Them</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Mistake</th>
+                  <th >Problem</th>
+                  <th >Fix</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr >
+                  <td >Too many type params</td>
+                  <td >Unreadable signatures</td>
+                  <td >Max 2-3 type params; extract interfaces</td>
+                </tr>
+                <tr >
+                  <td >Unnecessary generics</td>
+                  <td >Complexity without benefit</td>
+                  <td >Only use when return type depends on input</td>
+                </tr>
+                <tr >
+                  <td >Using any as constraint</td>
+                  <td >Defeats the purpose</td>
+                  <td >Use unknown or a specific interface</td>
+                </tr>
+                <tr >
+                  <td >Not using defaults</td>
+                  <td >Verbose call sites</td>
+                  <td >`Add defaults: <T = string>`</td>
+                </tr>
+                <tr >
+                  <td >Ignoring variance</td>
+                  <td >Unexpected assignability</td>
+                  <td >`Use in/out modifiers (TS 4.7+)`</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>What are generics in TypeScript?</h3>
+              <p >
+                Generics allow you to write functions, classes, and interfaces that work with any type while preserving type safety. Instead of using <code >any</code>, generics capture the actual type passed by the caller, enabling the compiler to enforce correct usage throughout the code. They are TypeScript&apos;s primary mechanism for code reuse without sacrificing type checking.
+              </p>
+            
+            
+              <h3>When should I use generics vs union types?</h3>
+              <p>
+                Use generics when the return type depends on the input type and you need to preserve that relationship through the function. Use union types when you accept a fixed set of types but do not need to track which one was passed. For example, a <code >first()</code> function on arrays should be generic (returns the same element type), while an <code >id</code> field that can be string or number is a union.
+              </p>
+            
+            
+              <h3>What is the difference between extends and implements with generics?</h3>
+              <p>
+                In a generic constraint like <code >`<T extends HasId>`</code>, <code >extends</code> means the type parameter T must be assignable to <code >HasId</code>. The <code >implements</code> keyword is for classes implementing interfaces and cannot be used in generic constraints. Constraints restrict what types are valid for the type parameter.
+              </p>
+            
+          
+        
+
+        
+          <h2>Validate Your TypeScript with BytePane Tools</h2>
+          <p>
+            Working with generic types that produce JSON output? Use our free <a href="/json-formatter/">JSON Formatter</a> to validate and pretty-print API responses, or test your regex patterns with the <a href="/regex-tester/">Regex Tester</a>.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/typescript-utility-types/">
+              <h3>TypeScript Utility Types</h3>
+              <p>Partial, Pick, Omit, Record, and custom utility types explained.</p>
+            </a>
+            <a href="/blog/json-schema-validation-guide/">
+              <h3>JSON Schema Validation</h3>
+              <p>Validate data structures with JSON Schema and TypeScript.</p>
+            </a>
+            <a href="/blog/rest-api-design-principles/">
+              <h3>REST API Design Principles</h3>
+              <p>Best practices for HTTP methods, error handling, and versioning.</p>
+            </a>
+            <a href="/blog/jwt-tokens-guide/">
+              <h3>JWT Tokens Explained</h3>
+              <p>JWT structure, signing algorithms, and authentication patterns.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/typescript-generics-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
