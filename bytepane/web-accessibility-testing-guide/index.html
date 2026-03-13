@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Accessibility Testing Guide: WCAG 2.1 Compliance Checklist - BytePane</title>
+  <meta name="description" content="Complete guide to web accessibility testing and WCAG 2.1 compliance with automated testing tools, manual testing techniques, ARIA roles, and color contrast requirements.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/web-accessibility-testing-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Web Accessibility Testing Guide: WCAG 2.1 Compliance Checklist
+  </nav>
+
+  <article>
+    <h1>Web Accessibility Testing Guide: WCAG 2.1 Compliance Checklist</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/web-accessibility-testing-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Web Accessibility Testing Guide: WCAG 2.1 Compliance Checklist',
+            description: 'Complete guide to web accessibility testing and WCAG 2.1 compliance with automated testing tools, manual testing techniques, ARIA roles, and color contrast requirements.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/web-accessibility-testing-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/web-accessibility-testing-guide/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Web Accessibility Testing Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What is WCAG 2.1 and why does it matter?',
+                acceptedAnswer:  '@type': 'Answer', text: 'WCAG 2.1 (Web Content Accessibility Guidelines) is the international standard for web accessibility published by the W3C. It defines how to make web content accessible to people with disabilities. Compliance is legally required in many jurisdictions under laws like the ADA, Section 508, and the European Accessibility Act.' ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between WCAG Level A, AA, and AAA?',
+                acceptedAnswer:  '@type': 'Answer', text: 'Level A covers basic accessibility (25 criteria). Level AA adds 13 more criteria covering contrast ratios, resize support, and consistent navigation. Level AAA adds 23 criteria for enhanced accessibility but is rarely required as a blanket standard.' ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Can automated tools catch all accessibility issues?',
+                acceptedAnswer:  '@type': 'Answer', text: 'No. Automated tools typically catch only 30-40% of WCAG issues. They detect missing alt text, low contrast, and missing labels, but cannot evaluate whether alt text is meaningful or whether focus order is logical. Manual testing is essential.' ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What are the minimum contrast ratios required by WCAG?',
+                acceptedAnswer:  '@type': 'Answer', text: 'WCAG AA requires 4.5:1 for normal text and 3:1 for large text (18px+ or 14px+ bold). WCAG AAA raises these to 7:1 and 4.5:1. UI components require at least 3:1 contrast.' ,
+              ,
+            ],
+          ),
+        
+      />
+
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Web Accessibility Testing Guide
+      
+
+      
+        <h2>
+          Web Accessibility Testing Guide: WCAG 2.1 Compliance Checklist
+        </h2>
+        
+          Accessibility
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          16 min read
+        
+      
+
+      
+
+        
+          <h2>Why Accessibility Testing Matters</h2>
+          <p>
+            Web accessibility ensures that people with disabilities can perceive, understand, navigate, and interact with websites. According to the WHO, over 1 billion people -- about 16% of the global population -- live with some form of disability. Beyond the moral imperative, accessibility is increasingly a legal requirement: ADA lawsuits against websites exceeded 4,600 in 2023, and the European Accessibility Act takes full effect in 2025.
+          </p>
+          <p>
+            Accessible websites also benefit everyone. Captions help users in noisy environments. High contrast benefits users in bright sunlight. Keyboard navigation is faster for power users. Good semantic HTML improves SEO because search engines parse the same structure that screen readers use.
+          </p>
+          <p>
+            This guide covers the WCAG 2.1 standard, testing methodologies (automated and manual), essential ARIA patterns, and a practical checklist you can apply to any web project.
+          </p>
+        
+
+        
+          <h2>WCAG 2.1 Conformance Levels Explained</h2>
+          <p>
+            WCAG organizes its success criteria into three conformance levels. Each level builds on the previous one, adding stricter requirements.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Level</th>
+                  <th >Criteria</th>
+                  <th >Focus</th>
+                  <th >Legal Target</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr >
+                  <td >A</td>
+                  <td >25 criteria</td>
+                  <td >Basic access: alt text, keyboard, page titles</td>
+                  <td >Minimum baseline</td>
+                </tr>
+                <tr >
+                  <td >AA</td>
+                  <td >13 additional</td>
+                  <td >Contrast, resize, consistent nav, error handling</td>
+                  <td >Most laws (ADA, Section 508, EAA)</td>
+                </tr>
+                <tr >
+                  <td >AAA</td>
+                  <td >23 additional</td>
+                  <td >Sign language, enhanced contrast, reading level</td>
+                  <td >Rarely required across entire sites</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Most organizations target WCAG 2.1 Level AA, which covers the majority of accessibility needs. The four foundational principles (POUR) organize all criteria: content must be <strong>Perceivable</strong>, <strong>Operable</strong>, <strong>Understandable</strong>, and <strong>Robust</strong>.
+          </p>
+        
+
+        
+          <h2>Automated Testing Tools</h2>
+          <p>
+            Automated tools catch approximately 30-40% of WCAG issues. They excel at structural checks but cannot evaluate subjective quality (like whether alt text is meaningful). Use them as a first pass, never as the only testing method.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool</th>
+                  <th >Type</th>
+                  <th >Best For</th>
+                  <th >Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr >
+                  <td >axe-core / axe DevTools</td>
+                  <td >Browser extension + CI</td>
+                  <td >Component-level testing, CI integration</td>
+                  <td >Free (core) / Paid (pro)</td>
+                </tr>
+                <tr >
+                  <td >Lighthouse</td>
+                  <td >Built into Chrome DevTools</td>
+                  <td >Quick audits, performance + a11y</td>
+                  <td >Free</td>
+                </tr>
+                <tr >
+                  <td >WAVE</td>
+                  <td >Browser extension + web</td>
+                  <td >Visual overlay showing issues in context</td>
+                  <td >Free</td>
+                </tr>
+                <tr >
+                  <td >Pa11y</td>
+                  <td >CLI / CI tool</td>
+                  <td >CI/CD pipelines, bulk testing</td>
+                  <td >Free (open source)</td>
+                </tr>
+                <tr >
+                  <td >eslint-plugin-jsx-a11y</td>
+                  <td >Linter plugin</td>
+                  <td >Catching issues during development</td>
+                  <td >Free</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// axe-core in Playwright tests
+
+test('homepage passes axe accessibility checks', async ( page ) => 
+  await page.goto('/');
+  const results = await new AxeBuilder( page )
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+    .analyze();
+
+  expect(results.violations).toEqual([]);
+);
+
+// Jest + React Testing Library
+
+expect.extend(toHaveNoViolations);
+
+test('form has no a11y violations', async () => 
+  const  container  = render(<LoginForm />);
+  const results = await axe(container);
+  expect(results).toHaveNoViolations();
+);`</code>
+          </pre>
+        
+
+        
+          <h2>Manual Testing Techniques</h2>
+          <p >
+            Manual testing catches the 60-70% of issues that automated tools miss. Focus on these core techniques:
+          </p>
+
+          <h3>Keyboard Navigation Testing</h3>
+          <p>
+            Every interactive element must be reachable and operable with keyboard alone. Test these key interactions:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Key</th>
+                  <th >Expected Behavior</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr >
+                  <td >Tab</td>
+                  <td >Move focus to next interactive element</td>
+                </tr>
+                <tr >
+                  <td >Shift+Tab</td>
+                  <td >Move focus to previous interactive element</td>
+                </tr>
+                <tr >
+                  <td >Enter</td>
+                  <td >Activate links and buttons</td>
+                </tr>
+                <tr >
+                  <td >Space</td>
+                  <td >Toggle checkboxes, activate buttons</td>
+                </tr>
+                <tr >
+                  <td >Arrow keys</td>
+                  <td >Navigate within widgets (tabs, menus, radio groups)</td>
+                </tr>
+                <tr >
+                  <td >Escape</td>
+                  <td >Close modals, dismiss dropdowns</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h3>Screen Reader Testing</h3>
+          <p>
+            Test with at least one screen reader. NVDA (Windows, free) and VoiceOver (macOS, built-in) are the most common. Verify that headings create a logical outline, images have descriptive alt text, form fields have associated labels, and dynamic content changes are announced.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Screen Reader</th>
+                  <th >Platform</th>
+                  <th >Browser</th>
+                  <th >Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr >
+                  <td >NVDA</td>
+                  <td >Windows</td>
+                  <td >Firefox, Chrome</td>
+                  <td >Free</td>
+                </tr>
+                <tr >
+                  <td >JAWS</td>
+                  <td >Windows</td>
+                  <td >Chrome, Edge</td>
+                  <td >$90/year</td>
+                </tr>
+                <tr >
+                  <td >VoiceOver</td>
+                  <td >macOS / iOS</td>
+                  <td >Safari</td>
+                  <td >Free (built-in)</td>
+                </tr>
+                <tr >
+                  <td >TalkBack</td>
+                  <td >Android</td>
+                  <td >Chrome</td>
+                  <td >Free (built-in)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Color Contrast Requirements</h2>
+          <p>
+            Insufficient color contrast is the single most common accessibility issue on the web. WCAG defines specific contrast ratio thresholds based on text size and conformance level.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Element</th>
+                  <th >AA Ratio</th>
+                  <th >AAA Ratio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr >
+                  <td >Normal text (&lt;18px or &lt;14px bold)</td>
+                  <td >4.5:1</td>
+                  <td >7:1</td>
+                </tr>
+                <tr >
+                  <td >Large text (18px+ or 14px+ bold)</td>
+                  <td >3:1</td>
+                  <td >4.5:1</td>
+                </tr>
+                <tr >
+                  <td >UI components and graphical objects</td>
+                  <td >3:1</td>
+                  <td >N/A</td>
+                </tr>
+                <tr >
+                  <td >Focus indicators</td>
+                  <td >3:1</td>
+                  <td >N/A</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Use BytePane&apos;s <a href="/color-converter/">Color Converter</a> to check contrast ratios between any two colors, or use browser DevTools which shows contrast ratio in the color picker.
+          </p>
+        
+
+        
+          <h2>ARIA Roles, States, and Properties</h2>
+          <p>
+            ARIA (Accessible Rich Internet Applications) adds semantic information to HTML elements that screen readers use to describe the UI. The first rule of ARIA: do not use ARIA if a native HTML element provides the same semantics.
+          </p>
+          <p>
+            <code >`<!-- BAD: Using ARIA when native HTML works -->
+Submit
+
+<!-- GOOD: Native HTML button -->
+<button type="submit">Submit</button>
+
+<!-- BAD: ARIA checkbox -->
+
+  Accept terms
+
+<!-- GOOD: Native checkbox -->
+<label>
+  <input type="checkbox" name="terms" />
+  Accept terms
+</label>`</code>
+          </pre>
+          <p >
+            When you must use ARIA (for custom widgets with no HTML equivalent), follow these essential patterns:
+          </p>
+          <p>
+            <code >`<!-- Tab component -->
+
+  <button role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
+    General
+  </button>
+  <button role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">
+    Security
+  </button>
+
+  General settings content...
+
+<!-- Live regions for dynamic content -->
+
+  3 results found
+
+<!-- Modal dialog -->
+
+  <h2>Confirm deletion</h2>
+  <p>This action cannot be undone.</p>
+  <button>Cancel</button>
+  <button>Delete</button>
+`</code>
+          </pre>
+        
+
+        
+          <h2>Semantic HTML Checklist</h2>
+          <p>
+            Proper semantic HTML eliminates the need for most ARIA attributes. Screen readers and search engines rely on HTML semantics to understand page structure.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Element</th>
+                  <th >Use For</th>
+                  <th >Not</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr >
+                  <td >&lt;nav&gt;</td>
+                  <td >Navigation links</td>
+                  <td >``</td>
+                </tr>
+                <tr >
+                  <td >&lt;main&gt;</td>
+                  <td >Primary page content</td>
+                  <td >``</td>
+                </tr>
+                <tr >
+                  <td >&lt;article&gt;</td>
+                  <td >Self-contained content</td>
+                  <td >``</td>
+                </tr>
+                <tr >
+                  <td >&lt;button&gt;</td>
+                  <td >Clickable actions</td>
+                  <td >``</td>
+                </tr>
+                <tr >
+                  <td >&lt;label&gt;</td>
+                  <td >Form field descriptions</td>
+                  <td >`Name:`</td>
+                </tr>
+                <tr >
+                  <td >&lt;h1&gt;-&lt;h6&gt;</td>
+                  <td >Heading hierarchy</td>
+                  <td >``</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Common Accessibility Issues and Fixes</h2>
+
+          <h3>1. Missing or Empty Alt Text</h3>
+          <p>
+            <code >`<!-- Decorative image: use empty alt -->
+<img src="divider.svg" alt="" role="presentation" />
+
+<!-- Informative image: describe the content -->
+<img src="chart.png" alt="Bar chart showing 40% increase in sales Q3 2025" />
+
+<!-- Linked image: describe the destination -->
+<a href="/dashboard/">
+  <img src="logo.svg" alt="Return to dashboard" />
+</a>`</code>
+          </pre>
+
+          <h3>2. Missing Form Labels</h3>
+          <pre >
+            <code >`<!-- BAD: no label association -->
+Email
+<input type="email" />
+
+<!-- GOOD: explicit label -->
+<label for="email">Email</label>
+<input type="email" id="email" />
+
+<!-- GOOD: implicit label (wrapping) -->
+<label>
+  Email
+  <input type="email" />
+</label>
+
+<!-- For visually hidden labels -->
+<label for="search" class="sr-only">Search</label>
+<input type="search" id="search" placeholder="Search..." />`</code>
+          </pre>
+
+          <h3>3. Focus Management in SPAs</h3>
+          <pre >
+            <code >`// After route change, move focus to main content
+useEffect(() => 
+  const main = document.querySelector('main');
+  if (main) 
+    main.setAttribute('tabindex', '-1');
+    main.focus();
+    main.addEventListener('blur', () => 
+      main.removeAttribute('tabindex');
+    ,  once: true );
+  
+, [pathname]);
+
+// Skip navigation link
+<a href="#main-content" >
+  Skip to main content
+</a>`</code>
+          </pre>
+        
+
+        
+          <h2>WCAG 2.1 Quick-Reference Checklist</h2>
+          <p >
+            Use this checklist for every page or component you build. Items marked with asterisks (*) are the most commonly failed criteria.
+          </p>
+          
+            
+              <h3>Perceivable</h3>
+              <ul>
+                <li>* All images have appropriate alt text (or alt=&quot;&quot; for decorative)</li>
+                <li>* Color contrast meets 4.5:1 for text, 3:1 for large text</li>
+                <li>* Information is not conveyed by color alone</li>
+                <li>Videos have captions and audio descriptions</li>
+                <li>Content can be resized to 200% without loss of functionality</li>
+                <li>Text spacing can be overridden without breaking layout</li>
+              </ul>
+            
+            
+              <h3>Operable</h3>
+              <ul>
+                <li>* All functionality is available via keyboard</li>
+                <li>* Focus order is logical and visible</li>
+                <li>No keyboard traps (user can always Tab away)</li>
+                <li>Users can pause, stop, or hide moving content</li>
+                <li>No content that flashes more than 3 times per second</li>
+                <li>Pages have descriptive titles</li>
+                <li>Link purpose is clear from text (avoid &quot;click here&quot;)</li>
+              </ul>
+            
+            
+              <h3>Understandable</h3>
+              <ul>
+                <li>* Form inputs have visible labels</li>
+                <li>* Error messages identify the field and suggest correction</li>
+                <li>Page language is set (lang attribute on html)</li>
+                <li>Navigation is consistent across pages</li>
+                <li>No unexpected context changes on focus or input</li>
+              </ul>
+            
+            
+              <h3>Robust</h3>
+              <ul>
+                <li>HTML validates (no duplicate IDs, proper nesting)</li>
+                <li>Custom components have correct ARIA roles and states</li>
+                <li>Status messages use aria-live regions</li>
+              </ul>
+            
+          
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>What is WCAG 2.1 and why does it matter?</h3>
+              <p>
+                WCAG 2.1 (Web Content Accessibility Guidelines) is the international standard for web accessibility published by the W3C. It defines how to make web content accessible to people with disabilities including visual, auditory, motor, and cognitive impairments. Compliance is legally required in many jurisdictions under laws like the ADA, Section 508, and the European Accessibility Act.
+              </p>
+            
+            
+              <h3>What is the difference between WCAG Level A, AA, and AAA?</h3>
+              <p>
+                Level A covers basic accessibility requirements (25 criteria). Level AA adds 13 more criteria covering contrast ratios, resize support, and consistent navigation -- most legal requirements target AA. Level AAA adds 23 criteria for enhanced accessibility but is rarely required as a blanket standard because some content types cannot meet all AAA criteria.
+              </p>
+            
+            
+              <h3>Can automated tools catch all accessibility issues?</h3>
+              <p>
+                No. Automated tools typically catch only 30-40% of WCAG issues. They excel at detecting missing alt text, low contrast ratios, missing form labels, and invalid ARIA attributes. However, they cannot evaluate whether alt text is meaningful, whether focus order is logical, or whether custom widgets are keyboard-operable. Manual testing with screen readers and keyboard navigation is essential.
+              </p>
+            
+            
+              <h3>What are the minimum contrast ratios required by WCAG?</h3>
+              <p>
+                WCAG AA requires a contrast ratio of at least 4.5:1 for normal text (under 18px or 14px bold) and 3:1 for large text (18px+ or 14px+ bold). WCAG AAA raises these to 7:1 and 4.5:1 respectively. UI components and graphical objects require at least 3:1 contrast against adjacent colors.
+              </p>
+            
+          
+        
+
+        
+          <h2>Test Accessibility with BytePane Tools</h2>
+          <p>
+            Check color contrast ratios with our free <a href="/color-converter/">Color Converter</a>, validate your HTML structure, and ensure proper heading hierarchy. All tools run in your browser with zero setup.
+          </p>
+          <a href="/color-converter/">
+            Open Color Converter
+          </a>
+        
+
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/color-formats-hex-rgb-hsl/">
+              <h3>Color Formats Explained</h3>
+              <p>HEX, RGB, HSL color formats and contrast ratios for design.</p>
+            </a>
+            <a href="/blog/css-grid-vs-flexbox/">
+              <h3>CSS Grid vs Flexbox</h3>
+              <p>When to use each layout system for accessible, responsive design.</p>
+            </a>
+            <a href="/blog/web-performance-optimization/">
+              <h3>Web Performance Optimization</h3>
+              <p>Core Web Vitals, loading speed, and user experience optimization.</p>
+            </a>
+            <a href="/blog/rest-api-design-principles/">
+              <h3>REST API Design Principles</h3>
+              <p>Best practices for HTTP methods, error handling, and versioning.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/web-accessibility-testing-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
