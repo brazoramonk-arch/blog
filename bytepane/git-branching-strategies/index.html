@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Branching Strategies: GitFlow, GitHub Flow &amp;amp; Trunk-Based Development - BytePane</title>
+  <meta name="description" content="Schedule tasks and automate your CI/CD pipeline.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/git-branching-strategies/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Git Branching Strategies: GitFlow, GitHub Flow &amp;amp; Trunk-Based Development
+  </nav>
+
+  <article>
+    <h1>Git Branching Strategies: GitFlow, GitHub Flow &amp;amp; Trunk-Based Development</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/git-branching-strategies/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const relatedArticles = [
+   slug: 'cron-jobs-tutorial', title: 'Cron Jobs Tutorial', description: 'Schedule tasks and automate your CI/CD pipeline.' ,
+   slug: 'linux-file-permissions', title: 'Linux File Permissions', description: 'chmod, chown, and access control for dev environments.' ,
+   slug: 'docker-for-developers', title: 'Docker for Developers', description: 'Containers, images, and Docker Compose for local development.' ,
+]
+
+  
+    
+      /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Git Branching Strategies: GitFlow, GitHub Flow & Trunk-Based Development',
+            description: 'Compare GitFlow, GitHub Flow, and Trunk-Based Development. Learn which Git workflow fits your team size and release cadence.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/git-branching-strategies/',
+            mainEntityOfPage: 'https://bytepane.com/blog/git-branching-strategies/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Git Branching Strategies' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What is the best Git branching strategy for small teams?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'GitHub Flow is ideal for small teams (2-10 developers). It uses a single main branch with short-lived feature branches that are merged via pull requests. There are no develop, release, or hotfix branches to manage. This simplicity reduces overhead while maintaining code quality through mandatory code reviews and CI/CD checks before merging.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Should I use git merge or git rebase for feature branches?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Use rebase for updating your feature branch with the latest main branch changes (git rebase main) to keep a linear history. Use merge (via pull request) when integrating the feature branch back into main, as this creates a merge commit that clearly marks when the feature was integrated. Never rebase branches that other developers have pulled -- this rewrites shared history and causes conflicts.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is Trunk-Based Development and when should I use it?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Trunk-Based Development (TBD) is a strategy where all developers commit directly to the main branch (trunk) or use very short-lived feature branches (lasting hours, not days). It requires feature flags to hide incomplete work, comprehensive automated testing, and a strong CI/CD pipeline. TBD is best for teams practicing continuous deployment with 10+ releases per day, such as Google, Facebook, and Netflix.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Git Branching Strategies
+      
+
+      /* Article Header */
+      
+        <h2>
+          Git Branching Strategies: GitFlow, GitHub Flow &amp; Trunk-Based Development
+        </h2>
+        
+          Git
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          12 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>Why Branching Strategies Matter</h2>
+          <p>
+            Every software team uses Git, but how you organize branches determines whether your workflow is a smooth highway or a merge-conflict minefield. A branching strategy defines how developers create, name, merge, and delete branches. The right strategy depends on your team size, release cadence, and deployment pipeline. The wrong one leads to integration nightmares, stale branches, and deployment fear.
+          </p>
+          <p>
+            This guide compares the three most popular strategies -- GitFlow, GitHub Flow, and Trunk-Based Development -- with concrete examples, branch diagrams, and decision criteria so you can pick the one that fits your team.
+          </p>
+        
+
+        
+          <h2>Strategy Comparison at a Glance</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >GitFlow</th>
+                  <th >GitHub Flow</th>
+                  <th >Trunk-Based</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Long-lived branches</td><td >main + develop</td><td >main only</td><td >main only</td></tr>
+                <tr ><td >Feature branches</td><td >Yes (days-weeks)</td><td >Yes (hours-days)</td><td >Optional (hours)</td></tr>
+                <tr ><td >Release branches</td><td >Yes</td><td >No</td><td >No</td></tr>
+                <tr ><td >Hotfix branches</td><td >Yes</td><td >No (use feature)</td><td >No (commit to trunk)</td></tr>
+                <tr ><td >Merge strategy</td><td >Merge commits</td><td >Squash merge / PR</td><td >Rebase / direct push</td></tr>
+                <tr ><td >Release cadence</td><td >Scheduled</td><td >Continuous</td><td >Continuous</td></tr>
+                <tr ><td >Feature flags needed</td><td >No</td><td >Sometimes</td><td >Yes (critical)</td></tr>
+                <tr><td >Best for</td><td >Versioned software, mobile apps</td><td >Web apps, small teams</td><td >Large teams, CD pipelines</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>GitFlow: The Classic Enterprise Workflow</h2>
+          <p>
+            GitFlow, introduced by Vincent Driessen in 2010, uses two long-lived branches (<code >main</code> and <code >develop</code>) plus three types of supporting branches: feature, release, and hotfix. It is designed for projects with scheduled releases and multiple versions in production.
+          </p>
+
+          <h3>Branch Structure</h3>
+          <p>
+            <code >`main          ──●──────────────────●──────●──── (production releases)
+                \\                  /      /
+release/1.0    \\──●──●──────●    /       (stabilization)
+                \\       \\    /   /
+develop        ──●──●──●──●──●──●──●──── (integration branch)
+                  \\  /       \\     /
+feature/login   ●──●         \\   /
+                           ●──●
+                        feature/auth
+
+Branch naming:
+  feature/user-login
+  feature/JIRA-123-payment
+  release/1.2.0
+  hotfix/critical-auth-fix`</code>
+          </pre>
+
+          <h3>GitFlow Workflow Commands</h3>
+          <pre >
+            <code >`# Start a new feature
+git checkout develop
+git checkout -b feature/user-dashboard
+
+# Work on the feature... commit changes
+git add .
+git commit -m "Add dashboard layout with chart widgets"
+
+# Finish feature -- merge back into develop
+git checkout develop
+git merge --no-ff feature/user-dashboard
+git branch -d feature/user-dashboard
+
+# Create a release branch when develop is ready
+git checkout develop
+git checkout -b release/1.2.0
+
+# Fix bugs on the release branch, update version
+git commit -m "Bump version to 1.2.0"
+
+# Finish release -- merge into main AND develop
+git checkout main
+git merge --no-ff release/1.2.0
+git tag -a v1.2.0 -m "Release 1.2.0"
+git checkout develop
+git merge --no-ff release/1.2.0
+git branch -d release/1.2.0
+
+# Emergency hotfix from main
+git checkout main
+git checkout -b hotfix/fix-payment-crash
+# Fix the bug...
+git checkout main
+git merge --no-ff hotfix/fix-payment-crash
+git tag -a v1.2.1 -m "Hotfix 1.2.1"
+git checkout develop
+git merge --no-ff hotfix/fix-payment-crash
+git branch -d hotfix/fix-payment-crash`</code>
+          </pre>
+
+          <h3>When to Use GitFlow</h3>
+          <ul>
+            <li>Mobile apps with app store review cycles (iOS, Android)</li>
+            <li>Desktop software with versioned releases (v1.0, v2.0)</li>
+            <li>Enterprise projects with QA/staging environments per release</li>
+            <li>Teams supporting multiple major versions simultaneously</li>
+          </ul>
+
+          <h3>When to Avoid GitFlow</h3>
+          <ul>
+            <li>Web applications deployed continuously (too much ceremony)</li>
+            <li>Small teams under 5 developers (unnecessary complexity)</li>
+            <li>Projects without version numbers or scheduled releases</li>
+          </ul>
+        
+
+        
+          <h2>GitHub Flow: Simple and Continuous</h2>
+          <p >
+            GitHub Flow, popularized by GitHub itself, strips branching down to the essentials: one main branch, short-lived feature branches, pull requests, and continuous deployment. There is no develop branch, no release branches, and no hotfix branches. Every merge to main is deployed to production.
+          </p>
+
+          <h3>The Complete Workflow</h3>
+          <p>
+            <code >`# 1. Create a feature branch from main
+git checkout main
+git pull origin main
+git checkout -b add-search-filter
+
+# 2. Make commits with clear messages
+git add src/components/SearchFilter.tsx
+git commit -m "Add search filter component with debounce"
+
+git add src/hooks/useSearch.ts
+git commit -m "Add useSearch hook with fuzzy matching"
+
+# 3. Push and open a Pull Request
+git push -u origin add-search-filter
+# Open PR on GitHub -- triggers CI/CD checks
+
+# 4. Code review + automated tests pass
+
+# 5. Merge PR (squash or merge commit)
+# GitHub merges and optionally deploys to production
+
+# 6. Delete the branch
+git checkout main
+git pull origin main
+git branch -d add-search-filter`</code>
+          </pre>
+
+          <h3>Best Practices for GitHub Flow</h3>
+          <ol>
+            <li><strong>Keep branches short-lived</strong> -- merge within 1-3 days. Longer branches accumulate merge conflicts and integration risk.</li>
+            <li><strong>Write descriptive PR titles</strong> -- your PR title becomes the merge commit message. Make it meaningful for git log.</li>
+            <li><strong>Require CI checks before merge</strong> -- set up branch protection rules to prevent merging broken code.</li>
+            <li><strong>Use squash merge for clean history</strong> -- squash merge combines all PR commits into one clean commit on main.</li>
+            <li><strong>Deploy after every merge</strong> -- if you are not deploying after every merge, GitHub Flow is not the right fit.</li>
+          </ol>
+        
+
+        
+          <h2>Trunk-Based Development: The Speed-First Approach</h2>
+          <p >
+            Trunk-Based Development (TBD) takes simplicity to its logical extreme: all developers commit directly to the main branch (the "trunk") or use very short-lived feature branches that last hours, not days. Google, Facebook, Netflix, and most high-performing engineering teams use TBD.
+          </p>
+
+          <h3>How It Works</h3>
+          <p>
+            <code >`# Option A: Commit directly to main
+git checkout main
+git pull --rebase origin main
+# Make small, focused changes
+git add src/utils/format.ts
+git commit -m "Add currency formatter with locale support"
+git push origin main
+
+# Option B: Very short-lived branch (merged same day)
+git checkout main
+git pull --rebase origin main
+git checkout -b fix-date-parser
+# Fix in 2-3 hours max
+git add .
+git commit -m "Fix date parser timezone offset bug"
+git checkout main
+git merge fix-date-parser
+git push origin main
+git branch -d fix-date-parser
+
+# Feature flags for incomplete work
+// config/features.ts
+export const FEATURES = 
+  NEW_DASHBOARD: process.env.FEATURE_DASHBOARD === 'true',
+  BETA_SEARCH: process.env.FEATURE_SEARCH === 'true',
+
+// In your component
+
+function App() 
+  return FEATURES.NEW_DASHBOARD
+    ? <NewDashboard />
+    : <LegacyDashboard />
+`</code>
+          </pre>
+
+          <h3>Prerequisites for Trunk-Based Development</h3>
+          <ul>
+            <li><strong>Comprehensive automated tests</strong> -- every commit goes to production, so your test suite must catch regressions</li>
+            <li><strong>Feature flags</strong> -- you need a way to deploy incomplete features without exposing them to users</li>
+            <li><strong>Fast CI/CD pipeline</strong> -- builds must complete in minutes, not hours, to keep the trunk green</li>
+            <li><strong>Small, incremental commits</strong> -- each commit should be independently deployable and safe</li>
+            <li><strong>Team discipline</strong> -- no one commits code that breaks the build</li>
+          </ul>
+        
+
+        
+          <h2>Branch Naming Conventions</h2>
+          <p >
+            Consistent branch naming makes your repository navigable and your CI/CD rules predictable. Here are the most common conventions across all three strategies.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Type</th>
+                  <th >Pattern</th>
+                  <th >Examples</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Feature</td><td >feature/description</td><td >feature/user-auth, feature/JIRA-456-search</td></tr>
+                <tr ><td >Bug fix</td><td >fix/description</td><td >fix/login-redirect, fix/null-pointer</td></tr>
+                <tr ><td >Release</td><td >release/version</td><td >release/1.2.0, release/2026-q1</td></tr>
+                <tr ><td >Hotfix</td><td >hotfix/description</td><td >hotfix/crash-on-login, hotfix/security-patch</td></tr>
+                <tr><td >Chore</td><td >chore/description</td><td >chore/update-deps, chore/ci-config</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Use lowercase, hyphens as separators, and include a ticket number if your team uses issue tracking. Validate branch names with a <a href="/regex-tester/">regex pattern</a> like <code >'(feature|fix|hotfix|release|chore)/[a-z0-9-]+'</code> in a pre-push hook.
+          </p>
+        
+
+        
+          <h2>Merge vs Rebase: Which to Use</h2>
+          <p>
+            The merge-vs-rebase debate is one of the most common Git discussions. The answer depends on your branching strategy and what you optimize for: history clarity or traceability.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Aspect</th>
+                  <th >Merge</th>
+                  <th >Rebase</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >History</td><td >Preserves full branch history</td><td >Creates linear history</td></tr>
+                <tr ><td >Merge commits</td><td >Creates merge commit</td><td >No merge commit</td></tr>
+                <tr ><td >Conflict resolution</td><td >Once per merge</td><td >Per rebased commit</td></tr>
+                <tr ><td >Safe for shared branches</td><td >Yes</td><td >No (rewrites history)</td></tr>
+                <tr><td >Best used for</td><td >Integrating feature into main</td><td >Updating feature from main</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`# Golden rule: rebase to update, merge to integrate
+
+# Update your feature branch with latest main
+git checkout feature/search
+git rebase main
+# Resolve conflicts per commit if any
+
+# Integrate feature into main (via PR or manual merge)
+git checkout main
+git merge --no-ff feature/search
+# Creates a merge commit -- clear integration point
+
+# Squash merge for cleaner history (GitHub PR option)
+git checkout main
+git merge --squash feature/search
+git commit -m "Add search with fuzzy matching and filters"`</code>
+          </pre>
+        
+
+        
+          <h2>Choosing the Right Strategy for Your Team</h2>
+          <p >
+            Use this decision framework to pick the strategy that matches your team's reality, not its aspirations.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >If your team...</th>
+                  <th >Use</th>
+                  <th >Reason</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Ships versioned releases (v1, v2)</td><td >GitFlow</td><td >Release branches for stabilization</td></tr>
+                <tr ><td >Deploys web apps continuously</td><td >GitHub Flow</td><td >Simple, PR-based, CI/CD friendly</td></tr>
+                <tr ><td >Has 2-5 developers</td><td >GitHub Flow</td><td >Minimal overhead, easy to learn</td></tr>
+                <tr ><td >Has 50+ developers on one repo</td><td >Trunk-Based</td><td >Avoids long-lived branch conflicts</td></tr>
+                <tr ><td >Deploys 10+ times per day</td><td >Trunk-Based</td><td >Branches add unnecessary latency</td></tr>
+                <tr><td >Supports multiple prod versions</td><td >GitFlow</td><td >Parallel release/hotfix branches</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Many teams start with GitHub Flow and migrate to Trunk-Based Development as their CI/CD pipeline matures. GitFlow is less common in modern web development but remains the standard for mobile and desktop software with app store release cycles.
+          </p>
+        
+
+        
+          <h2>Automating Branch Policies</h2>
+          <p>
+            Branch protection rules enforce your strategy automatically. Here is an example GitHub Actions workflow that validates branch names and requires checks before merging.
+          </p>
+          <p>
+            <code >`# .github/workflows/branch-policy.yml
+name: Branch Policy
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  validate-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        run: |
+          BRANCH=\$ github.head_ref 
+          if [[ ! "$BRANCH" =~ ^(feature|fix|hotfix|chore)/ ]]; then
+            echo "Invalid branch name: $BRANCH"
+            echo "Must start with feature/, fix/, hotfix/, or chore/"
+            exit 1
+          fi
+
+      - name: Check PR size
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const  data: files  = await github.rest.pulls.listFiles(
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            );
+            const changes = files.reduce((sum, f) =>
+              sum + f.additions + f.deletions, 0);
+            if (changes > 500) 
+              core.warning(
+                \`Large PR: \$changes lines changed. Consider splitting.\`
+              );
+            `</code>
+          </pre>
+          <p >
+            You can validate branch names, commit messages, and other patterns with a <a href="/regex-tester/">Regex Tester</a> before hardcoding them into CI/CD configs. For <a href="/blog/cron-jobs-tutorial/">scheduled automation</a> like stale branch cleanup, cron expressions handle the timing.
+          </p>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <details >
+            <summary >
+              What is the best Git branching strategy for small teams?
+            </summary>
+            
+              GitHub Flow is ideal for small teams (2-10 developers). It uses a single main branch with short-lived feature branches that are merged via pull requests. There are no develop, release, or hotfix branches to manage. This simplicity reduces overhead while maintaining code quality through mandatory code reviews and CI/CD checks before merging.
+            
+          </details>
+
+          <details >
+            <summary >
+              Should I use git merge or git rebase for feature branches?
+            </summary>
+            
+              Use rebase for updating your feature branch with the latest main branch changes (<code >git rebase main</code>) to keep a linear history. Use merge (via pull request) when integrating the feature branch back into main, as this creates a merge commit that clearly marks when the feature was integrated. Never rebase branches that other developers have pulled -- this rewrites shared history and causes conflicts.
+            
+          </details>
+
+          <details >
+            <summary >
+              What is Trunk-Based Development and when should I use it?
+            </summary>
+            
+              Trunk-Based Development (TBD) is a strategy where all developers commit directly to the main branch (trunk) or use very short-lived feature branches lasting hours, not days. It requires feature flags to hide incomplete work, comprehensive automated testing, and a strong CI/CD pipeline. TBD is best for teams practicing continuous deployment with 10+ releases per day, such as Google, Facebook, and Netflix.
+            
+          </details>
+        
+
+        /* CTA Section */
+        
+          <h2>Validate Your Git Patterns</h2>
+          <p>
+            Test branch naming conventions, commit message formats, and CI/CD patterns with our free Regex Tester. Build and validate patterns directly in your browser.
+          </p>
+          <a href="/regex-tester/">
+            Open Regex Tester
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                <h3>article.title</h3>
+                <p>article.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/git-branching-strategies/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
