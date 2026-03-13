@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roofing Calculator: Estimate Materials, Cost &amp;amp; Labor - HammerIO</title>
+  <meta name="description" content="Calculate roofing shingles, underlayment, and labor costs for any roof. RSMeans and NAHB data for 2026 with material quantities and per-square pricing.">
+  <link rel="canonical" href="https://www.hammerio.com/blog/roofing-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/hammerio/">HammerIO</a> &rarr; Roofing Calculator: Estimate Materials, Cost &amp;amp; Labor
+  </nav>
+
+  <article>
+    <h1>Roofing Calculator: Estimate Materials, Cost &amp;amp; Labor</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.hammerio.com/blog/roofing-calculator/">hammerio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const relatedArticles = [
+   slug: 'roofing-materials-comparison', title: 'Roofing Materials Comparison: Costs, Lifespan & Best Uses', category: 'Roofing' ,
+   slug: 'solar-panel-roof-installation', title: 'Solar Panel Roof Installation: Costs, Roof Types & What to Know', category: 'Solar' ,
+   slug: 'energy-efficient-home-upgrades', title: 'Energy-Efficient Home Upgrades: Best ROI Projects for 2026', category: 'Energy' ,
+   slug: 'construction-cost-calculator', title: 'Construction Cost Calculator: Estimate Your Building Costs', category: 'Cost Estimating' ,
+];
+
+  const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Roofing Calculator: Estimate Materials, Cost & Labor',
+    description: 'Calculate roofing shingles, underlayment, and labor costs for any roof. RSMeans and NAHB data for 2026 with material quantities and per-square pricing.',
+    datePublished: '2026-03-13',
+    dateModified: '2026-03-13',
+    author: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+    ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+      logo: 
+        '@type': 'ImageObject',
+        url: 'https://hammerio.com/favicon.svg',
+      ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://hammerio.com/blog/roofing-calculator/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://hammerio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://hammerio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Roofing Calculator', item: 'https://hammerio.com/blog/roofing-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How many bundles of shingles do I need for a 2,000 square foot house?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A 2,000 square foot house typically has 2,000 to 2,400 square feet of actual roof surface, depending on pitch. At 3 bundles per roofing square, you need 60 to 72 bundles for the shingles alone. Add one extra square for waste, hips, ridges, and valleys, bringing the total to 63 to 75 bundles.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do I measure my roof square footage?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Multiply your home footprint in square feet by a pitch factor to get roof surface area. A low-slope 4/12 pitch adds about 5 percent area; a steep 12/12 pitch adds 41 percent. The simplest method is to measure from the ground using satellite imagery or use our roofing calculator, which handles pitch multipliers automatically.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the average cost to replace a roof on a 2,000 square foot house?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Replacing a 2,000 square foot home roof costs $8,000 to $16,000 for standard 3-tab asphalt shingles and $12,000 to $22,000 for architectural shingles. Metal roofing runs $20,000 to $45,000. According to HomeAdvisor and RSMeans 2026 data, the national average for an asphalt shingle replacement is $9,000 to $14,000 fully installed including tear-off and disposal.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How long does a roof replacement take?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A standard asphalt shingle roof replacement on a 2,000 square foot house takes one to two days for an experienced crew. Complex roofs with multiple valleys, dormers, skylights, or steep pitches may take two to four days. Metal roofing and tile installation take significantly longer, typically four to seven days. Weather delays are common and should be factored into scheduling.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What roofing material lasts the longest?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Slate and clay tile roofs last 75 to 150 years with proper maintenance, making them the longest-lasting roofing materials. Standing seam metal roofs last 40 to 70 years. High-definition architectural asphalt shingles carry 30-year warranties but realistically last 20 to 25 years in harsh climates. Material longevity must be weighed against installation cost and structural requirements.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Do I need a permit to replace my roof?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Most jurisdictions require a permit for full roof replacements, especially if structural work, decking replacement, or ventilation changes are involved. Permits for residential roofing typically cost $150 to $500. Some municipalities exempt like-for-like shingle replacements on existing decking. Always check with your local building department before starting work to avoid fines and insurance complications.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is a roofing square and how many do I need?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A roofing square equals 100 square feet of roof surface area. To find how many squares you need, divide your total roof surface area by 100. A 2,000 square foot house with a moderate pitch has approximately 22 to 25 squares of roof area. Most roofing contractors price materials and labor per square.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Roofing Calculator</li>
+          </ol>
+        
+
+        /* Header */
+        
+          
+            Roofing
+            13 min read
+            <time  dateTime="2026-03-13">March 13, 2026</time>
+          
+          <h2>
+            Roofing Calculator: Estimate Materials, Cost &amp; Labor
+          </h2>
+          <p>
+            Getting roofing quantities wrong means either running out of shingles mid-job or paying to haul back two squares of surplus material. This guide walks you through how to calculate roof area, determine shingle bundles and underlayment rolls, estimate labor hours, and build a complete roofing budget — using 2026 RSMeans pricing and NRCA benchmarks.
+          </p>
+        
+
+        /* CTA Banner */
+        
+          <h2>Calculate Your Roofing Materials</h2>
+          <p>Enter your roof dimensions and pitch to instantly get shingle bundles, underlayment rolls, and cost estimates.</p>
+          <a href="/roofing-calculator/">
+            Open the Roofing Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+          </a>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>✓<strong>Roof area ≠ floor area:</strong> A 2,000 sf home has 2,000–2,400 sf of roof surface depending on pitch. Always apply a pitch multiplier.</li>
+            <li>✓<strong>Bundle math:</strong> Standard asphalt shingles cover 33.3 sf per bundle; 3 bundles = 1 roofing square (100 sf). Always add 10–15% for waste.</li>
+            <li>✓<strong>RSMeans 2026:</strong> Total asphalt shingle replacement (materials + labor + tear-off) runs $350–$550 per square nationally.</li>
+            <li>✓<strong>NRCA benchmark:</strong> Labor alone runs $150–$300 per square for standard asphalt shingle installation on a walkable slope.</li>
+            <li>✓<strong>Decking matters:</strong> Budget $80–$120 per sheet of 7/16-inch OSB decking if your existing sheathing needs replacement — this alone can add $2,000–$5,000.</li>
+          </ul>
+        
+
+        
+
+          <h2>How to Calculate Roof Square Footage</h2>
+          <p >
+            The most common mistake homeowners make when estimating roofing materials is using the home&apos;s footprint square footage as the roof area. They are not the same. A roof with any pitch greater than flat has more surface area than the footprint below it because the surface travels up the slope, not straight across.
+          </p>
+          <p>
+            To find true roof area, multiply your home&apos;s footprint (length × width, including any overhangs) by a pitch correction factor. Roof pitch is expressed as rise over run: a 6/12 pitch rises 6 inches for every 12 inches of horizontal run. Here are the pitch multipliers used by NRCA-certified contractors:
+          </p>
+          <ul>
+            <li><strong>2/12 pitch (nearly flat):</strong> multiply footprint by 1.02</li>
+            <li><strong>4/12 pitch (low slope):</strong> multiply by 1.054</li>
+            <li><strong>6/12 pitch (standard):</strong> multiply by 1.118</li>
+            <li><strong>8/12 pitch (moderate-steep):</strong> multiply by 1.202</li>
+            <li><strong>10/12 pitch (steep):</strong> multiply by 1.302</li>
+            <li><strong>12/12 pitch (very steep):</strong> multiply by 1.414</li>
+          </ul>
+          <p>
+            Example: A 2,000 sf footprint home with a 6/12 pitch has 2,000 × 1.118 = 2,236 sf of actual roof surface. Divide by 100 to get squares: 22.36 squares. Add 10% waste: 24.6 squares ordered. At 3 bundles per square: 73.8 — round up to 74 bundles. Our <a href="/roofing-calculator/">roofing calculator</a> handles all of this math automatically.
+          </p>
+          <p>
+            For homes with complex roof geometry — multiple valleys, dormers, hips, ridges, and penetrations — measure each roof plane individually from your drawings or from satellite imagery. Add all planes together, then apply the pitch factor for each plane separately if pitches differ. Valleys and hips add material waste; increase your waste factor to 15% on complex roofs.
+          </p>
+
+          <h2>Roofing Material Cost Per Square (2026)</h2>
+          <p>
+            Roofing contractors price materials and labor per square (100 sf). The table below shows 2026 material costs per square for the most common residential roofing types, based on RSMeans Building Construction Cost Data and current distributor pricing. These are material-only costs; labor is separate.
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Material</th>
+                    <th >Cost per Square (Materials)</th>
+                    <th >Labor per Square</th>
+                    <th >Total Installed</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >3-Tab Asphalt Shingles</td><td >$85–$120</td><td >$150–$220</td><td >$235–$340</td></tr>
+                  <tr ><td >Architectural Shingles</td><td >$120–$175</td><td >$150–$230</td><td >$270–$405</td></tr>
+                  <tr ><td >Impact-Resistant Shingles</td><td >$180–$240</td><td >$160–$240</td><td >$340–$480</td></tr>
+                  <tr ><td >Standing Seam Metal</td><td >$400–$700</td><td >$300–$500</td><td >$700–$1,200</td></tr>
+                  <tr ><td >Metal Shingles</td><td >$300–$500</td><td >$200–$350</td><td >$500–$850</td></tr>
+                  <tr ><td >Concrete Tile</td><td >$250–$400</td><td >$250–$400</td><td >$500–$800</td></tr>
+                  <tr ><td >Clay Tile</td><td >$350–$700</td><td >$300–$500</td><td >$650–$1,200</td></tr>
+                  <tr><td >Natural Slate</td><td >$800–$1,800</td><td >$600–$1,000</td><td >$1,400–$2,800</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: RSMeans Building Construction Cost Data 2026, NRCA labor benchmarks. Excludes tear-off ($50–$100/sq) and underlayment. National average; apply city cost index for your market.</p>
+          
+
+          <h2>Shingle Calculator: Bundles, Squares, and Waste Factors</h2>
+          <p>
+            Asphalt shingles are packaged in bundles. Standard 3-tab and most architectural shingles pack at 3 bundles per square (100 sf). Some heavier laminated shingles pack at 4 bundles per square — always check the manufacturer&apos;s coverage data on the bundle label before ordering.
+          </p>
+          <p>
+            The waste factor accounts for cut pieces at rakes, eaves, hips, valleys, and around penetrations. Use these waste factors:
+          </p>
+          <ul>
+            <li><strong>Simple gable roof (1–2 planes):</strong> Add 10% waste.</li>
+            <li><strong>Hip roof or 4-plane gable:</strong> Add 12–15% waste.</li>
+            <li><strong>Complex roof with dormers and multiple valleys:</strong> Add 15–20% waste.</li>
+            <li><strong>Steep slopes (10/12 or greater):</strong> Add an additional 5% for drop and breakage.</li>
+          </ul>
+          <p>
+            Beyond field shingles, you need starter shingles for the first course at eaves and rakes (1 bundle per 100 LF of perimeter), ridge cap shingles (1 bundle per 35 LF of ridge), and valley flashing (1 roll of 50 LF covers 50 LF of valley). Do not forget drip edge at eaves (1 piece per 10 LF) and rakes.
+          </p>
+
+          <h2>Underlayment Calculator: Felt vs. Synthetic</h2>
+          <p>
+            Roofing underlayment is the moisture barrier installed over the sheathing before shingles. It is required by IRC Section R905.2.7 and most shingle manufacturer warranties. There are two primary types:
+          </p>
+          <ul>
+            <li><strong>15-lb felt (No. 15 asphalt felt):</strong> Covers approximately 400 sf per roll (4 squares). Cost: $15–$25 per roll. Economical but tears easily and absorbs moisture. Used on low-risk applications in dry climates.</li>
+            <li><strong>30-lb felt:</strong> Covers approximately 200 sf per roll (2 squares). Cost: $20–$35 per roll. More durable than 15-lb, required on slopes below 4/12 with a single-layer application.</li>
+            <li><strong>Synthetic underlayment (polypropylene):</strong> Covers 1,000 sf per roll (10 squares). Cost: $50–$120 per roll. Lighter, stronger, more slip-resistant, and more waterproof than felt. Required by most premium shingle manufacturers to maintain warranty. HomeAdvisor data shows synthetic is now used on 65%+ of residential re-roofing projects.</li>
+            <li><strong>Self-adhering ice and water shield:</strong> Covers 75 sf per roll. Cost: $65–$120 per roll. Required at eaves (minimum 24 inches inside the exterior wall), valleys, around skylights, and in cold climates (Climate Zones 5–8) per IRC R905.2.8.2. Budget 1 roll per 75 LF of eave plus 2 rolls per valley.</li>
+          </ul>
+          <p>
+            For a 22-square roof using synthetic underlayment: 22 squares ÷ 10 squares per roll = 2.2 rolls, round up to 3 rolls. Add ice and water shield at eaves (assume 200 LF perimeter = 3 rolls) and 2 valleys (4 rolls). Total underlayment cost: 3 × $85 (synthetic) + 7 × $90 (ice/water) = $255 + $630 = $885 in underlayment alone.
+          </p>
+
+          <h2>Roof Decking: When to Replace OSB or Plywood</h2>
+          <p>
+            During a tear-off, your contractor will inspect the existing roof decking (OSB or plywood sheathing). Soft spots, delamination, rot, or insufficient thickness require replacement before new shingles go on. Skipping damaged decking is one of the most common reasons new roofs fail prematurely — and it voids most shingle warranties.
+          </p>
+          <p>
+            Standard residential roof sheathing is 7/16-inch OSB or 1/2-inch plywood. Rafter spacing of 16 inches on center requires minimum 7/16-inch; 24-inch spacing requires 5/8-inch. In 2026, 7/16-inch OSB costs $28–$38 per sheet (covering 32 sf). Replacing the full deck on a 22-square roof requires approximately 69 sheets: 2,200 sf ÷ 32 sf per sheet = 68.75 sheets. At $33 per sheet, that&apos;s $2,270 in materials plus $0.80–$1.20/sf in labor for removal and installation — adding $1,760–$2,640 in labor. Budget $4,000–$5,000 for full deck replacement on a typical home.
+          </p>
+          <p>
+            Partial decking replacement (spot repairs for localized rot) typically costs $50–$150 per sheet replaced, including labor. Most roofers budget for 5–10% decking replacement on average — about 3–7 sheets on a typical re-roof. If your house is over 30 years old or has had multiple roof layers, budget for more.
+          </p>
+
+          <h2>Flashing: The Material That Prevents 90% of Leaks</h2>
+          <p>
+            Flashing is the metal (typically galvanized steel, aluminum, or copper) installed at every roof penetration, valley, and transition to prevent water intrusion. According to NRCA, improper or failed flashing is the cause of over 90 percent of residential roof leaks. Always replace all flashing during a re-roof — cutting this corner is false economy.
+          </p>
+          <p>
+            Flashing types and typical costs for a standard home:
+          </p>
+          <ul>
+            <li><strong>Step flashing (walls and chimneys):</strong> $10–$20 per linear foot installed. A typical chimney requires 20–40 LF: $200–$800.</li>
+            <li><strong>Valley flashing (open metal):</strong> $8–$18 per linear foot. Each valley averages 12–20 LF: $100–$360 per valley.</li>
+            <li><strong>Pipe boot/plumbing flashing:</strong> $35–$80 per penetration installed. Budget for 3–6 pipe boots on a typical home: $105–$480.</li>
+            <li><strong>Skylight flashing:</strong> $150–$400 per skylight depending on size and type. Curb-mounted skylights require more complex flashing than deck-mounted.</li>
+            <li><strong>Drip edge:</strong> $1.50–$3.00 per linear foot. Perimeter of a 2,000 sf home: approximately 200 LF = $300–$600.</li>
+          </ul>
+          <p>
+            Copper flashing costs 3–4× more than galvanized but lasts the life of a slate or tile roof. On asphalt shingle roofs with a 30-year lifespan expectation, galvanized or aluminum flashing is the standard and appropriate choice.
+          </p>
+
+          <h2>Tear-Off Costs and Disposal</h2>
+          <p>
+            Tear-off is the removal of existing roofing before new materials are installed. Most jurisdictions limit roofing to two layers maximum — if you already have two layers of shingles, tear-off is mandatory regardless of cost. Even with one existing layer, tear-off is recommended for new roofs because it allows inspection of the decking and correct installation of ice and water shield.
+          </p>
+          <p>
+            RSMeans 2026 prices tear-off at $50 to $100 per square for a single layer of asphalt shingles. A second layer adds $30–$50 per square. On a 22-square roof, single-layer tear-off costs $1,100 to $2,200. Disposal of old shingles adds $0.50–$1.00 per square foot of shingle area — approximately $1,100–$2,200 for a full re-roof — covering dumpster rental ($300–$600) and tipping fees ($400–$800). Some contractors include disposal in their per-square bid; always confirm what is included.
+          </p>
+
+          <h2>Roof Ventilation: The Hidden Requirement</h2>
+          <p>
+            Proper attic ventilation is required by IRC Section R806 and is critical for shingle longevity. Inadequate ventilation causes heat and moisture buildup that can halve a shingle&apos;s lifespan. The IRC requires 1 square foot of net free area (NFA) of ventilation per 150 square feet of attic floor area, or 1:300 with a vapor retarder on the ceiling.
+          </p>
+          <p>
+            Ventilation components to include in your roofing estimate:
+          </p>
+          <ul>
+            <li><strong>Ridge vent:</strong> $3–$7 per linear foot installed. Runs the full length of the ridge for continuous ventilation. A 40 LF ridge = $120–$280.</li>
+            <li><strong>Soffit vents:</strong> $2–$5 per linear foot. Continuous soffit vent covers the full eave length for intake air. Must be kept clear of insulation baffles.</li>
+            <li><strong>Box vents / turtle vents:</strong> $35–$80 each installed. Used where ridge vent is not practical. Each provides approximately 50 NFA; most homes need 6–12.</li>
+            <li><strong>Power attic ventilator:</strong> $300–$700 installed. Used to supplement passive ventilation in hot climates. Thermostat-controlled, activates above 90–110°F.</li>
+          </ul>
+
+          <h2>Total Roofing Budget: A Complete Example</h2>
+          <p>
+            Let&apos;s build a complete roofing estimate for a 2,000 sf single-story home with a 6/12 pitch gable roof, two valleys, one chimney, and five plumbing penetrations. This is a full tear-off and replacement with architectural shingles in a mid-cost market (RSMeans CCI = 100).
+          </p>
+          <ul>
+            <li><strong>Roof area:</strong> 2,000 × 1.118 = 2,236 sf = 22.36 squares. Round to 23 squares + 12% waste = 25.8 squares ordered.</li>
+            <li><strong>Architectural shingles:</strong> 26 squares × $150/sq = $3,900 in materials. 26 × 3 bundles = 78 bundles.</li>
+            <li><strong>Synthetic underlayment:</strong> 26 squares ÷ 10 sq/roll = 3 rolls × $85 = $255.</li>
+            <li><strong>Ice and water shield (eaves + valleys):</strong> 220 LF eaves ÷ 75 sf/roll = 3 rolls + 2 valleys × 2 rolls = 10 rolls × $90 = $900.</li>
+            <li><strong>Drip edge:</strong> 200 LF × $2.25 = $450.</li>
+            <li><strong>Ridge cap:</strong> 40 LF ÷ 35 = 2 bundles × $65 = $130.</li>
+            <li><strong>Flashing (chimney + 2 valleys + 5 pipe boots):</strong> approximately $850.</li>
+            <li><strong>Ridge vent:</strong> 40 LF × $5 = $200.</li>
+            <li><strong>Tear-off (1 layer):</strong> 23 squares × $75 = $1,725.</li>
+            <li><strong>Decking replacement (5% = 1.2 squares = 4 sheets):</strong> 4 × $33 + labor = $250.</li>
+            <li><strong>Labor (install at $190/sq):</strong> 23 squares × $190 = $4,370.</li>
+            <li><strong>Permit:</strong> $350.</li>
+            <li><strong>Total estimated cost:</strong> $13,380. Budget $14,500–$15,000 with 10% contingency.</li>
+          </ul>
+          <p>
+            This aligns with HomeAdvisor&apos;s 2026 national average of $9,000–$16,000 for a full architectural shingle replacement on a standard home. Your actual cost will vary based on market, complexity, and contractor. For a comprehensive look at material options and their trade-offs, see our <a href="/blog/roofing-materials-comparison/">roofing materials comparison guide</a>.
+          </p>
+
+          <h2>DIY vs. Professional Roofing: The Real Cost Comparison</h2>
+          <p>
+            DIY roofing can save $3,000–$8,000 in labor on a standard shingle replacement. But there are hard limits on where DIY makes sense. Fall protection (OSHA-standard) is required above 6 feet, and residential roofers are injured more than workers in most other trades. A fall from a roof is among the most common construction fatalities — OSHA falls violations are among the top citations nationally.
+          </p>
+          <p>
+            Beyond safety, most manufacturer warranties (including GAF and Owens Corning enhanced warranties) require installation by a certified contractor. DIY installation voids these warranties. On a 30-year architectural shingle, the warranty is worth real money if a defect appears at year 15. Consider the warranty value when doing the DIY math.
+          </p>
+          <p>
+            DIY makes sense for small repairs — replacing a few damaged shingles, re-sealing flashing, or repairing a small section on a walkable slope. Full DIY re-roofing is appropriate only for experienced builders with proper safety equipment, a helper on the ground, and comfort working at height. Read our <a href="/blog/diy-vs-contractor-when-to-hire/">DIY vs. contractor guide</a> for a full risk-benefit framework.
+          </p>
+
+          <h2>Permits and Inspections for Roofing</h2>
+          <p>
+            Permit requirements for roofing vary significantly by jurisdiction. Many localities require a permit for any full re-roof, while others only require permits when structural work (decking replacement, rafter repair) is involved. Permit fees for residential roofing typically run $150 to $500.
+          </p>
+          <p>
+            When a permit is required, an inspector will typically check: (1) ice and water shield installation at eaves and valleys, (2) underlayment type and installation, (3) shingle fastening pattern (nail length and placement), (4) ventilation adequacy, and (5) flashing at all penetrations and transitions. Failing to pull a permit can complicate your homeowner&apos;s insurance claim for storm damage and create issues at resale. See our <a href="/blog/building-permits-guide/">building permits guide</a> for a full breakdown of when permits are required.
+          </p>
+
+          <h2>Roofing and Solar: Planning for Future Panels</h2>
+          <p>
+            If you are replacing your roof and considering solar panels within the next 5 years, do it in the right order. Installing solar on an older roof means the panels must be removed when you re-roof (at $1,500–$5,000 cost). Replace the roof first with a material that has a lifespan compatible with the panels (25–30 years for asphalt, 40+ years for metal).
+          </p>
+          <p>
+            Metal roofing is increasingly popular for solar homes because standing seam panels can be attached without penetrations using clamps on the seams — maintaining full warranty. Asphalt shingle roofs require through-penetration mounts that must be properly flashed. For a complete analysis, see our <a href="/blog/solar-panel-roof-installation/">solar panel roof installation guide</a>.
+          </p>
+          <p>
+            Energy-efficient roofing upgrades — cool roof coatings, reflective shingles, and above-deck insulation — can reduce cooling loads by 10–15%. Our <a href="/blog/energy-efficient-home-upgrades/">energy-efficient home upgrades guide</a> shows payback periods for roofing improvements by climate zone.
+          </p>
+
+          <h2>Getting Accurate Contractor Bids</h2>
+          <p>
+            Get at least three bids from licensed, insured roofing contractors. A complete roofing bid should specify: the shingle manufacturer and product name, shingle color and warranty, underlayment type, ice and water shield coverage, flashing material and installation method, ventilation changes, decking replacement allowance, tear-off layers included, disposal method, payment schedule, and start/completion dates.
+          </p>
+          <p>
+            Bids that omit any of these items leave room for disputes and change orders. The lowest bid is often low because it excludes items that show up as extras mid-project. Use our roofing estimate as a benchmark — if a bid is 30% below your calculated number, ask specifically which line items were excluded before accepting.
+          </p>
+          <p>
+            For broader construction budgeting context, our <a href="/blog/construction-cost-calculator/">construction cost calculator guide</a> covers the full range of residential building costs and how to apply RSMeans regional adjustments to any project type.
+          </p>
+
+          /* FAQ Section */
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>How many bundles of shingles do I need for a 2,000 square foot house?</h3>
+              <p>A 2,000 square foot house typically has 2,000 to 2,400 square feet of actual roof surface, depending on pitch. At 3 bundles per roofing square, you need 60 to 72 bundles for the shingles alone. Add one extra square for waste, hips, ridges, and valleys, bringing the total to 63 to 75 bundles.</p>
+            
+            
+              <h3>How do I measure my roof square footage?</h3>
+              <p>Multiply your home footprint in square feet by a pitch factor to get roof surface area. A low-slope 4/12 pitch adds about 5 percent area; a steep 12/12 pitch adds 41 percent. The simplest method is to measure from the ground using satellite imagery or use our roofing calculator, which handles pitch multipliers automatically.</p>
+            
+            
+              <h3>What is the average cost to replace a roof on a 2,000 square foot house?</h3>
+              <p>Replacing a 2,000 square foot home roof costs $8,000 to $16,000 for standard 3-tab asphalt shingles and $12,000 to $22,000 for architectural shingles. Metal roofing runs $20,000 to $45,000. According to HomeAdvisor and RSMeans 2026 data, the national average for an asphalt shingle replacement is $9,000 to $14,000 fully installed including tear-off and disposal.</p>
+            
+            
+              <h3>How long does a roof replacement take?</h3>
+              <p>A standard asphalt shingle roof replacement on a 2,000 square foot house takes one to two days for an experienced crew. Complex roofs with multiple valleys, dormers, skylights, or steep pitches may take two to four days. Metal roofing and tile installation take significantly longer, typically four to seven days. Weather delays are common and should be factored into scheduling.</p>
+            
+            
+              <h3>What roofing material lasts the longest?</h3>
+              <p>Slate and clay tile roofs last 75 to 150 years with proper maintenance, making them the longest-lasting roofing materials. Standing seam metal roofs last 40 to 70 years. High-definition architectural asphalt shingles carry 30-year warranties but realistically last 20 to 25 years in harsh climates. Material longevity must be weighed against installation cost and structural requirements.</p>
+            
+            
+              <h3>Do I need a permit to replace my roof?</h3>
+              <p>Most jurisdictions require a permit for full roof replacements, especially if structural work, decking replacement, or ventilation changes are involved. Permits for residential roofing typically cost $150 to $500. Some municipalities exempt like-for-like shingle replacements on existing decking. Always check with your local building department before starting work to avoid fines and insurance complications.</p>
+            
+            
+              <h3>What is a roofing square and how many do I need?</h3>
+              <p>A roofing square equals 100 square feet of roof surface area. To find how many squares you need, divide your total roof surface area by 100. A 2,000 square foot house with a moderate pitch has approximately 22 to 25 squares of roof area. Most roofing contractors price materials and labor per square.</p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>Get Your Roofing Numbers Right</h2>
+          <p>Use our roofing calculator for instant shingle bundles, underlayment rolls, and cost estimates for any roof size.</p>
+          <a href="/roofing-calculator/">
+            Open Roofing Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+          </a>
+        
+
+        /* Explore More Tools */
+        
+          <h2>Explore More Tools</h2>
+          
+            <a href="https://amortio.com/" target="_blank" rel="noopener"  style= border: '1px solid var(--color-border)' >
+              Amortio
+              <h3>Home Equity Calculator</h3>
+              <p  style= color: 'var(--color-text-light)' >Finance your roof replacement with a home equity loan and model your monthly payments.</p>
+            </a>
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.slice(0, 3).map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                article.category
+                <h3>article.title</h3>
+              </Link>
+            ))
+          
+        
+      
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.hammerio.com/blog/roofing-calculator/">HammerIO</a>.
+      Explore more free tools at <a href="https://www.hammerio.com/">hammerio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.hammerio.com/">HammerIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
