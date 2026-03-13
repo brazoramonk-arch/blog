@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS Records Explained: A, AAAA, CNAME, MX, TXT &amp; More - BytePane</title>
+  <meta name="description" content="Understand DNS record types: A, AAAA, CNAME, MX, TXT, NS, SOA, SRV, and CAA. DNS resolution, TTL, and troubleshooting.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/dns-records-explained/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; DNS Records Explained: A, AAAA, CNAME, MX, TXT &amp; More
+  </nav>
+
+  <article>
+    <h1>DNS Records Explained: A, AAAA, CNAME, MX, TXT &amp; More</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/dns-records-explained/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'What is the difference between A and CNAME records?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'An A record maps a domain name directly to an IPv4 address (e.g., example.com → 93.184.216.34). A CNAME record maps a domain name to another domain name (e.g., www.example.com → example.com), creating an alias. Key rules: CNAME records cannot coexist with other record types at the same name (no CNAME + MX at the same subdomain), and you cannot use a CNAME at the zone apex (the bare domain). Use A records for your root domain and CNAME records for subdomains like www, blog, or app.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What TTL should I set for DNS records?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For most records, 3600 seconds (1 hour) is a good default. Use lower TTL (300 seconds / 5 minutes) for records you might need to change quickly during migrations or failovers. Use higher TTL (86400 seconds / 24 hours) for stable records like MX or NS that rarely change. Before a planned migration, lower TTL 24-48 hours in advance so caches expire before the change, then raise it again afterward. CDN providers like Cloudflare often recommend leaving TTL on "Auto" which typically uses 300 seconds.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What TXT records do I need for email deliverability?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Three TXT records are essential for email: (1) SPF (Sender Policy Framework) — specifies which mail servers can send email on behalf of your domain (v=spf1 include:_spf.google.com ~all). (2) DKIM (DomainKeys Identified Mail) — a public key record that verifies email signatures, proving the email was not altered in transit. (3) DMARC (Domain-based Message Authentication) — tells receiving servers how to handle emails that fail SPF/DKIM checks (_dmarc.example.com TXT "v=DMARC1; p=reject; rua=mailto:dmarc@example.com"). Without these records, your emails are likely to land in spam folders or be rejected entirely.',
+        ,
+      ,
+    ],
+  
+
+  
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'DNS Records Explained: A, AAAA, CNAME, MX, TXT & More',
+            description: 'Understand DNS record types: A, AAAA, CNAME, MX, TXT, NS, SOA, SRV, and CAA. DNS resolution, TTL, and troubleshooting.',
+            datePublished: '2026-03-08',
+            dateModified: '2026-03-08',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/dns-records-explained/',
+            mainEntityOfPage: 'https://bytepane.com/blog/dns-records-explained/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'DNS Records Explained' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+      />
+
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        DNS Records Explained
+      
+
+      
+        <h2>
+          DNS Records Explained: A, AAAA, CNAME, MX, TXT & More
+        </h2>
+        
+          Networking
+          <time dateTime="2026-03-08">March 8, 2026</time>
+          14 min read
+        
+      
+
+      
+
+        
+          <h2>How DNS Resolution Works</h2>
+          <p>
+            The Domain Name System translates human-readable domain names into IP addresses that computers use to communicate. When you type <code >bytepane.com</code> in your browser, a chain of DNS lookups converts that name into an IP address before your browser can connect.
+          </p>
+          <p>
+            <code >`# DNS resolution chain (simplified):
+#
+# 1. Browser cache → Already resolved recently?
+# 2. OS cache      → Check /etc/hosts and local DNS cache
+# 3. Recursive resolver (ISP or 8.8.8.8) → Cached from other users?
+# 4. Root servers  → "Who handles .com?" → Verisign
+# 5. TLD servers   → "Who handles bytepane.com?" → Cloudflare NS
+# 6. Authoritative nameserver → "bytepane.com = 104.21.x.x"
+# 7. Answer cached at each level based on TTL
+
+# Total time: 10-100ms (uncached), <1ms (cached)
+
+# Check your domain's DNS resolution chain:
+dig bytepane.com +trace`</code>
+          </pre>
+        
+
+        
+          <h2>A and AAAA Records: IP Address Mapping</h2>
+          <p >
+            The A record is the most fundamental DNS record type. It maps a domain name to an IPv4 address. The AAAA record (pronounced "quad-A") does the same for IPv6 addresses. Every domain needs at least one A record for the root domain.
+          </p>
+          <p>
+            <code >`# A Record: Domain → IPv4
+example.com.    3600    IN    A    93.184.216.34
+
+# AAAA Record: Domain → IPv6
+example.com.    3600    IN    AAAA    2606:2800:220:1:248:1893:25c8:1946
+
+# Multiple A records for load balancing (round-robin DNS)
+api.example.com.    300    IN    A    10.0.1.1
+api.example.com.    300    IN    A    10.0.1.2
+api.example.com.    300    IN    A    10.0.1.3
+
+# Query A records with dig
+dig example.com A
+# ;; ANSWER SECTION:
+# example.com.    3600    IN    A    93.184.216.34
+
+# Query AAAA records
+dig example.com AAAA`</code>
+          </pre>
+        
+
+        
+          <h2>CNAME Records: Domain Aliases</h2>
+          <p >
+            CNAME (Canonical Name) records create aliases from one domain name to another. Instead of pointing to an IP address, a CNAME points to another domain name, which is then resolved to get the final IP.
+          </p>
+          <p>
+            <code >`# CNAME: Alias one domain to another
+www.example.com.     3600    IN    CNAME    example.com.
+blog.example.com.    3600    IN    CNAME    myblog.wordpress.com.
+shop.example.com.    3600    IN    CNAME    shops.myshopify.com.
+docs.example.com.    3600    IN    CNAME    example.github.io.
+
+# IMPORTANT: CNAME restrictions
+# 1. Cannot coexist with other record types at same name
+#    WRONG: example.com CNAME + example.com MX ← Not allowed!
+#
+# 2. Cannot be used at zone apex (root domain)
+#    WRONG: example.com. CNAME other.com. ← Not allowed!
+#    RIGHT: www.example.com. CNAME other.com. ← Subdomain OK
+#
+# 3. Workaround for root: Use ALIAS/ANAME (provider-specific)
+#    Cloudflare calls this "CNAME flattening"
+#    example.com. CNAME my-app.vercel.app. ← Works on Cloudflare
+
+# Resolution chain: www.example.com → example.com → 93.184.216.34
+dig www.example.com
+# ;; ANSWER SECTION:
+# www.example.com.  3600  IN  CNAME  example.com.
+# example.com.      3600  IN  A      93.184.216.34`</code>
+          </pre>
+        
+
+        
+          <h2>MX Records: Email Routing</h2>
+          <p >
+            MX (Mail Exchange) records tell other mail servers where to deliver email for your domain. Each MX record has a priority value; lower numbers mean higher priority. Mail is attempted at the lowest priority server first, falling back to higher values if the primary is unavailable.
+          </p>
+          <p>
+            <code >`# MX Records for Google Workspace
+example.com.    3600    IN    MX    1  aspmx.l.google.com.
+example.com.    3600    IN    MX    5  alt1.aspmx.l.google.com.
+example.com.    3600    IN    MX    5  alt2.aspmx.l.google.com.
+example.com.    3600    IN    MX    10 alt3.aspmx.l.google.com.
+example.com.    3600    IN    MX    10 alt4.aspmx.l.google.com.
+
+# MX Records for Microsoft 365
+example.com.    3600    IN    MX    0  example-com.mail.protection.outlook.com.
+
+# Check MX records
+dig example.com MX
+# Or use nslookup
+nslookup -type=mx example.com
+
+# Priority explanation:
+# Priority 1  → Try first (primary mail server)
+# Priority 5  → Try second (secondary servers)
+# Priority 10 → Try last (backup servers)
+# Same priority = round-robin between them`</code>
+          </pre>
+        
+
+        
+          <h2>TXT Records: Verification and Security</h2>
+          <p >
+            TXT records store arbitrary text data associated with a domain. They are primarily used for domain verification (proving you own a domain), email authentication (SPF, DKIM, DMARC), and security policies.
+          </p>
+          <p>
+            <code >`# SPF: Which servers can send email for your domain
+example.com.    3600    IN    TXT    "v=spf1 include:_spf.google.com ~all"
+# include: = allow Google's mail servers
+# ~all = soft fail others (mark as spam, don't reject)
+# -all = hard fail (reject unauthorized senders)
+
+# DKIM: Email signature verification
+google._domainkey.example.com. 3600 IN TXT "v=DKIM1; k=rsa; p=MIGfMA0..."
+
+# DMARC: Policy for failed SPF/DKIM checks
+_dmarc.example.com. 3600 IN TXT "v=DMARC1; p=reject; rua=mailto:dmarc@example.com"
+# p=none    → Monitor only (start here)
+# p=quarantine → Mark as spam
+# p=reject  → Reject entirely (strictest)
+
+# Domain verification (Google, Microsoft, etc.)
+example.com. 3600 IN TXT "google-site-verification=abc123..."
+example.com. 3600 IN TXT "MS=ms12345678"
+
+# Check TXT records
+dig example.com TXT +short`</code>
+          </pre>
+        
+
+        
+          <h2>NS, SOA, SRV, and CAA Records</h2>
+          <p >
+            Beyond the common record types, several specialized records handle nameserver delegation, zone metadata, service discovery, and certificate authority restrictions.
+          </p>
+          <p>
+            <code >`# NS (Nameserver): Which DNS servers are authoritative
+example.com.    86400   IN    NS    ns1.cloudflare.com.
+example.com.    86400   IN    NS    ns2.cloudflare.com.
+
+# SOA (Start of Authority): Zone metadata
+example.com.    3600    IN    SOA   ns1.cloudflare.com. dns.cloudflare.com. (
+    2026030801  ; Serial number (YYYYMMDDNN)
+    3600        ; Refresh interval
+    600         ; Retry interval
+    604800      ; Expire time
+    300         ; Minimum TTL (negative cache)
+)
+
+# SRV (Service): Service discovery
+# _service._protocol.name  TTL  IN  SRV  priority weight port target
+_sip._tcp.example.com.  3600  IN  SRV  10 60 5060 sip.example.com.
+_xmpp._tcp.example.com. 3600  IN  SRV  5  0  5222 xmpp.example.com.
+
+# CAA (Certificate Authority Authorization)
+# Restricts which CAs can issue certificates for your domain
+example.com.    3600    IN    CAA    0 issue "letsencrypt.org"
+example.com.    3600    IN    CAA    0 issue "digicert.com"
+example.com.    3600    IN    CAA    0 iodef "mailto:security@example.com"`</code>
+          </pre>
+        
+
+        
+          <h2>DNS Record Type Reference</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Type</th>
+                  <th >Purpose</th>
+                  <th >Example Value</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >A</td><td >IPv4 address mapping</td><td >93.184.216.34</td></tr>
+                <tr ><td >AAAA</td><td >IPv6 address mapping</td><td >2606:2800:220:1::248</td></tr>
+                <tr ><td >CNAME</td><td >Domain alias</td><td >www → example.com</td></tr>
+                <tr ><td >MX</td><td >Mail server routing</td><td >10 mail.example.com</td></tr>
+                <tr ><td >TXT</td><td >Text data (SPF, DKIM, verification)</td><td >v=spf1 include:...</td></tr>
+                <tr ><td >NS</td><td >Nameserver delegation</td><td >ns1.cloudflare.com</td></tr>
+                <tr ><td >SOA</td><td >Zone authority metadata</td><td >Serial, refresh, retry</td></tr>
+                <tr ><td >SRV</td><td >Service discovery</td><td >10 60 5060 sip.example.com</td></tr>
+                <tr><td >CAA</td><td >Certificate authority restriction</td><td >0 issue "letsencrypt.org"</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Troubleshooting DNS Issues</h2>
+          <p >
+            DNS problems are notoriously difficult to debug because of caching at multiple levels. These commands help you diagnose resolution failures, propagation delays, and configuration errors.
+          </p>
+          <p>
+            <code >`# dig: The Swiss Army knife for DNS debugging
+
+# Basic query (A record)
+dig example.com
+
+# Query specific record type
+dig example.com MX
+dig example.com TXT
+dig example.com NS
+
+# Query a specific nameserver (bypass cache)
+dig @8.8.8.8 example.com
+dig @1.1.1.1 example.com
+
+# Short output (just the answer)
+dig example.com +short
+# 93.184.216.34
+
+# Trace the full resolution path
+dig example.com +trace
+
+# Check if a DNS change has propagated
+# Query different public DNS servers:
+dig @8.8.8.8 example.com +short      # Google DNS
+dig @1.1.1.1 example.com +short      # Cloudflare DNS
+dig @208.67.222.222 example.com +short  # OpenDNS
+dig @9.9.9.9 example.com +short      # Quad9
+
+# Check TTL remaining on cached record
+dig example.com | grep -A1 "ANSWER SECTION"
+
+# nslookup alternative (works on Windows too)
+nslookup example.com
+nslookup -type=MX example.com
+nslookup example.com 8.8.8.8`</code>
+          </pre>
+          <p >
+            When setting up DNS for a new domain, you will often need to add TXT records for verification. Use our <a href="/base64/">Base64 tool</a> to decode DKIM keys and our <a href="/diff-checker/">Diff Checker</a> to compare DNS configurations between environments.
+          </p>
+        
+
+        
+          <h2>Common DNS Configurations</h2>
+          <p>
+            Here are complete DNS setups for the most common scenarios developers encounter.
+          </p>
+          <p>
+            <code >`# Website on Cloudflare (proxied)
+example.com.      1    IN    A       104.21.32.1    ; Proxied
+www.example.com.  1    IN    CNAME   example.com.   ; Proxied
+
+# Website on Vercel
+example.com.      300  IN    A       76.76.21.21
+www.example.com.  300  IN    CNAME   cname.vercel-dns.com.
+
+# Subdomain for API on different server
+api.example.com.  300  IN    A       10.0.1.50
+
+# Subdomain for staging
+staging.example.com. 300 IN  CNAME   staging-abc123.netlify.app.
+
+# Email with Google Workspace
+example.com.    3600  IN    MX    1   aspmx.l.google.com.
+example.com.    3600  IN    MX    5   alt1.aspmx.l.google.com.
+example.com.    3600  IN    TXT   "v=spf1 include:_spf.google.com ~all"
+_dmarc.example.com. 3600 IN TXT  "v=DMARC1; p=quarantine; rua=mailto:admin@example.com"
+
+# Redirect www to non-www (or vice versa)
+# Option 1: CNAME + server-side redirect
+# Option 2: Cloudflare Page Rule: www.example.com/* → 301 → example.com/$1`</code>
+          </pre>
+        
+
+        /* CTA Section */
+        
+          <h2>Developer Tools for DNS and Networking</h2>
+          <p >
+            Decode Base64 DKIM keys with our <a href="/base64/">Base64 Encoder/Decoder</a>. Format DNS configuration exports with the <a href="/json-formatter/">JSON Formatter</a>. Generate unique identifiers for DNS-based service discovery with the <a href="/uuid-generator/">UUID Generator</a>.
+          </p>
+          <a href="/base64/">
+            Open Base64 Tool
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/http-status-codes-guide/">
+              <h3>HTTP Status Codes Guide</h3>
+              <p>Complete reference for HTTP status codes and web protocols.</p>
+            </a>
+            <a href="/blog/ssh-keys-guide/">
+              <h3>SSH Keys Guide</h3>
+              <p>Server authentication and secure remote access.</p>
+            </a>
+            <a href="/blog/web-performance-optimization/">
+              <h3>Web Performance Optimization</h3>
+              <p>DNS prefetching and other loading speed techniques.</p>
+            </a>
+            <a href="/blog/linux-file-permissions/">
+              <h3>Linux File Permissions</h3>
+              <p>Server administration and security fundamentals.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/dns-records-explained/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
