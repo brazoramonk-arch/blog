@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Calorie Calculator: How Many Calories Do You Need? - Calorique</title>
+  <meta name="description" content="Learn how to calculate your daily calorie needs using TDEE and the Mifflin-St Jeor equation. Covers BMR, activity multipliers, and calorie targets for weight loss or muscle gain.">
+  <link rel="canonical" href="https://www.calorique.io/blog/calorie-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/calorique/">Calorique</a> &rarr; Free Calorie Calculator: How Many Calories Do You Need?
+  </nav>
+
+  <article>
+    <h1>Free Calorie Calculator: How Many Calories Do You Need?</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.calorique.io/blog/calorie-calculator/">calorique.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Free Calorie Calculator: How Many Calories Do You Need?',
+    description: 'Learn how to calculate your daily calorie needs using TDEE and the Mifflin-St Jeor equation. Covers BMR, activity multipliers, and calorie targets for weight loss or muscle gain.',
+    author:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    publisher:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    mainEntityOfPage: 'https://calorique.io/blog/calorie-calculator/',
+    datePublished: '2026-03-04',
+    dateModified: '2026-03-04',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://calorique.io/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://calorique.io/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Calorie Calculator Guide', item: 'https://calorique.io/blog/calorie-calculator/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How many calories do I need per day to lose weight?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'To lose weight, subtract 300–500 calories from your Total Daily Energy Expenditure (TDEE). For most adults, this means roughly 1,500–1,800 calories per day, producing 0.5–1 lb of fat loss per week. Never drop below 1,200 calories (women) or 1,500 calories (men) without medical supervision.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the Mifflin-St Jeor equation?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The Mifflin-St Jeor equation estimates your Basal Metabolic Rate (BMR): Men: (10 × weight in kg) + (6.25 × height in cm) − (5 × age) + 5. Women: (10 × weight in kg) + (6.25 × height in cm) − (5 × age) − 161. A 2005 meta-analysis in the Journal of the American Dietetic Association found it the most accurate BMR formula for most adults.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is 1,200 calories a day enough?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: '1,200 calories is generally the minimum safe threshold for sedentary women. At this level it is very difficult to meet protein, vitamin, and mineral needs without careful planning. Most active women need 1,400–1,700 calories and most men need 1,500–2,000 calories even when dieting. A moderate deficit of 300–500 below TDEE is safer and more sustainable.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How accurate are online calorie calculators?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Predictive equations like Mifflin-St Jeor estimate BMR within ±10% for most adults. The bigger source of error is activity level: people consistently overestimate how active they are. Treat calculator results as a starting point and adjust your intake by ±100–200 calories every 2–3 weeks based on real scale trends.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many calories should I eat to build muscle?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A caloric surplus of 200–300 calories above TDEE supports muscle growth while minimising fat gain, a strategy called "lean bulking." Beginners may gain muscle closer to maintenance calories. Pair the surplus with 0.7–1 g of protein per pound of body weight and a consistent resistance training program for best results.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does age affect how many calories I need?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Yes. BMR declines roughly 1–2% per decade after age 20, partly due to loss of muscle mass. A 50-year-old typically needs 100–200 fewer calories per day than a 25-year-old of the same height and weight. Resistance training slows this decline by preserving metabolically active muscle tissue.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What happens if I eat too few calories?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Eating far below your TDEE triggers metabolic adaptation: your BMR decreases, NEAT (unconscious movement) drops, and hunger hormones surge. Research published in Obesity (2016) tracking Biggest Loser contestants showed BMR suppression persisting years after severe restriction. Moderate deficits of 300–500 calories minimise these adaptations.',
+        ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          Calorie Calculator Guide
+        
+
+        
+          
+            Nutrition
+            14 min read
+          
+          <h2>Free Calorie Calculator: How Many Calories Do You Need?</h2>
+          <p>
+            Knowing your daily calorie target is the foundation of every nutrition goal — whether you want to lose fat, build muscle, or simply maintain your weight. This guide walks you through the science of calorie needs, the equations behind our calculator, and exactly how to use your number to reach your goal.
+          </p>
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <p>Key Takeaways</p>
+            <ul>
+              <li>Your daily calorie need equals your Total Daily Energy Expenditure (TDEE) — BMR multiplied by an activity factor.</li>
+              <li>The Mifflin-St Jeor equation is the most validated formula for estimating BMR in the general adult population.</li>
+              <li>A deficit of 300–500 calories/day produces 0.5–1 lb of fat loss per week with minimal muscle loss.</li>
+              <li>A surplus of 200–300 calories/day above TDEE supports lean muscle gain with limited fat gain.</li>
+              <li>Protein (0.7–1 g per lb body weight) should anchor every calorie target regardless of goal.</li>
+              <li>Calculator outputs are estimates; adjust intake every 2–3 weeks based on actual scale trends.</li>
+            </ul>
+          
+
+          <h2>What Is a Calorie — and Why Does Counting Them Work?</h2>
+          <p>
+            A calorie (technically a kilocalorie, or kcal) is a unit of energy. When food is digested, its chemical energy is released and used to power every biological process — from pumping your heart to rebuilding muscle fibers after a hard workout. Body weight changes when energy intake and energy expenditure are chronically imbalanced.
+          </p>
+          <p>
+            This principle — the First Law of Thermodynamics applied to human physiology — is supported by decades of metabolic ward research. A landmark review by Hall et al. (2012, <em>American Journal of Clinical Nutrition</em>) confirmed that energy balance is the primary driver of body weight change, regardless of macronutrient composition. Hormones, food quality, and timing matter for health and body composition quality, but they all operate within the framework of energy balance.
+          </p>
+          <p>
+            One pound of body fat stores approximately 3,500 kcal of energy. A sustained daily deficit of 500 calories therefore yields roughly one pound of fat loss per week. In practice, results vary because of water retention, muscle changes, and metabolic adaptation, but this remains a reliable planning rule.
+          </p>
+
+          <h2>The Four Components of Total Daily Energy Expenditure</h2>
+          <p>
+            Your <a href="/tdee-calculator/">Total Daily Energy Expenditure (TDEE)</a> is not a single number but a sum of four distinct processes. Understanding each one helps you manipulate your calorie balance more strategically.
+          </p>
+
+          <p>
+            <strong>1. Basal Metabolic Rate (BMR)</strong> — 60–75% of TDEE. This is the energy your body burns at complete rest: keeping your heart beating, lungs breathing, kidneys filtering, and cells repairing. BMR is largely determined by lean body mass, which is why resistance training is so valuable for long-term weight management. You can dive deeper in our <a href="/blog/bmr-explained/">BMR explained guide</a>.
+          </p>
+          <p>
+            <strong>2. Thermic Effect of Food (TEF)</strong> — ~10% of TDEE. Every time you eat, your body uses energy to digest, absorb, and store nutrients. Protein has the highest thermic effect (20–30% of its calories burned in digestion), followed by carbohydrates (5–10%) and fat (0–3%). Eating a high-protein diet therefore marginally raises TDEE.
+          </p>
+          <p>
+            <strong>3. Exercise Activity Thermogenesis (EAT)</strong> — 5–15% of TDEE for most people. This is the energy from deliberate structured exercise: running, lifting, cycling, swimming. It is the component most people focus on, yet it is often the smallest lever available.
+          </p>
+          <p>
+            <strong>4. Non-Exercise Activity Thermogenesis (NEAT)</strong> — 10–30% of TDEE. NEAT covers everything else: walking to your car, fidgeting, standing, cooking, typing. Research by Levine et al. (1999, <em>Science</em>) showed NEAT can differ by up to 2,000 calories per day between individuals — making it the most variable and arguably the most important lever for long-term weight management. NEAT unconsciously drops when you cut calories, which is one reason sustained dieting becomes harder over time.
+          </p>
+
+          <h2>How to Calculate Your BMR: The Mifflin-St Jeor Equation</h2>
+          <p>
+            Several equations estimate BMR, but a 2005 meta-analysis published in the <em>Journal of the American Dietetic Association</em> (Frankenfield et al.) tested five formulas across 249 subjects and found the <strong>Mifflin-St Jeor equation</strong> to be the most accurate for the broadest range of adults, with errors within ±10% for 82% of participants.
+          </p>
+          
+            <p>Mifflin-St Jeor BMR Formula</p>
+            <p><strong>Men:</strong> BMR = (10 × weight in kg) + (6.25 × height in cm) − (5 × age in years) + 5</p>
+            <p><strong>Women:</strong> BMR = (10 × weight in kg) + (6.25 × height in cm) − (5 × age in years) − 161</p>
+            <p>Source: Mifflin MD et al. (1990). <em>A new predictive equation for resting energy expenditure in healthy individuals.</em> American Journal of Clinical Nutrition, 51(2), 241–247.</p>
+          
+          <p>
+            <strong>Worked example.</strong> A 32-year-old woman weighing 68 kg (150 lb) and standing 165 cm (5&apos;5&quot;):
+            BMR = (10 × 68) + (6.25 × 165) − (5 × 32) − 161 = 680 + 1,031 − 160 − 161 = <strong>1,390 kcal/day</strong>
+          </p>
+          <p>
+            The older Harris-Benedict equation (1918, revised 1984) is also widely used, but Frankenfield&apos;s analysis found it overestimates BMR by about 5% in non-obese adults. The Katch-McArdle formula — which uses lean body mass instead of total weight — is slightly more accurate for individuals who know their body fat percentage, since muscle burns more calories than fat.
+          </p>
+
+          <h2>Activity Multipliers: From BMR to TDEE</h2>
+          <p>
+            Once you have your BMR, multiply it by an activity factor to estimate TDEE. These multipliers, originally described by Harris and Benedict and refined in subsequent research, account for average daily movement across a week.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Activity Level</th>
+                  <th >Description</th>
+                  <th >Multiplier</th>
+                  <th >Example TDEE (BMR 1,400)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >Sedentary</td>
+                  <td >Desk job, little or no exercise</td>
+                  <td >× 1.2</td>
+                  <td >1,680 kcal</td>
+                </tr>
+                <tr >
+                  <td >Lightly Active</td>
+                  <td >Exercise 1–3 days/week</td>
+                  <td >× 1.375</td>
+                  <td >1,925 kcal</td>
+                </tr>
+                <tr>
+                  <td >Moderately Active</td>
+                  <td >Exercise 3–5 days/week</td>
+                  <td >× 1.55</td>
+                  <td >2,170 kcal</td>
+                </tr>
+                <tr >
+                  <td >Very Active</td>
+                  <td >Hard exercise 6–7 days/week</td>
+                  <td >× 1.725</td>
+                  <td >2,415 kcal</td>
+                </tr>
+                <tr>
+                  <td >Extra Active</td>
+                  <td >Physical job + daily hard training</td>
+                  <td >× 1.9</td>
+                  <td >2,660 kcal</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            Most people overestimate their activity level. If you have a desk job and hit the gym 3×/week for 45 minutes, &quot;lightly active&quot; is often a better fit than &quot;moderately active.&quot; When in doubt, select the lower category and adjust upward if you are losing weight faster than intended. Use our <a href="/calorie-calculator/">free calorie calculator</a> to compute your TDEE instantly.
+          </p>
+
+          <h2>Setting Your Calorie Target by Goal</h2>
+
+          <h3>Goal 1: Weight Loss (Fat Loss)</h3>
+          <p>
+            The ACSM Position Stand on weight management (2009, <em>Medicine &amp; Science in Sports &amp; Exercise</em>) recommends a daily energy deficit of 500–1,000 calories to produce 0.5–1 kg (1–2 lb) of weight loss per week. Most practitioners favor the more conservative 300–500 calorie deficit to preserve muscle and avoid metabolic adaptation.
+          </p>
+          <p>
+            <strong>Minimum safe intake floors:</strong> The CDC and most registered dietitians advise women not to drop below 1,200 kcal/day and men not to drop below 1,500 kcal/day without medical supervision. Below these thresholds it becomes nearly impossible to meet micronutrient needs. If your TDEE minus 500 falls below these floors, a smaller deficit combined with increased activity is a safer approach. Women over 40 face additional hormonal considerations — our <a href="/blog/safe-calorie-deficit-for-women-over-40/">guide for women over 40</a> covers these in detail.
+          </p>
+
+          <h3>Goal 2: Muscle Gain (Lean Bulk)</h3>
+          <p>
+            Building muscle requires a caloric surplus to provide energy for protein synthesis and training recovery. Research suggests a modest surplus of 200–300 calories above TDEE maximises the muscle-to-fat gain ratio, especially for intermediate and advanced trainees. Beginners can gain muscle near maintenance because their training stimulus is so novel that protein synthesis is highly efficient.
+          </p>
+          <p>
+            Protein remains non-negotiable during a bulk: 0.7–1 g per pound of body weight (1.6–2.2 g/kg), as supported by the ISSN&apos;s 2017 position statement. Excess calories beyond the modest surplus tend to add fat rather than muscle, so &quot;dirty bulking&quot; on thousands of extra calories is largely inefficient. Learn more in our <a href="/blog/protein-intake-guide/">protein intake guide</a>.
+          </p>
+
+          <h3>Goal 3: Maintenance</h3>
+          <p>
+            Eating at TDEE keeps your weight stable while supporting training performance, hormonal health, and micronutrient sufficiency. Maintenance phases are actively beneficial after a dieting period — they restore leptin, reduce cortisol, replenish glycogen, and allow the metabolism to recalibrate before the next deficit.
+          </p>
+
+          <h2>Setting Your Macros Within Your Calorie Budget</h2>
+          <p>
+            Total calories determine whether you gain or lose weight. Macronutrient ratios determine the quality of that change — specifically, how much of the weight change is fat versus muscle. The <a href="/blog/macros-guide/">macros guide</a> covers this in full, but here is the priority order:
+          </p>
+          <p>
+            <strong>1. Protein first.</strong> Set protein at 0.7–1 g per lb body weight (1.5–2.2 g/kg). Protein preserves muscle, has the highest satiety per calorie, and has the highest thermic effect. At 4 kcal/g, 160 g of protein = 640 calories.
+          </p>
+          <p>
+            <strong>2. Fat minimum.</strong> Do not drop below 0.3 g per lb body weight (0.6 g/kg). Dietary fat supports testosterone production, vitamin absorption (A, D, E, K), and cell membrane integrity. Crashing fat too low causes hormonal disruption.
+          </p>
+          <p>
+            <strong>3. Fill with carbohydrates.</strong> Remaining calories (after protein and fat) go to carbs. Carbs are not required for survival but are highly effective at fueling high-intensity training and supporting recovery. There is no need to restrict carbs for fat loss when calories are controlled. Timing carbs around workouts can enhance performance — see our <a href="/blog/meal-timing-for-weight-loss/">meal timing guide</a>.
+          </p>
+
+          <h2>Sample Day of Eating at Different Calorie Targets</h2>
+          <p>
+            Below are three example daily meal plans showing how calorie targets translate to real food. All three are built on the same high-protein framework — only portion sizes change.
+          </p>
+
+          
+            
+              <p>1,600 kcal — Weight Loss Plan (approx. 150g P / 120g C / 55g F)</p>
+              <ul>
+                <li><strong>Breakfast (380 kcal):</strong> 4 egg whites + 1 whole egg scrambled, 1 cup spinach, 1 slice Ezekiel bread, 1 tsp olive oil — 35g P / 22g C / 10g F</li>
+                <li><strong>Lunch (420 kcal):</strong> 5 oz grilled chicken breast, ¾ cup cooked brown rice, 1 cup roasted zucchini and bell peppers, 1 tbsp balsamic vinaigrette — 42g P / 38g C / 8g F</li>
+                <li><strong>Snack (150 kcal):</strong> 170g fat-free Greek yogurt, ½ cup blueberries — 17g P / 18g C / 0g F</li>
+                <li><strong>Dinner (500 kcal):</strong> 5 oz baked cod, 1 medium sweet potato, 2 cups steamed broccoli, 1 tbsp grass-fed butter — 40g P / 38g C / 15g F</li>
+                <li><strong>Evening (150 kcal):</strong> 1 scoop casein protein + 1 tbsp almond butter — 25g P / 5g C / 7g F</li>
+              </ul>
+            
+            
+              <p>2,000 kcal — Maintenance Plan (approx. 160g P / 185g C / 65g F)</p>
+              <ul>
+                <li><strong>Breakfast (480 kcal):</strong> 3 whole eggs, ½ cup oats with 1 cup mixed berries, 1 tbsp nut butter — 28g P / 55g C / 18g F</li>
+                <li><strong>Lunch (520 kcal):</strong> 6 oz turkey breast, 1 cup quinoa, large mixed green salad, 2 tbsp tahini dressing — 50g P / 48g C / 16g F</li>
+                <li><strong>Snack (200 kcal):</strong> 1 cup cottage cheese, 1 medium apple — 25g P / 25g C / 4g F</li>
+                <li><strong>Dinner (620 kcal):</strong> 6 oz salmon, 1 cup basmati rice, 1½ cups roasted asparagus, 1 tsp olive oil, lemon — 45g P / 52g C / 22g F</li>
+                <li><strong>Snack (180 kcal):</strong> 1 scoop whey protein, 1 banana — 25g P / 28g C / 2g F</li>
+              </ul>
+            
+            
+              <p>2,400 kcal — Lean Bulk Plan (approx. 180g P / 260g C / 75g F)</p>
+              <ul>
+                <li><strong>Breakfast (580 kcal):</strong> 3 whole eggs + 2 whites, 1 cup oats, 1 cup whole milk, ½ banana — 40g P / 72g C / 18g F</li>
+                <li><strong>Pre-workout (250 kcal):</strong> 1 scoop whey, 1 medium apple, 1 rice cake — 25g P / 38g C / 2g F</li>
+                <li><strong>Lunch (620 kcal):</strong> 7 oz chicken breast, 1½ cups brown rice, 1 cup edamame, 1 tbsp olive oil — 60g P / 68g C / 18g F</li>
+                <li><strong>Snack (200 kcal):</strong> 200g Greek yogurt (2%), ¼ cup granola — 18g P / 24g C / 5g F</li>
+                <li><strong>Dinner (750 kcal):</strong> 7 oz sirloin steak, 1 large baked potato, 1½ cups mixed vegetables, 2 tsp butter — 55g P / 62g C / 25g F</li>
+              </ul>
+            
+          
+
+          <h2>Workout Plan to Pair with Your Calorie Target</h2>
+          <p>
+            Nutrition drives results, but resistance training is the critical partner that determines whether your calories build or spare muscle. The ACSM recommends at least 2 days per week of muscle-strengthening activity for health. For body composition changes, 3–4 days per week of progressive resistance training is optimal.
+          </p>
+          
+            <p>3-Day Full-Body Strength Template (all goals)</p>
+            
+              
+                <p>Day A — Push/Squat Focus</p>
+                <ul>
+                  <li>Barbell Back Squat — 4 sets × 6–8 reps (2 min rest)</li>
+                  <li>Dumbbell Bench Press — 3 sets × 8–10 reps (90 sec rest)</li>
+                  <li>Seated Dumbbell Shoulder Press — 3 sets × 10–12 reps (90 sec rest)</li>
+                  <li>Triceps Rope Pushdown — 3 sets × 12–15 reps (60 sec rest)</li>
+                  <li>Plank — 3 × 30–45 sec hold</li>
+                </ul>
+              
+              
+                <p>Day B — Pull/Hinge Focus</p>
+                <ul>
+                  <li>Romanian Deadlift — 4 sets × 6–8 reps (2 min rest)</li>
+                  <li>Pull-Up or Lat Pulldown — 3 sets × 8–10 reps (90 sec rest)</li>
+                  <li>Seated Cable Row — 3 sets × 10–12 reps (90 sec rest)</li>
+                  <li>Face Pull — 3 sets × 15 reps (60 sec rest)</li>
+                  <li>Dumbbell Bicep Curl — 3 sets × 12 reps (60 sec rest)</li>
+                </ul>
+              
+              
+                <p>Day C — Lower Body + Core</p>
+                <ul>
+                  <li>Leg Press — 4 sets × 10–12 reps (90 sec rest)</li>
+                  <li>Bulgarian Split Squat — 3 sets × 10 reps each leg (90 sec rest)</li>
+                  <li>Leg Curl — 3 sets × 12 reps (60 sec rest)</li>
+                  <li>Calf Raise — 3 sets × 15–20 reps (60 sec rest)</li>
+                  <li>Dead Bug — 3 sets × 10 reps each side (60 sec rest)</li>
+                </ul>
+              
+            
+          
+          <p>
+            Add 7,000–10,000 daily steps as your primary cardiovascular tool. Walking burns 200–400 extra calories depending on body weight and pace — without the recovery cost of HIIT that can undermine strength training. See our <a href="/blog/calorie-deficit-guide/">calorie deficit guide</a> for how to structure exercise within a diet phase.
+          </p>
+
+          <h2>Factors That Affect Your Calorie Needs Over Time</h2>
+          <p>
+            <strong>Age.</strong> BMR declines roughly 1–2% per decade after 20, primarily because of age-related muscle loss (sarcopenia). The CDC notes that adults lose 3–5% of muscle mass per decade from age 30. Maintaining or building muscle through resistance training is the most effective strategy to keep BMR high as you age.
+          </p>
+          <p>
+            <strong>Body composition.</strong> Lean mass is the primary driver of BMR. One pound of muscle burns approximately 6 kcal/day at rest, compared to 2 kcal/day for fat. This difference, while modest per pound, becomes significant with large differences in lean mass between individuals.
+          </p>
+          <p>
+            <strong>Hormones.</strong> Thyroid hormones (T3, T4) directly regulate metabolic rate. Testosterone and estrogen influence muscle mass and fat distribution. Leptin and ghrelin regulate hunger and satiety signaling. Hormonal disruptions from chronic under-eating, sleep deprivation, or high stress can meaningfully shift calorie needs and appetite — see our <a href="/blog/understanding-metabolism/">metabolism guide</a> for a full breakdown.
+          </p>
+          <p>
+            <strong>Metabolic adaptation.</strong> When you maintain a calorie deficit, your body adapts: BMR decreases (partly through muscle loss), NEAT drops unconsciously, and hormones drive hunger up. Research by Rosenbaum and Leibel (2010, <em>Obesity Reviews</em>) documented that sustained weight loss reduces energy expenditure beyond what body composition changes alone predict, requiring ongoing dietary adjustments. This is why your calorie target should be reassessed every 4–8 weeks.
+          </p>
+
+          <h2>Common Mistakes When Using a Calorie Calculator</h2>
+          <p>
+            <strong>Overestimating activity level.</strong> This is the single most common error. Selecting &quot;moderately active&quot; when your real life is sedentary inflates your TDEE by 200–400 calories, making a supposed deficit actually a surplus.
+          </p>
+          <p>
+            <strong>Not accounting for liquid calories.</strong> A 16 oz latte, two glasses of orange juice, and a sports drink can add 500–700 untracked calories. Beverages — including alcohol (7 kcal/g) — must be logged.
+          </p>
+          <p>
+            <strong>Eyeballing portions.</strong> Studies show people underestimate their portion sizes by 20–50%. Weigh food with a digital kitchen scale for the first 2–4 weeks to calibrate your visual estimates.
+          </p>
+          <p>
+            <strong>Treating the output as permanent.</strong> Your TDEE changes as you lose weight. A 20 lb lighter version of you burns fewer calories at rest. Recalculate your target every time you lose 5–10 lbs.
+          </p>
+          <p>
+            <strong>Ignoring protein in favor of calorie cuts.</strong> Dropping calories without protecting protein accelerates muscle loss, which permanently lowers BMR. Always set protein first, then create the deficit from carbohydrates and fat.
+          </p>
+
+          <h2>How to Know if Your Calorie Target Is Working</h2>
+          <p>
+            Do not judge by a single day&apos;s weigh-in. Body weight fluctuates 1–4 lbs daily due to water retention, sodium intake, glycogen levels, and bowel contents. The correct approach is to weigh yourself daily under consistent conditions (same time, same state) and track <em>weekly averages</em>. Compare weekly averages to detect true trends.
+          </p>
+          <p>
+            For fat loss: if your weekly average drops 0.5–1 lb over 2–3 consecutive weeks, your target is dialled in. For muscle gain: if the scale rises 0.25–0.5 lb per week with stable strength progression, you are likely gaining lean mass. If nothing moves after 3 weeks of accurate tracking, reduce calories by 100–200 or add 2,000 daily steps and reassess.
+          </p>
+          <p>
+            Use our <a href="/bmi-calculator/">BMI calculator</a> as a supplementary reference point, and pair it with waist circumference and progress photos for the most complete picture of body change.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>How many calories do I need per day to lose weight?</h3>
+              <p>To lose weight, subtract 300–500 calories from your TDEE. For most adults, this means roughly 1,500–1,800 calories per day, producing 0.5–1 lb of fat loss per week. Never drop below 1,200 calories (women) or 1,500 calories (men) without medical supervision.</p>
+            
+            
+              <h3>What is the Mifflin-St Jeor equation?</h3>
+              <p>The Mifflin-St Jeor equation estimates your BMR: Men: (10 × kg) + (6.25 × cm) − (5 × age) + 5. Women: (10 × kg) + (6.25 × cm) − (5 × age) − 161. A 2005 meta-analysis found it the most accurate formula for most adults, predicting within ±10% for 82% of subjects.</p>
+            
+            
+              <h3>Is 1,200 calories a day enough?</h3>
+              <p>1,200 calories is the minimum safe threshold for sedentary women. At this level it is very difficult to meet protein, vitamin, and mineral needs. Most active women need 1,400–1,700 calories even when dieting. A moderate deficit of 300–500 below TDEE is safer and more sustainable.</p>
+            
+            
+              <h3>How accurate are online calorie calculators?</h3>
+              <p>Predictive equations estimate BMR within ±10% for most adults. The bigger error source is activity level — people consistently overestimate how active they are. Treat calculator results as a starting point and adjust intake by ±100–200 calories every 2–3 weeks based on real scale trends.</p>
+            
+            
+              <h3>How many calories should I eat to build muscle?</h3>
+              <p>A caloric surplus of 200–300 calories above TDEE supports muscle growth while minimising fat gain. Pair the surplus with 0.7–1 g of protein per pound of body weight and consistent progressive resistance training for best results.</p>
+            
+            
+              <h3>Does age affect how many calories I need?</h3>
+              <p>Yes. BMR declines roughly 1–2% per decade after age 20, partly due to muscle mass loss. A 50-year-old typically needs 100–200 fewer calories per day than a 25-year-old of the same height and weight. Resistance training slows this decline significantly.</p>
+            
+            
+              <h3>What happens if I eat too few calories?</h3>
+              <p>Eating far below TDEE triggers metabolic adaptation: BMR decreases, NEAT drops, and hunger hormones surge. Research tracking Biggest Loser contestants (Obesity, 2016) showed BMR suppression persisting years after severe restriction. Moderate deficits of 300–500 calories minimise these adaptations.</p>
+            
+          
+
+          /* CTA */
+          
+            <h2>Find Your Exact Calorie Target</h2>
+            <p>Enter your stats into our free calorie calculator and get personalised calorie and macro targets in seconds.</p>
+            
+              <a href="/calorie-calculator/">
+                Calorie Calculator
+              </a>
+              <a href="/tdee-calculator/">
+                TDEE Calculator
+              </a>
+            
+          
+
+          
+            <h2>Explore More Tools</h2>
+            
+              <a href="https://salario.io/cost-of-living/" target="_blank" rel="noopener" >
+                Salario
+                <h3>Cost of Living Calculator</h3>
+                <p>Compare grocery and food costs across cities to plan your healthy eating budget.</p>
+              </a>
+            
+          
+
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/calorie-deficit-guide/">
+              <h3>Calorie Deficit Guide</h3>
+              <p>How to safely create and sustain a calorie deficit for fat loss.</p>
+            </a>
+            <a href="/blog/bmr-explained/">
+              <h3>BMR Explained</h3>
+              <p>Understand Basal Metabolic Rate and what drives your resting calorie burn.</p>
+            </a>
+            <a href="/blog/macros-guide/">
+              <h3>Macro Calculator Guide</h3>
+              <p>Set ideal protein, carb, and fat targets for your calorie budget.</p>
+            </a>
+            <a href="/blog/bmi-chart-explained/">
+              <h3>BMI Chart Explained</h3>
+              <p>Learn what your BMI number means and its limitations.</p>
+            </a>
+          
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.calorique.io/blog/calorie-calculator/">Calorique</a>.
+      Explore more free tools at <a href="https://www.calorique.io/">calorique.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.calorique.io/">Calorique</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
