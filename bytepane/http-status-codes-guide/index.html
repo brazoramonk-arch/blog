@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTTP Status Codes: Complete Reference Guide - BytePane</title>
+  <meta name="description" content="Every HTTP status code explained with real-world context, API best practices, and debugging tips.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/http-status-codes-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; HTTP Status Codes: Complete Reference Guide
+  </nav>
+
+  <article>
+    <h1>HTTP Status Codes: Complete Reference Guide</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/http-status-codes-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'HTTP Status Codes: Complete Reference Guide',
+            description: 'Every HTTP status code explained with real-world context, API best practices, and debugging tips.',
+            datePublished: '2026-03-06',
+            dateModified: '2026-03-06',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/http-status-codes-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/http-status-codes-guide/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'HTTP Status Codes Guide' ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        HTTP Status Codes Guide
+      
+
+      /* Article Header */
+      
+        <h2>
+          HTTP Status Codes: Complete Reference Guide
+        </h2>
+        
+          HTTP
+          <time dateTime="2026-03-06">March 6, 2026</time>
+          16 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>What Are HTTP Status Codes?</h2>
+          <p>
+            HTTP status codes are three-digit numbers that a server returns in response to every HTTP request. They tell the client (browser, API consumer, or crawler) what happened: whether the request succeeded, was redirected, encountered an error, or requires additional action. Every web developer, API designer, and DevOps engineer needs to understand these codes to build reliable systems and debug problems efficiently.
+          </p>
+          <p>
+            Status codes are defined in RFC 9110 (HTTP Semantics) and organized into five classes based on the first digit. The 1xx class is informational, 2xx indicates success, 3xx means redirection, 4xx signals a client error, and 5xx indicates a server error. This classification makes it possible to understand the general meaning of any status code even if you have never encountered the specific number before.
+          </p>
+          <p>
+            For a quick interactive lookup of any status code, use our <a href="/http-status-codes/">HTTP Status Codes</a> reference tool. It shows the code, name, description, and common causes for every standard status code.
+          </p>
+        
+
+        
+          <h2>1xx Informational Responses</h2>
+          <p>
+            The 1xx status codes are interim responses. They indicate that the server has received the request and the client should continue or wait. Most developers rarely encounter these directly because browsers and HTTP libraries handle them automatically.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Name</th>
+                  <th >When It Occurs</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >100</td><td >Continue</td><td >Server received headers, client should send body</td></tr>
+                <tr ><td >101</td><td >Switching Protocols</td><td >Upgrading from HTTP to WebSocket</td></tr>
+                <tr><td >103</td><td >Early Hints</td><td >Preload resources before final response</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// 100 Continue - useful for large uploads
+// Client sends: Expect: 100-continue header
+// Server responds with 100 if ready, or 413 if payload too large
+
+// 101 Switching Protocols - WebSocket upgrade
+GET /chat HTTP/1.1
+Upgrade: websocket
+Connection: Upgrade
+
+// Server responds:
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade`</code>
+          </pre>
+        
+
+        
+          <h2>2xx Success Codes</h2>
+          <p >
+            The 2xx status codes indicate that the request was received, understood, and processed successfully. These are the codes you want to see. Each code communicates a slightly different kind of success, which is important for API design.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Name</th>
+                  <th >When to Use</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >200</td><td >OK</td><td >Standard success for GET, PUT, PATCH, DELETE</td></tr>
+                <tr ><td >201</td><td >Created</td><td >Resource created successfully (POST)</td></tr>
+                <tr ><td >202</td><td >Accepted</td><td >Request accepted for async processing</td></tr>
+                <tr ><td >204</td><td >No Content</td><td >Success with no response body (DELETE)</td></tr>
+                <tr><td >206</td><td >Partial Content</td><td >Range request (file downloads, video streaming)</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// 200 OK - Return data
+app.get('/api/users/:id', (req, res) => 
+  const user = db.findUser(req.params.id);
+  res.status(200).json(user);
+);
+
+// 201 Created - Return new resource with Location header
+app.post('/api/users', (req, res) => 
+  const newUser = db.createUser(req.body);
+  res.status(201)
+    .header('Location', \`/api/users/\$newUser.id\`)
+    .json(newUser);
+);
+
+// 202 Accepted - Async job queued
+app.post('/api/reports/generate', (req, res) => 
+  const jobId = queue.enqueue('generate-report', req.body);
+  res.status(202).json( jobId, status: 'processing' );
+);
+
+// 204 No Content - Successful deletion
+app.delete('/api/users/:id', (req, res) => 
+  db.deleteUser(req.params.id);
+  res.status(204).send();
+);`</code>
+          </pre>
+          <p >
+            A common API design mistake is returning 200 for everything. Using the correct 2xx code makes your API self-documenting and helps clients handle responses correctly. For example, a 201 tells the client it should check the Location header for the new resource URL, and a 204 tells it not to expect a response body.
+          </p>
+        
+
+        
+          <h2>3xx Redirection Codes</h2>
+          <p>
+            The 3xx status codes indicate that the client must take additional action to complete the request, usually by following a URL in the <code >Location</code> header. Choosing the correct redirect code is critical for SEO and user experience.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Name</th>
+                  <th >Permanent?</th>
+                  <th >Use Case</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >301</td><td >Moved Permanently</td><td >Yes</td><td >Domain migration, URL restructuring</td></tr>
+                <tr ><td >302</td><td >Found</td><td >No</td><td >Temporary redirect (legacy)</td></tr>
+                <tr ><td >303</td><td >See Other</td><td >No</td><td >Redirect after POST (PRG pattern)</td></tr>
+                <tr ><td >304</td><td >Not Modified</td><td >N/A</td><td >Cache validation (ETag/Last-Modified)</td></tr>
+                <tr ><td >307</td><td >Temporary Redirect</td><td >No</td><td >Temporary redirect (preserves method)</td></tr>
+                <tr><td >308</td><td >Permanent Redirect</td><td >Yes</td><td >Permanent redirect (preserves method)</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`# Nginx - 301 permanent redirect (old URL to new URL)
+server 
+    listen 80;
+    server_name old-domain.com;
+    return 301 https://new-domain.com$request_uri;
+
+# Nginx - 302 temporary redirect (maintenance page)
+location /api/ 
+    return 302 /maintenance.html;
+
+# Express.js - 303 See Other (Post-Redirect-Get pattern)
+app.post('/api/orders', (req, res) => 
+  const order = db.createOrder(req.body);
+  // After POST, redirect to GET the new order
+  res.redirect(303, \`/orders/\$order.id\`);
+);`</code>
+          </pre>
+          <p >
+            SEO tip: always use 301 for permanent URL changes. Search engines transfer link equity (ranking power) from the old URL to the new one. A 302 does not transfer link equity, so using it for permanent moves wastes your SEO authority. The difference between 301/308 and 302/307 is whether the HTTP method is preserved -- 307/308 guarantee the method stays the same (important for POST redirects).
+          </p>
+        
+
+        
+          <h2>4xx Client Error Codes</h2>
+          <p>
+            The 4xx status codes mean the request contains an error on the client side. The server understood the request but refuses to process it because something is wrong with what the client sent. These codes should always include a descriptive error message in the response body to help the client fix the problem.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Name</th>
+                  <th >Common Cause</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >400</td><td >Bad Request</td><td >Malformed syntax, invalid parameters</td></tr>
+                <tr ><td >401</td><td >Unauthorized</td><td >Missing or invalid authentication</td></tr>
+                <tr ><td >403</td><td >Forbidden</td><td >Authenticated but lacks permission</td></tr>
+                <tr ><td >404</td><td >Not Found</td><td >Resource does not exist at this URL</td></tr>
+                <tr ><td >405</td><td >Method Not Allowed</td><td >Wrong HTTP method (POST to GET-only endpoint)</td></tr>
+                <tr ><td >409</td><td >Conflict</td><td >Duplicate resource, version conflict</td></tr>
+                <tr ><td >413</td><td >Payload Too Large</td><td >Request body exceeds server limit</td></tr>
+                <tr ><td >422</td><td >Unprocessable Entity</td><td >Valid syntax but semantic errors (validation)</td></tr>
+                <tr><td >429</td><td >Too Many Requests</td><td >Rate limit exceeded</td></tr>
+              </tbody>
+            </table>
+          
+
+          <h3>401 vs 403: The Most Confused Pair</h3>
+          <p>
+            These two codes are constantly confused. <strong>401 Unauthorized</strong> actually means &quot;unauthenticated&quot; -- the server does not know who you are. Include a <code >WWW-Authenticate</code> header to tell the client how to authenticate. <strong>403 Forbidden</strong> means the server knows who you are (you are authenticated) but you do not have permission to access this resource.
+          </p>
+          <p>
+            <code >`// 401 - No token provided or token is invalid
+app.get('/api/admin', (req, res) => 
+  if (!req.headers.authorization) 
+    return res.status(401)
+      .header('WWW-Authenticate', 'Bearer')
+      .json( error: 'Authentication required' );
+  
+);
+
+// 403 - Valid token but user is not an admin
+app.get('/api/admin', authMiddleware, (req, res) => 
+  if (req.user.role !== 'admin') 
+    return res.status(403)
+      .json( error: 'Admin access required' );
+  
+);
+
+// 404 - Resource not found
+app.get('/api/users/:id', (req, res) => 
+  const user = db.findUser(req.params.id);
+  if (!user) 
+    return res.status(404)
+      .json( error: \`User \$req.params.id not found\` );
+  
+  res.json(user);
+);
+
+// 422 - Validation errors
+app.post('/api/users', (req, res) => 
+  const errors = validate(req.body);
+  if (errors.length > 0) 
+    return res.status(422)
+      .json( error: 'Validation failed', details: errors );
+  
+);
+
+// 429 - Rate limiting with Retry-After header
+app.use(rateLimiter(
+  max: 100,
+  windowMs: 60000,
+  handler: (req, res) => 
+    res.status(429)
+      .header('Retry-After', '60')
+      .json( error: 'Rate limit exceeded. Try again in 60 seconds.' );
+  
+));`</code>
+          </pre>
+        
+
+        
+          <h2>5xx Server Error Codes</h2>
+          <p >
+            The 5xx status codes indicate that the server failed to fulfill a valid request. The problem is on the server side, not the client side. These codes should be treated as incidents that require investigation. In production, every 5xx response should be logged and monitored.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Name</th>
+                  <th >Common Cause</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >500</td><td >Internal Server Error</td><td >Unhandled exception, bug in code</td></tr>
+                <tr ><td >502</td><td >Bad Gateway</td><td >Upstream server returned invalid response</td></tr>
+                <tr ><td >503</td><td >Service Unavailable</td><td >Server overloaded or in maintenance</td></tr>
+                <tr><td >504</td><td >Gateway Timeout</td><td >Upstream server did not respond in time</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// 500 - Always use a global error handler
+app.use((err, req, res, next) => 
+  console.error('Unhandled error:', err);
+  // Never expose stack traces to clients in production
+  res.status(500).json(
+    error: process.env.NODE_ENV === 'production'
+      ? 'Internal server error'
+      : err.message
+  );
+);
+
+// 503 - Graceful maintenance mode
+app.use((req, res, next) => 
+  if (process.env.MAINTENANCE_MODE === 'true') 
+    return res.status(503)
+      .header('Retry-After', '3600')
+      .json( error: 'Service under maintenance' );
+  
+  next();
+);`</code>
+          </pre>
+
+          <h3>502 vs 503 vs 504: Reverse Proxy Errors</h3>
+          <p >
+            These three codes are commonly returned by reverse proxies (Nginx, Cloudflare, AWS ALB) and are often confused.
+            <strong> 502 Bad Gateway</strong> means the proxy received an invalid response from the upstream server -- usually because the application crashed or returned malformed data.
+            <strong> 503 Service Unavailable</strong> means the upstream server is alive but not accepting requests -- it is overloaded, starting up, or in maintenance mode.
+            <strong> 504 Gateway Timeout</strong> means the proxy waited for a response from the upstream server but it never came within the configured timeout period.
+          </p>
+        
+
+        
+          <h2>API Design: Choosing the Right Status Code</h2>
+          <p>
+            A well-designed API uses status codes consistently and predictably. Here is a decision guide for the most common API operations.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Operation</th>
+                  <th >Success</th>
+                  <th >Not Found</th>
+                  <th >Invalid Input</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >GET /resource</td><td >200</td><td >404</td><td >400</td></tr>
+                <tr ><td >POST /resources</td><td >201</td><td >N/A</td><td >422</td></tr>
+                <tr ><td >PUT /resource/:id</td><td >200</td><td >404</td><td >422</td></tr>
+                <tr ><td >PATCH /resource/:id</td><td >200</td><td >404</td><td >422</td></tr>
+                <tr ><td >DELETE /resource/:id</td><td >204</td><td >404</td><td >N/A</td></tr>
+                <tr><td >POST /resource/action</td><td >200 or 202</td><td >404</td><td >400</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            When building APIs that return JSON, format your error responses consistently. Use our <a href="/json-formatter/">JSON Formatter</a> to verify that error response structures are valid and readable. A standardized error format should include at minimum an error code, a human-readable message, and optionally a details array for validation errors.
+          </p>
+          <p>
+            <code >`// Consistent error response format
+
+  "error": 
+    "code": "VALIDATION_ERROR",
+    "message": "Request validation failed",
+    "details": [
+       "field": "email", "message": "Must be a valid email address" ,
+       "field": "age", "message": "Must be a positive integer" 
+    ]
+  
+`</code>
+          </pre>
+        
+
+        
+          <h2>Troubleshooting Common HTTP Errors</h2>
+          <p >
+            When you encounter an HTTP error in production, here is a systematic approach to diagnosing and resolving the most common issues.
+          </p>
+
+          <h3>Debugging 404 Not Found</h3>
+          <ol>
+            <li>Check the URL for typos, case sensitivity, and trailing slashes.</li>
+            <li>Verify the resource exists on the server (check file system or database).</li>
+            <li>Check your web server or router configuration for the correct route.</li>
+            <li>Look for redirect rules that might be sending traffic to a wrong path.</li>
+            <li>Check if the URL uses the correct encoding -- special characters need to be <a href="/url-encode-decode/">URL-encoded</a>.</li>
+          </ol>
+
+          <h3>Debugging 500 Internal Server Error</h3>
+          <ol>
+            <li>Check application logs for the stack trace and error message.</li>
+            <li>Verify database connectivity and query correctness.</li>
+            <li>Check that environment variables and configuration files are present.</li>
+            <li>Look for recent deployments that may have introduced the bug.</li>
+            <li>Check disk space, memory, and file descriptor limits.</li>
+          </ol>
+
+          <h3>Debugging 502/504 Gateway Errors</h3>
+          <ol>
+            <li>Check that the upstream application is running (<code >systemctl status myapp</code>).</li>
+            <li>Verify the proxy configuration points to the correct host and port.</li>
+            <li>Check upstream application logs for crashes or resource exhaustion.</li>
+            <li>Increase proxy timeout values if the upstream legitimately needs more time.</li>
+            <li>Check network connectivity between the proxy and upstream server.</li>
+          </ol>
+
+          <p>
+            <code >`# Quick diagnosis commands
+# Check if the upstream is running
+curl -v http://localhost:3000/health
+
+# View Nginx error log
+tail -50 /var/log/nginx/error.log
+
+# Check if the port is listening
+ss -tlnp | grep 3000
+
+# Test with verbose curl output
+curl -v -H "Content-Type: application/json" https://api.example.com/users
+
+# Follow redirects and show each hop
+curl -L -v https://example.com/old-url 2>&1 | grep "< HTTP"`</code>
+          </pre>
+        
+
+        
+          <h2>Common Misconceptions About Status Codes</h2>
+          <p >
+            Even experienced developers hold incorrect beliefs about HTTP status codes. Here are the most persistent misconceptions and the truth behind them.
+          </p>
+          <ol>
+            <li><strong>&quot;401 means unauthorized&quot;</strong> -- Despite its name, 401 actually means &quot;unauthenticated.&quot; The client has not proven its identity. 403 is the code for &quot;authenticated but not authorized.&quot;</li>
+            <li><strong>&quot;Use 200 for everything and put the real status in the JSON body&quot;</strong> -- This anti-pattern breaks HTTP caching, makes monitoring tools useless, and forces every client to parse the body before knowing if the request succeeded. Use proper status codes.</li>
+            <li><strong>&quot;302 and 307 are the same&quot;</strong> -- 302 allows the browser to change POST to GET on redirect (which most browsers do). 307 guarantees the method is preserved. Use 307 when you need to redirect a POST request and keep it as a POST.</li>
+            <li><strong>&quot;404 means the server is down&quot;</strong> -- A 404 means the server is working perfectly but the specific URL does not map to any resource. The server is up and responding -- it just does not have what you asked for.</li>
+            <li><strong>&quot;5xx errors are always bugs&quot;</strong> -- A 503 during planned maintenance or a 504 due to a slow third-party API are operational issues, not bugs in your code. Use 503 with a Retry-After header to communicate expected downtime.</li>
+            <li><strong>&quot;You should never return 500&quot;</strong> -- In practice, unhandled exceptions happen. The important thing is to catch them with a global error handler, log the details, and return a safe 500 response without exposing internal information.</li>
+          </ol>
+        
+
+        
+          <h2>HTTP Status Codes and Caching</h2>
+          <p>
+            Status codes play a critical role in HTTP caching. The browser and CDN caching behavior depends entirely on the status code returned, and getting this wrong can lead to stale content being served or fresh content never being cached.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Cacheable by Default?</th>
+                  <th >Notes</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >200</td><td >Yes</td><td >Cached according to Cache-Control headers</td></tr>
+                <tr ><td >301</td><td >Yes</td><td >Browsers cache permanently (can be hard to undo)</td></tr>
+                <tr ><td >302</td><td >No</td><td >Not cached unless explicit Cache-Control set</td></tr>
+                <tr ><td >304</td><td >N/A</td><td >Instructs client to use cached version</td></tr>
+                <tr ><td >404</td><td >Yes</td><td >Browsers may cache 404s (use no-store to prevent)</td></tr>
+                <tr><td >500</td><td >No</td><td >Never cached by default</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// Proper caching headers for API responses
+// Cacheable GET endpoint
+app.get('/api/products', (req, res) => 
+  res.set('Cache-Control', 'public, max-age=300'); // 5 min
+  res.set('ETag', computeETag(products));
+  res.status(200).json(products);
+);
+
+// Never cache sensitive data
+app.get('/api/user/profile', auth, (req, res) => 
+  res.set('Cache-Control', 'private, no-store');
+  res.status(200).json(req.user);
+);
+
+// Conditional request handling (304)
+app.get('/api/data', (req, res) => 
+  const etag = computeETag(data);
+  if (req.headers['if-none-match'] === etag) 
+    return res.status(304).send(); // Use cached version
+  
+  res.set('ETag', etag);
+  res.status(200).json(data);
+);`</code>
+          </pre>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>What is the difference between 400 and 422?</h3>
+              <p >
+                Use <strong>400 Bad Request</strong> when the request is syntactically malformed -- the server cannot even parse it (invalid JSON, missing required headers). Use <strong>422 Unprocessable Entity</strong> when the syntax is valid but the content fails validation (email format wrong, number out of range). In practice, many APIs use 400 for both cases, but 422 is more precise for validation errors.
+              </p>
+            
+            
+              <h3>Should I use 404 or 204 for an empty search result?</h3>
+              <p>
+                Neither. Return <strong>200 OK</strong> with an empty array. The resource (the search endpoint) exists and responded successfully -- it just found zero results. Use 404 only when the URL itself does not map to any resource. An empty result set is a successful response with no data, not a missing resource.
+              </p>
+            
+            
+              <h3>Do status codes affect SEO?</h3>
+              <p>
+                Absolutely. Search engines use status codes to decide how to index pages. 200 means the page exists and should be indexed. 301 transfers ranking authority to the new URL. 404 tells crawlers to drop the page from the index. 503 tells crawlers the page is temporarily unavailable and they should come back later. Using the wrong status code can cause pages to be incorrectly indexed or de-indexed.
+              </p>
+            
+            
+              <h3>What status code should rate limiters return?</h3>
+              <p>
+                Use <strong>429 Too Many Requests</strong> with a <code >Retry-After</code> header that tells the client how many seconds to wait before retrying. Also include <code >X-RateLimit-Limit</code>, <code >X-RateLimit-Remaining</code>, and <code >X-RateLimit-Reset</code> headers so clients can proactively manage their request rate.
+              </p>
+            
+            
+              <h3>Can I create custom HTTP status codes?</h3>
+              <p>
+                Technically yes, but it is strongly discouraged. HTTP clients may not understand non-standard codes. Some platforms use custom codes internally (Cloudflare uses 520-527 for edge errors, Nginx uses 444 for dropped connections), but these are non-standard and should not be used in your API responses. Stick to the standard codes defined in RFC 9110.
+              </p>
+            
+          
+        
+
+        /* CTA Section */
+        
+          <h2>Look Up Any Status Code Instantly</h2>
+          <p>
+            Bookmark our HTTP Status Codes reference tool for instant lookups. Search by code number or category, see descriptions, common causes, and debugging tips for every standard HTTP status code.
+          </p>
+          <a href="/http-status-codes/">
+            Open HTTP Status Codes Reference
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/json-formatting-guide/">
+              <h3>How to Format JSON</h3>
+              <p>Complete guide to JSON formatting, validation, and best practices.</p>
+            </a>
+            <a href="/blog/cron-jobs-tutorial/">
+              <h3>Cron Jobs Tutorial</h3>
+              <p>Learn cron syntax and schedule automated tasks on Linux like a pro.</p>
+            </a>
+            <a href="/blog/base64-encoding-explained/">
+              <h3>Base64 Encoding Explained</h3>
+              <p>When and why to use Base64 encoding in your projects.</p>
+            </a>
+            <a href="/blog/regex-cheat-sheet/">
+              <h3>Regex Cheat Sheet</h3>
+              <p>Regular expression patterns every developer needs to know.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/http-status-codes-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
