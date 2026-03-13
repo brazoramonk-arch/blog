@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Schema Validation: Complete Guide with Examples - BytePane</title>
+  <meta name="description" content="Master JSON Schema validation with practical examples covering types, constraints, nested objects, arrays, and conditional schemas.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/json-schema-validation-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; JSON Schema Validation: Complete Guide with Examples
+  </nav>
+
+  <article>
+    <h1>JSON Schema Validation: Complete Guide with Examples</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/json-schema-validation-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'JSON Schema Validation: Complete Guide with Examples',
+            description: 'Master JSON Schema validation with practical examples covering types, constraints, nested objects, arrays, and conditional schemas.',
+            datePublished: '2026-03-07',
+            dateModified: '2026-03-07',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/json-schema-validation-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/json-schema-validation-guide/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'JSON Schema Validation Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What is JSON Schema and why should I use it?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'JSON Schema is a declarative language for describing the structure and constraints of JSON data. It allows you to define what types of values are allowed, which fields are required, what formats strings must follow, and how nested objects and arrays should be structured. You should use it to validate API request/response payloads, configuration files, form data, and any JSON data that crosses trust boundaries. JSON Schema prevents invalid data from entering your system and serves as living documentation for your data contracts.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Which JSON Schema draft version should I use?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Use Draft 2020-12 for new projects. It is the latest stable specification and is supported by most major validation libraries including Ajv (JavaScript), jsonschema (Python), and gojsonschema (Go). Draft 2020-12 introduced prefixItems for tuple validation, replaced definitions with $defs, and improved the $dynamicRef system. If you are maintaining existing schemas, Draft-07 is still widely supported and perfectly adequate. The differences between drafts are incremental, so migrating from Draft-07 to 2020-12 is straightforward.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Can JSON Schema validate nested objects and arrays?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Yes, JSON Schema excels at validating deeply nested structures. Use the properties keyword to define object fields, items to define array element schemas, and additionalProperties to control whether extra fields are allowed. You can nest schemas to any depth, use $ref to reference shared definitions, and apply conditional validation with if/then/else. For arrays, you can validate individual item types, set minItems and maxItems, enforce uniqueItems, and use prefixItems (Draft 2020-12) for tuple-style validation where each position has a different schema.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        JSON Schema Validation Guide
+      
+
+      /* Article Header */
+      
+        <h2>
+          JSON Schema Validation: Complete Guide with Examples
+        </h2>
+        
+          JSON
+          <time dateTime="2026-03-07">March 7, 2026</time>
+          15 min read
+        
+      
+
+      /* Article Content */
+      
+
+        
+          <h2>What Is JSON Schema?</h2>
+          <p>
+            JSON Schema is a declarative language for describing the structure and constraints of JSON data. Think of it as TypeScript types for your JSON -- it defines what fields exist, what types they have, which ones are required, and what values are valid. But unlike TypeScript, JSON Schema validation happens at runtime, which makes it perfect for validating API payloads, configuration files, form submissions, and any data that crosses trust boundaries.
+          </p>
+          <p>
+            A JSON Schema is itself a JSON document. It describes another JSON document. When you validate data against a schema, the validator checks every constraint and returns a list of violations if the data does not conform. This approach is language-agnostic -- the same schema works in JavaScript, Python, Go, Java, C#, and every other language with a JSON Schema library.
+          </p>
+          <p>
+            <code >`// A simple JSON Schema
+
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": 
+    "name":  "type": "string", "minLength": 1 ,
+    "email":  "type": "string", "format": "email" ,
+    "age":  "type": "integer", "minimum": 0, "maximum": 150 
+  ,
+  "required": ["name", "email"]
+
+// Valid data:
+ "name": "Alice", "email": "alice@example.com", "age": 30 
+
+// Invalid data (missing required field, wrong type):
+ "email": 123 
+// Errors: "name" is required, "email" must be a string`</code>
+          </pre>
+          <p >
+            To experiment with JSON structures before writing schemas, format your data with our <a href="/json-formatter/">JSON Formatter</a> -- it validates syntax, highlights errors, and pretty-prints with configurable indentation.
+          </p>
+        
+
+        
+          <h2>Type System: The Foundation</h2>
+          <p>
+            Every JSON Schema starts with a type declaration. JSON Schema supports seven primitive types that map directly to JSON value types.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Type</th>
+                  <th >JSON Value</th>
+                  <th >Example</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >string</td><td >Text in double quotes</td><td >&quot;hello&quot;</td></tr>
+                <tr ><td >number</td><td >Any numeric value</td><td >3.14, -1, 2e10</td></tr>
+                <tr ><td >integer</td><td >Whole numbers only</td><td >42, -7, 0</td></tr>
+                <tr ><td >boolean</td><td >true or false</td><td >true</td></tr>
+                <tr ><td >object</td><td >Key-value pairs</td><td >`"key": "value"`</td></tr>
+                <tr ><td >array</td><td >Ordered list</td><td >[1, 2, 3]</td></tr>
+                <tr><td >null</td><td >Null value</td><td >null</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// Allow multiple types (nullable string)
+ "type": ["string", "null"] 
+// Accepts: "hello", null
+// Rejects: 42, true
+
+// Enum: restrict to specific values
+ "type": "string", "enum": ["active", "inactive", "pending"] 
+
+// Const: restrict to exactly one value
+ "const": "production" `</code>
+          </pre>
+        
+
+        
+          <h2>String Constraints</h2>
+          <p >
+            Strings support length constraints, regex pattern matching, and built-in format validators. The <code >format</code> keyword provides semantic validation for common string types like emails, URIs, dates, and UUIDs.
+          </p>
+          <p>
+            <code >`// String with length and pattern constraints
+
+  "type": "string",
+  "minLength": 3,
+  "maxLength": 50,
+  "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+
+// Accepts: "username_123"
+// Rejects: "ab" (too short), "123abc" (doesn't start with letter)
+
+// Built-in format validators
+ "type": "string", "format": "email"         // RFC 5321 email
+ "type": "string", "format": "uri"           // Full URI with scheme
+ "type": "string", "format": "date"          // ISO 8601 date (YYYY-MM-DD)
+ "type": "string", "format": "date-time"     // ISO 8601 datetime
+ "type": "string", "format": "uuid"          // UUID any version
+ "type": "string", "format": "ipv4"          // IPv4 address
+ "type": "string", "format": "ipv6"          // IPv6 address
+ "type": "string", "format": "hostname"      // Internet hostname
+ "type": "string", "format": "json-pointer"  // JSON Pointer (RFC 6901)`</code>
+          </pre>
+          <p >
+            The <code >pattern</code> keyword accepts any valid regular expression. For building and testing regex patterns, use our <a href="/regex-tester/">Regex Tester</a> to verify they match your expected inputs before embedding them in schemas.
+          </p>
+        
+
+        
+          <h2>Number Constraints</h2>
+          <p>
+            <code >`// Integer with range
+
+  "type": "integer",
+  "minimum": 1,
+  "maximum": 100
+
+// Number with exclusive bounds
+
+  "type": "number",
+  "exclusiveMinimum": 0,     // greater than 0 (not equal)
+  "exclusiveMaximum": 1      // less than 1 (not equal)
+
+// Accepts: 0.5, 0.001, 0.999
+// Rejects: 0, 1, -0.5
+
+// Multiple of (useful for prices, grid sizes)
+
+  "type": "number",
+  "multipleOf": 0.01          // two decimal places max
+
+// Accepts: 9.99, 10.00, 0.01
+// Rejects: 9.999
+
+// Percentage with step
+
+  "type": "integer",
+  "minimum": 0,
+  "maximum": 100,
+  "multipleOf": 5             // 0, 5, 10, 15, ..., 100
+`</code>
+          </pre>
+        
+
+        
+          <h2>Object Schemas: Properties, Required Fields, and More</h2>
+          <p >
+            Objects are the most common type in JSON APIs. JSON Schema gives you fine-grained control over which properties are allowed, which are required, and what additional properties look like.
+          </p>
+          <p>
+            <code >`// Complete API request schema
+
+  "type": "object",
+  "properties": 
+    "username": 
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 30,
+      "pattern": "^[a-zA-Z0-9_]+$"
+    ,
+    "email": 
+      "type": "string",
+      "format": "email"
+    ,
+    "role": 
+      "type": "string",
+      "enum": ["admin", "editor", "viewer"],
+      "default": "viewer"
+    ,
+    "metadata": 
+      "type": "object",
+      "additionalProperties":  "type": "string" 
+    
+  ,
+  "required": ["username", "email"],
+  "additionalProperties": false
+
+// "additionalProperties": false  → rejects any field not listed in "properties"
+// "additionalProperties": true   → allows any extra fields (default behavior)
+// "additionalProperties":  "type": "string"  → extra fields must be strings`</code>
+          </pre>
+
+          <h3>Property Name Patterns</h3>
+          <pre >
+            <code >`// patternProperties: apply schemas based on property name patterns
+
+  "type": "object",
+  "patternProperties": 
+    "^x-":  "type": "string" ,         // x-* headers must be strings
+    "^[0-9]+$":  "type": "boolean"     // numeric keys must be booleans
+  ,
+  "additionalProperties": false
+
+// Accepts:  "x-custom": "value", "123": true 
+// Rejects:  "x-custom": 42  (x-* must be string)`</code>
+          </pre>
+
+          <h3>Property Dependencies</h3>
+          <pre >
+            <code >`// dependentRequired: if field A exists, field B is required
+
+  "type": "object",
+  "properties": 
+    "creditCard":  "type": "string" ,
+    "billingAddress":  "type": "string" ,
+    "couponCode":  "type": "string" 
+  ,
+  "dependentRequired": 
+    "creditCard": ["billingAddress"]   // creditCard requires billingAddress
+  
+
+// Accepts:  "couponCode": "SAVE10"  (no card, no address needed)
+// Accepts:  "creditCard": "4111...", "billingAddress": "123 St" 
+// Rejects:  "creditCard": "4111..."  (missing billingAddress)`</code>
+          </pre>
+        
+
+        
+          <h2>Array Schemas: Items, Tuples, and Uniqueness</h2>
+          <pre >
+            <code >`// Array of strings with length constraints
+
+  "type": "array",
+  "items":  "type": "string", "minLength": 1 ,
+  "minItems": 1,
+  "maxItems": 10,
+  "uniqueItems": true
+
+// Accepts: ["apple", "banana", "cherry"]
+// Rejects: ["apple", "apple"] (not unique)
+// Rejects: [] (minItems is 1)
+
+// Tuple validation (Draft 2020-12: prefixItems)
+
+  "type": "array",
+  "prefixItems": [
+     "type": "string" ,       // first element: string
+     "type": "integer" ,      // second element: integer
+     "type": "boolean"        // third element: boolean
+  ],
+  "items": false                // no additional items allowed
+
+// Accepts: ["hello", 42, true]
+// Rejects: ["hello", 42, true, "extra"]
+
+// Mixed array (allow strings or numbers)
+
+  "type": "array",
+  "items": 
+    "oneOf": [
+       "type": "string" ,
+       "type": "number" 
+    ]
+  
+
+// Accepts: ["hello", 42, "world", 3.14]
+// Rejects: ["hello", true] (boolean not allowed)
+
+// Array of objects (common API pattern)
+
+  "type": "array",
+  "items": 
+    "type": "object",
+    "properties": 
+      "id":  "type": "integer" ,
+      "name":  "type": "string" 
+    ,
+    "required": ["id", "name"]
+  
+`</code>
+          </pre>
+        
+
+        
+          <h2>Composition: allOf, anyOf, oneOf, not</h2>
+          <p >
+            Composition keywords let you combine schemas using logical operators. This is how you model inheritance, polymorphism, and complex validation rules that cannot be expressed with simple property definitions.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Keyword</th>
+                  <th >Logic</th>
+                  <th >Use Case</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >allOf</td><td >AND -- must match all schemas</td><td >Inheritance, combining constraints</td></tr>
+                <tr ><td >anyOf</td><td >OR -- must match at least one</td><td >Multiple acceptable formats</td></tr>
+                <tr ><td >oneOf</td><td >XOR -- must match exactly one</td><td >Discriminated unions, polymorphism</td></tr>
+                <tr><td >not</td><td >NOT -- must not match</td><td >Exclusion, blacklisting values</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// allOf: extend a base schema
+
+  "allOf": [
+    
+      "type": "object",
+      "properties": 
+        "id":  "type": "integer" ,
+        "createdAt":  "type": "string", "format": "date-time" 
+      ,
+      "required": ["id", "createdAt"]
+    ,
+    
+      "properties": 
+        "name":  "type": "string" ,
+        "email":  "type": "string", "format": "email" 
+      ,
+      "required": ["name", "email"]
+    
+  ]
+
+// Result: object must have id, createdAt, name, AND email
+
+// oneOf: discriminated union (API event types)
+
+  "oneOf": [
+    
+      "type": "object",
+      "properties": 
+        "type":  "const": "user.created" ,
+        "data": 
+          "type": "object",
+          "properties":  "userId":  "type": "integer"  ,
+          "required": ["userId"]
+        
+      ,
+      "required": ["type", "data"]
+    ,
+    
+      "type": "object",
+      "properties": 
+        "type":  "const": "order.completed" ,
+        "data": 
+          "type": "object",
+          "properties":  "orderId":  "type": "string"  ,
+          "required": ["orderId"]
+        
+      ,
+      "required": ["type", "data"]
+    
+  ]
+`</code>
+          </pre>
+        
+
+        
+          <h2>Conditional Schemas: if / then / else</h2>
+          <p >
+            Conditional schemas let you apply different validation rules based on the data itself. This is extremely useful for forms and API payloads where the required fields depend on a type or mode selection.
+          </p>
+          <p>
+            <code >`// If paymentMethod is "credit_card", require cardNumber and cvv
+// If paymentMethod is "bank_transfer", require accountNumber and routingNumber
+
+  "type": "object",
+  "properties": 
+    "paymentMethod":  "type": "string", "enum": ["credit_card", "bank_transfer"] ,
+    "amount":  "type": "number", "minimum": 0.01 
+  ,
+  "required": ["paymentMethod", "amount"],
+  "if": 
+    "properties":  "paymentMethod":  "const": "credit_card"  
+  ,
+  "then": 
+    "properties": 
+      "cardNumber":  "type": "string", "pattern": "^[0-9]16$" ,
+      "cvv":  "type": "string", "pattern": "^[0-9]3,4$" 
+    ,
+    "required": ["cardNumber", "cvv"]
+  ,
+  "else": 
+    "properties": 
+      "accountNumber":  "type": "string" ,
+      "routingNumber":  "type": "string", "pattern": "^[0-9]9$" 
+    ,
+    "required": ["accountNumber", "routingNumber"]
+  
+
+// Valid credit card payment:
+ "paymentMethod": "credit_card", "amount": 99.99, "cardNumber": "4111111111111111", "cvv": "123" 
+
+// Valid bank transfer:
+ "paymentMethod": "bank_transfer", "amount": 500, "accountNumber": "12345678", "routingNumber": "021000021" 
+
+// Invalid (credit card selected but missing cvv):
+ "paymentMethod": "credit_card", "amount": 99.99, "cardNumber": "4111111111111111" `</code>
+          </pre>
+        
+
+        
+          <h2>Reusable Schemas with $ref and $defs</h2>
+          <p >
+            Real-world schemas share definitions across endpoints. The <code >$defs</code> keyword (formerly <code >definitions</code> in Draft-07) stores reusable schemas, and <code >$ref</code> references them. This keeps your schemas DRY and maintainable.
+          </p>
+          <p>
+            <code >`
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": 
+    "address": 
+      "type": "object",
+      "properties": 
+        "street":  "type": "string" ,
+        "city":  "type": "string" ,
+        "state":  "type": "string", "pattern": "^[A-Z]2$" ,
+        "zip":  "type": "string", "pattern": "^[0-9]5(-[0-9]4)?$" 
+      ,
+      "required": ["street", "city", "state", "zip"]
+    ,
+    "phone": 
+      "type": "string",
+      "pattern": "^\\\\+?[1-9]\\\\d6,14$"
+    
+  ,
+  "type": "object",
+  "properties": 
+    "name":  "type": "string" ,
+    "homeAddress":  "$ref": "#/$defs/address" ,
+    "workAddress":  "$ref": "#/$defs/address" ,
+    "phone":  "$ref": "#/$defs/phone" 
+  ,
+  "required": ["name", "homeAddress"]
+
+// Both homeAddress and workAddress validate against the same schema
+// Changes to the address definition automatically apply everywhere`</code>
+          </pre>
+          <p >
+            For schemas that span multiple files, you can use absolute or relative URIs in <code >$ref</code>. For example, <code >`"$ref": "./address.schema.json"`</code> references a separate file. When working with complex JSON structures, use our <a href="/json-path-tester/">JSON Path Tester</a> to navigate and extract data from deeply nested documents.
+          </p>
+        
+
+        
+          <h2>Validation in JavaScript with Ajv</h2>
+          <p>
+            Ajv (Another JSON Schema Validator) is the most popular JSON Schema library for JavaScript and TypeScript. It compiles schemas into optimized validation functions for maximum performance.
+          </p>
+          <p>
+            <code >`// Installation
+// npm install ajv ajv-formats
+
+const ajv = new Ajv( allErrors: true );
+addFormats(ajv);  // adds "email", "uri", "date-time", etc.
+
+const schema = 
+  type: 'object',
+  properties: 
+    name:  type: 'string', minLength: 1 ,
+    email:  type: 'string', format: 'email' ,
+    age:  type: 'integer', minimum: 0 ,
+  ,
+  required: ['name', 'email'],
+  additionalProperties: false,
+;
+
+const validate = ajv.compile(schema);
+
+// Valid data
+const valid = validate( name: 'Alice', email: 'alice@example.com', age: 30 );
+console.log(valid); // true
+
+// Invalid data
+const invalid = validate( email: 'not-an-email' );
+console.log(invalid); // false
+console.log(validate.errors);
+// [
+//    keyword: 'required', params:  missingProperty: 'name'  ,
+//    keyword: 'format', params:  format: 'email'  
+// ]
+
+// Express.js middleware example
+function validateBody(schema) 
+  const validate = ajv.compile(schema);
+  req, res, next) => 
+    if (!validate(req.body)) 
+      return res.status(400).json(
+        error: 'Validation failed',
+        details: validate.errors,
+      );
+    
+    next();
+  ;
+
+app.post('/api/users', validateBody(schema), (req, res) => 
+  // req.body is guaranteed to be valid here
+);`</code>
+          </pre>
+        
+
+        
+          <h2>Validation in Python with jsonschema</h2>
+          <pre >
+            <code >`# pip install jsonschema[format]
+
+from jsonschema import validate, ValidationError, Draft202012Validator
+
+schema = 
+    "type": "object",
+    "properties": 
+        "name": "type": "string", "minLength": 1,
+        "email": "type": "string", "format": "email",
+        "tags": 
+            "type": "array",
+            "items": "type": "string",
+            "uniqueItems": True
+        
+    ,
+    "required": ["name", "email"],
+    "additionalProperties": False
+
+# Simple validation (raises on first error)
+try:
+    validate(instance="name": "", "email": "bad", schema=schema)
+except ValidationError as e:
+    print(f"Error: e.message")
+    # Error: '' is too short
+
+# Collect all errors
+validator = Draft202012Validator(schema)
+errors = list(validator.iter_errors("email": 123))
+for error in errors:
+    print(f"error.json_path: error.message")
+# $.name: 'name' is a required property
+# $.email: 123 is not of type 'string'
+
+# FastAPI integration (uses JSON Schema internally)
+from pydantic import BaseModel, EmailStr
+
+class UserCreate(BaseModel):
+    name: str
+    email: EmailStr
+    tags: list[str] = []
+
+# Pydantic generates JSON Schema automatically:
+print(UserCreate.model_json_schema())`</code>
+          </pre>
+        
+
+        
+          <h2>Validation in Go with gojsonschema</h2>
+          <pre >
+            <code >`// go get github.com/xeipuuv/gojsonschema
+
+package main
+
+    "fmt"
+    "github.com/xeipuuv/gojsonschema"
+)
+
+func main() 
+    schema := gojsonschema.NewStringLoader(\`
+        "type": "object",
+        "properties": 
+            "name": "type": "string", "minLength": 1,
+            "email": "type": "string", "format": "email"
+        ,
+        "required": ["name", "email"],
+        "additionalProperties": false
+    \`)
+
+    document := gojsonschema.NewStringLoader(\`
+        "name": "Alice",
+        "email": "alice@example.com"
+    \`)
+
+    result, err := gojsonschema.Validate(schema, document)
+    if err != nil 
+        panic(err)
+    
+
+    if result.Valid() 
+        fmt.Println("Document is valid")
+     else 
+        for _, err := range result.Errors() 
+            fmt.Printf("- %s\\n", err)
+        
+    
+`</code>
+          </pre>
+        
+
+        
+          <h2>Real-World Schema: REST API Response</h2>
+          <p >
+            Here is a complete schema for a paginated API response -- the kind you would use to validate responses from a REST API.
+          </p>
+          <p>
+            <code >`
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": 
+    "user": 
+      "type": "object",
+      "properties": 
+        "id":  "type": "integer", "minimum": 1 ,
+        "username":  "type": "string", "minLength": 3, "maxLength": 30 ,
+        "email":  "type": "string", "format": "email" ,
+        "role":  "type": "string", "enum": ["admin", "editor", "viewer"] ,
+        "createdAt":  "type": "string", "format": "date-time" ,
+        "profile": 
+          "type": "object",
+          "properties": 
+            "displayName":  "type": "string" ,
+            "bio":  "type": ["string", "null"], "maxLength": 500 ,
+            "avatarUrl":  "type": ["string", "null"], "format": "uri" 
+          ,
+          "required": ["displayName"]
+        
+      ,
+      "required": ["id", "username", "email", "role", "createdAt"]
+    ,
+    "pagination": 
+      "type": "object",
+      "properties": 
+        "page":  "type": "integer", "minimum": 1 ,
+        "perPage":  "type": "integer", "minimum": 1, "maximum": 100 ,
+        "total":  "type": "integer", "minimum": 0 ,
+        "totalPages":  "type": "integer", "minimum": 0 
+      ,
+      "required": ["page", "perPage", "total", "totalPages"]
+    
+  ,
+  "type": "object",
+  "properties": 
+    "data": 
+      "type": "array",
+      "items":  "$ref": "#/$defs/user" 
+    ,
+    "pagination":  "$ref": "#/$defs/pagination" 
+  ,
+  "required": ["data", "pagination"]
+`</code>
+          </pre>
+          <p >
+            This schema validates the entire response structure including nested user profiles and pagination metadata. For designing APIs with correct status codes, check our <a href="/blog/api-response-codes-best-practices/">API Response Codes Best Practices</a> guide and the <a href="/http-status-codes/">HTTP Status Codes</a> reference.
+          </p>
+        
+
+        
+          <h2>Schema Generation from TypeScript</h2>
+          <p>
+            If you already have TypeScript interfaces, you can generate JSON Schema automatically instead of writing it by hand. This keeps your types and validation in sync.
+          </p>
+          <p>
+            <code >`// Install: npm install typescript-json-schema -D
+
+// Define your TypeScript interface
+interface User 
+  /** @minimum 1 */
+  id: number;
+  /** @minLength 3 @maxLength 30 */
+  username: string;
+  /** @format email */
+  email: string;
+  role: 'admin' | 'editor' | 'viewer';
+  /** @format date-time */
+  createdAt: string;
+
+// Generate schema from CLI:
+// npx typescript-json-schema tsconfig.json User --required --strictNullChecks
+
+// Or use Zod (runtime validation + schema generation):
+
+const userSchema = z.object(
+  id: z.number().int().min(1),
+  username: z.string().min(3).max(30),
+  email: z.string().email(),
+  role: z.enum(['admin', 'editor', 'viewer']),
+  createdAt: z.string().datetime(),
+);
+
+const jsonSchema = zodToJsonSchema(userSchema);
+console.log(JSON.stringify(jsonSchema, null, 2));`</code>
+          </pre>
+          <p >
+            Need to convert JSON data to TypeScript types first? Our <a href="/json-to-typescript/">JSON to TypeScript</a> converter generates accurate type definitions from any JSON payload. For converting between JSON and other formats, see our <a href="/json-to-yaml/">JSON to YAML</a> and <a href="/json-to-xml/">JSON to XML</a> converters.
+          </p>
+        
+
+        
+          <h2>Common Mistakes and Best Practices</h2>
+          <ol>
+            <li><strong>Forgetting additionalProperties</strong> -- By default, objects allow any extra fields. Set <code >additionalProperties: false</code> to catch typos and unexpected data in API requests.</li>
+            <li><strong>Not enabling format validation</strong> -- The <code >format</code> keyword is an annotation by default in most validators. In Ajv, install <code >ajv-formats</code> and call <code >addFormats(ajv)</code>. In jsonschema (Python), install with <code >pip install jsonschema[format]</code>.</li>
+            <li><strong>Using oneOf when anyOf works</strong> -- <code >oneOf</code> requires exactly one match. If schemas overlap, validation fails even though the data is valid. Use <code >anyOf</code> unless you specifically need exclusive matching.</li>
+            <li><strong>Overly strict patterns</strong> -- Regex patterns in schemas should validate structure, not content. A pattern like <code >^[A-Z][a-z]+$</code> for names rejects valid names like &quot;O&apos;Brien&quot; or &quot;McDonald&quot;.</li>
+            <li><strong>Not using $defs for repeated structures</strong> -- Duplicating schemas leads to inconsistencies when you update one copy but forget the others. Extract shared definitions into <code >$defs</code> and reference them with <code >$ref</code>.</li>
+            <li><strong>Ignoring error messages</strong> -- Default validation errors are technical. Map them to user-friendly messages in your API layer, especially for form validation.</li>
+          </ol>
+        
+
+        
+          <h2>Draft Version Comparison</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >Draft-07</th>
+                  <th >2019-09</th>
+                  <th >2020-12</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >if/then/else</td><td >Yes</td><td >Yes</td><td >Yes</td></tr>
+                <tr ><td >$defs (was definitions)</td><td >definitions</td><td >$defs</td><td >$defs</td></tr>
+                <tr ><td >prefixItems (tuples)</td><td >No</td><td >No</td><td >Yes</td></tr>
+                <tr ><td >dependentRequired</td><td >No</td><td >Yes</td><td >Yes</td></tr>
+                <tr ><td >$dynamicRef</td><td >No</td><td >No</td><td >Yes</td></tr>
+                <tr><td >unevaluatedProperties</td><td >No</td><td >Yes</td><td >Yes</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <h3>What is JSON Schema and why should I use it?</h3>
+          <p>
+            JSON Schema is a declarative language for describing the structure and constraints of JSON data. It defines allowed types, required fields, string formats, and nested structures. Use it to validate API payloads, configuration files, form data, and any JSON crossing trust boundaries. It prevents invalid data from entering your system and serves as living documentation for data contracts. The same schema works across all programming languages.
+          </p>
+
+          <h3>Which JSON Schema draft version should I use?</h3>
+          <p>
+            Use Draft 2020-12 for new projects. It is the latest stable specification supported by major validators including Ajv, jsonschema, and gojsonschema. It introduced <code >prefixItems</code> for tuples and replaced <code >definitions</code> with <code >$defs</code>. If maintaining existing schemas, Draft-07 remains widely supported and perfectly adequate for most use cases.
+          </p>
+
+          <h3>Can JSON Schema validate nested objects and arrays?</h3>
+          <p>
+            Yes, JSON Schema validates deeply nested structures. Use <code >properties</code> for object fields, <code >items</code> for array elements, and <code >additionalProperties</code> to control extra fields. Nest schemas to any depth, use <code >$ref</code> for shared definitions, and apply conditional validation with <code >if/then/else</code>. Arrays support <code >minItems</code>, <code >maxItems</code>, <code >uniqueItems</code>, and <code >prefixItems</code> for tuple-style validation.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Format and Validate Your JSON</h2>
+          <p>
+            Paste any JSON into our free formatter to validate syntax, pretty-print with custom indentation, and catch errors before writing your schema.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/json-formatting-guide/">
+              <h3>JSON Formatting Guide</h3>
+              <p>Learn proper JSON indentation, validation, and common syntax errors.</p>
+            </a>
+            <a href="/blog/json-vs-yaml-vs-xml/">
+              <h3>JSON vs YAML vs XML</h3>
+              <p>Compare data formats: pros, cons, readability, and ecosystem support.</p>
+            </a>
+            <a href="/blog/api-response-codes-best-practices/">
+              <h3>API Response Codes Best Practices</h3>
+              <p>HTTP status codes for REST APIs: 4xx vs 5xx, error formats, and patterns.</p>
+            </a>
+            <a href="/blog/regex-patterns-cheat-sheet/">
+              <h3>Regex Patterns Cheat Sheet</h3>
+              <p>30+ copy-paste regex patterns for validation and data extraction.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/json-schema-validation-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
