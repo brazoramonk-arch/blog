@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heat Pump vs Gas Furnace: Operating Costs by Climate Region - JouleIO</title>
+  <meta name="description" content="Compare heat pump vs gas furnace operating costs across warm, mild, and cold climates. Regional analysis of efficiency, annual costs, and which system saves more money.">
+  <link rel="canonical" href="https://www.jouleio.com/blog/heat-pump-operating-cost-by-climate/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/jouleio/">JouleIO</a> &rarr; Heat Pump vs Gas Furnace: Operating Costs by Climate Region
+  </nav>
+
+  <article>
+    <h1>Heat Pump vs Gas Furnace: Operating Costs by Climate Region</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.jouleio.com/blog/heat-pump-operating-cost-by-climate/">jouleio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Heat Pump vs Gas Furnace: Operating Costs by Climate Region',
+  description: 'Compare heat pump vs gas furnace operating costs across warm, mild, and cold climates. Regional analysis of efficiency, annual costs, and which system saves more money.',
+  datePublished: '2026-03-06',
+  dateModified: '2026-03-06',
+  author: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+  ,
+  publisher: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+    logo:  '@type': 'ImageObject', url: 'https://jouleio.com/favicon.svg' ,
+  ,
+  mainEntityOfPage: 'https://jouleio.com/blog/heat-pump-operating-cost-by-climate/',
+;
+
+const breadcrumbSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+     '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jouleio.com/' ,
+     '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://jouleio.com/blog/' ,
+     '@type': 'ListItem', position: 3, name: 'Heat Pump vs Furnace by Climate', item: 'https://jouleio.com/blog/heat-pump-operating-cost-by-climate/' ,
+  ],
+;
+
+const faqSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    
+      '@type': 'Question',
+      name: 'At what temperature do heat pumps become inefficient?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Standard air-source heat pumps begin losing efficiency below 40°F and struggle significantly below 25°F. However, cold-climate heat pumps (ccASHP) with variable-speed compressors can maintain efficiency down to 5°F and continue operating at -15°F, though at reduced capacity.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Are heat pumps cheaper to run than gas furnaces?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'In warm and mild climates (USDA zones 7-10), heat pumps are consistently cheaper to operate than gas furnaces, saving $200-$600 per year. In cold climates (zones 4-6), operating costs depend on local electricity and gas prices — heat pumps may cost slightly more where gas is cheap and electricity is expensive.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How much does a heat pump cost to install vs a gas furnace?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'A standard air-source heat pump costs $4,000-$8,000 installed, while a cold-climate model runs $6,000-$12,000. A gas furnace costs $3,000-$7,000 installed. However, heat pumps provide both heating and cooling, potentially eliminating the need for a separate AC unit ($3,000-$5,000), making the total HVAC cost comparable.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Do heat pumps work in cold climates like Minnesota or Maine?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes, modern cold-climate heat pumps work effectively even in Minnesota and Maine. Models from Mitsubishi (Hyper-Heating), Daikin, and Bosch can heat homes efficiently down to -13°F. Maine has one of the highest heat pump adoption rates in the U.S., with over 100,000 installed as of 2025.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'What is COP and HSPF and why do they matter?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'COP (Coefficient of Performance) measures how many units of heat a heat pump produces per unit of electricity consumed. A COP of 3.0 means 3 kWh of heat per 1 kWh of electricity. HSPF (Heating Seasonal Performance Factor) is the seasonal average efficiency. Higher values mean lower operating costs. A gas furnace has an effective COP of 0.80-0.96.',
+      ,
+    ,
+  ],
+;
+
+  
+    <>
+      <Header />
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Heat Pump vs Furnace by Climate</li>
+          </ol>
+        
+
+        
+          /* Header */
+          
+            HVAC
+            <h2>
+              Heat Pump vs Gas Furnace: Operating Costs by Climate Region
+            </h2>
+            <p>
+              The debate between heat pumps and gas furnaces depends heavily on where you live. A heat pump that saves hundreds in Miami may cost more to run in Minneapolis. This guide breaks down operating costs by climate region, including efficiency ratings, installation costs, and real-world cost comparisons for warm, mild, and cold climates.
+            </p>
+            
+              <time dateTime="2026-03-06">March 6, 2026</time>
+              13 min read
+            
+          
+
+          /* Table of Contents */
+          
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#how-heat-pumps-work" >1. How Heat Pumps Work (and Why Climate Matters)</a></li>
+              <li><a href="#efficiency-by-temperature" >2. Efficiency by Temperature: COP Explained</a></li>
+              <li><a href="#warm-climates" >3. Warm Climates (Zones 8-10): Clear Heat Pump Winner</a></li>
+              <li><a href="#mild-climates" >4. Mild Climates (Zones 6-7): Heat Pump Advantage</a></li>
+              <li><a href="#cold-climates" >5. Cold Climates (Zones 4-5): The Close Call</a></li>
+              <li><a href="#very-cold" >6. Very Cold Climates (Zones 2-3): Cold-Climate Heat Pumps</a></li>
+              <li><a href="#installation-costs" >7. Installation Cost Comparison</a></li>
+              <li><a href="#total-cost-ownership" >8. 15-Year Total Cost of Ownership</a></li>
+              <li><a href="#faq" >9. Frequently Asked Questions</a></li>
+            </ol>
+          
+
+          /* Content */
+          
+            
+              <h2>How Heat Pumps Work (and Why Climate Matters)</h2>
+              <p>
+                A heat pump does not generate heat — it moves heat from one place to another using a refrigeration cycle. In winter, it extracts heat from outdoor air (even cold air contains heat energy) and transfers it indoors. In summer, it reverses the process, working like an air conditioner by removing heat from your home.
+              </p>
+              <p>
+                This is fundamentally different from a gas furnace, which burns natural gas to create heat. Because a heat pump moves heat rather than generating it, it can deliver 2 to 4 units of heat for every 1 unit of electricity consumed. A gas furnace, by comparison, can only convert 80-96% of the gas energy into heat — it can never exceed 1:1 efficiency.
+              </p>
+              <p>
+                Climate matters because a heat pump&apos;s efficiency drops as outdoor temperatures fall. There is less heat energy available in colder air, so the system must work harder. Use our <a href="/heat-pump-calculator/">Heat Pump Calculator</a> to estimate operating costs for your specific climate and electricity rates.
+              </p>
+            
+
+            
+              <h2>Efficiency by Temperature: COP Explained</h2>
+              <p>
+                COP (Coefficient of Performance) measures heat pump efficiency at a specific temperature. A COP of 3.0 means the heat pump produces 3 kWh of heat for every 1 kWh of electricity consumed. Here is how COP changes with outdoor temperature for different heat pump types.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Outdoor Temp</th>
+                      <th >Standard Heat Pump</th>
+                      <th >Cold-Climate HP</th>
+                      <th >Gas Furnace (equiv.)</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >60°F (16°C)</td><td >COP 4.0</td><td >COP 4.5</td><td >COP 0.92</td></tr>
+                    <tr ><td >40°F (4°C)</td><td >COP 3.0</td><td >COP 3.5</td><td >COP 0.92</td></tr>
+                    <tr ><td >25°F (-4°C)</td><td >COP 2.0</td><td >COP 2.8</td><td >COP 0.92</td></tr>
+                    <tr ><td >10°F (-12°C)</td><td >COP 1.2</td><td >COP 2.2</td><td >COP 0.92</td></tr>
+                    <tr><td >-5°F (-21°C)</td><td >Backup heat</td><td >COP 1.6</td><td >COP 0.92</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                Even at 10°F, a cold-climate heat pump delivers 2.2 kWh of heat per 1 kWh of electricity — more than twice the efficiency of a gas furnace. The crossover point where a standard heat pump becomes less cost-effective than gas depends on your local electricity and gas prices. Check your rates with our <a href="/electricity-cost-calculator/">Electricity Cost Calculator</a>.
+              </p>
+            
+
+            
+              <h2>Warm Climates (Zones 8-10): Clear Heat Pump Winner</h2>
+              <p>
+                In warm climates like Miami, Houston, Phoenix, and the Gulf Coast, heat pumps are the obvious choice. Heating needs are minimal (500-1,500 heating hours per year), temperatures rarely drop below 40°F, and the heat pump doubles as your air conditioner for the dominant cooling season.
+              </p>
+
+              <h3>Annual Operating Cost Comparison</h3>
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Cost Category</th>
+                      <th >Heat Pump</th>
+                      <th >Gas Furnace + AC</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Heating</td><td >$180 - $320</td><td >$300 - $500</td></tr>
+                    <tr ><td >Cooling</td><td >$600 - $1,100</td><td >$650 - $1,200</td></tr>
+                    <tr><td >Total Annual</td><td >$780 - $1,420</td><td >$950 - $1,700</td></tr>
+                  </tbody>
+                </table>
+              
+
+              
+                <p>
+                  <strong>Verdict:</strong> Heat pumps save $170-$280 per year in warm climates. They also eliminate the need for a separate AC unit, simplifying your HVAC system and reducing maintenance costs. This is a no-brainer region for heat pump adoption.
+                </p>
+              
+            
+
+            
+              <h2>Mild Climates (Zones 6-7): Heat Pump Advantage</h2>
+              <p>
+                Mild climate regions include cities like Charlotte, Nashville, Atlanta, Sacramento, and Portland. These areas experience moderate winters (2,000-3,500 heating hours) with temperatures typically staying above 20°F. Standard heat pumps perform well here without supplemental heating.
+              </p>
+
+              <h3>Annual Operating Cost Comparison</h3>
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Cost Category</th>
+                      <th >Heat Pump</th>
+                      <th >Gas Furnace + AC</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Heating</td><td >$450 - $750</td><td >$600 - $1,000</td></tr>
+                    <tr ><td >Cooling</td><td >$350 - $650</td><td >$400 - $700</td></tr>
+                    <tr><td >Total Annual</td><td >$800 - $1,400</td><td >$1,000 - $1,700</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                In mild climates, heat pumps consistently save $200-$300 annually compared to gas furnace plus AC combinations. The average COP during heating season stays above 2.5, making electricity a more cost-effective fuel than natural gas in most of these markets. Pair a heat pump with solar for even greater savings — check our <a href="/carbon-footprint-calculator/">Carbon Footprint Calculator</a> to see the environmental benefit.
+              </p>
+            
+
+            
+              <h2>Cold Climates (Zones 4-5): The Close Call</h2>
+              <p>
+                Cold climate regions include Chicago, Denver, Boston, Philadelphia, and the upper Midwest. These areas have extended heating seasons (4,000-6,000 heating hours) with extended periods below 25°F. Standard heat pumps need supplemental electric resistance heat during the coldest stretches, which reduces their cost advantage.
+              </p>
+
+              <h3>Standard Heat Pump vs Cold-Climate Heat Pump</h3>
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >System</th>
+                      <th >Heating Cost</th>
+                      <th >Cooling Cost</th>
+                      <th >Total</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Standard Heat Pump</td><td >$1,100 - $1,600</td><td >$250 - $450</td><td >$1,350 - $2,050</td></tr>
+                    <tr ><td >Cold-Climate Heat Pump</td><td >$750 - $1,200</td><td >$250 - $450</td><td >$1,000 - $1,650</td></tr>
+                    <tr><td >Gas Furnace + AC</td><td >$800 - $1,300</td><td >$300 - $500</td><td >$1,100 - $1,800</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                In cold climates, the comparison is closer. A standard heat pump may cost more to operate than a gas furnace during harsh winters due to backup electric resistance heat. However, a cold-climate heat pump with a variable-speed compressor avoids this penalty and typically matches or beats gas furnace costs, even in zones 4-5.
+              </p>
+              <p>
+                The critical variable is the ratio of electricity price to gas price. When electricity costs less than 3x the price of gas (per BTU equivalent), heat pumps win. In most U.S. markets, this threshold is met. Use our <a href="/heat-pump-calculator/">Heat Pump Calculator</a> to compare costs with your actual utility rates.
+              </p>
+            
+
+            
+              <h2>Very Cold Climates (Zones 2-3): Cold-Climate Heat Pumps</h2>
+              <p>
+                Very cold regions like Minneapolis, Anchorage, Fargo, and northern New England experience extreme winters with temperatures regularly below 0°F. Historically, heat pumps were impractical here. Modern cold-climate models have changed that calculus dramatically.
+              </p>
+              <p>
+                Cold-climate heat pumps (ccASHP) from manufacturers like Mitsubishi, Daikin, Fujitsu, and Bosch use variable-speed inverter compressors, enhanced vapor injection, and larger heat exchangers to maintain performance at extreme temperatures. The Mitsubishi Hyper-Heating line, for example, produces rated heating capacity down to -13°F.
+              </p>
+              <p>
+                Even in zone 2-3 climates, a cold-climate heat pump combined with modest backup heating (gas or electric) achieves annual operating costs comparable to a high-efficiency gas furnace. States like Maine and Vermont have aggressive heat pump rebate programs specifically because the economics work even in their harsh winters. Many homeowners keep their existing furnace as backup and use the heat pump for 80-90% of heating hours, achieving significant savings.
+              </p>
+            
+
+            
+              <h2>Installation Cost Comparison</h2>
+              <p>
+                Understanding upfront costs is essential for a complete economic comparison. Remember that a heat pump replaces both your furnace and air conditioner.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >System</th>
+                      <th >Equipment</th>
+                      <th >Installation</th>
+                      <th >Total Installed</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Standard Heat Pump</td><td >$2,500 - $5,000</td><td >$1,500 - $3,000</td><td >$4,000 - $8,000</td></tr>
+                    <tr ><td >Cold-Climate Heat Pump</td><td >$4,000 - $8,000</td><td >$2,000 - $4,000</td><td >$6,000 - $12,000</td></tr>
+                    <tr ><td >Gas Furnace</td><td >$1,500 - $4,000</td><td >$1,500 - $3,000</td><td >$3,000 - $7,000</td></tr>
+                    <tr><td >Gas Furnace + Central AC</td><td >$4,000 - $8,000</td><td >$2,500 - $5,000</td><td >$6,500 - $13,000</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                When comparing apples to apples — a heat pump versus a furnace plus AC — the installation costs are surprisingly similar. The heat pump provides both heating and cooling in a single system, while the furnace setup requires separate heating and cooling equipment. Federal tax credits and state rebates for heat pumps can further tilt the equation in their favor.
+              </p>
+            
+
+            
+              <h2>15-Year Total Cost of Ownership</h2>
+              <p>
+                The most meaningful comparison looks at total cost of ownership over the system&apos;s lifetime, including installation, operating costs, maintenance, and potential equipment replacement.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Climate Zone</th>
+                      <th >Heat Pump (15-yr)</th>
+                      <th >Gas + AC (15-yr)</th>
+                      <th >HP Savings</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Warm (8-10)</td><td >$22,000</td><td >$28,500</td><td >$6,500</td></tr>
+                    <tr ><td >Mild (6-7)</td><td >$24,000</td><td >$30,000</td><td >$6,000</td></tr>
+                    <tr ><td >Cold (4-5)</td><td >$28,500</td><td >$31,000</td><td >$2,500</td></tr>
+                    <tr><td >Very Cold (2-3)</td><td >$34,000</td><td >$33,000</td><td >-$1,000*</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                *In very cold climates, cold-climate heat pumps may cost slightly more over 15 years if gas prices are low. However, factoring in the Inflation Reduction Act&apos;s heat pump rebates ($2,000-$8,000 for qualifying households) and rising natural gas prices can close or eliminate the gap. The environmental benefit of electrified heating — especially with renewable electricity — is an additional consideration for many homeowners.
+              </p>
+            
+
+            /* FAQ Section */
+            
+              <h2>Frequently Asked Questions</h2>
+
+              
+                
+                  <h3>At what temperature do heat pumps become inefficient?</h3>
+                  <p>
+                    Standard air-source heat pumps lose efficiency below 40°F and struggle below 25°F. Cold-climate models maintain efficiency down to 5°F and continue operating at -15°F, though at reduced capacity.
+                  </p>
+                
+
+                
+                  <h3>Are heat pumps cheaper to run than gas furnaces?</h3>
+                  <p>
+                    In warm and mild climates (zones 7-10), heat pumps consistently save $200-$600/year. In cold climates (zones 4-6), it depends on local electricity and gas prices. Use our <a href="/heat-pump-calculator/">Heat Pump Calculator</a> with your rates.
+                  </p>
+                
+
+                
+                  <h3>How much does a heat pump cost to install vs a gas furnace?</h3>
+                  <p>
+                    A standard heat pump costs $4,000-$8,000 installed; a cold-climate model runs $6,000-$12,000. A gas furnace costs $3,000-$7,000. But heat pumps provide both heating and cooling, potentially eliminating a separate $3,000-$5,000 AC unit.
+                  </p>
+                
+
+                
+                  <h3>Do heat pumps work in cold climates like Minnesota or Maine?</h3>
+                  <p>
+                    Yes. Modern cold-climate heat pumps from Mitsubishi, Daikin, and Bosch heat homes efficiently down to -13°F. Maine has over 100,000 heat pumps installed, one of the highest adoption rates in the U.S.
+                  </p>
+                
+
+                
+                  <h3>What is COP and HSPF and why do they matter?</h3>
+                  <p>
+                    COP (Coefficient of Performance) measures heat output per unit of electricity at a specific temperature. HSPF (Heating Seasonal Performance Factor) is the seasonal average. Higher values mean lower operating costs. A gas furnace has an effective COP of 0.80-0.96, while heat pumps typically achieve 2.0-4.5 depending on conditions.
+                  </p>
+                
+              
+            
+          
+
+          /* CTA */
+          
+            <h2>Calculate Your Heat Pump Savings</h2>
+            <p>Compare heat pump vs furnace costs for your specific climate and energy rates.</p>
+            
+              <a href="/heat-pump-calculator/">
+                Heat Pump Calculator
+              </a>
+              <a href="/electricity-cost-calculator/">
+                Electricity Cost Calculator
+              </a>
+            
+          
+
+          /* Explore More Tools */
+          
+            <h2>Explore More Tools</h2>
+            
+              <a href="https://hammerio.com/hvac-calculator/" target="_blank" rel="noopener" >
+                HammerIO
+                <h3>HVAC Calculator</h3>
+                <p>Estimate HVAC installation and replacement costs for your home.</p>
+              </a>
+              <a href="https://hammerio.com/insulation-calculator/" target="_blank" rel="noopener" >
+                HammerIO
+                <h3>Insulation Calculator</h3>
+                <p>Better insulation means your heat pump works less — estimate insulation costs.</p>
+              </a>
+            
+          
+
+          /* Related Articles */
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/heat-pump-vs-furnace/">
+                HVAC
+                <h3>Heat Pump vs Furnace: Which is Better for Your Home?</h3>
+                <p>Complete comparison of heat pumps and furnaces — efficiency, costs, and ideal use cases.</p>
+              </a>
+              <a href="/blog/reduce-electricity-bill/">
+                Energy
+                <h3>How to Reduce Your Electricity Bill: 15 Proven Tips</h3>
+                <p>Practical strategies to lower your energy costs alongside HVAC upgrades.</p>
+              </a>
+            
+          
+        
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+        />
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.jouleio.com/blog/heat-pump-operating-cost-by-climate/">JouleIO</a>.
+      Explore more free tools at <a href="https://www.jouleio.com/">jouleio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.jouleio.com/">JouleIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
