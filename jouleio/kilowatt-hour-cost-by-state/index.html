@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kilowatt Hour Cost by State: 2026 Electricity Price Comparison - JouleIO</title>
+  <meta name="description" content="Current electricity rates for all 50 states in 2026, from Hawaii at 41.62¢/kWh to North Dakota at 11.02¢/kWh. Understand why prices vary and what it means for your energy bills.">
+  <link rel="canonical" href="https://www.jouleio.com/blog/kilowatt-hour-cost-by-state/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/jouleio/">JouleIO</a> &rarr; Kilowatt Hour Cost by State: 2026 Electricity Price Comparison
+  </nav>
+
+  <article>
+    <h1>Kilowatt Hour Cost by State: 2026 Electricity Price Comparison</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.jouleio.com/blog/kilowatt-hour-cost-by-state/">jouleio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Kilowatt Hour Cost by State: 2026 Electricity Price Comparison',
+  description: 'Current electricity rates for all 50 states in 2026, from Hawaii at 41.62¢/kWh to North Dakota at 11.02¢/kWh. Understand why prices vary and what it means for your energy bills.',
+  datePublished: '2026-03-17',
+  dateModified: '2026-03-17',
+  author: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+  ,
+  publisher: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+    logo:  '@type': 'ImageObject', url: 'https://jouleio.com/favicon.svg' ,
+  ,
+  mainEntityOfPage: 'https://jouleio.com/blog/kilowatt-hour-cost-by-state/',
+;
+
+const breadcrumbSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+     '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jouleio.com/' ,
+     '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://jouleio.com/blog/' ,
+     '@type': 'ListItem', position: 3, name: 'Kilowatt Hour Cost by State', item: 'https://jouleio.com/blog/kilowatt-hour-cost-by-state/' ,
+  ],
+;
+
+const faqSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    
+      '@type': 'Question',
+      name: 'What is the average cost of electricity per kilowatt hour in the US?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'The US average residential electricity rate was 17.30¢/kWh in 2025 (preliminary), per EIA Electric Power Monthly data released February 2026. This translates to approximately $1.73 per 10 kWh, or about $155–$187/month for the average household consuming 899–1,090 kWh/month. Rates have risen 31.6% since 2020, when the national average was 13.15¢/kWh.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Which state has the highest electricity rates?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Hawaii has by far the highest residential electricity rate at 41.62¢/kWh as of December 2025, per EIA data — 2.4x the national average. This is due to Hawaii\'s near-total dependence on imported petroleum for electricity generation and its geographic isolation from the mainland grid. California (34.71¢) and Maine (30.39¢) rank second and third.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Which state has the cheapest electricity?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'North Dakota has the cheapest residential electricity at 11.02¢/kWh as of December 2025, per EIA data. The state benefits from abundant coal, wind, and hydroelectric generation with relatively low transmission costs. Nebraska (11.57¢), Idaho (11.87¢), Missouri (11.91¢), and Oklahoma (12.25¢) round out the five cheapest states.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Why is electricity so expensive in California?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'California\'s 34.71¢/kWh rate (December 2025) reflects several factors: aggressive grid modernization costs, wildfire mitigation spending (Public Safety Power Shutoff infrastructure), renewable energy transition surcharges, high labor costs, and stringent environmental regulations. The CPUC has approved large rate increases in 2024–2025 to fund wildfire prevention and grid hardening programs across PG&E, SCE, and SDG&E service territories.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How much does the average American household spend on electricity per year?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'The average US household consumes 10,791 kWh per year, according to EIA\'s 2022 Residential Energy Consumption Survey (RECS). At the 2025 national average rate of 17.30¢/kWh, that equals approximately $1,867/year or $156/month. However, high-consumption states like Louisiana (14,774 kWh/year) and high-rate states like Hawaii and California can see annual bills of $2,500–$4,500.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How much have electricity prices risen in recent years?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'US residential electricity rates have risen 31.6% from 2020 to 2025, per EIA Electric Power Monthly data. The sharpest single-year increase was 2021 to 2022 (+10.1%), driven by post-pandemic natural gas price spikes and supply chain inflation. Rates were relatively flat from 2015 to 2021, rising only 8%, then jumped 26.7% in just four years from 2021 to 2025.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Does my electricity rate affect whether solar panels are worth it?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Your electricity rate is the single most important factor in solar ROI. At 30¢/kWh (Massachusetts, Rhode Island), a typical solar system pays for itself in 5–6 years and generates $100,000+ in 25-year savings. At 12¢/kWh (Tennessee, Louisiana), the same system takes 15–20 years to pay back and generates minimal lifetime savings. SolarReviews recommends solar only for households paying more than $75/month for electricity.',
+      ,
+    ,
+  ],
+;
+
+// Full 50-state rate data from EIA Electric Power Monthly, December 2025 (released Feb 24, 2026)
+const stateRates = [
+   state: 'Alabama', abbr: 'AL', rate: 16.01, trend: 'up' ,
+   state: 'Alaska', abbr: 'AK', rate: 25.54, trend: 'up' ,
+   state: 'Arizona', abbr: 'AZ', rate: 15.46, trend: 'up' ,
+   state: 'Arkansas', abbr: 'AR', rate: 12.33, trend: 'up' ,
+   state: 'California', abbr: 'CA', rate: 34.71, trend: 'up' ,
+   state: 'Colorado', abbr: 'CO', rate: 16.12, trend: 'up' ,
+   state: 'Connecticut', abbr: 'CT', rate: 25.30, trend: 'up' ,
+   state: 'Delaware', abbr: 'DE', rate: 17.12, trend: 'up' ,
+   state: 'District of Columbia', abbr: 'DC', rate: 23.90, trend: 'up' ,
+   state: 'Florida', abbr: 'FL', rate: 15.02, trend: 'up' ,
+   state: 'Georgia', abbr: 'GA', rate: 13.67, trend: 'up' ,
+   state: 'Hawaii', abbr: 'HI', rate: 41.62, trend: 'up' ,
+   state: 'Idaho', abbr: 'ID', rate: 11.87, trend: 'up' ,
+   state: 'Illinois', abbr: 'IL', rate: 17.07, trend: 'up' ,
+   state: 'Indiana', abbr: 'IN', rate: 15.91, trend: 'up' ,
+   state: 'Iowa', abbr: 'IA', rate: 12.60, trend: 'up' ,
+   state: 'Kansas', abbr: 'KS', rate: 14.43, trend: 'up' ,
+   state: 'Kentucky', abbr: 'KY', rate: 13.22, trend: 'up' ,
+   state: 'Louisiana', abbr: 'LA', rate: 12.56, trend: 'up' ,
+   state: 'Maine', abbr: 'ME', rate: 30.39, trend: 'up' ,
+   state: 'Maryland', abbr: 'MD', rate: 19.57, trend: 'up' ,
+   state: 'Massachusetts', abbr: 'MA', rate: 30.88, trend: 'up' ,
+   state: 'Michigan', abbr: 'MI', rate: 19.53, trend: 'up' ,
+   state: 'Minnesota', abbr: 'MN', rate: 14.96, trend: 'up' ,
+   state: 'Mississippi', abbr: 'MS', rate: 14.16, trend: 'up' ,
+   state: 'Missouri', abbr: 'MO', rate: 11.91, trend: 'up' ,
+   state: 'Montana', abbr: 'MT', rate: 12.77, trend: 'up' ,
+   state: 'Nebraska', abbr: 'NE', rate: 11.57, trend: 'up' ,
+   state: 'Nevada', abbr: 'NV', rate: 12.83, trend: 'up' ,
+   state: 'New Hampshire', abbr: 'NH', rate: 26.28, trend: 'up' ,
+   state: 'New Jersey', abbr: 'NJ', rate: 22.98, trend: 'up' ,
+   state: 'New Mexico', abbr: 'NM', rate: 14.66, trend: 'up' ,
+   state: 'New York', abbr: 'NY', rate: 27.39, trend: 'up' ,
+   state: 'North Carolina', abbr: 'NC', rate: 13.47, trend: 'up' ,
+   state: 'North Dakota', abbr: 'ND', rate: 11.02, trend: 'up' ,
+   state: 'Ohio', abbr: 'OH', rate: 17.31, trend: 'up' ,
+   state: 'Oklahoma', abbr: 'OK', rate: 12.25, trend: 'up' ,
+   state: 'Oregon', abbr: 'OR', rate: 14.94, trend: 'up' ,
+   state: 'Pennsylvania', abbr: 'PA', rate: 20.08, trend: 'up' ,
+   state: 'Rhode Island', abbr: 'RI', rate: 31.15, trend: 'up' ,
+   state: 'South Carolina', abbr: 'SC', rate: 14.82, trend: 'up' ,
+   state: 'South Dakota', abbr: 'SD', rate: 12.51, trend: 'up' ,
+   state: 'Tennessee', abbr: 'TN', rate: 12.87, trend: 'up' ,
+   state: 'Texas', abbr: 'TX', rate: 15.87, trend: 'up' ,
+   state: 'Utah', abbr: 'UT', rate: 12.99, trend: 'up' ,
+   state: 'Vermont', abbr: 'VT', rate: 23.22, trend: 'up' ,
+   state: 'Virginia', abbr: 'VA', rate: 15.27, trend: 'up' ,
+   state: 'Washington', abbr: 'WA', rate: 13.33, trend: 'up' ,
+   state: 'West Virginia', abbr: 'WV', rate: 14.61, trend: 'up' ,
+   state: 'Wisconsin', abbr: 'WI', rate: 17.84, trend: 'up' ,
+   state: 'Wyoming', abbr: 'WY', rate: 12.83, trend: 'up' ,
+];
+
+function getRateColor(rate: number): string 
+  if (rate >= 30) return 'text-red-700 font-semibold';
+  if (rate >= 20) return 'text-orange-700 font-medium';
+  if (rate >= 15) return 'text-yellow-700';
+  return 'text-green-700';
+
+  const nationalAvg = 17.30;
+
+  
+    <>
+      <Header />
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Electricity Cost by State</li>
+          </ol>
+        
+
+        
+          /* Header — opens with a key statistic to hook the reader */
+          
+            Energy
+            
+              <p>EIA Data — December 2025</p>
+              <p>Hawaii pays 41.62¢/kWh.</p>
+              <p>North Dakota pays 11.02¢/kWh.</p>
+              <p>That 3.8× gap is the difference between a $374/month electricity bill and a $99/month bill — for the same usage.</p>
+            
+            <h2>
+              Kilowatt Hour Cost by State: 2026 Electricity Price Comparison
+            </h2>
+            <p>
+              Your kilowatt-hour rate determines not just your monthly electricity bill, but also whether solar panels make financial sense, how much an EV costs to charge, and what your appliances really cost to run. This guide presents every state&apos;s current residential electricity rate, explains the structural reasons for the dramatic variation, and shows what your rate means for your energy decisions.
+            </p>
+            
+              <time dateTime="2026-03-17">March 17, 2026</time>
+              14 min read
+            
+          
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>→US average residential rate: <strong>17.30¢/kWh in 2025</strong>, up 31.6% from 13.15¢ in 2020 (per EIA)</li>
+              <li>→Most expensive state: <strong>Hawaii at 41.62¢/kWh</strong> — driven by petroleum-dependent isolated grid</li>
+              <li>→Cheapest state: <strong>North Dakota at 11.02¢/kWh</strong> — coal, wind, and hydro with low transmission costs</li>
+              <li>→Average household uses <strong>10,791 kWh/year</strong> and spends approximately <strong>$1,867/year</strong> on electricity</li>
+              <li>→Residential rates are <strong>50% higher than industrial rates</strong> — households subsidize grid infrastructure costs</li>
+            </ul>
+          
+
+          /* Table of Contents */
+          
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#full-table" >1. Electricity Rates for All 50 States (December 2025)</a></li>
+              <li><a href="#highest-rates" >2. States with the Highest Electricity Rates</a></li>
+              <li><a href="#lowest-rates" >3. States with the Cheapest Electricity</a></li>
+              <li><a href="#why-rates-vary" >4. Why Electricity Prices Vary So Dramatically</a></li>
+              <li><a href="#rate-trend" >5. How Electricity Rates Have Risen (2015–2025)</a></li>
+              <li><a href="#monthly-bill" >6. What Your Rate Means for Your Monthly Bill</a></li>
+              <li><a href="#residential-vs-industrial" >7. Residential vs. Industrial Rates</a></li>
+              <li><a href="#time-of-use" >8. Time-of-Use Pricing and How to Beat Peak Rates</a></li>
+              <li><a href="#solar-implications" >9. Your Rate and Solar Panel ROI</a></li>
+              <li><a href="#faq" >10. Frequently Asked Questions</a></li>
+            </ol>
+          
+
+          
+
+            
+              <h2>Electricity Rates for All 50 States (December 2025)</h2>
+              <p>
+                The following rates are residential averages from the EIA Electric Power Monthly, Table 5.6.A, released February 24, 2026, reflecting December 2025 billing data. These are the most current state-level figures available. The national average for December 2025 was <strong>nationalAvg¢/kWh</strong>.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >State</th>
+                      <th >Rate (¢/kWh)</th>
+                      <th >vs. Nat&apos;l Avg</th>
+                      <th >Monthly Bill*</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    stateRates.map((s) => 
+                      const diff = ((s.rate - nationalAvg) / nationalAvg * 100).toFixed(0);
+                      const diffNum = parseFloat(diff);
+                      const monthlyBill = Math.round(s.rate * 899 / 100);
+                      
+                        <tr key=s.abbr >
+                          <td >s.state</td>
+                          <td className=`py-2.5 px-3 text-right $getRateColor(s.rate)`>s.rate¢</td>
+                          <td className=`py-2.5 px-3 text-right text-sm $diffNum > 0 ? 'text-red-600' : 'text-green-600'`>
+                            diffNum > 0 ? '+' : ''diff%
+                          </td>
+                          <td >$monthlyBill</td>
+                        </tr>
+                      );
+                    )
+                  </tbody>
+                </table>
+              
+              <p>Source: EIA Electric Power Monthly Table 5.6.A, February 24, 2026 (December 2025 data, preliminary). *Monthly bill estimated at national average consumption of 899 kWh/month per EIA RECS 2022 data.</p>
+            
+
+            
+              <h2>States with the Highest Electricity Rates</h2>
+              <p>
+                Nine states and DC pay more than 20¢/kWh for residential electricity — well above the national average of 17.30¢. Here is the breakdown of who pays the most and why.
+              </p>
+
+              <h3>1. Hawaii — 41.62¢/kWh</h3>
+              <p>
+                Hawaii pays nearly 2.4 times the national average for electricity — and it is not even close to any other state. The core problem is geographic isolation: Hawaii cannot import power from the mainland grid. Every island has its own electrical grid, and until recently almost all generation came from imported petroleum. Per EIA data, petroleum-fired plants accounted for the majority of Hawaii&apos;s generation for decades. The state is aggressively transitioning to solar and wind (aiming for 100% renewable by 2045), but the transition costs are being passed to ratepayers now. The silver lining: Hawaii&apos;s high rate makes solar panels extraordinarily lucrative, with payback periods under 4 years in optimal installations.
+              </p>
+
+              <h3>2. California — 34.71¢/kWh</h3>
+              <p>
+                California&apos;s rate — nearly double the national average — reflects a confluence of costs unique to the state. The three major investor-owned utilities (PG&E, SCE, SDG&E) have received multiple large rate increase approvals from the California Public Utilities Commission since 2022 to fund wildfire prevention, grid hardening, and utility undergrounding programs. Per CPUC filings, PG&E alone has invested billions in Public Safety Power Shutoff (PSPS) infrastructure. On top of that, California&apos;s aggressive renewable portfolio standard means utilities pay premium prices for solar, wind, and storage capacity — costs that flow to ratepayers. California&apos;s rate has nearly doubled from roughly $0.18/kWh in 2018 to $0.35/kWh today.
+              </p>
+
+              <h3>3–5. New England — Maine (30.39¢), Massachusetts (30.88¢), Rhode Island (31.15¢)</h3>
+              <p>
+                New England&apos;s electricity is expensive for structural reasons. The region depends heavily on natural gas for generation — but New England has constrained pipeline capacity that prevents importing cheap Appalachian gas. When natural gas prices spike nationally (as in 2022), New England faces an amplified impact. The region&apos;s aging transmission infrastructure also requires ongoing expensive maintenance. Massachusetts and Connecticut have faced particularly high rate increases from their electric distribution companies in recent years. The cold winters drive high heating demand that strains the grid, further increasing peak-pricing impacts. On the positive side, these high rates make solar economics extremely compelling — Massachusetts averages a 5.5-year solar payback.
+              </p>
+
+              <h3>Other High-Rate States</h3>
+              <p>
+                <strong>New York (27.39¢):</strong> Transmission congestion surcharges, state taxes, aging ConEdison infrastructure in NYC, and the transition away from the Indian Point nuclear plant have all contributed to elevated rates. <strong>New Hampshire (26.28¢):</strong> Small market with natural gas dependence and limited pipeline access. <strong>Alaska (25.54¢):</strong> Like Hawaii, Alaska faces isolated grid challenges — rural Alaskan villages rely on diesel generation, while even urban Anchorage faces high fuel transport costs. <strong>Connecticut (25.30¢):</strong> Dense grid infrastructure maintenance, natural gas dependence, and mandatory utility programs add cost.
+              </p>
+            
+
+            
+              <h2>States with the Cheapest Electricity</h2>
+              <p>
+                The states with the lowest electricity rates share a common profile: abundant, inexpensive generation sources, often with a large portion of publicly owned utilities that do not need to deliver shareholder returns.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >State</th>
+                      <th >Rate (¢/kWh)</th>
+                      <th >Primary Generation Source</th>
+                      <th >Key Factor</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr >
+                      <td >North Dakota</td>
+                      <td >11.02¢</td>
+                      <td >Coal + Wind</td>
+                      <td >Low fuel cost, low transmission density</td>
+                    </tr>
+                    <tr >
+                      <td >Nebraska</td>
+                      <td >11.57¢</td>
+                      <td >Nuclear + Wind</td>
+                      <td >100% publicly owned utilities (no shareholder profit)</td>
+                    </tr>
+                    <tr >
+                      <td >Idaho</td>
+                      <td >11.87¢</td>
+                      <td >Hydroelectric</td>
+                      <td >Columbia River system; nearly free fuel</td>
+                    </tr>
+                    <tr >
+                      <td >Missouri</td>
+                      <td >11.91¢</td>
+                      <td >Coal + Nuclear</td>
+                      <td >Low-cost fuel mix, rate-regulated environment</td>
+                    </tr>
+                    <tr >
+                      <td >Oklahoma</td>
+                      <td >12.25¢</td>
+                      <td >Natural Gas + Wind</td>
+                      <td >Natural gas production state; abundant wind</td>
+                    </tr>
+                    <tr >
+                      <td >Arkansas</td>
+                      <td >12.33¢</td>
+                      <td >Natural Gas + Nuclear</td>
+                      <td >Low population density, diversified fuel mix</td>
+                    </tr>
+                    <tr>
+                      <td >Iowa</td>
+                      <td >12.60¢</td>
+                      <td >Wind + Coal</td>
+                      <td >Nation&apos;s largest wind energy producer per capita; cooperative utilities</td>
+                    </tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                Nebraska is a particularly instructive case: it is the only state in the US where <em>all</em> electricity is supplied by publicly owned utilities and cooperatives — no investor-owned utilities exist. Without the need to return profits to shareholders, Nebraska&apos;s public power districts keep rates among the lowest in the country despite not having exceptional natural resources. This demonstrates that market structure, not just fuel mix, affects what consumers pay.
+              </p>
+              <p>
+                Idaho&apos;s 11.87¢/kWh rate is largely attributable to hydroelectric power from the Columbia and Snake River systems. Hydro has near-zero fuel costs once infrastructure is built, making it among the cheapest generation sources available. Washington state (13.33¢) benefits from the same system but pays slightly more due to higher transmission infrastructure costs serving a larger population.
+              </p>
+            
+
+            
+              <h2>Why Electricity Prices Vary So Dramatically</h2>
+              <p>
+                A homeowner in Hawaii pays nearly four times more per kilowatt-hour than a homeowner in North Dakota. Understanding why helps you evaluate whether your rate is likely to change — and whether switching to renewables is driven by economics or altruism.
+              </p>
+
+              <h3>Generation Mix</h3>
+              <p>
+                Fuel cost is the biggest single driver of electricity rates. Per EIA&apos;s analysis of pricing factors, states with access to cheap, abundant generation sources pass those savings to consumers. Hydroelectric power has essentially zero fuel cost after construction — which is why the Pacific Northwest, Nebraska, and the Dakotas enjoy some of the lowest rates in the nation. States dependent on imported oil (Hawaii) or constrained natural gas pipelines (New England) pay the most.
+              </p>
+              <p>
+                Nuclear power provides relatively stable, low-cost generation (though with high capital costs). States with significant nuclear capacity — Illinois, South Carolina, Connecticut — partially offset natural gas price volatility. Coal-heavy states have historically had cheap electricity, but carbon reduction policies and plant retirements are gradually raising costs in those markets too.
+              </p>
+
+              <h3>Transmission and Distribution Infrastructure</h3>
+              <p>
+                Building, maintaining, and operating the wires that carry electricity from power plants to your outlet is a major cost component. Per EIA&apos;s pricing explainer, infrastructure costs include &quot;construction, operation, and maintenance of the transmission and distribution systems, including the costs of repairing damage from extreme weather and improving cybersecurity.&quot;
+              </p>
+              <p>
+                Dense urban grids (New York City, Boston) require constant upkeep of aging underground cable systems. California&apos;s wildfire mitigation program has added billions in infrastructure spending that ratepayers are now funding. Rural states with sparse populations pay more per customer for long transmission lines but benefit from less complex distribution systems.
+              </p>
+
+              <h3>Market Structure and Regulation</h3>
+              <p>
+                Approximately 14 states plus DC allow retail electricity competition — consumers can choose their electricity supplier in a deregulated market. Theoretically, competition should drive prices down; in practice, results are mixed. Texas&apos;s deregulated ERCOT grid has seen high volatility (February 2021&apos;s storm caused prices to spike 10,000%) but generally competitive baseline rates.
+              </p>
+              <p>
+                Fully regulated states have utility commissions (public service commissions or public utility commissions) that approve rate changes. This process can protect consumers from sudden spikes but sometimes results in utilities under-recovering costs for years, leading to larger eventual rate increase requests. Nebraska&apos;s all-public-power model is a unique alternative — its public power districts operate without profit motive.
+              </p>
+
+              <h3>State Policy Surcharges</h3>
+              <p>
+                State policies add costs that vary significantly. Renewable portfolio standards (RPS) require utilities to buy renewable energy, often at above-market prices — this is a significant cost driver in California, Massachusetts, and New York. Energy efficiency program charges, low-income assistance programs, storm recovery costs, and nuclear decommissioning funds all add to residential rates as line items on utility bills.
+              </p>
+            
+
+            
+              <h2>How Electricity Rates Have Risen (2015–2025)</h2>
+              <p>
+                Residential electricity rates have not risen smoothly — they were nearly flat for six years, then surged dramatically. The following data is from EIA Electric Power Monthly Table 5.3, released February 24, 2026.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Year</th>
+                      <th >Residential (¢/kWh)</th>
+                      <th >Commercial (¢/kWh)</th>
+                      <th >Industrial (¢/kWh)</th>
+                      <th >Res. YoY Change</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >2015</td><td >12.65¢</td><td >10.64¢</td><td >6.91¢</td><td >—</td></tr>
+                    <tr ><td >2016</td><td >12.55¢</td><td >10.43¢</td><td >6.76¢</td><td >−0.8%</td></tr>
+                    <tr ><td >2019</td><td >13.01¢</td><td >10.68¢</td><td >6.81¢</td><td >+1.8%</td></tr>
+                    <tr ><td >2020</td><td >13.15¢</td><td >10.59¢</td><td >6.67¢</td><td >+1.1%</td></tr>
+                    <tr ><td >2021</td><td >13.66¢</td><td >11.22¢</td><td >7.18¢</td><td >+3.9%</td></tr>
+                    <tr ><td >2022</td><td >15.04¢</td><td >12.41¢</td><td >8.32¢</td><td >+10.1%</td></tr>
+                    <tr ><td >2023</td><td >16.00¢</td><td >12.59¢</td><td >8.04¢</td><td >+6.4%</td></tr>
+                    <tr ><td >2024</td><td >16.48¢</td><td >12.75¢</td><td >8.13¢</td><td >+3.0%</td></tr>
+                    <tr><td >2025 (prelim.)</td><td >17.30¢</td><td >13.41¢</td><td >8.62¢</td><td >+5.0%</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>Source: EIA Electric Power Monthly Table 5.3, released February 24, 2026. 2025 figures are preliminary.</p>
+
+              <p>
+                Two observations stand out from this data. First, rates were remarkably stable from 2015–2021 — rising only 8% over six years, barely keeping pace with inflation. Second, the period from 2021 to 2025 saw a 26.7% surge in just four years, driven by the 2022 natural gas price shock (Russia&apos;s invasion of Ukraine triggered global LNG price spikes) and the subsequent wave of grid investment and wildfire mitigation spending being baked into utility rate requests.
+              </p>
+              <p>
+                The structural drivers of recent rate increases — grid hardening, wildfire prevention, renewable transition, and electrification infrastructure — are not going away. Most utility analysts expect continued rate escalation of 3–5% per year through the late 2020s. Use our <a href="/electricity-cost-calculator/">Electricity Cost Calculator</a> to project your future utility bills under different escalation scenarios.
+              </p>
+            
+
+            
+              <h2>What Your Rate Means for Your Monthly Bill</h2>
+              <p>
+                Kilowatt-hour rate is only half the bill equation — consumption is the other half. Per EIA&apos;s 2022 Residential Energy Consumption Survey (RECS), the average US household consumes <strong>10,791 kWh per year</strong> — approximately 899 kWh per month. But this average conceals enormous regional variation driven by climate, housing type, and local appliance habits.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >State</th>
+                      <th >Avg Annual Consumption</th>
+                      <th >Rate (¢/kWh)</th>
+                      <th >Est. Annual Bill</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr >
+                      <td >Louisiana</td>
+                      <td >14,774 kWh (highest in US)</td>
+                      <td >12.56¢</td>
+                      <td >~$1,856/yr</td>
+                    </tr>
+                    <tr >
+                      <td >California</td>
+                      <td >~7,200 kWh (mild climate)</td>
+                      <td >34.71¢</td>
+                      <td >~$2,499/yr</td>
+                    </tr>
+                    <tr >
+                      <td >Massachusetts</td>
+                      <td >~8,500 kWh</td>
+                      <td >30.88¢</td>
+                      <td >~$2,625/yr</td>
+                    </tr>
+                    <tr >
+                      <td >Hawaii</td>
+                      <td >6,178 kWh (lowest in US)</td>
+                      <td >41.62¢</td>
+                      <td >~$2,571/yr</td>
+                    </tr>
+                    <tr >
+                      <td >Texas</td>
+                      <td >~13,500 kWh</td>
+                      <td >15.87¢</td>
+                      <td >~$2,142/yr</td>
+                    </tr>
+                    <tr>
+                      <td >North Dakota</td>
+                      <td >~10,400 kWh</td>
+                      <td >11.02¢</td>
+                      <td >~$1,146/yr</td>
+                    </tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                Hawaii&apos;s extreme rate (41.62¢) is partially offset by its mild climate — residents use far less electricity than Americans in the Deep South or Mountain West. Hawaiians consume only 6,178 kWh per year — less than half what Louisiana households use — because cooling and heating loads are modest. Even so, their annual bill still reaches roughly $2,571.
+              </p>
+              <p>
+                Louisiana illustrates the opposite pattern: very low rates (12.56¢) but the highest electricity consumption in the country (14,774 kWh/year). The intense summer heat drives enormous air conditioning loads — and those low rates encourage consumption rather than efficiency. Louisiana&apos;s annual electricity bill ends up similar to many higher-rate states simply due to volume. Use our <a href="/electric-bill-estimator/">Electric Bill Estimator</a> to benchmark your usage against state averages.
+              </p>
+            
+
+            
+              <h2>Residential vs. Industrial Rates: The 2× Gap</h2>
+              <p>
+                One of the least-discussed aspects of electricity pricing is the dramatic gap between what households pay and what large industrial customers pay. Per EIA Electric Power Monthly data:
+              </p>
+
+              
+                
+                  
+                    <p>17.30¢</p>
+                    <p>Residential avg (2025)</p>
+                  
+                  
+                    <p>13.41¢</p>
+                    <p>Commercial avg (2025)</p>
+                  
+                  
+                    <p>8.62¢</p>
+                    <p>Industrial avg (2025)</p>
+                  
+                
+              
+
+              <p>
+                Households pay <strong>50% more per kWh than industrial customers</strong>. This gap exists for several legitimate reasons, per EIA&apos;s pricing factors explainer: industrial customers take power at high voltages, bypassing expensive distribution infrastructure; they have predictable, stable demand that reduces grid management costs; and per-meter administrative costs spread across millions of residential accounts versus a handful of industrial accounts favor large customers.
+              </p>
+              <p>
+                However, this gap also means residential consumers disproportionately fund the grid. Every large industrial customer that installs rooftop solar or microgeneration shifts more fixed grid costs onto remaining residential ratepayers — a phenomenon utility regulators call the &quot;utility death spiral.&quot; This dynamic partly explains why some utilities have opposed residential net metering: distributed solar reduces the revenue base while fixed grid costs remain constant.
+              </p>
+            
+
+            
+              <h2>Time-of-Use Pricing and How to Beat Peak Rates</h2>
+              <p>
+                Standard flat-rate electricity pricing charges the same per kWh regardless of when you use power. Time-of-use (TOU) pricing — which many utilities now offer or mandate — charges significantly more during high-demand hours and less during off-peak periods.
+              </p>
+              <p>
+                California has made TOU the default rate for new residential customers across PG&E, SCE, and SDG&E territories. Under a typical California TOU structure, on-peak hours (weekdays 4–9 PM) cost roughly 48¢/kWh while off-peak hours fall around 26¢ and super off-peak (midnight to 6 AM) drops to approximately 18¢. That is a nearly 3× swing within a single day on the same grid.
+              </p>
+              <p>
+                TOU pricing is spreading because it helps utilities manage the &quot;duck curve&quot; — the sharp afternoon demand spike that occurs when solar output drops as workplaces end their days and residential air conditioning kicks in. By making peak power more expensive, TOU pricing encourages consumers to shift loads to off-peak hours.
+              </p>
+              <p>
+                <strong>For homeowners on TOU rates, three strategies dramatically reduce bills:</strong>
+              </p>
+              <ul>
+                <li><strong>Shift appliance loads:</strong> Schedule dishwasher, laundry, and pool pumps to run after 9 PM or before 7 AM. This alone can reduce bills 15–25% without changing consumption.</li>
+                <li><strong>EV charging off-peak:</strong> EV owners who charge overnight (super off-peak) versus evening peak can save $400–$800/year at California rates. Our <a href="/ev-charging-cost/">EV Charging Cost Calculator</a> models TOU rate scenarios.</li>
+                <li><strong>Battery storage arbitrage:</strong> A home battery charged during super-off-peak and discharged during on-peak hours saves the spread (18¢ vs. 48¢ = 30¢/kWh savings). A 10 kWh battery cycling once daily captures ~$3/day in rate arbitrage, adding up to $1,095/year — potentially justifying the battery cost over its lifespan in high-TOU-spread markets.</li>
+              </ul>
+            
+
+            
+              <h2>Your Rate and Solar Panel ROI</h2>
+              <p>
+                Your electricity rate is the single most predictive factor in whether solar panels make financial sense. The math is straightforward: higher rates mean more savings per kilowatt-hour produced, which means faster payback and greater lifetime returns.
+              </p>
+              <p>
+                Per EnergySage 2025 analysis, a typical 8 kW system produces approximately 10,000–11,000 kWh per year. That same system saves radically different amounts depending on where you live:
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >State / Rate</th>
+                      <th >Annual Savings (10,500 kWh)</th>
+                      <th >Approx. Payback</th>
+                      <th >25-Year Savings</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr >
+                      <td >Massachusetts (30.88¢)</td>
+                      <td >$3,242/yr</td>
+                      <td >~5.5 years</td>
+                      <td >~$155,000</td>
+                    </tr>
+                    <tr >
+                      <td >New York (27.39¢)</td>
+                      <td >$2,876/yr</td>
+                      <td >~6.5 years</td>
+                      <td >~$95,000</td>
+                    </tr>
+                    <tr >
+                      <td >National avg (17.30¢)</td>
+                      <td >$1,817/yr</td>
+                      <td >~9 years</td>
+                      <td >~$60,000</td>
+                    </tr>
+                    <tr >
+                      <td >Texas (15.87¢)</td>
+                      <td >$1,666/yr</td>
+                      <td >~9–10 years</td>
+                      <td >~$55,000</td>
+                    </tr>
+                    <tr>
+                      <td >North Dakota (11.02¢)</td>
+                      <td >$1,157/yr</td>
+                      <td >~12–14 years</td>
+                      <td >~$12,000</td>
+                    </tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                The rate difference between Massachusetts and North Dakota creates a $2,085/year gap in annual solar savings on the same system. Over 25 years, that is over $140,000 in cumulative difference — entirely because of the electricity rate, not the solar equipment or installation.
+              </p>
+              <p>
+                Per SolarReviews, homeowners paying less than $75/month for electricity — roughly 8.3¢/kWh at average consumption — will struggle to achieve a reasonable solar ROI. If you fall into the category of states with rates below 12¢/kWh, explore community solar programs instead: they offer bill savings of 5–15% with no upfront investment. Read our <a href="/blog/solar-panel-roi/">Solar Panel ROI Guide</a> for a full payback calculation methodology.
+              </p>
+            
+
+            /* FAQ Section */
+            
+              <h2>Frequently Asked Questions</h2>
+              
+                
+                  <h3>What is the average cost of electricity per kilowatt hour in the US?</h3>
+                  <p>The US average residential electricity rate was 17.30¢/kWh in 2025 (preliminary), per EIA Electric Power Monthly released February 2026. At the average consumption of 899 kWh/month, that equals approximately $156/month or $1,867/year. Rates rose 31.6% from 13.15¢ in 2020 to 17.30¢ in 2025.</p>
+                
+                
+                  <h3>Which state has the highest electricity rates?</h3>
+                  <p>Hawaii at 41.62¢/kWh (December 2025 EIA data) — 2.4x the national average. This reflects near-total petroleum dependence and geographic isolation from the mainland grid. California (34.71¢) and Rhode Island (31.15¢) rank second and third. Maine (30.39¢) and Massachusetts (30.88¢) round out the top five.</p>
+                
+                
+                  <h3>Which state has the cheapest electricity?</h3>
+                  <p>North Dakota at 11.02¢/kWh (December 2025 EIA data) — the lowest in the US. Abundant coal, wind, and hydroelectric power with low transmission costs drive the low rate. Nebraska (11.57¢), Idaho (11.87¢), Missouri (11.91¢), and Oklahoma (12.25¢) complete the five cheapest states.</p>
+                
+                
+                  <h3>Why is electricity so expensive in California?</h3>
+                  <p>California&apos;s 34.71¢/kWh rate reflects wildfire mitigation infrastructure (PSPS programs), aggressive renewable transition surcharges, grid modernization spending, high labor costs, and stringent environmental regulations. Major utilities PG&E, SCE, and SDG&E have received large CPUC-approved rate increases since 2022 to fund grid hardening.</p>
+                
+                
+                  <h3>How much does the average American household spend on electricity per year?</h3>
+                  <p>The average US household uses 10,791 kWh/year (EIA RECS 2022). At the 2025 national average of 17.30¢/kWh, that equals approximately $1,867/year or $156/month. High-consumption Louisiana households (14,774 kWh/year) and high-rate California/Massachusetts households spend $2,500–$3,000/year or more.</p>
+                
+                
+                  <h3>How much have electricity prices risen in recent years?</h3>
+                  <p>US residential rates rose 31.6% from 2020 to 2025, per EIA Electric Power Monthly data. The sharpest increase was 2021–2022 (+10.1%), driven by the post-pandemic natural gas price spike. Rates were nearly flat 2015–2021 (+8%), then surged 26.7% in just four years from 2021 to 2025.</p>
+                
+                
+                  <h3>Does my electricity rate affect whether solar panels are worth it?</h3>
+                  <p>Your electricity rate is the primary determinant of solar ROI. At 30¢/kWh, solar pays back in 5–6 years with $100,000+ in 25-year savings. At 12¢/kWh, the same system takes 15–20 years to pay back with minimal lifetime returns. SolarReviews recommends solar only for households paying more than $75/month for electricity.</p>
+                
+              
+            
+          
+
+          /* CTA */
+          
+            <h2>See How Your Electricity Rate Affects Solar Savings</h2>
+            <p>Enter your monthly kWh usage and local rate to calculate your solar payback period and 25-year savings projection.</p>
+            
+              <a href="/solar-payback-calculator/">
+                Solar Payback Calculator
+              </a>
+              <a href="/electricity-cost-calculator/">
+                Electricity Cost Calculator
+              </a>
+            
+          
+
+          /* Related Articles */
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/solar-panel-roi/">
+                Solar
+                <h3>Solar Panel ROI: How Long Until Panels Pay for Themselves?</h3>
+                <p>Complete payback period analysis by state — the real ROI math using 2026 costs and current electricity rates.</p>
+              </a>
+              <a href="/blog/time-of-use-rates-guide/">
+                Energy
+                <h3>Time-of-Use Electricity Rates: How They Work &amp; How to Save</h3>
+                <p>Beat peak electricity rates by shifting loads — smart scheduling can cut bills 20–40% without reducing usage.</p>
+              </a>
+            
+          
+        
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+        />
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.jouleio.com/blog/kilowatt-hour-cost-by-state/">JouleIO</a>.
+      Explore more free tools at <a href="https://www.jouleio.com/">jouleio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.jouleio.com/">JouleIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
