@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Much Electricity Does an AC Use? Cost Breakdown by Type (2026) - JouleIO</title>
+  <meta name="description" content="Exact kWh usage for every AC type — window units by BTU, central AC by tonnage, mini-splits, portable ACs. Monthly cost breakdown at 2026 electricity rates with SEER2 efficiency data.">
+  <link rel="canonical" href="https://www.jouleio.com/blog/how-much-electricity-does-ac-use/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/jouleio/">JouleIO</a> &rarr; How Much Electricity Does an AC Use? Cost Breakdown by Type (2026)
+  </nav>
+
+  <article>
+    <h1>How Much Electricity Does an AC Use? Cost Breakdown by Type (2026)</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.jouleio.com/blog/how-much-electricity-does-ac-use/">jouleio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How Much Electricity Does an AC Use? Cost Breakdown by Type (2026)',
+  description: 'Exact kWh usage for every AC type — window units by BTU, central AC by tonnage, mini-splits, portable ACs. Monthly cost breakdown at 2026 electricity rates with SEER2 efficiency data.',
+  datePublished: '2026-03-19',
+  dateModified: '2026-03-19',
+  author:  '@type': 'Organization', name: 'JouleIO', url: 'https://jouleio.com/' ,
+  publisher: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+    logo:  '@type': 'ImageObject', url: 'https://jouleio.com/favicon.svg' ,
+  ,
+  mainEntityOfPage: 'https://jouleio.com/blog/how-much-electricity-does-ac-use/',
+;
+
+const breadcrumbSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+     '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jouleio.com/' ,
+     '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://jouleio.com/blog/' ,
+     '@type': 'ListItem', position: 3, name: 'How Much Electricity Does an AC Use', item: 'https://jouleio.com/blog/how-much-electricity-does-ac-use/' ,
+  ],
+;
+
+const faqSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    
+      '@type': 'Question',
+      name: 'How many kWh does a central AC use per month?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'A central AC system uses 1,000–1,800 kWh per month during the cooling season, depending on size and efficiency. A 3-ton, 14 SEER2 unit running 8 hours/day uses approximately 617 kWh/month at the national average of $0.1805/kWh — that is about $111/month. A high-efficiency 3-ton at 21 SEER2 uses about 350 kWh/month, cutting the bill to $63.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How much does it cost to run a window AC per month?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'A 5,000 BTU window AC running 8 hours/day costs about $20–$27/month at the national average electricity rate of $0.1805/kWh. A 10,000 BTU unit costs $40–$56/month. A 12,000 BTU window unit costs approximately $48–$65/month. These estimates assume a 10–11 EER efficiency rating typical of modern window units.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Is a portable AC more expensive to run than a window AC?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes — portable ACs are approximately twice as inefficient as window units of similar capacity. A portable AC uses about 0.88 kWh/hour on average versus 0.43 kWh/hour for a window unit. This is because portable units exhaust warm air through a hose but draw replacement air from the conditioned space, creating a positive pressure leak that requires additional cooling. Stick with window units when possible.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'What is SEER2 and why does it matter?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'SEER2 (Seasonal Energy Efficiency Ratio 2) is the 2023 DOE standard for AC cooling efficiency. Higher SEER2 means less electricity consumed per BTU of cooling. The minimum SEER2 as of January 2023 is 13.4 (North) and 14.3 (South/Southwest). A 3-ton unit at 21 SEER2 uses 44% less electricity than the same capacity unit at 14 SEER2, saving approximately $580/year in a hot climate running 8 hours/day.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How much electricity does a mini-split AC use vs central AC?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Mini-split systems typically use 30–50% less electricity than central AC systems of equivalent cooling capacity. The primary reasons are elimination of duct losses (which waste 30%+ of central AC energy) and inverter-driven variable-speed compressors that modulate output rather than cycling on/off. A 3.5-ton equivalent multi-zone mini-split costs roughly $41/month vs $72/month for central AC running 3 hours/day at $0.23/kWh.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How can I reduce my AC electricity use?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'The most effective strategies: (1) Set thermostat to 78°F when home, 85°F when away — each degree above 72°F saves ~3% on cooling; (2) Use ceiling fans to allow thermostat set 4°F higher, saving ~12%; (3) Close blinds during peak sun hours; (4) Schedule setback 7–10°F for 8 hours/day for up to 10% annual savings per DOE data; (5) Clean filters monthly during cooling season for up to 15% efficiency improvement.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How many kWh does a 3-ton AC use per hour?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'A 3-ton (36,000 BTU) central AC uses approximately 1.44–2.57 kWh per hour, depending on SEER2 rating. At minimum-standard 14 SEER2, a 3-ton unit uses about 2.57 kWh/hour. At 21 SEER2, the same capacity unit uses 1.44 kWh/hour. At the national average rate of $0.1805/kWh, that is $0.26–$0.46 per hour of operation.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Does AC use a lot of electricity?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes — air conditioning is one of the largest energy consumers in American homes. According to EIA\'s 2020 Residential Energy Consumption Survey, AC accounts for approximately 19% of total U.S. residential electricity consumption — 254 billion kWh annually across all homes. In the South and Southwest, cooling can represent 30–50% of a home\'s annual electricity bill during hot months.',
+      ,
+    ,
+  ],
+;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+      <Header />
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>How Much Electricity Does an AC Use</li>
+          </ol>
+        
+
+        
+          /* Header */
+          
+            Energy
+            <h2>
+              How Much Electricity Does an AC Use? Cost Breakdown by Type (2026)
+            </h2>
+            <p>
+              Air conditioning accounts for approximately <strong>19% of total U.S. residential electricity consumption</strong> — 254 billion kWh per year according to the EIA&rsquo;s 2020 Residential Energy Consumption Survey. In the South and Southwest, cooling can represent 30–50% of your summer electricity bill. Here is the complete kWh breakdown by AC type, with exact costs at 2026 electricity rates.
+            </p>
+            
+              <time dateTime="2026-03-19">March 19, 2026</time>
+              14 min read
+            
+          
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>&#10003;AC accounts for 19% of U.S. residential electricity — 254 billion kWh/year (EIA RECS 2020); 88% of homes have air conditioning</li>
+              <li>&#10003;Window AC (5,000 BTU): ~0.50 kWh/hour; costs $20–$27/month running 8 hrs/day at national average rates</li>
+              <li>&#10003;Central AC (3-ton): 1.44–2.57 kWh/hour depending on SEER2; costs $63–$111/month at 8 hrs/day</li>
+              <li>&#10003;Portable ACs use ~2x more electricity per BTU than window units — avoid them when a window unit is feasible</li>
+              <li>&#10003;Mini-splits use 30–50% less electricity than central AC due to no duct losses and inverter-driven compressors</li>
+            </ul>
+          
+
+          /* Table of Contents */
+          
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#window-ac" >1. Window AC Electricity Usage by BTU Size</a></li>
+              <li><a href="#central-ac" >2. Central AC Electricity Usage by Tonnage</a></li>
+              <li><a href="#portable-ac" >3. Portable AC: The Most Expensive Option</a></li>
+              <li><a href="#mini-split" >4. Mini-Splits: The Efficiency Leader</a></li>
+              <li><a href="#seer2-explained" >5. SEER2 Explained: How It Affects Your Bill</a></li>
+              <li><a href="#monthly-cost-by-state" >6. Monthly AC Cost by State</a></li>
+              <li><a href="#comparison-table" >7. Full AC Type Comparison</a></li>
+              <li><a href="#reduce-ac-costs" >8. How to Reduce AC Electricity Use</a></li>
+              <li><a href="#faq" >9. Frequently Asked Questions</a></li>
+            </ol>
+          
+
+          
+
+            /* Section 1: Window AC */
+            
+              <h2>Window AC Electricity Usage by BTU Size</h2>
+              <p>
+                Window air conditioners are the most common single-room cooling solution. Their electricity consumption depends on two factors: BTU capacity (the amount of cooling they deliver) and EER (Energy Efficiency Ratio — the cooling output per watt of electricity consumed). The formula is simple:
+              </p>
+
+              
+                <p>Watts = BTU &divide; EER</p>
+                <p>Example: 10,000 BTU unit at EER 10 = 1,000 watts = 1.0 kWh/hour</p>
+              
+
+              <p>
+                Modern window ACs carry EER ratings of 10–12 for standard models and up to 15 for premium ENERGY STAR models. The DOE minimum for window units is 10.3 EER for units under 8,000 BTU. Here is the complete breakdown at a 10 EER baseline:
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >BTU Rating</th>
+                      <th >Wattage (10 EER)</th>
+                      <th >kWh/hour</th>
+                      <th >kWh/month<br/>(8 hrs/day)</th>
+                      <th >Monthly Cost<br/>at $0.1805/kWh</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >5,000 BTU</td><td >500W</td><td >0.50</td><td >120</td><td >$21.66</td></tr>
+                    <tr ><td >6,000 BTU</td><td >600W</td><td >0.60</td><td >144</td><td >$26.00</td></tr>
+                    <tr ><td >8,000 BTU</td><td >800W</td><td >0.80</td><td >192</td><td >$34.66</td></tr>
+                    <tr ><td >10,000 BTU</td><td >1,000W</td><td >1.00</td><td >240</td><td >$43.32</td></tr>
+                    <tr ><td >12,000 BTU</td><td >1,200W</td><td >1.20</td><td >288</td><td >$51.98</td></tr>
+                    <tr><td >15,000 BTU</td><td >1,500W</td><td >1.50</td><td >360</td><td >$64.98</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                Real-world consumption is lower than these maximums because window ACs cycle on and off rather than running continuously at full capacity. An AC running at 70% duty cycle (typical in moderate climates) uses 30% less electricity than the maximums shown. In a hot Southern climate with 95&deg;F+ outdoor temperatures, duty cycles can approach 90–100% during peak afternoon hours. Use our <a href="/appliance-calculator/">Appliance Cost Calculator</a> to model duty cycle and local electricity rates for your specific unit.
+              </p>
+              <p>
+                Window ACs size by room square footage: 5,000 BTU handles 100–150 sq ft; 8,000 BTU handles 200–300 sq ft; 12,000 BTU handles 400–550 sq ft. Oversizing — a common mistake — increases electricity use without improving comfort, because oversized units cycle rapidly and fail to dehumidify properly.
+              </p>
+            
+
+            /* Section 2: Central AC */
+            
+              <h2>Central AC Electricity Usage by Tonnage</h2>
+              <p>
+                Central air conditioning is rated in tons: 1 ton = 12,000 BTU/hour of cooling capacity. A 2,000 sq ft home typically requires a 2.5–3.5 ton system depending on climate, insulation, window area, and ceiling height. The electricity consumption depends heavily on SEER2 rating (see Section 5). Here is the breakdown for the most common unit sizes at both minimum-standard and high-efficiency ratings:
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >AC Size</th>
+                      <th >BTU/hr</th>
+                      <th >kWh/hr<br/>14 SEER2</th>
+                      <th >kWh/hr<br/>21 SEER2</th>
+                      <th >Monthly Cost<br/>14 SEER2, 8 hrs/day</th>
+                      <th >Monthly Cost<br/>21 SEER2, 8 hrs/day</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >1.5-ton</td><td >18,000</td><td >1.29</td><td >0.86</td><td >$55.95</td><td >$37.30</td></tr>
+                    <tr ><td >2-ton</td><td >24,000</td><td >1.71</td><td >1.14</td><td >$74.17</td><td >$49.45</td></tr>
+                    <tr ><td >2.5-ton (avg home)</td><td >30,000</td><td >2.14</td><td >1.43</td><td >$92.77</td><td >$62.02</td></tr>
+                    <tr ><td >3-ton (avg home)</td><td >36,000</td><td >2.57</td><td >1.71</td><td >$111.42</td><td >$74.24</td></tr>
+                    <tr ><td >3.5-ton</td><td >42,000</td><td >3.00</td><td >2.00</td><td >$130.00</td><td >$86.64</td></tr>
+                    <tr ><td >4-ton</td><td >48,000</td><td >3.43</td><td >2.29</td><td >$148.65</td><td >$99.27</td></tr>
+                    <tr><td >5-ton</td><td >60,000</td><td >4.29</td><td >2.86</td><td >$185.95</td><td >$124.03</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                The kWh/hour figures above are calculated as BTU ÷ (SEER2 &times; 1,000). Note that central ACs rarely run at 100% duty cycle except during heat waves. In a temperate climate with an average summer temperature around 80&deg;F, a properly-sized central AC may run at 50–70% duty cycle, reducing actual monthly consumption by 30–50% below these figures. In Phoenix, Arizona or Miami, Florida during July, duty cycles approach 90%+ during afternoon hours.
+              </p>
+              <p>
+                Duct losses are a hidden cost that these figures do not fully capture. The EIA estimates that duct losses in typical homes waste 20–30% of the cooled air before it reaches living spaces. A central AC running on 14 SEER2 with 25% duct losses effectively delivers only about 10.5 SEER2 of useful cooling to the rooms. Mini-splits eliminate this waste entirely. Calculate what your central AC actually costs with our <a href="/electricity-cost-calculator/">Electricity Cost Calculator</a>.
+              </p>
+            
+
+            /* Section 3: Portable AC */
+            
+              <h2>Portable AC: The Most Expensive Option</h2>
+              <p>
+                Portable air conditioners are popular because they require no installation — you just wheel them in, stick the exhaust hose out a window, and plug them in. They are also, per BTU of cooling delivered, the most expensive type to run. Here is why, and by how much.
+              </p>
+              <p>
+                A portable AC exhausts warm air through a hose — but that warm air has to come from somewhere. As the unit exhaust warm air out the window, it creates negative pressure in the room, which draws unconditioned (warm, humid) air in through door gaps, window cracks, and other building penetrations. The AC then has to cool that infiltration air on top of the intended load. This &ldquo;infiltration penalty&rdquo; can reduce effective efficiency by 30–50% compared to the unit&rsquo;s rated specifications.
+              </p>
+              <p>
+                A comparison of typical units at the same BTU capacity (8,000 BTU):
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >AC Type</th>
+                      <th >Rated Capacity</th>
+                      <th >Wattage</th>
+                      <th >kWh/hour</th>
+                      <th >Monthly Cost<br/>(8 hrs/day)</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Window AC</td><td >8,000 BTU</td><td >~800W</td><td >0.80</td><td >$34.66</td></tr>
+                    <tr ><td >Portable AC (single hose)</td><td >8,000 BTU (SACC)</td><td >~1,100–1,400W</td><td >1.10–1.40</td><td >$47.65–$60.65</td></tr>
+                    <tr><td >Portable AC (dual hose)</td><td >8,000 BTU (SACC)</td><td >~950–1,200W</td><td >0.95–1.20</td><td >$41.15–$52.00</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                The DOE introduced the SACC (Seasonally Adjusted Cooling Capacity) standard in 2017 to account for the infiltration penalty in portable AC ratings. An older portable AC rated at 12,000 BTU under the old standard may carry only 6,000–7,000 BTU SACC. Always compare SACC ratings when evaluating portable units. Dual-hose models (one hose for exhaust, one for intake) reduce — but do not eliminate — the infiltration problem.
+              </p>
+              <p>
+                If you have any window that can accommodate a window unit, use a window AC. The electricity cost difference over a summer (3 months) for an 8,000 BTU application is approximately $40–$80 in favor of the window unit. Over five years, that is $200–$400 in unnecessary electricity costs.
+              </p>
+            
+
+            /* Section 4: Mini-Splits */
+            
+              <h2>Mini-Splits: The Efficiency Leader</h2>
+              <p>
+                Ductless mini-split systems are the most efficient way to cool and heat your home. They consist of an outdoor compressor unit connected to one or more indoor air handlers via refrigerant lines — no ducts required. Their electricity efficiency advantage comes from two sources: elimination of duct losses and variable-speed (inverter) compressor technology.
+              </p>
+              <p>
+                <strong>Duct loss elimination:</strong> Central AC systems lose 20–30% of their cooled air through duct leakage, conduction through duct walls, and poor distribution. A 3-ton central AC at 14 SEER2 effectively delivers only about 10–11 SEER2 of useful cooling to the rooms due to these losses. A mini-split with direct indoor air handlers delivers close to its rated efficiency.
+              </p>
+              <p>
+                <strong>Inverter compressor technology:</strong> Standard central AC systems use single-speed or two-speed compressors that cycle fully on and fully off. Inverter-driven mini-split compressors modulate their output speed continuously to match the exact cooling load. At 60% load, the compressor runs at 60% speed rather than cycling on and off. This reduces electricity consumption and eliminates the temperature swings associated with on/off cycling.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >System</th>
+                      <th >Equivalent Capacity</th>
+                      <th >SEER2 Range</th>
+                      <th >Monthly Cost<br/>at 8 hrs/day, $0.1805/kWh</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Central AC (standard)</td><td >3-ton</td><td >14–18 SEER2</td><td >$111–$86/month</td></tr>
+                    <tr ><td >Central AC (high-efficiency)</td><td >3-ton</td><td >19–21 SEER2</td><td >$78–$74/month</td></tr>
+                    <tr ><td >Mini-split (standard)</td><td >3-zone equiv.</td><td >18–22 SEER2</td><td >$65–$50/month</td></tr>
+                    <tr><td >Mini-split (premium)</td><td >3-zone equiv.</td><td >24–28 SEER2</td><td >$43–$37/month</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                The best-in-class mini-splits from Mitsubishi, Daikin, and Fujitsu reach SEER2 ratings of 24–28+, which represents 60–70% less electricity consumed per BTU compared to a minimum-standard central AC at 14 SEER2. Over a 3-month cooling season in a hot climate, the difference between a 14 SEER2 central system and a 24 SEER2 mini-split for a 2,000 sq ft home is approximately $450–$600 in electricity costs.
+              </p>
+              <p>
+                Mini-splits also function as heat pumps in winter, providing highly efficient heating alongside cooling. This dual functionality — especially in climate zones 2–5 — makes them a strong candidate for whole-home electrification. Explore how mini-splits fit into a complete home energy strategy with our <a href="/home-electrification-planner/">Home Electrification Planner</a>.
+              </p>
+            
+
+            /* Section 5: SEER2 Explained */
+            
+              <h2>SEER2 Explained: How It Affects Your Electric Bill</h2>
+              <p>
+                SEER2 — Seasonal Energy Efficiency Ratio 2 — replaced the original SEER standard on January 1, 2023. The &ldquo;2&rdquo; denotes a new DOE test procedure (M1) that increases external static pressure by five times to better simulate real-world ductwork resistance. This means SEER2 ratings are typically 4–7% lower than the old SEER ratings for identical equipment. A unit rated 15 SEER would score approximately 14.3 SEER2.
+              </p>
+              <p>
+                The DOE mandated new minimum standards effective January 1, 2023: 13.4 SEER2 for the North; 14.3 SEER2 for the Southeast and Southwest for units under 45,000 BTU; 13.8 SEER2 for units 45,000 BTU and above in those regions; and 14.3 SEER2 for heat pumps nationally.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >SEER2 Rating</th>
+                      <th >Classification</th>
+                      <th >kWh/hr (3-ton)</th>
+                      <th >Annual kWh (750 hrs)</th>
+                      <th >Annual Cost<br/>at $0.1805/kWh</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >13.4 SEER2</td><td >DOE minimum (North)</td><td >2.69</td><td >2,015</td><td >$363.71</td></tr>
+                    <tr ><td >14.3 SEER2</td><td >DOE minimum (South)</td><td >2.52</td><td >1,888</td><td >$340.78</td></tr>
+                    <tr ><td >16 SEER2</td><td >Mid-efficiency</td><td >2.25</td><td >1,688</td><td >$304.68</td></tr>
+                    <tr ><td >18 SEER2</td><td >ENERGY STAR typical</td><td >2.00</td><td >1,500</td><td >$270.75</td></tr>
+                    <tr ><td >21 SEER2</td><td >High-efficiency</td><td >1.71</td><td >1,286</td><td >$232.11</td></tr>
+                    <tr><td >24 SEER2</td><td >Premium mini-split</td><td >1.50</td><td >1,125</td><td >$203.06</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                Annual hours assume 750 cooling hours — representative of a moderate climate like Dallas, TX or Atlanta, GA. Hot climates like Miami or Phoenix may see 1,400–1,800 annual cooling hours, multiplying the cost differential between SEER2 ratings proportionally. The savings from upgrading from 14 SEER2 to 21 SEER2 in a hot climate with 1,500 annual cooling hours: approximately $259/year for a 3-ton system at national average electricity rates.
+              </p>
+              <p>
+                Higher SEER2 systems cost more upfront — typically $300–$1,200 more for a 3-ton central unit at 18–21 SEER2 vs. 14 SEER2. At $150–$260/year in operating savings, the payback on the efficiency premium is 2–5 years. After payback, the savings continue for the remaining 12–15 years of the system&rsquo;s life. Calculate total cost of ownership for any AC upgrade with our <a href="/appliance-calculator/">Appliance Cost Calculator</a>.
+              </p>
+            
+
+            /* Section 6: Monthly Cost by State */
+            
+              <h2>Monthly AC Cost by State and Region</h2>
+              <p>
+                Your monthly AC bill depends on two independent variables that vary dramatically by location: electricity rate and cooling hours. A homeowner in Louisiana pays $0.124/kWh (among the cheapest in the U.S.) but may run their AC 2,000+ hours per summer. A homeowner in Hawaii pays $0.42/kWh but may only need light cooling. Here is the monthly cost for a 3-ton, 14 SEER2 central AC running 10 hours/day:
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >State / Region</th>
+                      <th >Avg Rate/kWh<br/>(March 2026)</th>
+                      <th >Monthly Cost<br/>3-ton, 14 SEER2, 10 hrs</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Hawaii</td><td >$0.42</td><td >$323/month</td></tr>
+                    <tr ><td >New England (avg)</td><td >$0.30</td><td >$231/month</td></tr>
+                    <tr ><td >California (avg)</td><td >$0.28</td><td >$215/month</td></tr>
+                    <tr ><td >National Average</td><td >$0.1805</td><td >$139/month</td></tr>
+                    <tr ><td >Texas (avg)</td><td >$0.162</td><td >$124/month</td></tr>
+                    <tr ><td >Florida (avg)</td><td >$0.152</td><td >$117/month</td></tr>
+                    <tr ><td >Louisiana</td><td >$0.124</td><td >$95/month</td></tr>
+                    <tr><td >North Dakota</td><td >$0.110</td><td >$85/month</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                Electricity rate data from Electric Choice and EIA (March 2026). These are the monthly costs at peak summer usage. In states like Florida, Texas, and Louisiana, AC runs 8–12 hours/day for 4–6 months of the year, meaning annual cooling costs of $950–$2,800 depending on system size and efficiency.
+              </p>
+              <p>
+                High electricity rate states like California and New England have the strongest financial case for upgrading to high-efficiency systems, since every percentage point of efficiency improvement translates to larger dollar savings at $0.28–$0.30/kWh vs $0.12/kWh. Calculate your specific state cost with our <a href="/solar-savings/">Solar Savings calculator</a> — solar can offset AC electricity costs significantly in sunny states.
+              </p>
+            
+
+            /* Section 7: Full Comparison Table */
+            
+              <h2>Full AC Type Comparison</h2>
+              <p>
+                Here is a consolidated comparison of all AC types across the metrics that matter for purchasing decisions:
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >AC Type</th>
+                      <th >Avg kWh/hr</th>
+                      <th >Monthly Cost<br/>8 hrs/day, avg rate</th>
+                      <th >Installation Cost</th>
+                      <th >Efficiency vs Central</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Window AC (8,000 BTU)</td><td >0.80</td><td >$35</td><td >$150–$600</td><td >Comparable</td></tr>
+                    <tr ><td >Portable AC (8,000 SACC)</td><td >1.10–1.40</td><td >$48–$61</td><td >$300–$700</td><td >30–75% worse</td></tr>
+                    <tr ><td >Central AC (3-ton, 14 SEER2)</td><td >2.57</td><td >$111</td><td >$4,000–$8,000</td><td >Baseline</td></tr>
+                    <tr ><td >Central AC (3-ton, 21 SEER2)</td><td >1.71</td><td >$74</td><td >$5,000–$9,500</td><td >33% better</td></tr>
+                    <tr ><td >Mini-split (3-zone, 18 SEER2)</td><td >~1.50</td><td >$65</td><td >$8,000–$15,000</td><td >40–50% better</td></tr>
+                    <tr><td >Mini-split (premium, 24 SEER2)</td><td >~1.00</td><td >$43</td><td >$10,000–$20,000</td><td >60–65% better</td></tr>
+                  </tbody>
+                </table>
+              
+            
+
+            /* Section 8: Reduce Costs */
+            
+              <h2>How to Reduce AC Electricity Use</h2>
+              <p>
+                The DOE data and independent studies point to a consistent set of high-impact strategies. Here they are ranked by typical electricity savings:
+              </p>
+
+              
+                
+                  <h3>1. Upgrade to a higher SEER2 system (33–65% savings)</h3>
+                  <p>Replacing a 14 SEER2 central AC with a 21 SEER2 model cuts electricity use by 33% — approximately $259–$580/year depending on climate and usage. The payback period on the efficiency premium is typically 3–7 years, after which the savings accrue pure for the remaining system life.</p>
+                
+                
+                  <h3>2. Smart thermostat setback (8–15% savings)</h3>
+                  <p>The DOE states that setting back your thermostat 7–10&deg;F for 8 hours per day saves up to 10% per year on heating and cooling. Ecobee customers report 23–26% savings on HVAC through occupancy-based scheduling. Google Nest customers report 15% cooling savings and approximately $140/year combined HVAC savings across two independent studies.</p>
+                
+                
+                  <h3>3. Thermostat temperature adjustment (~3% per degree)</h3>
+                  <p>Every degree you raise the cooling setpoint above 72&deg;F reduces electricity consumption by approximately 3%. Setting 78&deg;F instead of 72&deg;F saves roughly 18% on cooling costs — while still maintaining comfort. The ENERGY STAR recommended setpoint is 78&deg;F when home and 85&deg;F when away.</p>
+                
+                
+                  <h3>4. Ceiling fans (allows 4°F higher thermostat; ~12% savings)</h3>
+                  <p>Ceiling fans create a wind-chill effect that makes 78&deg;F feel like 74&deg;F. You can raise the AC thermostat by 4&deg;F and maintain equivalent comfort — saving approximately 12% on cooling costs. A ceiling fan uses 15–75 watts, far less than the 400–2,500 watts you would otherwise need the AC to consume. Turn fans off in unoccupied rooms; they cool people, not spaces.</p>
+                
+                
+                  <h3>5. Air filter maintenance (up to 15% savings)</h3>
+                  <p>A clogged air filter restricts airflow, causing the AC to work harder to move the same volume of air. The DOE estimates dirty filters can increase AC energy consumption by up to 15%. Replace standard 1-inch filters monthly during peak cooling season; replace thicker media filters (4–5 inch) every 6–12 months. This is the highest-ROI maintenance action available — filters cost $5–$20, and the savings are immediate.</p>
+                
+              
+
+              <p>
+                On the structural side: adding attic insulation is among the highest-ROI improvements for reducing AC load. A properly insulated attic (R-38 to R-60 depending on climate zone) can reduce cooling load by 10–15%. Sealing duct leaks can recover 20–30% of the cooled air currently lost before it reaches your living spaces. Learn more in our <a href="/blog/home-insulation-guide/">Complete Home Insulation Guide</a>.
+              </p>
+            
+
+            /* FAQ Section */
+            
+              <h2>Frequently Asked Questions</h2>
+              
+                [
+                  
+                    q: 'How many kWh does a central AC use per month?',
+                    a: 'A central AC uses 1,000–1,800 kWh per month during peak cooling season, depending on size and efficiency. A 3-ton, 14 SEER2 unit running 8 hours/day uses approximately 617 kWh/month — about $111 at the 2026 national average of $0.1805/kWh. A high-efficiency 3-ton at 21 SEER2 uses about 411 kWh/month, cutting the bill to $74.'
+                  ,
+                  
+                    q: 'How much does it cost to run a window AC per month?',
+                    a: 'A 5,000 BTU window AC running 8 hours/day costs about $21.66/month at the national average electricity rate. An 8,000 BTU unit costs ~$34.66/month and a 12,000 BTU unit costs ~$51.98/month. These assume a 10 EER rating and 100% duty cycle — real costs are typically 20–40% lower depending on climate and runtime.'
+                  ,
+                  
+                    q: 'Is a portable AC more expensive to run than a window AC?',
+                    a: 'Yes. Portable ACs are approximately 38–75% more expensive to run per BTU than window units. A portable AC exhausts warm air outdoors but draws replacement unconditioned air into the room, forcing the unit to cool that extra air. Dual-hose portables reduce but do not eliminate this penalty. Use a window AC when possible; the annual savings can be $80–$200.'
+                  ,
+                  
+                    q: 'What is SEER2 and why does it matter?',
+                    a: 'SEER2 is the 2023 DOE AC efficiency standard — higher is more efficient. The minimum SEER2 is 13.4 (North) and 14.3 (South). A 3-ton unit at 21 SEER2 uses 33% less electricity than the same capacity at 14 SEER2, saving approximately $37/month. Premium mini-splits reach SEER2 24–28, using 60–65% less electricity than minimum-standard central AC.'
+                  ,
+                  
+                    q: 'How much electricity does a mini-split use vs central AC?',
+                    a: 'Mini-splits typically use 30–50% less electricity than central AC. The primary reasons are no duct losses (which waste 20–30% of central AC energy) and inverter-driven variable-speed compressors. A premium 3-zone mini-split costs approximately $43/month vs $111/month for a 3-ton 14 SEER2 central system at 8 hrs/day — a 61% reduction.'
+                  ,
+                  
+                    q: 'How can I reduce my AC electricity use?',
+                    a: 'The most impactful strategies by savings: (1) Set thermostat to 78°F when home — saves ~18% vs 72°F setpoint; (2) Program setback 7–10°F for 8 hrs/day — saves up to 10% annually per DOE; (3) Use ceiling fans to allow 4°F higher thermostat — saves ~12%; (4) Clean filters monthly — saves up to 15%; (5) Seal duct leaks — recovers 20–30% of lost air.'
+                  ,
+                  
+                    q: 'How many kWh does a 3-ton AC use per hour?',
+                    a: 'A 3-ton (36,000 BTU) central AC uses 1.44–2.57 kWh/hour depending on SEER2 rating. At minimum standard 14 SEER2 it uses 2.57 kWh/hour; at 21 SEER2 it uses 1.44 kWh/hour. At the 2026 national average of $0.1805/kWh, that is $0.26–$0.46 per hour of runtime.'
+                  ,
+                  
+                    q: 'Does AC use a lot of electricity?',
+                    a: 'Yes — AC is one of the largest home energy consumers. Per EIA\'s 2020 RECS survey, AC accounts for 19% of total U.S. residential electricity — 254 billion kWh annually across all homes. In the South and Southwest, cooling can represent 30–50% of a home\'s electricity bill during summer months.'
+                  ,
+                ].map((item, i) => (
+                  
+                    <h3>item.q</h3>
+                    <p>item.a</p>
+                  
+                ))
+              
+            
+
+            /* CTA */
+            
+              <h2>Calculate Your AC&rsquo;s Exact Monthly Cost</h2>
+              <p>
+                Enter your AC unit size, SEER2 rating, local electricity rate, and daily usage to get a precise monthly and annual cost — plus savings estimates for upgrading.
+              </p>
+              
+                <a href="/appliance-calculator/">
+                  Appliance Cost Calculator &rarr;
+                </a>
+                <a href="/electricity-cost-calculator/">
+                  Electricity Cost Calculator
+                </a>
+              
+            
+
+            /* Related Articles */
+            
+              <h2>Related Articles</h2>
+              
+                <a href="/blog/heat-pump-vs-furnace/">
+                  HVAC
+                  <h3>Heat Pump vs Furnace: Which Is Cheaper in 2026?</h3>
+                  <p>A heat pump replaces both your AC and furnace — see the cost comparison.</p>
+                </a>
+                <a href="/blog/smart-thermostat-savings/">
+                  HVAC
+                  <h3>Smart Thermostat Savings: Real Data &amp; ROI</h3>
+                  <p>How Nest, Ecobee, and other smart thermostats reduce AC bills by 8–26%.</p>
+                </a>
+                <a href="/blog/home-insulation-guide/">
+                  Energy
+                  <h3>Home Insulation Guide: R-Values &amp; Savings</h3>
+                  <p>Reduce your AC load by 10–15% with proper attic and wall insulation.</p>
+                </a>
+                <a href="/blog/energy-efficient-appliances-guide/">
+                  Appliances
+                  <h3>Most Energy-Efficient Appliances in 2026</h3>
+                  <p>Top picks for every major appliance category with payback period data.</p>
+                </a>
+              
+            
+          
+        
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.jouleio.com/blog/how-much-electricity-does-ac-use/">JouleIO</a>.
+      Explore more free tools at <a href="https://www.jouleio.com/">jouleio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.jouleio.com/">JouleIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
