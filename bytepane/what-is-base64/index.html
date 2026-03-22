@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Is Base64 Encoding? How It Works &amp;amp; When to Use It - BytePane</title>
+  <meta name="description" content="Base64 explained from first principles: the 64-character alphabet, the 3-byte→4-char algorithm, RFC 4648 variants, real use cases in JWTs, email, and data URLs — with code in JS, Python, and Go.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/what-is-base64/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; What Is Base64 Encoding? How It Works &amp;amp; When to Use It
+  </nav>
+
+  <article>
+    <h1>What Is Base64 Encoding? How It Works &amp;amp; When to Use It</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/what-is-base64/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'What Is Base64 Encoding? How It Works & When to Use It',
+            description: 'Base64 explained from first principles: the 64-character alphabet, the 3-byte→4-char algorithm, RFC 4648 variants, real use cases in JWTs, email, and data URLs — with code in JS, Python, and Go.',
+            datePublished: '2026-03-20',
+            dateModified: '2026-03-20',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/what-is-base64/',
+            mainEntityOfPage: 'https://bytepane.com/blog/what-is-base64/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'What Is Base64 Encoding?' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'Is Base64 a form of encryption?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'No. Base64 is encoding, not encryption. It is fully reversible without any key. Anyone who receives a Base64 string can decode it instantly. Never use Base64 to protect sensitive data — use proper encryption like AES-256 instead.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Why does Base64 increase file size by 33%?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Base64 encodes every 3 bytes (24 bits) of input into 4 ASCII characters (4 × 6 bits = 24 bits). The output is 4/3 the size of the input, a 33.3% increase. MIME line-break padding can push overhead to roughly 37% in email contexts.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between Base64 and Base64url?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Standard Base64 uses + and / characters that are percent-encoded in URLs, breaking them. Base64url (RFC 4648 §5) replaces + with - and / with _, making it safe for URLs and filenames without percent-encoding. JWTs use Base64url.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'When should I use Base64 to embed images in CSS?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Only for small assets under roughly 5–10 KB. Embedding larger images as Base64 data URLs bloats your CSS file, prevents browser caching of the image independently, and increases parse time. Above 10 KB, serve the image as a separate file.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Can Base64 encode any type of data?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Yes. Base64 operates on raw bytes, so it can encode any binary data: images, PDFs, executables, encrypted ciphertext, audio files, or arbitrary byte streams. The output is always printable ASCII, regardless of what the input is.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Why does btoa() throw in JavaScript for Unicode strings?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'btoa() only accepts Latin-1 characters (code points 0–255). Strings with characters above U+00FF — such as emoji or CJK characters — cause a "InvalidCharacterError". The fix is to encode the string to UTF-8 bytes first using TextEncoder, then pass the bytes to btoa().',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        What Is Base64 Encoding?
+      
+
+      /* Article Header */
+      
+        <h2>
+          What Is Base64 Encoding? How It Works &amp; When to Use It
+        </h2>
+        
+          Encoding
+          <time dateTime="2026-03-20">March 20, 2026</time>
+          15 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>&#x2022;Base64 is <strong>encoding, not encryption</strong> — any Base64 string can be decoded by anyone without a key.</li>
+            <li>&#x2022;It converts arbitrary binary data to printable ASCII by mapping every 3 input bytes to 4 output characters, inflating size by exactly <strong>33.3%</strong>.</li>
+            <li>&#x2022;Three standardized variants exist: standard Base64, URL-safe <strong>Base64url</strong> (used in JWTs), and MIME Base64 (used in email attachments).</li>
+            <li>&#x2022;The right use cases: transmitting binary data over text-only channels (SMTP, JSON, HTTP Basic Auth), <strong>not</strong> general-purpose data compression or security.</li>
+            <li>&#x2022;Every major language ships built-in Base64 support — but Unicode handling in JavaScript&apos;s <code >btoa()</code> requires extra care.</li>
+          </ul>
+        
+
+        /* Myth-busting opener */
+        
+          <h2>Let&apos;s Clear Up the Biggest Misconception First</h2>
+          <p>
+            A surprising number of developers — including experienced ones — treat Base64 as a form of light security. You&apos;ll see it in API responses where someone &quot;hid&quot; a password, or in localStorage where a token was &quot;encoded for safety.&quot; This is a meaningful security mistake.
+          </p>
+          <p>
+            Base64 is <strong>not encryption</strong>. It requires no key. It has no secret. Any string encoded with Base64 can be decoded by anyone in under a second using any Base64 decoder on the planet — including the one built into every browser&apos;s developer console:
+          </p>
+          <p>
+            <code >`// "Hidden" password? Absolutely not.
+atob("c3VwZXJzZWNyZXRwYXNzd29yZA==")
+// => "supersecretpassword"
+
+// Anyone can do this. There is no key.`</code>
+          </pre>
+          <p >
+            With that settled: Base64 is a genuinely useful encoding scheme for specific, legitimate purposes. Understanding what it actually does — and what it does not do — is fundamental to working with APIs, authentication tokens, email, and binary data in web applications. To experiment with encoding and decoding, use our <a href="/base64/">Base64 Encoder/Decoder</a> tool.
+          </p>
+        
+
+        /* What is Base64 */
+        
+          <h2>What Is Base64? The Core Concept</h2>
+          <p>
+            Base64 is a binary-to-text encoding scheme that represents binary data using a set of 64 printable ASCII characters. The name comes directly from the number of characters in that alphabet: 64.
+          </p>
+          <p>
+            The problem Base64 solves is simple: many communication protocols and storage systems were designed to handle text — specifically printable ASCII characters (roughly the keyboard characters of a 1970s teletype machine). When you need to transmit binary data — an image, a PDF, an executable — across one of these text-only channels, you need a way to represent those arbitrary bytes using only printable characters.
+          </p>
+          <p>
+            The 64 characters in the standard Base64 alphabet are:
+          </p>
+          <p>
+            <code >`// Standard Base64 Alphabet (RFC 4648 Table 1)
+// Values 0-25:  A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+// Values 26-51: a b c d e f g h i j k l m n o p q r s t u v w x y z
+// Values 52-61: 0 1 2 3 4 5 6 7 8 9
+// Value 62:     +
+// Value 63:     /
+// Padding:      = (used to pad output to a multiple of 4 characters)`</code>
+          </pre>
+          <p >
+            Why 64? Because 64 is 2<sup>6</sup> — each character represents exactly 6 bits of data. This clean power-of-two relationship is what makes Base64 efficient and unambiguous to encode and decode.
+          </p>
+          <p>
+            The earliest standardized version appeared in <strong>RFC 989</strong>, published in February 1987 by John Linn of BBN Corp, for Privacy Enhanced Mail (PEM). The current normative specification is <strong>RFC 4648</strong> (published October 2006 by S. Josefsson), which defines standard Base64, Base64url, Base32, and Base16 encodings. RFC 4648 superseded the earlier RFC 3548.
+          </p>
+        
+
+        /* The Algorithm */
+        
+          <h2>How the Base64 Algorithm Works</h2>
+          <p>
+            The algorithm processes input in groups of 3 bytes (24 bits) at a time, splitting them into four 6-bit groups, each mapped to a Base64 character. Walk through the encoding of the string &quot;Man&quot; to see exactly how:
+          </p>
+
+          <h3>Step 1: Convert input bytes to binary</h3>
+          <p>
+            <code >`// Input: "Man" (3 bytes)
+// ASCII values: M=77, a=97, n=110
+
+// Binary representation:
+M  =  77  =  0100 1101
+a  =  97  =  0110 0001
+n  = 110  =  0110 1110
+
+// Concatenated 24 bits:
+010011010110000101101110`</code>
+          </pre>
+
+          <h3>Step 2: Split into four 6-bit groups</h3>
+          <pre >
+            <code >`// Split 24 bits into 4 × 6-bit groups:
+010011  010110  000101  101110
+  19      22       5      46
+
+// Look up in Base64 alphabet:
+// 19 = T
+// 22 = W
+//  5 = F
+// 46 = u
+
+// Result: "TWFu"
+btoa("Man") // => "TWFu"`</code>
+          </pre>
+
+          <h3>Step 3: Handle padding when input length isn&apos;t a multiple of 3</h3>
+          <p >
+            When input bytes don&apos;t divide evenly into groups of three, Base64 pads the output with <code >=</code> characters:
+          </p>
+          <p>
+            <code >`// 1 remaining byte → 2 Base64 chars + "=="
+btoa("M")     // => "TQ=="
+
+// 2 remaining bytes → 3 Base64 chars + "="
+btoa("Ma")    // => "TWE="
+
+// 3 bytes → 4 Base64 chars, no padding needed
+btoa("Man")   // => "TWFu"
+
+// For a full string:
+btoa("Hello") // => "SGVsbG8="
+// H=72, e=101, l=108, l=108, o=111
+// Groups: "Hel" → "SGVs", "lo" → "bG8="  (1 pad char)`</code>
+          </pre>
+
+          <h3>The size math</h3>
+          <p >
+            Every 3 input bytes produce exactly 4 output characters. Output length = ⌈input_bytes / 3⌉ × 4. This always results in <strong>33.3% size inflation</strong> (plus padding bytes). For a 1 MB binary file, Base64 output is approximately 1.37 MB. Per the <strong>MIME specification (RFC 2045)</strong>, Base64-encoded content in email must also insert a CRLF line break every 76 characters, adding another ~3–4% overhead in email contexts.
+          </p>
+        
+
+        /* Variants */
+        
+          <h2>Base64 Variants: Standard, Base64url, and MIME</h2>
+          <p>
+            RFC 4648 defines multiple Base64 alphabets for different environments. They are identical except for two characters:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Variant</th>
+                  <th >Char 62</th>
+                  <th >Char 63</th>
+                  <th >Padding</th>
+                  <th >Line breaks</th>
+                  <th >Used in</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Standard</td>
+                  <td >+</td>
+                  <td >/</td>
+                  <td >= (required)</td>
+                  <td >No</td>
+                  <td >Data URLs, binary blobs</td>
+                </tr>
+                <tr >
+                  <td >Base64url</td>
+                  <td >-</td>
+                  <td >_</td>
+                  <td >= (optional)</td>
+                  <td >No</td>
+                  <td >JWTs, URL params, filenames</td>
+                </tr>
+                <tr >
+                  <td >MIME Base64</td>
+                  <td >+</td>
+                  <td >/</td>
+                  <td >= (required)</td>
+                  <td >CRLF every 76 chars</td>
+                  <td >Email attachments (SMTP)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The <strong>Base64url</strong> variant (RFC 4648 §5) exists because standard Base64&apos;s <code >+</code> and <code >/</code> characters are special in URLs — they need percent-encoding (<code >%2B</code> and <code >%2F</code>), which breaks query strings and path segments. JSON Web Tokens (JWTs) use Base64url for all three of their dot-separated sections. The <code >=</code> padding is also typically omitted in Base64url to keep JWTs slightly shorter. You can inspect the Base64url-encoded sections of any JWT with our <a href="/jwt-decoder/">JWT Decoder</a>.
+          </p>
+          <p>
+            <strong>MIME Base64</strong>, specified in RFC 2045 (1996), adds mandatory line breaks every 76 characters. This limit traces back to constraints in SMTP — the Simple Mail Transfer Protocol — which was defined in an era of line-buffered communications. When your email client attaches a 2 MB PDF, it Base64-encodes the raw bytes and inserts a CRLF every 76 characters before embedding the result in the message body.
+          </p>
+        
+
+        /* Use Cases */
+        
+          <h2>Real-World Use Cases for Base64</h2>
+
+          <h3>1. Email Attachments (SMTP)</h3>
+          <p>
+            SMTP was designed in 1982 for 7-bit ASCII text. Binary files — images, PDFs, executables — cannot pass through SMTP directly without corruption. Per <strong>RFC 2045 (MIME Part One)</strong>, Base64 is the standard Content-Transfer-Encoding for binary email attachments. Every time you send a file via email, your email client Base64-encodes it first.
+          </p>
+
+          <h3>2. Data URLs in HTML and CSS</h3>
+          <p>
+            The <code >data:</code> URI scheme (defined in RFC 2397) lets you embed file content directly in HTML or CSS using Base64. This eliminates HTTP requests for small assets:
+          </p>
+          <p>
+            <code >`<!-- Embed a tiny icon directly in HTML — no HTTP request -->
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..." alt="icon" />
+
+/* Or in CSS: */
+.icon 
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxu...');
+`</code>
+          </pre>
+          <p >
+            This pattern is worth using for assets under roughly 5–10 KB. Above that, the 33% size overhead and loss of independent browser caching outweigh the benefit of saving an HTTP request.
+          </p>
+
+          <h3>3. HTTP Basic Authentication</h3>
+          <p>
+            RFC 7617 specifies HTTP Basic Authentication as a Base64-encoded <code >username:password</code> string in the Authorization header. This is purely a text-encoding convenience for the HTTP protocol — it provides <strong>zero security</strong> on its own. Basic Auth must always be used over HTTPS.
+          </p>
+          <p>
+            <code >`// Constructing a Basic Auth header:
+const credentials = btoa("alice:mypassword123")
+// => "YWxpY2U6bXlwYXNzd29yZDEyMw=="
+
+fetch("https://api.example.com/resource", 
+  headers: 
+    "Authorization": \`Basic \$credentials\`
+  
+)
+
+// The server decodes:
+// atob("YWxpY2U6bXlwYXNzd29yZDEyMw==") => "alice:mypassword123"
+// Split on first ":" to get username and password`</code>
+          </pre>
+
+          <h3>4. JSON Web Tokens (JWTs)</h3>
+          <p >
+            Every JWT consists of three Base64url-encoded sections separated by dots: header, payload, and signature. Base64url makes JWTs safe to include in URL parameters, HTTP headers, and cookie values without additional escaping. The header and payload are just encoded JSON objects — not encrypted — which is why you should never include sensitive data in a JWT payload. Our <a href="/jwt-decoder/">JWT Decoder</a> shows this in action.
+          </p>
+
+          <h3>5. Binary Data in JSON APIs</h3>
+          <p>
+            JSON has no binary data type. When an API needs to transmit binary content — a thumbnail, a cryptographic key, a signature — Base64 encoding the bytes and including the resulting string in a JSON field is the standard solution:
+          </p>
+          <p>
+            <code >`// API response with a Base64-encoded thumbnail
+
+  "id": "user_42",
+  "name": "Alice",
+  "avatarData": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQ...",
+  "avatarMime": "image/png"
+
+// Decode and display in browser:
+const img = document.createElement('img')
+img.src = \`data:\$response.avatarMime;base64,\$response.avatarData\``</code>
+          </pre>
+
+          <h3>6. Kubernetes Secrets and Config Files</h3>
+          <p >
+            Kubernetes stores Secret values as Base64 in YAML manifests. This is explicitly <strong>not security</strong> — the Kubernetes documentation itself states that the Base64 encoding is merely for safe YAML representation of arbitrary byte strings, not for protecting the values. Actual encryption of Secret data at rest requires etcd encryption configuration.
+          </p>
+          <p>
+            <code >`# Kubernetes Secret — values are Base64-encoded, NOT encrypted
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+data:
+  username: YWxpY2U=          # echo -n "alice" | base64
+  password: bXlwYXNzd29yZA==  # echo -n "mypassword" | base64
+
+# Anyone with kubectl get secret can decode these instantly:
+# kubectl get secret my-secret -o jsonpath='.data.username' | base64 -d`</code>
+          </pre>
+        
+
+        /* Code in multiple languages */
+        
+          <h2>Base64 Encoding in Every Major Language</h2>
+
+          <h3>JavaScript / Browser</h3>
+          <pre >
+            <code >`// Browser built-ins: btoa() and atob()
+const encoded = btoa("Hello, World!")  // => "SGVsbG8sIFdvcmxkIQ=="
+const decoded = atob("SGVsbG8sIFdvcmxkIQ==")  // => "Hello, World!"
+
+// ⚠️ btoa() fails for non-Latin-1 characters (emoji, CJK, etc.)
+// Fix: encode to UTF-8 bytes first
+function btoaUnicode(str: string): string 
+  const bytes = new TextEncoder().encode(str)
+  const binStr = String.fromCharCode(...bytes)
+  return btoa(binStr)
+
+function atobUnicode(b64: string): string 
+  const binStr = atob(b64)
+  const bytes = Uint8Array.from(binStr, c => c.charCodeAt(0))
+  return new TextDecoder().decode(bytes)
+
+btoaUnicode("Hello 🌍")  // Works correctly`</code>
+          </pre>
+
+          <h3>Node.js</h3>
+          <pre >
+            <code >`// Node.js: use Buffer (handles arbitrary bytes cleanly)
+const encoded = Buffer.from("Hello, World!").toString("base64")
+// => "SGVsbG8sIFdvcmxkIQ=="
+
+const decoded = Buffer.from("SGVsbG8sIFdvcmxkIQ==", "base64").toString("utf8")
+// => "Hello, World!"
+
+// Base64url (for JWTs, URLs):
+const urlSafe = Buffer.from("Hello, World!").toString("base64url")
+// => "SGVsbG8sIFdvcmxkIQ" (no padding, - and _ instead of + and /)
+
+// Encoding a binary file:
+
+const imageBytes = readFileSync("./photo.jpg")
+const imageB64 = imageBytes.toString("base64")
+const dataUrl = \`data:image/jpeg;base64,\$imageB64\``</code>
+          </pre>
+
+          <h3>Python</h3>
+          <pre >
+            <code >`import base64
+
+# Standard Base64
+encoded = base64.b64encode(b"Hello, World!")
+# => b"SGVsbG8sIFdvcmxkIQ=="
+
+decoded = base64.b64decode(b"SGVsbG8sIFdvcmxkIQ==")
+# => b"Hello, World!"
+
+# Base64url (URL-safe variant, no padding by default)
+url_safe = base64.urlsafe_b64encode(b"Hello, World!")
+# => b"SGVsbG8sIFdvcmxkIQ=="  (same here, but + and / are replaced)
+
+# Stripping padding for use in JWTs:
+no_pad = url_safe.rstrip(b"=")
+
+# Working with strings (encode to bytes first):
+text = "Hello 🌍"
+encoded = base64.b64encode(text.encode("utf-8")).decode("ascii")`</code>
+          </pre>
+
+          <h3>Go</h3>
+          <pre >
+            <code >`package main
+
+    "encoding/base64"
+    "fmt"
+)
+
+func main() 
+    input := []byte("Hello, World!")
+
+    // Standard encoding
+    encoded := base64.StdEncoding.EncodeToString(input)
+    fmt.Println(encoded) // SGVsbG8sIFdvcmxkIQ==
+
+    decoded, err := base64.StdEncoding.DecodeString(encoded)
+    if err != nil 
+        panic(err)
+    
+    fmt.Println(string(decoded)) // Hello, World!
+
+    // URL-safe encoding (for JWTs, URLs)
+    urlEncoded := base64.URLEncoding.EncodeToString(input)
+    // Uses - and _ instead of + and /
+
+    // URL-safe without padding (most JWT libraries use this)
+    rawEncoded := base64.RawURLEncoding.EncodeToString(input)
+    fmt.Println(rawEncoded) // SGVsbG8sIFdvcmxkIQ  (no =)
+`</code>
+          </pre>
+        
+
+        /* Performance */
+        
+          <h2>Performance Considerations</h2>
+          <p >
+            Base64&apos;s 33% overhead is predictable and constant, but it compounds with other costs in high-traffic systems:
+          </p>
+          <ul>
+            <li><strong>Network bandwidth:</strong> A 10 MB image embedded as a Base64 data URL in HTML becomes ~13.7 MB over the wire. At scale, this adds up. Serve images as separate assets whenever they exceed 10 KB.</li>
+            <li><strong>CSS parse time:</strong> Base64 data URLs embedded in CSS files are parsed synchronously on the main thread. Large embedded images can block rendering.</li>
+            <li><strong>Memory:</strong> Base64 decoding allocates new byte arrays. In hot paths processing many requests, the GC pressure from repeated decode allocations is measurable. Reuse buffers where possible.</li>
+            <li><strong>CPU:</strong> The encoding/decoding algorithm is computationally trivial — modern CPUs process hundreds of MB/s. CPU is rarely the bottleneck.</li>
+          </ul>
+          <p>
+            The dominant real-world trade-off is <strong>bandwidth vs. HTTP requests</strong>. Base64 data URLs eliminate a round-trip for each asset but pay a bandwidth penalty every time the parent document is fetched. For SVG icons under 1 KB, inlining as Base64 (or as raw SVG) is typically a net win. For anything larger, a separate file with proper cache headers wins on repeat loads.
+          </p>
+        
+
+        /* When NOT to use */
+        
+          <h2>When Not to Use Base64</h2>
+          <p>
+            Base64 is often misapplied. Here are the patterns to avoid:
+          </p>
+          <ul>
+            <li><strong>Not for security:</strong> As established, Base64 provides no confidentiality. If data is sensitive, encrypt it with AES-GCM or similar. Base64 is transparent encoding.</li>
+            <li><strong>Not for compression:</strong> Base64 makes data larger, never smaller. If you want to reduce payload size, use gzip or Brotli compression.</li>
+            <li><strong>Not for hashing:</strong> People sometimes Base64-encode password hashes &quot;for storage.&quot; Hash the password with bcrypt or Argon2id. The output of those functions is already safe to store as-is.</li>
+            <li><strong>Not as a substitute for binary protocols:</strong> If you control both ends of a communication channel and can speak binary (e.g., WebSocket binary frames, Protocol Buffers, MessagePack), use that. Base64 overhead is only justified when the channel is text-only.</li>
+          </ul>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>Is Base64 a form of encryption?</h3>
+              <p>
+                No. Base64 is encoding, not encryption. It is fully reversible without any key. Anyone who receives a Base64 string can decode it instantly. Never use Base64 to protect sensitive data — use proper encryption like AES-256 instead. The confusion arises because the output looks scrambled, but it carries zero cryptographic protection.
+              </p>
+            
+            
+              <h3>Why does Base64 increase file size by 33%?</h3>
+              <p>
+                Base64 encodes every 3 bytes (24 bits) of input into 4 ASCII characters (4 × 6 bits = 24 bits). The output is 4/3 the size of the input — a 33.3% increase. MIME line-break padding in email contexts can push the overhead to roughly 37% of the original binary size.
+              </p>
+            
+            
+              <h3>What is the difference between Base64 and Base64url?</h3>
+              <p>
+                Standard Base64 uses <code >+</code> and <code >/</code> characters that are percent-encoded in URLs, breaking them. Base64url (RFC 4648 §5) replaces <code >+</code> with <code >-</code> and <code >/</code> with <code >_</code>, making it safe for URLs and filenames. JWTs use Base64url throughout.
+              </p>
+            
+            
+              <h3>When should I use Base64 to embed images in CSS?</h3>
+              <p>
+                Only for small assets under roughly 5–10 KB. Embedding larger images as Base64 data URLs bloats your CSS file, prevents browser caching of the image independently, and increases CSS parse time. Above 10 KB, serve the image as a separate file with appropriate cache headers.
+              </p>
+            
+            
+              <h3>Why does btoa() throw in JavaScript for Unicode strings?</h3>
+              <p>
+                <code >btoa()</code> only accepts Latin-1 characters (code points 0–255). Strings with characters above U+00FF — such as emoji or CJK characters — cause an &quot;InvalidCharacterError&quot;. The fix is to encode the string to UTF-8 bytes first using <code >TextEncoder</code>, then pass the bytes to <code >btoa()</code>.
+              </p>
+            
+            
+              <h3>Can Base64 encode any type of data?</h3>
+              <p>
+                Yes. Base64 operates on raw bytes, so it can encode any binary data: images, PDFs, executables, encrypted ciphertext, audio files, or arbitrary byte streams. The output is always printable ASCII, regardless of what the input is.
+              </p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>Encode and Decode Base64 Online</h2>
+          <p>
+            Put the theory to practice. Our Base64 tool processes data client-side — nothing is sent to a server — and supports standard Base64, Base64url, and binary file input.
+          </p>
+          <a href="/base64/">
+            Open Base64 Encoder/Decoder &rarr;
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/what-is-base64/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
