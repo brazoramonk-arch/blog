@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Generator: Create Strong Random Passwords Online - BytePane</title>
+  <meta name="description" content="How password generators work under the hood, what entropy actually means, and why length beats complexity every time -- with NIST SP 800-63B explained.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/password-generator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Password Generator: Create Strong Random Passwords Online
+  </nav>
+
+  <article>
+    <h1>Password Generator: Create Strong Random Passwords Online</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/password-generator/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Password Generator: Create Strong Random Passwords Online',
+            description: 'How password generators work under the hood, what entropy actually means, and why length beats complexity every time -- with NIST SP 800-63B explained.',
+            datePublished: '2026-03-21',
+            dateModified: '2026-03-21',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/password-generator/',
+            mainEntityOfPage: 'https://bytepane.com/blog/password-generator/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Password Generator Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'How long should a randomly generated password be?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'NIST SP 800-63B sets a minimum of 8 characters but strongly encourages longer passwords. CISA recommends at least 16 characters for general accounts. For high-value targets -- password manager master passwords, SSH key passphrases, root accounts -- use 20+ characters or a 6-word Diceware passphrase (~85 bits of entropy). Length matters far more than complexity.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What makes a password generator truly random?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'A secure generator must use a cryptographically secure pseudorandom number generator (CSPRNG) -- not Math.random() in JavaScript or random.random() in Python. In browsers, the Web Crypto API\'s crypto.getRandomValues() is the correct source. In Node.js, use crypto.randomBytes(). In Python, use secrets.token_urlsafe(). These pull entropy from the OS kernel\'s entropy pool (/dev/urandom on Linux), which is seeded from hardware events.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Is it safe to generate passwords online?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Yes, if the generator runs entirely in your browser with no server-side component. Client-side generators using the Web Crypto API never transmit your password anywhere -- generation happens in JavaScript in your browser tab. Avoid any password generator that makes a network request to produce results. You can verify browser-side generators by checking source code or disconnecting from the internet before generating.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is password entropy and why does it matter?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Entropy (measured in bits) quantifies how unpredictable a password is. A password from an alphabet of N characters with length L has log2(N^L) bits of entropy. A 16-character password using lowercase + uppercase + digits + 32 symbols (95 total characters) has log2(95^16) ≈ 105 bits. At 10 billion guesses per second, exhausting 105 bits would take longer than the age of the universe. 80 bits is considered the modern minimum for sensitive accounts.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Should I use a passphrase instead of a random character password?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Both are secure when done correctly. A 5-word Diceware passphrase offers ~64 bits of entropy; 6 words gives ~85 bits -- more than a typical 12-character random password. Passphrases are easier to type and remember, making them better for master passwords, SSH passphrases, and anything you type by hand. Random character passwords are better where you always paste or autofill and maximum entropy per character is important.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Why do password complexity rules often backfire?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'NIST SP 800-63B explicitly dropped mandatory complexity requirements in 2017 because they produce predictable patterns (P@ssw0rd1!) that attackers exploit. Users substitute letters for numbers and symbols in well-known ways, reducing effective entropy. NIST now recommends checking passwords against a breached password list (like Have I Been Pwned) instead of enforcing uppercase + symbol rules.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do password managers generate and store passwords securely?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Password managers generate passwords using a CSPRNG, then encrypt the vault using AES-256-GCM with a key derived from your master password via a key derivation function (Argon2id or PBKDF2 with 600,000+ iterations per OWASP 2025 guidelines). The master password never leaves your device -- only the encrypted vault is synced. Even if the provider is breached, the attacker only gets ciphertext.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Password Generator Guide
+      
+
+      /* Article Header */
+      
+        <h2>
+          Password Generator: Create Strong Random Passwords Online
+        </h2>
+        
+          Security
+          <time dateTime="2026-03-21">March 21, 2026</time>
+          16 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>&#x2022;A secure password generator must use a <strong>CSPRNG</strong> (cryptographically secure pseudorandom number generator) -- never <code >Math.random()</code>.</li>
+            <li>&#x2022;Password <strong>length</strong> matters more than complexity. CISA recommends 16+ characters; NIST SP 800-63B dropped mandatory complexity rules in 2017.</li>
+            <li>&#x2022;Per a 2026 analysis of 19 billion leaked passwords, only <strong>6% were unique</strong> -- 94% were reused or trivially weak (Spacelift research).</li>
+            <li>&#x2022;A 16-character random password using all printable ASCII (~95 chars) provides <strong>~105 bits of entropy</strong> -- computationally unbreakable with current hardware.</li>
+            <li>&#x2022;Browser-side generators using the <strong>Web Crypto API</strong> never transmit your password -- generation happens entirely in your local JavaScript context.</li>
+          </ul>
+        
+
+        /* Myth-busting opener */
+        
+          <h2>The Complexity Myth: Why &ldquo;P@ssw0rd1!&rdquo; Is Weaker Than You Think</h2>
+          <p>
+            For over a decade, IT security policy was shaped by a 2003 NIST document that pushed mandatory complexity requirements: uppercase letters, numbers, special characters, forced rotations. The author of that guidance, Bill Burr, publicly apologized in 2017. The rules he wrote made passwords harder for humans but barely harder for computers.
+          </p>
+          <p>
+            Here is why: attackers do not brute-force character-by-character. They use rule-based attacks in tools like Hashcat that know &ldquo;users capitalize the first letter, append a number, and substitute @ for a&rdquo;. A password matching those patterns -- even with all complexity boxes checked -- has far less effective entropy than it appears. The updated NIST Special Publication 800-63B (2017, revised 2024) explicitly removed complexity requirements and instead mandates checking new passwords against lists of known-compromised credentials.
+          </p>
+          <p>
+            The correct mental model is this: what matters is the size of the search space an attacker must cover, which is determined by the <em>true randomness</em> of your password and its <em>length</em>. A random 16-character password from a 95-character alphabet (all printable ASCII) provides log2(95^16) ≈ <strong>105 bits of entropy</strong>. At 10 billion guesses per second -- the throughput of a high-end GPU cluster in offline attack mode -- exhausting that space would take longer than the current age of the universe.
+          </p>
+        
+
+        
+          <h2>The Password Problem in Numbers</h2>
+          <p>
+            The scale of poor password hygiene is hard to overstate. According to a 2026 analysis of 19 billion leaked credentials published by Spacelift, only 6% of passwords in that dataset were unique -- meaning 94% were reused or commonly used passwords. Only 27% of US adults use a random password generator to create new passwords, per research aggregated by Huntress (2026). The rest mix words with numbers in patterns attackers know by heart.
+          </p>
+          <p>
+            The consequences show up in breach data. According to the Verizon 2025 Data Breach Investigations Report, 37% of successful web application attacks used brute force -- up from 21% the year before. Per Heimdal Security&apos;s 2026 breach analysis, 61% of all breaches involved compromised credentials. These are not sophisticated supply-chain attacks; they are the direct result of weak, reused, or guessable passwords at scale.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Statistic</th>
+                  <th >Value</th>
+                  <th >Source</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Leaked passwords that are reused or weak</td><td >94%</td><td >Spacelift, 2026 (19B password analysis)</td></tr>
+                <tr ><td >US adults who use a password generator</td><td >27%</td><td >Huntress Password Statistics, 2026</td></tr>
+                <tr ><td >People who reuse passwords across sites</td><td >80-85%</td><td >Huntress / Heimdal, 2026</td></tr>
+                <tr ><td >Breaches involving compromised credentials</td><td >61%</td><td >Heimdal Security, 2026</td></tr>
+                <tr ><td >Web app attacks using brute force</td><td >37%</td><td >Verizon DBIR 2025</td></tr>
+                <tr><td >Daily passkey creations surge (Bitwarden)</td><td >+550%</td><td >Bitwarden, Q4 2024</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>How a Secure Password Generator Actually Works</h2>
+          <p>
+            The critical distinction between a secure and an insecure password generator is the randomness source. Most languages have two categories of random number generators: general-purpose PRNGs (pseudorandom number generators) and CSPRNGs (cryptographically secure PRNGs). Only CSPRNGs are appropriate for security-sensitive work.
+          </p>
+
+          <h3>Why Math.random() Is Never Acceptable</h3>
+          <p>
+            JavaScript&apos;s <code >Math.random()</code> is explicitly documented as unsuitable for security purposes. V8&apos;s implementation uses xorshift128+ with a 128-bit state -- fast and uniform, but the internal state is recoverable. With enough observed outputs, an attacker can predict future values. Browsers expose this function because it is fast and adequate for games, animations, and simulations. It is not for passwords.
+          </p>
+          <p>
+            The correct browser API is <code >crypto.getRandomValues()</code>, part of the Web Crypto API (W3C specification). It reads from the OS kernel&apos;s CSPRNG, which in turn is seeded from hardware entropy sources (interrupt timing, disk I/O jitter, hardware RNG instructions like Intel&apos;s RDRAND).
+          </p>
+
+          <p>
+            <code >`// WRONG -- never use for passwords
+const bad = Math.random().toString(36).slice(2);
+
+// CORRECT -- Web Crypto API (browser + Node.js 19+)
+function generatePassword(length = 16, charset = '') 
+  const lower = 'abcdefghijklmnopqrstuvwxyz';
+  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const digits = '0123456789';
+  const symbols = '!@#$%^&*()-_=+[]|;:,.<>?';
+  charset = charset || lower + upper + digits + symbols;
+
+  const array = new Uint32Array(length);
+  crypto.getRandomValues(array);
+
+  // Rejection sampling to avoid modulo bias
+  const charsetLen = charset.length;
+  const maxUnbiased = Math.floor(0x100000000 / charsetLen) * charsetLen;
+
+  let result = '';
+  let i = 0;
+  while (result.length < length) 
+    const val = array[i++ % array.length];
+    if (val < maxUnbiased) 
+      result += charset[val % charsetLen];
+    
+    if (i >= array.length) 
+      crypto.getRandomValues(array);
+      i = 0;
+    
+  
+  return result;
+
+// Example usage
+generatePassword(20);
+// => 'kT#9xZ!2mQr@vL$8nWpY'`</code>
+          </pre>
+
+          <h3>Rejection Sampling: Eliminating Modulo Bias</h3>
+          <p >
+            A subtle but important detail: if you naively do <code >randomByte % charsetLength</code>, you introduce modulo bias when the charset length does not evenly divide the range of random values. For example, if your charset has 95 characters and your random value is a byte (0-255), the values 0-94 will appear more frequently than they should because 256 is not evenly divisible by 95. The fix -- rejection sampling -- discards values in the remainder range and draws again. The code above applies this correctly.
+          </p>
+
+          <h3>Server-Side Generation in Multiple Languages</h3>
+          <p>
+            <code >`// Node.js (crypto module)
+const crypto = require('crypto');
+const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+const length = 20;
+let password = '';
+while (password.length < length) 
+  const byte = crypto.randomBytes(1)[0];
+  if (byte < Math.floor(256 / charset.length) * charset.length) 
+    password += charset[byte % charset.length];
+  
+
+// Python -- 'secrets' module (stdlib since 3.6)
+
+alphabet = string.ascii_letters + string.digits + string.punctuation
+password = ''.join(secrets.choice(alphabet) for _ in range(20))
+# secrets.choice() uses os.urandom() internally -- CSPRNG
+
+# Go
+
+    "crypto/rand"
+    "math/big"
+)
+func generatePassword(length int, charset string) string 
+    result := make([]byte, length)
+    for i := range result 
+        n, _ := rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
+        result[i] = charset[n.Int64()]
+    
+    return string(result)
+
+# Bash (useful for quick scripts)
+< /dev/urandom tr -dc 'A-Za-z0-9!@#$%^&*' | head -c 20`</code>
+          </pre>
+        
+
+        
+          <h2>Password Entropy: The Math Behind &ldquo;Strong&rdquo;</h2>
+          <p >
+            Entropy is the correct way to quantify password strength because it measures the size of the search space an attacker must explore. The formula is simple: <code >entropy = log2(charset_size ^ length)</code>.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Password Type</th>
+                  <th >Length</th>
+                  <th >Charset Size</th>
+                  <th >Entropy (bits)</th>
+                  <th >Crack time (10B/sec)</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Lowercase only</td><td >8</td><td >26</td><td >37.6 bits</td><td >&lt;1 second</td></tr>
+                <tr ><td >Mixed case + digits</td><td >8</td><td >62</td><td >47.6 bits</td><td >~4 hours</td></tr>
+                <tr ><td >All printable ASCII</td><td >8</td><td >95</td><td >52.6 bits</td><td >~6 days</td></tr>
+                <tr ><td >All printable ASCII</td><td >12</td><td >95</td><td >78.9 bits</td><td >~800K years</td></tr>
+                <tr ><td >All printable ASCII</td><td >16</td><td >95</td><td >105.1 bits</td><td >Heat death of universe</td></tr>
+                <tr ><td >5-word Diceware passphrase</td><td >5 words</td><td >7,776 words</td><td >64.6 bits</td><td >~2.3M years</td></tr>
+                <tr><td >6-word Diceware passphrase</td><td >6 words</td><td >7,776 words</td><td >77.5 bits</td><td >&gt;100B years</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Note that these crack times assume the attacker has the hash and is running offline -- the worst-case scenario. Online attacks (guessing against a live login form) are throttled to thousands of attempts per second at most, making even a 50-bit password effectively uncrackable online. The offline scenario matters when a database is breached and attackers crack hashes locally.
+          </p>
+          <p>
+            The key takeaway: 80 bits of entropy is the informal modern threshold for high-security offline resistance. A 16-character password from a full printable ASCII charset (105 bits) or a 6-word Diceware passphrase (77.5 bits) both exceed this bar. An 8-character password -- even with symbols -- does not.
+          </p>
+        
+
+        
+          <h2>NIST SP 800-63B: What the Standard Actually Says</h2>
+          <p>
+            NIST Special Publication 800-63B is the US government&apos;s authoritative guidance on digital identity and authentication. The 2017 revision (with subsequent updates through 2024) made several landmark changes that contradicted a decade of conventional IT policy:
+          </p>
+          <ul>
+            <li><strong>No mandatory complexity rules.</strong> Organizations &ldquo;SHALL NOT&rdquo; require specific character types (uppercase, digits, symbols) unless the user chooses to include them.</li>
+            <li><strong>No periodic rotation without cause.</strong> Forced password changes every 90 days actually reduce security -- users predictably change Password1 to Password2. Rotation is only required when a compromise is suspected.</li>
+            <li><strong>Minimum length of 8 characters</strong> for memorized secrets, with a maximum of at least 64 characters to allow passphrases.</li>
+            <li><strong>Blocklist checking.</strong> New passwords must be checked against lists of commonly used, expected, or compromised values (NIST provides guidance; Have I Been Pwned&apos;s API is a practical implementation).</li>
+            <li><strong>Allow all printable Unicode and spaces.</strong> Restricting character sets reduces the effective entropy of user-chosen passwords.</li>
+          </ul>
+          <p>
+            CISA, the Cybersecurity and Infrastructure Security Agency, goes further in its 2025 guidance: it recommends passwords of <strong>16 or more characters</strong> for regular accounts and 20+ characters for privileged accounts like admin or root. For developer tooling (API keys, service accounts), use generated secrets of at least 256 bits.
+          </p>
+        
+
+        
+          <h2>Passphrases vs. Random Character Passwords</h2>
+          <p>
+            Both approaches are valid when implemented correctly. The choice depends on how the password will be used:
+          </p>
+
+          <h3>Diceware Passphrases</h3>
+          <p>
+            Diceware generates passphrases by selecting words randomly from a 7,776-word list (6^5 = 7,776, one word per 5 dice rolls). Each word adds log2(7,776) ≈ 12.9 bits of entropy. A 6-word passphrase reaches 77.5 bits -- comparable to a 12-character random ASCII password, but far more memorable and easier to type. The EFF publishes an updated Diceware wordlist optimized for memorability.
+          </p>
+          <p>
+            <code >`// Diceware-style passphrase generator (Node.js)
+const crypto = require('crypto');
+
+// EFF large wordlist has 7776 words (indices 11111-66666 in base-6)
+// For simplicity, this demonstrates the selection logic
+function generatePassphrase(wordList, wordCount = 6) 
+  const words = [];
+  for (let i = 0; i < wordCount; i++) 
+    const n = crypto.randomInt(wordList.length);  // Node.js 14.10+
+    words.push(wordList[n]);
+  
+  return words.join('-');
+
+// Entropy = wordCount * log2(wordListSize)
+// 6 words * log2(7776) = 6 * 12.925 = 77.55 bits
+// Example output: "correct-horse-battery-staple-purple-fox"`</code>
+          </pre>
+
+          <h3>When to Use Which</h3>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Use Case</th>
+                  <th >Recommendation</th>
+                  <th >Reason</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Password manager master password</td><td >6-word passphrase</td><td >Must be memorable, typed by hand, high entropy</td></tr>
+                <tr ><td >SSH key passphrase</td><td >6-word passphrase</td><td >Typed manually, memorable after practice</td></tr>
+                <tr ><td >Website accounts (autofilled)</td><td >20-char random</td><td >Never typed, maximum entropy per character</td></tr>
+                <tr ><td >API keys / service tokens</td><td >32+ random chars</td><td >Always used programmatically, max entropy</td></tr>
+                <tr><td >Wi-Fi WPA2 passphrase</td><td >5-word passphrase or 16+ chars</td><td >Typed occasionally on new devices</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Password Managers: The Only Scalable Solution</h2>
+          <p >
+            Generating a unique strong password for every account is only sustainable with a password manager. A human cannot memorize hundreds of unique 20-character passwords. The standard security advice -- use a unique password per site -- is physically impossible without tooling.
+          </p>
+          <p>
+            Password managers generate and store passwords encrypted with AES-256-GCM, using a key derived from your master password via Argon2id or PBKDF2. The master password never leaves your device. Per OWASP&apos;s 2025 Password Storage Cheat Sheet, the recommended PBKDF2 iteration count for SHA-256 is 600,000 minimum. Even if the password manager&apos;s servers are breached, the attacker gets only ciphertext.
+          </p>
+          <p>
+            Major options include Bitwarden (open source, audited), 1Password (closed source, widely audited), KeePassXC (local-only, no sync), and Dashlane. For teams and CI/CD pipelines, HashiCorp Vault, AWS Secrets Manager, or GitHub Actions Encrypted Secrets are appropriate. Per the Stack Overflow Developer Survey 2024, 68% of professional developers reported using a password manager or secrets management tool.
+          </p>
+        
+
+        
+          <h2>Common Password Generation Mistakes (and How to Avoid Them)</h2>
+
+          <h3>1. Using a Weak Randomness Source</h3>
+          <p>
+            This is the most critical error. Any generator not using a CSPRNG (<code >crypto.getRandomValues()</code> in browsers, <code >secrets</code> module in Python, <code >crypto/rand</code> in Go) is producing passwords that could be predicted by an attacker who has observed enough of the generator&apos;s output. The <a href="/hash-generator/">hash generator tool</a> and other cryptographic utilities on this site use the Web Crypto API exclusively.
+          </p>
+
+          <h3>2. Generating Passwords Server-Side and Transmitting Them</h3>
+          <p>
+            If a password generator makes an HTTPS request to a server to obtain the password, your password is exposed to the server&apos;s logs, TLS inspection middleware, and any infrastructure between you and the server. The gold standard is client-side generation -- the password is created in your browser&apos;s JavaScript context and never transmitted. You can verify this by opening DevTools, going to the Network tab, and confirming no requests are made when the password is generated.
+          </p>
+
+          <h3>3. Restricting Charset Too Aggressively</h3>
+          <p>
+            Some services reject passwords containing certain symbols. If your generator excludes symbols entirely to ensure compatibility, a 16-character alphanumeric-only password has log2(62^16) = 95.3 bits -- still excellent. The issue is generators that produce passwords that are too short AND symbol-free. Avoid generators that default to 8 characters with letters-only.
+          </p>
+
+          <h3>4. Not Verifying Against Breach Lists</h3>
+          <p>
+            While a truly random 16-character password has negligible chance of appearing in a breach database, it is good practice to verify new passwords against the Have I Been Pwned Passwords API (k-anonymity model -- only the first 5 hex characters of the SHA-1 hash are sent). This protects against edge cases and validates your randomness source. The NIST 800-63B standard mandates this check for verifiers.
+          </p>
+        
+
+        
+          <h2>The Future: Passkeys and Passwordless Auth</h2>
+          <p>
+            The FIDO2/WebAuthn standard, which underlies passkeys, replaces the password with a public-key credential stored on your device. When you authenticate, the device signs a challenge with the private key -- no secret is ever transmitted to the server. Bitwarden reported a 550% increase in daily passkey creation in Q4 2024 as Apple, Google, and Microsoft all shipped passkey support across their platforms.
+          </p>
+          <p>
+            Passkeys eliminate the password problem entirely for supported services. But as of 2026, hundreds of thousands of services still require passwords, and the transition will take years. Until then, generating unique, random, long passwords for every account -- stored in a password manager -- remains the correct approach. You can use our <a href="/password-generator/">Password Generator</a> tool to create cryptographically random passwords in your browser with zero server contact. For generating UUIDs as API tokens or session identifiers, see our <a href="/uuid-generator/">UUID Generator</a>.
+          </p>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <h3>How long should a randomly generated password be?</h3>
+          <p>
+            NIST SP 800-63B sets a minimum of 8 characters but strongly encourages longer passwords. CISA recommends at least 16 characters for general accounts. For high-value targets -- password manager master passwords, SSH key passphrases, root accounts -- use 20+ characters or a 6-word Diceware passphrase (~85 bits of entropy). Length matters far more than complexity.
+          </p>
+
+          <h3>What makes a password generator truly random?</h3>
+          <p>
+            A secure generator must use a cryptographically secure pseudorandom number generator (CSPRNG) -- not <code >Math.random()</code> in JavaScript or <code >random.random()</code> in Python. In browsers, the Web Crypto API&apos;s <code >crypto.getRandomValues()</code> is the correct source. In Node.js, use <code >crypto.randomBytes()</code>. In Python, use <code >secrets.token_urlsafe()</code>. These pull entropy from the OS kernel&apos;s entropy pool, seeded from hardware events.
+          </p>
+
+          <h3>Is it safe to generate passwords online?</h3>
+          <p>
+            Yes, if the generator runs entirely client-side. A browser-based generator using <code >crypto.getRandomValues()</code> never transmits your password. Verify this by checking the Network tab in DevTools -- no requests should be made during generation. Avoid generators that clearly make server requests to produce results.
+          </p>
+
+          <h3>What is password entropy and why does it matter?</h3>
+          <p>
+            Entropy (measured in bits) quantifies how unpredictable a password is. The formula is log2(charset_size ^ length). A 16-character password using all printable ASCII (~95 chars) has ~105 bits of entropy. At 10 billion guesses per second -- a high-end GPU cluster -- exhausting 105 bits would take longer than the age of the universe. 80 bits is the modern threshold for high-security offline resistance.
+          </p>
+
+          <h3>Should I use a passphrase instead of a random character password?</h3>
+          <p>
+            Both are secure when done right. A 5-word Diceware passphrase offers ~64 bits of entropy; 6 words gives ~85 bits. Passphrases are better for things you type by hand (master passwords, SSH passphrases). Random character passwords are better when autofilled, as they provide maximum entropy per character for a given length.
+          </p>
+
+          <h3>Why do complexity rules backfire?</h3>
+          <p>
+            NIST SP 800-63B explicitly dropped mandatory complexity requirements because they produce predictable patterns (P@ssw0rd1!) that attackers model. Rule-based attacks in Hashcat exploit the fact that users substitute @ for a, capitalize first letters, and append numbers. NIST now mandates blocklist checking against compromised credentials instead of enforcing complexity rules.
+          </p>
+
+          <h3>How do password managers store passwords securely?</h3>
+          <p>
+            Password managers encrypt vaults using AES-256-GCM with a key derived from your master password via Argon2id (PBKDF2 in older implementations). The master password never leaves your device -- only the encrypted vault syncs. OWASP&apos;s 2025 guidance recommends a minimum of 600,000 PBKDF2-SHA256 iterations for key derivation. Even in a server breach, attackers get only ciphertext.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Generate a Strong Password Now</h2>
+          <p>
+            Our Password Generator uses the Web Crypto API to create cryptographically random passwords entirely in your browser. No server contact, no logging. Configure length, charset, and get a password that meets NIST and CISA recommendations.
+          </p>
+          <a href="/password-generator/">
+            Open Password Generator
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/hash-functions-explained/">
+              <h3>Hash Functions Explained</h3>
+              <p>MD5 vs SHA-256 vs bcrypt vs Argon2 -- when to use each.</p>
+            </a>
+            <a href="/blog/ssh-keys-guide/">
+              <h3>SSH Keys Explained</h3>
+              <p>Ed25519 vs RSA, key generation, and security best practices.</p>
+            </a>
+            <a href="/blog/api-authentication-methods/">
+              <h3>API Authentication Methods</h3>
+              <p>API keys, OAuth 2.0, JWT, and mTLS compared.</p>
+            </a>
+            <a href="/blog/jwt-tokens-explained/">
+              <h3>JWT Tokens Explained</h3>
+              <p>JWT structure, signing algorithms, and common security pitfalls.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/password-generator/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
