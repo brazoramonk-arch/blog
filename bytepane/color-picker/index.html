@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Picker: Choose &amp;amp; Convert Colors (HEX, RGB, HSL) - BytePane</title>
+  <meta name="description" content="Pick colors and convert between HEX, RGB, HSL, and OKLCH formats. Understand color math, when to use each format, and how to build accessible color systems.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/color-picker/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Color Picker: Choose &amp;amp; Convert Colors (HEX, RGB, HSL)
+  </nav>
+
+  <article>
+    <h1>Color Picker: Choose &amp;amp; Convert Colors (HEX, RGB, HSL)</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/color-picker/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Color Picker: Choose & Convert Colors (HEX, RGB, HSL)',
+            description: 'Pick colors and convert between HEX, RGB, HSL, and OKLCH formats. Understand color math, when to use each format, and how to build accessible color systems.',
+            datePublished: '2026-03-25',
+            dateModified: '2026-03-25',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/color-picker/',
+            mainEntityOfPage: 'https://bytepane.com/blog/color-picker/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Color Picker Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What is the difference between HEX, RGB, and HSL color formats?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'HEX and RGB both describe colors using red, green, and blue channels — they are mathematically equivalent (ff = 255). HSL describes color as Hue (0–360°), Saturation (0–100%), and Lightness (0–100%). HEX is compact for static values. RGB works well for programmatic channel manipulation. HSL is the best format for building color palettes, because adjusting lightness or saturation produces predictable results.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do I convert HEX to RGB?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Split the HEX string into three two-character pairs and convert each from base-16 to decimal. Example: #FF5733 → FF=255, 57=87, 33=51 → rgb(255, 87, 51). In JavaScript: parseInt("FF", 16) returns 255. For the alpha channel in 8-digit HEX (#RRGGBBAA), the last pair converts the same way and is divided by 255 to get a 0–1 alpha value.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is OKLCH and should I use it instead of HSL?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'OKLCH is a perceptually uniform color space where equal numeric changes produce equal perceived visual differences. HSL has a well-known flaw: yellow at 50% lightness looks far brighter than blue at 50% lightness. OKLCH corrects this. As of 2026 it has 93%+ global browser support (Chrome 111+, Firefox 113+, Safari 15.4+). Use OKLCH for new design systems and provide an HSL fallback for legacy contexts.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do I check if my color combination meets WCAG contrast requirements?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'WCAG 2.1 requires a contrast ratio of at least 4.5:1 for normal text (AA) and 3:1 for large text (18pt or 14pt bold). To calculate: convert both colors to relative luminance using the sRGB formula, then contrast = (L1 + 0.05) / (L2 + 0.05) where L1 is the lighter color. A good color picker tool like the BytePane Color Converter shows contrast ratios and WCAG pass/fail status automatically.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Why does HSL hue use degrees (0–360)?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'The hue in HSL represents a position on the color wheel, which is naturally circular — hence the 360° range. 0° and 360° are both red. Moving clockwise: 0°=red, 60°=yellow, 120°=green, 180°=cyan, 240°=blue, 300°=magenta. This is why hue values can wrap around: hsl(370deg, 80%, 50%) is equivalent to hsl(10deg, 80%, 50%).',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the alpha channel and how is it expressed in different formats?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'The alpha channel controls opacity. In 8-digit HEX it is a two-digit hex suffix (#RRGGBBAA, where FF=fully opaque, 00=fully transparent). In RGB it appears as a fourth argument: rgba(255, 87, 51, 0.5) for 50% opacity. In HSL: hsla(9, 100%, 60%, 0.5). Modern CSS also allows a space-separated slash syntax: rgb(255 87 51 / 50%) or hsl(9 100% 60% / 50%).',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Can I use CSS variables with color functions to build a theme?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Yes, and this is the recommended pattern for design systems. Define base hue and saturation as CSS custom properties, then derive all shades using hsl() or oklch(). For example: --brand-hue: 220; and then --color-primary: hsl(var(--brand-hue) 90% 55%). Changing --brand-hue to 160 instantly re-themes the entire application without touching any other variable.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Color Picker Guide
+      
+
+      /* Article Header */
+      
+        <h2>
+          Color Picker: Choose &amp; Convert Colors (HEX, RGB, HSL)
+        </h2>
+        
+          Design
+          <time dateTime="2026-03-25">March 25, 2026</time>
+          16 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Opening: myth-busting */
+        
+          <p>
+            Here is a widely held assumption worth examining: most developers default to HEX colors because that is what design tools export and what CSS tutorials show. But HEX is actually the <em>least useful</em> format once you need to programmatically adjust a color — darken a button on hover, generate a palette from a brand color, or check if two colors meet WCAG contrast requirements. You cannot do any of that by staring at <code >#3B82F6</code>.
+          </p>
+          <p>
+            This guide covers what each color format actually represents, the conversion math between them, when each format earns its place in production code, and why OKLCH — supported by 93%+ of browsers as of 2026, per Can I Use data — is the format most design systems should be adopting now. Use the <a href="/color-converter/">BytePane Color Converter</a> alongside this guide to see every conversion live.
+          </p>
+        
+
+        /* Key Takeaways Box */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸<strong>HEX is compact notation for RGB</strong> — the two are mathematically identical. Use HEX for hardcoded static values in CSS.</li>
+            <li>▸<strong>HSL is the right format for palette generation</strong> — increment lightness to create shades, rotate hue to create complementary colors.</li>
+            <li>▸<strong>OKLCH solves HSL's perceptual uniformity problem</strong> — yellow and blue at the same OKLCH lightness actually look equally bright.</li>
+            <li>▸<strong>WCAG AA requires 4.5:1 contrast</strong> for normal text, 3:1 for large text — your color picker should verify this automatically.</li>
+            <li>▸<strong>CSS custom properties + HSL/OKLCH</strong> are the correct foundation for a themeable design system.</li>
+          </ul>
+        
+
+        /* Section 1: HEX */
+        
+          <h2>HEX: The Compact RGB Shorthand</h2>
+          <p>
+            A HEX color like <code >#FF5733</code> is six hexadecimal digits representing three 8-bit channels: red, green, blue. Each pair encodes a value from <code >00</code> (0) to <code >FF</code> (255). There is no mathematical difference between HEX and RGB — they are the same color model with different notation.
+          </p>
+          <p>
+            <code >`/* 6-digit HEX: #RRGGBB */
+color: #FF5733;   /* red=255, green=87, blue=51 */
+
+/* 3-digit shorthand: each digit doubles */
+color: #F53;      /* equivalent to #FF5533 */
+
+/* 8-digit HEX with alpha: #RRGGBBAA */
+color: #FF573380; /* 50% opacity (80 hex = 128 dec, 128/255 ≈ 0.5) */
+
+/* 4-digit shorthand with alpha */
+color: #F538;     /* equivalent to #FF553388 */`</code>
+          </pre>
+
+          <h3>HEX ↔ RGB Conversion</h3>
+          <pre >
+            <code >`// HEX to RGB in JavaScript
+function hexToRgb(hex: string):  r: number; g: number; b: number  | null 
+  const result = /^#?([a-f\d]2)([a-f\d]2)([a-f\d]2)$/i.exec(hex)
+  return result
+    ? 
+        r: parseInt(result[1], 16),  // FF → 255
+        g: parseInt(result[2], 16),  // 57 → 87
+        b: parseInt(result[3], 16),  // 33 → 51
+      
+    : null
+
+hexToRgb('#FF5733')  // →  r: 255, g: 87, b: 51 
+
+// RGB to HEX
+function rgbToHex(r: number, g: number, b: number): string 
+  return '#' + [r, g, b]
+    .map(v => v.toString(16).padStart(2, '0'))
+    .join('')
+    .toUpperCase()
+
+rgbToHex(255, 87, 51)  // → '#FF5733'`</code>
+          </pre>
+          <p >
+            HEX is the right choice for static values in CSS and when passing colors to third-party APIs or SVG attributes that expect <code >#RRGGBB</code> strings. It is a poor choice whenever you need to manipulate a color — darkening <code >#FF5733</code> requires converting to RGB or HSL first, doing the math, and converting back.
+          </p>
+        
+
+        /* Section 2: RGB */
+        
+          <h2>RGB: The Native Color Model of Screens</h2>
+          <p>
+            RGB (Red, Green, Blue) directly maps to how LCD and OLED screens work: each pixel has three sub-pixels that emit red, green, and blue light at varying intensities. The RGB model has been supported in CSS since CSS2 (1998). The modern syntax dropped the mandatory comma and added opacity support inline:
+          </p>
+          <p>
+            <code >`/* Legacy syntax (still valid) */
+color: rgb(255, 87, 51);
+color: rgba(255, 87, 51, 0.5);  /* 50% opacity */
+
+/* Modern CSS Color Level 4 syntax (CSS4, all modern browsers) */
+color: rgb(255 87 51);
+color: rgb(255 87 51 / 50%);    /* Alpha as percentage */
+color: rgb(255 87 51 / 0.5);    /* Alpha as decimal */
+
+/* Percentage values are valid too */
+color: rgb(100% 34% 20%);`</code>
+          </pre>
+          <p >
+            RGB shines for programmatic channel manipulation — adding red to a color, adjusting brightness by scaling all channels proportionally, or mixing two colors:
+          </p>
+          <p>
+            <code >`// Linear blend between two RGB colors
+function mixColors(
+  color1:  r: number; g: number; b: number ,
+  color2:  r: number; g: number; b: number ,
+  ratio: number  // 0.0 = 100% color1, 1.0 = 100% color2
+) 
+  return 
+    r: Math.round(color1.r + (color2.r - color1.r) * ratio),
+    g: Math.round(color1.g + (color2.g - color1.g) * ratio),
+    b: Math.round(color1.b + (color2.b - color1.b) * ratio),
+  
+
+// Note: for perceptually smooth blending, convert to OKLCH first.
+// RGB blending through gray (e.g., blue + yellow = muddy brown),
+// whereas OKLCH blending produces vivid intermediate hues.`</code>
+          </pre>
+        
+
+        /* Section 3: HSL */
+        
+          <h2>HSL: The Designer's Color Model</h2>
+          <p >
+            HSL (Hue, Saturation, Lightness) was introduced to CSS in CSS3 and is the most intuitive format for humans to reason about. Instead of describing how much red, green, and blue to mix, you specify <em>which color</em> (hue), how <em>vivid</em> it is (saturation), and how <em>bright</em> it is (lightness).
+          </p>
+          <p>
+            <code >`/* hsl(hue, saturation%, lightness%) */
+color: hsl(9, 100%, 60%);     /* vivid orange-red */
+color: hsl(9, 100%, 40%);     /* darker orange-red */
+color: hsl(9, 100%, 80%);     /* lighter orange-red (pastel) */
+color: hsl(9, 0%, 60%);       /* gray (saturation 0%) */
+
+/* Modern CSS4 syntax (no commas) */
+color: hsl(9 100% 60%);
+color: hsl(9 100% 60% / 50%); /* with 50% opacity */
+
+/* Hue rotation creates complementary colors */
+/* Complement of orange (9°) is blue-green (189°) */
+color: hsl(189 100% 60%);`</code>
+          </pre>
+
+          <h3>Generating a Full Palette from One Hue</h3>
+          <p >
+            HSL makes palette generation trivial. A 10-stop gray scale, a full set of tints and shades, or a triad of harmonious colors all follow from simple arithmetic:
+          </p>
+          <p>
+            <code >`// Generate a 9-stop shade palette from a base hue and saturation
+function generatePalette(hue: number, saturation: number): string[] 
+  const stops = [95, 88, 75, 60, 50, 40, 30, 20, 10]
+  return stops.map(l => \`hsl(\$hue \$saturation% \$l%)\`)
+
+// Usage: generatePalette(220, 90)
+// → ["hsl(220 90% 95%)", "hsl(220 90% 88%)", ... "hsl(220 90% 10%)"]
+
+// Triadic harmony: hues 120° apart
+function triad(baseHue: number): [string, string, string] 
+  return [
+    \`hsl(\$baseHue 80% 55%)\`,
+    \`hsl(\$(baseHue + 120) % 360 80% 55%)\`,
+    \`hsl(\$(baseHue + 240) % 360 80% 55%)\`,
+  ]
+
+// CSS custom properties for a themeable design system
+:root 
+  --brand-hue: 220;
+  --brand-sat: 90%;
+  --color-50:  hsl(var(--brand-hue) var(--brand-sat) 95%);
+  --color-500: hsl(var(--brand-hue) var(--brand-sat) 50%);
+  --color-900: hsl(var(--brand-hue) var(--brand-sat) 10%);
+`</code>
+          </pre>
+
+          <h3>RGB ↔ HSL Conversion</h3>
+          <pre >
+            <code >`function rgbToHsl(r: number, g: number, b: number) 
+  r /= 255; g /= 255; b /= 255
+  const max = Math.max(r, g, b), min = Math.min(r, g, b)
+  const l = (max + min) / 2
+  let h = 0, s = 0
+
+  if (max !== min) 
+    const d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    switch (max) 
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break
+      case g: h = ((b - r) / d + 2) / 6; break
+      case b: h = ((r - g) / d + 4) / 6; break
+    
+  
+
+  return 
+    h: Math.round(h * 360),
+    s: Math.round(s * 100),
+    l: Math.round(l * 100),
+  
+
+rgbToHsl(255, 87, 51)  // →  h: 9, s: 100, l: 60 `</code>
+          </pre>
+          <p >
+            For more on when each CSS color format is appropriate in different contexts, see the <a href="/blog/color-formats-hex-rgb-hsl/">Color Formats Explained</a> article for a deeper dive into the theory.
+          </p>
+        
+
+        /* Section 4: OKLCH */
+        
+          <h2>OKLCH: The Modern Standard (and Why It Fixes HSL)</h2>
+          <p>
+            HSL has a fundamental problem: it is not perceptually uniform. Yellow at <code >hsl(60 80% 50%)</code> looks dramatically brighter than blue at <code >hsl(240 80% 50%)</code>, even though both have the same numeric lightness. This is because HSL was defined mathematically rather than perceptually.
+          </p>
+          <p>
+            OKLCH (Lightness, Chroma, Hue in the OKLab color space, published by Björn Ottosson in 2020) solves this. It is a perceptually uniform polar color space where equal numeric differences produce equal perceived differences. According to <strong>Can I Use</strong>, OKLCH reached 93%+ global browser support in Q2 2025 (Chrome 111+, Firefox 113+, Safari 15.4+, Edge 111+).
+          </p>
+          <p>
+            <code >`/* OKLCH syntax: oklch(lightness chroma hue) */
+/* lightness: 0 = black, 1 = white */
+/* chroma: 0 = gray, ~0.4 = max vivid (varies by hue) */
+/* hue: 0–360° (same wheel orientation as HSL) */
+
+color: oklch(0.63 0.26 29);     /* vivid orange-red */
+color: oklch(0.63 0.26 149);    /* vivid green (same lightness, same chroma) */
+color: oklch(0.63 0.26 269);    /* vivid blue  (same lightness, same chroma) */
+/* All three look equally bright — unlike HSL equivalents */
+
+/* Opacity with slash */
+color: oklch(0.63 0.26 29 / 50%);
+
+/* Fallback for older browsers */
+.button 
+  color: #e84314;                   /* fallback */
+  color: oklch(0.63 0.26 29);       /* modern browsers use this */
+
+/* CSS custom properties with OKLCH */
+:root 
+  --brand-l: 0.55;
+  --brand-c: 0.22;
+  --brand-h: 265;
+  --color-primary:       oklch(var(--brand-l) var(--brand-c) var(--brand-h));
+  --color-primary-light: oklch(0.75 var(--brand-c) var(--brand-h));
+  --color-primary-dark:  oklch(0.35 var(--brand-c) var(--brand-h));
+`</code>
+          </pre>
+
+          <h3>P3 Wide Gamut Colors</h3>
+          <p >
+            One of OKLCH's most important capabilities is access to the P3 color gamut — the expanded range of colors that modern displays (iPhone, MacBook Pro, most 2023+ monitors) can show but that sRGB HEX/RGB/HSL cannot reach. These vivid colors are genuinely unavailable in the older formats.
+          </p>
+          <p>
+            <code >`/* Colors with chroma > ~0.37 may exceed sRGB gamut.
+   Browsers automatically clamp to the closest sRGB value
+   on non-P3 displays, so there's no risk of broken output. */
+
+/* sRGB-safe vivid green (max chroma without exceeding gamut) */
+color: oklch(0.75 0.25 145);
+
+/* P3 vivid green — only visible on P3 displays */
+color: oklch(0.75 0.37 145);
+
+/* Feature query for P3-capable displays */
+@media (color-gamut: p3) 
+  .hero-gradient 
+    background: linear-gradient(
+      to right,
+      oklch(0.65 0.32 265),   /* vivid purple */
+      oklch(0.65 0.30 330)    /* vivid pink */
+    );
+  
+`</code>
+          </pre>
+        
+
+        /* Section 5: Format Comparison Table */
+        
+          <h2>Color Format Comparison</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Format</th>
+                  <th >Perceptually Uniform?</th>
+                  <th >P3 Wide Gamut?</th>
+                  <th >Best For</th>
+                  <th >Browser Support</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >#RRGGBB</td>
+                  <td >No</td>
+                  <td >No</td>
+                  <td >Static CSS values, APIs</td>
+                  <td >All browsers</td>
+                </tr>
+                <tr >
+                  <td >rgb()</td>
+                  <td >No</td>
+                  <td >No</td>
+                  <td >Channel manipulation, canvas</td>
+                  <td >All browsers</td>
+                </tr>
+                <tr >
+                  <td >hsl()</td>
+                  <td >Partial</td>
+                  <td >No</td>
+                  <td >Palette generation, theming</td>
+                  <td >All browsers</td>
+                </tr>
+                <tr >
+                  <td >oklch()</td>
+                  <td >Yes</td>
+                  <td >Yes</td>
+                  <td >New design systems, P3 displays</td>
+                  <td >93%+ (2026)</td>
+                </tr>
+                <tr>
+                  <td >lab() / lch()</td>
+                  <td >Yes</td>
+                  <td >Yes</td>
+                  <td >Legacy perceptual use cases</td>
+                  <td >93%+ (2026)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        /* Section 6: Accessibility */
+        
+          <h2>Color Contrast and Accessibility</h2>
+          <p >
+            WCAG 2.1 (Web Content Accessibility Guidelines) defines minimum contrast ratios that any production color pair must meet. The contrast ratio formula uses <em>relative luminance</em> — a measure of how much light a color appears to emit on a calibrated display, defined in WCAG 2.1 by the W3C and based on the IEC 61966-2-1 sRGB specification.
+          </p>
+          <p>
+            <code >`// WCAG 2.1 relative luminance calculation (per W3C spec)
+function relativeLuminance(r: number, g: number, b: number): number 
+  const srgb = [r, g, b].map(v => 
+    const s = v / 255
+    return s <= 0.04045 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4)
+  )
+  return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2]
+
+// Contrast ratio between two colors (always >= 1)
+function contrastRatio(
+  fg:  r: number; g: number; b: number ,
+  bg:  r: number; g: number; b: number 
+): number 
+  const L1 = relativeLuminance(fg.r, fg.g, fg.b)
+  const L2 = relativeLuminance(bg.r, bg.g, bg.b)
+  const lighter = Math.max(L1, L2)
+  const darker  = Math.min(L1, L2)
+  lighter + 0.05) / (darker + 0.05)
+
+// Example: white text on #3B82F6 (Tailwind blue-500)
+const white =  r: 255, g: 255, b: 255 
+const blue  =  r: 59,  g: 130, b: 246 
+console.log(contrastRatio(white, blue).toFixed(2))  // → 3.05
+// WCAG AA FAILS for normal text (needs 4.5:1)
+// WCAG AA PASSES for large text (needs 3:1)
+// This is why white-on-blue-500 is acceptable for headings but not body text`</code>
+          </pre>
+
+          <h3>WCAG Contrast Level Reference</h3>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Level</th>
+                  <th >Normal Text</th>
+                  <th >Large Text (&ge;18pt or 14pt bold)</th>
+                  <th >UI Components</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >WCAG AA</td>
+                  <td >4.5:1 minimum</td>
+                  <td >3:1 minimum</td>
+                  <td >3:1 minimum</td>
+                </tr>
+                <tr>
+                  <td >WCAG AAA</td>
+                  <td >7:1 minimum</td>
+                  <td >4.5:1 minimum</td>
+                  <td >Not defined</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p >
+            According to the <strong>WebAIM Million report (2025)</strong>, 79.7% of home pages have at least one WCAG contrast failure. Low contrast is consistently the most common accessibility failure across the web — and one of the easiest to fix once you have a color picker that shows you the ratio in real time. See our full <a href="/blog/web-accessibility-testing-guide/">web accessibility testing guide</a> for the complete WCAG 2.1 checklist.
+          </p>
+        
+
+        /* Section 7: CSS Variables Design System */
+        
+          <h2>Building a Themeable Design System with CSS Variables</h2>
+          <p>
+            The most effective pattern for a design system combines CSS custom properties with HSL or OKLCH so that a single variable change re-themes the entire UI. This is how Tailwind CSS v3's arbitrary color utilities work, and it is the approach used by Radix UI, shadcn/ui, and most modern component libraries.
+          </p>
+          <p>
+            <code >`/* Approach 1: HSL component variables */
+:root 
+  /* Define the raw channel values */
+  --primary-h: 220;
+  --primary-s: 90%;
+
+  /* Derive all shades from those two values */
+  --primary-50:  hsl(var(--primary-h) var(--primary-s) 95%);
+  --primary-100: hsl(var(--primary-h) var(--primary-s) 90%);
+  --primary-200: hsl(var(--primary-h) var(--primary-s) 80%);
+  --primary-500: hsl(var(--primary-h) var(--primary-s) 50%);
+  --primary-700: hsl(var(--primary-h) var(--primary-s) 35%);
+  --primary-900: hsl(var(--primary-h) var(--primary-s) 15%);
+
+/* Rebrand from blue to purple: change two values */
+:root 
+  --primary-h: 270;
+  --primary-s: 85%;
+
+/* Approach 2: OKLCH (more accurate perceptually) */
+:root 
+  --brand-l: 0.55;
+  --brand-c: 0.22;
+  --brand-h: 265;
+
+.btn-primary 
+  background: oklch(var(--brand-l) var(--brand-c) var(--brand-h));
+  color: oklch(0.98 0 0);  /* near-white */
+
+.btn-primary:hover 
+  background: oklch(calc(var(--brand-l) - 0.07) var(--brand-c) var(--brand-h));
+
+/* Dark mode: adjust lightness only */
+@media (prefers-color-scheme: dark) 
+  :root  --brand-l: 0.70; 
+`</code>
+          </pre>
+          <p >
+            The <code >calc()</code> trick for hover states in OKLCH (<code >calc(var(--brand-l) - 0.07)</code>) is significantly cleaner than the HSL equivalent because OKLCH lightness is perceptually linear — subtracting 0.07 always produces a noticeably darker shade regardless of which hue you are on.
+          </p>
+        
+
+        /* Section 8: Color Picker Tools */
+        
+          <h2>Choosing a Color Picker Tool: What to Look For</h2>
+          <p>
+            Not all color pickers are equal. Here is what a professional-grade tool should include:
+          </p>
+          <ul>
+            <li><strong>Live format conversion</strong> — changes in one format (HEX, RGB, HSL, OKLCH) should instantly update all others.</li>
+            <li><strong>WCAG contrast checker</strong> — input foreground and background colors, see the contrast ratio and AA/AAA pass/fail status immediately.</li>
+            <li><strong>Alpha channel support</strong> — any real-world UI uses semi-transparent colors for shadows, overlays, and glass effects.</li>
+            <li><strong>Color space awareness</strong> — the tool should ideally support OKLCH and P3 gamut, not just the sRGB-only formats.</li>
+            <li><strong>Copy output in multiple formats</strong> — CSS <code >hsl()</code>, Tailwind config object, design token JSON — not just a HEX string.</li>
+            <li><strong>Client-side only</strong> — your palette is brand-sensitive. A tool that does not send colors to a server avoids unnecessary data exposure.</li>
+          </ul>
+          <p>
+            The <a href="/color-converter/">BytePane Color Converter</a> handles all format conversions — HEX, RGB, HSL, and OKLCH — entirely in your browser. No data leaves your machine.
+          </p>
+        
+
+        /* Section 9: Quick Reference */
+        
+          <h2>Color Conversion Quick Reference</h2>
+          <p>
+            <code >`/* The same color in every format */
+
+HEX:   #FF5733
+RGB:   rgb(255 87 51)
+HSL:   hsl(9 100% 60%)
+OKLCH: oklch(0.63 0.26 29)
+
+/* Named colors as reference anchors */
+red:     #FF0000  rgb(255 0 0)    hsl(0 100% 50%)
+green:   #008000  rgb(0 128 0)    hsl(120 100% 25%)
+blue:    #0000FF  rgb(0 0 255)    hsl(240 100% 50%)
+white:   #FFFFFF  rgb(255 255 255) hsl(0 0% 100%)
+black:   #000000  rgb(0 0 0)      hsl(0 0% 0%)
+gray50:  #808080  rgb(128 128 128) hsl(0 0% 50%)`</code>
+          </pre>
+        
+
+        /* FAQ Section */
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <h3>What is the difference between HEX, RGB, and HSL color formats?</h3>
+          <p >
+            HEX and RGB both describe colors using red, green, and blue channels — they are mathematically equivalent (<code >ff</code> = 255). HSL describes color as Hue (0–360°), Saturation (0–100%), and Lightness (0–100%). HEX is compact for static values. RGB is better for channel manipulation. HSL is the most intuitive for generating palettes, because adjusting lightness or saturation produces predictable results without needing to know the channel math.
+          </p>
+
+          <h3>How do I convert HEX to RGB?</h3>
+          <p>
+            Split the HEX string into three two-character pairs and convert each from base-16 to decimal: <code >#FF5733</code> → <code >FF=255, 57=87, 33=51</code> → <code >rgb(255, 87, 51)</code>. In JavaScript: <code >parseInt("FF", 16)</code> returns 255. For 8-digit HEX with alpha, the last pair converts the same way and is divided by 255 to get a 0–1 alpha value.
+          </p>
+
+          <h3>What is OKLCH and should I use it instead of HSL?</h3>
+          <p>
+            OKLCH is a perceptually uniform color space where equal numeric changes produce equal perceived visual differences. HSL has a known flaw: yellow at 50% lightness looks far brighter than blue at 50% lightness because HSL is not perceptually calibrated. OKLCH corrects this. As of 2026 it has 93%+ global browser support. Use OKLCH for new design systems; provide an HSL or HEX fallback for legacy browser contexts.
+          </p>
+
+          <h3>How do I check if my colors meet WCAG contrast requirements?</h3>
+          <p>
+            WCAG 2.1 requires a contrast ratio of at least 4.5:1 for normal text (AA level) and 3:1 for large text (18pt or 14pt bold). Calculate contrast using the relative luminance formula defined in the W3C spec, or use a tool that computes it automatically. The <a href="/color-converter/">BytePane Color Converter</a> shows WCAG pass/fail status for any two colors. Per the WebAIM Million 2025 report, 79.7% of home pages still fail at least one contrast check.
+          </p>
+
+          <h3>Why does HSL hue use degrees (0–360)?</h3>
+          <p>
+            Hue represents a position on the color wheel, which is circular — hence 360°. Key landmarks: 0°=red, 60°=yellow, 120°=green, 180°=cyan, 240°=blue, 300°=magenta, 360°=red again. Hue values wrap around, so <code >hsl(370deg 80% 50%)</code> is identical to <code >hsl(10deg 80% 50%)</code>. This wrapping property is useful for generating analogous or complementary colors by adding/subtracting fixed degree offsets.
+          </p>
+
+          <h3>What is the alpha channel and how is it expressed in different formats?</h3>
+          <p>
+            Alpha controls opacity. In 8-digit HEX it is a two-digit suffix (<code >#RRGGBBAA</code>, where <code >FF</code>=fully opaque, <code >00</code>=fully transparent). In RGB: <code >rgba(255, 87, 51, 0.5)</code>. In HSL: <code >hsla(9, 100%, 60%, 0.5)</code>. Modern CSS4 uses slash notation: <code >rgb(255 87 51 / 50%)</code> or <code >hsl(9 100% 60% / 50%)</code>.
+          </p>
+
+          <h3>Can I use CSS variables with color functions to build a theme?</h3>
+          <p>
+            Yes — and this is the recommended pattern for design systems. Define base hue and saturation (or OKLCH lightness and chroma) as CSS custom properties, then derive all shades using <code >hsl()</code> or <code >oklch()</code>. Changing <code >--brand-hue</code> from 220 to 160 instantly re-themes the entire application without touching any other variable. This is how shadcn/ui and other modern component libraries implement multiple color themes with minimal CSS duplication.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Convert Colors Instantly in Your Browser</h2>
+          <p>
+            The BytePane Color Converter converts between HEX, RGB, HSL, and OKLCH in real time. It also calculates WCAG contrast ratios for any color pair — fully client-side, no tracking, no API calls.
+          </p>
+          <a href="/color-converter/">
+            Open Color Converter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/color-formats-hex-rgb-hsl/">
+              <h3>Color Formats Explained: HEX, RGB, HSL &amp; Beyond</h3>
+              <p>Deep dive into color format theory, conversion formulas, and design system patterns.</p>
+            </a>
+            <a href="/blog/web-accessibility-testing-guide/">
+              <h3>Web Accessibility Testing Guide</h3>
+              <p>WCAG 2.1 compliance checklist, contrast requirements, and testing tools.</p>
+            </a>
+            <a href="/blog/css-grid-vs-flexbox/">
+              <h3>CSS Grid vs Flexbox</h3>
+              <p>When to use each layout system with practical examples.</p>
+            </a>
+            <a href="/blog/css-has-selector-guide/">
+              <h3>CSS :has() Selector Guide</h3>
+              <p>The parent selector CSS always needed, with real-world patterns.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/color-picker/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
