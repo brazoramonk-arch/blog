@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Cheat Sheet: Most Useful Commands Every Developer Needs - BytePane</title>
+  <meta name="description" content="The essential Git command reference: setup, staging, branching, merging, remotes, undoing mistakes, and stashing. With real examples and workflow tips.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/git-cheat-sheet/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Git Cheat Sheet: Most Useful Commands Every Developer Needs
+  </nav>
+
+  <article>
+    <h1>Git Cheat Sheet: Most Useful Commands Every Developer Needs</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/git-cheat-sheet/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Git Cheat Sheet: Most Useful Commands Every Developer Needs',
+            description: 'The essential Git command reference: setup, staging, branching, merging, remotes, undoing mistakes, and stashing. With real examples and workflow tips.',
+            datePublished: '2026-03-23',
+            dateModified: '2026-03-23',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/git-cheat-sheet/',
+            mainEntityOfPage: 'https://bytepane.com/blog/git-cheat-sheet/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Git Cheat Sheet' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'What is the difference between git fetch and git pull?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'git fetch downloads remote changes into your local remote-tracking branches (origin/main) without touching your working branch. git pull is effectively git fetch followed by git merge (or git rebase with --rebase). Use fetch when you want to inspect remote changes before integrating them. Use pull when you trust the remote and want to update immediately.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do I undo the last git commit without losing changes?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Run git reset --soft HEAD~1. This moves the HEAD pointer back one commit but leaves all changes staged in your index. If you want to unstage the changes too (but keep them in your working directory), use git reset --mixed HEAD~1. Never use git reset --hard unless you are sure you want to permanently discard the changes.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What does git stash do and when should I use it?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'git stash temporarily shelves your uncommitted changes so you can switch branches or pull updates without committing half-finished work. Run git stash to save, git stash pop to restore. Use git stash push -m "description" to name stashes when you have multiple. Stashes are local-only — they are not pushed to remotes.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do I delete a remote branch in Git?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Run git push origin --delete branch-name. To also delete the local tracking reference, follow up with git fetch --prune or run git branch -d branch-name for the local branch. In GitHub and GitLab you can also delete branches through the web UI after merging a pull request.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between git reset and git revert?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'git reset rewrites history by moving the HEAD pointer backward — it should only be used on local commits that have not been pushed. git revert creates a new commit that undoes a previous commit, preserving the full history. Always use git revert on shared branches to avoid disrupting collaborators who have already pulled the commits you want to undo.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do I see which branches have been merged?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Run git branch --merged to list local branches already merged into the current branch. Use git branch -r --merged to check remote branches. To list branches that have NOT been merged yet, run git branch --no-merged. This is useful for identifying stale branches that are safe to delete after a sprint or release cycle.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do I configure Git to use a specific SSH key for a repository?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Edit ~/.ssh/config and add a Host block that maps an alias to your key: Host github-work, HostName github.com, IdentityFile ~/.ssh/id_ed25519_work. Then set the remote URL to use the alias: git remote set-url origin git@github-work:org/repo.git. This lets you use different SSH keys for different GitHub accounts or organizations.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Git Cheat Sheet
+      
+
+      /* Article Header */
+      
+        <h2>
+          Git Cheat Sheet: Most Useful Commands Every Developer Needs
+        </h2>
+        
+          Git
+          <time dateTime="2026-03-23">March 23, 2026</time>
+          18 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Opening: lead with a key statistic */
+        
+          <p>
+            According to the <strong>2025 Stack Overflow Developer Survey</strong> — which collected responses from 49,000+ developers across 177 countries — Git is used by <strong>93.87% of professional developers</strong>, up from 87.1% in 2016. It is the single most universally adopted tool in the industry. Yet most developers operate with a vocabulary of 8–12 commands and panic when they need anything beyond that.
+          </p>
+          <p>
+            This reference covers the commands you will actually reach for in daily work, organized by the workflow phase where they matter most. No padding, no obvious filler — just the commands, flags, and real-world context that make the difference.
+          </p>
+        
+
+        /* Key Takeaways Box */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸<strong>93.87% of developers use Git</strong> per the 2025 Stack Overflow Developer Survey — the highest adoption of any developer tool.</li>
+            <li>▸<strong>git reset vs git revert:</strong> reset rewrites history (local only); revert is safe on shared branches.</li>
+            <li>▸<strong>git stash push -m</strong> with a message beats unnamed stashes the moment you accumulate more than one.</li>
+            <li>▸<strong>Interactive rebase</strong> (<code >git rebase -i</code>) is the most powerful cleanup tool most developers never use.</li>
+            <li>▸<strong>git bisect</strong> can pinpoint the exact commit that introduced a bug in O(log n) steps without any manual binary search.</li>
+          </ul>
+        
+
+        /* Section 1: Setup & Config */
+        
+          <h2>Initial Setup & Global Configuration</h2>
+          <p>
+            These commands run once per machine. Git stores configuration in three layers: <code >--system</code> (all users), <code >--global</code> (current user, stored in <code >~/.gitconfig</code>), and <code >--local</code> (per-repo, stored in <code >.git/config</code>). Local overrides global, which overrides system.
+          </p>
+          <p>
+            <code >`# Identity — appears in every commit you create
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+# Default branch name (Git 2.28+)
+git config --global init.defaultBranch main
+
+# Set VS Code as the default editor
+git config --global core.editor "code --wait"
+
+# Use rebase instead of merge on git pull
+git config --global pull.rebase true
+
+# Automatically set up remote tracking on push
+git config --global push.autoSetupRemote true   # Git 2.37+
+
+# View all active config values and where they come from
+git config --list --show-origin
+
+# View a specific value
+git config user.email`</code>
+          </pre>
+          <p >
+            <code >push.autoSetupRemote true</code> (introduced in Git 2.37, July 2022) eliminates the need to type <code >--set-upstream origin branch-name</code> on your first push from a new branch. It is one of the most underused config improvements in recent Git versions.
+          </p>
+        
+
+        /* Section 2: Starting a Repository */
+        
+          <h2>Starting and Cloning Repositories</h2>
+          <p>
+            <code >`# Initialize a new repository in the current directory
+git init
+
+# Initialize with a specific branch name
+git init -b main
+
+# Clone a remote repository
+git clone https://github.com/org/repo.git
+
+# Clone into a specific folder name
+git clone https://github.com/org/repo.git my-folder
+
+# Shallow clone — only the latest commit (faster for CI/CD)
+git clone --depth 1 https://github.com/org/repo.git
+
+# Clone a single branch
+git clone --branch develop --single-branch https://github.com/org/repo.git
+
+# Clone using SSH (requires SSH key setup)
+git clone git@github.com:org/repo.git`</code>
+          </pre>
+          <p >
+            Shallow clones (<code >--depth 1</code>) are standard practice in CI/CD pipelines where you only care about the latest code. According to GitHub's internal data, shallow clones can reduce clone time by 80–95% on large repositories. The trade-off is that history-dependent commands like <code >git bisect</code> and <code >git log --follow</code> will not work correctly.
+          </p>
+        
+
+        /* Section 3: Staging & Committing */
+        
+          <h2>Staging, Inspecting, and Committing Changes</h2>
+          <p>
+            Git's three-stage model — working directory, staging area (index), repository — is the concept most developers gloss over until it bites them. Understanding what <code >git add</code> actually does (writing to the index, not to any commit) is the key to using <code >git reset</code> and <code >git checkout</code> without surprises.
+          </p>
+          <p>
+            <code >`# Show working directory and staging area status
+git status
+git status -s        # Short format: M=modified, A=added, ?=untracked
+
+# Stage a specific file
+git add src/app.js
+
+# Stage all changes in the current directory
+git add .
+
+# Stage only parts of a file (interactive hunk selection)
+git add -p           # or --patch
+
+# Unstage a file (keeps changes in working directory)
+git restore --staged src/app.js   # Git 2.23+
+# Older equivalent:
+git reset HEAD src/app.js
+
+# Show what is staged (what will go into the next commit)
+git diff --staged    # or --cached
+
+# Show unstaged changes (working dir vs index)
+git diff
+
+# Commit staged changes
+git commit -m "feat: add user authentication"
+
+# Stage all tracked files and commit in one step
+git commit -am "fix: correct typo in error message"
+
+# Amend the most recent commit (message or content)
+# WARNING: only use before pushing — rewrites history
+git commit --amend -m "fix: correct typo in error message"
+git commit --amend --no-edit   # Keep same message, add staged changes`</code>
+          </pre>
+          <p >
+            Use <code >git add -p</code> (patch mode) to stage only specific hunks within a file. This is how you make atomic commits — each commit does one thing — without having to artificially split your work into separate files. See our guide on <a href="/blog/git-workflow-best-practices/">Git workflow best practices</a> for commit message conventions and PR review discipline.
+          </p>
+        
+
+        /* Section 4: Viewing History */
+        
+          <h2>Viewing History and Searching Commits</h2>
+          <p>
+            <code >`# Show commit history
+git log
+git log --oneline                        # Compact, one commit per line
+git log --oneline --graph --all          # Visual branch graph
+git log --oneline -10                    # Last 10 commits
+
+# Show commits by a specific author
+git log --author="Alice"
+
+# Show commits that changed a specific file
+git log --follow -- src/auth.js          # --follow tracks renames
+
+# Show what changed in a specific commit
+git show abc1234
+git show HEAD                            # Most recent commit
+
+# Search commit messages for a string
+git log --grep="authentication"
+
+# Search for when a line of code was introduced/removed
+git log -S "function getUserById"        # Pickaxe search
+
+# Show commits between two dates
+git log --after="2026-01-01" --before="2026-03-01"
+
+# Show who last modified each line of a file
+git blame src/auth.js
+git blame -L 10,30 src/auth.js          # Lines 10–30 only`</code>
+          </pre>
+          <p >
+            The <code >-S</code> flag (pickaxe) is indispensable for debugging: it finds every commit where a specific string was added or removed from the codebase, regardless of which file. Combine it with <code >--oneline -p</code> to see both the commit and the diff in one pass.
+          </p>
+        
+
+        /* Section 5: Branching */
+        
+          <h2>Branching and Switching</h2>
+          <p>
+            <code >`# List all local branches (* = current branch)
+git branch
+
+# List all branches including remote-tracking
+git branch -a
+
+# Create a new branch
+git branch feature/user-auth
+
+# Create and switch to a new branch (preferred modern syntax)
+git switch -c feature/user-auth     # Git 2.23+
+# Older equivalent:
+git checkout -b feature/user-auth
+
+# Switch to an existing branch
+git switch main
+git checkout main    # Older equivalent
+
+# Rename the current branch
+git branch -m new-name
+
+# Delete a merged local branch
+git branch -d feature/user-auth
+
+# Force-delete an unmerged branch (data loss risk!)
+git branch -D feature/user-auth
+
+# List branches already merged into current branch
+git branch --merged
+
+# List branches NOT yet merged
+git branch --no-merged`</code>
+          </pre>
+          <p >
+            The <code >git switch</code> command (Git 2.23+) was introduced specifically to separate branch operations from file restore operations, which <code >git checkout</code> awkwardly combined. Prefer <code >git switch</code> in scripts and documentation going forward. For team branching strategies, see our comparison of <a href="/blog/git-branching-strategies/">GitFlow, GitHub Flow, and trunk-based development</a>.
+          </p>
+        
+
+        /* Section 6: Merging & Rebasing */
+        
+          <h2>Merging and Rebasing</h2>
+          <p>
+            <code >`# Merge a branch into the current branch
+git merge feature/user-auth
+
+# Merge without fast-forward (always creates a merge commit)
+git merge --no-ff feature/user-auth
+
+# Squash all branch commits into one staged changeset
+git merge --squash feature/user-auth
+git commit -m "feat: add user authentication"
+
+# Abort an in-progress merge
+git merge --abort
+
+# Rebase current branch onto main
+git rebase main
+
+# Interactive rebase — edit last 4 commits
+# pick = keep, reword = change message, squash = combine, drop = delete
+git rebase -i HEAD~4
+
+# Rebase onto a specific commit
+git rebase --onto main feature-base feature-branch
+
+# Abort a rebase in progress
+git rebase --abort
+
+# Continue after resolving a conflict
+git rebase --continue`</code>
+          </pre>
+          <p >
+            Interactive rebase (<code >git rebase -i</code>) is the most powerful history cleanup tool in Git and the one most developers avoid because it looks intimidating. Use it to squash WIP commits before opening a PR, split a large commit into focused pieces, or reorder commits so the history tells a coherent story. The full decision framework for when to use each strategy is in our <a href="/blog/git-rebase-vs-merge/">rebase vs merge guide</a>.
+          </p>
+        
+
+        /* Section 7: Remote Operations */
+        
+          <h2>Working with Remotes</h2>
+          <p>
+            <code >`# List remotes (with URLs)
+git remote -v
+
+# Add a remote
+git remote add origin https://github.com/org/repo.git
+
+# Change a remote URL (e.g., switch from HTTPS to SSH)
+git remote set-url origin git@github.com:org/repo.git
+
+# Remove a remote
+git remote remove upstream
+
+# Fetch all remote changes without merging
+git fetch origin
+git fetch --all        # Fetch from all remotes
+git fetch --prune      # Fetch and delete stale remote-tracking branches
+
+# Push a branch to remote
+git push origin feature/user-auth
+
+# Push and set upstream tracking in one step
+git push -u origin feature/user-auth
+
+# Force push — DANGEROUS on shared branches
+git push --force-with-lease   # Safer: fails if remote has new commits
+git push --force              # Overwrites remote unconditionally
+
+# Delete a remote branch
+git push origin --delete feature/user-auth
+
+# Pull (fetch + merge)
+git pull origin main
+
+# Pull with rebase instead of merge
+git pull --rebase origin main`</code>
+          </pre>
+          <p >
+            Always use <code >--force-with-lease</code> instead of <code >--force</code> when you must force-push. It checks whether the remote has been updated by someone else since your last fetch — if it has, the push is rejected, preventing you from silently overwriting a teammate's work. This single habit has prevented countless lost commits on engineering teams.
+          </p>
+        
+
+        /* Section 8: Undoing Changes */
+        
+          <h2>Undoing Changes: Reset, Revert, Restore, and Clean</h2>
+          <p>
+            This is where most Git horror stories originate. The key rule: <strong>never rewrite history that has already been pushed to a shared branch.</strong>
+          </p>
+          <p>
+            <code >`# Discard changes in working directory (dangerous — irreversible)
+git restore src/app.js         # Git 2.23+
+git checkout -- src/app.js     # Older equivalent
+
+# Unstage changes (keeps changes in working directory)
+git restore --staged src/app.js
+
+# Undo last commit — keep changes staged
+git reset --soft HEAD~1
+
+# Undo last commit — keep changes unstaged (DEFAULT behavior)
+git reset --mixed HEAD~1
+git reset HEAD~1              # Same as --mixed
+
+# Undo last commit — DISCARD all changes (irreversible!)
+git reset --hard HEAD~1
+
+# Safely undo a commit by creating a new reverting commit
+# Safe on shared branches because history is preserved
+git revert HEAD               # Revert the last commit
+git revert abc1234            # Revert a specific commit
+git revert HEAD~3..HEAD       # Revert a range of commits
+
+# Remove untracked files from working directory
+git clean -n                  # Dry run — show what would be deleted
+git clean -fd                 # Actually delete untracked files and dirs`</code>
+          </pre>
+
+          /* Comparison Table */
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Command</th>
+                  <th >Rewrites History?</th>
+                  <th >Safe on Shared Branch?</th>
+                  <th >Keeps Changes?</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >git reset --soft</td>
+                  <td >Yes</td>
+                  <td >No</td>
+                  <td >Yes (staged)</td>
+                </tr>
+                <tr >
+                  <td >git reset --mixed</td>
+                  <td >Yes</td>
+                  <td >No</td>
+                  <td >Yes (unstaged)</td>
+                </tr>
+                <tr >
+                  <td >git reset --hard</td>
+                  <td >Yes</td>
+                  <td >No</td>
+                  <td >No (lost!)</td>
+                </tr>
+                <tr >
+                  <td >git revert</td>
+                  <td >No (adds commit)</td>
+                  <td >Yes</td>
+                  <td >N/A (creates inverse)</td>
+                </tr>
+                <tr>
+                  <td >git restore</td>
+                  <td >No</td>
+                  <td >Yes</td>
+                  <td >No (working dir only)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        /* Section 9: Stashing */
+        
+          <h2>Stashing Work in Progress</h2>
+          <pre >
+            <code >`# Save current working directory and staging area
+git stash
+
+# Stash with a descriptive name (highly recommended)
+git stash push -m "WIP: refactor auth middleware"
+
+# Include untracked files in the stash
+git stash push -u -m "WIP: add new config files"
+
+# List all stashes
+git stash list
+# Output:
+# stash@0: On feature/auth: WIP: refactor auth middleware
+# stash@1: On main: WIP: add new config files
+
+# Apply the most recent stash (keeps it in stash list)
+git stash apply
+
+# Apply a specific stash
+git stash apply stash@1
+
+# Apply and remove the most recent stash from the list
+git stash pop
+
+# Show the diff of a stash without applying it
+git stash show -p stash@0
+
+# Delete a specific stash
+git stash drop stash@1
+
+# Delete all stashes
+git stash clear
+
+# Create a branch from a stash
+git stash branch feature/new-branch stash@0`</code>
+          </pre>
+          <p >
+            Always name your stashes with <code >-m</code>. The auto-generated name (<code >WIP on feature/auth: abc1234 fix typo</code>) becomes useless after you have accumulated 3+ stashes and cannot remember which is which.
+          </p>
+        
+
+        /* Section 10: Tags */
+        
+          <h2>Tagging Releases</h2>
+          <p>
+            <code >`# List all tags
+git tag
+
+# Create an annotated tag (recommended — includes tagger, date, message)
+git tag -a v1.2.0 -m "Release v1.2.0: add user authentication"
+
+# Create a lightweight tag (just a pointer, no metadata)
+git tag v1.2.0
+
+# Tag a specific commit
+git tag -a v1.1.0 abc1234 -m "Backfill release tag"
+
+# Show tag details and the tagged commit
+git show v1.2.0
+
+# Push a specific tag to remote
+git push origin v1.2.0
+
+# Push all local tags to remote
+git push origin --tags
+
+# Delete a local tag
+git tag -d v1.2.0
+
+# Delete a remote tag
+git push origin --delete v1.2.0`</code>
+          </pre>
+        
+
+        /* Section 11: Advanced & Power Commands */
+        
+          <h2>Advanced Commands Worth Knowing</h2>
+
+          <h3>Cherry-pick: Apply Specific Commits</h3>
+          <pre >
+            <code >`# Apply a single commit from another branch
+git cherry-pick abc1234
+
+# Cherry-pick a range of commits (exclusive..inclusive)
+git cherry-pick abc1234..def5678
+
+# Cherry-pick without auto-committing (stage only)
+git cherry-pick -n abc1234
+
+# Continue after resolving a conflict
+git cherry-pick --continue`</code>
+          </pre>
+
+          <h3>Bisect: Binary Search for a Bug</h3>
+          <p >
+            <code >git bisect</code> is criminally underused. Given a range of 1,000 commits, it finds the exact commit that introduced a regression in just 10 steps (log₂ 1000 ≈ 10). You can automate it entirely with a test script.
+          </p>
+          <p>
+            <code >`# Start a bisect session
+git bisect start
+
+# Mark the current (broken) commit as bad
+git bisect bad
+
+# Mark a known-good commit
+git bisect good v1.0.0
+
+# Git checks out the midpoint commit. Test it, then:
+git bisect good    # If this commit is fine
+git bisect bad     # If this commit is broken
+
+# Git narrows the range and repeats until it finds the culprit
+# To automate with a test script (exit 0 = good, exit 1 = bad):
+git bisect run npm test -- --testPathPattern="auth.test.js"
+
+# End the session and return to original HEAD
+git bisect reset`</code>
+          </pre>
+
+          <h3>Worktrees: Multiple Branches, One Clone</h3>
+          <pre >
+            <code >`# Check out a branch into a separate directory
+# without cloning the repo again
+git worktree add ../hotfix-branch hotfix/critical-fix
+
+# List all worktrees
+git worktree list
+
+# Remove a worktree
+git worktree remove ../hotfix-branch`</code>
+          </pre>
+          <p >
+            Worktrees are the clean solution to the classic "I'm in the middle of a feature and need to quickly patch prod" problem. Instead of stashing, switching branches, fixing, pushing, and un-stashing — you check out the hotfix branch into a separate folder and work there independently. Both branches share the same <code >.git</code> directory, so no disk duplication.
+          </p>
+
+          <h3>Reflog: Your Safety Net</h3>
+          <p>
+            <code >`# Show the reflog for HEAD (every position HEAD has pointed to)
+git reflog
+
+# Show reflog for a specific branch
+git reflog show main
+
+# Recover a commit after a bad reset --hard
+# Find the commit SHA in reflog, then:
+git reset --hard abc1234   # Return to that state
+# Or create a new branch at the lost commit:
+git branch recovery-branch abc1234`</code>
+          </pre>
+          <p >
+            The reflog is local-only and expires after 90 days by default. If you accidentally <code >git reset --hard</code> past important commits, <code >git reflog</code> is usually your path back. It records every movement of HEAD, including resets, rebases, and merges.
+          </p>
+        
+
+        /* Section 12: .gitignore */
+        
+          <h2>.gitignore Patterns and Troubleshooting</h2>
+          <p>
+            <code >`# Common .gitignore patterns
+node_modules/          # Ignore entire directory
+*.log                  # Ignore all log files
+.env                   # Ignore environment files
+.DS_Store              # macOS metadata
+dist/                  # Build output
+*.local                # Local override files
+
+# Negate a pattern (track this file even if its parent is ignored)
+!dist/index.html
+
+# Check why a file is being ignored
+git check-ignore -v src/secrets.env
+
+# Add a file that is already being tracked (already in git history)
+# .gitignore only affects untracked files. To stop tracking:
+git rm --cached src/secrets.env
+echo "src/secrets.env" >> .gitignore
+git commit -m "chore: stop tracking secrets file"
+
+# Check what .gitignore rules apply globally (user-level)
+git config --global core.excludesFile    # Typically ~/.gitignore_global`</code>
+          </pre>
+        
+
+        /* Command Quick Reference Table */
+        
+          <h2>Quick Reference: Commands by Frequency of Use</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Frequency</th>
+                  <th >Commands</th>
+                  <th >Purpose</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Daily</td>
+                  <td >status, add, commit, push, pull, switch</td>
+                  <td >Core edit-commit-sync loop</td>
+                </tr>
+                <tr >
+                  <td >Weekly</td>
+                  <td >fetch, merge, rebase, log, diff, stash</td>
+                  <td >Branch integration and history</td>
+                </tr>
+                <tr >
+                  <td >Monthly</td>
+                  <td >rebase -i, cherry-pick, tag, remote</td>
+                  <td >Cleanup and release management</td>
+                </tr>
+                <tr>
+                  <td >Emergency</td>
+                  <td >reflog, bisect, reset --hard, worktree</td>
+                  <td >Recovery and debugging</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        /* Section: Useful Aliases */
+        
+          <h2>Git Aliases Worth Configuring</h2>
+          <p >
+            Git aliases save keystrokes on the commands you run dozens of times a day. Add these to your <code >~/.gitconfig</code> under <code >[alias]</code>:
+          </p>
+          <p>
+            <code >`[alias]
+  # Compact status
+  st = status -s
+
+  # Pretty log graph
+  lg = log --oneline --graph --all --decorate
+
+  # Last 10 commits with relative dates
+  last = log -10 --pretty=format:"%C(yellow)%h%Creset %ad %C(bold)%s%Creset %C(red)%d%Creset" --date=relative
+
+  # Undo last commit, keep changes staged
+  undo = reset --soft HEAD~1
+
+  # Amend without editing the message
+  amend = commit --amend --no-edit
+
+  # Delete all merged local branches (except main/master/develop)
+  cleanup = !git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs git branch -d
+
+  # Show files changed in last N commits
+  changed = diff --name-only HEAD~1 HEAD
+
+  # Stash including untracked files
+  save = stash push -u
+
+  # Find which branch contains a commit
+  find-branch = branch -a --contains`</code>
+          </pre>
+          <p >
+            The <code >cleanup</code> alias is particularly useful at the end of a sprint. It deletes every local branch that has already been merged, leaving only the active branches. Run it after merging a batch of PRs to keep your branch list clean. Review CI/CD integration with Git in our <a href="/blog/ci-cd-pipeline-guide/">CI/CD pipeline guide</a>.
+          </p>
+        
+
+        /* FAQ Section */
+        
+          <h2>Frequently Asked Questions</h2>
+
+          <h3>What is the difference between git fetch and git pull?</h3>
+          <p>
+            <code >git fetch</code> downloads remote changes into your local remote-tracking branches (<code >origin/main</code>) without touching your working branch. <code >git pull</code> is effectively <code >git fetch</code> followed by <code >git merge</code> (or rebase with <code >--rebase</code>). Use <code >fetch</code> when you want to inspect remote changes before integrating them. Use <code >pull</code> when you trust the remote and want to update immediately.
+          </p>
+
+          <h3>How do I undo the last git commit without losing changes?</h3>
+          <p>
+            Run <code >git reset --soft HEAD~1</code>. This moves the HEAD pointer back one commit but leaves all changes staged in your index. If you want to also unstage the changes (but keep them in your working directory), use <code >git reset --mixed HEAD~1</code>. Never use <code >git reset --hard</code> unless you are sure you want to permanently discard the changes.
+          </p>
+
+          <h3>What does git stash do and when should I use it?</h3>
+          <p>
+            <code >git stash</code> temporarily shelves your uncommitted changes so you can switch branches or pull updates without committing half-finished work. Run <code >git stash push -m "description"</code> to save with a name, <code >git stash pop</code> to restore. Stashes are local-only — they are not pushed to remotes.
+          </p>
+
+          <h3>How do I delete a remote branch in Git?</h3>
+          <p>
+            Run <code >git push origin --delete branch-name</code>. To also remove the local tracking reference, run <code >git fetch --prune</code> afterward. On GitHub and GitLab, branches are automatically offered for deletion after a pull request is merged.
+          </p>
+
+          <h3>What is the difference between git reset and git revert?</h3>
+          <p>
+            <code >git reset</code> rewrites history by moving the HEAD pointer backward — safe only on local commits that have not been pushed. <code >git revert</code> creates a new commit that undoes a previous commit, preserving the full history. Always use <code >git revert</code> on shared branches to avoid disrupting collaborators who have already pulled the commits you want to undo.
+          </p>
+
+          <h3>How do I see which branches have been merged?</h3>
+          <p>
+            Run <code >git branch --merged</code> to list local branches already merged into the current branch. Use <code >git branch -r --merged</code> to check remote branches. To list branches not yet merged, run <code >git branch --no-merged</code>. Useful for identifying stale branches that are safe to delete after a sprint or release cycle.
+          </p>
+
+          <h3>How do I configure Git to use a specific SSH key for a repository?</h3>
+          <p>
+            Edit <code >~/.ssh/config</code> and add a <code >Host</code> block that maps an alias to your key. Then set the remote URL to use the alias: <code >git remote set-url origin git@github-work:org/repo.git</code>. This lets you use different SSH keys for different GitHub accounts. See our <a href="/blog/ssh-keys-guide/">SSH keys guide</a> for the full setup walkthrough.
+          </p>
+        
+
+        /* CTA Section */
+        
+          <h2>Compare File Differences in Your Browser</h2>
+          <p>
+            Need to inspect what changed between two versions of a file without pulling up a terminal? BytePane's Diff Checker gives you a side-by-side diff with syntax highlighting, inline change markers, and copy-paste convenience — no install required.
+          </p>
+          <a href="/diff-checker/">
+            Open Diff Checker
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/git-rebase-vs-merge/">
+              <h3>Git Rebase vs Merge</h3>
+              <p>When to rebase, when to merge, and how to avoid common pitfalls.</p>
+            </a>
+            <a href="/blog/git-branching-strategies/">
+              <h3>Git Branching Strategies</h3>
+              <p>GitFlow, GitHub Flow, and trunk-based development compared.</p>
+            </a>
+            <a href="/blog/git-workflow-best-practices/">
+              <h3>Git Workflow Best Practices</h3>
+              <p>Atomic commits, branch naming, and code review discipline.</p>
+            </a>
+            <a href="/blog/ci-cd-pipeline-guide/">
+              <h3>CI/CD Pipeline Guide</h3>
+              <p>GitHub Actions, Jenkins, and GitLab CI compared side by side.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/git-cheat-sheet/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
