@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Average Salary by State: 2026 Data for All 50 States - Salario</title>
+  <meta name="description" content="Comprehensive 2026 average salary data for all 50 US states, based on BLS OEWS figures. Covers median and mean annual wages, regional patterns, and what drives the $37,000 gap between top and bottom states.">
+  <link rel="canonical" href="https://www.salario.io/blog/average-salary-by-state/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/salario/">Salario</a> &rarr; Average Salary by State: 2026 Data for All 50 States
+  </nav>
+
+  <article>
+    <h1>Average Salary by State: 2026 Data for All 50 States</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.salario.io/blog/average-salary-by-state/">salario.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Average Salary by State: 2026 Data for All 50 States',
+    description: 'Comprehensive 2026 average salary data for all 50 US states, based on BLS OEWS figures. Covers median and mean annual wages, regional patterns, and what drives the $37,000 gap between top and bottom states.',
+    datePublished: '2026-03-22',
+    dateModified: '2026-03-22',
+    author:  '@type': 'Organization', name: 'Salario', url: 'https://salario.io/' ,
+    publisher:  '@type': 'Organization', name: 'Salario', url: 'https://salario.io/', logo:  '@type': 'ImageObject', url: 'https://salario.io/favicon.svg'  ,
+    mainEntityOfPage: 'https://salario.io/blog/average-salary-by-state/',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://salario.io/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://salario.io/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Average Salary by State', item: 'https://salario.io/blog/average-salary-by-state/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'What is the average salary in the United States in 2026?',
+        acceptedAnswer:  '@type': 'Answer', text: 'The national median annual wage is approximately $62,000–$66,600 depending on the measure used. The Bureau of Labor Statistics OEWS program reported a national mean annual wage of $66,622 for May 2024 (the latest published data). The Census Bureau\'s 2024 median household income was $83,730, which reflects all earners in a household rather than individual workers.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Which state has the highest average salary?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Massachusetts consistently ranks as the highest-paying state (excluding the District of Columbia, which is not a state). The BLS OEWS May 2024 data puts Massachusetts mean annual wages at approximately $83,490, driven by its concentration of biotechnology, financial services, and higher education institutions. Washington state ($79,580) and California ($79,080) rank second and third.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What state has the lowest average salary?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Mississippi has the lowest average wages of any US state, with a BLS mean annual wage of approximately $49,380. The state\'s economy relies heavily on agriculture, manufacturing, and retail trade — industries that pay below national averages. Arkansas ($51,950), Oklahoma ($53,720), and West Virginia ($52,800) round out the lowest-paying states.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does a higher state salary mean more take-home pay?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Not necessarily. High-salary states often have higher income taxes and higher costs of living that offset the gross pay advantage. Massachusetts earns $83,490 on average but has a 5% state income tax and high housing costs. Texas earns $61,640 on average but has no state income tax and lower housing costs. After adjusting for taxes and cost of living, the take-home purchasing power gap narrows significantly.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Why do coastal states pay so much more than inland states?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Coastal states benefit from geographic clustering of high-wage industries: technology in California and Washington, finance in New York and Connecticut, and biotech and education in Massachusetts. Urban density creates agglomeration effects — proximity to suppliers, clients, and talent pools drives productivity and wages higher. Trade access through major ports also supports higher-paying logistics, export, and financial services roles.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How does remote work affect average salary by state?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Remote work is beginning to narrow state salary gaps. Workers in low-wage states can now earn coastal-market salaries while paying local costs of living. States like Idaho, Montana, and Arizona have seen significant inflows of remote workers from California and the Pacific Northwest, which is gradually pushing average reported wages upward as high earners relocate. BLS data with a 12–18 month lag is only beginning to capture this effect.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the difference between mean and median salary by state?',
+        acceptedAnswer:  '@type': 'Answer', text: 'The mean (average) salary is pulled upward by high earners — a single CEO earning $5 million raises the average for everyone in the sample. The median salary is the midpoint where half of workers earn more and half earn less; it is a better measure of what a typical worker actually earns. In states with large tech or finance sectors, the mean often exceeds the median by $5,000–$15,000 due to a small number of very high earners at the top.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How should I use state salary data when negotiating my salary?',
+        acceptedAnswer:  '@type': 'Answer', text: 'State-level averages are a starting point, not a final benchmark. Use BLS OEWS state data to establish a regional baseline, then narrow to your specific metropolitan area and occupation using BLS metro-level data or Glassdoor. State averages blend rural and urban wages — metro-area data in your city may be 20–40% higher than the state average, giving you a stronger negotiating baseline.' ,
+      ,
+    ],
+  
+
+  
+    <>
+      
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          Average Salary by State
+        
+
+        
+          Salary Data
+          <h2>Average Salary by State: 2026 Data for All 50 States</h2>
+          <p>The gap between the highest and lowest-paying US states is $34,000 in mean annual wages. Here is where all 50 states rank, what drives the divide, and how to use state wage data to negotiate a better salary.</p>
+          
+            <time dateTime="2026-03-22">March 22, 2026</time>
+            
+            15 min read
+          
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>→National mean annual wage: $66,622 (BLS OEWS May 2024, latest published data); national median household income reached $83,730 in 2024 per the Census Bureau</li>
+              <li>→Highest-paying state: Massachusetts at ~$83,490 mean annual wage; District of Columbia ($101,570) leads all jurisdictions but is not a state</li>
+              <li>→Lowest-paying state: Mississippi at ~$49,380 mean annual wage — a $34,000 gap from Massachusetts</li>
+              <li>→8 states have no income tax; after adjusting for taxes and cost of living, low-wage states often close more than half the gap</li>
+              <li>→Industry composition explains most state salary differences — states with tech, finance, and biotech clusters dominate the top of the rankings</li>
+            </ul>
+          
+
+          /* Intro */
+          
+            <h2>The National Salary Baseline: What the Data Shows</h2>
+            <p>In May 2024 — the most recent survey period from the Bureau of Labor Statistics Occupational Employment and Wage Statistics (OEWS) program — the national mean annual wage across all occupations was <strong>$66,622</strong>. The median annual wage (the midpoint where half of US workers earn more and half earn less) was approximately $48,060 for all occupations, though this figure includes part-time workers; for full-time workers only, the median climbs to roughly $62,000.</p>
+            <p>The Census Bureau&apos;s 2024 American Community Survey separately measured median household income at $83,730 — up 4% from 2023. Household income reflects multiple earners in a household and is therefore higher than individual wage data. When reading salary comparisons, it&apos;s worth noting which measure is being used, as mean individual wages, median individual wages, and median household income can differ by $15,000–$25,000 for the same state.</p>
+            <p>The BLS OEWS program surveys approximately 1.1 million establishments across the country, making it the most statistically rigorous employer-reported wage dataset in existence. Data released in 2025 reflects May 2024 survey conditions — the standard 12–18 month publication lag means the figures here are the best available official data, not real-time estimates.</p>
+            <p>Use our <a href="/salary-calculator/">Salary Calculator</a> to convert any state&apos;s average salary to hourly, weekly, and monthly figures, or our <a href="/paycheck-calculator/">Paycheck Calculator</a> to model take-home pay after federal and state taxes in any state.</p>
+          
+
+          /* Full 50-State Table */
+          
+            <h2>Average Salary by State: All 50 States + DC (2026)</h2>
+            <p>The table below shows mean annual wages by state from BLS OEWS May 2024 data, ranked from highest to lowest. Mean wages are used (rather than median) because BLS publishes mean wage estimates at the state occupational level with greater consistency. Mean wages are pulled upward by high earners; for a &quot;typical worker&quot; perspective, assume median wages run approximately $5,000–$15,000 below these figures in most states.</p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Rank</th>
+                    <th >State</th>
+                    <th >Mean Annual Wage</th>
+                    <th >Mean Hourly Wage</th>
+                    <th >State Income Tax</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr >
+                    <td >—</td>
+                    <td >District of Columbia</td>
+                    <td >$101,570</td>
+                    <td >$48.83</td>
+                    <td >8.95%</td>
+                  </tr>
+                  <tr >
+                    <td >1</td>
+                    <td >Massachusetts</td>
+                    <td >$83,490</td>
+                    <td >$40.14</td>
+                    <td >5.0%</td>
+                  </tr>
+                  <tr >
+                    <td >2</td>
+                    <td >Washington</td>
+                    <td >$79,580</td>
+                    <td >$38.26</td>
+                    <td >0%</td>
+                  </tr>
+                  <tr >
+                    <td >3</td>
+                    <td >California</td>
+                    <td >$79,080</td>
+                    <td >$38.02</td>
+                    <td >13.3%</td>
+                  </tr>
+                  <tr >
+                    <td >4</td>
+                    <td >Connecticut</td>
+                    <td >$76,440</td>
+                    <td >$36.75</td>
+                    <td >6.99%</td>
+                  </tr>
+                  <tr >
+                    <td >5</td>
+                    <td >New Jersey</td>
+                    <td >$75,990</td>
+                    <td >$36.54</td>
+                    <td >10.75%</td>
+                  </tr>
+                  <tr >
+                    <td >6</td>
+                    <td >New York</td>
+                    <td >$74,690</td>
+                    <td >$35.91</td>
+                    <td >10.9%</td>
+                  </tr>
+                  <tr >
+                    <td >7</td>
+                    <td >Maryland</td>
+                    <td >$72,730</td>
+                    <td >$34.97</td>
+                    <td >5.75%</td>
+                  </tr>
+                  <tr >
+                    <td >8</td>
+                    <td >Virginia</td>
+                    <td >$71,560</td>
+                    <td >$34.40</td>
+                    <td >5.75%</td>
+                  </tr>
+                  <tr >
+                    <td >9</td>
+                    <td >Colorado</td>
+                    <td >$71,210</td>
+                    <td >$34.24</td>
+                    <td >4.4%</td>
+                  </tr>
+                  <tr >
+                    <td >10</td>
+                    <td >Minnesota</td>
+                    <td >$68,940</td>
+                    <td >$33.14</td>
+                    <td >9.85%</td>
+                  </tr>
+                  <tr >
+                    <td >11</td>
+                    <td >Alaska</td>
+                    <td >$65,850</td>
+                    <td >$31.66</td>
+                    <td >0%</td>
+                  </tr>
+                  <tr >
+                    <td >12</td>
+                    <td >New Hampshire</td>
+                    <td >$65,260</td>
+                    <td >$31.38</td>
+                    <td >0%</td>
+                  </tr>
+                  <tr >
+                    <td >13</td>
+                    <td >Illinois</td>
+                    <td >$65,200</td>
+                    <td >$31.35</td>
+                    <td >4.95%</td>
+                  </tr>
+                  <tr >
+                    <td >14</td>
+                    <td >Oregon</td>
+                    <td >$66,150</td>
+                    <td >$31.80</td>
+                    <td >9.9%</td>
+                  </tr>
+                  <tr >
+                    <td >15</td>
+                    <td >Hawaii</td>
+                    <td >$62,950</td>
+                    <td >$30.26</td>
+                    <td >11.0%</td>
+                  </tr>
+                  <tr >
+                    <td >16</td>
+                    <td >Delaware</td>
+                    <td >$63,780</td>
+                    <td >$30.66</td>
+                    <td >6.6%</td>
+                  </tr>
+                  <tr >
+                    <td >17</td>
+                    <td >Rhode Island</td>
+                    <td >$63,850</td>
+                    <td >$30.70</td>
+                    <td >5.99%</td>
+                  </tr>
+                  <tr >
+                    <td >18</td>
+                    <td >Texas</td>
+                    <td >$61,640</td>
+                    <td >$29.63</td>
+                    <td >0%</td>
+                  </tr>
+                  <tr >
+                    <td >19</td>
+                    <td >Arizona</td>
+                    <td >$62,140</td>
+                    <td >$29.88</td>
+                    <td >2.5%</td>
+                  </tr>
+                  <tr >
+                    <td >20</td>
+                    <td >Nevada</td>
+                    <td >$60,470</td>
+                    <td >$29.07</td>
+                    <td >0%</td>
+                  </tr>
+                  <tr >
+                    <td >21</td>
+                    <td >Michigan</td>
+                    <td >$60,770</td>
+                    <td >$29.22</td>
+                    <td >4.25%</td>
+                  </tr>
+                  <tr >
+                    <td >22</td>
+                    <td >Georgia</td>
+                    <td >$60,320</td>
+                    <td >$29.00</td>
+                    <td >5.49%</td>
+                  </tr>
+                  <tr >
+                    <td >23</td>
+                    <td >Wisconsin</td>
+                    <td >$59,560</td>
+                    <td >$28.63</td>
+                    <td >7.65%</td>
+                  </tr>
+                  <tr >
+                    <td >24</td>
+                    <td >Ohio</td>
+                    <td >$59,820</td>
+                    <td >$28.76</td>
+                    <td >3.99%</td>
+                  </tr>
+                  <tr >
+                    <td >25</td>
+                    <td >North Carolina</td>
+                    <td >$58,820</td>
+                    <td >$28.28</td>
+                    <td >4.5%</td>
+                  </tr>
+                  <tr >
+                    <td >26</td>
+                    <td >North Dakota</td>
+                    <td >$59,290</td>
+                    <td >$28.50</td>
+                    <td >2.5%</td>
+                  </tr>
+                  <tr >
+                    <td >27</td>
+                    <td >Kansas</td>
+                    <td >$58,390</td>
+                    <td >$28.07</td>
+                    <td >5.7%</td>
+                  </tr>
+                  <tr >
+                    <td >28</td>
+                    <td >Indiana</td>
+                    <td >$58,130</td>
+                    <td >$27.95</td>
+                    <td >3.15%</td>
+                  </tr>
+                  <tr >
+                    <td >29</td>
+                    <td >Utah</td>
+                    <td >$59,420</td>
+                    <td >$28.57</td>
+                    <td >4.65%</td>
+                  </tr>
+                  <tr >
+                    <td >30</td>
+                    <td >Pennsylvania</td>
+                    <td >$62,810</td>
+                    <td >$30.20</td>
+                    <td >3.07%</td>
+                  </tr>
+                  <tr >
+                    <td >31</td>
+                    <td >Vermont</td>
+                    <td >$59,750</td>
+                    <td >$28.73</td>
+                    <td >8.75%</td>
+                  </tr>
+                  <tr >
+                    <td >32</td>
+                    <td >Wyoming</td>
+                    <td >$59,640</td>
+                    <td >$28.67</td>
+                    <td >0%</td>
+                  </tr>
+                  <tr >
+                    <td >33</td>
+                    <td >Missouri</td>
+                    <td >$57,960</td>
+                    <td >$27.87</td>
+                    <td >4.8%</td>
+                  </tr>
+                  <tr >
+                    <td >34</td>
+                    <td >Maine</td>
+                    <td >$57,270</td>
+                    <td >$27.54</td>
+                    <td >7.15%</td>
+                  </tr>
+                  <tr >
+                    <td >35</td>
+                    <td >Nebraska</td>
+                    <td >$57,150</td>
+                    <td >$27.47</td>
+                    <td >5.84%</td>
+                  </tr>
+                  <tr >
+                    <td >36</td>
+                    <td >Iowa</td>
+                    <td >$56,700</td>
+                    <td >$27.26</td>
+                    <td >6.0%</td>
+                  </tr>
+                  <tr >
+                    <td >37</td>
+                    <td >Florida</td>
+                    <td >$56,230</td>
+                    <td >$27.03</td>
+                    <td >0%</td>
+                  </tr>
+                  <tr >
+                    <td >38</td>
+                    <td >South Carolina</td>
+                    <td >$56,240</td>
+                    <td >$27.04</td>
+                    <td >6.5%</td>
+                  </tr>
+                  <tr >
+                    <td >39</td>
+                    <td >New Mexico</td>
+                    <td >$56,380</td>
+                    <td >$27.11</td>
+                    <td >5.9%</td>
+                  </tr>
+                  <tr >
+                    <td >40</td>
+                    <td >Tennessee</td>
+                    <td >$56,020</td>
+                    <td >$26.93</td>
+                    <td >0%</td>
+                  </tr>
+                  <tr >
+                    <td >41</td>
+                    <td >South Dakota</td>
+                    <td >$53,760</td>
+                    <td >$25.85</td>
+                    <td >0%</td>
+                  </tr>
+                  <tr >
+                    <td >42</td>
+                    <td >Montana</td>
+                    <td >$54,490</td>
+                    <td >$26.20</td>
+                    <td >6.75%</td>
+                  </tr>
+                  <tr >
+                    <td >43</td>
+                    <td >Louisiana</td>
+                    <td >$55,420</td>
+                    <td >$26.65</td>
+                    <td >4.25%</td>
+                  </tr>
+                  <tr >
+                    <td >44</td>
+                    <td >Kentucky</td>
+                    <td >$54,540</td>
+                    <td >$26.22</td>
+                    <td >4.5%</td>
+                  </tr>
+                  <tr >
+                    <td >45</td>
+                    <td >Alabama</td>
+                    <td >$54,270</td>
+                    <td >$26.09</td>
+                    <td >5.0%</td>
+                  </tr>
+                  <tr >
+                    <td >46</td>
+                    <td >Idaho</td>
+                    <td >$54,020</td>
+                    <td >$25.97</td>
+                    <td >5.8%</td>
+                  </tr>
+                  <tr >
+                    <td >47</td>
+                    <td >West Virginia</td>
+                    <td >$52,800</td>
+                    <td >$25.38</td>
+                    <td >5.12%</td>
+                  </tr>
+                  <tr >
+                    <td >48</td>
+                    <td >Oklahoma</td>
+                    <td >$53,720</td>
+                    <td >$25.83</td>
+                    <td >4.75%</td>
+                  </tr>
+                  <tr >
+                    <td >49</td>
+                    <td >Arkansas</td>
+                    <td >$51,950</td>
+                    <td >$24.98</td>
+                    <td >4.4%</td>
+                  </tr>
+                  <tr >
+                    <td >50</td>
+                    <td >Mississippi</td>
+                    <td >$49,380</td>
+                    <td >$23.74</td>
+                    <td >5.0%</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            <p>Source: BLS Occupational Employment and Wage Statistics (OEWS) May 2024 data, published 2025. Mean annual wages across all occupations. State income tax top marginal rates for 2026.</p>
+          
+
+          /* Top 10 Deep Dive */
+          
+            <h2>The Top 10 Highest-Paying States: What Drives High Wages</h2>
+            <p>The ten highest-paying states share a common thread: economic specialization in high-productivity industries. Understanding what drives their wage premiums helps workers identify where their skills command the most value.</p>
+
+            <h3>Massachusetts: Biotech, Finance, and the Education Complex</h3>
+            <p>Massachusetts ranks first among states at $83,490 mean annual wage, anchored by one of the world&apos;s densest concentrations of biotechnology and pharmaceutical companies (Moderna, Biogen, and hundreds of smaller firms cluster along Route 128 and in Cambridge). The financial services sector in Boston and healthcare giants like Mass General Brigham add well-paying professional jobs. Harvard, MIT, and 120+ other colleges and universities generate demand for high-skilled research and administrative positions. Per BLS data, Massachusetts computer and mathematical occupations average $122,000 annually, and healthcare practitioners average $99,000.</p>
+
+            <h3>Washington State: Amazon, Microsoft, and the No-Income-Tax Advantage</h3>
+            <p>Washington ranks second at $79,580. The presence of Amazon (headquarters, 50,000+ employees) and Microsoft (headquarters, 50,000+ employees) in the Seattle metropolitan area creates massive demand for software engineers, product managers, and operations staff at wages well above national averages. Washington&apos;s lack of a state income tax is a significant real-wages amplifier — a $150,000 salary goes roughly $8,000–$12,000 further than the same salary in Massachusetts after taxes, partially explaining why many tech workers choose Washington over other high-wage states.</p>
+
+            <h3>California: Highest Nominal Wages, Highest Tax Burden</h3>
+            <p>California ranks third at $79,080, driven almost entirely by its technology sector in the San Francisco Bay Area and Los Angeles. According to Levels.fyi data, senior software engineers at FAANG companies in the Bay Area average $250,000–$400,000 in total compensation — figures that pull state averages up substantially. However, California&apos;s 13.3% top marginal state income tax rate means a $200,000 California salary nets roughly $10,000–$15,000 less annually than the same salary in Washington state, significantly reducing the real advantage over states ranked lower.</p>
+
+            <h3>The Notable Outliers: Alaska and Wyoming</h3>
+            <p>Alaska ($65,850) and Wyoming ($59,640) rank higher than their population and economic size would suggest, largely because of their extractive industries. Oil and gas extraction, mining, and natural resource management pay well above average wages, and both states have no income tax, boosting real take-home substantially. However, the cost of living in remote Alaska and Wyoming is elevated, partially offsetting the wage advantage.</p>
+          
+
+          /* Regional Patterns */
+          
+            <h2>Regional Salary Patterns: The Coastal-Interior Divide</h2>
+            <p>The salary map of the United States shows a persistent pattern: coastal states and their major metros systematically outpay interior and Southern states. This divide is not arbitrary — it reflects structural economic differences that have deepened over the past 40 years.</p>
+
+            
+              <p>Average Annual Wage by Region (BLS OEWS May 2024)</p>
+              
+                
+                  Northeast (NY, NJ, CT, MA, RI, NH, VT, ME, PA)
+                  ~$68,000–$75,000
+                
+                
+                  Pacific West (CA, WA, OR, HI, AK)
+                  ~$67,000–$72,000
+                
+                
+                  Mid-Atlantic (MD, VA, DC area)
+                  ~$65,000–$72,000
+                
+                
+                  Mountain West (CO, AZ, UT, NV, NM, ID, MT, WY)
+                  ~$57,000–$65,000
+                
+                
+                  Midwest (IL, MN, OH, MI, WI, IN, MO, IA, KS, NE, ND, SD)
+                  ~$56,000–$65,000
+                
+                
+                  South (TX, GA, FL, NC, TN, AL, LA, SC, AR, MS, KY, OK, WV)
+                  ~$53,000–$60,000
+                
+              
+            
+
+            <p>The coastal premium has three main causes. First, <strong>industry clustering</strong>: high-productivity industries (tech, finance, biotech, entertainment) are geographically concentrated in coastal metros. Second, <strong>agglomeration effects</strong>: dense urban economies create productivity gains through knowledge spillovers, specialized labor pools, and supply chain depth — all of which support higher wages. Third, <strong>college attainment</strong>: coastal states have higher rates of four-year degree holders, and degree holders on average earn 65% more than workers without degrees, according to the Bureau of Labor Statistics 2024 Current Population Survey data.</p>
+            <p>However, the cost-of-living-adjusted picture is more balanced. The BEA&apos;s Regional Price Parities data shows that after adjusting wages for local price levels, Midwestern states like Iowa, Wisconsin, and Indiana move up substantially in the real purchasing power rankings. See our <a href="/blog/cost-of-living-comparison/">Cost of Living Comparison</a> for the full analysis of where $66,000 goes furthest.</p>
+          
+
+          /* Mean vs Median */
+          
+            <h2>Mean vs. Median Salary: Which Number to Use</h2>
+            <p>Most salary discussions conflate mean (average) and median figures, but the difference matters enormously for practical use. The BLS publishes both for state-level data, and understanding which to use prevents costly benchmarking errors.</p>
+            <p>In California, the mean annual wage of $79,080 masks extreme income inequality. The top 10% of California workers earn $175,000+ per year, pulling the average upward substantially. The median California wage — where half of workers earn more and half earn less — is significantly lower, roughly $55,000–$60,000 for individual workers. For most people asking &quot;what does a typical worker earn in California?&quot; the median is the right answer. For employers trying to budget total payroll costs, the mean may be more relevant.</p>
+            <p>States with strong tech or finance sectors (California, New York, Washington, Connecticut, Massachusetts) show the largest mean-to-median gaps because a small number of extremely high earners pull the average up. States with more uniform wage distributions — Iowa, Nebraska, Indiana — show smaller gaps between mean and median.</p>
+            <p>For individual salary benchmarking, always request percentile data (25th, 50th, 75th) rather than just the mean. The BLS OEWS provides percentile wage estimates for all occupations at both state and national levels. Use our <a href="/blog/salary-benchmarking-guide/">Salary Benchmarking Guide</a> for the full methodology on comparing your pay to market data.</p>
+          
+
+          /* Tax-Adjusted Rankings */
+          
+            <h2>The Tax-Adjusted Salary Ranking: Which States Actually Pay More</h2>
+            <p>After applying state income taxes to average salaries, the ranking shifts meaningfully. States with no income tax (Texas, Florida, Washington, Tennessee, Nevada, Wyoming, South Dakota, Alaska, New Hampshire) effectively pay their workers more per dollar of gross salary than high-tax states at the same wage level.</p>
+            <p>Consider Texas ($61,640 mean wage, 0% state tax) versus California ($79,080, effective state tax rate ~8–10% on average income). A California worker earning $79,080 pays roughly $6,000–$7,500 in state income tax. After state taxes, their net is approximately $71,500–$73,000. Texas workers earning $61,640 keep the full amount after federal taxes. The post-state-tax gap shrinks from $17,400 to approximately $10,000–$12,000 — and then cost-of-living adjustments compress it further.</p>
+            <p>Run your own state income tax comparison with our <a href="/blog/state-income-tax-comparison/">State Income Tax Comparison</a>, or use the <a href="/paycheck-calculator/">Paycheck Calculator</a> to model take-home pay in any state at your salary level.</p>
+          
+
+          /* How to Use This Data */
+          
+            <h2>How to Use State Salary Data to Negotiate Better Pay</h2>
+            <p>State-level salary averages are most useful as the outermost layer of a benchmarking framework — they set regional context, not job-specific targets. Here is how to use them effectively:</p>
+
+            <h3>Start with State Data, Then Drill Down to Metro Level</h3>
+            <p>State averages blend urban and rural wages. If you work in Atlanta, GA, the Atlanta metro BLS data will show wages 15–25% above Georgia&apos;s state average. If you work in rural Iowa, state averages may actually be above your local market. Always benchmark against your specific metropolitan statistical area (MSA) using BLS&apos;s Metro Area Occupational Employment data, available free at bls.gov/oes.</p>
+
+            <h3>Use State Data for Relocation Negotiations</h3>
+            <p>When negotiating a remote salary for a company headquartered in a different state, state wage data helps you argue against excessive location-based pay cuts. If your employer wants to cut your pay 20% because you&apos;re moving from California to Texas, BLS data showing Texas mean wages at $61,640 versus California at $79,080 supports a maximum adjustment of roughly 22% — not a penny more. Most employers who apply location-based pay do not systematically apply this data; a well-prepared employee who does will negotiate better outcomes.</p>
+
+            <h3>Factor In Tax Exposure Before Accepting Relocations</h3>
+            <p>When evaluating a job that requires relocation, calculate post-tax take-home in both states before comparing offers. Use our <a href="/paycheck-calculator/">Paycheck Calculator</a> to model net pay by state. A $10,000 salary increase from moving to a state with 8% higher income taxes may be a wash or worse depending on your income level.</p>
+          
+
+          /* FAQ */
+          
+            <h2>Frequently Asked Questions</h2>
+            
+              
+                <h3>What is the average salary in the United States in 2026?</h3>
+                <p>The national mean annual wage is approximately $66,622 per the BLS OEWS May 2024 survey. The Census Bureau&apos;s 2024 median household income was $83,730, reflecting multiple earners. For individual full-time workers, the median falls around $62,000. The significant spread between mean and median reflects income inequality, particularly at the top of the wage distribution.</p>
+              
+              
+                <h3>Which state has the highest average salary?</h3>
+                <p>Massachusetts ranks first among states at ~$83,490 mean annual wage (BLS OEWS May 2024). The District of Columbia leads all jurisdictions at $101,570 but is not a state. Massachusetts&apos;s dominance is driven by biotechnology, financial services, and the large university and hospital sector anchored by Harvard, MIT, and Mass General Brigham.</p>
+              
+              
+                <h3>Does a higher state salary mean more take-home pay?</h3>
+                <p>Not necessarily. Massachusetts earns $83,490 on average but pays 5% state income tax and has high housing costs. Texas earns $61,640 but has no state income tax. After adjusting for taxes and cost of living, Texas workers at the average wage retain a larger share of their income. The raw wage gap narrows substantially after these adjustments.</p>
+              
+              
+                <h3>Why do coastal states pay so much more than inland states?</h3>
+                <p>Coastal states benefit from geographic concentration of high-productivity industries (tech, finance, biotech), urban agglomeration effects, and higher rates of college attainment. BLS data shows workers with bachelor&apos;s degrees earn 65% more than those without — and coastal states have higher degree attainment rates, creating structurally higher wage floors across all occupations.</p>
+              
+              
+                <h3>What is the difference between mean and median salary by state?</h3>
+                <p>The mean is pulled upward by high earners; the median is the true midpoint for typical workers. In California, a small number of tech executives earning $1M+ pull the mean significantly above what most workers earn. In states with more uniform wages (Iowa, Indiana), mean and median are closer together. For individual benchmarking, median wages better represent what you can realistically expect to earn.</p>
+              
+            
+          
+
+          /* CTA */
+          
+            <h2>See What Your Salary Looks Like in Every State</h2>
+            <p>Use our tools to calculate take-home pay by state, convert your salary to hourly, and compare purchasing power across US cities.</p>
+            
+              <a href="/paycheck-calculator/">Paycheck Calculator</a>
+              <a href="/cost-of-living/">Cost of Living Comparison</a>
+            
+          
+        
+      
+
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.salario.io/blog/average-salary-by-state/">Salario</a>.
+      Explore more free tools at <a href="https://www.salario.io/">salario.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.salario.io/">Salario</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
