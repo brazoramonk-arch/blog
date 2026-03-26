@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Square Footage Calculator: Measure Any Room or Area - HammerIO</title>
+  <meta name="description" content="Step-by-step guide to calculating square footage for any room shape with ANSI Z765 measurement standards, formulas for irregular spaces, and how square footage affects home value.">
+  <link rel="canonical" href="https://www.hammerio.com/blog/square-footage-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/hammerio/">HammerIO</a> &rarr; Square Footage Calculator: Measure Any Room or Area
+  </nav>
+
+  <article>
+    <h1>Square Footage Calculator: Measure Any Room or Area</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.hammerio.com/blog/square-footage-calculator/">hammerio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const relatedArticles = [
+   slug: 'home-building-cost-per-square-foot', title: 'Home Building Cost Per Square Foot by State (2026 Data)', category: 'New Construction' ,
+   slug: 'construction-cost-calculator', title: 'Construction Cost Calculator: Estimate Your Building Costs', category: 'Cost Estimating' ,
+   slug: 'bathroom-remodel-cost', title: 'Bathroom Remodel Cost: Average Prices & How to Save (2026)', category: 'Bathroom' ,
+];
+
+  const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Square Footage Calculator: Measure Any Room or Area (2026)',
+    description: 'Step-by-step guide to calculating square footage for any room shape with ANSI Z765 measurement standards, formulas for irregular spaces, and how square footage affects home value.',
+    datePublished: '2026-03-26',
+    dateModified: '2026-03-26',
+    author: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+    ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+      logo: 
+        '@type': 'ImageObject',
+        url: 'https://hammerio.com/favicon.svg',
+      ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://hammerio.com/blog/square-footage-calculator/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://hammerio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://hammerio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Square Footage Calculator', item: 'https://hammerio.com/blog/square-footage-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do I calculate the square footage of a room?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For a rectangular room, multiply length by width. A 12-by-14-foot bedroom is 168 square feet. For an L-shaped room, divide it into two rectangles, calculate each, and add the results. For a triangular section, multiply base by height and divide by two. Always measure from wall to wall (not furniture to furniture) and include the full width of doorways if they open into the space.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does a finished basement count as square footage?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'No. Per the ANSI Z765-2021 standard — now required by Fannie Mae for all single-family appraisals — a basement does not count toward Gross Living Area regardless of how well-finished it is. If any exterior wall of a floor level has soil against it, that entire level is classified as below-grade and excluded from GLA. Finished basement space must be reported separately on appraisals and typically adds less per-square-foot value than above-grade living space.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does a garage count toward square footage?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'No. Garages — attached or detached, finished or unfinished — are excluded from Gross Living Area under ANSI Z765-2021. This is true even if the garage is climate-controlled or contains a finished room above it. The finished room above the garage can count as GLA if it meets ceiling height requirements (minimum 7 feet for at least 50% of the floor area) and is accessible from the main living area.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Should I measure interior or exterior walls for square footage?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Per ANSI Z765-2021, Gross Living Area is measured from exterior wall to exterior wall — not interior walls. This includes wall thickness in the total. For a typical 2x6 framed wall with sheathing and siding, that adds about 8 to 10 inches per exterior wall. Interior measurements will give you net usable floor area, which is useful for flooring material calculations but is not the recognized standard for listing or appraisal purposes.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much is a square foot of living space worth?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The national median listing price per square foot was $226 as of September 2025, per Realtor.com data. But this varies enormously by market. Manhattan averages $1,636 per square foot; Detroit averages $169. According to NAR data from January 2026, the median existing home sales price was $396,800. One key rule: added square footage has diminishing returns. Each additional square foot in a large home adds less value than in a small home.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is Gross Living Area (GLA)?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Gross Living Area is the standard real estate measurement for a home\'s livable space. It includes only above-grade, finished, heated space with minimum ceiling heights of 7 feet (or where at least 50% of floor area meets the 7-foot height). It excludes basements, garages, unfinished spaces, and areas with ceilings below 5 feet. GLA is the number that appears on appraisals and is required to comply with ANSI Z765-2021 for Fannie Mae and Freddie Mac loans.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How accurate is the square footage listed in MLS?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Not very. A study cited by Authority Appraisals found that over 84% of closed MLS sales had square footage discrepancies between the listed amount and the appraiser\'s independent measurement — and errors often exceed 50 square feet. Sources of error include non-compliant measurement methods, inclusion of non-GLA spaces like basements, and unpermitted additions that updated the physical space but never updated county records. Always verify against a recent appraisal.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Square Footage Calculator</li>
+          </ol>
+        
+
+        /* Header */
+        
+          
+            Measuring
+            13 min read
+            <time  dateTime="2026-03-26">March 26, 2026</time>
+          
+          <h2>
+            Square Footage Calculator: Measure Any Room or Area
+          </h2>
+          <p>
+            A study by Authority Appraisals found that over 84% of closed MLS transactions had a measurable discrepancy between the listed square footage and the appraiser&apos;s independent measurement. Those errors aren&apos;t just paperwork problems — they affect listing prices, appraisal values, property taxes, permit applications, and the cost of materials for every renovation project. Here is how to measure correctly, what actually counts toward your home&apos;s livable area, and how square footage drives real dollar value in 2026.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>→The controlling standard for residential square footage is <strong>ANSI Z765-2021</strong>, required by Fannie Mae since April 2022</li>
+            <li>→Measure <strong>exterior wall to exterior wall</strong> — interior measurements undercount the true square footage</li>
+            <li>→Basements and garages <strong>never count</strong> toward Gross Living Area, even when fully finished</li>
+            <li>→The national median listing price was <strong>$226/sq ft</strong> as of September 2025 (Realtor.com), but varies from $169 in Detroit to $1,636 in Manhattan</li>
+            <li>→For material estimates: add <strong>10% waste</strong> for straight flooring layouts, 15% for diagonal or pattern layouts</li>
+          </ul>
+        
+
+        
+
+          /* Quick Calculator CTA */
+          
+            <h2>Need Material Quantities?</h2>
+            <p>Once you have your square footage, use our calculators to estimate flooring, concrete, roofing materials, and more.</p>
+            
+              <a href="/construction-cost-calculator/">
+                Construction Cost Calculator
+              </a>
+              <a href="/roofing-calculator/">
+                Roofing Calculator
+              </a>
+            
+          
+
+          <h2>Square Footage Formulas for Every Room Shape</h2>
+          <p>
+            Most rooms are rectangles. Some are not. Here are the formulas you need for every configuration you&apos;re likely to encounter, along with worked examples at realistic room dimensions.
+          </p>
+
+          
+            <h3>Quick Reference: Area Formulas by Shape</h3>
+            <table >
+              <thead>
+                <tr >
+                  <th >Shape</th>
+                  <th >Formula</th>
+                  <th >Example</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Rectangle / Square</td>
+                  <td >Length × Width</td>
+                  <td >12 ft × 14 ft = 168 sq ft</td>
+                </tr>
+                <tr >
+                  <td >L-Shape</td>
+                  <td >(L₁ × W₁) + (L₂ × W₂)</td>
+                  <td >(12×10) + (8×6) = 168 sq ft</td>
+                </tr>
+                <tr >
+                  <td >Right Triangle</td>
+                  <td >(Base × Height) ÷ 2</td>
+                  <td >(10 × 8) ÷ 2 = 40 sq ft</td>
+                </tr>
+                <tr >
+                  <td >Circle</td>
+                  <td >π × radius²</td>
+                  <td >π × 5² = 78.5 sq ft</td>
+                </tr>
+                <tr >
+                  <td >Trapezoid</td>
+                  <td >((Side A + Side B) × Height) ÷ 2</td>
+                  <td >((12 + 8) × 6) ÷ 2 = 60 sq ft</td>
+                </tr>
+                <tr>
+                  <td >Irregular (any shape)</td>
+                  <td >Divide into known shapes, sum</td>
+                  <td >Sketch + divide into rectangles/triangles</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h3>How to Handle L-Shaped Rooms</h3>
+          <p>
+            L-shaped rooms are the most common irregular shape in residential construction. The method is straightforward: divide the L into two rectangles at the interior corner, measure each rectangle separately, and add the results. The tricky part is deciding where to draw the dividing line — any straight line across the interior notch works, as long as you measure each rectangle accurately.
+          </p>
+          <p>
+            Example: An L-shaped great room that measures 20 feet along its longest wall and 16 feet at its widest, with a 10×8 notch cut from one corner for a hallway. Total area = (20 × 16) − (10 × 8) = 320 − 80 = 240 sq ft. Alternatively, split into two rectangles: (20 × 8) + (10 × 16) = 160 + 160 = 320 sq ft. Wait — those give different answers because the split was drawn differently. Always verify by checking which dimensions actually define your two rectangles.
+          </p>
+
+          <h3>Angled Walls and Vaulted Ceilings</h3>
+          <p>
+            Angled walls — common in attic rooms, bonus rooms over garages, and Cape Cod dormers — introduce a complication. Under ANSI Z765-2021, only floor area where the ceiling is at least 5 feet high counts at all, and only floor area where the ceiling reaches 7 feet counts toward the room total for GLA purposes. For sloped ceilings, the rule is that at least 50 percent of the room&apos;s floor area must achieve 7 feet of ceiling height for the room to be counted in full.
+          </p>
+          <p>
+            Practical example: A bonus room over a garage is 20 × 18 = 360 sq ft total floor area. The ceiling slopes from 10 feet at the ridge to 4 feet at the walls. Area with ceiling below 5 feet (which doesn&apos;t count at all): approximately 2 feet wide on each side = 2 × (2 × 20) = 80 sq ft excluded. Area between 5 and 7 feet: another 2 feet per side = 80 sq ft. Area above 7 feet: the remaining 200 sq ft. Since the area above 7 feet (200 sq ft) exceeds 50% of the total 360 sq ft, the room qualifies as GLA — but only the area above 5 feet (280 sq ft) counts toward the final number.
+          </p>
+
+          <h2>The ANSI Z765-2021 Standard: The Rules That Actually Govern Your Home&apos;s Size</h2>
+          <p>
+            Most homeowners — and plenty of real estate agents — don&apos;t know that square footage measurement has a governing standard. ANSI Z765-2021 (American National Standard for Single-Family Residential Buildings: Square Footage Method for Calculating) is the rule book. Fannie Mae made compliance mandatory for all single-family appraisals in April 2022. Freddie Mac followed in November 2023. Any lender using conventional mortgage backing has been operating under this standard for the past two to three years.
+          </p>
+          <p>
+            The standard&apos;s key requirements:
+          </p>
+          <ul>
+            <li>Measurements taken from <strong>exterior wall to exterior wall</strong> — this includes wall thickness in the total</li>
+            <li>Reported to the nearest tenth of a foot in sketches; rounded to the nearest whole square foot for final GLA</li>
+            <li>Only <strong>above-grade, finished, heated space</strong> with adequate ceiling height counts toward GLA</li>
+            <li>Floor plan sketches must be computer-generated under the new UAD 3.6 appraisal format (rolled out 2025)</li>
+          </ul>
+          <p>
+            This is not just theoretical — ANSI compliance directly determines the number that goes on your appraisal, which determines your borrowing capacity. A home appraising at 1,800 GLA vs. 2,100 GLA in the same neighborhood could be a $50,000 to $80,000 difference in assessed value depending on market conditions.
+          </p>
+
+          <h2>What Counts as Square Footage — and What Doesn&apos;t</h2>
+
+          
+            
+              
+                <h3>✓ Counts Toward GLA</h3>
+                <ul>
+                  <li>Above-grade finished living space</li>
+                  <li>All rooms connected and accessible from the main house</li>
+                  <li>Spaces with permanent heat and minimum 7 ft ceilings</li>
+                  <li>Finished room above garage (if connected)</li>
+                  <li>Heated sunrooms meeting ceiling height rules</li>
+                  <li>Finished attic space (when ≥50% meets 7 ft height)</li>
+                </ul>
+              
+              
+                <h3>✗ Excluded from GLA</h3>
+                <ul>
+                  <li>Basements (even fully finished)</li>
+                  <li>Attached or detached garages</li>
+                  <li>Unheated sunrooms or screened porches</li>
+                  <li>Unfinished attic space</li>
+                  <li>Areas with ceiling below 5 feet</li>
+                  <li>Utility rooms below grade</li>
+                  <li>Crawlspaces and mechanical rooms</li>
+                </ul>
+              
+            
+          
+
+          <h3>The Basement Rule Is Non-Negotiable</h3>
+          <p>
+            This is the most common source of inflated square footage listings. A fully finished basement — media room, bedroom, bathroom, bar — is still a basement. Under ANSI Z765-2021, if any exterior wall of a floor level has soil against it, that entire level is classified as below-grade and excluded from GLA. Period.
+          </p>
+          <p>
+            This doesn&apos;t mean your finished basement has no value — appraisers report it separately and buyers absolutely factor it into offers. According to Redfin&apos;s published analysis, finished basements typically add 50 to 70 percent of the dollar value per square foot compared to above-grade space in the same market. A basement that adds $80/sq ft of value in a market where above-grade space commands $150/sq ft is still a good investment — but it&apos;s not GLA.
+          </p>
+
+          <h2>How to Measure Square Footage of Your Home</h2>
+          <p>
+            Here is the professional method for measuring a house accurately — the same process an appraiser follows on a standard residential assignment.
+          </p>
+
+          <h3>Step 1: Choose Your Tool</h3>
+          <p>
+            A laser distance measurer is significantly faster and more accurate than a tape measure for whole-room measurements. Budget models from Bosch, Leica, or Ryobi cost $25 to $60 and measure to ±1/16 inch. For an entire house, the time savings are substantial — what takes 45 minutes with a tape takes 15 minutes with a laser. Tape measures work fine for individual rooms but introduce compounding errors across a multi-room house.
+          </p>
+
+          <h3>Step 2: Sketch the Floor Plan First</h3>
+          <p>
+            Walk the entire level and sketch a rough floor plan on paper before taking any measurements. Label each room and mark where walls intersect. This prevents the common error of measuring a room, moving on, then realizing you forgot an alcove or closet. Most professional appraisers sketch from the exterior, measuring the overall building footprint first, then verifying interior room dimensions.
+          </p>
+
+          <h3>Step 3: Measure Exterior Dimensions (for GLA)</h3>
+          <p>
+            Walk the exterior of the house and measure the full perimeter. For a simple rectangle, you need just length and width. For L-shapes, measure the full length of each exterior wall segment. Per ANSI Z765-2021, GLA is calculated from these exterior measurements — wall thickness is included in the total. For an L-shaped single-story home:
+          </p>
+          <ul>
+            <li>Measure the maximum depth (long side): say 48 feet</li>
+            <li>Measure the maximum width: say 32 feet</li>
+            <li>Measure the notch cut from the L: say 16 × 20 feet</li>
+            <li>Total GLA = (48 × 32) − (16 × 20) = 1,536 − 320 = 1,216 sq ft</li>
+          </ul>
+
+          <h3>Step 4: Handle Multiple Stories</h3>
+          <p>
+            For a two-story home, measure each floor separately. The second floor footprint is often smaller than the first due to attached garages or one-story additions that extend from the main structure. Add each floor&apos;s GLA together for the total. Note that stairwell floor area is counted only once — typically on the lower level.
+          </p>
+
+          <h3>Step 5: Interior Measurements for Material Estimates</h3>
+          <p>
+            If you&apos;re calculating square footage for a renovation project — ordering flooring, paint, or tile — you want interior dimensions, not exterior. Interior measurements give you the net floor area you&apos;re actually covering. For flooring, measure interior wall to interior wall in each room. Add a waste factor before ordering:
+          </p>
+          <ul>
+            <li>Straight tile or plank layout: add <strong>10%</strong></li>
+            <li>Diagonal or patterned layout: add <strong>15%</strong></li>
+            <li>Carpet (seaming waste): add <strong>10%</strong></li>
+            <li>Hardwood with run-out cuts: add <strong>7–10%</strong></li>
+          </ul>
+          <p>
+            For bathroom tile projects specifically, see our <a href="/blog/bathroom-tile-installation-guide/">bathroom tile installation guide</a> for material calculation methods that account for cuts around fixtures and pattern matching.
+          </p>
+
+          <h2>Useful Unit Conversions</h2>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Convert From</th>
+                  <th >Convert To</th>
+                  <th >Multiply By</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Square yards</td><td >Square feet</td><td >× 9</td></tr>
+                <tr ><td >Square meters</td><td >Square feet</td><td >× 10.764</td></tr>
+                <tr ><td >Square feet</td><td >Square meters</td><td >× 0.0929</td></tr>
+                <tr ><td >Square feet</td><td >Square yards</td><td >÷ 9</td></tr>
+                <tr ><td >Inches</td><td >Feet (linear)</td><td >÷ 12</td></tr>
+                <tr><td >Meters</td><td >Feet (linear)</td><td >× 3.281</td></tr>
+              </tbody>
+            </table>
+          
+
+          <h2>How Square Footage Affects Your Home&apos;s Value</h2>
+          <p>
+            According to NAR&apos;s January 2026 data, the U.S. median existing home sales price reached $396,800 — up 0.9% year-over-year. The national median listing price per square foot was $226 as of September 2025 (Realtor.com data), with St. Louis Fed data showing the median sales price per square foot at approximately $220 in January 2026.
+          </p>
+
+          
+            <h3>Price Per Square Foot by Market (2025–2026)</h3>
+            <table >
+              <thead>
+                <tr >
+                  <th >Market</th>
+                  <th >Approx. $/Sq Ft</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Manhattan, NY</td><td >$1,636</td></tr>
+                <tr ><td >San Jose, CA</td><td >$783</td></tr>
+                <tr ><td >Los Angeles, CA</td><td >$655</td></tr>
+                <tr ><td >Boston, MA</td><td >$461</td></tr>
+                <tr ><td >Chicago, IL</td><td >$207</td></tr>
+                <tr ><td >National Median</td><td >$220–$226</td></tr>
+                <tr ><td >South Atlantic Region</td><td >$147</td></tr>
+                <tr><td >Detroit, MI</td><td >$169</td></tr>
+              </tbody>
+            </table>
+            <p>Sources: Realtor.com (Sep 2025), FRED/St. Louis Fed (Jan 2026), NAHB Eye on Housing (2025)</p>
+          
+
+          <p>
+            Three important nuances that raw price-per-square-foot data doesn&apos;t capture:
+          </p>
+          <ul>
+            <li><strong>Diminishing returns:</strong> Each additional square foot in a large home adds less marginal value than in a small home. A 1,200 sq ft home gaining 200 sq ft sees a bigger proportional value jump than a 3,500 sq ft home gaining the same 200 sq ft.</li>
+            <li><strong>Finished basement vs. above-grade:</strong> Finished basement space typically adds 50–70% of the value of above-grade GLA in the same market. A basement is worth appraising accurately, but it is not the same as adding a room above grade.</li>
+            <li><strong>New home size trends:</strong> According to NAHB Eye on Housing data, the median size of new single-family homes completed in Q3 2025 was 2,176 square feet — down from a 2015 peak of ~2,467 sq ft. Builders are responding to affordability pressures by building smaller, more efficiently planned homes.</li>
+          </ul>
+          <p>
+            For a deeper dive into how square footage drives construction costs, see our <a href="/blog/home-building-cost-per-square-foot/">home building cost per square foot guide</a>, which includes state-by-state data for new construction.
+          </p>
+
+          <h2>Common Measurement Mistakes That Cost Homeowners</h2>
+          <p>
+            Beyond the 84% MLS error rate, here are the specific mistakes that show up repeatedly on real estate appraisals and renovation material orders:
+          </p>
+
+          
+            
+              <h3>1. Including the Garage in the House Square Footage</h3>
+              <p>A 400 sq ft attached garage falsely listed as living space overstates GLA by 22% on a 1,800 sq ft home. Buyers discover this at appraisal. The deal either renegotiates or collapses.</p>
+            
+            
+              <h3>2. Measuring Interior Walls Instead of Exterior</h3>
+              <p>Interior measurements undercount GLA by 2 to 5% depending on wall construction. On a 2,000 sq ft home, that is 40 to 100 sq ft — a meaningful number when appraisers adjust for size differences between comparables.</p>
+            
+            
+              <h3>3. Counting Basement Space as GLA</h3>
+              <p>The most expensive mistake, particularly in the Midwest and Northeast where finished basements are common and sometimes larger than the first floor. A finished 1,200 sq ft basement counted as GLA would overstate a home&apos;s &ldquo;square footage&rdquo; by more than 50% on a small home.</p>
+            
+            
+              <h3>4. Ignoring Ceiling Height Limitations in Attic Rooms</h3>
+              <p>A 400 sq ft attic room where only 180 sq ft has 7-foot clearance (less than 50% of total area) does not meet ANSI standards for GLA. It may count for zero toward GLA, not 400 sq ft.</p>
+            
+            
+              <h3>5. Not Accounting for Unpermitted Additions</h3>
+              <p>An unpermitted addition physically exists but may not appear in county records. Appraisers measure what&apos;s there; lenders may refuse to count unpermitted space. The square footage in tax records may lag reality by decades if prior owners added space without permits. Always verify against your most recent appraisal, not the county assessor&apos;s records.</p>
+            
+          
+
+          <h2>Building Code Minimums: How Small Can a Room Be?</h2>
+          <p>
+            The International Residential Code (IRC 2024), adopted by most jurisdictions, sets minimum dimensions for habitable rooms under Section R304:
+          </p>
+          <ul>
+            <li>Minimum floor area for any habitable room: <strong>70 square feet</strong></li>
+            <li>Minimum horizontal dimension in any direction: <strong>7 feet</strong></li>
+            <li>Minimum ceiling height for habitable rooms: <strong>7 feet</strong></li>
+            <li>Bathrooms and laundry: minimum <strong>6 feet 4 inches</strong> ceiling height (2024 IRC)</li>
+            <li>Kitchens: exempt from minimum room area requirements</li>
+          </ul>
+          <p>
+            These minimums exist for occupant safety and livability. A 70 sq ft bedroom with a 7-foot ceiling is technically legal under IRC — but it is a 7×10-foot room, which is genuinely small. The IRC Appendix Q recognizes &ldquo;tiny houses&rdquo; at 400 square feet or under with modified standards including ceiling heights as low as 6 feet 8 inches in common areas.
+          </p>
+          <p>
+            Square footage thresholds also trigger permit requirements for accessory structures. Most jurisdictions exempt structures under 200 square feet from building permits (Connecticut) or provide simplified approval for structures under 400 square feet (Pacific Northwest). For any habitable addition, a permit is required regardless of size in virtually every U.S. jurisdiction. See our <a href="/blog/building-permits-guide/">building permits guide</a> for jurisdiction-specific details.
+          </p>
+
+          <h2>Square Footage for Contractor Estimates</h2>
+          <p>
+            When getting bids from contractors, your square footage figure matters because most renovation trades price per square foot. To order accurately:
+          </p>
+          <ul>
+            <li><strong>Flooring:</strong> Measure interior floor area room by room. Subtract fixed cabinets or islands. Add waste factor (10–15%).</li>
+            <li><strong>Paint (walls):</strong> Measure total wall area (perimeter × height) minus openings (doors ~21 sq ft, windows ~15 sq ft each).</li>
+            <li><strong>Roofing:</strong> Measure horizontal footprint and apply pitch multiplier. A 6/12 pitch adds ~12% to the flat area. Use our <a href="/roofing-calculator/">roofing calculator</a> for material quantities.</li>
+            <li><strong>Concrete slabs:</strong> Measure area in square feet, convert to cubic yards (length × width × depth ÷ 27). See our <a href="/blog/concrete-calculator-guide/">concrete calculator guide</a>.</li>
+            <li><strong>Insulation:</strong> Measure wall and ceiling areas separately — they have different R-value requirements per climate zone.</li>
+          </ul>
+
+          /* FAQ Section */
+          <h2>Frequently Asked Questions</h2>
+
+          
+            [
+              
+                q: 'How do I calculate the square footage of a room?',
+                a: 'For a rectangular room, multiply length by width. A 12-by-14-foot bedroom is 168 square feet. For an L-shaped room, divide it into two rectangles, calculate each, and add the results. For a triangular section, multiply base by height and divide by two. Always measure from wall to wall and include the full width of doorways if they open into the space.'
+              ,
+              
+                q: 'Does a finished basement count as square footage?',
+                a: 'No. Per the ANSI Z765-2021 standard — required by Fannie Mae for all single-family appraisals — a basement does not count toward Gross Living Area regardless of how well-finished it is. If any exterior wall of a floor level has soil against it, that entire level is classified as below-grade and excluded from GLA. Finished basement space must be reported separately on appraisals.'
+              ,
+              
+                q: 'Does a garage count toward square footage?',
+                a: 'No. Garages — attached or detached, finished or unfinished — are excluded from Gross Living Area under ANSI Z765-2021. This is true even if the garage is climate-controlled. A finished room above the garage can count as GLA if it meets ceiling height requirements and is accessible from the main living area.'
+              ,
+              
+                q: 'Should I measure interior or exterior walls for square footage?',
+                a: 'Per ANSI Z765-2021, Gross Living Area is measured from exterior wall to exterior wall — not interior walls. This includes wall thickness in the total. Interior measurements give you net usable floor area, which is useful for flooring material calculations but is not the standard for listing or appraisal purposes.'
+              ,
+              
+                q: 'How much is a square foot of living space worth?',
+                a: 'The national median listing price per square foot was $226 as of September 2025, per Realtor.com data. This varies enormously by market — from $169 in Detroit to $1,636 in Manhattan. Per NAR data from January 2026, the median existing home sales price was $396,800. Added square footage has diminishing returns: each additional square foot in a large home adds less value than in a small home.'
+              ,
+              
+                q: 'What is Gross Living Area (GLA)?',
+                a: 'Gross Living Area is the standard real estate measurement for a home\'s livable space. It includes only above-grade, finished, heated space with minimum ceiling heights of 7 feet (or where at least 50% of floor area meets the 7-foot height). It excludes basements, garages, unfinished spaces, and areas with ceilings below 5 feet. GLA is required to comply with ANSI Z765-2021 for Fannie Mae and Freddie Mac loans.'
+              ,
+              
+                q: 'How accurate is the square footage listed in MLS?',
+                a: 'Not very. A study cited by Authority Appraisals found that over 84% of closed MLS sales had square footage discrepancies between the listed amount and the appraiser\'s independent measurement — and errors often exceed 50 square feet. Sources of error include non-compliant measurement methods, inclusion of non-GLA spaces like basements, and unpermitted additions. Always verify against a recent appraisal.'
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* Bottom CTA */
+        
+          <h2>Turn Your Square Footage Into a Cost Estimate</h2>
+          <p>Enter your project square footage into our construction cost calculator to get material and labor estimates for any renovation.</p>
+          <a href="/construction-cost-calculator/">
+            Open Construction Cost Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M6 3l5 5-5 5V3z" /></svg>
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                article.category
+                <h3>article.title</h3>
+              </Link>
+            ))
+          
+        
+      
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.hammerio.com/blog/square-footage-calculator/">HammerIO</a>.
+      Explore more free tools at <a href="https://www.hammerio.com/">hammerio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.hammerio.com/">HammerIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
