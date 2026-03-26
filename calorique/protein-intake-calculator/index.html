@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protein Intake Calculator: How Much Protein Do You Need Daily? - Calorique</title>
+  <meta name="description" content="Find your exact daily protein needs with science-backed ranges by goal. Covers muscle gain, weight loss, healthy aging, and how protein calculators actually work.">
+  <link rel="canonical" href="https://www.calorique.io/blog/protein-intake-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/calorique/">Calorique</a> &rarr; Protein Intake Calculator: How Much Protein Do You Need Daily?
+  </nav>
+
+  <article>
+    <h1>Protein Intake Calculator: How Much Protein Do You Need Daily?</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.calorique.io/blog/protein-intake-calculator/">calorique.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Protein Intake Calculator: How Much Protein Do You Need Daily?',
+    description: 'Find your exact daily protein needs with science-backed ranges by goal. Covers muscle gain, weight loss, healthy aging, and how protein calculators actually work.',
+    author:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    publisher:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    mainEntityOfPage: 'https://calorique.io/blog/protein-intake-calculator/',
+    datePublished: '2026-03-25',
+    dateModified: '2026-03-25',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://calorique.io/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://calorique.io/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Protein Intake Calculator', item: 'https://calorique.io/blog/protein-intake-calculator/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do I calculate my daily protein intake?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Multiply your body weight in kilograms by a goal-based multiplier: 0.8 g/kg for sedentary adults (the RDA minimum), 1.6–2.2 g/kg for muscle gain, and 1.2–2.4 g/kg during weight loss. If you are significantly overweight, base your calculation on lean body mass or your goal weight rather than current weight. Our Protein Calculator automates these steps.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is 0.8g per kg of body weight enough protein?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For sedentary adults, 0.8 g/kg (the official RDA) prevents deficiency but is likely inadequate for anyone who exercises regularly. A 2018 meta-analysis in the British Journal of Sports Medicine found 1.62 g/kg is the threshold for maximizing muscle protein synthesis in people who resistance train. Most active adults benefit from at least 1.2–1.6 g/kg per day.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much protein do I need per day to lose weight?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'During a calorie deficit, aim for 1.2–2.4 g/kg of body weight daily, with the higher end reserved for leaner individuals or larger deficits. A 2024 meta-analysis of 47 randomized controlled trials (Clinical Nutrition ESPEN, PubMed 39002131) confirmed that higher protein intake significantly preserves muscle mass during caloric restriction in overweight adults, improving body composition outcomes.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Do older adults need more or less protein?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'More. Adults over 65 experience "anabolic resistance," meaning the body needs a greater protein stimulus to achieve the same muscle protein synthesis response as younger adults. A 2025 Frontiers in Nutrition study (PMC12104658) found that 1.2 g/kg/day significantly improved muscle mass vs. 0.8 g/kg over 12 weeks in elderly women. Most experts now recommend 1.0–1.5 g/kg for adults over 65.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Can I get enough protein from plant foods alone?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Yes, but it requires planning. Plant proteins generally have lower bioavailability (70–85%) vs. animal proteins (90–99%) and may lack certain essential amino acids in isolation. Vegans should target the higher end of protein ranges and combine diverse sources — lentils, tempeh, tofu, edamame, seitan, and pea protein — to cover all essential amino acids throughout the day.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the difference between using body weight vs. lean body mass for protein calculations?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Lean body mass (LBM)-based calculations are more precise for overweight individuals. Since body fat tissue does not require protein for maintenance, using total body weight can overestimate needs for those with high body fat percentages. Most protein calculators switch to LBM-based or goal-weight-based calculations when body fat exceeds approximately 30% in men or 40% in women.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many grams of protein can the body use in one meal?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'More than the old "30-gram limit" suggests. Recent 2025 research challenges the traditional ceiling, showing whole-body protein synthesis was significantly higher after a 100g meal than 25g over extended digestion windows. However, for maximizing muscle protein synthesis per meal, a practical target of 0.4 g/kg of body weight per meal (roughly 25–40g for most people) spread across 3–5 meals per day remains well-supported.',
+        ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          Protein Intake Calculator
+        
+
+        
+          
+            Nutrition
+            March 25, 2026
+            15 min read
+          
+          <h2>Protein Intake Calculator: How Much Protein Do You Need Daily?</h2>
+          <p>
+            The official protein RDA of 0.8 grams per kilogram has not changed in over 70 years — and sports nutrition research has largely moved past it. If you exercise regularly, the science now points to targets nearly double the government standard. Here is exactly how to calculate yours.
+          </p>
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <p>Key Takeaways</p>
+            <ul>
+              <li>• The RDA of 0.8 g/kg is a minimum to prevent deficiency — not an optimal target for active adults</li>
+              <li>• For muscle gain, the evidence-backed ceiling is 1.6–2.2 g/kg/day (per a 2018 meta-analysis of 49 studies)</li>
+              <li>• During weight loss, higher protein (1.2–2.4 g/kg) preserves muscle and increases fat loss</li>
+              <li>• Adults over 65 need more protein per meal due to age-related anabolic resistance</li>
+              <li>• Spreading intake across 3–5 meals of 25–40g each maximizes daily muscle protein synthesis</li>
+            </ul>
+          
+
+          <h2>The Problem With "One Number Fits All" Protein Advice</h2>
+          <p>
+            Open any government nutrition website and you will find the same recommendation: 0.8 grams of protein per kilogram of body weight per day. For a 75 kg (165 lb) person, that is 60 grams — roughly the protein in two small chicken breasts. It sounds reasonable until you understand what the number actually means.
+          </p>
+          <p>
+            The 0.8 g/kg figure represents the Recommended Dietary Allowance (RDA), which the Institute of Medicine defines as the minimum intake sufficient to meet the nutrient requirements of 97–98% of healthy sedentary adults. In plain English: it is the floor below which deficiency occurs, not the ceiling above which health improves. It was established through nitrogen balance studies on sedentary subjects and has not been substantively revised since 1989.
+          </p>
+          <p>
+            This matters because a personal trainer, a 65-year-old trying to prevent sarcopenia, and a competitive cyclist all have radically different protein needs — yet they all receive the same 0.8 g/kg guideline from official sources. A protein intake calculator solves this by factoring in body weight, activity level, body composition, and goal to generate an individualized target.
+          </p>
+          <p>
+            Use the <a href="/protein-calculator/">Protein Calculator</a> to get your personalized daily target, then read on for the science behind the numbers.
+          </p>
+
+          <h2>How a Protein Intake Calculator Works</h2>
+          <p>
+            A well-designed protein calculator combines four variables: your body weight (or lean body mass), activity level, body fat percentage, and primary goal. Here is how each factor adjusts your target:
+          </p>
+
+          <h3>Step 1: Body Weight or Lean Body Mass?</h3>
+          <p>
+            For most people at a healthy weight, total body weight in kilograms provides a close enough estimate. However, body fat tissue does not require protein for maintenance in the same way muscle tissue does. For individuals with body fat percentages above approximately 30% in men or 40% in women, calculators should switch to lean body mass (LBM) or goal body weight to avoid overestimating needs.
+          </p>
+          <p>
+            The Boer formula is commonly used: for males, LBM = (0.407 × weight in kg) + (0.267 × height in cm) − 19.2. For females, LBM = (0.252 × weight in kg) + (0.473 × height in cm) − 48.3. A simpler approach for those who do not know their body composition: use your goal weight in kilograms as the basis for calculation.
+          </p>
+
+          <h3>Step 2: Applying a Goal-Based Multiplier</h3>
+          <p>
+            The research-backed ranges differ meaningfully by goal. The table below consolidates current evidence from the ACSM Joint Position Statement on Nutrition and Athletic Performance, the 2018 Morton et al. meta-analysis (British Journal of Sports Medicine), and the 2024 Clinical Nutrition ESPEN meta-analysis of 47 randomized controlled trials:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Goal / Population</th>
+                  <th >Range (g/kg/day)</th>
+                  <th >Range (g/lb/day)</th>
+                  <th >Key Evidence</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >Sedentary maintenance</td>
+                  <td >0.8</td>
+                  <td >0.36</td>
+                  <td >Official RDA minimum</td>
+                </tr>
+                <tr >
+                  <td >Active maintenance</td>
+                  <td >1.0 – 1.2</td>
+                  <td >0.45 – 0.55</td>
+                  <td >ACSM Position Stand</td>
+                </tr>
+                <tr>
+                  <td >Endurance training</td>
+                  <td >1.0 – 1.6</td>
+                  <td >0.45 – 0.73</td>
+                  <td >ACSM Joint Position Statement</td>
+                </tr>
+                <tr >
+                  <td >Muscle gain (hypertrophy)</td>
+                  <td >1.6 – 2.2</td>
+                  <td >0.73 – 1.0</td>
+                  <td >Morton et al. 2018, BJSM</td>
+                </tr>
+                <tr>
+                  <td >Weight loss (calorie deficit)</td>
+                  <td >1.2 – 2.4</td>
+                  <td >0.55 – 1.09</td>
+                  <td >Clin Nutr ESPEN 2024 (47 RCTs)</td>
+                </tr>
+                <tr >
+                  <td >Adults 65+ (sarcopenia prevention)</td>
+                  <td >1.2 – 1.5</td>
+                  <td >0.55 – 0.68</td>
+                  <td >Frontiers in Nutrition 2025</td>
+                </tr>
+                <tr>
+                  <td >Elite athletes cutting weight</td>
+                  <td >2.0 – 2.4</td>
+                  <td >0.91 – 1.09</td>
+                  <td >ACSM (caloric restriction + training)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h2>What the Science Actually Says: Goal-by-Goal Breakdown</h2>
+
+          <h3>Protein for Building Muscle</h3>
+          <p>
+            The most rigorous data on protein and muscle gain comes from a 2018 systematic review and meta-analysis by Morton and colleagues, published in the British Journal of Sports Medicine. Analyzing 49 randomized controlled trials with 1,863 participants, the authors concluded that protein supplementation beyond 1.62 g/kg/day produced no statistically significant additional increases in fat-free mass when combined with resistance training. The dose-response curve flattens at roughly 1.6 g/kg.
+          </p>
+          <p>
+            That does not mean there is harm above 1.62 g/kg — it simply means the marginal benefit diminishes. Some individuals, particularly leaner athletes and advanced trainers, may benefit from intakes up to 2.2 g/kg. The practical recommendation for most recreational lifters: target 1.6–2.0 g/kg and invest the effort in training consistency rather than fine-tuning protein beyond that range.
+          </p>
+          <p>
+            For a 180 lb (82 kg) person, this translates to 131–164 grams of protein per day — significantly more than the RDA minimum of 66 grams. Balance protein within a full macronutrient framework using the <a href="/macro-calculator/">Macro Calculator</a> to ensure you hit calorie targets alongside your protein goal.
+          </p>
+
+          <h3>Protein for Weight Loss</h3>
+          <p>
+            Protein serves three distinct functions during a calorie deficit that make it the most important macronutrient for fat loss: it preserves lean muscle tissue, increases satiety, and has the highest thermic effect of food among the three macronutrients.
+          </p>
+          <p>
+            On the muscle preservation front, a 2024 meta-analysis published in Clinical Nutrition ESPEN (PubMed ID 39002131) analyzed 47 randomized controlled trials involving 3,218 overweight adults and found that higher protein intake significantly preserved lean mass during caloric restriction. The effect was dose-dependent — those consuming more protein retained more muscle — which is why the recommended range for weight loss (1.2–2.4 g/kg) is wider than for muscle gain and skews higher.
+          </p>
+          <p>
+            On the satiety front, protein stimulates the release of peptide YY and GLP-1, hormones that suppress appetite, while reducing ghrelin (the hunger hormone). In practical terms, meals high in protein keep you fuller longer, reducing the likelihood of drifting above your calorie target. For a 150 lb (68 kg) person in a moderate calorie deficit, a daily target of 115–135 grams of protein covers both muscle preservation and satiety goals.
+          </p>
+          <p>
+            Calculate your calorie deficit alongside protein targets by starting with the <a href="/calorie-calculator/">Calorie Calculator</a> to find your TDEE.
+          </p>
+
+          <h3>Protein for Healthy Aging (65+)</h3>
+          <p>
+            Age-related muscle loss (sarcopenia) begins around age 30 at a rate of approximately 3–8% per decade, accelerating after 60. Adults lose an estimated 1–2% of muscle mass per year after 50 without intervention, and sarcopenia affects approximately 10% of adults over 60 globally, according to data cited in a 2025 Frontiers in Nutrition study (PMC12104658).
+          </p>
+          <p>
+            The mechanism driving higher protein needs in older adults is anabolic resistance: the age-related blunting of muscle protein synthesis in response to protein ingestion and exercise. Older muscles require a greater amino acid stimulus — roughly 0.4–0.6 g/kg per meal rather than 0.25 g/kg in younger adults — to achieve the same anabolic response. This means older adults need not just more total protein per day, but larger doses per meal.
+          </p>
+          <p>
+            The 2025 Frontiers in Nutrition trial found that 1.2 g/kg/day significantly improved muscle mass versus the RDA of 0.8 g/kg over 12 weeks in older women. A separate 2024 Korean meta-analysis (Nutrients, PMC11677379) found 1.5 g/kg/day was more effective at preventing sarcopenia than either 0.8 or 1.2 g/kg. For practical purposes, adults 65 and older should aim for a minimum of 1.2 g/kg, with 1.5 g/kg preferred.
+          </p>
+
+          <h2>Protein Distribution: When You Eat Matters (A Little)</h2>
+          <p>
+            Total daily protein intake is the primary driver of results. Timing and distribution are secondary — but not irrelevant. A 2024 study in Frontiers in Nutrition (PMC11099237) found that evenly distributing protein across meals significantly improves muscle protein synthesis compared to skewing intake toward one large meal, even when total daily intake is identical.
+          </p>
+          <p>
+            The practical implication: aim for 3–5 protein-rich meals spaced 3–5 hours apart, each containing roughly 0.4 g/kg of body weight (20–40 grams for most people). Each meal triggers a spike in muscle protein synthesis (MPS) that lasts 3–5 hours. Spacing meals allows you to trigger MPS multiple times per day rather than once.
+          </p>
+
+          
+            <p>Sample Daily Protein Distribution (140g target, 80 kg person):</p>
+            <ul>
+              <li><strong>Breakfast (7 AM):</strong> 35g — 4 eggs + 1 cup Greek yogurt + protein coffee</li>
+              <li><strong>Lunch (12 PM):</strong> 40g — 175g chicken breast + 1 cup lentil soup</li>
+              <li><strong>Post-workout (4 PM):</strong> 30g — 1 scoop whey protein + 250ml milk</li>
+              <li><strong>Dinner (7 PM):</strong> 35g — 175g salmon + edamame side</li>
+            </ul>
+            <p>Each meal meets the ~0.4 g/kg threshold shown to maximize per-meal MPS in research.</p>
+          
+
+          <p>
+            One timing strategy with specific research support: consuming 40 grams of slow-digesting casein protein (cottage cheese, casein powder) before bed extends overnight muscle protein synthesis, particularly relevant for older adults or those in a calorie deficit.
+          </p>
+
+          <h2>Protein Quality: Not All Grams Are Equal</h2>
+          <p>
+            Protein quality is assessed by its amino acid profile and digestibility. The Digestible Indispensable Amino Acid Score (DIAAS), the current gold standard metric, scores proteins based on the bioavailability of each essential amino acid compared to a reference pattern. Whey protein and eggs score above 1.0 (complete); most plant proteins score below.
+          </p>
+
+          
+            <p>Protein Source Comparison by Quality and Density:</p>
+            <ul>
+              <li><strong>Whey protein powder:</strong> 25g per scoop, DIAAS ~1.09, highest leucine content</li>
+              <li><strong>Eggs (2 large):</strong> 13g protein, DIAAS ~1.21, complete amino acid profile</li>
+              <li><strong>Chicken breast (100g):</strong> 31g protein, bioavailability ~91%, lean, versatile</li>
+              <li><strong>Greek yogurt (1 cup):</strong> 17g protein, casein + whey blend, plus probiotics</li>
+              <li><strong>Salmon (100g):</strong> 25g protein, plus omega-3s for muscle recovery</li>
+              <li><strong>Cottage cheese (½ cup):</strong> 14g protein, slow-digesting casein, ideal pre-sleep</li>
+              <li><strong>Tempeh (1 cup):</strong> 31g protein, best plant option for DIAAS score (~0.93)</li>
+              <li><strong>Lentils (1 cup cooked):</strong> 18g protein, high fiber, low cost</li>
+              <li><strong>Tofu (1 cup):</strong> 20g protein, complete plant protein</li>
+              <li><strong>Pea protein (1 scoop):</strong> 24g protein, hypoallergenic, high leucine for a plant source</li>
+            </ul>
+          
+
+          <p>
+            Vegans and vegetarians should aim for the higher end of protein ranges and diversify sources throughout the day. The amino acid gaps in individual plant proteins are easily covered by combining legumes (high in lysine, low in methionine) with grains (high in methionine, low in lysine) across meals — they do not need to be combined within the same meal, a misconception that was debunked decades ago.
+          </p>
+          <p>
+            For ideas on hitting high protein targets with plant foods, see our guide to <a href="/blog/plant-based-protein-sources/">plant-based protein sources</a>.
+          </p>
+
+          <h2>Three Common Protein Calculation Mistakes</h2>
+
+          <h3>Mistake 1: Using Total Body Weight When Significantly Overweight</h3>
+          <p>
+            A 300 lb (136 kg) person does not need 218+ grams of protein per day (1.6 g/kg × 136). The excess body fat does not have elevated protein requirements. Using their goal body weight of, say, 180 lb (82 kg) gives a far more practical and equally effective target of 131 grams. Most quality protein calculators apply this adjustment automatically when body fat exceeds threshold levels.
+          </p>
+
+          <h3>Mistake 2: Treating Protein Needs as Static</h3>
+          <p>
+            Protein needs change as you lose weight, add muscle, age, or shift goals. Someone who drops from 200 lb to 170 lb while cutting needs to recalculate — their target drops from roughly 146g to 124g at 1.6 g/kg. Similarly, a person who transitions from weight loss to muscle gain shifts from a higher-protein deficit phase (2.0+ g/kg) to a slightly lower but calorie-surplus phase (1.6–1.8 g/kg). Recalculate every 10–15 lb of body weight change.
+          </p>
+
+          <h3>Mistake 3: Tracking Total Grams Without Checking Amino Acid Completeness</h3>
+          <p>
+            Hitting 150 grams per day from exclusively plant sources with poor amino acid diversity is not equivalent to 150 grams from varied complete protein sources. The 2024 reconsidering of leucine pre-eminence (American Journal of Clinical Nutrition) suggests total amino acid profile matters more than any single trigger amino acid — which reinforces the case for food variety over single-source protein optimization.
+          </p>
+          <p>
+            After setting protein targets, use the <a href="/macro-calculator/">Macro Calculator</a> to align carbohydrate and fat intake with your total calorie goal, and check your <a href="/tdee-calculator/">TDEE</a> to ensure the calorie math supports your goal.
+          </p>
+
+          <h2>Practical Guide: Hitting Your Protein Target</h2>
+          <p>
+            Knowing your target is different from consistently hitting it. The most common barrier is not cost or access — it is the absence of a default protein anchor at each meal. Here is a systematic approach:
+          </p>
+          <p>
+            <strong>Build each meal around a protein source first.</strong> Before deciding on carbs or fats, pick your protein: chicken breast, eggs, Greek yogurt, salmon, cottage cheese, lentils, tofu. Aim for 30–40 grams per sitting. The other components fill in around it.
+          </p>
+          <p>
+            <strong>Replace low-protein snacks with high-protein alternatives.</strong> Swap crackers for a 150g container of Greek yogurt (17g protein). Swap a granola bar for a hard-boiled egg and a 100g portion of cottage cheese (total ~19g). Swap chips for beef jerky (12–15g per 30g serving).
+          </p>
+          <p>
+            <strong>Batch cook protein on the weekend.</strong> A 1.5 kg batch of chicken thighs (cooked) yields roughly 300g of protein across the week. Hard-boil a dozen eggs in 15 minutes. Pre-cook a large pot of lentils. Having ready-to-eat protein on hand is the single greatest predictor of consistently hitting daily targets.
+          </p>
+          <p>
+            <strong>Use protein powder strategically, not habitually.</strong> Whey and pea protein powders are convenient but are no more effective than whole food sources for muscle growth. Reserve them for situations where whole food is impractical: post-workout convenience, travel, or bridging a gap when meals are spread far apart.
+          </p>
+          <p>
+            For high-protein meal ideas with full macro breakdowns, see our <a href="/blog/high-protein-meals/">high-protein meals guide</a>.
+          </p>
+
+          <h2>Sample Protein Targets by Body Weight and Goal</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Body Weight</th>
+                  <th >Muscle Gain (g/day)</th>
+                  <th >Weight Loss (g/day)</th>
+                  <th >Maintenance (g/day)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >130 lb / 59 kg</td>
+                  <td >94–130</td>
+                  <td >71–142</td>
+                  <td >59–71</td>
+                </tr>
+                <tr >
+                  <td >150 lb / 68 kg</td>
+                  <td >109–150</td>
+                  <td >82–163</td>
+                  <td >68–82</td>
+                </tr>
+                <tr>
+                  <td >175 lb / 79 kg</td>
+                  <td >127–175</td>
+                  <td >95–190</td>
+                  <td >79–95</td>
+                </tr>
+                <tr >
+                  <td >200 lb / 91 kg</td>
+                  <td >146–200</td>
+                  <td >109–218</td>
+                  <td >91–109</td>
+                </tr>
+                <tr>
+                  <td >225 lb / 102 kg</td>
+                  <td >163–225</td>
+                  <td >122–245</td>
+                  <td >102–122</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>Note: Weight loss ranges assume active individuals in a calorie deficit. Very overweight individuals should use goal body weight as the calculation basis. For precise targets, use the <a href="/protein-calculator/">Protein Calculator</a>.</p>
+
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>How do I calculate my daily protein intake?</h3>
+              <p>Multiply your body weight in kilograms by a goal-based multiplier: 0.8 g/kg for sedentary adults (the RDA minimum), 1.6–2.2 g/kg for muscle gain, and 1.2–2.4 g/kg during weight loss. If you are significantly overweight, base your calculation on lean body mass or your goal weight rather than current weight. Our Protein Calculator automates these steps.</p>
+            
+            
+              <h3>Is 0.8g per kg of body weight enough protein?</h3>
+              <p>For sedentary adults, 0.8 g/kg (the official RDA) prevents deficiency but is likely inadequate for anyone who exercises regularly. A 2018 meta-analysis in the British Journal of Sports Medicine found 1.62 g/kg is the threshold for maximizing muscle protein synthesis in people who resistance train. Most active adults benefit from at least 1.2–1.6 g/kg per day.</p>
+            
+            
+              <h3>How much protein do I need per day to lose weight?</h3>
+              <p>During a calorie deficit, aim for 1.2–2.4 g/kg of body weight daily, with the higher end reserved for leaner individuals or larger deficits. A 2024 meta-analysis of 47 randomized controlled trials (Clinical Nutrition ESPEN, PubMed 39002131) confirmed that higher protein intake significantly preserves muscle mass during caloric restriction in overweight adults, improving body composition outcomes.</p>
+            
+            
+              <h3>Do older adults need more or less protein?</h3>
+              <p>More. Adults over 65 experience "anabolic resistance," meaning the body needs a greater protein stimulus to achieve the same muscle protein synthesis response as younger adults. A 2025 Frontiers in Nutrition study (PMC12104658) found that 1.2 g/kg/day significantly improved muscle mass vs. 0.8 g/kg over 12 weeks in elderly women. Most experts now recommend 1.0–1.5 g/kg for adults over 65.</p>
+            
+            
+              <h3>Can I get enough protein from plant foods alone?</h3>
+              <p>Yes, but it requires planning. Plant proteins generally have lower bioavailability (70–85%) vs. animal proteins (90–99%) and may lack certain essential amino acids in isolation. Vegans should target the higher end of protein ranges and combine diverse sources — lentils, tempeh, tofu, edamame, seitan, and pea protein — to cover all essential amino acids throughout the day.</p>
+            
+            
+              <h3>What is the difference between using body weight vs. lean body mass?</h3>
+              <p>Lean body mass (LBM)-based calculations are more precise for overweight individuals. Since body fat tissue does not require protein for maintenance, using total body weight can overestimate needs for those with high body fat percentages. Most protein calculators switch to LBM-based or goal-weight-based calculations when body fat exceeds approximately 30% in men or 40% in women.</p>
+            
+            
+              <h3>How many grams of protein can the body use in one meal?</h3>
+              <p>More than the old "30-gram limit" suggests. Recent 2025 research challenges the traditional ceiling, showing whole-body protein synthesis was significantly higher after a 100g meal than 25g over extended digestion windows. However, for maximizing muscle protein synthesis per meal, a practical target of 0.4 g/kg of body weight per meal (roughly 25–40g for most people) spread across 3–5 meals per day remains well-supported.</p>
+            
+          
+
+          
+            <h2>Get Your Personalized Protein Target</h2>
+            <p>Enter your weight, goal, and activity level for a precise daily protein recommendation.</p>
+            
+              <a href="/protein-calculator/">
+                Protein Calculator
+              </a>
+              <a href="/macro-calculator/">
+                Full Macro Calculator
+              </a>
+            
+          
+
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/high-protein-meals/">
+              <h3>25 High-Protein Meal Ideas</h3>
+              <p>Quick recipes with full macro breakdowns hitting 30–50g per serving.</p>
+            </a>
+            <a href="/blog/macros-guide/">
+              <h3>Complete Macro Calculator Guide</h3>
+              <p>Set protein, carbs, and fat targets that match your specific goal.</p>
+            </a>
+            <a href="/blog/plant-based-protein-sources/">
+              <h3>Best Plant-Based Protein Sources</h3>
+              <p>Top plant proteins ranked by density, completeness, and cost.</p>
+            </a>
+            <a href="/blog/calorie-deficit/">
+              <h3>How to Create a Calorie Deficit Safely</h3>
+              <p>Evidence-based deficit sizing to lose fat without muscle loss.</p>
+            </a>
+          
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.calorique.io/blog/protein-intake-calculator/">Calorique</a>.
+      Explore more free tools at <a href="https://www.calorique.io/">calorique.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.calorique.io/">Calorique</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
