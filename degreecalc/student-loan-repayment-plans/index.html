@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Loan Repayment Plans Compared: Which One Saves You Most? - DegreeCalc</title>
+  <meta name="description" content="Compare all federal student loan repayment plans side by side: Standard, IBR, PAYE, ICR, and the new RAP. See exactly which plan saves you the most money.">
+  <link rel="canonical" href="https://www.degreecalc.com/blog/student-loan-repayment-plans/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/degreecalc/">DegreeCalc</a> &rarr; Student Loan Repayment Plans Compared: Which One Saves You Most?
+  </nav>
+
+  <article>
+    <h1>Student Loan Repayment Plans Compared: Which One Saves You Most?</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.degreecalc.com/blog/student-loan-repayment-plans/">degreecalc.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Student Loan Repayment Plans Compared: Which One Saves You Most?',
+    description: 'Compare all federal student loan repayment plans side by side: Standard, IBR, PAYE, ICR, and the new RAP. See exactly which plan saves you the most money.',
+    datePublished: '2026-03-25',
+    dateModified: '2026-03-25',
+    author: 
+      '@type': 'Organization',
+      name: 'DegreeCalc',
+      url: 'https://degreecalc.com/',
+    ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'DegreeCalc',
+      url: 'https://degreecalc.com/',
+      logo: 
+        '@type': 'ImageObject',
+        url: 'https://degreecalc.com/favicon.svg',
+      ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://degreecalc.com/blog/student-loan-repayment-plans/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://degreecalc.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://degreecalc.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Student Loan Repayment Plans', item: 'https://degreecalc.com/blog/student-loan-repayment-plans/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'Which student loan repayment plan has the lowest monthly payment?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Income-Driven Repayment plans — particularly IBR and the new Repayment Assistance Plan (RAP) — offer the lowest monthly payments, potentially $0 if your income falls below 150% of the federal poverty line (about $23,475 for a single person in 2025). The trade-off is that lower payments over longer terms mean significantly more total interest paid.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the difference between IBR and PAYE?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Both IBR (new borrowers) and PAYE cap payments at 10% of discretionary income and offer forgiveness after 20 years. The key difference: PAYE has a payment cap (never more than the Standard 10-year payment) and is being phased out by July 2028. IBR is available to all borrowers with financial hardship and will remain available. For most borrowers today, IBR is the better choice since PAYE is closing.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What happened to the SAVE plan?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The SAVE plan was permanently terminated. Federal courts blocked it in mid-2024, and in December 2025 the Trump administration and State of Missouri reached a settlement that officially ended SAVE. The Eighth Circuit Court formally finalized this in March 2026. Borrowers who were in SAVE forbearance must now transition to IBR or the new Repayment Assistance Plan (RAP).',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the Repayment Assistance Plan (RAP)?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'RAP is a new federal repayment plan created by the One Big Beautiful Bill Act to replace SAVE, PAYE, and ICR for new loans made on or after July 1, 2026. Payments range from $10/month at the lowest income bracket up to 10% of AGI for earnings above $100,000. Unlike other IDR plans, RAP uses AGI rather than discretionary income. Forgiveness occurs after 30 years (360 qualifying payments).',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is Public Service Loan Forgiveness (PSLF) worth it?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For high-balance borrowers in qualifying government or nonprofit jobs, PSLF is among the most powerful financial tools available. Per Education Department data, over 1 million borrowers have received forgiveness averaging $73,400 tax-free. The key is making 120 qualifying payments on an IDR plan. For borrowers with $80,000+ in loans and careers in public service, PSLF can save six figures over private-sector refinancing.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does income-driven repayment hurt your credit?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'No — enrolling in an IDR plan does not negatively impact your credit score. Your loans remain in good standing as long as you make your required payments, even if those payments are $0. In fact, IDR plans protect credit by ensuring borrowers stay current. The risk to credit comes from missing payments, not from being on an IDR plan.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Can I switch repayment plans if my situation changes?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Yes. Federal borrowers can generally switch repayment plans at any time by contacting their loan servicer or through StudentAid.gov. There is no fee to change plans. However, switching from an IDR plan back to Standard resets the forgiveness clock. If you&apos;re pursuing PSLF, switching away from a qualifying IDR plan and back could affect your qualifying payment count, so model the numbers carefully before switching.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+      <Header />
+      
+        
+          /* Breadcrumb */
+          
+            <a href="/">Home</a>
+            /
+            <a href="/blog/">Blog</a>
+            /
+            Student Loan Repayment Plans
+          
+
+          /* Header */
+          
+            Financial Aid
+            <h2>
+              Student Loan Repayment Plans Compared: Which One Saves You Most?
+            </h2>
+            
+              <time dateTime="2026-03-25">March 25, 2026</time>
+              16 min read
+            
+          
+
+          
+
+            /* Anchor stats */
+            
+              
+                44.6M
+                Federal student loan borrowers (Federal Student Aid, Q3 FY2025)
+              
+              
+                $39,375
+                Average federal loan debt per borrower (Federal Student Aid, 2025)
+              
+              
+                $73,400
+                Average PSLF forgiveness per borrower (U.S. Dept. of Education, 2025)
+              
+            
+
+            /* Key Takeaways */
+            
+              <h2>Key Takeaways</h2>
+              <ul>
+                <li>The <strong>SAVE plan is permanently dead</strong> — finalized by court order in March 2026. Borrowers must move to IBR or the new RAP.</li>
+                <li>For borrowers earning under $23,475/year, <strong>IBR payments can be $0/month</strong> with no interest accruing on outstanding balance in most cases.</li>
+                <li>PSLF has now forgiven over <strong>$87.6 billion</strong> for more than 1 million borrowers — the average forgiveness is $73,400, tax-free.</li>
+                <li>The Standard 10-year plan pays the <strong>least total interest</strong> but requires the highest monthly payment (~$436/month on $39,375 debt).</li>
+                <li>The new <strong>Repayment Assistance Plan (RAP)</strong> is the only IDR option for loans made after July 1, 2026 — and replaces PAYE and ICR by July 2028.</li>
+              </ul>
+            
+
+            <p>
+              Here&apos;s what most borrowers get wrong: they pick a repayment plan at loan disbursement and never revisit it. But the plan that made sense at 22 earning $38,000 can cost you $40,000 in unnecessary interest by the time you&apos;re 35. The right plan depends entirely on your income, debt amount, career path, and whether you qualify for forgiveness programs.
+            </p>
+
+            <p>
+              This guide walks through every federal repayment option available to borrowers in 2026, including the massive changes from SAVE&apos;s termination and the introduction of the Repayment Assistance Plan, with specific payment calculations so you can see the real numbers.
+            </p>
+
+            <h2>The Full Landscape: Every Federal Repayment Plan</h2>
+            <p>
+              Federal student loans offer three categories of repayment: fixed-term plans (Standard, Graduated, Extended) and income-driven plans (IBR, PAYE, ICR, and the new RAP). Each has a different payment formula, forgiveness timeline, and ideal borrower profile.
+            </p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Plan</th>
+                    <th >Payment Based On</th>
+                    <th >Term</th>
+                    <th >Forgiveness</th>
+                    <th >Status</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr><td >Standard</td><td >Fixed equal payments</td><td >10 years</td><td >None needed</td><td >Active</td></tr>
+                  <tr ><td >Graduated</td><td >Low start, increases every 2 yrs</td><td >10 years</td><td >None needed</td><td >Active</td></tr>
+                  <tr><td >Extended</td><td >Fixed or graduated</td><td >Up to 25 years</td><td >None needed</td><td >Active</td></tr>
+                  <tr ><td >IBR (new)</td><td >10% of discretionary income</td><td >20 years</td><td >After 20 years</td><td >Active</td></tr>
+                  <tr><td >IBR (old, pre-2014 loans)</td><td >15% of discretionary income</td><td >25 years</td><td >After 25 years</td><td >Active</td></tr>
+                  <tr ><td >PAYE</td><td >10% of discretionary income</td><td >20 years</td><td >After 20 years</td><td >Phasing out 2028</td></tr>
+                  <tr><td >ICR</td><td >20% of discretionary income</td><td >25 years</td><td >After 25 years</td><td >Phasing out 2028</td></tr>
+                  <tr ><td >SAVE</td><td >5–10% of discretionary income</td><td >20–25 years</td><td >—</td><td >Terminated</td></tr>
+                  <tr><td >RAP (new)</td><td >1–10% of AGI</td><td >30 years</td><td >After 30 years</td><td >New (July 2026+)</td></tr>
+                </tbody>
+              </table>
+            
+
+            <h2>Fixed-Term Plans: When Simplicity Wins</h2>
+
+            <h3>Standard 10-Year Plan</h3>
+            <p>
+              The Standard plan spreads your debt into equal monthly payments over 10 years. For the average borrower carrying $39,375 at a 6.53% interest rate (the 2024–2025 federal undergraduate rate), the monthly payment is approximately $446.
+            </p>
+            <p>
+              The total cost: roughly $53,500 — meaning you pay about $14,125 in interest. That&apos;s the minimum interest you&apos;ll ever pay on federal loans absent forgiveness. Every other plan that extends the term beyond 10 years costs more in total interest.
+            </p>
+            <p>
+              <strong>Who should use it:</strong> Borrowers with stable income who can comfortably afford the payment. If your debt-to-income ratio is under 1.0 (debt less than your annual income) and you&apos;re not pursuing PSLF, Standard is almost always the right choice financially. According to <a href="/degree-roi-calculator/">our ROI calculator</a>, a borrower earning $65,000 with $39,000 in debt would pay off Standard in 10 years while keeping monthly payments at roughly 8% of gross income.
+            </p>
+
+            <h3>Graduated Repayment Plan</h3>
+            <p>
+              Graduated starts at roughly 50–60% of the Standard payment and increases every two years, finishing at roughly 150% of Standard. For the same $39,375 borrower, payments start near $250/month and end near $700/month, still completing in 10 years.
+            </p>
+            <p>
+              The math is unfavorable: you pay more total interest than Standard because you&apos;re paying less principal early. Graduated is only worth considering if you are certain your income will grow sharply in the first four years — for example, a medical resident with a defined salary progression, or a lawyer entering a firm with a lockstep associate salary structure.
+            </p>
+
+            <h3>Extended Repayment Plan</h3>
+            <p>
+              The Extended plan stretches repayment to 25 years and requires at least $30,000 in outstanding loans to qualify. Monthly payments drop to roughly $270/month for the same borrower — but total interest balloons to around $42,000, triple the Standard plan&apos;s interest load.
+            </p>
+            <p>
+              Most financial advisors recommend IDR plans over Extended for anyone who qualifies, since IDR plans offer income-based flexibility plus forgiveness after 20–25 years. Extended is primarily a fallback for borrowers with FFEL loans who can&apos;t access IDR.
+            </p>
+
+            <h2>Income-Driven Repayment Plans: The Real Decision</h2>
+            <p>
+              According to Federal Student Aid data, approximately 12.9 million borrowers are currently on income-driven plans, representing roughly 60% of all federally held student loan dollars. For borrowers with high debt relative to income — particularly those in public service or early-career roles — IDR plans can save tens of thousands of dollars.
+            </p>
+
+            <h3>Income-Based Repayment (IBR)</h3>
+            <p>
+              IBR is the most widely available and most important IDR plan remaining in 2026. It caps payments at <strong>10% of discretionary income</strong> for new borrowers (those who took their first loans after July 1, 2014) and 15% for older borrowers. Discretionary income is defined as Adjusted Gross Income minus 150% of the federal poverty guideline for your family size.
+            </p>
+            <p>
+              The math: A single borrower earning $40,000/year has a discretionary income of $40,000 minus $23,475 (150% of the 2025 poverty line for a family of one) = $16,525. At 10%, the monthly IBR payment is $137/month — roughly $300 less per month than Standard.
+            </p>
+            <p>
+              If income drops below the 150% poverty line, your payment is $0 — and this doesn&apos;t break your forgiveness payment count. You must recertify income annually, and forgiveness after 20 years is taxable as income (unlike PSLF forgiveness).
+            </p>
+
+            <h3>Pay As You Earn (PAYE) — Closing July 2028</h3>
+            <p>
+              PAYE also caps payments at 10% of discretionary income with a 20-year forgiveness timeline, identical to new IBR. Its distinguishing feature was a payment cap: payments never exceed what you&apos;d pay under Standard. This protected high earners who enrolled when income was low from payment shock as income grew.
+            </p>
+            <p>
+              PAYE is being phased out for new enrollments. If you&apos;re currently on PAYE, you can remain on it through July 2028, after which you&apos;ll need to transition. New borrowers should use IBR instead — the outcomes are nearly identical for most income profiles.
+            </p>
+
+            <h3>Income-Contingent Repayment (ICR) — Closing July 2028</h3>
+            <p>
+              ICR uses 20% of discretionary income (calculated against 100% of the poverty line rather than 150%), making it the least favorable IDR option for most borrowers. Forgiveness occurs after 25 years.
+            </p>
+            <p>
+              ICR&apos;s one remaining use case: Parent PLUS loan holders who consolidate into a Direct Consolidation Loan. ICR is currently the <em>only</em> IDR plan available to consolidated Parent PLUS loans. If you have Parent PLUS loans and are pursuing PSLF, ICR remains essential — but this is changing as RAP phases in.
+            </p>
+
+            <h2>The SAVE Plan: What Happened and What to Do Now</h2>
+            <p>
+              The SAVE plan — which offered the lowest IDR payments in history at 5–10% of discretionary income with 225% of the poverty line excluded — was permanently terminated in March 2026. Here&apos;s the timeline:
+            </p>
+            <ul>
+              <li><strong>Summer 2023:</strong> Biden administration launches SAVE as REPAYE replacement</li>
+              <li><strong>June 2024:</strong> Missouri and other states sue; courts block implementation</li>
+              <li><strong>July 2024:</strong> SAVE closed to new enrollment; ~8 million borrowers placed in administrative forbearance</li>
+              <li><strong>December 9, 2025:</strong> Trump administration reaches settlement with Missouri — SAVE permanently terminated</li>
+              <li><strong>March 2026:</strong> Eighth Circuit finalizes court order; SAVE legally ended</li>
+            </ul>
+            <p>
+              <strong>Action required:</strong> If you were in SAVE forbearance, you must actively enroll in a new plan. The Department of Education is transitioning borrowers, but do not wait — contact your loan servicer or visit StudentAid.gov to enroll in IBR or evaluate RAP. Payments during forbearance typically do not count toward PSLF forgiveness timelines.
+            </p>
+
+            <h2>The New Repayment Assistance Plan (RAP)</h2>
+            <p>
+              Created by the One Big Beautiful Bill Act, RAP replaces SAVE, PAYE, and ICR for new loans originated on or after July 1, 2026, and becomes the standard IDR option for all borrowers by July 2028.
+            </p>
+            <p>
+              RAP works differently from all previous IDR plans — it uses a percentage of <strong>total Adjusted Gross Income</strong> (not discretionary income) across 11 income brackets:
+            </p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Annual Income</th>
+                    <th >Monthly Payment</th>
+                    <th >vs. IBR (10% discretionary)</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr><td >Below poverty line</td><td >$10/month minimum</td><td >IBR: $0/month</td></tr>
+                  <tr ><td >$25,000</td><td >~$42–$62/month</td><td >IBR: ~$13/month</td></tr>
+                  <tr><td >$40,000</td><td >~$133–$167/month</td><td >IBR: ~$137/month</td></tr>
+                  <tr ><td >$60,000</td><td >~$250–$300/month</td><td >IBR: ~$304/month</td></tr>
+                  <tr><td >$100,000+</td><td >10% of AGI/12</td><td >IBR: ~$630/month</td></tr>
+                </tbody>
+              </table>
+            
+            <p>RAP payment estimates based on published bracket structure. IBR payments calculated at 10% of discretionary income (AGI minus 150% of 2025 federal poverty line of $15,650 for a single person). Exact RAP brackets pending final ED implementation rules.</p>
+
+            <p>
+              Key RAP features: forgiveness after 30 years (vs. 20 for IBR/PAYE), government subsidizes any unpaid interest and contributes up to $50/month toward principal, and a $50/month deduction per dependent child. The 30-year timeline is longer than IBR&apos;s 20 years — for borrowers not pursuing PSLF, IBR will typically result in earlier forgiveness or payoff.
+            </p>
+
+            <h2>Public Service Loan Forgiveness: The Highest-Value Strategy for Qualifying Borrowers</h2>
+            <p>
+              If you work for a government agency or 501(c)(3) nonprofit, PSLF is worth understanding in detail before choosing a repayment plan. According to the U.S. Department of Education, through January 2025, over <strong>1.069 million borrowers have received PSLF forgiveness</strong> totaling $87.6 billion — an average of $73,400 per borrower, completely tax-free.
+            </p>
+            <p>
+              The strategy: enroll in IBR (or PAYE while it&apos;s available), make 120 qualifying payments over 10 years of qualifying employment, and any remaining balance is forgiven with no tax consequence. For a borrower with $80,000 in graduate school debt earning $65,000 in a public school teaching job, PSLF can save over $90,000 compared to Standard repayment.
+            </p>
+            <p>
+              The historical barrier to PSLF — documentation failures and servicer errors — led to a 5.48% overall approval rate. This is improving: the waiver programs that ran through 2022 corrected millions of past errors, and the online PSLF tracker now provides real-time payment count verification. If you&apos;re in qualifying employment, <strong>submit an Employer Certification Form every year</strong> rather than waiting until year 10.
+            </p>
+            <p>
+              Note: The Trump administration implemented changes in 2025 that redefine qualifying employers, specifically excluding organizations with &ldquo;substantial illegal purpose.&rdquo; The Department of Education estimates fewer than 10 employers per year will be affected, and the rule is currently under legal challenge by a coalition of states and nonprofits.
+            </p>
+
+            <h2>Side-by-Side Cost Comparison: $39,375 Loan at 6.53%</h2>
+            <p>
+              Using the average federal loan balance of $39,375 at the 2024–25 undergraduate direct loan rate of 6.53%, here is the actual cost comparison across plans for a single borrower earning $45,000/year:
+            </p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Plan</th>
+                    <th >Monthly Payment</th>
+                    <th >Total Paid</th>
+                    <th >Total Interest</th>
+                    <th >Forgiven Amount</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr><td >Standard (10-yr)</td><td >$446</td><td >$53,520</td><td >$14,145</td><td >$0</td></tr>
+                  <tr ><td >Graduated (10-yr)</td><td >$250–$700</td><td >$56,200</td><td >$16,825</td><td >$0</td></tr>
+                  <tr><td >Extended (25-yr)</td><td >$271</td><td >$81,300</td><td >$41,925</td><td >$0</td></tr>
+                  <tr ><td >IBR — pays off before 20 yrs</td><td >~$180</td><td >~$68,000</td><td >~$28,625</td><td >$0</td></tr>
+                  <tr><td >IBR + PSLF (10-yr)</td><td >~$180</td><td >~$21,600</td><td >—</td><td >~$50,000+</td></tr>
+                </tbody>
+              </table>
+            
+            <p>IBR payment calculated at 10% of discretionary income ($45,000 - $23,475 = $21,525 × 10% ÷ 12 = $179/month). Totals are illustrative assuming 3% annual income growth. Actual amounts vary by servicer calculations and income recertification outcomes.</p>
+
+            <p>
+              The PSLF scenario is dramatic: a qualifying borrower pays $21,600 over 10 years and has $50,000+ forgiven tax-free. That&apos;s $32,000 less than Standard repayment and $60,000 less than Extended. For graduate school borrowers with $80,000–$120,000 in debt on a teacher or government salary, the savings are proportionally larger.
+            </p>
+
+            <h2>How to Choose the Right Plan for Your Situation</h2>
+
+            <h3>Scenario 1: High Income, Manageable Debt</h3>
+            <p>
+              If your debt is under 1× your annual income and you can afford Standard payments, use the Standard plan and pay it off in 10 years. You&apos;ll pay the least total interest. Our <a href="/student-loan-calculator/">student loan calculator</a> can help you model the exact payoff timeline and interest costs.
+            </p>
+
+            <h3>Scenario 2: Low Income, High Debt — Not Pursuing PSLF</h3>
+            <p>
+              Enroll in IBR. Your payment adjusts annually with your income, protecting cash flow during lean years. If your income grows significantly over time, you may pay off the loan before the 20-year forgiveness mark — which is fine. If not, you receive forgiveness at 20 years (taxable). Track your annual recertification deadlines carefully — missing them can result in your payment jumping to Standard or capitalized interest.
+            </p>
+
+            <h3>Scenario 3: Government or Nonprofit Career</h3>
+            <p>
+              This is the PSLF scenario. Enroll in IBR immediately, submit your Employer Certification Form, and verify your payment count with your servicer every year. The higher your loan balance relative to your income, the more PSLF benefits you. A teacher with $70,000 in debt earning $48,000 should be on IBR pursuing PSLF — full stop. See our guide to <a href="/blog/student-loan-forgiveness-guide/">student loan forgiveness programs</a> for full PSLF documentation requirements.
+            </p>
+
+            <h3>Scenario 4: New Loans After July 2026</h3>
+            <p>
+              Loans originated after July 1, 2026 will have RAP as their IDR option. Compare RAP payment brackets to IBR based on your projected income — for very low earners, RAP&apos;s $10/month minimum is actually higher than IBR&apos;s $0, which is a meaningful difference. For middle-income borrowers, the two plans are roughly comparable in monthly cost but IBR still offers 20-year forgiveness vs. RAP&apos;s 30-year timeline.
+            </p>
+
+            <h2>Private Student Loans: A Different Set of Options</h2>
+            <p>
+              Everything above applies to federal student loans only. Private loans — those issued by banks, credit unions, and online lenders — do not offer IDR, PSLF, or forgiveness programs. Private loan repayment terms are set by your lender contract.
+            </p>
+            <p>
+              If you have both federal and private debt, prioritize keeping federal loans in whichever federal plan is optimal. For private loans, refinancing can lower your interest rate if your credit score and income have improved since graduation — but refinancing federal loans into a private loan permanently eliminates access to IDR and forgiveness programs. According to <a href="/blog/average-student-loan-debt/">our student debt statistics</a>, private loans represent roughly 8% of total outstanding student debt but often carry rates 1–3 points higher than federal loans.
+            </p>
+
+            <h2>Key Mistakes to Avoid</h2>
+            <ul>
+              <li><strong>Missing annual income recertification:</strong> If you don&apos;t recertify by your deadline, your servicer will reset your payment to Standard, and unpaid interest may capitalize — increasing your principal balance.</li>
+              <li><strong>Refinancing federal loans to private:</strong> You permanently lose access to IDR, PSLF, and any future forgiveness programs. Only refinance if you have private loans, a high credit score, and no plans to pursue PSLF.</li>
+              <li><strong>Counting SAVE forbearance toward PSLF:</strong> The administrative forbearance period during SAVE litigation generally does not count toward PSLF&apos;s 120 payment requirement. Confirm your payment count with your servicer.</li>
+              <li><strong>Ignoring the tax bomb:</strong> IDR forgiveness after 20–25 years (not PSLF) is treated as taxable income. A $50,000 forgiveness could mean $15,000+ in taxes in the year of forgiveness. Plan accordingly by saving for this liability.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+
+            
+              
+                <h3>Which student loan repayment plan has the lowest monthly payment?</h3>
+                <p>Income-Driven Repayment plans — particularly IBR and the new Repayment Assistance Plan (RAP) — offer the lowest monthly payments, potentially $0 if your income falls below 150% of the federal poverty line (about $23,475 for a single person in 2025). The trade-off is that lower payments over longer terms mean significantly more total interest paid.</p>
+              
+              
+                <h3>What is the difference between IBR and PAYE?</h3>
+                <p>Both IBR (new borrowers) and PAYE cap payments at 10% of discretionary income and offer forgiveness after 20 years. The key difference: PAYE has a payment cap (never more than the Standard 10-year payment) and is being phased out by July 2028. IBR is available to all borrowers and will remain available. For most borrowers today, IBR is the better choice since PAYE is closing.</p>
+              
+              
+                <h3>What happened to the SAVE plan?</h3>
+                <p>The SAVE plan was permanently terminated. Federal courts blocked it in mid-2024, and in December 2025 the Trump administration and State of Missouri reached a settlement that officially ended SAVE. The Eighth Circuit Court formally finalized this in March 2026. Borrowers who were in SAVE forbearance must now transition to IBR or the new Repayment Assistance Plan (RAP).</p>
+              
+              
+                <h3>What is the Repayment Assistance Plan (RAP)?</h3>
+                <p>RAP is a new federal repayment plan created by the One Big Beautiful Bill Act to replace SAVE, PAYE, and ICR for new loans made on or after July 1, 2026. Payments range from $10/month at the lowest income bracket up to 10% of AGI for earnings above $100,000. Forgiveness occurs after 30 years.</p>
+              
+              
+                <h3>Is Public Service Loan Forgiveness (PSLF) worth it?</h3>
+                <p>For high-balance borrowers in qualifying government or nonprofit jobs, PSLF is among the most powerful financial tools available. Per Education Department data, over 1 million borrowers have received forgiveness averaging $73,400 tax-free. For borrowers with $80,000+ in loans and careers in public service, PSLF can save six figures over private-sector refinancing.</p>
+              
+              
+                <h3>Does income-driven repayment hurt your credit?</h3>
+                <p>No — enrolling in an IDR plan does not negatively impact your credit score. Your loans remain in good standing as long as you make your required payments, even if those payments are $0. The risk to credit comes from missing payments, not from being on an IDR plan.</p>
+              
+              
+                <h3>Can I switch repayment plans if my situation changes?</h3>
+                <p>Yes. Federal borrowers can generally switch repayment plans at any time by contacting their loan servicer or through StudentAid.gov. There is no fee to change plans. However, switching away from an IDR plan and back could affect your qualifying payment count for PSLF, so model the numbers carefully before switching.</p>
+              
+            
+
+            /* CTA */
+            
+              <h2>Calculate Your Exact Monthly Payment</h2>
+              <p>Use our free student loan calculator to compare what you&apos;d pay under Standard, IBR, and other plans based on your actual balance and income.</p>
+              <a href="/student-loan-calculator/">
+                Open Student Loan Calculator
+              </a>
+            
+
+          
+        
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.degreecalc.com/blog/student-loan-repayment-plans/">DegreeCalc</a>.
+      Explore more free tools at <a href="https://www.degreecalc.com/">degreecalc.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.degreecalc.com/">DegreeCalc</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
