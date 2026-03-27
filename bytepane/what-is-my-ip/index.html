@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Is My IP Address? Public &amp;amp; Local IP Finder - BytePane</title>
+  <meta name="description" content="Understand the difference between public and local IP addresses, why they differ, how NAT works, IPv6 adoption, geolocation accuracy, WebRTC leaks, and the best IP lookup APIs.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/what-is-my-ip/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; What Is My IP Address? Public &amp;amp; Local IP Finder
+  </nav>
+
+  <article>
+    <h1>What Is My IP Address? Public &amp;amp; Local IP Finder</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/what-is-my-ip/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'What Is My IP Address? Public & Local IP Finder',
+            description: 'Understand the difference between public and local IP addresses, why they differ, how NAT works, IPv6 adoption, geolocation accuracy, WebRTC leaks, and the best IP lookup APIs.',
+            datePublished: '2026-03-27',
+            dateModified: '2026-03-27',
+            author:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/what-is-my-ip/',
+            mainEntityOfPage: 'https://bytepane.com/blog/what-is-my-ip/',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'What Is My IP Address' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              
+                '@type': 'Question',
+                name: 'Why is my IP address different from what websites see versus what my router shows?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Your router assigns a private RFC 1918 IP address (e.g., 192.168.x.x) to devices on your local network. When traffic leaves your network, your router\'s NAT (Network Address Translation) replaces the private source IP with your public IP. Websites see your public IP — assigned by your ISP. Your devices never directly expose their private IPs to the internet.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between IPv4 and IPv6?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'IPv4 uses 32-bit addresses (e.g., 192.0.2.1), providing ~4.3 billion unique addresses — a pool that all five Regional Internet Registries exhausted between 2011 and 2020. IPv6 uses 128-bit addresses, providing 3.4×10³⁸ addresses — effectively unlimited. As of 2025, global IPv6 adoption is ~43% by traffic (Google IPv6 Statistics), with leaders like France at 86% and Germany at 75%.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How accurate is IP geolocation?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'According to MaxMind (the industry\'s leading IP geolocation database), IP-to-country accuracy is 99.8%. U.S. state-level accuracy is ~80%. City-level accuracy within a 50km radius is ~66% for the U.S. — and often lower globally. CGNAT IPs, cellular connections, and IPv6 addresses significantly reduce city accuracy, as they may geolocate to an ISP gateway rather than the user\'s actual location.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is CGNAT and why does it matter?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Carrier-Grade NAT (CGNAT) is a second layer of NAT deployed by ISPs — your household\'s public IP is shared with thousands of other subscribers behind the ISP\'s gateway. This is defined in RFC 6598 and uses the 100.64.0.0/10 range. Cloudflare found that CGNAT IPs get rate-limited 3× more often than regular IPs, causing collateral damage to innocent users sharing an IP with one bad actor.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Can my real IP address leak even when using a VPN?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Yes — 23% of VPNs leak your real IP through WebRTC (Security.org research). WebRTC\'s ICE protocol discovers peer IP addresses to establish direct connections, bypassing the VPN tunnel. Chrome, Firefox, Edge, and Safari all support WebRTC by default. Mitigation: use a VPN with built-in WebRTC leak protection, or disable WebRTC in browser settings. You can verify leaks at browserleaks.com.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What are the private IP address ranges I should know?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'RFC 1918 defines three private (non-routable) ranges: 10.0.0.0/8 (16.7 million addresses), 172.16.0.0/12 (1.04 million), and 192.168.0.0/16 (65,536). RFC 6598 adds 100.64.0.0/10 for CGNAT (4.19 million). RFC 3927 defines 169.254.0.0/16 for link-local (APIPA). None of these addresses are routed on the public internet.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do I find my IP address programmatically?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'For public IP: make an HTTP request to ipinfo.io/ip, api.ipify.org, or icanhazip.com — all return plain text. For local IP in Node.js: use os.networkInterfaces() and filter for non-internal, non-APIPA addresses. In the browser, local IPs are restricted for privacy unless WebRTC is used. Free API options include ipapi.co (1,000 req/day without auth) and ip-api.com (45 req/min on the free HTTP tier).',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        What Is My IP Address
+      
+
+      /* Article Header */
+      
+        <h2>
+          What Is My IP Address? Public &amp; Local IP Finder
+        </h2>
+        
+          Networking
+          <time dateTime="2026-03-27">March 27, 2026</time>
+          15 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>&#x2022;Your <strong>public IP</strong> (what the internet sees) differs from your <strong>local IP</strong> (assigned by your router) due to <strong>NAT</strong> — Network Address Translation defined in RFC 3022.</li>
+            <li>&#x2022;IPv4&apos;s 4.3 billion addresses are exhausted. All five Regional Internet Registries ran out of free pools between 2011 and 2020. IPv6 adoption is now <strong>~43% globally</strong> (Google IPv6 Statistics, 2025).</li>
+            <li>&#x2022;IP geolocation is <strong>99.8% accurate at country level</strong> but only <strong>66% accurate at city level</strong> for the U.S. (MaxMind official documentation).</li>
+            <li>&#x2022;<strong>23% of VPNs leak your real IP</strong> via WebRTC (Security.org) — even with the VPN active.</li>
+            <li>&#x2022;CGNAT (Carrier-Grade NAT) means your &ldquo;public&rdquo; IP may be shared with thousands of other users — Cloudflare found these IPs get rate-limited <strong>3× more often</strong> than regular IPs.</li>
+          </ul>
+        
+
+        /* Opening: data-driven stat hook */
+        
+          <h2>4.3 Billion Addresses for 8 Billion People: The IPv4 Crisis That Broke Networking</h2>
+          <p>
+            In 1981, RFC 791 defined the Internet Protocol version 4 with a 32-bit address space — 2³², or exactly <strong>4,294,967,296</strong> unique addresses. The engineers who wrote the spec knew this might eventually be a problem. They did not expect the internet to grow to 8 billion people with multiple devices each.
+          </p>
+          <p>
+            ARIN (the American Registry for Internet Numbers) exhausted its free IPv4 pool in <strong>2015</strong>. RIPE NCC (Europe/Middle East) in <strong>2019</strong>. LACNIC (Latin America) in <strong>2020</strong>. As of early 2026, the entire available RIR pool has fewer than <strong>4.6 million addresses remaining</strong> (APNIC Labs, January 2026). IANA — the body that allocates to RIRs — holds just 768 addresses in reserve (3 /24 prefixes).
+          </p>
+          <p>
+            The engineering responses to this crisis are responsible for everything confusing about IP addresses today: why your home device shows <code >192.168.1.x</code> while websites see a completely different address, why multiple households on a street may share the same public IP, why your VPN changes what websites think your location is, and why &ldquo;what is my IP&rdquo; returns a different answer depending on how and where you ask.
+          </p>
+          <p>
+            Understanding these mechanics is not just academic — it affects API rate limiting, geolocation-based features, WebRTC peer connections, security logging, and abuse detection in every application you build.
+          </p>
+        
+
+        
+          <h2>Public vs. Local IP: Why You Have Two (or More)</h2>
+          <p>
+            When you ask &ldquo;what is my IP address?&rdquo;, the answer depends on the question you&apos;re actually asking.
+          </p>
+
+          <h3>Your Local (Private) IP Address</h3>
+          <p>
+            Your router assigns local IP addresses to every device on your network using DHCP. These come from the three private ranges defined in <strong>RFC 1918</strong> (published 1996):
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Range</th>
+                  <th >CIDR Block</th>
+                  <th >Total Addresses</th>
+                  <th >Typical Use</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >10.0.0.0 – 10.255.255.255</td>
+                  <td >/8</td>
+                  <td >16,777,216</td>
+                  <td >Enterprise LANs, cloud VPCs (AWS, GCP)</td>
+                </tr>
+                <tr >
+                  <td >172.16.0.0 – 172.31.255.255</td>
+                  <td >/12</td>
+                  <td >1,048,576</td>
+                  <td >Mid-size enterprise networks</td>
+                </tr>
+                <tr >
+                  <td >192.168.0.0 – 192.168.255.255</td>
+                  <td >/16</td>
+                  <td >65,536</td>
+                  <td >Home routers (most common)</td>
+                </tr>
+                <tr >
+                  <td >100.64.0.0 – 100.127.255.255</td>
+                  <td >/10</td>
+                  <td >4,194,304</td>
+                  <td >CGNAT (ISP-level NAT, RFC 6598)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            Private IPs are not routable on the public internet. A packet from <code >192.168.1.100</code> sent to an external server would be dropped at the first ISP router. They exist only within your local network.
+          </p>
+          <p>
+            There is also <code >169.254.0.0/16</code> — link-local addresses (APIPA). When DHCP fails, Windows and macOS auto-assign addresses from this range. If your device shows <code >169.254.x.x</code>, it means it failed to get a DHCP lease — typically a misconfiguration or network fault.
+          </p>
+
+          <h3>Your Public IP Address</h3>
+          <p>
+            Your public IP is assigned by your ISP from one of its allocated blocks. It is what the internet sees when you make requests. Your router translates between local and public IPs using NAT (Network Address Translation) — replacing the source IP on outbound packets and reverse-mapping incoming responses to the correct local device.
+          </p>
+          <p>
+            Depending on your ISP and subscription type, your public IP may be:
+          </p>
+          <ul>
+            <li>&#x2022;<strong>Static</strong> — fixed, does not change. Common for business plans. Necessary for hosting servers, running VPNs, SSH without dynamic DNS.</li>
+            <li>&#x2022;<strong>Dynamic</strong> — changes periodically (usually on router restart or DHCP lease expiry). Standard for consumer plans.</li>
+            <li>&#x2022;<strong>CGNAT</strong> — your &ldquo;public&rdquo; IP is actually a shared private address behind your ISP&apos;s NAT. More on this below.</li>
+          </ul>
+        
+
+        
+          <h2>NAT and CGNAT: Why Sharing an IP Is a Problem</h2>
+          <p>
+            Network Address Translation (NAT) was designed as a stopgap for IPv4 exhaustion. It lets an entire household share a single public IP — your router tracks outbound connections using a connection table keyed by port numbers, mapping responses back to the correct internal device.
+          </p>
+          <p>
+            Carrier-Grade NAT (CGNAT) adds a second NAT layer. Your household gets a &ldquo;public&rdquo; IP that is actually a private address in the <code >100.64.0.0/10</code> range (RFC 6598). Your ISP then NATes that to a real public IP shared with potentially thousands of other subscribers. You cannot run servers behind CGNAT without ISP assistance, cannot port-forward reliably, and your requests appear to originate from the same IP as many other users.
+          </p>
+          <p>
+            This last point has concrete consequences. Cloudflare&apos;s 2025 research found that <strong>CGNAT IPs are rate-limited 3× more often</strong> than regular public IPs in their systems — collateral punishment because one malicious user behind the same CGNAT IP triggers blocks that affect thousands of innocent users. African cellular networks are especially affected: <strong>two-thirds of measured ASes</strong> in Africa&apos;s mobile networks use CGNAT (APNIC Blog, 2022), as does most of Eastern Europe, South America, and South/Southeast Asia.
+          </p>
+          <p>
+            If your application does rate limiting by IP address — as most REST APIs do — you need to account for CGNAT. A strict per-IP rate limit may effectively block an entire ISP&apos;s mobile subscriber base if one subscriber misbehaves. Consider supplementing with per-user authenticated limits, especially for mobile-heavy user bases.
+          </p>
+          <p>
+            For API design decisions around rate limiting and responses, the <a href="/blog/http-status-codes/">HTTP status codes reference</a> covers 429 Too Many Requests and the <code >Retry-After</code> header correctly.
+          </p>
+        
+
+        
+          <h2>IPv6: The Long-Delayed Fix</h2>
+          <p>
+            IPv6 was standardized in RFC 2460 in 1998 — two years after IETF engineers realized IPv4 would run out. Its 128-bit address space provides 3.4×10³⁸ addresses — enough for every grain of sand on Earth to have its own IP, with addresses left over.
+          </p>
+          <p>
+            Adoption has been slow. As of 2025, global IPv6 traffic measured by Google sits at approximately <strong>43%</strong>. Country-level adoption is uneven:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Country</th>
+                  <th >IPv6 Adoption Rate</th>
+                  <th >Primary Driver</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >France</td>
+                  <td >86%</td>
+                  <td >ISP mandates (Free, Orange)</td>
+                </tr>
+                <tr >
+                  <td >Germany</td>
+                  <td >75%</td>
+                  <td >Deutsche Telekom early rollout</td>
+                </tr>
+                <tr >
+                  <td >India</td>
+                  <td >74%</td>
+                  <td >Mobile network deployment (Jio)</td>
+                </tr>
+                <tr >
+                  <td >United States</td>
+                  <td >~50%</td>
+                  <td >Comcast, T-Mobile, major ISPs</td>
+                </tr>
+                <tr >
+                  <td >Brazil</td>
+                  <td >~50%</td>
+                  <td >NIC.br national mandate</td>
+                </tr>
+                <tr >
+                  <td >Global Average</td>
+                  <td >~43%</td>
+                  <td >—</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Source: Google IPv6 Statistics (Feb 2026), Internet Society Pulse.
+          </p>
+
+          <p>
+            An IPv6 address looks like <code >2001:db8:85a3::8a2e:370:7334</code> — eight groups of four hex digits, with consecutive zero groups collapsed to <code >::</code>. Unlike IPv4, every device gets a globally unique IPv6 address — NAT is architecturally unnecessary. This is both the security upside (proper end-to-end connectivity) and the concern (every device is directly reachable, requiring proper firewall configuration).
+          </p>
+          <p>
+            For applications, the practical implication is that you will increasingly receive IPv6 client addresses in server logs and APIs. Code that assumes IP addresses are 15 characters or less is broken — IPv6 addresses can be up to 39 characters. The <code >X-Forwarded-For</code> header may contain a mix of IPv4 and IPv6 addresses depending on the proxy chain.
+          </p>
+        
+
+        
+          <h2>IP Geolocation: What It Can and Cannot Tell You</h2>
+          <p>
+            Every &ldquo;what is my IP&rdquo; tool includes geolocation data. Understanding its accuracy limits prevents building applications that rely on it for precision they cannot achieve.
+          </p>
+          <p>
+            MaxMind is the dominant IP geolocation database, powering most commercial IP lookup services. Their published accuracy figures (MaxMind official documentation):
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Geolocation Level</th>
+                  <th >U.S. Accuracy</th>
+                  <th >Global Average</th>
+                  <th >Caveats</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Country</td>
+                  <td >99.8%</td>
+                  <td >~99%</td>
+                  <td >Reliable for country-level gating</td>
+                </tr>
+                <tr >
+                  <td >State / Region</td>
+                  <td >~80%</td>
+                  <td >~70%</td>
+                  <td >Adequate for regional targeting</td>
+                </tr>
+                <tr >
+                  <td >City (50km radius)</td>
+                  <td >~66%</td>
+                  <td >~50–70%</td>
+                  <td >Poor for precise location features</td>
+                </tr>
+                <tr >
+                  <td >ISP / ASN</td>
+                  <td >~95%</td>
+                  <td >~80%</td>
+                  <td >More reliable than city geolocation</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            Accuracy degrades significantly for cellular IPs and CGNAT addresses. A mobile user in Chicago may geolocate to Dallas if their carrier routes traffic through a Texas gateway. IPv6 addresses have even less consistent database coverage as the allocations are newer.
+          </p>
+          <p>
+            Practical consequences: do not use IP geolocation to restrict access to services requiring legal compliance with geographic regulations — it will both over-block and under-block. Do not use it to determine tax jurisdiction or payment region. It is appropriate for UX defaults (pre-selecting a user&apos;s country in a form), approximate content localization, and fraud signal enrichment where it is one of many signals.
+          </p>
+        
+
+        
+          <h2>IP Lookup APIs: Free Tier Comparison</h2>
+          <p>
+            For programmatic IP lookups, here is an honest comparison of the main free-tier options:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >API</th>
+                  <th >Free Limit</th>
+                  <th >Auth Required</th>
+                  <th >HTTPS Free</th>
+                  <th >Notable</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >ipinfo.io</td>
+                  <td >Unlimited (Lite API, registered)</td>
+                  <td >Yes (free account)</td>
+                  <td >Yes</td>
+                  <td >Daily database updates</td>
+                </tr>
+                <tr >
+                  <td >ipapi.co</td>
+                  <td >1,000 req/day</td>
+                  <td >No</td>
+                  <td >Yes</td>
+                  <td >Simple, dev/test only</td>
+                </tr>
+                <tr >
+                  <td >ip-api.com</td>
+                  <td >45 req/min</td>
+                  <td >No</td>
+                  <td >No (HTTP only)</td>
+                  <td >Bans for abuse; batch endpoint</td>
+                </tr>
+                <tr >
+                  <td >icanhazip.com</td>
+                  <td >Unlimited</td>
+                  <td >No</td>
+                  <td >Yes</td>
+                  <td >Plain text IP only, no geolocation</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h3>Finding Your Public IP Programmatically</h3>
+          <p>
+            <code>`// Node.js: get public IP
+const res = await fetch('https://icanhazip.com')
+const publicIp = (await res.text()).trim()
+
+// Node.js: get local IPs
+
+function getLocalIPs(): string[] 
+  const nets = networkInterfaces()
+  const results: string[] = []
+
+  for (const iface of Object.values(nets)) 
+    if (!iface) continue
+    for (const net of iface) 
+      // Skip loopback (127.x) and APIPA (169.254.x)
+      if (!net.internal && net.family === 'IPv4') 
+        results.push(net.address)
+      
+    
+  
+  return results
+
+`</code>
+          </pre>
+
+          <pre >
+            <code>`# Python: get public IP
+
+public_ip = urllib.request.urlopen('https://icanhazip.com').read().decode().strip()
+
+# Python: get local IP (connects to external address, reads socket)
+
+with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+    s.connect(('8.8.8.8', 80))  # doesn't actually send data
+    local_ip = s.getsockname()[0]
+`</code>
+          </pre>
+
+          <pre >
+            <code>`# curl: fastest one-liners
+curl -4 https://icanhazip.com    # public IPv4
+curl -6 https://icanhazip.com    # public IPv6 (if available)
+curl https://ipinfo.io/json      # full JSON with geolocation
+`</code>
+          </pre>
+
+          <h3>Parsing X-Forwarded-For in Production</h3>
+          <p >
+            In server applications behind a load balancer or reverse proxy, the client IP is in the <code >X-Forwarded-For</code> header, not the socket&apos;s remote address. The header is a comma-separated list where the leftmost IP is the original client:
+          </p>
+          <p>
+            <code>`X-Forwarded-For: 203.0.113.5, 10.0.0.1, 172.16.0.50
+#                ^-- real client  ^-- internal proxies
+`</code>
+          </pre>
+          <p >
+            Never trust the leftmost IP blindly — it can be spoofed by a client sending a fake <code >X-Forwarded-For</code> header before your proxy chain adds to it. The safe approach: trust only the <em>Nth-from-right</em> IP, where N is the number of known trusted proxies in your infrastructure. Many frameworks (Express.js <code >trust proxy</code>, FastAPI <code >ProxyHeadersMiddleware</code>) handle this with proper configuration.
+          </p>
+          <p>
+            This connects to how DNS resolution works downstream — see the <a href="/blog/dns-records-explained/">DNS records guide</a> for how A/AAAA records map hostnames to these IP addresses.
+          </p>
+        
+
+        
+          <h2>WebRTC IP Leaks: When Your VPN Is Not Protecting You</h2>
+          <p>
+            WebRTC (Web Real-Time Communication) is a browser API for peer-to-peer audio, video, and data channels. To establish a direct connection, it uses the <strong>ICE (Interactive Connectivity Establishment)</strong> protocol, which discovers all of a device&apos;s IP addresses — including local network IPs and the public IP visible to STUN servers.
+          </p>
+          <p>
+            The problem: browsers execute WebRTC discovery at the OS network level, bypassing the VPN tunnel. This means that even with a VPN active, a malicious web page can recover your real IP using a few lines of JavaScript:
+          </p>
+          <p>
+            <code>`// How WebRTC IP discovery works (simplified)
+const pc = new RTCPeerConnection( iceServers: [ urls: 'stun:stun.l.google.com:19302' ] )
+pc.createDataChannel('')
+pc.createOffer().then(offer => pc.setLocalDescription(offer))
+pc.onicecandidate = (event) => 
+  if (event.candidate) 
+    // event.candidate.candidate contains the IP address
+    console.log(event.candidate.candidate)
+  
+
+`</code>
+          </pre>
+          <p >
+            Research by Security.org found that <strong>23% of VPNs leak real IPs via WebRTC</strong>. The VPN encrypts traffic but the WebRTC STUN exchange happens before the tunnel processes the request.
+          </p>
+
+          <h3>Mitigation</h3>
+          <ul>
+            <li>&#x2022;<strong>Firefox</strong>: Set <code >media.peerconnection.enabled</code> to <code >false</code> in <code >about:config</code>. Disables WebRTC entirely — breaks video calls.</li>
+            <li>&#x2022;<strong>Chrome</strong>: Google&apos;s official WebRTC Network Limiter extension restricts IP exposure without breaking WebRTC.</li>
+            <li>&#x2022;<strong>VPN clients</strong>: Choose a provider that advertises WebRTC leak protection — it routes WebRTC STUN requests through the tunnel.</li>
+            <li>&#x2022;<strong>For developers building privacy tools</strong>: Set <code >iceTransportPolicy: &apos;relay&apos;</code> in RTCPeerConnection config to force all traffic through TURN servers, preventing local IP disclosure.</li>
+          </ul>
+          <p>
+            Beyond WebRTC, VPN vulnerabilities have been growing: Zscaler ThreatLabz&apos;s 2025 VPN Risk Report found that <strong>VPN CVEs grew 82.5%</strong> over the tracked period, with ~60% rated high or critical CVSS. 92% of surveyed organizations are concerned VPN vulnerabilities will lead to ransomware attacks.
+          </p>
+        
+
+        
+          <h2>IPv4 Address Market: The $35–55/IP Secondary Market</h2>
+          <p>
+            IPv4 exhaustion created a multi-billion dollar secondary market. Addresses that were allocated for free to universities and early adopters now trade at market rates. Since 2012, <strong>309 million IPv4 addresses</strong> have changed hands in transfer markets — approximately 18.4 /8 blocks, or 8% of the total delegated address space (APNIC Blog, 2024).
+          </p>
+          <p>
+            2024–2025 market prices (IPv4 Global, CircleID, Voldeta):
+          </p>
+          <ul>
+            <li>&#x2022;<strong>Purchase</strong>: /24 blocks (256 IPs) trading at $33–$45/IP. Larger /16 blocks (65,536 IPs) saw a sharp drop from ~$50/IP in 2023 to ~$24/IP mid-2025 as large institutional sellers entered the market.</li>
+            <li>&#x2022;<strong>Leasing</strong>: $0.40–$0.50/IP/month on platforms like IPXO, with APNIC-region IPs commanding &gt;$0.60/IP/month due to tighter regional supply.</li>
+          </ul>
+          <p>
+            This market is why cloud providers charge for public IPs. AWS charges $0.005/hour per public IPv4 (roughly $3.60/month) for all EC2 instances as of 2024, explicitly citing IPv4 scarcity costs. Azure and GCP have similar pricing.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>Why is my IP different from what websites see vs. my router?</h3>
+              <p>
+                Your router assigns a private RFC 1918 address (e.g., <code >192.168.x.x</code>) to your device. NAT replaces this with your public IP on outbound traffic. Websites see only your public IP — your local IP never leaves your network. This is by design: private IPs are not routable on the public internet.
+              </p>
+            
+
+            
+              <h3>What is the difference between IPv4 and IPv6?</h3>
+              <p>
+                IPv4 uses 32-bit addresses (~4.3 billion total), fully exhausted at all five RIRs between 2011–2020. IPv6 uses 128-bit addresses (3.4×10³⁸ — effectively unlimited). Global IPv6 adoption is ~43% by traffic in 2025 (Google IPv6 Statistics), led by France (86%) and Germany (75%). IPv6 eliminates the need for NAT.
+              </p>
+            
+
+            
+              <h3>How accurate is IP geolocation?</h3>
+              <p>
+                Per MaxMind documentation: 99.8% country-level, ~80% U.S. state-level, ~66% city-level within 50km. CGNAT, cellular, and IPv6 addresses are significantly less accurate. City-level geolocation can place a Chicago user in Dallas if their ISP routes through a Texas gateway. Use it for UX defaults, not compliance decisions.
+              </p>
+            
+
+            
+              <h3>What is CGNAT and why does it matter?</h3>
+              <p>
+                CGNAT (RFC 6598) is a second NAT layer at your ISP — your household&apos;s &ldquo;public&rdquo; IP is actually a private address shared with potentially thousands of other subscribers. You cannot host servers or port-forward. Cloudflare found CGNAT IPs get rate-limited 3× more often due to shared abuse flagging affecting innocent users.
+              </p>
+            
+
+            
+              <h3>Can my real IP leak through a VPN?</h3>
+              <p>
+                Yes — Security.org research found 23% of VPNs leak real IPs via WebRTC. The ICE protocol discovers IPs at the OS network level, bypassing VPN tunnels. Mitigate with a VPN that includes WebRTC leak protection, or set <code >iceTransportPolicy: &apos;relay&apos;</code> in WebRTC config. Verify at browserleaks.com.
+              </p>
+            
+
+            
+              <h3>What are the private IP address ranges?</h3>
+              <p>
+                RFC 1918 defines three: 10.0.0.0/8 (16.7M addresses), 172.16.0.0/12 (1.04M), 192.168.0.0/16 (65K). RFC 6598 adds 100.64.0.0/10 (4.19M) for CGNAT. RFC 3927 defines 169.254.0.0/16 for APIPA (link-local, when DHCP fails). None are routed on the public internet.
+              </p>
+            
+
+            
+              <h3>How do I find my IP address programmatically?</h3>
+              <p>
+                Public IP: <code >curl https://icanhazip.com</code> or fetch from <code >api.ipify.org</code> (plain text, no auth required). Local IP in Node.js: <code >os.networkInterfaces()</code> filtered for non-internal IPv4. In Python: connect a UDP socket to an external address and read <code >getsockname()[0]</code>. No actual data is sent.
+              </p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>More Networking &amp; Developer Tools</h2>
+          <p>
+            IP addresses are one layer of the web stack. These tools and guides cover the rest:
+          </p>
+          
+            <a href="/blog/dns-records-explained/">
+              DNS Records Explained
+            </a>
+            <a href="/blog/http-status-codes/">
+              HTTP Status Codes Reference
+            </a>
+            <a href="/blog/rest-api-best-practices/">
+              REST API Best Practices
+            </a>
+            <a href="/hash-generator/">
+              Hash Generator
+            </a>
+            <a href="/json-formatter/">
+              JSON Formatter
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/what-is-my-ip/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
