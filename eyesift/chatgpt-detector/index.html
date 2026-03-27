@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT Detector: Can You Actually Tell If ChatGPT Wrote This? - EyeSift</title>
+  <meta name="description" content="ChatGPT Detector: Can You Actually Tell If ChatGPT Wrote This?">
+  <link rel="canonical" href="https://www.eyesift.com/blog/chatgpt-detector/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/eyesift/">EyeSift</a> &rarr; ChatGPT Detector: Can You Actually Tell If ChatGPT Wrote This?
+  </nav>
+
+  <article>
+    <h1>ChatGPT Detector: Can You Actually Tell If ChatGPT Wrote This?</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.eyesift.com/blog/chatgpt-detector/">eyesift.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    <>
+      
+        
+          
+            <a href="/">Home</a>
+            /
+            <a href="/blog/">Blog</a>
+            /
+            ChatGPT Detector
+          
+          
+            Analysis
+            March 27, 2026
+            · 18 min read
+          
+          <h2>ChatGPT Detector: Can You Actually Tell If ChatGPT Wrote This?</h2>
+          <p>OpenAI built a detector for its own AI output. It caught only 26% of ChatGPT-generated text, produced a 9% false positive rate on human writing, and was shut down six months after launch. That is the honest starting point for understanding what ChatGPT detectors can and cannot do in 2026.</p>
+        
+      
+
+      
+        
+          
+
+            /* Myth-busting opening */
+            
+              <p>The Myth to Debunk First</p>
+              <p>"AI detectors can reliably tell whether text was written by ChatGPT." This is the assumption underlying billions of dollars of institutional investment in detection tools and countless academic integrity decisions made annually. The research evidence — including from OpenAI itself — consistently does not support it. Here is what the data actually shows.</p>
+            
+
+            <p>On January 31, 2023, OpenAI launched its own AI Text Classifier — a tool designed to detect whether text was written by ChatGPT or other AI systems. It was the company's answer to educators, publishers, and employers who needed a reliable way to distinguish human from AI-generated writing. Six months later, on July 20, 2023, OpenAI quietly removed it from its website. The stated reason, in the company's own words: "low rate of accuracy."</p>
+
+            <p>The tool had correctly identified only <strong>26% of AI-written text</strong> — missing three out of four ChatGPT-generated documents it was specifically designed to detect. Its false positive rate on genuine human writing was <strong>9%</strong> — meaning roughly 1 in 11 human-written texts was classified as AI-generated. These are not minor calibration problems. OpenAI, which built ChatGPT, which trained its classifier on ChatGPT's own outputs, could not reliably detect its own product. That failure tells us something fundamental about the nature of AI detection that every educator, HR manager, and publisher making consequential decisions based on detector scores should understand.</p>
+
+            /* Key Takeaways */
+            
+              <h2>Key Takeaways</h2>
+              <ul>
+                <li>▸<strong>OpenAI shut down its own ChatGPT detector in July 2023</strong> after it correctly identified only 26% of AI-generated text and falsely flagged 9% of human writing. The company that built the model could not reliably detect it.</li>
+                <li>▸<strong>Weber-Wulff et al. (2023), published in the <em>International Journal for Educational Integrity</em>, tested 14 AI detectors</strong> and found none exceeded 80% accuracy on real-world academic text. Only five exceeded 70%.</li>
+                <li>▸<strong>Perkins et al. (2024) found baseline accuracy of just 39.5%</strong> across six major detectors — dropping to 17.4% when texts were lightly modified. Accuracy below 20% is worse than random guessing.</li>
+                <li>▸<strong>Stanford HAI (Liang et al., <em>Cell Patterns</em>, 2023): 61.3% of non-native English speaker essays</strong> were falsely flagged as AI-generated. The false positive rate on human writing is not random — it systematically disadvantages ESL writers.</li>
+                <li>▸<strong>Humanizer tools currently evade detection at 78.6–96.2% success rates</strong> — making detection unreliable against anyone who deliberately attempts to circumvent it (arXiv:2404.01907, 2024).</li>
+              </ul>
+            
+
+            <h2>How ChatGPT Detectors Work: The Technical Foundation</h2>
+
+            <p>To evaluate what ChatGPT detectors can and cannot do, you first need to understand what they are actually measuring. There is a widespread misunderstanding that detectors compare submitted text against a database of ChatGPT outputs — something like reverse image search for AI writing. That is not how they work. No such database exists, and if it did, it would be instantly obsolete given the infinite variation in ChatGPT outputs.</p>
+
+            <p>Instead, detectors analyze the statistical properties of text itself and compare them against what AI-generated text characteristically looks like at a mathematical level. The two primary signals are perplexity and burstiness — plus, in more sophisticated tools, longer-range structural analysis.</p>
+
+            <p><strong>Perplexity</strong> measures how statistically predictable each word choice is, relative to what a language model would predict at that position in the text. Language models work by calculating the probability of each possible next token and selecting among the highest-probability options. This means AI-generated text is, structurally, low-perplexity: each word choice is roughly what you would expect given everything before it. Human writing is higher-perplexity: we include idiosyncratic word choices, surprising phrasings, and the kinds of departures from statistical expectation that result from genuine thought rather than probability optimization.</p>
+
+            <p><strong>Burstiness</strong> measures variation in sentence length and complexity across a document. Human prose is bursty: short sentences alternate with longer, more complex ones in patterns driven by the rhythm of thought rather than optimization. AI writing tends toward uniformity — each sentence in a paragraph tends toward similar length and structural complexity, because the model is generating each sentence from similar probability distributions without the cognitive variation that produces human rhythmic irregularity.</p>
+
+            <p>More sophisticated detection systems — like those deployed by Originality.ai and GPTZero's current generation — use classifier models rather than simple statistical thresholds. These systems train transformer-based neural networks on large corpora of labeled human and AI text, learning to identify stylistic signatures beyond what perplexity and burstiness alone capture. The RAID benchmark study (UPenn, UCL, King's College London, CMU — published at ACL 2024) tested six million AI-generated texts across eleven AI models and found these more sophisticated classifiers outperform statistical approaches, though still with important limitations.</p>
+
+            <h2>The Accuracy Landscape: What Independent Research Actually Shows</h2>
+
+            <p>Every major ChatGPT detector publishes impressive internal accuracy benchmarks. GPTZero cites 99% accuracy. Turnitin claims 98%. Originality.ai claims 94%. These figures are not fabricated — they are measured on specific test conditions that favor the tool. The question is what happens on real-world submissions.</p>
+
+            <p><strong>Weber-Wulff et al. (2023)</strong> — the most comprehensive independent evaluation, testing 14 tools in the <em>International Journal for Educational Integrity</em> — found that no tool exceeded 80% accuracy on real academic submissions. Only five of the fourteen tools exceeded 70%. The study's overall conclusion: "The available detection tools for AI-generated text are neither accurate nor reliable." This study is peer-reviewed, independently conducted, and published in a journal specifically focused on academic integrity — the field these tools claim to serve.</p>
+
+            <p><strong>Perkins et al. (2024)</strong> found baseline accuracy of just <strong>39.5% across six major detectors</strong>. When the test texts were lightly modified — through paraphrasing, changing sentence structures, or minor editing — accuracy dropped to <strong>17.4%</strong>. A coin flip would achieve 50% accuracy on binary classification. Detectors performing below 20% on modified texts are doing worse than random chance.</p>
+
+            <p>The <strong>RAID benchmark (ACL 2024)</strong> by researchers at UPenn, UCL, King's College London, and CMU provided the most rigorous evaluation framework: six million AI-generated texts, eleven source models, eight domains, eleven adversarial attack types, and four decoding strategies. The key finding relevant to ChatGPT detection: detectors trained primarily on GPT-family outputs perform much better against GPT-family text than against outputs from Claude, Gemini, or Llama. The market-leading detectors have a model-specificity problem — their accuracy on "ChatGPT" is meaningfully higher than their accuracy on other AI systems, but users and institutions deploy them as if they detect all AI writing equally.</p>
+
+            <h2>ChatGPT Detector Comparison: 2026 Benchmarks</h2>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Tool</th>
+                    <th >Official Accuracy Claim</th>
+                    <th >Independent / RAID Accuracy</th>
+                    <th >On Paraphrased AI Text</th>
+                    <th >Free Tier</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td >Originality.ai</td>
+                    <td >94%</td>
+                    <td >85% (RAID base), 96.7% (RAID paraphrased)</td>
+                    <td >96.7% — best performer</td>
+                    <td >None</td>
+                  </tr>
+                  <tr >
+                    <td >Copyleaks</td>
+                    <td >Not disclosed</td>
+                    <td >~76%</td>
+                    <td >85% (Dec 2025 study)</td>
+                    <td >10 pages/month</td>
+                  </tr>
+                  <tr>
+                    <td >GPTZero</td>
+                    <td >99%</td>
+                    <td >~82–84% (academic text)</td>
+                    <td >~70% (Dec 2025 study)</td>
+                    <td >5,000 chars/scan</td>
+                  </tr>
+                  <tr >
+                    <td >Turnitin</td>
+                    <td >98%</td>
+                    <td >Below 80% real-world</td>
+                    <td >80% (Dec 2025 study)</td>
+                    <td >Institutional only</td>
+                  </tr>
+                  <tr>
+                    <td >EyeSift</td>
+                    <td >—</td>
+                    <td >82–87%</td>
+                    <td >—</td>
+                    <td >Unlimited, no signup</td>
+                  </tr>
+                  <tr >
+                    <td >ZeroGPT</td>
+                    <td >86% (claimed)</td>
+                    <td >No independent validation</td>
+                    <td >Weaker on technical docs</td>
+                    <td >Unlimited (rate-limited)</td>
+                  </tr>
+                  <tr>
+                    <td >OpenAI Classifier</td>
+                    <td >—</td>
+                    <td >26% true positive rate</td>
+                    <td >Shut down Jul 2023</td>
+                    <td >Discontinued</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+
+            <p>Sources: RAID Benchmark (ACL 2024, UPenn/UCL/CMU), December 2025 comparative study, OpenAI classifier post-mortem, independent benchmarks compiled from Weber-Wulff et al. 2023 and Perkins et al. 2024. "Academic text" denotes testing on unmodified, human-written academic submissions vs. unmodified AI-generated academic text.</p>
+
+            <h2>Why Originality.ai Leads on Paraphrased Text (and Why That Matters)</h2>
+
+            <p>The most interesting finding from the RAID benchmark is Originality.ai's dramatic performance advantage on paraphrased AI text: <strong>96.7% accuracy on paraphrased content</strong>, compared to 59% average for all other detectors on the same challenge. This is the operationally critical scenario — students and content producers who want to evade detection run AI output through a paraphrasing tool before submission. Most detectors trained only on direct AI output fail significantly against paraphrased text; Originality.ai's training methodology appears to have specifically addressed this gap.</p>
+
+            <p>The trade-off is the complete absence of a free tier. Originality.ai's credit-based pricing model — approximately $0.01 per 100 words — makes it commercially oriented and better suited to publishers and content teams conducting bulk verification than to individual educators or students checking occasional submissions. For institutional use, its per-word pricing can be cost-competitive with flat-fee tools at moderate volumes, but it is not the right tool for someone checking one essay.</p>
+
+            <p>GPTZero's performance gap on paraphrased text — dropping from its claimed 99% accuracy to approximately 70% on paraphrased content in December 2025 testing — illustrates the broader limitation: the vast majority of students who deliberately use AI do not submit unmodified AI output. The real-world detection challenge is paraphrased, edited, and humanized AI content, not clean direct output. Tools optimized for clean AI detection produce very different results than tools optimized for the actual submission landscape. <a href="/blog/bypass-ai-detection/">Understanding how AI detection evasion works</a> is essential context for interpreting any detection result.</p>
+
+            <h2>The Arms Race: Humanizers, Paraphrasers, and Structural Evasion</h2>
+
+            <p>The AI detection ecosystem exists in an active arms race. Every time detection improves, evasion tools adapt. The current state of play, based on published research, significantly favors evasion.</p>
+
+            <p>A 2024 study published on arXiv (2404.01907, "Humanizing Machine-Generated Content") found that AI humanizer tools achieve attack success rates of <strong>78.6% to 96.2% against individual detectors</strong> — and outperform baseline paraphrasing methods. DetectGPT, Stanford's own AI detection tool, achieves approximately 70% detection rate on direct AI output, but this collapses to just <strong>4.6% after paraphrasing</strong> — a 65-point drop with minimal semantic change to the underlying text. These numbers are not from adversarial researchers trying to highlight worst cases — they are from researchers measuring the baseline fragility of detection methodology.</p>
+
+            <p>An April 2025 JISC report on AI detection characterized the structural dynamic: it costs almost nothing computationally to run AI text through a humanizer (one inference pass, typically free or cheap). Closing each evasion gap in a detector requires significant model retraining, new labeled data collection, and engineering effort. The asymmetry is structural, not temporary.</p>
+
+            <p>A newer reinforcement learning-based evasion method, AuthorMist (published March 2025, arXiv:2503.08716), uses RL to train an evasion system to maintain semantic coherence while specifically optimizing to minimize detection scores — representing a new generation of evasion tools more sophisticated than simple paraphrasers. Turnitin's August 2025 bypasser detection feature is a direct response, but its effectiveness against next-generation evasion tools like AuthorMist has not yet been independently evaluated.</p>
+
+            <p>The honest conclusion is that a motivated student or content producer who knows detection tools are in use and deliberately runs AI content through an evasion tool will, under current technology, most likely evade detection. Detection is most effective against naive direct submission of unmodified AI output — which is increasingly not what sophisticated users produce.</p>
+
+            <h2>The False Positive Crisis: When Detectors Accuse Human Writers</h2>
+
+            <p>The false positive rate — human-written text incorrectly flagged as AI-generated — is the harm side of the detection accuracy problem. It receives less public attention than false negatives (AI text that passes undetected), but its consequences for individuals are often more severe and more immediate.</p>
+
+            <p>The Stanford HAI study by Weixin Liang and colleagues, published in <em>Cell Press Patterns</em> in July 2023, is the most rigorous quantification of this problem. Testing seven AI detectors on 91 TOEFL essays written entirely by Chinese non-native English speakers, the study found that <strong>61.3% were falsely classified as AI-generated</strong>. Across all seven detectors, 97.8% of the non-native English essays were flagged by at least one detector, and 19.8% were unanimously flagged by all seven. Every essay was written by a human. The same detectors applied to essays by U.S.-born eighth-grade students produced near-zero false positives.</p>
+
+            <p>The mechanism matters: AI detectors flag low-perplexity, low-burstiness text as AI-generated. Non-native English writers naturally produce lower-perplexity text — limited vocabulary range, simpler sentence structures, more formulaic phrasing — because these are characteristics of L2 writing at intermediate proficiency levels. It is not a calibration bug that can be easily patched; it is baked into the fundamental mechanism of detection. Detectors that use perplexity as a primary signal will systematically disadvantage ESL writers relative to native speakers.</p>
+
+            <p>Documented cases of real harm are accumulating. At the University of California, Davis, a linguistics professor found that 15 of 17 student AI flags in a single semester were false positives — and the flagged students were disproportionately non-native speakers and students who had worked with writing tutors. At Texas A&M, multiple students were initially failed based on AI detection results and successfully appealed by presenting writing portfolios and draft histories. A growing number of students have filed lawsuits, per NBC News (2025), citing emotional distress and punitive consequences from false AI accusations.</p>
+
+            <h2>Use Cases Where ChatGPT Detection Actually Makes Sense</h2>
+
+            <p>None of the above means AI detectors have no legitimate use. The question is what use cases can absorb the known limitations without producing disproportionate harm.</p>
+
+            <p><strong>Content screening at scale, not individual verdicts.</strong> Publishers and content marketing teams use AI detection to triage high volumes of submitted content — identifying work that warrants editorial scrutiny, not to make binary accept/reject decisions based on a score alone. At this use case, where the score triggers human review rather than automatic action, the accuracy limitations are manageable. An editor reviewing a flagged piece for quality, voice, and originality is using the tool appropriately.</p>
+
+            <p><strong>HR pre-screening with human review follow-up.</strong> According to Insight Global's 2025 AI in Hiring report, <strong>29.3% of job seekers used AI to write or customize applications</strong> in 2025, up from 17.3% in 2024. Recruiters using AI detection as a first-pass screen — not as a sole basis for rejection — can focus manual review on flagged submissions. The same accuracy problems apply: the 88% of hiring managers who claim they can detect AI applications are almost certainly overconfident, but detection-as-triage is more defensible than detection-as-verdict.</p>
+
+            <p><strong>Academic integrity investigation triggers, not sanctions.</strong> The most defensible institutional use is detection as a hypothesis generator — a high AI score triggers a follow-up oral conversation with the student, not a misconduct referral. <a href="/blog/turnitin-ai-detection/">Turnitin's own guidance</a> explicitly warns against using AI scores as the sole basis for adverse student actions. Institutions that use detection this way — to identify submissions worth closer examination — are using it within its actual capabilities.</p>
+
+            <p><strong>Research and measurement, not individual targeting.</strong> The most valuable use of AI detection at scale is aggregate measurement — tracking what proportion of submissions in a corpus show AI signals over time, as Turnitin's dataset of 250 million papers has done. This produces genuinely useful trend data even when individual predictions are unreliable, because the errors partially cancel at scale.</p>
+
+            <h2>The Future: Watermarking and Why It Changes the Problem</h2>
+
+            <p>The fundamental limitation of all current ChatGPT detectors is that they are trying to identify AI text after it has been generated, using statistical inference about properties of the output. This is inherently uncertain — you are asking whether a text looks like it could have been generated by AI, which is a different question from whether it was. That gap is where false positives live.</p>
+
+            <p>Watermarking changes the problem from statistical inference to cryptographic verification. Google DeepMind's <strong>SynthID</strong> is the most developed public watermarking system. During text generation, SynthID adjusts token selection probability scores according to a secret pattern — embedding an invisible statistical watermark into the output at the point of creation. Detection then becomes a matter of checking whether the watermark pattern is present, not inferring whether the text looks AI-like. SynthID was deployed in Google Gemini products in May 2024, open-sourced on Hugging Face in October 2024, and expanded to a unified detector covering text, images, audio, and video in May 2025.</p>
+
+            <p>OpenAI has taken a different approach: <strong>C2PA content provenance</strong>. Rather than watermarking output statistically, OpenAI attaches cryptographically signed metadata to content generated by DALL-E 3 and (prospectively) Sora, joining the C2PA (Coalition for Content Provenance and Authenticity) steering committee in May 2024. For text, OpenAI has acknowledged a structural problem with watermarking: even a 0.1% false positive rate, applied across the billions of text snippets generated daily, produces enormous absolute numbers of false accusations. The company's current approach prioritizes provenance metadata over statistical watermarks for text.</p>
+
+            <p>The more fundamental problem with watermarking is evasion. SynthID's own documentation acknowledges vulnerability to paraphrasing, back-translation, and copy-paste modification. An August 2025 arXiv paper assessed robustness under adversarial conditions and found meaningful watermark degradation. A March 2025 arXiv paper ("Missing the Mark," arXiv:2503.18156) found that most AI providers are not yet in compliance with EU AI Act watermarking requirements — which will drive accelerated watermarking adoption but has not yet produced a robust standard. <a href="/blog/future-of-ai-detection/">The future of AI detection</a> likely involves a combination of watermarking, provenance metadata, and statistical inference — none of which will be individually sufficient on its own.</p>
+
+            <h2>A Practical Framework for Using ChatGPT Detection Tools</h2>
+
+            <p>Given what the research shows, here is the framework for using AI detection tools with appropriate calibration:</p>
+
+            <p><strong>Choose tools based on your use case, not marketing claims.</strong> For bulk content screening where paraphrased AI text is the primary concern, Originality.ai's RAID benchmark performance on paraphrased content makes it the current leader despite the absence of a free tier. For individual academic submission review with sentence-level granularity, GPTZero's highlighting capability adds value that aggregate scores don't. For multimodal content that includes images and audio, a tool like <a href="/text-analysis/">EyeSift</a> that covers multiple content types provides unified screening that text-only tools cannot. Match the tool to the actual submission type.</p>
+
+            <p><strong>Use multiple tools, not one.</strong> The ensemble approach — running suspect text through two or three detectors and looking for convergent signals — significantly improves reliability over any single tool. When three detectors independently produce high AI scores, the probability of false positive is meaningfully lower than when one detector does. When detectors diverge, that divergence itself is information: the text has characteristics that different detection approaches are reading differently, which warrants manual review rather than automated action.</p>
+
+            <p><strong>Weight context as heavily as scores.</strong> A 90% AI score from a native English speaker with a prior writing baseline in the course deserves different treatment than the same score from an international student writing their first English-medium academic paper. The score is one input; the student context is another that the tool cannot provide. <a href="/blog/how-to-tell-if-ai-written/">Manual techniques for identifying AI-written content</a> — qualitative reading for voice, consistency, specificity — complement tool-based screening and should not be skipped.</p>
+
+            <p><strong>Never use detection scores as the sole basis for consequential action.</strong> This is not an opinion — it is the stated policy guidance of every responsible actor in this space, including Turnitin, GPTZero, and academic integrity bodies. Detection scores are hypothesis generators. Investigation determines outcome. The investigation must gather evidence of authorship — or lack of it — through means other than the detector score itself.</p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            
+              
+                <h3>Can any tool reliably detect if ChatGPT wrote something?</h3>
+                <p>No current tool reliably detects all ChatGPT-generated text. OpenAI's own classifier — trained specifically on ChatGPT output — correctly identified only 26% of AI-generated text before being shut down in July 2023. Independent benchmarks consistently show that detectors performing well on clean, unmodified ChatGPT output fail significantly when text has been paraphrased or edited. Originality.ai performs best on paraphrased content in the RAID benchmark (96.7%), but no tool maintains high accuracy under all evasion conditions.</p>
+              
+
+              
+                <h3>Why did OpenAI shut down its AI detector?</h3>
+                <p>OpenAI's AI Text Classifier, launched January 2023, was shut down in July 2023 due to "low rate of accuracy." The tool correctly identified only 26% of AI-written text (74% false negative rate) and incorrectly flagged approximately 9% of human writing as AI-generated. The company has since acknowledged that text watermarking has a structural false-positive risk at scale, and is pursuing content provenance metadata (C2PA) as its primary authenticity approach for most content types.</p>
+              
+
+              
+                <h3>Do ChatGPT detectors work on Claude or Gemini text?</h3>
+                <p>Most ChatGPT detectors perform significantly worse on Claude, Gemini, and Llama outputs than on GPT-family text. The RAID benchmark (ACL 2024) found that detectors trained primarily on GPT outputs are "mostly useless" at detecting Llama-generated text. Independent benchmarks show Turnitin detecting Claude outputs at only 53–60% accuracy compared to 77–98% for GPT text. This model-specificity problem means detector accuracy claims based on ChatGPT testing do not generalize to other AI systems.</p>
+              
+
+              
+                <h3>How does perplexity work in AI detection?</h3>
+                <p>Perplexity measures how statistically predictable each word choice is relative to what a language model would select at that position. Since AI models generate text by selecting high-probability tokens, their outputs are low-perplexity — each word is roughly what you would predict. Human writing is higher-perplexity, containing unexpected word choices and idiosyncratic phrasing. The critical limitation: non-native English speakers also produce lower-perplexity text (simpler vocabulary, formulaic structures), making them disproportionately vulnerable to false positive flags. This is the root cause of the Stanford ESL bias finding.</p>
+              
+
+              
+                <h3>What is the best free ChatGPT detector?</h3>
+                <p>GPTZero offers the most capable free tier among dedicated AI detectors — 5,000 characters per scan, sentence-level highlighting, and no signup required for basic use. EyeSift provides unlimited free AI text detection alongside image and audio analysis, with no character limits. ZeroGPT offers unlimited free checks with rate limiting. For paraphrased text specifically, where evasion is the main concern, Originality.ai performs best in independent benchmarks but has no free tier. The right choice depends on volume, content type, and whether sentence-level granularity matters for your use case.</p>
+              
+
+              
+                <h3>Can humanizer tools really fool ChatGPT detectors?</h3>
+                <p>Current research says yes, with high consistency. A 2024 arXiv study (2404.01907) found humanizer tools achieve 78.6–96.2% attack success rates against individual detectors. DetectGPT drops from 70.3% detection accuracy on direct AI output to just 4.6% after paraphrasing — with minimal semantic change. Originality.ai is the notable exception, achieving 96.7% accuracy on paraphrased text in the RAID benchmark. Turnitin launched a bypasser detection feature in August 2025, but independent data on its effectiveness against modern humanizer tools is not yet available.</p>
+              
+
+              
+                <h3>Are AI detectors biased against ESL and non-native English writers?</h3>
+                <p>The Stanford HAI study (Liang et al., <em>Cell Patterns</em>, 2023) found 61.3% of TOEFL essays by Chinese non-native speakers were falsely flagged as AI-generated across seven detectors, versus near-zero false positives for native English speakers. The bias is structural: non-native writing exhibits lower perplexity and lower burstiness — the same statistical signals detectors use to flag AI text. Institutions serving international student populations should apply extra caution before using AI detection results for any consequential decision affecting ESL students.</p>
+              
+            
+
+            <h2>The Honest Bottom Line</h2>
+
+            <p>There is no reliable way to definitively determine whether a specific piece of text was written by ChatGPT. This is not a temporary limitation pending the next model update — it is a fundamental challenge rooted in the nature of language, probability, and the absence of cryptographic provenance in text generation. OpenAI's failed attempt to build its own detector is the most honest single piece of evidence in the entire debate: the company that built the model cannot reliably identify its own output.</p>
+
+            <p>What AI detectors can do — when calibrated correctly and used within their limitations — is identify text with statistical properties associated with AI generation and flag it for human review. Used as hypothesis generators rather than verdict machines, integrated into decision processes that require supporting evidence beyond the detection score itself, and deployed with awareness of their systematically higher false positive rates on ESL writing, they have genuine utility.</p>
+
+            <p>Used as automated gatekeepers making final decisions about student misconduct, job applicant qualification, or publication authenticity — without human judgment, contextual awareness, or any mechanism for false-positive correction — they are causing documented harm. The distance between those two uses is not a technical question. It is a policy question. <a href="/blog/ai-detection-ethics/">The ethics of AI content detection</a> ultimately come down to how organizations design the human accountability structures around tools that are inherently uncertain.</p>
+
+          
+
+          
+            <h2>Check Any Text for AI Content — Free</h2>
+            <p>EyeSift's AI detector analyzes text, images, and audio for AI-generated content. No signup required, no character limits, instant results.</p>
+            <a href="/text-analysis/">
+              Try EyeSift AI Detector Free
+            </a>
+          
+
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/best-ai-detectors-2026/">
+                Comparison
+                <h3>Best AI Detectors in 2026: Full Comparison</h3>
+                <p>Side-by-side accuracy testing of the top 7 AI detection tools.</p>
+              </a>
+              <a href="/blog/turnitin-ai-detection/">
+                Education
+                <h3>How Turnitin AI Detection Works</h3>
+                <p>Technical breakdown of Turnitin's AIW-2 model and real accuracy data.</p>
+              </a>
+              <a href="/blog/ai-detection-accuracy-benchmarks/">
+                Benchmarks
+                <h3>AI Detection Accuracy Benchmarks 2026</h3>
+                <p>Independent accuracy data across tools, models, and content types.</p>
+              </a>
+            
+          
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.eyesift.com/blog/chatgpt-detector/">EyeSift</a>.
+      Explore more free tools at <a href="https://www.eyesift.com/">eyesift.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.eyesift.com/">EyeSift</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
