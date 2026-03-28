@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calories Burned Calculator: By Exercise Type &amp; Duration - Calorique</title>
+  <meta name="description" content="A comprehensive, evidence-based guide to estimating calories burned during exercise using MET values, the Compendium of Physical Activities, and Harvard Health data. Covers cardio, strength training, HIIT, and more.">
+  <link rel="canonical" href="https://www.calorique.io/blog/calories-burned-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/calorique/">Calorique</a> &rarr; Calories Burned Calculator: By Exercise Type &amp; Duration
+  </nav>
+
+  <article>
+    <h1>Calories Burned Calculator: By Exercise Type &amp; Duration</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.calorique.io/blog/calories-burned-calculator/">calorique.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Calories Burned Calculator: By Exercise Type & Duration',
+    description: 'A comprehensive, evidence-based guide to estimating calories burned during exercise using MET values, the Compendium of Physical Activities, and Harvard Health data. Covers cardio, strength training, HIIT, and more.',
+    author:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    publisher:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    mainEntityOfPage: 'https://calorique.io/blog/calories-burned-calculator/',
+    datePublished: '2026-03-28',
+    dateModified: '2026-03-28',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://calorique.io/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://calorique.io/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Calories Burned Calculator', item: 'https://calorique.io/blog/calories-burned-calculator/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How accurate are calories burned calculators?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'MET-based calculators are population-level estimates with meaningful individual variation. According to ACSM, wearable fitness trackers typically have a 20–30% error margin for calorie tracking. Calculators perform best for steady-state activities like walking and running; they are less accurate for variable-intensity efforts like HIIT or team sports. Use them as a directional guide, not a precise measurement.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What exercise burns the most calories per hour?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Running at a fast pace consistently ranks as the highest-calorie-burning activity accessible to most people. Per Mayo Clinic data, running at 8 mph burns approximately 986 calories per hour for a 160-pound person. Jumping rope (MET ~12.3) and competitive swimming butterfly stroke (~13–14 MET) also rival running at equivalent intensities. Cycling at racing pace (20+ mph) can exceed 1,000 calories per hour for heavier individuals.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Do you burn more calories with more body weight?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Yes — calorie expenditure scales directly with body weight in the MET formula. A 200-pound person burns approximately 60% more calories than a 125-pound person doing the same activity at the same intensity and duration. This is because heavier bodies must move more mass against gravity and resistance. As you lose weight, your calorie burn per session decreases, which is one reason recalculating your targets regularly matters.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does strength training burn as many calories as cardio?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'During the session itself, no. General strength training has a MET of 3.0–5.0 versus running at 6.0–11.0+. However, strength training produces significant excess post-exercise oxygen consumption (EPOC) and, more importantly, builds muscle tissue that raises resting metabolic rate long-term. Muscle tissue burns roughly 6 calories per pound per day at rest versus about 2 calories per pound for fat — creating a compounding caloric advantage over time.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does HIIT really burn more calories than steady-state cardio?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Per minute of work, yes. A 2024 American Council on Exercise analysis found HIIT burns approximately 25–30% more calories per minute than steady-state cardio. However, HIIT sessions are typically shorter (20–30 min vs. 45–60 min), and a 2014 PubMed study (PMID 25162652) found the afterburn (EPOC) advantage was not as large as commonly claimed when measured over a full recovery period. HIIT wins on time efficiency; steady-state may produce greater total burn in longer sessions.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Do men and women burn different amounts of calories during exercise?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Men typically burn 5–10% more calories than women of the same body weight during identical exercise, primarily because men average significantly higher lean muscle mass (about 40% of body weight vs. 30% for women). However, women oxidize a higher proportion of fat during exercise — approximately 50.9% of energy from fat vs. 46.9% for men, per research published in the Journal of Applied Physiology. The total calorie difference narrows considerably when controlled for lean body mass.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is a MET value and how is it used?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'MET stands for Metabolic Equivalent of Task — a measure of how much energy an activity requires relative to sitting at rest (1 MET = 3.5 ml O₂/kg/min). Walking briskly is about 5.0 METs; running at 6 mph is about 9.8 METs. The standard calorie formula is: Calories = Duration (minutes) × (MET × 3.5 × Body weight in kg) ÷ 200. The 2024 Adult Compendium of Physical Activities (Ainsworth et al.) is the definitive reference for over 1,100 activities.',
+        ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          Calories Burned Calculator
+        
+
+        
+          
+            Exercise & Cardio
+            March 28, 2026
+            16 min read
+          
+          <h2>Calories Burned Calculator: By Exercise Type & Duration</h2>
+          <p>
+            The number on a treadmill screen and the estimate on your fitness tracker can differ by hundreds of calories. Here is what the science actually says about how many calories you burn — by activity, duration, and body weight — and why those differences matter for your goals.
+          </p>
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <p>Key Takeaways</p>
+            <ul>
+              <li>• Calories burned = MET × body weight (kg) × time (hours) — the formula used by ACSM and the 2024 Compendium of Physical Activities</li>
+              <li>• Fitness trackers have a 20–30% error margin per ACSM; use calculator data as directional estimates</li>
+              <li>• Running burns the most calories per hour among accessible activities — up to ~986 cal/hr at 8 mph per Mayo Clinic</li>
+              <li>• Heavier individuals burn significantly more calories per session; weight loss progressively reduces per-session burn</li>
+              <li>• Strength training builds muscle that raises resting metabolic rate — worth more than its modest in-session calorie burn suggests</li>
+            </ul>
+          
+
+          /* Opening with data */
+          <h2>What the Data Shows Before We Start</h2>
+          <p>
+            According to the CDC, only 28% of American adults meet both the aerobic and muscle-strengthening guidelines for physical activity — 150–300 minutes of moderate-intensity activity per week. One underappreciated reason: most people dramatically underestimate how hard they need to work to hit meaningful calorie expenditure targets.
+          </p>
+          <p>
+            Per ACSM guidelines, the recommended weekly exercise target is 500–1,000 MET-minutes. At a brisk walking pace (roughly 3.5 mph, MET 3.5), hitting 500 MET-minutes per week requires about 143 minutes of walking. At a running pace (6 mph, MET 9.8), you can hit it in about 51 minutes. The choice of exercise intensity has enormous leverage over both time required and total caloric output.
+          </p>
+          <p>
+            The tool that underpins almost every legitimate calorie calculator — including those used in research, clinical settings, and major health apps — is the Compendium of Physical Activities, last updated in January 2024 by Ainsworth et al. and published in the Journal of Science in Human Sports and Exercise. It contains measured MET values for 1,114 physical activities. That is the starting point for all the numbers in this guide.
+          </p>
+
+          <h2>The Formula: How Calorie Burn Is Calculated</h2>
+          <p>
+            The standard formula for calculating calories burned during exercise, used by ACSM and Texas A&M Health, is:
+          </p>
+
+          
+            <p>Calorie Calculation Formula</p>
+            <p>
+              Calories = Duration (min) × (MET × 3.5 × Weight in kg) ÷ 200
+            </p>
+            <p>Where:</p>
+            <ul>
+              <li>• <strong>MET</strong> = Metabolic Equivalent of Task (1 MET = resting metabolic rate, ~3.5 ml O₂/kg/min)</li>
+              <li>• <strong>3.5</strong> = the standard resting oxygen consumption value in ml/kg/min</li>
+              <li>• <strong>200</strong> = unit conversion factor (ml O₂ → kcal)</li>
+            </ul>
+            <p>Example: A 70 kg person running at 6 mph (MET = 9.8) for 30 minutes = 30 × (9.8 × 3.5 × 70) ÷ 200 = <strong>360 calories</strong>.</p>
+          
+
+          <p>
+            The simplified version — Calories = MET × weight (kg) × time (hours) — gives nearly identical results and is easier to apply mentally. Both formulas are standard in the exercise science literature and are used interchangeably in research and clinical applications.
+          </p>
+          <p>
+            The limitation worth understanding: MET values are population averages derived from indirect calorimetry studies. Your individual calorie burn depends on fitness level, age, body composition, environmental temperature, altitude, and health status. A well-trained athlete doing the same activity at the same pace as a beginner will burn fewer calories because their body performs the work more efficiently. This is not a flaw in the formula — it is a fundamental property of adaptation.
+          </p>
+          <p>
+            Use our <a href="/calorie-calculator/">Calorie Calculator</a> to find your TDEE and see how exercise contributes to your daily energy balance.
+          </p>
+
+          <h2>Calories Burned Per Hour: The Full Reference Table</h2>
+          <p>
+            The following data combines MET values from the 2024 Adult Compendium of Physical Activities (Ainsworth et al.) with per-weight calorie estimates verified against Harvard Health Publishing and Mayo Clinic reference tables. Three body weights are shown: 125 lbs (56.7 kg), 155 lbs (70.3 kg), and 185 lbs (83.9 kg).
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Activity</th>
+                  <th >MET</th>
+                  <th >125 lbs</th>
+                  <th >155 lbs</th>
+                  <th >185 lbs</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >Walking, brisk (3.5 mph)</td>
+                  <td >3.5</td>
+                  <td >240</td>
+                  <td >298</td>
+                  <td >354</td>
+                </tr>
+                <tr >
+                  <td >Running, 5 mph (12-min mile)</td>
+                  <td >8.3</td>
+                  <td >480</td>
+                  <td >596</td>
+                  <td >710</td>
+                </tr>
+                <tr>
+                  <td >Running, 6 mph (10-min mile)</td>
+                  <td >9.8</td>
+                  <td >572</td>
+                  <td >710</td>
+                  <td >846</td>
+                </tr>
+                <tr >
+                  <td >Cycling, moderate (12–14 mph)</td>
+                  <td >8.0</td>
+                  <td >480</td>
+                  <td >596</td>
+                  <td >710</td>
+                </tr>
+                <tr>
+                  <td >Swimming laps, moderate freestyle</td>
+                  <td >6.0</td>
+                  <td >420</td>
+                  <td >528</td>
+                  <td >622</td>
+                </tr>
+                <tr >
+                  <td >HIIT / Circuit training</td>
+                  <td >8.0–14.0</td>
+                  <td >540</td>
+                  <td >662</td>
+                  <td >786</td>
+                </tr>
+                <tr>
+                  <td >Jumping rope, general</td>
+                  <td >12.3</td>
+                  <td >600</td>
+                  <td >744</td>
+                  <td >888</td>
+                </tr>
+                <tr >
+                  <td >Strength training, general</td>
+                  <td >3.0–3.5</td>
+                  <td >180</td>
+                  <td >224</td>
+                  <td >266</td>
+                </tr>
+                <tr>
+                  <td >Strength training, vigorous</td>
+                  <td >5.0–6.0</td>
+                  <td >300</td>
+                  <td >373</td>
+                  <td >443</td>
+                </tr>
+                <tr >
+                  <td >Yoga, Hatha</td>
+                  <td >2.5</td>
+                  <td >150</td>
+                  <td >186</td>
+                  <td >222</td>
+                </tr>
+                <tr>
+                  <td >Yoga, Vinyasa/Power</td>
+                  <td >4.0–5.0</td>
+                  <td >240</td>
+                  <td >298</td>
+                  <td >354</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>Sources: 2024 Adult Compendium of Physical Activities (Ainsworth et al., PMC10818145), Harvard Health Publishing, Mayo Clinic. Calories shown per hour of continuous activity.</p>
+
+          <h2>Cardio Deep Dive: Running, Cycling, and Swimming Compared</h2>
+
+          <h3>Running: The Calorie-Burn Benchmark</h3>
+          <p>
+            Running is the gold standard for calorie expenditure per minute among accessible, equipment-free activities. Per Mayo Clinic data for a 160-pound person, running at 8 mph burns approximately 986 calories per hour — more than most gym activities can match at any given weight.
+          </p>
+          <p>
+            The MET values scale substantially with pace: slow jogging at 5 mph sits around MET 8.3, while 7 mph running reaches MET 11.0. Every mph increase adds roughly 1.5–2.0 METs, which translates to approximately 105–140 additional calories per hour for a 155-pound person. The practical takeaway is that small increases in running pace have a disproportionate impact on calorie burn compared to increasing duration.
+          </p>
+          <p>
+            Running also produces meaningful EPOC — excess post-exercise oxygen consumption — particularly after high-intensity runs. While the afterburn effect is often exaggerated in popular media, sustained elevated metabolism for 30–120 minutes post-run contributes meaningfully to daily expenditure.
+          </p>
+
+          <h3>Cycling: Efficiency vs. Calorie Burn</h3>
+          <p>
+            Cycling is mechanically more efficient than running — meaning you cover more distance per calorie spent. This is great for commuting or recreation but means that at the same perceived effort, cycling burns fewer calories per hour than running. At moderate pace (12–14 mph, MET 8.0), a 155-pound person burns approximately 596 calories per hour — about the same as running at 5 mph.
+          </p>
+          <p>
+            Stationary cycling and spin classes can narrow this gap by removing the drafting advantage and forcing consistent power output. High-resistance spin sessions can approach MET 10–12, rivaling running on the calorie scale. The additional advantage of cycling is the dramatically lower impact load on joints — making it the preferred modality for individuals with knee, hip, or ankle issues who still want high-calorie-burn cardio.
+          </p>
+          <p>
+            For cycling-specific calorie tracking and how it fits into a weight loss plan, see our guide on <a href="/blog/cycling-weight-loss-guide/">cycling for weight loss</a>.
+          </p>
+
+          <h3>Swimming: The Underrated Calorie Burner</h3>
+          <p>
+            Swimming calorie burn is highly stroke-dependent — a detail that most calculator tools miss. Per Ohio State University Wexner Medical Center data, breaststroke burns approximately 744 calories per hour for a 70 kg person, while butterfly stroke can exceed 818 calories per hour. Both outperform moderate freestyle (approximately 528 calories per hour for the same body weight).
+          </p>
+          <p>
+            Swimming provides the unique advantage of full-body muscle engagement with near-zero impact, making it valuable for injury rehabilitation and older exercisers. The metabolic load of displacing water and maintaining body position engages the core, shoulders, and legs simultaneously — explaining the high MET values for competitive strokes (butterfly MET ~13–14 per the 2024 Compendium).
+          </p>
+
+          <h2>HIIT vs. Steady-State Cardio: The Real Calorie Math</h2>
+          <p>
+            Few fitness debates generate more confusion than the HIIT versus steady-state cardio question for calorie burn. Here is the actual research, stripped of marketing.
+          </p>
+          <p>
+            A 2024 analysis by the American Council on Exercise (ACE) found that HIIT burns approximately 25–30% more calories per minute than steady-state cardio — roughly 12.6 calories per minute versus 9–10 calories per minute for moderate-intensity steady-state work. Over a 20-minute session, that is a meaningful gap.
+          </p>
+          <p>
+            However, a 2014 peer-reviewed study (PubMed PMID 25162652) that directly measured caloric expenditure including post-exercise recovery found that steady-state cardio produced 348 total calories versus 329 for HIIT across the full session and recovery window. The EPOC advantage of HIIT did not compensate for its shorter total work time in this controlled comparison.
+          </p>
+          <p>
+            The practical conclusion: HIIT wins on time efficiency — you can achieve comparable or greater calorie burn in less total time. Steady-state cardio can match or exceed total HIIT calorie burn when sessions are long enough (45–60 minutes versus 20–25 minutes for HIIT). Both approaches are valid; your choice should depend on time availability, fitness level, injury history, and how your body recovers. For a detailed comparison of these training styles, see our guide on <a href="/blog/hiit-vs-steady-state-cardio/">HIIT vs. steady-state cardio</a>.
+          </p>
+
+          <h2>Strength Training: Why the Low MET Number Is Misleading</h2>
+          <p>
+            At first glance, strength training looks like a poor investment for calorie burning — MET values of 3.0–5.0 versus running at 8–11 METs. For a 155-pound person, an hour of moderate weight training burns roughly 224 calories. That is less than 30 minutes of jogging.
+          </p>
+          <p>
+            The MET figure only captures in-session burn. What it misses is the structural metabolic advantage that resistance training creates: muscle tissue.
+          </p>
+          <p>
+            Muscle tissue burns approximately 6 calories per pound per day at rest, compared to roughly 2 calories per pound per day for fat tissue. A person who adds 10 pounds of lean muscle through consistent resistance training will burn an additional 40 calories per day at rest — 280 calories per week, 1,200 calories per month — without doing any additional exercise. Over a year, that compounds to over 14,000 calories burned purely from the metabolic contribution of added muscle.
+          </p>
+          <p>
+            Additionally, vigorous resistance training (heavy compound lifts, short rest periods) does produce significant EPOC — elevated metabolism for up to 38 hours post-session in some studies. This puts vigorous strength training in a different tier than its in-session MET value implies.
+          </p>
+          <p>
+            The ACSM 2024 guidelines on weight management now explicitly emphasize resistance training as essential to preserving lean mass during caloric restriction — recognizing that cardio-only approaches to weight loss result in 25–30% of total weight lost coming from muscle tissue rather than fat.
+          </p>
+          <p>
+            Use our <a href="/blog/strength-training-calories/">strength training calorie guide</a> for more on resistance exercise and body composition.
+          </p>
+
+          <h2>How Body Weight Affects Calorie Burn</h2>
+          <p>
+            Body weight is the single largest variable in calorie expenditure calculations — larger even than exercise intensity at many activity levels. The relationship is linear: double the weight, double the calories burned per hour for the same activity.
+          </p>
+          <p>
+            In practice, a 210-pound person walking briskly for 60 minutes burns approximately 425 calories. A 125-pound person doing the same walk burns approximately 240 calories — a difference of 185 calories from body weight alone. This has two practical implications.
+          </p>
+          <p>
+            First, early in a weight loss program, exercise is proportionally more effective at creating a calorie deficit because heavier bodies burn more per session. Second, as you lose weight, each exercise session burns fewer calories — which is a structural reason why weight loss tends to slow over time even with consistent exercise habits. Recalculating your TDEE every 10–15 pounds and adjusting your intake accordingly is essential to continued progress. Our <a href="/tdee-calculator/">TDEE Calculator</a> makes this recalculation straightforward.
+          </p>
+          <p>
+            Body composition also matters, although the standard MET formula does not capture it. Muscle-dense individuals with the same total body weight as less-muscular individuals will burn slightly more calories during identical exercise sessions, because muscle is metabolically more active and generates more heat during contraction. This is a modest effect during exercise itself but becomes significant at rest, where the body composition advantage of more muscle compounds daily.
+          </p>
+
+          <h2>Sex Differences in Calorie Burn: What the Research Shows</h2>
+          <p>
+            Men typically burn 5–10% more total calories than women of the same body weight during identical exercise, according to research published in PMC (PMC3136178). The primary driver is body composition: men average approximately 40% lean muscle mass as a proportion of body weight versus approximately 30% for women. More muscle = more metabolically active tissue = more calories burned per pound.
+          </p>
+          <p>
+            However, the picture is more nuanced at the substrate level. Research published in the Journal of Applied Physiology (Tarnopolsky et al.) found that women derive approximately 50.9% of their exercise energy from fat oxidation versus 46.9% for men. Women essentially burn a higher fraction of fat during exercise, which has implications for body composition over time even if total calorie expenditure per session is slightly lower.
+          </p>
+          <p>
+            A 2024 study reported by ScienceDaily found an additional mechanism: males preferentially oxidize fat during exercise (breaking it down to fuel the session), while females appear to recycle fat more (re-esterifying it back into storage after partial breakdown). This may contribute to the commonly observed finding that women achieve slower fat loss than men given the same calorie deficit — not because the deficit is smaller, but because fat mobilization and oxidation are regulated differently by estrogen.
+          </p>
+          <p>
+            The practical implication: sex is a relevant variable in any accurate calorie calculator. The Harris-Benedict and Mifflin-St Jeor formulas both use sex as an input for BMR calculation, which then serves as the baseline onto which exercise expenditure is layered. Learn more about how your baseline metabolic rate is calculated in our <a href="/blog/bmr-explained/">BMR explained guide</a>.
+          </p>
+
+          <h2>Calories Burned During Common Workout Structures</h2>
+          <p>
+            Real workout sessions are rarely single activities at constant intensity. Here is how calorie expenditure breaks down across common training structures for a 155-pound (70 kg) person:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Workout Structure</th>
+                  <th >Duration</th>
+                  <th >Est. Calories (155 lbs)</th>
+                  <th >Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >Easy morning walk</td>
+                  <td >45 min</td>
+                  <td >~195–225</td>
+                  <td >Great for recovery days, adds up</td>
+                </tr>
+                <tr >
+                  <td >30-min moderate run</td>
+                  <td >30 min</td>
+                  <td >~298–355</td>
+                  <td >Most efficient short cardio option</td>
+                </tr>
+                <tr>
+                  <td >Full-body strength session</td>
+                  <td >55 min</td>
+                  <td >~205–340</td>
+                  <td >Plus EPOC for 24–38 hrs post</td>
+                </tr>
+                <tr >
+                  <td >20-min HIIT session</td>
+                  <td >20 min</td>
+                  <td >~220–250</td>
+                  <td >Highest calories-per-minute option</td>
+                </tr>
+                <tr>
+                  <td >60-min spin class</td>
+                  <td >60 min</td>
+                  <td >~500–620</td>
+                  <td >Varies significantly by instructor intensity</td>
+                </tr>
+                <tr >
+                  <td >60-min yoga class (Hatha)</td>
+                  <td >60 min</td>
+                  <td >~186</td>
+                  <td >Benefits go beyond calorie burn</td>
+                </tr>
+                <tr>
+                  <td >45-min swim (mixed strokes)</td>
+                  <td >45 min</td>
+                  <td >~370–460</td>
+                  <td >Stroke selection dramatically affects burn</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h2>Why Fitness Trackers Get Calorie Burn Wrong</h2>
+          <p>
+            Wrist-based fitness trackers estimate calorie burn using algorithms that combine heart rate, accelerometer data, age, sex, and weight. The problem: individual heart rate response to exercise varies considerably, and the translation from heart rate to metabolic rate is imprecise, particularly during strength training and stop-start activities where heart rate lags actual work output.
+          </p>
+          <p>
+            ACSM research has consistently found that commercial fitness trackers have a 20–30% error margin for calorie estimation. Some studies have found errors exceeding 40% for specific modalities. The Apple Watch and Fitbit tend to perform better than cheaper alternatives for steady-state cardio, but all consumer devices struggle with resistance training, HIIT intervals, and activities with significant arm movement that can be misread as steps.
+          </p>
+          <p>
+            The most accurate consumer-available method remains chest strap heart rate monitors combined with a validated VO2 calculation, but even these have meaningful individual variability. Indirect calorimetry — the gold-standard lab method used to build the Compendium values — measures actual oxygen consumption and CO2 production but is not available outside research settings.
+          </p>
+          <p>
+            The practical implication: treat all calorie estimates, whether from apps, trackers, or calculator tools, as directional guides with an error band of ±20–30%. Do not eat back every "calorie burned" displayed on your device — you are likely overestimating your exercise burn by a meaningful margin. Instead, track weekly trends in body weight and adjust intake gradually based on actual results.
+          </p>
+
+          <h2>Using Calorie Burn Data for Your Goals</h2>
+
+          <h3>For Fat Loss</h3>
+          <p>
+            The NIH and ACC/AHA guidelines recommend creating a 500–750 calorie daily deficit for safe, sustainable fat loss. Exercise contributes to this deficit, but most people overestimate how much. A 30-minute moderate run burns roughly 300 calories — about one-third of the daily target deficit. A 60-minute session gets you to two-thirds. Exercise alone is generally insufficient; dietary changes typically need to supply the majority of the deficit.
+          </p>
+          <p>
+            The most effective combination per ACSM guidelines: 150–300 minutes per week of moderate cardio (walking, cycling) to contribute to caloric deficit, plus 2–3 resistance training sessions per week to preserve lean mass. This combination produces better body composition outcomes than either modality alone. See our <a href="/blog/calorie-deficit-guide/">calorie deficit guide</a> for the full deficit optimization framework.
+          </p>
+
+          <h3>For Maintenance and General Health</h3>
+          <p>
+            The CDC recommends 150–300 minutes per week of moderate-intensity activity (MET 3.0–5.9) or 75–150 minutes of vigorous activity (MET 6.0+) for health maintenance. In calorie terms, this translates to approximately 500–1,000 additional calories burned per week from structured exercise for a 155-pound person.
+          </p>
+          <p>
+            Non-exercise activity thermogenesis (NEAT) — the calories burned through all daily movement outside structured exercise — can range from 300 to over 2,000 calories per day between individuals of similar size. Research demonstrates that NEAT has more impact on long-term body weight than structured exercise for most sedentary individuals. Walking 10,000 steps per day (MET ~3.5, approximately 45–60 minutes of walking) can contribute 200–400 additional calories of daily expenditure compared to a sedentary baseline. For the data behind step counts and caloric output, see our <a href="/blog/walking-10000-steps/">10,000 steps calorie guide</a>.
+          </p>
+
+          <h3>Sample Weekly Exercise Calorie Burn (155 lbs)</h3>
+
+          
+            <p>5-Day Training Week — Estimated Calorie Expenditure</p>
+            <ul>
+              <li>• Monday: 45-min run at 5 mph — <strong>~450 cal</strong></li>
+              <li>• Tuesday: 55-min strength training (full body) — <strong>~205 cal in-session + EPOC</strong></li>
+              <li>• Wednesday: 30-min brisk walk (NEAT supplement) — <strong>~150 cal</strong></li>
+              <li>• Thursday: 20-min HIIT + 20-min moderate cycling — <strong>~420 cal</strong></li>
+              <li>• Friday: 55-min strength training (upper/lower split) — <strong>~205 cal in-session + EPOC</strong></li>
+            </ul>
+            <p>Estimated Weekly Exercise Burn: ~1,430+ calories</p>
+            <p>Does not include NEAT (daily movement) or EPOC from strength sessions. Actual burn will vary by intensity, fitness level, and body composition.</p>
+          
+
+          <h2>Beyond Calories: What Exercise Gives You That Dieting Cannot</h2>
+          <p>
+            It would be a mistake to evaluate exercise purely as a calorie-burning tool. The CDC's 2018 Physical Activity Guidelines for Americans established that regular physical activity reduces all-cause mortality, risk of cardiovascular disease, type 2 diabetes, and several cancers — benefits that operate independently of body weight or calorie balance. People who are overweight but physically active have better health outcomes than people who are normal weight but sedentary, per multiple large epidemiological studies.
+          </p>
+          <p>
+            The 2024 ACSM update on physical activity and weight management was the first major guideline to explicitly acknowledge that exercise benefits health even without producing meaningful weight loss — a departure from framing exercise primarily as a weight control tool. This matters for motivation: if you approach exercise as something you do only to burn calories, it becomes a chore. If you approach it as something that directly improves how you feel, perform, and how long you stay healthy — the calorie burn is a bonus.
+          </p>
+
+          /* FAQ Section */
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>How accurate are calories burned calculators?</h3>
+              <p>
+                MET-based calculators are population-level estimates with meaningful individual variation. According to ACSM, wearable fitness trackers typically have a 20–30% error margin for calorie tracking. Calculators perform best for steady-state activities like walking and running; they are less accurate for variable-intensity efforts like HIIT or team sports. Use them as a directional guide, not a precise measurement.
+              </p>
+            
+
+            
+              <h3>What exercise burns the most calories per hour?</h3>
+              <p>
+                Running at a fast pace consistently ranks as the highest-calorie-burning activity accessible to most people. Per Mayo Clinic data, running at 8 mph burns approximately 986 calories per hour for a 160-pound person. Jumping rope (MET ~12.3) and competitive swimming butterfly stroke (~13–14 MET) also rival running at equivalent intensities.
+              </p>
+            
+
+            
+              <h3>Do you burn more calories with more body weight?</h3>
+              <p>
+                Yes — calorie expenditure scales directly with body weight in the MET formula. A 200-pound person burns approximately 60% more calories than a 125-pound person doing the same activity at the same intensity and duration. As you lose weight, your calorie burn per session decreases, which is one reason recalculating your targets regularly matters.
+              </p>
+            
+
+            
+              <h3>Does strength training burn as many calories as cardio?</h3>
+              <p>
+                During the session itself, no — general strength training runs MET 3.0–5.0 versus running at 6.0–11.0+. However, strength training builds muscle tissue that raises resting metabolic rate long-term: roughly 6 cal/lb of muscle per day at rest versus 2 cal/lb of fat. The compounding effect over months makes it highly valuable for long-term calorie management, independent of in-session burn.
+              </p>
+            
+
+            
+              <h3>Does HIIT really burn more calories than steady-state cardio?</h3>
+              <p>
+                Per minute, yes — HIIT burns roughly 25–30% more per minute than steady-state per a 2024 ACE analysis. But a 2014 PubMed study (PMID 25162652) found the EPOC afterburn advantage was smaller than claimed when measured over a full recovery window. HIIT wins on time efficiency; longer steady-state sessions can match or exceed total HIIT calorie burn.
+              </p>
+            
+
+            
+              <h3>Do men and women burn different amounts of calories during exercise?</h3>
+              <p>
+                Men typically burn 5–10% more calories than women of identical body weight during the same exercise, primarily because of higher average lean muscle mass. However, women oxidize a higher proportion of fat during exercise (about 50.9% vs. 46.9% for men, per the Journal of Applied Physiology). The gap narrows considerably when controlled for lean body mass.
+              </p>
+            
+
+            
+              <h3>What is a MET value and how is it used?</h3>
+              <p>
+                MET (Metabolic Equivalent of Task) measures how much energy an activity requires relative to sitting at rest (1 MET = 3.5 ml O₂/kg/min). Walking briskly is about MET 3.5; running at 6 mph is about MET 9.8. The formula: Calories = Duration (min) × (MET × 3.5 × Body weight in kg) ÷ 200. The 2024 Adult Compendium of Physical Activities (Ainsworth et al.) covers 1,114 activities.
+              </p>
+            
+          
+
+          /* CTA */
+          
+            <h3>Calculate Your Full Daily Calorie Budget</h3>
+            <p>
+              Exercise is one piece of the calorie equation. Your TDEE — total daily energy expenditure including rest, daily activity, and workouts — determines your real calorie target. Use our calculator to find your number and set a goal-specific calorie target.
+            </p>
+            <a href="/tdee-calculator/">
+              Calculate My TDEE &rarr;
+            </a>
+          
+
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.calorique.io/blog/calories-burned-calculator/">Calorique</a>.
+      Explore more free tools at <a href="https://www.calorique.io/">calorique.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.calorique.io/">Calorique</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
