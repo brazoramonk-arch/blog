@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Does Turnitin Detect AI? Everything You Need to Know - EyeSift</title>
+  <meta name="description" content="Does Turnitin Detect AI? Everything You Need to Know">
+  <link rel="canonical" href="https://www.eyesift.com/blog/does-turnitin-detect-ai/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/eyesift/">EyeSift</a> &rarr; Does Turnitin Detect AI? Everything You Need to Know
+  </nav>
+
+  <article>
+    <h1>Does Turnitin Detect AI? Everything You Need to Know</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.eyesift.com/blog/does-turnitin-detect-ai/">eyesift.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    <>
+      
+        
+          
+            <a href="/">Home</a>
+            /
+            <a href="/blog/">Blog</a>
+            /
+            Does Turnitin Detect AI
+          
+          
+            Education
+            March 28, 2026
+            · 18 min read
+          
+          <h2>Does Turnitin Detect AI? Everything You Need to Know</h2>
+          <p>The honest, data-driven answer to whether Turnitin catches ChatGPT, Claude, and Gemini — including what the accuracy figures actually mean, the score threshold system, documented false positive problems, and what educators should do when a submission is flagged.</p>
+        
+      
+
+      
+        
+          
+
+            /* Scenario opening */
+            <p>A graduate student submits a literature review. Two days later, she receives a notification: Turnitin flagged her submission at <strong>73% AI-generated</strong>. She wrote every word herself — late nights, three drafts, a stack of printed journal articles on her desk. Her advisor, citing the Turnitin report, opens a formal academic integrity investigation.</p>
+
+            <p>This scenario is not hypothetical. A University of California, Davis linguistics professor reported that of 17 students flagged by AI detectors in a single semester, 15 were false positives — and the flagged students were disproportionately non-native English speakers who had worked with writing tutors. Understanding exactly what Turnitin's AI detection can and cannot do is no longer a minor technical curiosity. For the educators who deploy it and the students who face its verdicts, it is a matter of serious consequence.</p>
+
+            /* Key Takeaways */
+            
+              <h2>Key Takeaways</h2>
+              <ul>
+                <li>▸<strong>Yes, Turnitin detects AI</strong> — including ChatGPT, Claude, Gemini, Copilot, and Grok — but accuracy varies significantly by model, document type, and whether the text has been edited or run through a humanizer.</li>
+                <li>▸<strong>Turnitin's claimed 98% accuracy applies only under specific conditions</strong> — documents where 20%+ of text is flagged as AI. The false positive rate is higher for sub-20% AI documents, and independent research has not replicated the 98% figure on real-world academic submissions.</li>
+                <li>▸<strong>Scores of 1–19% display only as "*%"</strong> — Turnitin suppresses precise numbers in this range, acknowledging they are statistically unreliable. Only 0% or 20%+ scores carry enough confidence to report.</li>
+                <li>▸<strong>A Stanford study found 61.2% false positive rates for non-native English speaker essays</strong> (Liang et al., <em>Cell Patterns</em>, 2023) — a structural bias rooted in the same text signals Turnitin uses to flag AI writing.</li>
+                <li>▸<strong>Turnitin itself warns against using AI scores as sole evidence</strong> in academic integrity proceedings. At least 12 universities — including Yale, Vanderbilt, and Northwestern — have disabled the feature entirely.</li>
+              </ul>
+            
+
+            <h2>The Short Answer — and Why It Needs Unpacking</h2>
+
+            <p>Yes, Turnitin detects AI-generated text. It launched its AI Writing Detector in April 2023, has reviewed over <strong>280 million student papers</strong> since then, and has flagged <strong>9.9 million submissions as 80%+ AI-written</strong> — per Turnitin's own published data as of early 2025. The feature is live in the vast majority of institutional Turnitin deployments globally, covering an estimated <strong>71 million students across 16,000–17,000 institutions in 185 countries</strong> (per Sacra business intelligence, 2024).</p>
+
+            <p>But "Turnitin detects AI" answers only the binary question. The more important questions are: how reliably, on which types of content, under what conditions, with what consequences when it is wrong — and whether those consequences are being handled appropriately by institutions deploying the tool. The answers to those questions are considerably less reassuring than the yes/no answer.</p>
+
+            <h2>How Turnitin's AI Detection Actually Works</h2>
+
+            <p>Turnitin's AI detection is not a database lookup and not a plagiarism check. It does not compare submitted text against a library of AI-generated documents. Instead, it uses deep learning — transformer-based neural networks — to analyze the statistical properties of writing itself and compare them against characteristic patterns of AI-generated text.</p>
+
+            <p>Three signals drive the detection engine:</p>
+
+            <p><strong>Perplexity</strong> measures how statistically predictable a sequence of words is. AI language models generate text by selecting the highest-probability next token at each step — which means AI-generated text is, by construction, "low perplexity." Human writing includes surprising word choices, idiosyncratic phrasing, and deliberate stylistic variation that a model would not have predicted. A document scored low on perplexity is exhibiting AI-like writing behavior.</p>
+
+            <p><strong>Burstiness</strong> measures variation in sentence length and complexity across a document. Humans naturally write with irregular rhythm — short punchy sentences followed by longer, qualified, clause-heavy constructions. AI tends toward uniform sentence length and consistent complexity levels. Low burstiness is an AI signal.</p>
+
+            <p><strong>Structural coherence patterns</strong> capture longer-span regularities. AI-generated academic writing tends toward anomalously smooth transitions, perfectly topic-sentenced paragraphs, and near-flawless text-level cohesion. Authentic human writing, even good academic writing, contains structural roughness — ideas introduced before fully developed, transitions that gesture rather than fully connect, self-revision visible in the text.</p>
+
+            <p>Turnitin processes each submission in overlapping <strong>250-word segments</strong>, scores each segment from 0 (human) to 1 (AI), and aggregates these into a document-level AI percentage. The system has gone through three model generations: AIW-1 (April 2023, now retired), <strong>AIW-2</strong> (December 2023, current primary engine, trained on AI-paraphrased content as well as raw AI text), and <strong>AIR-1</strong> (July 2024, specifically targets AI rewriting — detects content where a human text was overwritten by AI). An <strong>AI bypasser detection layer</strong> was added in August 2025, targeting humanizer tools specifically designed to evade AI scoring.</p>
+
+            <h2>Which AI Models Does Turnitin Detect?</h2>
+
+            <p>Turnitin has confirmed detection capability for all major generative AI writing tools. The following table summarizes detection accuracy by model based on available independent testing data:</p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >AI Model</th>
+                    <th >Detection (Unmodified)</th>
+                    <th >Detection (Edited/Paraphrased)</th>
+                    <th >Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td >ChatGPT (GPT-4, GPT-4o)</td>
+                    <td >90%+</td>
+                    <td >60–70%</td>
+                    <td >Highest detection rate; AIW-2 specifically trained on GPT output</td>
+                  </tr>
+                  <tr >
+                    <td >Claude (Anthropic)</td>
+                    <td >53–73%</td>
+                    <td >40–55%</td>
+                    <td >Lower detection reflects different stylistic patterns from GPT</td>
+                  </tr>
+                  <tr >
+                    <td >Gemini (Google)</td>
+                    <td >75–85%</td>
+                    <td >55–65%</td>
+                    <td >Confirmed detectable; limited independent benchmark data available</td>
+                  </tr>
+                  <tr >
+                    <td >Microsoft Copilot</td>
+                    <td >80–90%</td>
+                    <td >60–70%</td>
+                    <td >GPT-based architecture; shares detection patterns with ChatGPT</td>
+                  </tr>
+                  <tr >
+                    <td >Meta LLaMA / Grok</td>
+                    <td >65–80%</td>
+                    <td >45–60%</td>
+                    <td >Less training data available; detection accuracy may vary more</td>
+                  </tr>
+                  <tr >
+                    <td >Humanized AI text</td>
+                    <td >20–63%</td>
+                    <td >Variable</td>
+                    <td >August 2025 bypasser update improved detection; arms race ongoing</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+
+            <p>Detection accuracy figures are drawn from a combination of Turnitin's official documentation, MDPI's <em>Information</em> journal "Evaluating AI Detection Tools in Higher Education" (2025), and PMC's "Can We Trust Academic AI Detective?" (2025). Independent benchmarking consistently shows lower real-world accuracy than vendor claims, particularly on edited or hybrid content.</p>
+
+            <h2>What Turnitin's Score Thresholds Actually Mean</h2>
+
+            <p>Turnitin made a significant interface change in July 2024 that most institutional deployment guides have not fully processed. Scores between 1% and 19% now display as <strong>*%</strong> rather than a specific number. Turnitin made this change because the company acknowledges that low-level AI percentages are too statistically noisy to report with precision. Only two cases receive exact reporting: <strong>0%</strong> (no AI detected) and any score <strong>20% and above</strong>.</p>
+
+            
+              <p>The ±15 Percentage Point Variance</p>
+              <p>Turnitin's official documentation acknowledges a <strong>±15 percentage point variance</strong> in its AI scores. A result of "50% AI-generated" legitimately represents a confidence interval of 35%–65%. For disciplinary proceedings where the institutional threshold is set at a specific number (say, "50% or above"), this variance has direct due process consequences that most academic integrity panels have not been briefed on. A student whose submission scores 52% could genuinely be anywhere between 37% and 67%.</p>
+            
+
+            <p>The practical interpretation of score bands:</p>
+
+            <ul>
+              <li>0%No AI detected. Can reflect genuinely human writing, heavily edited AI text, or AI from a model the system is not yet trained to detect. Not proof of human authorship.</li>
+              <li>*% (1–19)Suppressed score. Turnitin acknowledges too much noise to report a number. Most institutions correctly do not treat this range as evidence of AI use.</li>
+              <li>20–49%Statistically meaningful but ambiguous. Could represent moderate AI use, a formal writing style, ESL writing, or hybrid human-AI work. Requires context and human judgment before any action.</li>
+              <li>50–79%More than half the submission exhibits AI-like patterns. Strong signal warranting investigation — but still subject to the ±15pp variance caveat and false positive risk for certain writing populations.</li>
+              <li>80–100%Heavily AI-generated pattern. Turnitin's highest-confidence range, where its sub-1% false positive claim applies. Still requires due process; not automatic proof.</li>
+            </ul>
+
+            <h2>Turnitin's Official Claims vs. What Independent Research Shows</h2>
+
+            <p>Turnitin's official accuracy figure is <strong>98% accuracy</strong> with a <strong>false positive rate below 1%</strong> — sourced from its published AI Writing Detection Model Architecture and Testing Protocol whitepaper. These numbers appear extensively in institutional AI policy documents and media coverage as justification for deploying the tool. Three caveats are rarely cited alongside them.</p>
+
+            <p>First, the 1% false positive rate applies only to documents where <strong>at least 20% of the text</strong> is flagged as AI-generated. Turnitin's documentation explicitly notes higher false positive rates for lower-AI-proportion documents without quantifying them. Second, Turnitin's product leadership has publicly admitted the system deliberately allows approximately <strong>15% of AI-generated content to pass undetected</strong> — a conscious recall-versus-precision trade-off to keep false positives low. Third, 98% accuracy in controlled testing on clearly AI-generated text does not translate to 98% accuracy on real-world academic submissions.</p>
+
+            <p>Independent testing paints a different picture. <strong>Weber-Wulff et al. (2023)</strong>, published in the <em>International Journal for Educational Integrity</em>, tested 14 AI detection tools and found none exceeded <strong>80% real-world accuracy</strong> — Turnitin included. Research published in the <em>MDPI Information</em> journal in 2025, reviewing AI detection tool performance in higher education contexts, found that on <strong>hybrid or paraphrased content</strong> (the type most commonly submitted by students), accuracy dropped to <strong>20–63%</strong>. A 2025 meta-analysis in PMC ("Can We Trust Academic AI Detective?") found false positive rates in practical academic use ranging from <strong>2–5%</strong> — two to five times Turnitin's claimed rate.</p>
+
+            <p>The pattern is consistent across the independent literature: controlled testing on unambiguous AI-generated versus clearly human text produces high accuracy. Real academic submissions — which include extensively edited AI drafts, non-native speaker writing, heavily structured disciplinary writing, and writing influenced by AI tools without wholesale generation — produce substantially lower performance.</p>
+
+            <h2>The ESL False Positive Problem: What the Stanford Research Found</h2>
+
+            <p>The most consequential documented limitation of AI detection in educational settings is its disproportionate false positive rate on writing by non-native English speakers. This is the central finding of a peer-reviewed study by researchers at Stanford University, authored by Weixin Liang and colleagues from James Zou's lab, published in <em>Cell Press Patterns</em> in July 2023 and covered by the <strong>Stanford Human-Centered AI (HAI) Institute</strong> as a policy-relevant result.</p>
+
+            <p>The study tested seven AI detectors on two corpora: 91 TOEFL essays written by Chinese non-native English speakers, and 88 essays by U.S.-born eighth-graders. Every essay was human-written. The results: <strong>61.2% of non-native speaker TOEFL essays were classified as AI-generated</strong>. Across all seven detectors, <strong>97.8% of non-native speaker essays were flagged by at least one detector</strong>, and <strong>19.8% were unanimously flagged by all seven</strong>. For native English speaker essays, false positive rates were near zero.</p>
+
+            <p>The mechanism is structural, not incidental. Non-native academic English writing naturally exhibits simpler vocabulary, lower-complexity sentence structures, limited idiomatic variation, and more formulaic phrasing — characteristics of L2 acquisition at intermediate proficiency levels. These are also the exact characteristics that produce low perplexity and low burstiness scores — the same signals AI detectors use to flag AI-generated text. The bias is built into the detection methodology itself.</p>
+
+            <p>Turnitin disputed direct applicability to its specific model, citing an internal study of ELL writing samples that found no statistically significant bias. Turnitin's published false positive rate for ELL writers (0.014%) is marginally higher than for native speakers (0.013%) — a difference so small as to be statistically insignificant. But the debate over whose methodology is correct has not resolved, and <strong>The Markup's investigation in August 2023</strong> documented real cases of international students facing misconduct proceedings partly on the basis of AI detection results.</p>
+
+            <p>For educators, the practical implication is straightforward: any student population that includes non-native English speakers, students who write with a formal academic register, or students who have worked with writing tutors deserves extra scrutiny before acting on a positive AI flag.</p>
+
+            <h2>Why 12 Universities Disabled Turnitin's AI Detection</h2>
+
+            <p>At least twelve universities — including Yale University, Vanderbilt University, Johns Hopkins University, and Northwestern University — have publicly disabled Turnitin's AI detection feature. Their documented reasons cluster around three issues.</p>
+
+            <p><strong>False positive volume.</strong> Vanderbilt University's Center for Teaching published a transparent calculation in August 2023: their institution submitted approximately 75,000 papers in the prior academic year. At Turnitin's claimed 1% false positive rate, roughly <strong>750 students per year</strong> would be incorrectly accused of AI use. Vanderbilt determined this was an unacceptable institutional risk and disabled the feature.</p>
+
+            <p><strong>Due process asymmetry.</strong> When a plagiarism detector flags a submission, it produces a source — a URL, a document, a page reference that can be examined, contested, and discussed. When an AI detector flags a submission, it produces a probability score. There is no "exhibit A" to show a student. This creates a structural due process problem that several universities' legal counsel have flagged as problematic under existing academic integrity frameworks.</p>
+
+            <p><strong>Lack of peer-reviewed methodology.</strong> Turnitin has not published its full model architecture or testing methodology in peer-reviewed venues. Independent researchers cannot replicate or validate the company's accuracy claims using published methods. For institutions that take evidence-based academic integrity policy seriously, deploying a detection system with opaque, unvalidated methodology is untenable.</p>
+
+            <p>The institutions that have kept AI detection enabled generally fall into two categories: those with explicit, written policies treating AI scores as one data point among many (not as evidence of guilt), and those that have simply not yet engaged with the methodological questions their peers are raising.</p>
+
+            <h2>The Humanizer Arms Race: Can Students Bypass Detection?</h2>
+
+            <p>A category of tools explicitly marketed to bypass Turnitin's AI detection — including BypassGPT, uPass AI, and HIX Bypass — operates by rewriting AI-generated text to reduce its statistical signature. These tools work by introducing vocabulary variation, sentence restructuring, and stylistic irregularity that mimics human writing patterns. Their effectiveness is real but limited.</p>
+
+            <p>Turnitin's AIW-2 model (December 2023) was explicitly trained on AI-paraphrased content alongside raw AI text, making it more robust to simple synonym substitution. The AIR-1 model (July 2024) specifically targets AI rewriting patterns. The August 2025 AI bypasser detection update added explicit targeting of de-obfuscation techniques used by humanizer tools. Independent testing published in 2025 found that aggressive humanization reduces detection accuracy to 20–63% — a meaningful reduction from the 90%+ baseline, but not elimination. The gap between bypasser effectiveness and detection capability has narrowed significantly in the past 12 months.</p>
+
+            <p>The more important point for educators: the fact that evasion tools exist does not change the ethical stakes for students who use them. An institution's policy on unauthorized AI use applies regardless of whether the AI use is detected — and students who route their work through humanizer tools to evade detection are taking on compounded academic integrity risk, not reducing it.</p>
+
+            <h2>What Educators Should Actually Do With AI Detection Results</h2>
+
+            <p>Turnitin's own documentation is unambiguous on one point: the AI score "is not intended to be used as the sole basis of an academic integrity investigation." That sentence is doing a lot of work in a world where many instructors treat a high score as the beginning and end of their analysis. A research-supported framework for handling AI flags looks like this:</p>
+
+            <p><strong>Compare to the student's prior work.</strong> If a student's writing quality has significantly improved, sentence structures have changed, or disciplinary vocabulary has appeared that was absent before, those are genuine anomalies worth investigating. If writing quality is consistent with prior submissions, that consistency is meaningful evidence.</p>
+
+            <p><strong>Check for AI hallucination patterns.</strong> AI language models regularly fabricate citations, invent studies, attribute quotes incorrectly, and produce plausible-sounding but verifiably false factual claims. If flagged content contains citations that do not exist, statistics that cannot be sourced, or arguments built around research that predates its purported publication, that is a much stronger indicator of AI use than any percentage score.</p>
+
+            <p><strong>Conduct a brief oral verification.</strong> A five-minute conversation in which the student explains the argument of their paper, discusses a key source, or describes a specific analytical choice they made is far more informative than a Turnitin score. Students who wrote their work can discuss it; students who submitted AI-generated text typically cannot.</p>
+
+            <p><strong>Document everything before acting.</strong> If a formal proceeding is initiated, the Turnitin score should be one piece of a documented evidence set — not the totality of the case. The <strong>MLA-CCCC Joint Task Force on Writing and AI</strong> (2024–2025 guidance) explicitly recommends against using detection tools as evidence of misconduct, noting the disproportionate impact on marginalized students.</p>
+
+            <p>For institutions building or revising AI policy, the practical alternative to over-reliance on automated detection is assignment redesign: requiring in-class writing components alongside take-home work, mandating process documentation (drafts, notes, search histories), and incorporating oral presentations that test engagement with claimed research. These approaches address AI misuse directly, rather than relying on a probabilistic detection system to catch it after the fact.</p>
+
+            
+              <p>Check AI detection yourself</p>
+              <p>Use EyeSift's free AI detection tool to understand how a text scores before submitting — helpful for educators who want to understand what their institution's system is evaluating, and for students reviewing their own work.</p>
+              <a href="/text-analysis/">Try AI Detection Free</a>
+            
+
+            <h2>How Turnitin Fits Into a Broader Academic Integrity Strategy</h2>
+
+            <p>Turnitin's AI detection is one component of a much larger institutional challenge. The scale of AI adoption in student writing is substantial: by October 2025, approximately <strong>15% of essay submissions processed by Turnitin contained more than 80% AI-generated writing</strong> — up from 3% when the detector launched in April 2023, per Turnitin's own data. A <strong>2025 Turnitin survey conducted with Vanson Bourne</strong> found that 95% of the academic community believes AI is being misused at their institutions, and 18% of UK undergraduates admitted submitting AI-generated text.</p>
+
+            <p>Traditional plagiarism detection — the core Turnitin product — remains a separate and more technically robust capability. Turnitin's plagiarism database covers <strong>929 million archived student papers, 67 billion web pages, and 178 million journal articles from 47,000+ journals</strong>. This is a fundamentally different technology from AI detection: it matches text fingerprints against a known corpus, produces a verifiable source as output, and carries the evidentiary weight that AI detection lacks. See our full analysis in <a href="/blog/turnitin-ai-detection/">How Turnitin AI Detection Works</a> for a deeper technical breakdown.</p>
+
+            <p>For a complete picture of what AI detectors — including Turnitin — can and cannot identify in 2026, our <a href="/blog/best-ai-detectors-2026/">Best AI Detectors of 2026</a> comparison covers seven tools with independent accuracy benchmarks. And for educators specifically wondering whether their methods of identifying AI-written homework hold up, our guide on <a href="/blog/teachers-detect-ai-homework-2026/">how teachers can detect AI-generated homework</a> covers behavioral and contextual signals that go beyond what any automated tool can assess.</p>
+
+            <h2>The Broader AI Detection Accuracy Question</h2>
+
+            <p>Turnitin is the dominant institutional AI detection tool, but it is not the only one, and the accuracy questions it faces are shared across the category. A 2025 review published in <em>MDPI Information</em> examining AI detection tools in higher education contexts found consistent patterns: high accuracy on unmodified AI text, lower accuracy on edited content, structural bias against formal or formulaic writing styles, and limited independent validation of vendor accuracy claims.</p>
+
+            <p>OpenAI discontinued its own AI classifier in July 2023, citing a "low rate of accuracy." GPTZero, one of the independent AI detection tools used alongside Turnitin at some institutions, has been publicly transparent about its accuracy limitations. Our <a href="/blog/ai-detection-accuracy-benchmarks/">AI detection accuracy benchmarks</a> article aggregates independent testing across eight tools, providing a reference point for institutions evaluating which detection capabilities are sufficiently reliable for their use case.</p>
+
+            <p>The field is evolving. Turnitin's February 2026 model update improved recall while maintaining sub-1% false positive rates on high-AI-proportion documents. A September 2025 update added an AI-powered citation assistant. The company is actively investing in the capability. But the fundamental tension — between high recall (catching more AI) and low false positives (not falsely accusing more students) — is a statistical constraint that no update eliminates entirely. More sensitive detection means more false positives, not fewer.</p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            
+              
+                <h3>Does Turnitin detect ChatGPT?</h3>
+                <p>Yes, with over 90% accuracy on unmodified ChatGPT output. Detection drops to approximately 60–70% when ChatGPT text has been edited or paraphrased. Turnitin's August 2025 update added specific detection for humanizer tools used to disguise ChatGPT text. ChatGPT remains the AI model Turnitin is best calibrated to detect, given the volume of training data available.</p>
+              
+              
+                <h3>What percentage triggers a Turnitin AI flag?</h3>
+                <p>Turnitin only displays precise AI percentages at 0% or 20% and above. Scores between 1–19% are shown as *% because Turnitin acknowledges these are too statistically noisy to report. Most institutional policies treat 20%+ as the threshold requiring educator review, but Turnitin does not specify a disciplinary cutoff — each institution sets its own policy.</p>
+              
+              
+                <h3>Can Turnitin detect AI if I paraphrase it?</h3>
+                <p>Partially. Turnitin's AIR-1 model specifically targets AI-paraphrased content. Simple synonym substitution is often still flagged. More aggressive humanizer tools reduce accuracy to 20–63% in 2025 testing, but Turnitin's August 2025 bypasser update has closed some of this gap. The evasion window is narrowing with each model update.</p>
+              
+              
+                <h3>Does Turnitin flag non-native English speakers as AI?</h3>
+                <p>Yes, at a higher rate than native speakers. A Stanford University study (Liang et al., <em>Cell Patterns</em>, 2023) found 61.2% of TOEFL essays by non-native English speakers were falsely flagged by AI detectors. The mechanism is structural: L2 writing naturally produces low perplexity and burstiness scores — the same signals detectors use to flag AI. Educators should apply heightened scrutiny before acting on flags for students in ESL populations.</p>
+              
+              
+                <h3>Why have some universities disabled Turnitin AI detection?</h3>
+                <p>At least 12 universities — including Yale, Vanderbilt, Johns Hopkins, and Northwestern — have disabled the feature. Primary reasons: false positive risk (Vanderbilt calculated ~750 wrongly accused students annually at the 1% rate), disproportionate impact on ESL students, and a due process problem — AI detection produces no verifiable source document, unlike plagiarism detection, making it legally and procedurally problematic as sole evidence.</p>
+              
+              
+                <h3>What should educators do when Turnitin flags AI writing?</h3>
+                <p>Treat the score as a starting point, not a verdict. Compare to prior student work. Check for AI hallucination patterns (fabricated citations, implausible statistics). Conduct a brief oral conversation about the paper's argument. Consider whether the student is a non-native speaker. Turnitin explicitly states its AI score should not be used as the sole basis of an academic integrity investigation — and the institution's disciplinary framework should require more than a percentage to proceed.</p>
+              
+            
+
+            /* CTA */
+            
+              <h2>Understand Any Text's AI Signature</h2>
+              <p>EyeSift's free AI detection tool uses the same perplexity and structural analysis methodology to score any document. Useful for educators evaluating submissions and students reviewing their own work before submission.</p>
+              <a href="/text-analysis/">Analyze Text Free</a>
+            
+
+          
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.eyesift.com/blog/does-turnitin-detect-ai/">EyeSift</a>.
+      Explore more free tools at <a href="https://www.eyesift.com/">eyesift.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.eyesift.com/">EyeSift</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
