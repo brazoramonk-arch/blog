@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Formatter Online: Format &amp;amp; Beautify SQL Queries Free - BytePane</title>
+  <meta name="description" content="Format messy SQL queries instantly. Free online SQL formatter supporting MySQL, PostgreSQL, T-SQL, BigQuery. Compare style guides, SQLFluff, and CI/CD integration.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/sql-formatter-online/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; SQL Formatter Online: Format &amp;amp; Beautify SQL Queries Free
+  </nav>
+
+  <article>
+    <h1>SQL Formatter Online: Format &amp;amp; Beautify SQL Queries Free</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/sql-formatter-online/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    Beautify SQL Queries Free
+        </h1>
+        
+          SQL
+          <time dateTime="2026-04-05">April 5, 2026</time>
+          14 min read
+        
+      
+
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸SQL is used by 59% of all developers and 54.1% of professional developers, per the 2024 Stack Overflow Developer Survey (90,000+ respondents) — only JavaScript is more common.</li>
+            <li>▸No universal SQL formatting standard exists. The three main style guides (Holywell, Mazur, dbt) disagree on the most fundamental question: uppercase vs lowercase keywords.</li>
+            <li>▸SQLFluff is the de facto standard for teams: it combines formatting with linting, supports 15+ dialects (Postgres, MySQL, BigQuery, Snowflake, DuckDB), and integrates with CI/CD pipelines.</li>
+            <li>▸SQL formatting has zero effect on query performance — the database strips all whitespace before query compilation. It is entirely a developer productivity concern.</li>
+            <li>▸For a quick one-off format, use BytePane's <a href="/sql-formatter/">SQL Formatter</a> — it runs in-browser and supports multiple dialects with no setup.</li>
+          </ul>
+        
+
+        /* Myth-busting intro */
+        
+          <p>
+            Here is the misconception I see most often in code reviews: <em>"SQL formatting doesn't matter that much — the database doesn't care about whitespace."</em>
+          </p>
+          <p>
+            The first half is technically true. The database parser strips all whitespace before compilation. A query written as a single line and the same query formatted across 40 lines produce identical execution plans. The second half — that it therefore does not matter — is the wrong conclusion.
+          </p>
+          <p>
+            SQL formatting matters because <strong>humans read SQL, not just databases</strong>. The 2024 Stack Overflow Developer Survey found SQL is used by <strong>54.1% of professional developers</strong> — second only to JavaScript at 64.6%. That means SQL code is reviewed, debugged, modified, and maintained by a massive developer population. Inconsistent formatting slows every one of those operations.
+          </p>
+          <p>
+            This guide covers: the three major SQL style guides and where they disagree, a tool comparison from one-off formatters to CI/CD-integrated linters, and how to set up automated SQL formatting in your project.
+          </p>
+        
+
+        
+          <h2>The Problem: Unformatted SQL Is Unreadable SQL</h2>
+          <p>
+            Start with the before/after. This is the same query — one written by someone in a hurry, one formatted:
+          </p>
+          <p>
+            <code >`-- Before: What does this even do?
+select u.id,u.name,u.email,count(o.id) as order_count,sum(o.total) as lifetime_value from users u left join orders o on u.id=o.user_id where u.created_at > '2024-01-01' and u.status='active' group by u.id,u.name,u.email having count(o.id)>0 order by lifetime_value desc limit 100;`</code>
+          </pre>
+          <pre >
+            <code >`-- After: Formatted (dbt-style lowercase)
+select
+    u.id,
+    u.name,
+    u.email,
+    count(o.id)  as order_count,
+    sum(o.total) as lifetime_value
+
+from users as u
+
+left join orders as o
+    on u.id = o.user_id
+
+where
+    u.created_at > '2024-01-01'
+    and u.status = 'active'
+
+group by
+    u.id,
+    u.name,
+    u.email
+
+having count(o.id) > 0
+
+order by lifetime_value desc
+
+limit 100`</code>
+          </pre>
+          <p >
+            The formatted version takes 26 lines instead of 1, but a reviewer can now immediately see the join condition, the WHERE filters, the grouping keys, and the HAVING clause. Adding a column, modifying a filter, or catching a bug is dramatically faster. Paste either version into BytePane's <a href="/sql-formatter/">SQL Formatter</a> and it produces the formatted version in milliseconds.
+          </p>
+        
+
+        
+          <h2>The Three Major SQL Style Guides (And Where They Disagree)</h2>
+          <p>
+            Unlike JavaScript (Prettier), Python (Black), or Go (gofmt), SQL has no universally adopted formatter. Three style guides are widely referenced, and they disagree on the most fundamental question: should keywords be uppercase or lowercase?
+          </p>
+
+          <h3>1. Simon Holywell's SQL Style Guide (sqlstyle.guide)</h3>
+          <p>
+            The most cited SQL style guide, licensed under Creative Commons Attribution-ShareAlike 4.0. Holywell's guide is the established DBA and SQL Server convention:
+          </p>
+          <ul>
+            <li><strong>UPPERCASE reserved keywords</strong>: SELECT, WHERE, FROM, JOIN, GROUP BY</li>
+            <li>snake_case for identifiers: <code >first_name</code>, not <code >firstName</code></li>
+            <li>Maximum 30 characters for identifiers</li>
+            <li>Singular table names (<code >staff</code>, not <code >employees</code>)</li>
+            <li>Right-align keywords to create a visual "river" on the left side</li>
+            <li>ISO 8601 dates: <code >YYYY-MM-DDTHH:MM:SS</code></li>
+            <li>Prefer BETWEEN over chained AND conditions</li>
+          </ul>
+          <p>
+            <code >`-- Holywell style: keywords uppercase, right-aligned "river"
+SELECT a.title,
+       a.release_date,
+       a.recording_date
+  FROM album AS a
+ WHERE a.title = 'Charcoal Lane'
+    OR a.title = 'The New Danger';`</code>
+          </pre>
+
+          <h3>2. Matt Mazur's SQL Style Guide</h3>
+          <p >
+            An opinionated guide by data analyst Matt Mazur, popular in startup and analytics communities:
+          </p>
+          <ul>
+            <li><strong>lowercase keywords</strong> — the opposite of Holywell</li>
+            <li>Each column on its own line</li>
+            <li>Plural snake_case table names (<code >users</code>, not <code >user</code>)</li>
+            <li>Boolean columns prefixed: <code >is_</code>, <code >has_</code>, <code >does_</code></li>
+            <li>Datetime columns suffixed: <code >created_at</code>; date-only: <code >birth_date</code></li>
+            <li>Use <code >!=</code> not <code >&lt;&gt;</code></li>
+            <li>Always write <code >inner join</code> explicitly (never just <code >join</code>)</li>
+          </ul>
+
+          <h3>3. dbt's Official SQL Style Guide</h3>
+          <p>
+            dbt (data build tool) has become the dominant SQL transformation framework in modern data stacks, with hundreds of thousands of practitioners. Its official style guide is the most influential in analytics engineering:
+          </p>
+          <ul>
+            <li><strong>Lowercase keywords</strong> — rationale: "modern syntax highlighting makes uppercase unnecessary, and uppercase is harder to type"</li>
+            <li>Trailing commas (comma at end of line, not beginning)</li>
+            <li>Explicit join types always</li>
+            <li>CTEs over subqueries for readability</li>
+            <li>SQLFluff as the enforcement tool with a published <code >.sqlfluff</code> config</li>
+          </ul>
+          <p>
+            The dbt ecosystem's influence on modern data engineering is shifting the balance toward lowercase. If you are building analytics SQL (dbt models, Snowflake, BigQuery, Databricks), lowercase is increasingly the default. If you are in a traditional SQL Server or Oracle environment, UPPERCASE is the established norm.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Convention</th>
+                  <th >Holywell</th>
+                  <th >Mazur</th>
+                  <th >dbt</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Keyword case</td>
+                  <td >UPPERCASE</td>
+                  <td >lowercase</td>
+                  <td >lowercase</td>
+                </tr>
+                <tr >
+                  <td >Table names</td>
+                  <td >singular (staff)</td>
+                  <td >plural (users)</td>
+                  <td >plural (users)</td>
+                </tr>
+                <tr >
+                  <td >Comma placement</td>
+                  <td >trailing</td>
+                  <td >trailing</td>
+                  <td >trailing</td>
+                </tr>
+                <tr >
+                  <td >Alignment</td>
+                  <td >keyword "river"</td>
+                  <td >4-space indent</td>
+                  <td >4-space indent</td>
+                </tr>
+                <tr >
+                  <td >NOT EQUAL</td>
+                  <td >&lt;&gt;</td>
+                  <td >!=</td>
+                  <td >!=</td>
+                </tr>
+                <tr>
+                  <td >Ecosystem</td>
+                  <td >DBAs, SQL Server</td>
+                  <td >Startups, analytics</td>
+                  <td >Data engineering</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The only universally wrong answer is mixing them. Inconsistency within a codebase is worse than any specific convention choice.
+          </p>
+        
+
+        
+          <h2>SQL Formatting Tools Comparison</h2>
+          <p>
+            The tool landscape spans from lightweight online formatters to full linter-formatters with CI/CD integration. The right choice depends on your workflow.
+          </p>
+
+          <h3>SQLFluff: The Production Standard</h3>
+          <p>
+            SQLFluff is an open-source SQL linter and formatter (Python), maintained on GitHub with active development through 2025. It is the official recommendation of dbt and supports 15+ dialects:
+          </p>
+          <p>
+            <code >`# Install
+pip install sqlfluff
+
+# Lint a file (shows style violations)
+sqlfluff lint --dialect postgres my_query.sql
+
+# Auto-fix formatting issues
+sqlfluff fix --dialect postgres my_query.sql
+
+# Lint an entire dbt project
+sqlfluff lint --dialect bigquery models/
+
+# Example .sqlfluff config
+[sqlfluff]
+dialect = postgres
+templater = dbt
+max_line_length = 120
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = lower   # lowercase keywords (dbt style)
+
+[sqlfluff:rules:aliasing.table]
+aliasing = explicit             # always require AS keyword`</code>
+          </pre>
+          <p >
+            SQLFluff catches more than formatting issues. Rules like <code >ambiguous.column_references</code> flag queries where column names are ambiguous across multiple joined tables — the kind of bug that causes silent data errors in production.
+          </p>
+
+          <h3>pgFormatter: Best for PostgreSQL</h3>
+          <p>
+            pgFormatter by Gilles Darold produces notably clean output for PostgreSQL-specific syntax including JSONB operators, CTEs, window functions, and Postgres extensions. It is Perl-based with a CGI web interface and a command-line binary. Output quality for complex Postgres queries is visibly better than generic formatters.
+          </p>
+          <p>
+            <code >`# Install via package manager
+brew install pgformatter          # macOS
+sudo apt install pgformatter      # Ubuntu
+
+# Format a file
+pg_format -i my_query.sql        # in-place
+
+# Format with specific indent
+pg_format --indent 4 my_query.sql
+
+# Format from stdin
+cat complex_query.sql | pg_format`</code>
+          </pre>
+
+          <h3>sql-formatter (npm): For JavaScript Projects</h3>
+          <p >
+            The <code >sql-formatter</code> package (github.com/sql-formatter-org/sql-formatter) is the standard choice for Node.js projects and web tooling. It is what powers most browser-based SQL formatters including BytePane's <a href="/sql-formatter/">SQL Formatter tool</a>.
+          </p>
+          <p>
+            <code >`npm install sql-formatter
+
+const ugly = "select u.id,u.name from users u where u.active=true";
+
+const pretty = format(ugly, 
+  language: 'postgresql',   // 'mysql' | 'tsql' | 'bigquery' | 'spark' etc.
+  tabWidth: 2,
+  keywordCase: 'lower',     // 'upper' | 'lower' | 'preserve'
+  linesBetweenQueries: 2,
+  indentStyle: 'standard',  // 'standard' | 'tabularLeft' | 'tabularRight'
+);
+
+// Output:
+// select
+//   u.id,
+//   u.name
+// from
+//   users u
+// where
+//   u.active = true`</code>
+          </pre>
+
+          <h3>Tool Comparison Matrix</h3>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool</th>
+                  <th >Linting</th>
+                  <th >CI/CD</th>
+                  <th >Dialects</th>
+                  <th >Best For</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >BytePane SQL Formatter</td>
+                  <td >Format only</td>
+                  <td >No</td>
+                  <td >8+</td>
+                  <td >Quick one-off formatting</td>
+                </tr>
+                <tr >
+                  <td >SQLFluff</td>
+                  <td >Yes (deep)</td>
+                  <td >Yes</td>
+                  <td >15+</td>
+                  <td >Teams, dbt projects, enforcement</td>
+                </tr>
+                <tr >
+                  <td >pgFormatter</td>
+                  <td >Format only</td>
+                  <td >Via script</td>
+                  <td >PostgreSQL only</td>
+                  <td >Best Postgres output quality</td>
+                </tr>
+                <tr >
+                  <td >sql-formatter (npm)</td>
+                  <td >Format only</td>
+                  <td >Via script</td>
+                  <td >12+</td>
+                  <td >JS/Node.js projects, web tools</td>
+                </tr>
+                <tr >
+                  <td >sqlfmt</td>
+                  <td >Opinionated format</td>
+                  <td >Yes</td>
+                  <td >dbt SQL</td>
+                  <td >dbt-first teams wanting auto-format</td>
+                </tr>
+                <tr>
+                  <td >DBeaver built-in</td>
+                  <td >Format only</td>
+                  <td >No</td>
+                  <td >All (auto-detect)</td>
+                  <td >GUI database work</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>How to Format SQL in Your IDE</h2>
+
+          <h3>VS Code</h3>
+          <p >
+            Install the <strong>SQL Formatter</strong> extension by sql-formatter-org (the official extension, distinct from the deprecated "prettier-plugin-sql-vscode"). Open any <code >.sql</code> file and press <code >Shift+Alt+F</code> (Windows/Linux) or <code >Shift+Option+F</code> (Mac) to format.
+          </p>
+          <p>
+            <code >`// settings.json — configure dialect and keyword case
+
+  "[sql]": 
+    "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode",
+    "editor.formatOnSave": true
+  ,
+  "sql-formatter.dialect": "postgresql",
+  "sql-formatter.keywordCase": "lower",
+  "sql-formatter.tabWidth": 4
+`</code>
+          </pre>
+
+          <h3>DBeaver</h3>
+          <p >
+            In the SQL Editor, press <code >Ctrl+Shift+F</code> (Windows/Linux) or <code >Cmd+Shift+F</code> (Mac). DBeaver auto-detects the connected database type and applies dialect-appropriate formatting. Configure keyword case at Window → Preferences → Editors → SQL Editor → Formatting.
+          </p>
+
+          <h3>Command Line (any SQL file)</h3>
+          <p>
+            <code >`# Using sqlfluff (recommended for teams)
+sqlfluff fix --dialect postgres queries/
+
+# Using sql-formatter CLI (npm)
+npx sql-formatter --language postgresql --tab-width 2 < ugly.sql > pretty.sql
+
+# Using pgFormatter (Postgres only)
+pg_format -i queries/*.sql`</code>
+          </pre>
+        
+
+        
+          <h2>CI/CD Integration: Enforcing SQL Style Automatically</h2>
+          <p >
+            Manual formatting reviews in code review are expensive and inconsistent. The right approach is to block unformatted SQL at the pre-commit or CI stage, the same way you would block JavaScript without Prettier.
+          </p>
+
+          <h3>pre-commit Hook (SQLFluff)</h3>
+          <p>
+            <code >`# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/sqlfluff/sqlfluff
+    rev: 3.0.7
+    hooks:
+      - id: sqlfluff-lint       # blocks commit if violations found
+        args: [--dialect, postgres]
+      - id: sqlfluff-fix        # auto-fixes what it can before commit
+        args: [--dialect, postgres]`</code>
+          </pre>
+
+          <h3>GitHub Actions</h3>
+          <pre >
+            <code >`# .github/workflows/sql-lint.yml
+name: SQL Style Check
+on: [pull_request]
+
+jobs:
+  sqlfluff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install sqlfluff sqlfluff-templater-dbt
+      - name: Lint SQL
+        run: sqlfluff lint --dialect bigquery models/`</code>
+          </pre>
+          <p >
+            With this setup, PRs that add unformatted SQL fail the CI check automatically. No reviewer needs to leave "please format this" comments. The same principle applies to <a href="/blog/json-formatting-guide/">JSON formatting</a> in your API layer — automated enforcement is faster and more consistent than manual review.
+          </p>
+        
+
+        
+          <h2>SQL Formatting for Specific Dialects</h2>
+          <p>
+            Dialect matters. Formatting rules that work for standard ANSI SQL can break or produce incorrect output for dialect-specific syntax.
+          </p>
+
+          <h3>PostgreSQL</h3>
+          <p>
+            PostgreSQL-specific syntax that formatters need to handle: JSONB operators (<code >-&gt;&gt;</code>, <code >@&gt;</code>), array operations, <code >FILTER (WHERE ...)</code> in aggregates, <code >LATERAL</code> joins, and dollar-quoting in function bodies. pgFormatter handles all of these; generic formatters frequently mangle them.
+          </p>
+
+          <h3>BigQuery</h3>
+          <p>
+            BigQuery uses backtick-quoted identifiers (<code >`project.dataset.table`</code>), ARRAY and STRUCT types, and pipe syntax in newer GoogleSQL. Use SQLFluff with <code >--dialect bigquery</code> or sql-formatter with <code >language: 'bigquery'</code>.
+          </p>
+
+          <h3>T-SQL (SQL Server)</h3>
+          <p>
+            T-SQL uses square bracket identifiers (<code >[TableName]</code>), <code >TOP N</code> instead of <code >LIMIT N</code>, and <code >NOLOCK</code> table hints. SQLFluff's tsql dialect handles all of this correctly. For T-SQL style, John McCall's T-SQL Style Guide (lowlydba.github.io/tsqlstyle.guide) is a community-maintained variant of Holywell's guide adapted for SQL Server conventions.
+          </p>
+        
+
+        /* FAQ Section */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'Should SQL keywords be uppercase or lowercase?',
+                a: 'No universal standard exists. Holywell\'s SQL Style Guide prescribes UPPERCASE (dominant in DBA and SQL Server environments). dbt\'s official guide and Matt Mazur\'s guide recommend lowercase, arguing modern editors make uppercase unnecessary. The dbt ecosystem is shifting data engineering toward lowercase. Pick one, enforce it with SQLFluff, and never mix them in the same codebase.',
+              ,
+              
+                q: 'What is the best SQL formatter for PostgreSQL?',
+                a: 'pgFormatter produces the highest-quality output for PostgreSQL-specific syntax (JSONB operators, window functions, CTEs). For CI/CD enforcement across a project, SQLFluff with --dialect postgres is better because it combines formatting with semantic linting and integrates with pre-commit hooks and GitHub Actions.',
+              ,
+              
+                q: 'How do I format SQL in VS Code?',
+                a: 'Install the "SQL Formatter" extension by sql-formatter-org. Open a .sql file and press Shift+Alt+F (Windows/Linux) or Shift+Option+F (Mac). Configure dialect and keyword case in settings.json under the [sql] language block. For SQL in JS template literals, use prettier-plugin-sql.',
+              ,
+              
+                q: 'What is SQLFluff and how does it differ from a formatter?',
+                a: 'SQLFluff is both a linter and formatter. Pure formatters only rearrange whitespace. SQLFluff also detects semantic issues: ambiguous column references, implicit type conversions, deprecated syntax. It supports 15+ dialects and is the official dbt recommendation. Think of it as ESLint for SQL.',
+              ,
+              
+                q: 'How do I auto-format SQL in a CI/CD pipeline?',
+                a: 'Add SQLFluff to .pre-commit-config.yaml with the sqlfluff-lint and sqlfluff-fix hooks. In GitHub Actions, run "sqlfluff lint --dialect postgres ." as a PR check step. This enforces consistent formatting on every PR without manual reviewer comments.',
+              ,
+              
+                q: 'Does SQL formatting affect query performance?',
+                a: 'No. The database parser strips all whitespace before building the execution plan. Identical queries formatted differently produce identical bytecodes. Formatting is purely a developer productivity concern — it affects read speed, review speed, and debugging speed, not database execution time.',
+              ,
+              
+                q: 'What SQL dialects does the BytePane SQL Formatter support?',
+                a: 'BytePane\'s SQL Formatter supports MySQL, PostgreSQL, T-SQL (SQL Server), Oracle, SQLite, BigQuery, Snowflake, and standard ANSI SQL. Select your dialect from the dropdown for dialect-specific keyword handling and formatting rules.',
+              ,
+            ].map(( q, a ) => (
+              <details key=q >
+                <summary >
+                  q
+                  ▾
+                </summary>
+                
+                  a
+                
+              </details>
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Format Your SQL Instantly</h2>
+          <p>
+            Paste any SQL query into BytePane's free SQL Formatter. Supports MySQL, PostgreSQL, T-SQL, BigQuery, Snowflake, and more. Choose keyword case (uppercase or lowercase), set your dialect, and get clean output in milliseconds — no signup, no server uploads.
+          </p>
+          <a href="/sql-formatter/">
+            Open SQL Formatter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/sql-joins-explained/">
+              <h3>SQL Joins Explained</h3>
+              <p>INNER, LEFT, RIGHT, FULL OUTER, and CROSS JOINs with real examples.</p>
+            </a>
+            <a href="/blog/json-formatting-guide/">
+              <h3>How to Format JSON</h3>
+              <p>JSON formatting best practices, tools, and common syntax errors.</p>
+            </a>
+            <a href="/blog/environment-variables-guide/">
+              <h3>Environment Variables Guide</h3>
+              <p>Manage database credentials and secrets safely with env vars.</p>
+            </a>
+            <a href="/blog/docker-compose-local-dev/">
+              <h3>Docker Compose for Local Dev</h3>
+              <p>Run PostgreSQL and MySQL locally with Docker Compose.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/sql-formatter-online/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
