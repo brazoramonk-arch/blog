@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP Address Lookup: Find Location, ISP &amp;amp; More for Any IP - BytePane</title>
+  <meta name="description" content="Look up any IP address and find its geolocation, ISP, hostname, and network details instantly. Free tool — no sign-up required. Also explains how IP lookup works.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/ip-address-lookup/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; IP Address Lookup: Find Location, ISP &amp;amp; More for Any IP
+  </nav>
+
+  <article>
+    <h1>IP Address Lookup: Find Location, ISP &amp;amp; More for Any IP</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/ip-address-lookup/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    CGNAT hides thousands of users behind one IP; geolocation databases have a 1–4 week lag after IP reassignment; and mobile carriers route traffic through regional hubs. The fix is to check multiple geolocation providers — discrepancies reveal which factor is at play.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is an ASN and why does IP lookup show it?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'An Autonomous System Number (ASN) is a globally unique identifier assigned to a network (ISP, cloud provider, university, or enterprise) that participates in BGP routing. IP lookup tools show ASNs because they reveal who owns and routes an IP block — critical for security analysis, bot detection (AWS ASNs get blocked), and understanding CDN routing. ARIN, RIPE, and APNIC assign ASNs.',
+        ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          IP Address Lookup
+        
+
+        /* Header */
+        
+          Networking
+          <h2>
+            IP Address Lookup: Find Location, ISP &amp; More for Any IP
+          </h2>
+          
+            <time dateTime="2026-03-30">March 30, 2026</time>
+            16 min read
+          
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>• IP geolocation is 98–99.99% accurate at country level but only 70–85% at city level for fixed-line connections</li>
+            <li>• IPv4 space (4.29 billion addresses) was fully exhausted by RIRs; RIPE NCC ran out on November 25, 2019</li>
+            <li>• As of early 2025, IPv6 adoption hit 47% globally — the US crossed 50% in February 2025 per Google traffic data</li>
+            <li>• Under GDPR Article 4(1), IP addresses are legally classified as personal data requiring a lawful processing basis</li>
+            <li>• MaxMind GeoLite2 is the industry-standard free database, covering 99.9999% of all publicly routable IPs</li>
+          </ul>
+        
+
+        
+
+          /* Myth-busting opener */
+          <p>
+            Here&apos;s a myth that persists in developer circles: <em>&ldquo;An IP address reveals exactly where someone is.&rdquo;</em> It doesn&apos;t. What it reveals is where your ISP&apos;s routing equipment is — which could be a data center hundreds of miles from you. A 2024 accuracy report from BigDataCloud found city-level IP geolocation is correct only 70&ndash;85% of the time for fixed-line residential connections, and as low as 40% for mobile. That distinction matters enormously for fraud detection, content licensing, and compliance.
+          </p>
+          <p>
+            This guide covers how IP address lookup actually works under the hood, which data sources are used, where accuracy breaks down, and how to query IP geolocation programmatically in Node.js, Python, and Go.
+          </p>
+
+          <h2>The IPv4 Address Space Crisis (and What It Means for Lookups)</h2>
+          <p>
+            IPv4 uses a 32-bit address space: 2<sup>32</sup> = 4,294,967,296 total addresses. On paper that sounds like a lot. In practice, the Regional Internet Registries (RIRs) exhausted their free pool years ago:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Registry (Region)</th>
+                  <th >Exhaustion Date</th>
+                  <th >Coverage</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr><td >IANA (global)</td><td >February 3, 2011</td><td >World</td></tr>
+                <tr><td >APNIC</td><td >April 15, 2011</td><td >Asia-Pacific</td></tr>
+                <tr><td >LACNIC</td><td >June 10, 2014</td><td >Latin America</td></tr>
+                <tr><td >ARIN</td><td >September 24, 2015</td><td >North America</td></tr>
+                <tr><td >RIPE NCC</td><td >November 25, 2019</td><td >Europe/Middle East/Central Asia</td></tr>
+                <tr><td >AFRINIC</td><td >Last major holdout</td><td >Africa</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Exhaustion has a direct effect on geolocation accuracy. ISPs now trade IPv4 blocks on a secondary market (prices stabilized around $35&ndash;$50 per IP in early 2025 per IPXO), which means an IP block registered to one organization in a geolocation database may have changed hands recently. The typical lag between a block being reassigned and geolocation databases reflecting the change is 1&ndash;4 weeks for major providers.
+          </p>
+          <p>
+            IPv6 solves scarcity: its 128-bit space holds 3.4 &times; 10<sup>38</sup> addresses &mdash; effectively unlimited. Per Google&apos;s ongoing traffic measurements, IPv6 adoption reached 47% globally by 2024, with the United States crossing 50% in February 2025. France leads at ~80%, Germany at 74.85%. China sits below 5%. Many geolocation providers still have weaker IPv6 coverage than IPv4, which affects lookup reliability for dual-stack users.
+          </p>
+
+          <h2>How IP Geolocation Actually Works</h2>
+          <p>
+            IP geolocation isn&apos;t magic — it&apos;s a combination of three technical data sources cross-referenced and updated continuously.
+          </p>
+
+          <h3>1. WHOIS / RIR Registry Data</h3>
+          <p>
+            The five RIRs (ARIN, RIPE NCC, APNIC, LACNIC, AFRINIC) maintain public WHOIS databases that map IP ranges to the organization that registered them, including a postal address. This is the baseline layer. The fundamental problem: ISPs register entire /8 or /16 blocks at their HQ address, then deploy those IPs to end users in different cities or countries. The WHOIS record says &ldquo;New York&rdquo;; the actual user is in Dallas.
+          </p>
+          <p>
+            A newer IETF standard called GeoFeed (RFC 8805) lets ISPs publish machine-readable subnet-to-location mappings directly in their WHOIS records, dramatically improving accuracy. Google and MaxMind actively consume GeoFeed data; adoption is still growing.
+          </p>
+
+          <h3>2. BGP Routing Tables</h3>
+          <p>
+            Border Gateway Protocol (BGP) governs how IP ranges are announced across Autonomous Systems (ASes). Public BGP data from Route Views and RIPE RIS lets providers infer location by peering point: if an IP block is announced by a router in Frankfurt with low latency to nearby infrastructure, it&apos;s probably in Frankfurt. Each AS has an ASN (Autonomous System Number) tied to a registered organization — this is why IP lookup tools show the ISP name alongside location.
+          </p>
+          <p><code >`# Query BGP data for an IP using whois
+$ whois -h whois.radb.net 8.8.8.8
+route:         8.8.8.0/24
+descr:         Google LLC
+origin:        AS15169
+mnt-by:        MAINT-AS15169
+
+# Or use the Team Cymru IP-to-ASN mapping
+$ dig +short 8.8.8.8.origin.asn.cymru.com TXT
+"15169 | 8.8.8.0/24 | US | arin | 1992-12-01"`</code></pre>
+
+          <h3>3. ISP Cooperation and Signal Fusion</h3>
+          <p >
+            The most accurate providers combine registry data with active signals: ISPs voluntarily submit subnet-to-location mappings; GPS-confirmed app location data is correlated to concurrent IP addresses at scale; and latency measurements from known Points of Presence (PoPs) triangulate proximity. NetAcuity (Digital Element) claims 99.99% country-level accuracy and 97% city-level accuracy using this fusion approach — the highest vendor claims on record.
+          </p>
+
+          <h2>IP Geolocation Accuracy: What the Numbers Actually Mean</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Connection Type</th>
+                  <th >Country Accuracy</th>
+                  <th >City Accuracy</th>
+                  <th >Why It Degrades</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr><td >Fixed-line residential</td><td >98–99.99%</td><td >70–85%</td><td >ISP registered address vs. deployment</td></tr>
+                <tr><td >Mobile/cellular</td><td >95–99%</td><td >40–65%</td><td >Traffic routed through carrier regional hub</td></tr>
+                <tr><td >Corporate/enterprise</td><td >97–99%</td><td >60–80%</td><td >Centralized egress through HQ IP</td></tr>
+                <tr><td >VPN user</td><td >0–30%</td><td >&lt;10%</td><td >Shows VPN exit server location</td></tr>
+                <tr><td >Tor exit node</td><td >0%</td><td >0%</td><td >Intentional anonymization</td></tr>
+                <tr><td >Cloud hosting (AWS/GCP/Azure)</td><td >99%+</td><td >90%+</td><td >Data center locations are precisely known</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            According to GlobalWebIndex (now GWI), approximately 22.9% of internet users worldwide used a VPN in 2024, with ~42% of Americans reporting VPN usage. That&apos;s a significant portion of your traffic that geolocation will get wrong at the city level — a factor to bake into any system that makes hard decisions based on IP location.
+          </p>
+
+          <h2>The Leading IP Geolocation Providers</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Provider</th>
+                  <th >Free Tier</th>
+                  <th >Format</th>
+                  <th >Best For</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr>
+                  <td >MaxMind GeoLite2</td>
+                  <td >Yes (attribution req.)</td>
+                  <td >MMDB binary</td>
+                  <td >Self-hosted, sub-ms lookups</td>
+                </tr>
+                <tr>
+                  <td >MaxMind GeoIP2</td>
+                  <td >No (commercial)</td>
+                  <td >MMDB / REST API</td>
+                  <td >Production accuracy, 99.9999% IP coverage</td>
+                </tr>
+                <tr>
+                  <td >IPinfo</td>
+                  <td >Country only (free)</td>
+                  <td >REST API / MMDB</td>
+                  <td >Transparent methodology, ASN data</td>
+                </tr>
+                <tr>
+                  <td >ip-api.com</td>
+                  <td >1,000 req/min (non-commercial)</td>
+                  <td >REST API (JSON/XML)</td>
+                  <td >Fast prototyping, hobby projects</td>
+                </tr>
+                <tr>
+                  <td >ipapi.co</td>
+                  <td >1,000 req/day</td>
+                  <td >REST API</td>
+                  <td >Simple REST, currency &amp; timezone included</td>
+                </tr>
+                <tr>
+                  <td >NetAcuity (Digital Element)</td>
+                  <td >No</td>
+                  <td >Enterprise API</td>
+                  <td >Ad tech, highest city accuracy claim</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h2>Querying IP Geolocation in Code</h2>
+          <p>
+            Here are production-ready patterns for the three most common server languages. MaxMind&apos;s MMDB format is preferred over HTTP APIs for latency-sensitive paths &mdash; lookups are typically under 1ms from memory.
+          </p>
+
+          <h3>Node.js (maxmind npm)</h3>
+          <p><code >`import maxmind,  CityResponse  from 'maxmind'
+
+// Load the MMDB database once at startup (not on each request)
+const dbPath = '/data/GeoLite2-City.mmdb'
+const lookup = await maxmind.open<CityResponse>(dbPath)
+
+function getIPInfo(ip: string) 
+  const result = lookup.get(ip)
+  if (!result) return null
+
+  return 
+    country: result.country?.iso_code,           // 'US'
+    countryName: result.country?.names?.en,      // 'United States'
+    region: result.subdivisions?.[0]?.iso_code,  // 'CA'
+    city: result.city?.names?.en,                // 'Mountain View'
+    latitude: result.location?.latitude,          // 37.386
+    longitude: result.location?.longitude,        // -122.0838
+    timezone: result.location?.time_zone,         // 'America/Los_Angeles'
+    accuracyRadius: result.location?.accuracy_radius, // radius in km
+    isp: result.traits?.isp,
+    asn: result.traits?.autonomous_system_number,
+  
+
+// Usage — sub-millisecond in-process lookup
+const info = getIPInfo('8.8.8.8')
+//  country: 'US', city: 'Mountain View', asn: 15169, ... `</code></pre>
+
+          <h3>Python (geoip2)</h3>
+          <pre ><code >`import geoip2.database
+
+# Open reader once, reuse across requests
+reader = geoip2.database.Reader('/data/GeoLite2-City.mmdb')
+
+def lookup_ip(ip_address: str) -> dict | None:
+    try:
+        response = reader.city(ip_address)
+        return 
+            'country_code': response.country.iso_code,
+            'country_name': response.country.name,
+            'city': response.city.name,
+            'latitude': response.location.latitude,
+            'longitude': response.location.longitude,
+            'timezone': response.location.time_zone,
+            'accuracy_km': response.location.accuracy_radius,
+            'asn': response.traits.autonomous_system_number,
+        
+    except geoip2.errors.AddressNotFoundError:
+        return None  # Private IP or unrecognized range
+    finally:
+        pass  # Do NOT close reader here — it's meant to persist
+
+result = lookup_ip('1.1.1.1')
+# 'country_code': 'AU', 'city': 'Sydney', 'asn': 13335`</code></pre>
+
+          <h3>Go (oschwald/geoip2-golang)</h3>
+          <pre ><code >`package main
+
+    "fmt"
+    "net"
+    "github.com/oschwald/geoip2-golang"
+)
+
+func main() 
+    db, err := geoip2.Open("GeoLite2-City.mmdb")
+    if err != nil 
+        panic(err)
+    
+    defer db.Close()
+
+    ip := net.ParseIP("81.2.69.142")
+    record, err := db.City(ip)
+    if err != nil 
+        panic(err)
+    
+
+    fmt.Printf("Country: %s\n", record.Country.IsoCode)
+    fmt.Printf("City: %s\n", record.City.Names["en"])
+    fmt.Printf("Lat/Lon: %f, %f\n",
+        record.Location.Latitude,
+        record.Location.Longitude)
+    fmt.Printf("Accuracy: %d km\n", record.Location.AccuracyRadius)
+    fmt.Printf("Timezone: %s\n", record.Location.TimeZone)
+`</code></pre>
+
+          <p >
+            If you need to validate and format IP addresses before lookup, <a href="/url-encode-decode/">our URL encoder</a> handles percent-encoded IP literals in URLs (IPv6 addresses in URLs must be wrapped in brackets and the colons may be encoded). You can also use <a href="/regex-tester/">our regex tester</a> to validate IPv4 and IPv6 format before querying — see the <a href="/blog/regex-patterns-cheat-sheet/">regex patterns cheat sheet</a> for production-ready IP validation patterns.
+          </p>
+
+          <h2>What IP Lookup Reveals: Field by Field</h2>
+          <p>
+            Modern IP lookup responses include far more than just city and country. Here&apos;s what each field means and when it matters:
+          </p>
+          <ul>
+            <li><strong>ASN (Autonomous System Number):</strong> Identifies the network operator. AWS IPs (AS16509), Cloudflare (AS13335), and Google (AS15169) are recognizable by ASN. Many security systems block traffic from hosting ASNs to prevent scraping and fraud.</li>
+            <li><strong>Connection type:</strong> Residential vs. business vs. hosting. A &ldquo;residential&rdquo; IP from a known hosting ASN is a strong bot signal.</li>
+            <li><strong>Proxy/VPN/Tor flags:</strong> MaxMind GeoIP2 Insights and IPinfo include boolean flags for known proxy IPs, datacenter IPs, and Tor exit nodes.</li>
+            <li><strong>Accuracy radius:</strong> The MMDB record includes an accuracy radius in kilometers. A radius of 500km on a &ldquo;city-level&rdquo; result means the city field is essentially noise. Check this field before making decisions based on location.</li>
+            <li><strong>Timezone:</strong> Derived from geolocation, not from the IP itself. Use it for display purposes (showing the user their local time), not for security decisions.</li>
+          </ul>
+
+          <h2>Real-World Use Cases for IP Lookup</h2>
+
+          <h3>Fraud Detection</h3>
+          <p>
+            Payment processors compare the IP geolocation against the billing address. A billing address in London with an IP geolocating to Lagos is a strong fraud signal — not definitive proof, but worth triggering additional verification. Cloudflare launched a dedicated Fraud Detection product in 2023 specifically for this pattern: fake account creation, card fraud, and account takeover attempts all have IP geolocation anomalies as a key signal.
+          </p>
+          <p>
+            Use <a href="/hash-generator/">our hash generator</a> to fingerprint IP + User-Agent + Accept-Language combinations for bot detection heuristics without storing PII directly.
+          </p>
+
+          <h3>CDN Routing and GeoDNS</h3>
+          <p>
+            CDNs like Cloudflare, Akamai, and Fastly use IP geolocation to route every HTTP request to the nearest Point of Presence (PoP). This is called anycast routing: the same IP address is announced from multiple data centers, and BGP routing directs each user&apos;s traffic to the closest one. GeoDNS does the same at the DNS resolution layer — returning different A records based on the requester&apos;s IP region. Both depend on accurate IP geolocation to work.
+          </p>
+
+          <h3>Content Licensing and Compliance</h3>
+          <p>
+            Streaming services are legally required to enforce regional content licenses. If a movie has UK rights but not US rights, the platform must geo-block US viewers. IP geolocation is the primary enforcement mechanism. This is also why streaming VPN usage is so widespread — users intentionally defeat the system.
+          </p>
+          <p>
+            GDPR compliance uses IP lookup to determine which privacy notice to serve: EU visitors get the full GDPR notice, California users get the CCPA notice, others get a generic one. The irony is that GDPR simultaneously requires geolocation (to serve the right notice) and restricts IP data collection (since IP is personal data under Article 4(1)).
+          </p>
+          <p>
+            For more on networking concepts like DNS-based routing, see our <a href="/blog/dns-records-explained/">DNS records deep dive</a>. If you want to check your own current IP address and its geolocation details, use our <a href="/blog/what-is-my-ip/">What Is My IP tool</a>.
+          </p>
+
+          <h2>Privacy and Legal Considerations</h2>
+          <p>
+            The GDPR is explicit: IP addresses are personal data under Article 4(1) as &ldquo;online identifiers.&rdquo; Processing IP addresses requires a legal basis — typically legitimate interest (for security logging), consent (for analytics), or contract (for fraud prevention). Static IPs are unambiguously PII. Even dynamic IPs are treated as personal data in EU courts, because when combined with a timestamp, they can identify a specific user to the ISP.
+          </p>
+          <p>
+            Practical implications for developers:
+          </p>
+          <ul>
+            <li>Log IP addresses only as long as operationally necessary; document your retention period</li>
+            <li>Consider IP masking (storing only the first two octets: 192.168.x.x) for analytics use cases where precise IP isn&apos;t needed</li>
+            <li>Google Analytics 4 anonymizes the last octet of EU user IPs by default</li>
+            <li>Under CCPA, IP-derived location data is &ldquo;personal information&rdquo; subject to deletion rights</li>
+            <li>Do not share raw IP logs with third-party analytics without a Data Processing Agreement</li>
+          </ul>
+
+          <h2>IPv4 vs IPv6: Lookup Differences</h2>
+          <p>
+            IPv6 addresses present distinct lookup challenges. The address format is radically different (eight groups of four hexadecimal digits: <code >2001:0db8:85a3:0000:0000:8a2e:0370:7334</code>), and the database coverage is weaker because IPv6 deployment is still maturing in many regions. Additionally, privacy extensions (RFC 4941) generate random interface identifiers that change frequently, making device tracking harder — by design. For lookups, most providers handle IPv6 the same way: the /48 or /64 prefix identifies the ISP network, and geolocation resolves to that network&apos;s PoP.
+          </p>
+          <p>
+            Validate IPv6 addresses before lookup — the format is complex. See our <a href="/blog/regex-patterns-cheat-sheet/">regex patterns reference</a> for tested IPv6 validation patterns.
+          </p>
+
+          /* CTA */
+          
+            <h3>Check Your Own IP Address</h3>
+            <p>See your current public IP, ISP, location, and whether your IP is flagged as a proxy or VPN exit node.</p>
+            <a href="/blog/what-is-my-ip/">
+              What Is My IP?
+            </a>
+          
+
+          /* FAQ */
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>How accurate is IP geolocation?</h3>
+              <p>Country-level accuracy is 98&ndash;99.99% for fixed-line connections (MaxMind, NetAcuity). City-level accuracy drops to 70&ndash;85% for residential IPs and 40&ndash;65% for mobile connections. Mobile carriers route through regional hubs, making the hub city appear as the user location. VPNs, CGNAT, and Tor completely defeat geolocation.</p>
+            
+            
+              <h3>What information can an IP address reveal?</h3>
+              <p>An IP address can reveal approximate geographic location (city, region, country), ISP or hosting provider name, Autonomous System Number (ASN), whether the IP is a known proxy/VPN/Tor exit node, connection type, and timezone. It cannot reveal your name, street address, or phone number without ISP cooperation under a legal order.</p>
+            
+            
+              <h3>Is an IP address personal data under GDPR?</h3>
+              <p>Yes. GDPR Article 4(1) classifies IP addresses as personal data as &ldquo;online identifiers.&rdquo; Processing requires a legal basis &mdash; consent, legitimate interest, or contractual necessity. Static IPs are clearly PII. Even dynamic IPs are treated as personal data in most EU court rulings.</p>
+            
+            
+              <h3>Can I look up private IP addresses?</h3>
+              <p>Public IP lookup APIs only work on routable public IPs. Private ranges (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 per RFC 1918), loopback 127.0.0.1, and link-local 169.254.0.0/16 have no geolocation data. Any lookup tool will return an error or null for these ranges.</p>
+            
+            
+              <h3>Which free IP geolocation API is most accurate?</h3>
+              <p>MaxMind GeoLite2 is the most widely used free option, covering 99.9999% of all IP addresses with MMDB binary format for sub-millisecond lookups. For REST API access, ip-api.com (1,000 req/min non-commercial) and ipapi.co (1,000 req/day) are popular. For production at scale, MaxMind GeoIP2 commercial is the industry standard.</p>
+            
+            
+              <h3>Why does my IP show the wrong city?</h3>
+              <p>ISPs register IP blocks at their HQ address even when those IPs are deployed elsewhere; CGNAT hides thousands of users behind one IP; geolocation databases have a 1&ndash;4 week lag after IP reassignment; and mobile carriers route traffic through regional hubs. Check multiple providers to identify which factor is causing the discrepancy.</p>
+            
+            
+              <h3>What is an ASN and why does IP lookup show it?</h3>
+              <p>An Autonomous System Number (ASN) is a globally unique identifier assigned to a network (ISP, cloud provider, university) that participates in BGP routing. IP lookup tools show ASNs because they reveal who owns and routes an IP block &mdash; critical for security analysis and bot detection. ARIN, RIPE NCC, and APNIC assign ASNs.</p>
+            
+          
+
+          /* Related */
+          <h2>Related Articles</h2>
+          <ul>
+            <li><a href="/blog/what-is-my-ip/">What Is My IP Address? Public &amp; Local IP Finder</a></li>
+            <li><a href="/blog/dns-records-explained/">DNS Records Explained: A, AAAA, CNAME, MX, TXT &amp; More</a></li>
+            <li><a href="/blog/regex-patterns-cheat-sheet/">Essential Regex Patterns Cheat Sheet: IP, Email, URL &amp; More</a></li>
+            <li><a href="/blog/ssh-keys-guide/">SSH Keys Explained: Generation, Management &amp; Best Practices</a></li>
+            <li><a href="/blog/hash-functions-explained/">Hash Functions Explained: MD5, SHA-256, bcrypt &amp; More</a></li>
+          </ul>
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/ip-address-lookup/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
