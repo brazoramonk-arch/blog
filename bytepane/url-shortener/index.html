@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener: Shorten Long URLs for Free - BytePane</title>
+  <meta name="description" content="Shorten any long URL instantly with our free URL shortener. No sign-up required. Learn how URL shorteners work and how to build one with redirects and analytics.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/url-shortener/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; URL Shortener: Shorten Long URLs for Free
+  </nav>
+
+  <article>
+    <h1>URL Shortener: Shorten Long URLs for Free</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/url-shortener/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    the URL shortener market is valued at $490M in 2025 per Business Research Insights</li>
+            <li>• 301 redirects pass ~99% of link equity to the destination; 302 redirects pass zero — use the right one</li>
+            <li>• Base62 encoding with a 7-character slug produces 3.5 trillion unique combinations — sufficient for most large-scale deployments</li>
+            <li>• 28% of campaigns using popular URL shorteners delivered malware per Cofense Intelligence (2024–2025) — hidden destinations are a genuine threat</li>
+            <li>• p99 redirect latency target is under 50ms; sub-millisecond with Redis caching; browser-cached 301s add zero round-trip latency</li>
+          </ul>
+        
+
+        
+
+          /* Problem-solution opener */
+          <p>
+            A product launch email to 50,000 subscribers. The CTA button links to a UTM-tagged URL that&apos;s 340 characters long: <code >https://store.example.com/products/widget-pro?utm_source=email&amp;utm_medium=newsletter&amp;utm_campaign=spring2026&amp;utm_content=hero-cta&amp;ref=homepage</code>. That URL will break in plain-text email clients, fail in SMS, and look suspicious in previews. The solution is a URL shortener &mdash; but choosing the wrong redirect type, the wrong provider, or no abuse protection can create real problems for SEO, security, and analytics.
+          </p>
+          <p>
+            This guide covers how URL shorteners work from the HTTP layer down, what to look for in a service, the real security risks, and how to implement a minimal shortener yourself. Let&apos;s start with the part most tutorials get wrong: the redirect status code.
+          </p>
+
+          <h2>301 vs 302 vs 307 vs 308: Which Redirect Code Should You Use?</h2>
+          <p>
+            This is the decision that has the most downstream impact on SEO and analytics — and many shorteners get it wrong by default.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Code</th>
+                  <th >Type</th>
+                  <th >Browser Caches?</th>
+                  <th >Passes Link Equity?</th>
+                  <th >Method Preserved?</th>
+                  <th >Use When</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr>
+                  <td >301</td>
+                  <td >Permanent</td>
+                  <td >Yes</td>
+                  <td >~99%</td>
+                  <td >No (POST→GET)</td>
+                  <td >Stable links, SEO pass-through</td>
+                </tr>
+                <tr>
+                  <td >302</td>
+                  <td >Temporary</td>
+                  <td >No</td>
+                  <td >0%</td>
+                  <td >No (POST→GET)</td>
+                  <td >A/B testing, changing destinations</td>
+                </tr>
+                <tr>
+                  <td >307</td>
+                  <td >Temp (strict)</td>
+                  <td >No</td>
+                  <td >0%</td>
+                  <td >Yes</td>
+                  <td >POST-preserving temp redirect</td>
+                </tr>
+                <tr>
+                  <td >308</td>
+                  <td >Permanent (strict)</td>
+                  <td >Yes</td>
+                  <td >~99%</td>
+                  <td >Yes</td>
+                  <td >API endpoint migrations</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The critical point about 301s: once a browser caches the redirect, subsequent clicks never hit the shortener server. The redirect resolves entirely in the browser. This is great for performance (zero additional latency after first visit) but means analytics events on the shortener server are undercounted. Bitly&apos;s client-side click tracking injects a brief intermediate page specifically to capture analytics before issuing the final redirect.
+          </p>
+          <p>
+            Google clarified in 2016 that properly implemented 301 redirects pass effectively 100% of PageRank to the destination &mdash; a correction from the earlier ~85% estimate that had been passed around since the PageRank era. Prior to that clarification, shortlinks had a minor SEO penalty; they don&apos;t anymore. See our <a href="/blog/http-status-codes/">HTTP status codes reference</a> for the full taxonomy of redirect codes and their semantics.
+          </p>
+
+          <h2>How Slug Generation Works: Base62 and Alternatives</h2>
+          <p>
+            The slug is the unique identifier appended to the short domain: the <code >abc123</code> in <code >bit.ly/abc123</code>. How it&apos;s generated determines the uniqueness capacity and predictability of your URL space.
+          </p>
+
+          <h3>Base62 Encoding (Industry Standard)</h3>
+          <p>
+            The most robust approach: auto-increment an integer primary key in your database, then encode it in Base62 (characters: <code >a-z A-Z 0-9</code>).
+          </p>
+          <p><code >`const BASE62_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+const BASE = 62
+
+function encodeBase62(num: number): string 
+  if (num === 0) return BASE62_CHARS[0]
+  let result = ''
+  while (num > 0) 
+    result = BASE62_CHARS[num % BASE] + result
+    num = Math.floor(num / BASE)
+  
+  return result
+
+function decodeBase62(slug: string): number 
+  let result = 0
+  for (const char of slug) 
+    result = result * BASE + BASE62_CHARS.indexOf(char)
+  
+  return result
+
+// Capacity by slug length:
+// 6 chars: 62^6 = 56.8 billion unique slugs
+// 7 chars: 62^7 = 3.52 trillion unique slugs
+// 8 chars: 62^8 = 218 trillion unique slugs
+
+console.log(encodeBase62(1))        // 'b'
+console.log(encodeBase62(62))       // 'ba'
+console.log(encodeBase62(1000000))  // '4c92'`</code></pre>
+          <p >
+            The strength of this approach: no collision checking needed, decode is O(n) and gives you the database row directly, and the sequence is non-predictable (because Base62 encoding of sequential integers produces non-sequential-looking slugs). The weakness: sequential IDs can be enumerated by incrementing &mdash; consider XOR-shuffling IDs before encoding if enumeration is a concern.
+          </p>
+
+          <h3>Random Generation with Collision Retry</h3>
+          <p><code >`import  randomBytes  from 'crypto'
+
+function generateSlug(length = 7): string 
+  // Use crypto.randomBytes — never Math.random() for slugs
+  const bytes = randomBytes(length)
+  let slug = ''
+  for (const byte of bytes) 
+    // Map to Base62 character space (rejection sampling)
+    const idx = byte % 62
+    slug += BASE62_CHARS[idx]
+  
+  return slug
+
+// In your database layer:
+async function createShortURL(longUrl: string): Promise<string> 
+  for (let attempts = 0; attempts < 5; attempts++) 
+    const slug = generateSlug(7)
+    try 
+      await db.insert( slug, url: longUrl )
+      return slug
+     catch (err) 
+      if (err.code === 'UNIQUE_VIOLATION') continue // retry
+      throw err
+    
+  
+  throw new Error('Failed to generate unique slug after 5 attempts')
+`</code></pre>
+          <p >
+            At 7 characters and 62^7 ≈ 3.5 trillion combinations, collision probability is negligible until you reach hundreds of billions of stored URLs. At Bitly&apos;s scale (256+ million links created monthly), they use Base62 on distributed sequence counters with sharded ID generators to avoid sequential enumeration.
+          </p>
+
+          <h2>The System Design: Building a URL Shortener at Scale</h2>
+          <p>
+            A URL shortener is a classic system design interview problem because it deceptively simple write path (one INSERT) combined with an extremely hot read path (every shortened link click is a read). At 35,000 QPS, a direct PostgreSQL query per redirect will collapse under load. The production architecture layers caching:
+          </p>
+          <p><code >`# Request flow for a redirect (read path):
+# 1. Browser hits https://sho.rt/abc123
+# 2. Edge (CDN) → check CDN cache for slug 'abc123'
+#    HIT: return 301 response immediately (~2ms)
+#    MISS: forward to origin
+# 3. Origin app → check Redis cache for slug
+#    HIT: return 301, set CDN cache header (~5ms)
+#    MISS: query PostgreSQL, populate Redis, return 301 (~15ms)
+# 4. Async analytics event written to Kafka/queue (non-blocking)
+
+# Redis schema for URL mappings:
+# SET url:abc123 "https://example.com/very/long/url" EX 86400
+# Key includes TTL so stale entries self-evict
+
+# Write path:
+# 1. Validate URL (scheme, length, malware check)
+# 2. Generate slug via Base62 encoded sequence ID
+# 3. INSERT into PostgreSQL (source of truth)
+# 4. Populate Redis cache
+# 5. Return short URL to user`</code></pre>
+          <p >
+            With Redis in front of the database, a production shortener can achieve sub-millisecond lookup times and sustain 100,000+ QPS on commodity hardware. Bitly&apos;s enterprise SLA guarantees 99.9% uptime with measured p99 redirect latency under 50ms globally.
+          </p>
+          <p>
+            URL encoding matters here too: long URLs must be properly percent-encoded before storage. Use our <a href="/url-encode-decode/">URL encoder/decoder tool</a> to inspect and fix malformed URLs, or see the <a href="/blog/url-encoding-guide/">URL encoding guide</a> for the full spec on when and why to encode.
+          </p>
+
+          <h2>The Security Problem Nobody Talks About</h2>
+          <p>
+            In July 2024 through June 2025, Cofense Intelligence analyzed phishing campaigns targeting enterprise email users. Their finding: 28% of campaigns using popular URL shorteners delivered malware. The mechanism is straightforward — attackers register legitimate shortened links pointing to clean content, get them past email security scanners, then redirect to malware payloads after the scan.
+          </p>
+          <p>
+            Menlo Security documented a 198% increase in browser-based phishing attacks over a six-month period, with URL shorteners as a primary evasion vector. Traditional URL filtering tools score the shortener&apos;s domain reputation (bit.ly = safe), not the destination — making detection nearly impossible without following the redirect chain.
+          </p>
+          <p>
+            Palo Alto Unit 42 found a 55% increase in QR code shortener traffic from H1 2023 to H1 2024, and a further 44% increase in the following year — QR codes being another way attackers use shorteners to obscure destinations from scanners.
+          </p>
+
+          <h3>Defensive Measures When Building a Shortener</h3>
+          <ul>
+            <li><strong>Safe Browsing API check:</strong> Google&apos;s Safe Browsing API (free up to 10,000 req/day) flags known malware/phishing URLs before you shorten them</li>
+            <li><strong>Follow redirects before storing:</strong> If the destination URL is itself a redirect chain, resolve it fully and store the final target for transparency</li>
+            <li><strong>Rate limiting by IP:</strong> Bulk link creation from a single IP is a clear abuse signal; limit to 100 creations/hour for unauthenticated users</li>
+            <li><strong>Preview pages:</strong> Bitly appends <code >+</code> to a slug to show a preview page; implement the same pattern so security-conscious users can inspect the destination</li>
+            <li><strong>Takedown mechanism:</strong> Build an admin endpoint to immediately deactivate a slug and replace it with a warning page</li>
+          </ul>
+
+          <h2>URL Shortener Services Compared</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Service</th>
+                  <th >Free Tier</th>
+                  <th >Custom Domain</th>
+                  <th >Analytics</th>
+                  <th >Best For</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr>
+                  <td >TinyURL</td>
+                  <td >Yes, unlimited</td>
+                  <td >Paid only</td>
+                  <td >Minimal</td>
+                  <td >Quick one-off links (est. 2002, 104M visits/mo)</td>
+                </tr>
+                <tr>
+                  <td >Bitly</td>
+                  <td >10 links/mo</td>
+                  <td >Yes (paid)</td>
+                  <td >Deep analytics</td>
+                  <td >Enterprise campaigns, 10B monthly connections</td>
+                </tr>
+                <tr>
+                  <td >Rebrandly</td>
+                  <td >5 links/mo</td>
+                  <td >Multiple domains</td>
+                  <td >Yes</td>
+                  <td >Branded links, teams</td>
+                </tr>
+                <tr>
+                  <td >Short.io</td>
+                  <td >1K clicks/mo</td>
+                  <td >Yes</td>
+                  <td >Real-time</td>
+                  <td >Developers, webhook/API integration</td>
+                </tr>
+                <tr>
+                  <td >Shlink</td>
+                  <td >Free (self-hosted)</td>
+                  <td >Yes</td>
+                  <td >Full control</td>
+                  <td >No vendor lock-in, privacy-first</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Bitly is the clear market leader: 500,000+ global customers, 5.7 million monthly active users, 256+ million links created monthly, and $100M ARR crossed in 2022 per Bitly&apos;s own press releases. TinyURL, despite minimal features, attracted 104 million website visits in October 2025 alone (per SemRush data) — a testament to the enduring power of &ldquo;first mover in a simple utility.&rdquo;
+          </p>
+          <p>
+            Google shut down goo.gl in 2019. Ow.ly (Hootsuite) remains but is tightly coupled to their social platform. The global URL shortener market was valued at approximately $490 million in 2025 and is projected to reach $2.55 billion by 2034 at a ~20% CAGR per Business Research Insights.
+          </p>
+
+          <h2>Analytics and Tracking: What Shorteners Measure</h2>
+          <p>
+            A URL shortener is fundamentally a measurement layer on top of a redirect. Modern services track:
+          </p>
+          <ul>
+            <li><strong>Total clicks vs unique clicks:</strong> Total counts every redirect; unique deduplicates by IP + User-Agent within a time window</li>
+            <li><strong>Geographic distribution:</strong> Country and city breakdown using IP geolocation (see accuracy caveats above)</li>
+            <li><strong>Device and browser:</strong> Parsed from User-Agent string</li>
+            <li><strong>Referrer:</strong> The HTTP Referer header revealing whether the click came from Twitter, a newsletter, direct, etc.</li>
+            <li><strong>Time series:</strong> Click volume over time, useful for measuring campaign decay</li>
+          </ul>
+          <p>
+            According to a U.S. Department of Commerce 2023 survey, 38% of businesses connect URL shorteners with analytics tools to monitor campaign performance. Per Bitly, 95% of B2B marketers use short links in their campaigns, with 65% of URL shortener market growth driven by social media campaigns where link length is constrained.
+          </p>
+          <p>
+            UTM parameters survive the redirect intact — the shortener stores the full destination URL including query strings. UTM-tagged links like <code >?utm_source=email&amp;utm_medium=newsletter</code> pass through to Google Analytics as-is, letting you attribute conversions correctly.
+          </p>
+
+          <h2>Building Your Own URL Shortener: Minimal Implementation</h2>
+          <p>
+            A production-viable URL shortener in Node.js/Express fits in approximately 80 lines of code for the core logic:
+          </p>
+          <p><code >`import express from 'express'
+
+const app = express()
+app.use(express.json())
+
+const db = new Pool( connectionString: process.env.DATABASE_URL )
+const redis = createClient( url: process.env.REDIS_URL )
+await redis.connect()
+
+const BASE62 = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+function toBase62(n: number): string 
+  let s = ''
+  while (n > 0)  s = BASE62[n % 62] + s; n = Math.floor(n / 62) 
+  return s || '0'
+
+// POST /shorten — create a short link
+app.post('/shorten', async (req, res) => 
+  const  url  = req.body
+  // Validate URL scheme (reject javascript:, data:, etc.)
+  try 
+    const parsed = new URL(url)
+    if (!['http:', 'https:'].includes(parsed.protocol)) 
+      return res.status(400).json( error: 'Only http/https URLs allowed' )
+    
+   catch 
+    return res.status(400).json( error: 'Invalid URL' )
+  
+
+  const result = await db.query(
+    'INSERT INTO urls (long_url) VALUES ($1) RETURNING id',
+    [url]
+  )
+  const slug = toBase62(result.rows[0].id)
+  await redis.set(\`url:\$slug\`, url,  EX: 86400 ) // 24h cache
+  res.json( short: \`https://sho.rt/\$slug\` )
+)
+
+// GET /:slug — redirect
+app.get('/:slug', async (req, res) => 
+  const  slug  = req.params
+  if (!/^[a-zA-Z0-9]1,10$/.test(slug)) 
+    return res.status(400).send('Invalid slug')
+  
+
+  // Try Redis cache first
+  let longUrl = await redis.get(\`url:\$slug\`)
+  if (!longUrl) 
+    // Fall back to database
+    const id = slug.split('').reduce((n, c) => n * 62 + BASE62.indexOf(c), 0)
+    const row = await db.query('SELECT long_url FROM urls WHERE id = $1', [id])
+    if (!row.rows[0]) return res.status(404).send('Not found')
+    longUrl = row.rows[0].long_url
+    await redis.set(\`url:\$slug\`, longUrl,  EX: 86400 )
+  
+
+  // 301 for stable links; use 302 if destination can change
+  res.redirect(301, longUrl)
+)
+
+app.listen(3000)`</code></pre>
+          <p >
+            Note the slug validation regex on line 46: <code >/^[a-zA-Z0-9]&#123;1,10&#125;$/</code>. This is critical to prevent path traversal and injection attacks. Never pass user-supplied slugs directly to a database query without validation. Use our <a href="/regex-tester/">regex tester</a> to verify your slug validation pattern, and see the <a href="/blog/regex-validation-patterns-email-url/">URL validation patterns guide</a> for production-ready URL format checking before storage.
+          </p>
+
+          <h2>Custom Domains and Branded Short Links</h2>
+          <p>
+            A branded short domain (e.g., <code >go.brand.com/campaign</code> instead of <code >bit.ly/xyz123</code>) increases click-through rates by 25&ndash;35% per Rebrandly&apos;s internal data across millions of links — users trust links from recognizable domains. Bitly supports custom domains on paid plans; Rebrandly is built specifically for multi-domain branded link management.
+          </p>
+          <p>
+            For self-hosted implementations, custom domain support requires: a wildcard DNS record pointing to your server, wildcard SSL certificate (Let&apos;s Encrypt supports this with DNS-01 challenge), and a multi-tenant domain routing layer in your application that maps incoming hostnames to link spaces.
+          </p>
+          <p>
+            The DNS configuration involves a CNAME record on the custom domain pointing to your shortener infrastructure. Use our <a href="/blog/dns-records-explained/">DNS records guide</a> if you need a refresher on CNAME vs A record for this setup.
+          </p>
+
+          /* CTA */
+          
+            <h3>Encode and Decode URLs Instantly</h3>
+            <p>Before storing long URLs in a shortener database, make sure they&apos;re properly percent-encoded. Use BytePane&apos;s URL encoder to inspect and fix malformed URLs.</p>
+            <a href="/url-encode-decode/">
+              Open URL Encoder / Decoder
+            </a>
+          
+
+          /* FAQ */
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>Do URL shorteners hurt SEO?</h3>
+              <p>No, when configured correctly. A 301 (permanent) redirect passes approximately 99% of link equity to the destination, per Google&apos;s guidance from 2016. 302 redirects pass zero link equity &mdash; avoid for permanent links. Redirect chains (shortlink → another redirect → destination) lose equity at each hop, so keep it to one redirect step.</p>
+            
+            
+              <h3>What is the difference between 301 and 302 redirects?</h3>
+              <p>301 (Permanent Redirect) is cached by browsers &mdash; subsequent visits skip the shortener server entirely &mdash; and passes full link equity. 302 (Temporary Redirect) checks the server on every click, passes no link equity, and is ideal when the destination URL may change (e.g., A/B testing). Most shorteners use 301 by default for stable links.</p>
+            
+            
+              <h3>Are URL shorteners safe to click?</h3>
+              <p>URL shorteners hide the destination, which bad actors exploit. According to Cofense Intelligence (2024&ndash;2025 data), 28% of campaigns using popular URL shorteners delivered malware. Safe practices: use Bitly&apos;s preview feature (append + to the URL), hover to see URLs in desktop clients, and treat unsolicited shortened links with the same caution as email attachments.</p>
+            
+            
+              <h3>How are short URL slugs generated?</h3>
+              <p>The most common approach is Base62 encoding: an auto-incrementing integer is encoded using 62 characters (a&ndash;z, A&ndash;Z, 0&ndash;9). A 7-character Base62 slug yields 62<sup>7</sup> ≈ 3.5 trillion unique combinations. Alternatives include cryptographically random strings with collision retry, and MD5 hash prefix (collision-prone at scale).</p>
+            
+            
+              <h3>What is the redirect latency of URL shorteners?</h3>
+              <p>Industry-standard p99 target is under 50ms for redirect resolution. Real-world averages are around 300ms (±150ms) depending on geography and cache state. With distributed Redis caching, lookups can be sub-millisecond. 301-cached links (after first visit) resolve instantly in the browser with no additional network round-trip.</p>
+            
+            
+              <h3>Can you build your own URL shortener?</h3>
+              <p>Yes. A basic shortener needs: a database (PostgreSQL or Redis) to store slug → long URL mappings, a Base62 encoder for slug generation, and a redirect handler issuing 301 responses. A minimal Node.js implementation fits under 80 lines. For production, add rate limiting, Safe Browsing API checks, analytics logging, and custom domain support.</p>
+            
+          
+
+          /* Related */
+          <h2>Related Articles</h2>
+          <ul>
+            <li><a href="/blog/http-status-codes/">HTTP Status Codes: Complete Reference Guide (200, 404, 500 &amp; More)</a></li>
+            <li><a href="/blog/url-encoding-guide/">URL Encoding Guide: When &amp; Why to Encode URLs</a></li>
+            <li><a href="/blog/regex-validation-patterns-email-url/">Regex Patterns for API Validation: Email, URL, Phone</a></li>
+            <li><a href="/blog/dns-records-explained/">DNS Records Explained: A, AAAA, CNAME, MX, TXT &amp; More</a></li>
+            <li><a href="/blog/rest-api-best-practices/">REST API Best Practices: Design, Security &amp; Performance</a></li>
+          </ul>
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/url-shortener/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
