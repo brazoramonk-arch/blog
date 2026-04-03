@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Is an API? How APIs Work Explained Simply - BytePane</title>
+  <meta name="description" content="APIs power 83% of all internet traffic. Learn exactly how APIs work, the difference between REST, GraphQL, and gRPC, and why Stripe processes 500M API calls daily.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/what-is-an-api/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; What Is an API? How APIs Work Explained Simply
+  </nav>
+
+  <article>
+    <h1>What Is an API? How APIs Work Explained Simply</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/what-is-an-api/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    GraphQL requires client-side caching libraries like Apollo. REST is simpler to adopt; GraphQL is better for complex data models with diverse client types.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is an API key and how does it work?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'An API key is a unique identifier passed in request headers or query parameters to authenticate the calling application. When you make a request with an API key, the server looks up the key in its database, identifies which account it belongs to, checks permissions, and logs the request for billing and rate limiting. API keys identify the application, not the user. For user authentication, OAuth 2.0 tokens or JWTs are used instead.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is a webhook and how is it different from an API?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A traditional API is pull-based: your application sends a request to a server and waits for a response. A webhook is push-based: the external service sends an HTTP POST to your URL when an event occurs (e.g., a payment completes, a file uploads). Webhooks eliminate polling. Instead of asking "did the payment succeed?" every second, Stripe POSTs to your endpoint the moment the charge is authorized. You configure webhooks by registering your URL with the provider.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do I test an API without writing code?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The most popular tool is Postman, which has 35 million users and lets you send HTTP requests, inspect responses, and set up automated test suites with a GUI. For simple GET requests, your browser\'s address bar works. For command-line testing, curl is universal: curl -H "Authorization: Bearer TOKEN" https://api.example.com/data. Browser DevTools Network tab also shows every API call a web page makes in real time.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is rate limiting in an API?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Rate limiting caps how many API requests a client can make within a time window to prevent abuse and ensure fair usage. For example, the GitHub API allows 5,000 requests per hour for authenticated users. When you exceed the limit, the server returns HTTP 429 Too Many Requests. The response headers typically include X-RateLimit-Limit (total allowed), X-RateLimit-Remaining (remaining), and X-RateLimit-Reset (when the window resets).',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What percentage of internet traffic is API traffic?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'According to Nordic APIs, approximately 83% of all internet traffic is API-based. The Postman 2025 State of the API Report found that 83.2% of developers have adopted some level of API-first approach, and 65% of organizations that generate API revenue now treat APIs as products rather than internal infrastructure.',
+        ,
+      ,
+    ],
+  
+
+  
+    
+      /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'What Is an API? How APIs Work, Types & Real-World Examples',
+            description: 'APIs power 83% of all internet traffic. Learn exactly how APIs work, REST vs GraphQL vs gRPC, and real-world examples from Stripe, Twilio, and Google Maps.',
+            datePublished: '2026-04-03',
+            dateModified: '2026-04-03',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/what-is-an-api/',
+            mainEntityOfPage: 'https://bytepane.com/blog/what-is-an-api/',
+            image: 'https://bytepane.com/og-image.png',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'What Is an API?' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+      />
+
+      /* Breadcrumb */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        What Is an API?
+      
+
+      /* Article Header */
+      
+        <h2>
+          What Is an API? How APIs Work Explained Simply
+        </h2>
+        
+          API
+          <time dateTime="2026-04-03">April 3, 2026</time>
+          16 min read
+        
+      
+
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸An API (Application Programming Interface) is a contract that lets two pieces of software communicate — one side defines what requests it accepts, the other makes those requests.</li>
+            <li>▸83% of all internet traffic is API-based, per Nordic APIs. The API management market is projected to grow from $10 billion in 2025 to $108 billion by 2033 (Precedence Research).</li>
+            <li>▸REST dominates with 83–93% adoption among developers; GraphQL is used by 22.5% and growing fast in enterprise (Postman 2024 State of the API).</li>
+            <li>▸Expedia generates 90% of its revenue via APIs. Salesforce 50%. On average, enterprises derive 31% of revenue from API-enabled services.</li>
+            <li>▸Every API call follows the same pattern: your code sends an HTTP request to a URL with headers and a body; the server processes it and returns a structured response (usually JSON).</li>
+          </ul>
+        
+
+        /* Intro scenario */
+        
+          <p>
+            Picture this: a flight booking app on your phone simultaneously checks availability from Delta, United, and Emirates, processes your credit card through Stripe, sends your confirmation via Twilio SMS, and pins your departure gate on Google Maps — all within a few seconds of pressing "Book." Every single one of those actions is an API call. You never saw the implementation details of any airline's reservation system, Stripe's payment vault, or Google's mapping database. You just called an interface and got a result.
+          </p>
+          <p>
+            That is the core idea behind an API: a defined contract between two pieces of software. The consumer (your app) does not need to know how the provider (Stripe, Google, Delta) works internally. It only needs to know what inputs to send and what outputs to expect.
+          </p>
+          <p>
+            According to Nordic APIs, approximately <strong>83% of all internet traffic is API traffic</strong>. Postman's 2025 State of the API Report — surveying 5,700+ developers across 100+ countries — found that 83.2% of development teams have adopted an API-first approach. APIs are not a feature; they are the architecture of the modern web.
+          </p>
+        
+
+        
+          <h2>The Anatomy of an API Call</h2>
+          <p>
+            Every API interaction involves the same four components regardless of protocol: a <strong>request</strong> from the client, a <strong>URL endpoint</strong> identifying the resource, optional <strong>headers</strong> for metadata and authentication, and a <strong>response</strong> containing the result.
+          </p>
+          <p>
+            <code >`// A real Stripe API call: charge a card
+const response = await fetch('https://api.stripe.com/v1/charges', 
+  method: 'POST',
+  headers: 
+    'Authorization': 'Bearer sk_live_...',   // API key authentication
+    'Content-Type': 'application/x-www-form-urlencoded',
+  ,
+  body: new URLSearchParams(
+    amount: '2000',       // $20.00 in cents
+    currency: 'usd',
+    source: 'tok_visa',   // tokenized card
+    description: 'Order #1234',
+  ),
+);
+
+const charge = await response.json();
+// charge.id = "ch_3MqLiJLkdIwHu7ix0PLkR9Ei"
+// charge.status = "succeeded"
+// charge.amount = 2000`</code>
+          </pre>
+          <p >
+            Stripe's API processes over <strong>500 million API requests daily</strong> from 4.5 million+ active websites. The call above abstracts away PCI compliance, card network communication, fraud scoring, bank authorization, and transaction logging. You send a request; you get a result.
+          </p>
+
+          <h3>Request Structure: The Four Key Parts</h3>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Component</th>
+                  <th >What It Carries</th>
+                  <th >Example</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >HTTP Method</td>
+                  <td >Intent (read/write/delete)</td>
+                  <td >GET, POST, PUT, DELETE, PATCH</td>
+                </tr>
+                <tr >
+                  <td >URL / Endpoint</td>
+                  <td >Which resource to act on</td>
+                  <td >https://api.stripe.com/v1/charges</td>
+                </tr>
+                <tr >
+                  <td >Headers</td>
+                  <td >Auth, content type, cache hints</td>
+                  <td >Authorization: Bearer sk_live_...</td>
+                </tr>
+                <tr>
+                  <td >Body</td>
+                  <td >Data payload (POST/PUT only)</td>
+                  <td >" \"amount\": 2000, \"currency\": \"usd\" "</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The response mirrors this structure: a <a href="/blog/http-status-codes/">status code</a> (200 OK, 404 Not Found, 429 Too Many Requests), response headers, and a body — almost always JSON in modern APIs. Use BytePane's <a href="/json-formatter/">JSON Formatter</a> to inspect and pretty-print API responses during development.
+          </p>
+        
+
+        
+          <h2>A Brief History: From SOAP to REST to GraphQL</h2>
+          <p>
+            APIs are not new. The concept predates the web. But the current era of web APIs began in the early 2000s with two competing approaches.
+          </p>
+          <p>
+            <strong>SOAP (Simple Object Access Protocol)</strong>, introduced by Microsoft in 1998, wrapped all operations in verbose XML envelopes and required a WSDL descriptor file to define the interface. It worked, but it was tedious — writing a SOAP client often meant generating hundreds of lines of boilerplate.
+          </p>
+          <p>
+            In 2000, <strong>Roy Fielding</strong> published his PhD dissertation at UC Irvine: <em>"Architectural Styles and the Design of Network-based Software Architectures."</em> Chapter 5 described REST (Representational State Transfer) — an architectural style that used HTTP methods (GET, POST, PUT, DELETE) and URLs as identifiers for resources. Fielding had co-authored the HTTP 1.0 spec in 1994 and was the primary author of HTTP 1.1. He was describing how the web already worked and formalizing it as a design philosophy.
+          </p>
+          <p>
+            REST won. By 2010, nearly every major consumer API — Twitter, Facebook, GitHub, Stripe — was RESTful. By 2015, JSON had replaced XML as the dominant response format. According to the Postman 2024 State of the API Report (surveying 5,600+ developers), <strong>REST is used by 83–93.4% of API developers</strong> today.
+          </p>
+          <p>
+            In 2015, Facebook open-sourced <strong>GraphQL</strong>, a query language for APIs born from the frustration of maintaining multiple REST endpoints for their mobile apps. GraphQL flips the model: instead of multiple endpoints each returning fixed data, a single endpoint accepts queries where the client specifies exactly what fields it needs.
+          </p>
+          <p>
+            <code >`# REST: 3 round trips to load a user profile page
+GET /api/users/42           → full user object (2 KB)
+GET /api/users/42/posts     → array of posts (8 KB)
+GET /api/users/42/followers → follower count + list (4 KB)
+
+# GraphQL: 1 request, exactly the fields needed (400 bytes)
+query 
+  user(id: "42") 
+    name
+    avatarUrl
+    postCount
+    followerCount
+  
+`</code>
+          </pre>
+          <p >
+            GraphQL adoption has grown significantly: per Postman's 2024 report, <strong>22.5% of developers use GraphQL</strong>, and adoption among Fortune 500 companies surged 340% from 2021 to 2024. For a detailed comparison, see our guide on <a href="/blog/graphql-vs-rest-api/">GraphQL vs REST API</a>.
+          </p>
+        
+
+        
+          <h2>API Protocols: REST, GraphQL, gRPC, and WebSockets</h2>
+          <p>
+            Choosing a protocol is not a religious decision — it is an engineering trade-off based on your data model, client diversity, and performance requirements.
+          </p>
+
+          <h3>REST (Representational State Transfer)</h3>
+          <p>
+            REST maps HTTP verbs to CRUD operations against URL-identified resources. It is stateless (no session memory on the server), cacheable (GET requests work with HTTP caching out of the box), and works with every HTTP client ever built. REST is the right default for most APIs.
+          </p>
+
+          <h3>GraphQL</h3>
+          <p>
+            One endpoint, typed schema, client-driven queries. Eliminates over-fetching and under-fetching. Best for complex data graphs with multiple client types (mobile, web, IoT) that need different data shapes. Adopted by GitHub, Shopify, Twitter, and most large product companies for their internal APIs.
+          </p>
+
+          <h3>gRPC (Google Remote Procedure Call)</h3>
+          <p>
+            Built on HTTP/2 and Protocol Buffers (binary serialization). Roughly 7–10x faster than REST+JSON for the same payload because Protobuf messages are significantly smaller and faster to parse than JSON. The trade-off: no browser support without a proxy layer (grpc-web), and Protobuf schemas add build complexity. Used by Netflix, Uber, and Google for internal microservice communication where throughput matters more than browser compatibility.
+          </p>
+          <p>
+            <code >`// gRPC service definition (.proto file)
+syntax = "proto3";
+
+service UserService 
+  rpc GetUser (UserRequest) returns (UserResponse);
+  rpc ListUsers (ListUsersRequest) returns (stream UserResponse);
+
+message UserRequest 
+  string id = 1;
+
+message UserResponse 
+  string id = 1;
+  string name = 2;
+  string email = 3;
+
+// Benchmark comparison for 1,000 requests (user profile payload):
+// REST + JSON:      ~450ms avg,  ~2.1 KB per response
+// gRPC + Protobuf: ~60ms avg,   ~180 bytes per response`</code>
+          </pre>
+
+          <h3>WebSockets</h3>
+          <p >
+            WebSockets open a persistent, bidirectional connection between client and server. Unlike HTTP (request → response → connection closed), WebSockets stay open. The server can push data to the client at any time without the client polling. Essential for real-time use cases: trading dashboards, collaborative editors (like Figma), live chat, and multiplayer games. For a complete implementation guide, see our <a href="/blog/websockets-guide/">WebSockets tutorial</a>.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Protocol</th>
+                  <th >Transport</th>
+                  <th >Format</th>
+                  <th >Browser</th>
+                  <th >Best For</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >REST</td>
+                  <td >HTTP/1.1+</td>
+                  <td >JSON / XML</td>
+                  <td >Native</td>
+                  <td >CRUD APIs, public APIs</td>
+                </tr>
+                <tr >
+                  <td >GraphQL</td>
+                  <td >HTTP/1.1+</td>
+                  <td >JSON</td>
+                  <td >Native</td>
+                  <td >Complex data, multiple clients</td>
+                </tr>
+                <tr >
+                  <td >gRPC</td>
+                  <td >HTTP/2</td>
+                  <td >Protobuf (binary)</td>
+                  <td >Via proxy</td>
+                  <td >Internal microservices, high throughput</td>
+                </tr>
+                <tr>
+                  <td >WebSockets</td>
+                  <td >TCP (upgrade from HTTP)</td>
+                  <td >Any (text/binary)</td>
+                  <td >Native</td>
+                  <td >Real-time bidirectional</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>How API Authentication Works</h2>
+          <p>
+            Every production API gates access with authentication. The four main mechanisms are API keys, OAuth 2.0, JWT tokens, and mutual TLS (mTLS).
+          </p>
+          <p>
+            <code >`// 1. API Key — simplest, identifies the app (not the user)
+GET /v1/forecast
+Authorization: Bearer api_key_abc123xyz
+
+// 2. OAuth 2.0 — delegates user permissions without sharing passwords
+// Step 1: Redirect user to provider
+GET https://github.com/login/oauth/authorize?client_id=abc&scope=repo
+
+// Step 2: Exchange callback code for access token
+POST https://github.com/login/oauth/access_token
+ code: "returned_code", client_secret: "..." 
+
+// Step 3: Use token
+GET https://api.github.com/user
+Authorization: Bearer gho_16C7e42F292c6912E7710c838347Ae178B4a
+
+// 3. JWT — self-contained token, no server-side session lookup needed
+// Header.Payload.Signature — all verifiable with public key
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI0MiJ9.abc...
+
+// 4. mTLS — both sides present certificates (used in financial/healthcare)
+// Client cert proves client identity; server cert proves server identity`</code>
+          </pre>
+          <p >
+            For a deep dive into each method with security trade-offs, see our guide on <a href="/blog/api-authentication-methods/">API authentication methods</a>. To inspect the contents of a JWT token during development, use BytePane's <a href="/jwt-decoder/">JWT Decoder</a> — it decodes the header and payload in your browser without sending tokens to any server.
+          </p>
+        
+
+        
+          <h2>The Economics of APIs: Why They Are a Business Strategy</h2>
+          <p>
+            APIs are not just technical plumbing. They are revenue channels. The numbers are striking:
+          </p>
+          <ul>
+            <li>
+              90%
+              
+                <p>Expedia's API revenue share</p>
+                <p>Nine out of ten dollars Expedia earns flows through partner APIs — travel agents, booking engines, and comparison sites that consume their inventory via API and pay commissions per booking.</p>
+              
+            </li>
+            <li>
+              60%
+              
+                <p>eBay's revenue from APIs</p>
+                <p>eBay's public API ecosystem lets third-party sellers, price aggregators, and shipping tools integrate directly, generating the majority of eBay's transaction volume.</p>
+              
+            </li>
+            <li>
+              50%
+              
+                <p>Salesforce's API revenue share</p>
+                <p>Half of Salesforce's revenue comes from API integrations — CRM connectors, marketing automation platforms, and custom enterprise integrations built on their REST and SOAP APIs.</p>
+              
+            </li>
+          </ul>
+          <p>
+            The Postman 2025 State of the API Report found that <strong>65% of revenue-generating API organizations now treat APIs as products</strong>, with dedicated teams, versioning, monetization strategies, and developer portals. The API management market is growing from $10 billion in 2025 to a projected $108.61 billion by 2033, per Precedence Research — a 34.7% compound annual growth rate.
+          </p>
+        
+
+        
+          <h2>Real-World API Examples Every Developer Should Know</h2>
+          <p>
+            Abstract concepts click faster with concrete examples. Here are four APIs that collectively power a significant portion of the applications you use daily.
+          </p>
+
+          <h3>Stripe: Payments API</h3>
+          <p>
+            Stripe's REST API processes 500M+ daily requests across 4.5M+ active websites. Its genius is abstraction: you never touch raw card numbers. Instead, you tokenize the card in the browser via Stripe.js (meaning PAN data never hits your server), then pass the token to Stripe's API to charge it. The API handles PCI-DSS compliance, fraud detection, currency conversion, and dispute management.
+          </p>
+
+          <h3>Twilio: Communications API</h3>
+          <p>
+            Twilio exposes telecom infrastructure as a web API. Instead of negotiating with carrier networks, buying SIM card pools, and building SMS routing infrastructure, you POST to <code >https://api.twilio.com/2010-04-01/Accounts/'AccountSid'/Messages</code> with a phone number and body text. Twilio handles carrier negotiation, delivery receipts, and number provisioning for 250,000+ businesses and 10 million+ developers.
+          </p>
+
+          <h3>Google Maps Platform</h3>
+          <p>
+            Google Maps APIs are integrated into 5 million+ active apps weekly, reaching 2.2 billion monthly active users through those apps. The suite includes: Geocoding API (address → coordinates), Directions API (routing), Places API (business data), and Maps JavaScript API (embeddable maps). Each call returns structured JSON — for instance, a coordinates lookup for "1600 Amphitheatre Parkway" returns lat/lng within milliseconds from Google's distributed infrastructure.
+          </p>
+
+          <h3>OpenAI API</h3>
+          <p>
+            The API that accelerated AI adoption in production applications. One POST request to <code >/v1/chat/completions</code> runs GPT-4 on your prompt without managing a single GPU. Per the Postman 2024 report, OpenAI accounts for <strong>78.5% of all AI-related API traffic</strong> on Postman's platform. The AI API market is projected to grow from $48.5 billion in 2024 to $246.87 billion by 2030 (Grand View Research).
+          </p>
+        
+
+        
+          <h2>API Rate Limiting, Versioning, and Status Codes</h2>
+          <p>
+            Three operational realities every API consumer needs to handle:
+          </p>
+
+          <h3>Rate Limiting</h3>
+          <p>
+            APIs cap requests per time window. GitHub allows 5,000 requests/hour for authenticated users. Exceed this and you get HTTP 429. The response headers tell you what you have left:
+          </p>
+          <p>
+            <code >`// Response headers from GitHub API
+X-RateLimit-Limit: 5000          // max per hour
+X-RateLimit-Remaining: 4921      // left in current window
+X-RateLimit-Reset: 1677649638    // Unix timestamp when window resets
+X-RateLimit-Used: 79             // used so far
+
+// Implement exponential backoff when you hit 429
+async function callWithBackoff(fn, maxRetries = 5) 
+  for (let i = 0; i < maxRetries; i++) 
+    try 
+      return await fn();
+     catch (err) 
+      if (err.status !== 429 || i === maxRetries - 1) throw err;
+      await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+    
+  
+`</code>
+          </pre>
+
+          <h3>Versioning</h3>
+          <p >
+            APIs change. Version your API to avoid breaking existing consumers. The three common strategies are URL versioning (<code >/v1/users</code>), header versioning (<code >Accept: application/vnd.api.v2+json</code>), and query parameter versioning (<code >/users?version=2</code>). URL versioning is the most widely used because it is explicit and easy to test in a browser. For best practices, see our <a href="/blog/rest-api-best-practices/">REST API best practices guide</a>.
+          </p>
+
+          <h3>HTTP Status Codes</h3>
+          <p>
+            APIs communicate success and failure through status codes defined in RFC 9110. The ones you will encounter most: <code >200 OK</code> (success), <code >201 Created</code> (resource created), <code >400 Bad Request</code> (your payload is malformed), <code >401 Unauthorized</code> (missing auth), <code >403 Forbidden</code> (authenticated but lacking permission), <code >404 Not Found</code>, <code >429 Too Many Requests</code>, and <code >500 Internal Server Error</code>. Our <a href="/blog/http-status-codes/">HTTP status codes reference</a> covers all 60+ codes with usage guidelines.
+          </p>
+        
+
+        
+          <h2>Webhooks: Push vs Pull</h2>
+          <p>
+            Traditional API calls are <em>pull</em>: your application asks a server "did anything change?" at regular intervals (polling). Webhooks are <em>push</em>: the server notifies your application the moment an event occurs.
+          </p>
+          <p>
+            <code >`// Polling: inefficient, high latency, wastes API quota
+setInterval(async () => 
+  const status = await stripe.charges.retrieve(chargeId);
+  if (status.paid) handlePayment(status); // check every 5 seconds
+, 5000);
+
+// Webhook: Stripe POSTs to your URL when the event happens
+// Express.js webhook handler
+app.post('/webhooks/stripe', express.raw( type: 'application/json' ), (req, res) => 
+  const sig = req.headers['stripe-signature'];
+
+  // Always verify webhook signatures to prevent forgery
+  const event = stripe.webhooks.constructEvent(req.body, sig, process.env.WEBHOOK_SECRET);
+
+  if (event.type === 'payment_intent.succeeded') 
+    const paymentIntent = event.data.object;
+    fulfillOrder(paymentIntent.metadata.orderId);
+  
+
+  res.json( received: true );
+);`</code>
+          </pre>
+          <p >
+            Always verify webhook signatures. Without signature verification, any HTTP client can POST to your webhook endpoint and trigger business logic with forged data. Every major provider (Stripe, GitHub, Twilio) includes a signature in the request headers that you verify against a shared secret.
+          </p>
+        
+
+        
+          <h2>API Documentation: The Make-or-Break Factor</h2>
+          <p>
+            Bad documentation is the top reason developers abandon an API. Postman's 2025 report found that <strong>55% of API teams cite inconsistent documentation as their primary collaboration blocker</strong>.
+          </p>
+          <p>
+            The industry standard for REST API documentation is the <strong>OpenAPI Specification</strong> (formerly Swagger), maintained by the Linux Foundation. An OpenAPI YAML or JSON file describes every endpoint, parameter, response schema, and authentication method in a machine-readable format. Tools like Swagger UI and Redoc render it into interactive documentation. Here is a minimal example:
+          </p>
+          <p>
+            <code >`# openapi.yaml
+openapi: "3.1.0"
+info:
+  title: User API
+  version: "1.0.0"
+paths:
+  /users/id:
+    get:
+      summary: Get user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found`</code>
+          </pre>
+        
+
+        /* FAQ Section */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What does API stand for?',
+                a: 'API stands for Application Programming Interface — a defined contract that lets two pieces of software communicate. One side specifies what inputs it accepts and what outputs it returns; the other side calls it without needing to know the internal implementation.',
+              ,
+              
+                q: 'What is the difference between a REST API and a GraphQL API?',
+                a: 'REST exposes multiple endpoints each returning fixed data structures. GraphQL exposes one endpoint where clients define exactly what fields they need, eliminating over-fetching. REST caches trivially via HTTP; GraphQL requires Apollo or persisted queries. Per Postman 2024, REST is used by 83–93% of developers; GraphQL by 22.5%.',
+              ,
+              
+                q: 'What is an API key and how does it work?',
+                a: 'An API key is a unique identifier you pass in request headers or query parameters to prove your application\'s identity. The server maps the key to your account, checks permissions, and logs the request for rate limiting and billing. API keys identify applications; OAuth tokens and JWTs identify users.',
+              ,
+              
+                q: 'What is a webhook and how is it different from an API?',
+                a: 'A standard API call is pull-based: you ask the server for data. A webhook is push-based: the server calls your URL when an event occurs. Stripe webhooks fire when a payment succeeds. GitHub webhooks fire when a commit is pushed. Webhooks eliminate polling and reduce latency to near-zero.',
+              ,
+              
+                q: 'How do I test an API without writing code?',
+                a: 'Postman (35M+ users) is the most popular GUI tool for sending HTTP requests and inspecting responses. For quick tests, curl works from any terminal: curl -H "Authorization: Bearer TOKEN" https://api.example.com/data. Browser DevTools Network tab shows every API call a page makes in real time.',
+              ,
+              
+                q: 'What is rate limiting in an API?',
+                a: 'Rate limiting caps requests per time window to prevent abuse. GitHub allows 5,000 requests/hour for authenticated users. Exceeding the limit returns HTTP 429 Too Many Requests. Response headers (X-RateLimit-Remaining, X-RateLimit-Reset) tell you how many requests you have left and when the window resets.',
+              ,
+              
+                q: 'What percentage of internet traffic is API traffic?',
+                a: 'Per Nordic APIs, approximately 83% of all internet traffic is API-based. Postman\'s 2025 State of the API Report found 83.2% of developers have adopted an API-first approach, with 65% of revenue-generating organizations treating APIs as products rather than internal infrastructure.',
+              ,
+            ].map(( q, a ) => (
+              <details key=q >
+                <summary >
+                  q
+                  ▾
+                </summary>
+                
+                  a
+                
+              </details>
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Debug Your API Responses with BytePane</h2>
+          <p >
+            Building or consuming APIs? Use BytePane's free developer tools to inspect responses and debug authentication:
+          </p>
+          <ul>
+            <li><a href="/json-formatter/">JSON Formatter</a> — pretty-print and validate API responses instantly</li>
+            <li><a href="/jwt-decoder/">JWT Decoder</a> — inspect token headers, payloads, and expiry without sending to a server</li>
+            <li><a href="/base64-encode-decode/">Base64 Encoder/Decoder</a> — decode Basic Auth headers and binary payloads</li>
+          </ul>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/graphql-vs-rest-api/">
+              <h3>GraphQL vs REST API</h3>
+              <p>When to use GraphQL over REST: data fetching, caching, and trade-offs.</p>
+            </a>
+            <a href="/blog/api-authentication-methods/">
+              <h3>API Authentication Methods</h3>
+              <p>Compare API keys, OAuth 2.0, JWT, and mTLS with security trade-offs.</p>
+            </a>
+            <a href="/blog/http-status-codes/">
+              <h3>HTTP Status Codes Reference</h3>
+              <p>Complete guide to 2xx, 4xx, and 5xx codes with API design guidance.</p>
+            </a>
+            <a href="/blog/websockets-guide/">
+              <h3>WebSockets Guide</h3>
+              <p>Build real-time bidirectional communication in web apps.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/what-is-an-api/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
