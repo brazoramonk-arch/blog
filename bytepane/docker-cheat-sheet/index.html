@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker Cheat Sheet: Essential Commands for Developers (2026) - BytePane</title>
+  <meta name="description" content="Quick reference for the most important Docker commands. Copy-paste ready examples for containers, images, volumes, networks, and Docker Compose in 2026.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/docker-cheat-sheet/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Docker Cheat Sheet: Essential Commands for Developers (2026)
+  </nav>
+
+  <article>
+    <h1>Docker Cheat Sheet: Essential Commands for Developers (2026)</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/docker-cheat-sheet/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    use named volumes for database data that must persist across container replacements.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do multi-stage Docker builds reduce image size?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Multi-stage builds let you use a full SDK image (e.g. node:20) to compile or bundle your app, then COPY --from=builder only the production artifacts into a minimal base image (e.g. node:20-alpine or scratch). The final image contains no compiler toolchain, source files, or dev dependencies. For Go applications using FROM scratch, this can reduce image size from 1GB+ to under 20MB.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What does docker system prune remove?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'docker system prune removes: stopped containers, networks not used by any container, dangling images (untagged layers not referenced by any image), and the build cache. It does NOT remove named volumes or tagged images by default. Adding -a removes all unused images (not just dangling ones), and --volumes adds named volumes to the cleanup. Always run docker system df first to see what will be freed.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'When should I use docker compose instead of Kubernetes?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Docker Compose is the right choice for teams with fewer than 6-7 engineers, single-host deployments, and 1-5 service containers. It starts your entire environment with one command and requires no cluster management expertise. Kubernetes makes sense when you need multi-node scheduling, autoscaling, high availability across zones, or have a dedicated platform team. Per the CNCF 2025 survey, 82% of container users run Kubernetes in production, but this skews heavily toward larger enterprises.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Is Docker Desktop still free in 2026?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Docker Desktop is free for personal use, education, and non-commercial open source. Since the January 2022 licensing change, organizations with 250+ employees OR $10M+ in annual revenue must purchase a paid subscription (Pro at $5/user/month, Team, or Business at $21/user/month). Alternatives like Podman Desktop, Rancher Desktop, and OrbStack remain free for enterprise use.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is BuildKit and should I enable it?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'BuildKit is Docker\'s next-generation build backend, default since Docker Engine 23.0. It builds independent Dockerfile stages in parallel using a DAG, offers more granular layer caching, supports cache mounts (--mount=type=cache), and secrets injection without leaking into layers. Docker Layer Caching with BuildKit can reduce CI build times by 70%+ per Netdata benchmarks. On older Docker versions, enable it with DOCKER_BUILDKIT=1 or use docker buildx build.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Docker Cheat Sheet
+      
+
+      /* Article Header */
+      
+        <h2>
+          Docker Cheat Sheet: Essential Commands for Developers (2026)
+        </h2>
+        
+          Docker
+          <time dateTime="2026-03-29">March 29, 2026</time>
+          20 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Opening: lead with a data-heavy statistic */
+        
+          <p>
+            For the first time in the history of the <strong>Stack Overflow Developer Survey</strong>, Docker ranked as the #1 most-used cloud development tool in 2025 — with <strong>59% of professional developers</strong> reporting regular use, a jump of 17 percentage points year-over-year. The <strong>CNCF 2025 Annual Cloud Native Survey</strong> (15.6 million cloud native developers globally) found that containers are now running in 92% of professional IT environments, up from 80% in 2024.
+          </p>
+          <p>
+            Docker Hub has recorded <strong>318 billion all-time image pulls</strong> — a 145% year-over-year increase — across 7.3 million accounts and 8.3 million container repositories. The number of companies using Docker globally now exceeds 108,000.
+          </p>
+          <p>
+            This reference covers the commands you will actually reach for organized by workflow phase, the flags that matter and why, and the troubleshooting commands that turn black-box containers into debuggable processes. Assumes Docker Engine 23.0+ (BuildKit default) with Compose V2 (<code >docker compose</code> as a plugin — the old <code >docker-compose</code> V1 Python binary reached end-of-life in July 2023).
+          </p>
+        
+
+        /* Key Takeaways Box */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸<strong>Docker is now #1 dev tool</strong> per the 2025 Stack Overflow survey (59% usage, +17pp YoY). Docker Hub hit 318B all-time pulls.</li>
+            <li>▸<strong>BuildKit is default since Docker 23.0</strong> — parallel stage builds and <code >--mount=type=cache</code> can reduce CI build times 70%+.</li>
+            <li>▸<strong>docker init</strong> (GA since Docker Desktop 4.27) generates a production-ready Dockerfile, Compose file, and .dockerignore automatically.</li>
+            <li>▸<strong>docker system df</strong> before <code >docker system prune</code> — know what you are deleting before the nuclear option.</li>
+            <li>▸<strong>Named volumes survive</strong> <code >docker rm</code>; bind mounts do not. Use named volumes for any data that must persist across container replacements.</li>
+          </ul>
+        
+
+        /* Section 1: Container lifecycle */
+        
+          <h2>Container Lifecycle</h2>
+          <p>
+            The most commonly looked-up commands — the day-to-day container start/stop/inspect cycle:
+          </p>
+          <p>
+            <code >`# Run a container (creates + starts in one step)
+docker run nginx:alpine
+
+# Common flags on docker run:
+docker run -d nginx:alpine                  # detached (background)
+docker run -it ubuntu:24.04 bash            # interactive shell
+docker run --rm alpine echo "hello"         # delete on exit (one-offs)
+docker run -p 8080:80 nginx:alpine          # map host:container ports
+docker run -p 127.0.0.1:8080:80 nginx       # bind to localhost only
+docker run -v /host/path:/app/data nginx    # bind mount
+docker run -v myvolume:/app/data nginx      # named volume
+docker run -e NODE_ENV=production myapp     # env variable
+docker run --name my-nginx nginx:alpine     # human-readable name
+docker run --restart unless-stopped nginx   # auto-restart policy
+
+# List containers
+docker ps                    # running containers only
+docker ps -a                 # all containers (including stopped)
+docker ps --format "table .Names\t.Status\t.Ports"
+
+# Stop / start / restart
+docker stop my-nginx         # SIGTERM → waits 10s → SIGKILL
+docker stop -t 30 my-nginx   # custom grace period (30s)
+docker kill my-nginx         # SIGKILL immediately (no grace period)
+docker start my-nginx        # restart a stopped container
+docker restart my-nginx      # stop + start
+
+# Remove containers
+docker rm my-nginx           # must be stopped first
+docker rm -f my-nginx        # force-remove running container
+docker rm $(docker ps -aq)   # remove ALL stopped containers
+docker container prune       # same, with confirmation prompt`</code>
+          </pre>
+
+          <h3>Understanding docker run Flags</h3>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Flag</th>
+                  <th >Full Form</th>
+                  <th >Purpose</th>
+                  <th >When to Use</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >-d</td>
+                  <td >--detach</td>
+                  <td >Run in background; print container ID</td>
+                  <td >Long-running services (web servers, databases)</td>
+                </tr>
+                <tr >
+                  <td >-it</td>
+                  <td >--interactive --tty</td>
+                  <td >Keep STDIN open + allocate pseudo-TTY</td>
+                  <td >Interactive shells, debugging sessions</td>
+                </tr>
+                <tr >
+                  <td >--rm</td>
+                  <td >—</td>
+                  <td >Delete container when it exits</td>
+                  <td >One-off commands, CI steps, scripts</td>
+                </tr>
+                <tr >
+                  <td >-p</td>
+                  <td >--publish</td>
+                  <td >Map host:container port</td>
+                  <td >Exposing services to the host or network</td>
+                </tr>
+                <tr >
+                  <td >-v</td>
+                  <td >--volume</td>
+                  <td >Mount host path or named volume</td>
+                  <td >Persisting data, live code reloading</td>
+                </tr>
+                <tr >
+                  <td >-e</td>
+                  <td >--env</td>
+                  <td >Set environment variable</td>
+                  <td >Config, API keys (use --env-file for many)</td>
+                </tr>
+                <tr>
+                  <td >--name</td>
+                  <td >—</td>
+                  <td >Assign human-readable name</td>
+                  <td >Any container you'll reference by name later</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p >
+            Critical gotcha: <code >-d</code> and <code >-it</code> are mutually contradictory for interactive sessions. Use <code >-it</code> without <code >-d</code> when you need a shell. Use <code >-d</code> for background services you will check on later with <code >docker logs</code>.
+          </p>
+        
+
+        /* Section 2: Images */
+        
+          <h2>Image Management</h2>
+          <p>
+            <code >`# List local images
+docker images
+docker image ls
+docker images --format "table .Repository\t.Tag\t.Size"
+
+# Pull / push
+docker pull nginx:alpine          # from Docker Hub
+docker pull ghcr.io/org/image:tag # from GitHub Container Registry
+docker push myrepo/myimage:latest
+
+# Build
+docker build -t myapp:latest .
+docker build -t myapp:latest -f Dockerfile.prod .   # custom Dockerfile
+docker build --no-cache -t myapp:latest .            # skip cache
+
+# Tag
+docker tag myapp:latest myrepo/myapp:1.0.0
+
+# Remove
+docker rmi nginx:alpine           # by name
+docker rmi abc123def456           # by image ID
+docker image prune                # remove dangling (untagged) images
+docker image prune -a             # remove ALL unused images
+
+# Inspect an image (layers, config, env, entrypoint)
+docker inspect nginx:alpine
+docker history nginx:alpine       # show all layers + sizes`</code>
+          </pre>
+        
+
+        /* Section 3: Building — BuildKit and multi-stage */
+        
+          <h2>Building Images: BuildKit &amp; Multi-Stage Builds</h2>
+          <p >
+            <strong>BuildKit</strong> has been the default build backend since Docker Engine 23.0 (February 2023). Its key advantages: it builds independent Dockerfile stages in parallel using a Directed Acyclic Graph (DAG), and it offers cache mounts that persist across builds without being committed to image layers.
+          </p>
+          <p>
+            According to <strong>Netdata's Docker benchmarks</strong>, enabling Docker Layer Caching with BuildKit in CI/CD pipelines reduces build times by <strong>70% or more</strong> for typical Node.js and Python applications. The pattern is the same in every language: copy the dependency manifest first, install, then copy source code — so the install layer caches until dependencies actually change.
+          </p>
+
+          <h3>Layer Cache Ordering (the most impactful Dockerfile habit)</h3>
+          <p>
+            <code >`# BAD — cache busted on every source code change
+FROM node:20-alpine
+WORKDIR /app
+COPY . .                  # invalidates everything below when ANY file changes
+RUN npm ci
+CMD ["node", "index.js"]
+
+# GOOD — npm ci only reruns when package*.json changes
+FROM node:20-alpine
+WORKDIR /app
+COPY package.json package-lock.json ./   # copy manifests first
+RUN npm ci                               # cached until deps change
+COPY . .                                 # source code last
+CMD ["node", "index.js"]`</code>
+          </pre>
+
+          <h3>Multi-Stage Build (Node.js → Alpine)</h3>
+          <pre >
+            <code >`# Stage 1: full SDK image for building
+FROM node:20 AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Stage 2: minimal runtime image
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+
+# Only copy compiled output + prod dependencies
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package*.json ./
+RUN npm ci --omit=dev
+
+EXPOSE 3000
+CMD ["node", "dist/index.js"]
+
+# Result: ~120MB vs ~1.1GB for the single-stage node:20 image`</code>
+          </pre>
+
+          <h3>BuildKit Cache Mount (persistent across builds)</h3>
+          <pre >
+            <code >`# syntax=docker/dockerfile:1
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+
+# --mount=type=cache keeps the pip cache between builds
+# without the cache ending up inside the image layer
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install -r requirements.txt
+
+COPY . .
+CMD ["python", "app.py"]`</code>
+          </pre>
+
+          <h3>BuildKit Remote Cache (CI/CD)</h3>
+          <pre >
+            <code >`# Push build cache to registry (GitHub Actions / GitLab CI)
+docker buildx build \
+  --cache-from type=registry,ref=myrepo/myimage:cache \
+  --cache-to   type=registry,ref=myrepo/myimage:cache,mode=max \
+  -t myrepo/myimage:latest \
+  --push .
+
+# mode=max caches ALL stages, not just the final image's layers`</code>
+          </pre>
+
+          <h3>docker init — Auto-Generate a Production Dockerfile</h3>
+          <p >
+            Introduced in beta with Docker 23.0 and reaching General Availability in Docker Desktop 4.27, <code >docker init</code> scans your project directory, detects the tech stack (Go, Node.js, Python, Java, Rust, .NET, PHP), and generates a <code >Dockerfile</code>, <code >docker-compose.yml</code>, and <code >.dockerignore</code> with production defaults:
+          </p>
+          <p>
+            <code >`cd my-project
+docker init
+# Interactive: select platform, port, entrypoint
+# Generates: Dockerfile (multi-stage), compose.yaml, .dockerignore`</code>
+          </pre>
+          <p >
+            The generated Dockerfile uses multi-stage builds by default — something most developers skip when writing their first Dockerfile from scratch. It also populates <code >.dockerignore</code> with sensible exclusions (<code >node_modules</code>, <code >.git</code>, test files), which prevents the most common source of unnecessary cache busting.
+          </p>
+        
+
+        /* Section 4: Volumes and Networks */
+        
+          <h2>Volumes and Networks</h2>
+
+          <h3>Volumes</h3>
+          <p>
+            <code >`# Named volumes (Docker-managed, persists across container removal)
+docker volume create mydata
+docker volume ls
+docker volume inspect mydata    # shows mount path: /var/lib/docker/volumes/
+docker volume rm mydata
+docker volume prune             # remove all unused volumes
+
+# Bind mounts (host filesystem — live code reloading in dev)
+docker run -v $(pwd):/app node:20   # current directory → /app
+
+# tmpfs mount (in-memory, not persisted to disk or image)
+docker run --tmpfs /tmp myapp`</code>
+          </pre>
+
+          <h3>Networks</h3>
+          <pre >
+            <code >`# List and create networks
+docker network ls
+docker network create mynet
+docker network create --driver bridge mynet   # default driver
+docker network inspect mynet
+
+# Connect containers to a network
+docker run --network mynet --name api myapp
+docker run --network mynet --name db postgres
+
+# Containers on the same network resolve each other by name:
+# Inside 'api', postgres is reachable at hostname 'db'
+
+# Connect a running container to an additional network
+docker network connect mynet existing-container
+
+# Remove
+docker network rm mynet
+docker network prune     # remove all unused networks`</code>
+          </pre>
+        
+
+        /* Section 5: Docker Compose */
+        
+          <h2>Docker Compose V2 Commands</h2>
+          <p >
+            Compose V2 is written in Go and ships as a Docker CLI plugin (<code >docker compose</code> with a space). The old Python-based <code >docker-compose</code> reached end-of-life July 2023 and was removed from Docker Desktop in 2024. Use <code >docker compose</code> (no hyphen) going forward.
+          </p>
+          <p>
+            <code >`# Start services
+docker compose up             # foreground, streams logs
+docker compose up -d          # detached (background)
+docker compose up --build     # rebuild images before starting
+docker compose up api db      # start only specific services
+
+# Stop / tear down
+docker compose down           # stop + remove containers and networks
+docker compose down -v        # also remove named volumes (⚠️ deletes data)
+docker compose down --rmi all # also remove all images
+
+# View status and logs
+docker compose ps
+docker compose logs           # all services
+docker compose logs -f        # follow/stream
+docker compose logs api       # specific service only
+docker compose logs --tail=50 api
+
+# Run one-off commands
+docker compose run --rm api bash            # interactive shell in service
+docker compose run --rm api npm run migrate # one-off command
+
+# Rebuild and restart a single service
+docker compose build api
+docker compose up -d --no-deps api   # restart api without restarting deps
+
+# Scale a service
+docker compose up -d --scale worker=4
+
+# Config validation
+docker compose config         # validate and print resolved compose.yaml`</code>
+          </pre>
+
+          <h3>Minimal compose.yaml Reference</h3>
+          <pre >
+            <code >`# compose.yaml (preferred filename — docker-compose.yml still works)
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgres://user:pass@db:5432/mydb
+    volumes:
+      - .:/app              # bind mount for live reload
+      - /app/node_modules   # anonymous volume — keeps container's node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: mydb
+    volumes:
+      - pgdata:/var/lib/postgresql/data   # named volume — survives docker compose down
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d mydb"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - backend
+
+volumes:
+  pgdata:
+
+networks:
+  backend:`</code>
+          </pre>
+        
+
+        /* Section 6: System commands */
+        
+          <h2>System Commands and Disk Cleanup</h2>
+          <p >
+            Docker accumulates disk usage quickly. A single active project with several builds can consume 10–15GB. Run <code >docker system df</code> before any prune command — know what you are deleting.
+          </p>
+          <p>
+            <code >`# Check disk usage (containers, images, volumes, build cache)
+docker system df
+docker system df -v          # verbose: breakdown per image/container/volume
+
+# Prune options (from conservative to nuclear)
+docker container prune       # stopped containers only
+docker image prune           # dangling images only (untagged, unreferenced)
+docker image prune -a        # ALL unused images (nothing pointing to them)
+docker volume prune          # unused named volumes
+docker network prune         # unused networks
+docker builder prune         # build cache only
+
+# The nuclear option — reclaim maximum space
+# Removes: stopped containers, unused networks, ALL unused images,
+#          build cache. Does NOT remove named volumes by default.
+docker system prune -a
+
+# Include volumes (careful — deletes database data)
+docker system prune -a --volumes`</code>
+          </pre>
+        
+
+        /* Section 7: Troubleshooting */
+        
+          <h2>Troubleshooting Commands</h2>
+          <p >
+            Containers are black boxes until you know how to see inside them. These commands convert opaque container failures into debuggable processes.
+          </p>
+
+          <h3>docker logs — Reading Output</h3>
+          <p>
+            <code >`docker logs my-container                    # full log output
+docker logs -f my-container                 # follow / stream live
+docker logs --tail 100 my-container         # last 100 lines
+docker logs --timestamps my-container       # RFC3339Nano timestamps
+docker logs --since 1h my-container         # logs from last hour
+docker logs --since 2026-03-29T10:00:00 c  # since specific time`</code>
+          </pre>
+
+          <h3>docker exec — Shell Access</h3>
+          <pre >
+            <code >`docker exec -it my-container bash    # interactive shell (full distro)
+docker exec -it my-container sh      # Alpine / minimal images (no bash)
+
+# Run specific commands without interactive session
+docker exec my-container env                    # list all env vars
+docker exec my-container cat /etc/hosts        # check networking config
+docker exec my-container ls -la /app           # inspect filesystem
+
+# Debug a distroless or minimal container (Docker Desktop only)
+docker debug my-container    # attaches debug sidecar — no shell required in image`</code>
+          </pre>
+
+          <h3>docker inspect — Full Metadata</h3>
+          <pre >
+            <code >`docker inspect my-container        # full JSON: networking, mounts, env, state
+docker inspect my-image            # inspect an image — layers, config, entrypoint
+
+# Filter with --format (Go template) — faster than piping to jq
+docker inspect --format '.State.Status' my-container
+docker inspect --format '.NetworkSettings.IPAddress' my-container
+docker inspect --format 'range .Mounts.Source → .Destination"\n"end' c
+
+# With jq for complex queries
+docker inspect my-container | jq '.[0].State'
+docker inspect my-container | jq '.[0].HostConfig.PortBindings'`</code>
+          </pre>
+
+          <h3>docker stats — Live Resource Monitoring</h3>
+          <pre >
+            <code >`docker stats                          # live CPU/mem/net/IO for all containers
+docker stats my-container             # specific container
+docker stats --no-stream              # single snapshot (scriptable)
+docker stats --format "table .Name\t.CPUPerc\t.MemUsage\t.NetIO"
+
+# Companion commands
+docker top my-container               # running processes inside (like ps aux)
+docker events                         # real-time Docker daemon event stream
+docker events --filter type=container # filter by object type
+docker events --since 30m             # last 30 minutes of events`</code>
+          </pre>
+
+          <h3>Copying Files Out of a Container</h3>
+          <pre >
+            <code >`# Copy a file from a running or stopped container to the host
+docker cp my-container:/app/logs/error.log ./error.log
+
+# Copy a directory
+docker cp my-container:/app/dist ./dist-backup
+
+# Copy from host into container
+docker cp ./config.json my-container:/app/config.json`</code>
+          </pre>
+        
+
+        /* Section 8: Registry operations */
+        
+          <h2>Registry Authentication and Operations</h2>
+          <pre >
+            <code >`# Docker Hub
+docker login
+docker login -u myuser -p mytoken   # non-interactive (CI)
+docker logout
+
+# GitHub Container Registry
+docker login ghcr.io -u USERNAME --password-stdin <<< $GITHUB_TOKEN
+
+# AWS ECR
+aws ecr get-login-password --region us-east-1 \
+  | docker login --username AWS --password-stdin \
+    123456789.dkr.ecr.us-east-1.amazonaws.com
+
+# Tag for a specific registry
+docker tag myapp:latest ghcr.io/myorg/myapp:latest
+docker tag myapp:latest 123456789.dkr.ecr.us-east-1.amazonaws.com/myapp:latest
+
+# Save image to file (for air-gapped environments)
+docker save myapp:latest | gzip > myapp.tar.gz
+
+# Load image from file
+docker load < myapp.tar.gz`</code>
+          </pre>
+        
+
+        /* Section 9: Docker Compose vs Kubernetes */
+        
+          <h2>Docker Compose vs Kubernetes: When to Migrate</h2>
+          <p >
+            Per the <strong>CNCF 2025 Annual Cloud Native Survey</strong>, 82% of container users now run Kubernetes in production — up from 66% in 2023. But this figure skews heavily toward enterprises with dedicated platform teams. The practical decision framework:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Criterion</th>
+                  <th >Docker Compose</th>
+                  <th >Kubernetes</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Team size (infra)</td>
+                  <td >1–6 engineers</td>
+                  <td >Dedicated platform team</td>
+                </tr>
+                <tr >
+                  <td >Host count</td>
+                  <td >Single host</td>
+                  <td >Multi-node required</td>
+                </tr>
+                <tr >
+                  <td >Autoscaling</td>
+                  <td >Manual scale flag</td>
+                  <td >HPA / KEDA built-in</td>
+                </tr>
+                <tr >
+                  <td >Uptime SLA</td>
+                  <td >Best-effort single host</td>
+                  <td >Multi-zone HA</td>
+                </tr>
+                <tr >
+                  <td >Onboarding time</td>
+                  <td >Minutes (one command)</td>
+                  <td >Days to weeks</td>
+                </tr>
+                <tr >
+                  <td >GPU workloads</td>
+                  <td >Possible, manual</td>
+                  <td >CDI-based scheduling (K8s + Docker Engine 29)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The practical rule: start with Docker Compose for dev and production, migrate to Kubernetes when you hit one of three walls — multi-host scheduling requirements, autoscaling needs, or strict multi-zone HA uptime SLAs. The migration is incremental; Compose files can be converted with <code >kompose convert</code> as a starting point.
+          </p>
+          <p>
+            For deeper coverage of Compose patterns for local development including hot reloading, service dependencies, and database initialization, see <a href="/blog/docker-compose-local-dev/">Docker Compose for Local Development</a>.
+          </p>
+        
+
+        /* Section 10: Docker Desktop licensing */
+        
+          <h2>Docker Desktop Licensing (2022 Change — Still Relevant in 2026)</h2>
+          <p>
+            Docker Desktop became a paid product for professional use in <strong>January 2022</strong>. Organizations with <strong>250+ employees or $10M+ in annual revenue</strong> must purchase a subscription. The tiers:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tier</th>
+                  <th >Price</th>
+                  <th >Key Features</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Personal (free)</td>
+                  <td >$0</td>
+                  <td >Individual use, education, non-commercial OSS</td>
+                </tr>
+                <tr >
+                  <td >Pro</td>
+                  <td >$5/user/mo</td>
+                  <td >Single commercial user</td>
+                </tr>
+                <tr >
+                  <td >Team</td>
+                  <td >$9/user/mo</td>
+                  <td >Up to 100 users (raised cap in Oct 2022)</td>
+                </tr>
+                <tr>
+                  <td >Business</td>
+                  <td >$24/user/mo</td>
+                  <td >SAML SSO, centralized management, image access control</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Free alternatives for enterprise environments: <strong>Podman Desktop</strong> (Red Hat, free, rootless by default), <strong>Rancher Desktop</strong> (SUSE, free, supports containerd or moby), and <strong>OrbStack</strong> (macOS, fast alternative). Docker Engine itself — the CLI and daemon without the GUI — remains Apache 2.0 licensed and free on Linux.
+          </p>
+        
+
+        /* FAQ Section */
+        
+          <h2>FAQ</h2>
+          
+            [
+              
+                q: 'What is the difference between docker stop and docker kill?',
+                a: 'docker stop sends SIGTERM to PID 1, giving the process up to 10 seconds (configurable with -t) to shut down cleanly. If it does not exit in time, Docker sends SIGKILL. docker kill sends SIGKILL immediately with no grace period. Always prefer docker stop for databases and message brokers — abrupt SIGKILL can corrupt write-ahead logs and uncommitted transactions.',
+              ,
+              
+                q: 'What is the difference between a bind mount and a named volume?',
+                a: 'A bind mount (-v /host/path:/container/path) maps a specific host directory — changes are visible on both sides instantly, useful for live code reloading in development. A named volume (-v myvolume:/container/path) is managed by Docker in /var/lib/docker/volumes/, survives docker rm, and is not host-path-dependent. Use named volumes for database data that must persist across container replacements.',
+              ,
+              
+                q: 'How do multi-stage builds reduce image size?',
+                a: 'Multi-stage builds let you compile or bundle in a full SDK image, then COPY --from=builder only the production artifacts into a minimal base (alpine, distroless, or scratch). The final image contains no compiler, source files, or dev dependencies. A Node.js app goes from ~1.1GB (node:20) to ~120MB (node:20-alpine). A compiled Go binary using FROM scratch can be under 20MB.',
+              ,
+              
+                q: 'What does docker system prune remove?',
+                a: 'By default: stopped containers, networks not used by any container, dangling images (untagged, not referenced), and the build cache. It does NOT remove named volumes or tagged images unless you add -a (all unused images) and --volumes. Always run docker system df first to see breakdown by category before running prune.',
+              ,
+              
+                q: 'When should I use Docker Compose instead of Kubernetes?',
+                a: 'Docker Compose is the right choice for teams under 6-7 engineers, single-host deployments with 1-5 services, and projects where developer onboarding speed is the priority. Kubernetes makes sense when you need multi-node scheduling, autoscaling (HPA/KEDA), multi-zone HA, or GPU workload scheduling. Per CNCF 2025, 82% of container users run Kubernetes in production — but that skews heavily toward enterprises with dedicated platform teams.',
+              ,
+              
+                q: 'Is Docker Desktop still free in 2026?',
+                a: 'Free for personal use, education, and non-commercial open source. Since January 2022, commercial use by organizations with 250+ employees or $10M+ revenue requires a paid subscription (Pro $5/user/mo, Team $9/user/mo, Business $24/user/mo). Docker Engine (the daemon + CLI, no GUI) remains Apache 2.0 licensed and fully free on Linux for all use cases.',
+              ,
+              
+                q: 'What is BuildKit and should I enable it?',
+                a: 'BuildKit is the default build backend since Docker Engine 23.0. It builds independent Dockerfile stages in parallel, offers cache mounts that persist across builds without being committed to layers, and supports secrets injection without leaking into the image. Netdata benchmarks show BuildKit layer caching can reduce CI build times by 70%+. On Docker 23.0+, it is already active — use docker buildx build to access full BuildKit features including multi-platform builds.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Related Developer References</h2>
+          <p>
+            Container workflows often involve environment variables, JSON config files, and SSH keys. BytePane covers the full stack.
+          </p>
+          
+            <a href="/blog/environment-variables-guide/">
+              Environment Variables Guide
+            </a>
+            <a href="/blog/ssh-keys-guide/">
+              SSH Keys Guide →
+            </a>
+            <a href="/blog/git-cheat-sheet/">
+              Git Cheat Sheet →
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/docker-cheat-sheet/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
