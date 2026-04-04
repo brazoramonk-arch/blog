@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pay Raise Calculator: See How a Raise Affects Your Paycheck - Salario</title>
+  <meta name="description" content="A 5% raise rarely means 5% more take-home pay. See the real net impact of your salary increase using 2026 federal tax brackets, FICA rates, and state tax data.">
+  <link rel="canonical" href="https://www.salario.io/blog/pay-raise-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/salario/">Salario</a> &rarr; Pay Raise Calculator: See How a Raise Affects Your Paycheck
+  </nav>
+
+  <article>
+    <h1>Pay Raise Calculator: See How a Raise Affects Your Paycheck</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.salario.io/blog/pay-raise-calculator/">salario.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    your actual take-home depends on filing status, deductions, and your specific state.</p>
+
+            
+              <table style= width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' >
+                <thead>
+                  <tr style= backgroundColor: '#f0fdf4' >
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'left', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Current Salary</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Federal Bracket</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >FICA + Tax Lost</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Net Annual Gain</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Per Biweekly Check</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  [
+                     salary: '$35,000', bracket: '12%', lost: '~$1,725', net: '~$3,275', check: '~$126', bg: false ,
+                     salary: '$50,000', bracket: '22%', lost: '~$1,983', net: '~$3,017', check: '~$116', bg: true ,
+                     salary: '$65,000', bracket: '22%', lost: '~$1,983', net: '~$3,017', check: '~$116', bg: false ,
+                     salary: '$85,000', bracket: '22%', lost: '~$1,983', net: '~$3,017', check: '~$116', bg: true ,
+                     salary: '$110,000', bracket: '24%', lost: '~$2,083', net: '~$2,917', check: '~$112', bg: false ,
+                     salary: '$150,000', bracket: '24%', lost: '~$2,083', net: '~$2,917', check: '~$112', bg: true ,
+                     salary: '$200,000', bracket: '32%', lost: '~$2,483', net: '~$2,517', check: '~$97', bg: false ,
+                  ].map((row) => (
+                    <tr key=row.salary style= backgroundColor: row.bg ? '#f9fafb' : 'transparent' >
+                      <td style= padding: '0.5rem 0.75rem', borderBottom: '1px solid #f3f4f6', fontWeight: 600 >row.salary</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6' >row.bracket</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6', color: '#ef4444' >row.lost</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6', fontWeight: 600, color: '#10b981' >row.net</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6', fontWeight: 600 >row.check</td>
+                    </tr>
+                  ))
+                </tbody>
+              </table>
+            
+            <p>Assumes single filer, 4.5% state income tax, no changes to pre-tax deductions. FICA applied at 7.65% to full raise amount. For exact figures, use our <a href="/paycheck-calculator/">paycheck calculator</a>.</p>
+            <p>Notice the jump at $110,000: crossing from the 22% to 24% bracket reduces the net take-home on a $5,000 raise by about $100 annually. This is the real cost of bracket creep — significant but not catastrophic. The often-heard fear that a raise will cost more in taxes than it earns is mathematically impossible under a marginal rate system.</p>
+          
+
+          
+            <h2>What Is a Good Pay Raise in 2025 and 2026?</h2>
+            <p>Several compensation research organizations track employer pay budgets and actual raises annually. Here is where the 2025 and 2026 data lands:</p>
+
+            
+              <table style= width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' >
+                <thead>
+                  <tr style= backgroundColor: '#f0fdf4' >
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'left', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Source</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >2025 Actual</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >2026 Forecast</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'left', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  [
+                     source: 'Bureau of Labor Statistics', y25: '3.3%', y26: 'N/A', notes: 'Wages/salaries, 12 mo. to Dec 2025', bg: false ,
+                     source: 'ADP (job-stayers)', y25: '4.4–4.5%', y26: 'Trending ~4%', notes: '26M private workers; payroll data', bg: true ,
+                     source: 'ADP (job-changers)', y25: '6.3–6.6%', y26: 'Narrowing premium', notes: 'Gap vs stayers at 4-year low', bg: false ,
+                     source: 'Payscale Salary Budget Survey', y25: '3.6%', y26: '3.5%', notes: '85% of employees received a raise', bg: true ,
+                     source: 'Mercer', y25: '3.7%', y26: '3.5%', notes: 'Merit + COLA combined', bg: false ,
+                     source: 'WorldatWork', y25: '3.8%', y26: '3.6%', notes: 'Total comp including promo', bg: true ,
+                     source: 'The Conference Board', y25: '3.9%', y26: '3.5%', notes: 'Base pay budgets', bg: false ,
+                  ].map((row) => (
+                    <tr key=row.source style= backgroundColor: row.bg ? '#f9fafb' : 'transparent' >
+                      <td style= padding: '0.5rem 0.75rem', borderBottom: '1px solid #f3f4f6', fontWeight: 500 >row.source</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6', fontWeight: 600 >row.y25</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6' >row.y26</td>
+                      <td style= padding: '0.5rem 0.75rem', borderBottom: '1px solid #f3f4f6', color: '#6b7280', fontSize: '0.75rem' >row.notes</td>
+                    </tr>
+                  ))
+                </tbody>
+              </table>
+            
+
+            <p>Practically speaking, a raise that beats inflation preserves real purchasing power; a raise that exceeds inflation actually improves your standard of living. The Social Security COLA for 2026 was set at 2.8%, based on the Consumer Price Index for Urban Wage Earners (CPI-W). An employer raise of 3.5% beats COLA by 0.7 percentage points — modest real gains, but gains nonetheless.</p>
+            <p>If you received less than 2.8% in 2025, your real purchasing power declined even if your paycheck number went up. Use the <a href="/blog/inflation-salary-purchasing-power/">inflation and salary purchasing power guide</a> to calculate the real value of your compensation over time.</p>
+          
+
+          
+            <h2>Merit Raise vs. COLA Raise: The Distinction That Matters</h2>
+            <p>Most compensation professionals distinguish between two types of base pay increases, and understanding which one you received changes how you should think about your take-home math.</p>
+
+            
+              
+                <h3>Cost-of-Living Adjustment (COLA)</h3>
+                <ul>
+                  <li>Applied uniformly to all employees</li>
+                  <li>Tied to external inflation index (CPI)</li>
+                  <li>Does not reflect individual performance</li>
+                  <li>2026 Social Security COLA: 2.8%</li>
+                  <li>Private employer COLA: typically 2–3%</li>
+                  <li>A COLA equal to inflation = zero real raise</li>
+                </ul>
+              
+              
+                <h3>Merit Raise</h3>
+                <ul>
+                  <li>Based on individual performance rating</li>
+                  <li>Distributed unequally from a fixed budget</li>
+                  <li>Top performers: 5–6% (2025 Payscale data)</li>
+                  <li>Average performers: 2–3%</li>
+                  <li>Low performers: 0% or minimal</li>
+                  <li>Compounds into future raises and benefits</li>
+                </ul>
+              
+            
+
+            <p>According to Payscale&apos;s 10th Annual Salary Budget Survey, 85% of US employees received some form of base pay increase in 2025, up from 83% in 2024. However, averages hide the distribution: many employers operate a performance-differentiated merit matrix where the top 15% of performers receive raises 2.5 times larger than the bottom 40%.</p>
+            <p>The compounding impact of a higher merit raise is substantial. A single extra percentage point in an annual raise compounds into dramatically higher lifetime earnings. Our <a href="/blog/raise-vs-bonus-tax-impact/">raise vs. bonus comparison guide</a> walks through the math of how a merit increase compounds versus a one-time bonus payment.</p>
+          
+
+          
+            <h2>How to Calculate Your Net Raise: Step-by-Step</h2>
+            <p>HR professionals and compensation analysts use a consistent seven-step process to estimate the net take-home impact of a raise. You can run this calculation yourself before your new salary takes effect.</p>
+
+            
+              [
+                 step: '1', title: 'Identify Your Gross Annual Raise', desc: 'New salary minus current salary. Example: $68,000 − $63,000 = $5,000 gross raise.' ,
+                 step: '2', title: 'Subtract FICA Taxes', desc: 'Multiply the raise by 7.65% (Social Security 6.2% + Medicare 1.45%). $5,000 × 0.0765 = $383 in FICA taxes.' ,
+                 step: '3', title: 'Find Your Marginal Federal Bracket', desc: 'Subtract the standard deduction from your new gross salary, then locate where your taxable income falls on the 2025 bracket table.' ,
+                 step: '4', title: 'Calculate Federal Income Tax on the Raise', desc: 'Apply your marginal rate to the raise amount (or split if it crosses brackets). In 22% bracket: $5,000 × 0.22 = $1,100.' ,
+                 step: '5', title: 'Apply State Income Tax', desc: 'Multiply the raise by your state\'s marginal rate. Varies from 0% (TX, FL) to 9.3%+ (CA). At 4.5%: $5,000 × 0.045 = $225.' ,
+                 step: '6', title: 'Account for Pre-Tax Deduction Changes', desc: 'If you increase 401(k) or HSA contributions, those reduce your taxable base — partially offsetting taxes. Subtract these from your gross raise before step 4.' ,
+                 step: '7', title: 'Calculate Net Annual and Per-Paycheck Increase', desc: 'Subtract all taxes from the gross raise. Divide by 26 for biweekly, 24 for semimonthly. Example: ($5,000 − $383 − $1,100 − $225) ÷ 26 = $126 per biweekly paycheck.' ,
+              ].map((item) => (
+                
+                  item.step
+                  
+                    <p>item.title</p>
+                    <p>item.desc</p>
+                  
+                
+              ))
+            
+
+            <p>Running this calculation manually is useful once, but the variables (state tax, filing status, deductions) make it tedious for different scenarios. The <a href="/raise-calculator/">Salario raise calculator</a> handles all seven steps automatically — enter your current salary, new salary, state, and filing status to get the exact per-paycheck change.</p>
+          
+
+          
+            <h2>Raise Frequency and Biweekly vs. Semimonthly Paycheck Impact</h2>
+            <p>How your employer runs payroll affects when your raise appears and how large each payment looks. This distinction trips up many employees who expect their first raised paycheck immediately after an effective date.</p>
+            <p>On a <strong>biweekly schedule</strong> (26 pay periods per year), a $5,000 raise adds $192.31 gross per paycheck ($5,000 ÷ 26). After taxes in the 22% bracket with 4.5% state tax, the net increase per check is approximately $126.</p>
+            <p>On a <strong>semimonthly schedule</strong> (24 pay periods per year), the same $5,000 raise adds $208.33 gross per paycheck ($5,000 ÷ 24). Net after taxes: approximately $136 per semimonthly check. The annual net is identical — the only difference is how it is distributed.</p>
+            <p>Our <a href="/blog/biweekly-vs-semimonthly-pay/">biweekly vs. semimonthly pay guide</a> explains how payroll schedules affect budgeting and when you actually receive your first raised paycheck depending on your company&apos;s payroll processing cycle.</p>
+          
+
+          
+            <h2>The Smart Move After a Raise: Adjusting Pre-Tax Contributions</h2>
+            <p>The most overlooked opportunity after a raise is using the increased gross pay to maximize pre-tax benefits before the IRS gets its share. This is standard practice in compensation planning and can improve your long-term financial position significantly.</p>
+
+            
+              <h3>Example: $5,000 Raise with 401(k) Optimization</h3>
+              
+                
+                  Gross raise
+                  $5,000/year
+                
+                
+                  Strategy A: Take full raise as take-home
+                  Net ~$3,017 after FICA + 22% federal + 4.5% state
+                
+                
+                  Strategy B: Redirect $2,000 to traditional 401(k)
+                  Net take-home increase: ~$2,227 (saves $790 in taxes)
+                
+                
+                  Net advantage of Strategy B
+                  $2,000 in retirement + $2,227 take-home vs. $3,017 take-home alone
+                
+              
+            
+
+            <p>Strategy B puts $2,000 into retirement at a net cost of only $790 in forgone take-home. If your employer matches 4% of salary, a $5,000 raise from $60,000 to $65,000 also increases your annual employer match from $2,400 to $2,600 — a free $200 increase. Over 20 years at 7% investment growth, that $200 per year compounds to approximately $8,800 in additional retirement savings.</p>
+            <p>The 2025 401(k) contribution limit is $23,500 ($31,000 if over age 50). HSA contribution limits are $4,300 for self-only coverage and $8,550 for family coverage. Both reduce taxable income dollar-for-dollar. For more on maximizing pre-tax deductions, see our <a href="/blog/paycheck-deductions-explained/">complete guide to paycheck deductions</a>.</p>
+          
+
+          
+            <h2>How Raises Affect Benefits Beyond Your Paycheck</h2>
+            <p>A salary increase does not only affect your paycheck — it cascades through several compensation dimensions that most employees never calculate.</p>
+            
+              
+                <p>Employer 401(k) Match</p>
+                <p>Most matches are a percentage of salary. A 4% match on $65,000 vs. $60,000 = $200 more in free money annually, plus any investment growth on that amount.</p>
+              
+              
+                <p>Social Security Benefits</p>
+                <p>Your future Social Security benefit is calculated from your highest 35 years of earnings. Higher salary now means higher Social Security income in retirement, compounded over decades of FICA contributions.</p>
+              
+              
+                <p>Life and Disability Insurance</p>
+                <p>Many employer-provided life and long-term disability policies are expressed as a multiple of salary (e.g., 2x annual salary). A higher base automatically increases your coverage at no additional premium cost.</p>
+              
+              
+                <p>Future Raises and Bonus Calculations</p>
+                <p>Percentage-based merit raises and performance bonuses compound from a higher starting point. A 4% raise on $65,000 adds $2,600; the same 4% on $60,000 added only $2,400. The gap widens every cycle.</p>
+              
+            
+          
+
+          
+            <h2>Pay Raise by Industry: Are You Getting a Fair Increase?</h2>
+            <p>Not all industries raise salaries at the same rate. Mercer and WorldatWork compensation surveys track sector-specific raise budgets, which is the appropriate comparison benchmark for evaluating whether your raise is competitive.</p>
+
+            
+              <table style= width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' >
+                <thead>
+                  <tr style= backgroundColor: '#f0fdf4' >
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'left', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Industry</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Merit Increase 2025</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Total Raise Budget 2025</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >vs. Inflation (2.5%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  [
+                     industry: 'Technology', merit: '3.5%', total: '3.8%', vs: '+1.3%', bg: false ,
+                     industry: 'Financial Services / Insurance', merit: 'N/A', total: '3.7–3.8%', vs: '+1.2%', bg: true ,
+                     industry: 'Engineering & Science', merit: 'N/A', total: '~4.2%', vs: '+1.7%', bg: false ,
+                     industry: 'Government / Public Sector', merit: 'N/A', total: '~4.5%', vs: '+2.0%', bg: true ,
+                     industry: 'Healthcare Services', merit: '2.8–3.0%', total: '2.9–3.5%', vs: '+0.4%', bg: false ,
+                     industry: 'Education', merit: 'N/A', total: '~3.1%', vs: '+0.6%', bg: true ,
+                     industry: 'Retail / Customer Service', merit: 'N/A', total: '~3.1%', vs: '+0.6%', bg: false ,
+                  ].map((row) => (
+                    <tr key=row.industry style= backgroundColor: row.bg ? '#f9fafb' : 'transparent' >
+                      <td style= padding: '0.5rem 0.75rem', borderBottom: '1px solid #f3f4f6', fontWeight: 500 >row.industry</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6' >row.merit</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6', fontWeight: 600 >row.total</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6', color: '#10b981', fontWeight: 600 >row.vs</td>
+                    </tr>
+                  ))
+                </tbody>
+              </table>
+            
+            <p>Source: Mercer, WorldatWork, Conference Board 2025 salary budget surveys. COLA reference: 2025 Social Security COLA of 2.5%.</p>
+
+            <p>If your raise fell below your industry average, you have data to support a negotiation conversation. Our <a href="/blog/how-to-negotiate-salary/">salary negotiation guide</a> includes exact scripts for requesting a market-rate adjustment between annual review cycles.</p>
+          
+
+          
+            <h2>State-by-State Impact: The Hidden Cost of Where You Live</h2>
+            <p>The same gross raise produces very different net results depending on your state. Here is how a $5,000 raise nets out in seven representative states for a single filer in the 22% federal bracket:</p>
+
+            
+              <table style= width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' >
+                <thead>
+                  <tr style= backgroundColor: '#f0fdf4' >
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'left', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >State</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >State Income Tax Rate</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >State Tax on $5K Raise</th>
+                    <th style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '2px solid #e5e7eb', fontWeight: 600 >Net Annual Raise</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  [
+                     state: 'Texas / Florida / Nevada', rate: '0%', tax: '$0', net: '~$3,292', bg: false ,
+                     state: 'Illinois', rate: '4.95%', tax: '$248', net: '~$3,044', bg: true ,
+                     state: 'New York (state only)', rate: '6.85%', tax: '$343', net: '~$2,950', bg: false ,
+                     state: 'Georgia', rate: '5.49%', tax: '$275', net: '~$3,018', bg: true ,
+                     state: 'Colorado', rate: '4.4%', tax: '$220', net: '~$3,072', bg: false ,
+                     state: 'Minnesota', rate: '6.8%', tax: '$340', net: '~$2,953', bg: true ,
+                     state: 'California', rate: '9.3%', tax: '$465', net: '~$2,828', bg: false ,
+                  ].map((row) => (
+                    <tr key=row.state style= backgroundColor: row.bg ? '#f9fafb' : 'transparent' >
+                      <td style= padding: '0.5rem 0.75rem', borderBottom: '1px solid #f3f4f6', fontWeight: 500 >row.state</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6' >row.rate</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6', color: '#ef4444' >row.tax</td>
+                      <td style= padding: '0.5rem 0.75rem', textAlign: 'right', borderBottom: '1px solid #f3f4f6', fontWeight: 600, color: '#10b981' >row.net</td>
+                    </tr>
+                  ))
+                </tbody>
+              </table>
+            
+            <p>A Texas worker pockets $464 more per year from the same $5,000 raise than a California worker. Over a 30-year career, assuming 3% annual raise growth, that state tax difference on raises alone compounds into a substantial wealth gap. See our <a href="/blog/state-income-tax-comparison/">state income tax comparison</a> for a full breakdown by state.</p>
+          
+
+          
+            <h2>Frequently Asked Questions</h2>
+            
+              faqSchema.mainEntity.map((faq) => (
+                
+                  <h3>faq.name</h3>
+                  <p>faq.acceptedAnswer.text</p>
+                
+              ))
+            
+          
+
+        
+
+        
+          <h2>Calculate Your Exact Net Raise</h2>
+          <p>Enter your current salary, new salary, state, and filing status to see the precise per-paycheck impact — including federal tax, FICA, and state income tax.</p>
+          <a href="/raise-calculator/">Open Raise Calculator</a>
+        
+
+        <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+        <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+        <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.salario.io/blog/pay-raise-calculator/">Salario</a>.
+      Explore more free tools at <a href="https://www.salario.io/">salario.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.salario.io/">Salario</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
