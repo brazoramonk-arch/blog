@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to Base64 Converter: Encode Images to Base64 Online - BytePane</title>
+  <meta name="description" content="Image to Base64 Converter: Encode Images to Base64 Online">
+  <link rel="canonical" href="https://www.bytepane.com/blog/image-to-base64/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Image to Base64 Converter: Encode Images to Base64 Online
+  </nav>
+
+  <article>
+    <h1>Image to Base64 Converter: Encode Images to Base64 Online</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/image-to-base64/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Image to Base64 Converter
+      
+
+      /* Header */
+      
+        <h2>
+          Image to Base64 Converter: Encode Images to Base64 Online
+        </h2>
+        
+          Encoding
+          <time dateTime="2026-04-06">April 6, 2026</time>
+          13 min read
+        
+      
+
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸Base64 encoding inflates every image by exactly 33.33% — a mathematical constant derived from encoding 3 bytes as 4 ASCII characters per RFC 4648.</li>
+            <li>▸A Catchpoint study found data URIs are <strong>6× slower than external image links on mobile</strong>, with 10.27× slower first paint in real-user measurement across hundreds of thousands of page views.</li>
+            <li>▸Base64 images are the right choice in exactly three cases: email templates with blocked external URLs, single-use icons under ~500 bytes, and binary-in-text transport (API payloads, config files).</li>
+            <li>▸For SVGs specifically, URL-encoding the raw SVG markup produces shorter output than Base64 because SVG is already text — Base64 is the wrong tool for SVG in most cases.</li>
+            <li>▸BytePane's <a href="/base64-image-encoder/">Image to Base64 tool</a> encodes entirely in-browser via the FileReader API — no image data is transmitted to any server.</li>
+          </ul>
+        
+
+        /* Opening: problem-solution framework */
+        
+          <p>
+            The question I see most often from developers discovering Base64 image encoding: <em>"Can I just embed all my images as Base64 and eliminate all those HTTP requests?"</em>
+          </p>
+          <p>
+            The answer is technically yes, but practically no — and understanding <em>why</em> is what separates developers who reach for Base64 when it genuinely helps from those who reach for it and regress their performance metrics.
+          </p>
+          <p>
+            This guide covers how the Base64 encoding algorithm works at the byte level, how to produce a correct data URI for every image format, the specific situations where Base64 is the right tool, the performance data from real measurements (not speculation), and how to convert images to Base64 in JavaScript, Python, and the command line.
+          </p>
+        
+
+        /* How Base64 works */
+        
+          <h2>How Base64 Encoding Works at the Byte Level</h2>
+          <p>
+            Base64 is defined in RFC 4648. The algorithm takes binary input and converts it to a 64-character ASCII alphabet (A–Z, a–z, 0–9, +, /) that is safe to transmit through any text-based system — HTTP headers, JSON strings, XML attributes, email bodies.
+          </p>
+          <p>
+            The encoding process works in fixed chunks:
+          </p>
+          <ol>
+            <li>Take 3 bytes (24 bits) of input</li>
+            <li>Split into four 6-bit groups</li>
+            <li>Map each 6-bit value (0–63) to a character in the Base64 alphabet</li>
+            <li>If input is not a multiple of 3 bytes, pad with one or two <code >=</code> characters</li>
+          </ol>
+          <p>
+            <code >`Input bytes:  M        a        n
+Binary:       01001101 01100001 01101110
+Split 6-bit:  010011 010110 000101 101110
+Decimal:      19     22     5      46
+Base64 chars: T      W      F      u
+Result:       "TWFu"
+
+-- The 33% overhead is mathematically fixed:
+-- 3 input bytes → 4 output characters
+-- 4/3 = 1.333... → exactly 33.33% increase
+-- A 1,000,000 byte (1MB) image → 1,333,333 Base64 chars`</code>
+          </pre>
+          <p >
+            The padding character <code >=</code> ensures the output length is always a multiple of 4. One trailing <code >=</code> means the last group had 2 input bytes; two trailing <code >==</code> means 1 input byte.
+          </p>
+          <p>
+            RFC 4648 also defines Base64url — a URL-safe variant that replaces <code >+</code> with <code >-</code> and <code >/</code> with <code >_</code>, used in JWTs, OAuth tokens, and URL parameters. For image data URIs, use standard Base64 (with <code >+</code> and <code >/</code>).
+          </p>
+          <p>
+            For a deeper dive into the full Base64 algorithm, the <a href="/blog/base64-encoding-explained/">Base64 Encoding Explained</a> article covers text encoding in detail, including URL-safe variants and MIME line-length constraints.
+          </p>
+        
+
+        /* Data URI format */
+        
+          <h2>The Data URI Format (RFC 2397)</h2>
+          <p>
+            A data URI packages a Base64-encoded image with its MIME type into a self-contained URL string. The format, defined in RFC 2397, is:
+          </p>
+          <p>
+            <code >`data:[<mediatype>][;base64],<data>
+
+-- Examples by image format:
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...
+data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABI...
+data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAA...
+data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACw...
+data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDov...
+data:image/vnd.microsoft.icon;base64,AAABAAEAEBAAAAEAIABoBAAAFg...`</code>
+          </pre>
+          <p >
+            The MIME type tells the browser what format decoder to use on the raw bytes. MDN Web Docs documents the complete list of image MIME types — the most common ones for web use are <code >image/png</code>, <code >image/jpeg</code>, <code >image/webp</code>, and <code >image/svg+xml</code>.
+          </p>
+
+          /* MIME type table */
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Format</th>
+                  <th >MIME Type</th>
+                  <th >Extension</th>
+                  <th >Best Use Case</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >PNG</td><td >image/png</td><td >.png</td><td >Lossless, transparency, screenshots</td></tr>
+                <tr ><td >JPEG</td><td >image/jpeg</td><td >.jpg, .jpeg</td><td >Photos, lossy compression</td></tr>
+                <tr ><td >WebP</td><td >image/webp</td><td >.webp</td><td >Modern lossless/lossy, smaller than PNG/JPEG</td></tr>
+                <tr ><td >GIF</td><td >image/gif</td><td >.gif</td><td >Animation (prefer WebP for modern browsers)</td></tr>
+                <tr ><td >SVG</td><td >image/svg+xml</td><td >.svg</td><td >Vector graphics, icons (prefer inline or URL-encoded)</td></tr>
+                <tr><td >ICO</td><td >image/vnd.microsoft.icon</td><td >.ico</td><td >Favicons (rarely Base64'd)</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        /* How to convert */
+        
+          <h2>Converting Images to Base64: JavaScript, Python, Node.js, and CLI</h2>
+          <p>
+            For quick conversions, use BytePane's <a href="/base64-image-encoder/">Image to Base64 Encoder</a> — it runs entirely in-browser with no file upload. For programmatic conversion, here are the patterns in each major environment.
+          </p>
+
+          <h3>Browser: FileReader API</h3>
+          <p>
+            The FileReader API converts a <code >File</code> object to a Base64 data URI. This is what browser-based converters use — no server involved.
+          </p>
+          <p>
+            <code >`// Convert File object to Base64 data URI (browser)
+function imageToBase64(file: File): Promise<string> 
+  return new Promise((resolve, reject) => 
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file); // Returns full data URI including MIME type
+  );
+
+// Usage with an <input type="file"> element
+const input = document.querySelector<HTMLInputElement>('input[type="file"]')!;
+input.addEventListener('change', async () => 
+  const file = input.files?.[0];
+  if (!file) return;
+
+  const dataUri = await imageToBase64(file);
+  // dataUri = "data:image/png;base64,iVBORw0KGgo..."
+
+  // Use as img src
+  const img = document.createElement('img');
+  img.src = dataUri;
+  document.body.appendChild(img);
+
+  // Or just the Base64 string without the prefix
+  const base64Only = dataUri.split(',')[1];
+  console.log(base64Only); // "iVBORw0KGgo..."
+);`</code>
+          </pre>
+
+          <h3>Node.js: fs.readFileSync + Buffer</h3>
+          <pre >
+            <code >`import fs from 'fs';
+
+function imageToDataUri(filePath: string): string 
+  const buffer = fs.readFileSync(filePath);
+  const base64 = buffer.toString('base64');
+  const mimeType = lookup(filePath) || 'application/octet-stream';
+  return \`data:\$mimeType;base64,\$base64\`;
+
+// Usage
+const dataUri = imageToDataUri('./logo.png');
+console.log(dataUri.substring(0, 60)); // Preview first 60 chars
+
+// For large files, check size before encoding
+const stats = fs.statSync('./hero.jpg');
+const sizeMB = stats.size / 1024 / 1024;
+if (sizeMB > 0.5) 
+  console.warn(\`Image is \$sizeMB.toFixed(2)MB — Base64 not recommended above ~0.5MB\`);
+
+// Stream-based for large files (generates Base64 in chunks)
+
+const base64Transform = new Transform(
+  transform(chunk, _encoding, callback) 
+    this.push(chunk.toString('base64'));
+    callback();
+  
+);
+createReadStream('./large-image.png').pipe(base64Transform).pipe(process.stdout);`</code>
+          </pre>
+
+          <h3>Python: base64 module</h3>
+          <pre >
+            <code >`import base64
+
+def image_to_data_uri(file_path: str) -> str:
+    mime_type, _ = mimetypes.guess_type(file_path)
+    if mime_type is None:
+        mime_type = 'application/octet-stream'
+
+    with open(file_path, 'rb') as f:
+        encoded = base64.b64encode(f.read()).decode('utf-8')
+
+    return f"data:mime_type;base64,encoded"
+
+# Usage
+data_uri = image_to_data_uri("logo.png")
+print(f"Length: len(data_uri) chars")
+
+# Verify the 33% overhead
+
+original_size = os.path.getsize("logo.png")
+base64_size = len(base64.b64encode(open("logo.png", "rb").read()))
+overhead = (base64_size - original_size) / original_size * 100
+print(f"Overhead: overhead:.1f%")  # Always ~33.33%`</code>
+          </pre>
+
+          <h3>Command Line (macOS / Linux)</h3>
+          <pre >
+            <code >`# Encode image to Base64 (single line output)
+base64 -i logo.png -o logo.b64
+
+# Generate a complete data URI
+echo "data:image/png;base64,$(base64 -i logo.png)"
+
+# On Linux (GNU coreutils base64, wrap at 0 = no line breaks)
+base64 -w 0 logo.png
+
+# Decode Base64 back to image
+base64 -d logo.b64 > logo-restored.png
+
+# Verify round-trip integrity
+md5sum logo.png logo-restored.png  # Should match`</code>
+          </pre>
+        
+
+        /* Performance: the real data */
+        
+          <h2>The Performance Reality: When Base64 Hurts</h2>
+          <p >
+            The intuitive appeal of Base64 images is that they eliminate HTTP requests. One fewer round-trip to the server should be faster, right? The actual measurement data tells a more complicated story.
+          </p>
+
+          <h3>Catchpoint Mobile Measurement</h3>
+          <p>
+            Catchpoint, a performance monitoring company, measured data URIs vs. external image links across <strong>hundreds of thousands of real mobile page views</strong>. Their findings:
+          </p>
+          <ul>
+            <li>Data URIs are <strong>6× slower</strong> than external image URLs on mobile devices</li>
+            <li>Stylesheet parsing is <strong>32× slower</strong> when CSS contains Base64-encoded images</li>
+            <li>First paint is <strong>10.27× slower</strong> when images are inlined as data URIs</li>
+          </ul>
+          <p>
+            The mechanism: browsers parse HTML and CSS synchronously. When the parser encounters a data URI, it must decode the Base64 string inline before continuing. An external image URL, by contrast, triggers an asynchronous fetch that runs in parallel while parsing continues. The saved HTTP request does not compensate for the synchronous decoding cost, particularly on mobile CPUs.
+          </p>
+
+          <h3>CSS Wizardry: The CSS Stylesheet Problem</h3>
+          <p>
+            Harry Roberts (CSS Wizardry) documented in a 2017 performance study that Base64 images embedded in CSS stylesheets are the worst case. CSS is render-blocking: the browser blocks page rendering until all CSS is downloaded and parsed. Embedding a large Base64 image in a stylesheet forces the browser to:
+          </p>
+          <ol>
+            <li>Download the full stylesheet (larger because of Base64 content)</li>
+            <li>Parse the stylesheet, including decoding the Base64 string</li>
+            <li>Only then begin rendering the page</li>
+          </ol>
+          <p>
+            An external image in CSS, by contrast, is fetched after the stylesheet is parsed — the critical rendering path is shorter even though there is an extra HTTP request. Per DebugBear's analysis, the overhead after HTTP compression (gzip/brotli) drops to roughly 2–5% for text content, but the synchronous parsing cost remains.
+          </p>
+
+          /* Performance comparison table */
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Context</th>
+                  <th >External URL</th>
+                  <th >Base64 Data URI</th>
+                  <th >Verdict</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >CSS background (large img)</td>
+                  <td >Async fetch, fast parse</td>
+                  <td >Blocks render, 32× slower parse</td>
+                  <td >Avoid</td>
+                </tr>
+                <tr >
+                  <td >HTML img (large img)</td>
+                  <td >Async, cacheable</td>
+                  <td >6× slower on mobile</td>
+                  <td >Avoid</td>
+                </tr>
+                <tr >
+                  <td >Tiny icon (&lt;500 bytes)</td>
+                  <td >Extra HTTP req overhead</td>
+                  <td >Negligible decode cost</td>
+                  <td >OK</td>
+                </tr>
+                <tr >
+                  <td >Email template</td>
+                  <td >Many clients block external</td>
+                  <td >Universally supported</td>
+                  <td >Use it</td>
+                </tr>
+                <tr >
+                  <td >JSON/API payload</td>
+                  <td >Binary doesn't fit in JSON</td>
+                  <td >Standard transport for binary</td>
+                  <td >Use it</td>
+                </tr>
+                <tr>
+                  <td >Reused logo (multiple pages)</td>
+                  <td >Cached after first load</td>
+                  <td >Cannot cache separately</td>
+                  <td >Never</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        /* When to use */
+        
+          <h2>When Base64 Image Encoding Is the Right Choice</h2>
+          <p>
+            Three scenarios where Base64 is genuinely the best approach — not just a convenient shortcut.
+          </p>
+
+          <h3>1. Email Templates</h3>
+          <p>
+            This is the clearest use case. Gmail, Outlook, and Apple Mail render Base64 data URIs reliably, but many email clients block external image URLs by default. Corporate environments, government email, and many security-conscious users have external image loading disabled. An external logo URL disappears. A Base64-embedded logo always renders.
+          </p>
+          <p>
+            <code >`<!-- Email template: use Base64 for reliable rendering -->
+<img
+  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUg..."
+  alt="Company Logo"
+  width="200"
+  height="60"
+/>
+
+<!-- Do NOT use external URL in email (often blocked):
+<img src="https://yoursite.com/logo.png" ...> -->
+
+<!-- Tools like Nodemailer and SendGrid support inline attachments
+     as an alternative — attach the image file and reference by CID: -->
+<!-- <img src="cid:logo@example.com"> -->
+<!-- This is more reliable than Base64 for very large images -->`</code>
+          </pre>
+
+          <h3>2. Tiny Single-Use Icons (Under ~500 Bytes)</h3>
+          <p >
+            CSS Wizardry recommends 500 bytes as the practical upper limit. Below this threshold, the HTTP request overhead (TCP connection, DNS lookup, headers) costs more than the Base64 parsing overhead. Above it, external files win every time. Common examples: a 16×16 favicon variant, a simple loading spinner, a tiny checkmark icon in a custom checkbox style.
+          </p>
+          <p>
+            <code >`/* Good: tiny 16×16 checkmark icon, ~200 bytes encoded */
+.checkbox-checked::after 
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.5 3L6 11 2.5 7.5' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E");
+
+/* Bad: 80KB hero image as Base64 */
+.hero 
+  /* This will block rendering for hundreds of milliseconds */
+  background-image: url("data:image/jpeg;base64,/9j/4AAQSkZJRgAB...[100KB of chars]");
+`</code>
+          </pre>
+
+          <h3>3. Binary Data in Text Transport Layers</h3>
+          <p >
+            JSON, XML, CSV, and most API formats only handle text. When an API must accept or return image data inline — a profile photo upload API that takes JSON, a configuration format embedding an icon — Base64 is the correct encoding. The performance argument does not apply because you are solving a binary-in-text transport problem, not a web rendering problem.
+          </p>
+          <p>
+            <code >`// Multipart form upload — preferred for image APIs
+// But when you must use JSON:
+const uploadPayload = 
+  userId: 'usr_123',
+  profileImage: 
+    mimeType: 'image/jpeg',
+    data: '<base64-encoded-jpeg-string>',
+    filename: 'avatar.jpg',
+  
+;
+
+// Validate size before encoding — most APIs cap payload at 1-10MB
+const base64Data = fileBuffer.toString('base64');
+const payloadSizeKB = Buffer.byteLength(JSON.stringify(uploadPayload)) / 1024;
+if (payloadSizeKB > 1024) 
+  throw new Error(\`Payload too large: \$payloadSizeKB.toFixed(0)KB. Upload via multipart.\`);
+`</code>
+          </pre>
+        
+
+        /* SVG: don't use Base64 */
+        
+          <h2>SVG Images: URL-Encode, Don't Base64</h2>
+          <p >
+            SVG is XML — it is already text. Base64-encoding SVG adds 33% overhead on content that does not need it. A shorter approach: URL-encode the SVG markup directly using percent-encoding.
+          </p>
+          <p>
+            <code >`const svg = \`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="10" fill="#6d28d9"/>
+  <path d="M8 12l3 3 5-5" stroke="white" stroke-width="2" fill="none"/>
+</svg>\`;
+
+// BAD: Base64 encoded SVG (+33% size)
+const base64Uri = \`data:image/svg+xml;base64,\$btoa(svg)\`;
+console.log(base64Uri.length); // 240 chars
+
+// GOOD: URL-encoded SVG (shorter, readable)
+const urlEncodedUri = \`data:image/svg+xml,\$encodeURIComponent(svg)\`;
+console.log(urlEncodedUri.length); // ~195 chars
+
+// For CSS backgrounds, both work. URL-encoded is preferred:
+// background-image: url("data:image/svg+xml,<svg...>");
+
+// OR just use inline SVG in HTML (best for interactive SVGs):
+// <svg xmlns="..." viewBox="..."><circle .../></svg>
+
+// Optimize SVGs before embedding with SVGO:
+// npm install -g svgo && svgo logo.svg -o logo.min.svg`</code>
+          </pre>
+        
+
+        /* Using the converter */
+        
+          <h2>Using an Online Image to Base64 Converter</h2>
+          <p >
+            For one-off conversions, an online tool is faster than writing code. Here are the outputs you should expect from a complete converter:
+          </p>
+          <ul>
+            <li><strong>Base64 string only</strong> — just the encoded data, no prefix. Use this when your target system adds the data URI prefix itself.</li>
+            <li><strong>HTML data URI</strong> — complete <code >'<img src="data:image/...;base64,...">'</code> ready to paste into HTML.</li>
+            <li><strong>CSS data URI</strong> — <code >'url("data:image/...;base64,...")'</code> ready for CSS <code >background-image</code>.</li>
+            <li><strong>JSON value</strong> — the Base64 string with escaped quotes for pasting into JSON configs or API payloads.</li>
+          </ul>
+          <p>
+            Security note: verify that the tool processes files client-side. Open DevTools Network panel, convert a file, and confirm no upload request appears. BytePane's <a href="/base64-image-encoder/">Image to Base64 Encoder</a> uses the browser FileReader API exclusively — your image never leaves your machine.
+          </p>
+        
+
+        /* Decode Base64 back */
+        
+          <h2>Decoding Base64 Back to an Image</h2>
+          <p>
+            The reverse operation — converting a Base64 string back to a file — is equally common when debugging API responses or extracting embedded images from JSON payloads.
+          </p>
+          <p>
+            <code >`// Browser: trigger download of decoded image
+function base64ToDownload(dataUri: string, filename: string): void 
+  const link = document.createElement('a');
+  link.href = dataUri;
+  link.download = filename;
+  link.click();
+
+// Extract from data URI and download
+const dataUri = "data:image/png;base64,iVBORw0KGgo...";
+base64ToDownload(dataUri, 'image.png');
+
+// Node.js: save Base64 string to file
+
+function base64ToFile(base64String: string, outputPath: string): void 
+  // Strip data URI prefix if present
+  const base64Data = base64String.replace(/^data:[^;]+;base64,/, '');
+  const buffer = Buffer.from(base64Data, 'base64');
+  fs.writeFileSync(outputPath, buffer);
+
+// Python: save to file
+
+with open('output.png', 'wb') as f:
+    # Strip prefix if needed
+    b64_data = data_uri.split(',', 1)[1] if ',' in data_uri else data_uri
+    f.write(base64.b64decode(b64_data))`</code>
+          </pre>
+          <p >
+            When decoding, strip the <code >data:[type];base64,</code> prefix before passing the string to the decoder — decoders expect pure Base64, not the full data URI format. The <a href="/blog/base64-encode-decode/">Base64 Encode &amp; Decode</a> guide covers the full encode/decode cycle for text and binary data.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'How much larger does an image get when converted to Base64?',
+                a: 'Exactly 33.33% larger — always. Base64 encodes 3 input bytes as 4 output characters. A 300KB PNG becomes a 400KB Base64 string. HTTP gzip compression reduces the wire-transfer overhead to roughly 2–5% for text, but the in-memory representation is always 33% larger.',
+              ,
+              
+                q: 'When should I use Base64 images?',
+                a: 'Three cases: (1) email templates, where clients block external image URLs; (2) tiny icons under ~500 bytes, where the HTTP request cost exceeds the Base64 overhead; (3) binary data in text-only transport formats (JSON API payloads, config files). Avoid Base64 for any image used on multiple pages or above ~500 bytes in a web context.',
+              ,
+              
+                q: 'Why are Base64 images slower on mobile?',
+                a: 'A Catchpoint study measuring hundreds of thousands of mobile page views found data URIs are 6× slower than external image URLs, with 32× slower stylesheet parsing and 10.27× slower first paint. Browsers decode Base64 synchronously during HTML/CSS parsing, blocking rendering — external images load asynchronously in parallel.',
+              ,
+              
+                q: 'Is it safe to use an online image-to-Base64 converter?',
+                a: "Only if the tool runs client-side. Open DevTools Network panel while converting — no upload request should appear. BytePane's converter uses the browser FileReader API, so your image is encoded locally and never transmitted.",
+              ,
+              
+                q: 'Can I use Base64 for SVG images?',
+                a: 'You can, but you should not. SVG is text, so Base64 adds 33% overhead unnecessarily. URL-encode the SVG markup with encodeURIComponent() instead — the result is shorter and works equally well in CSS background-image and HTML src attributes.',
+              ,
+              
+                q: 'What is the maximum safe size for a Base64 image?',
+                a: 'CSS Wizardry recommends 500 bytes as the upper limit for performance-sensitive Base64 images in stylesheets. RFC 2397 has no size limit, but browsers handle multi-megabyte data URIs poorly. For any image you would normally serve as a file, serve it as a file.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Convert Images to Base64 with BytePane</h2>
+          <p>
+            Use BytePane's free <a href="/base64-image-encoder/">Image to Base64 Encoder</a> to convert PNG, JPEG, WebP, GIF, and SVG files to Base64 data URIs instantly. Outputs HTML, CSS, and JSON formats. Runs entirely in your browser — no upload, no server.
+          </p>
+          
+            <a href="/base64-image-encoder/">
+              Open Image to Base64 Encoder
+            </a>
+            <a href="/base64-encoder/">
+              Base64 Text Encoder
+            </a>
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/base64-encoding-explained/">
+              <h3>Base64 Encoding Explained</h3>
+              <p>The RFC 4648 algorithm from first principles, with all variants.</p>
+            </a>
+            <a href="/blog/base64-encode-decode/">
+              <h3>Base64 Encode &amp; Decode Online</h3>
+              <p>Full encode/decode cycle for text and binary data in every major language.</p>
+            </a>
+            <a href="/blog/what-is-base64/">
+              <h3>What Is Base64?</h3>
+              <p>Base64 from first principles: when and why it exists.</p>
+            </a>
+            <a href="/blog/url-encoding-guide/">
+              <h3>URL Encoding Guide</h3>
+              <p>Percent-encoding for URLs — the alternative to Base64 for SVGs in CSS.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/image-to-base64/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
