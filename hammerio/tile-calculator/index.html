@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tile Calculator: Estimate Tiles, Mortar &amp; Grout for Any Project - HammerIO</title>
+  <meta name="description" content="Calculate exactly how many tiles, bags of thinset, and grout you need. Covers waste factors by pattern, mortar coverage rates, and 2026 installed costs per sq ft.">
+  <link rel="canonical" href="https://www.hammerio.com/blog/tile-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/hammerio/">HammerIO</a> &rarr; Tile Calculator: Estimate Tiles, Mortar &amp; Grout for Any Project
+  </nav>
+
+  <article>
+    <h1>Tile Calculator: Estimate Tiles, Mortar &amp; Grout for Any Project</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.hammerio.com/blog/tile-calculator/">hammerio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Tile Calculator: Estimate Tiles, Mortar & Grout for Any Project',
+    description: 'Calculate exactly how many tiles, bags of thinset, and grout you need for any project. Covers waste factors by pattern, mortar coverage rates, and 2026 installed costs.',
+    datePublished: '2026-03-30',
+    dateModified: '2026-03-30',
+    author: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+    ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+      logo: 
+        '@type': 'ImageObject',
+        url: 'https://hammerio.com/favicon.svg',
+      ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://hammerio.com/blog/tile-calculator/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://hammerio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://hammerio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Tile Calculator Guide', item: 'https://hammerio.com/blog/tile-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do I calculate how many tiles I need?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Multiply the length by the width of your space to get the total square footage. Divide that by the square footage of one tile to get the tile count, then multiply by your waste factor (1.10 for straight layouts, 1.15–1.20 for diagonal or herringbone). Always round up to the nearest full box.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much waste factor should I add for tile?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Use 10% for straight grid layouts, 10–15% for running bond or subway patterns, and 15–20% for diagonal or herringbone patterns. For rooms under 50 sq ft or with lots of cutouts (toilets, vanities), add at least 15% regardless of pattern.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many bags of thinset do I need per 100 square feet?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For small tiles (6x6 or smaller) with a 1/4-inch V-notch trowel, one 50 lb bag covers 80–100 sq ft. For 12x12 tiles, expect 60–80 sq ft per bag. Large format tiles (18x18 and up) with a 1/2-inch square notch yield only 40–50 sq ft per bag.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much does tile installation cost per square foot?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Per Angi 2026 data, tile installation runs $5–$35 per sq ft installed, including materials and labor. Basic ceramic installed averages $5–$10/sq ft. Porcelain runs $8–$20/sq ft. Natural stone (travertine, slate) costs $15–$30/sq ft. Marble can exceed $40/sq ft.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many boxes of tile do I need for a 100 sq ft floor?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Depends on the tile size and box coverage. For 12x12 tiles (about 10–15 tiles per box), you need 7–10 boxes plus 10% waste. For 18x18 tiles (4–6 per box covering 9–13.5 sq ft per box), you need 8–12 boxes. Always check the box label for exact coverage.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Do I need sanded or unsanded grout?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Use unsanded grout for joints under 1/8 inch wide — common with glass tile, polished marble, and tight-fitting porcelain. Use sanded grout for joints 1/8 inch and wider, which covers most ceramic, porcelain, and stone installations. Using the wrong type causes cracking or joint failure.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Can I tile over existing tile?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Yes, if the existing tile is firmly bonded, flat, and the additional weight and height are acceptable. Check that the substrate can handle the added load (most bathroom floors can). The main risk is the floor height change at transitions. Most building codes allow tiling over tile once.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Tile Calculator Guide</li>
+          </ol>
+        
+
+        /* Header */
+        
+          
+            Tile
+            11 min read
+            <time  dateTime="2026-03-30">March 30, 2026</time>
+          
+          <h2>
+            Tile Calculator: Estimate Tiles, Mortar & Grout for Any Project
+          </h2>
+          <p>
+            Short-ordering tile is one of the most expensive mistakes you can make on a renovation — dye lots change, the tile gets discontinued, or you end up paying rush freight to get two more boxes. Here is the complete method for calculating tiles, thinset, and grout before you ever set foot in a tile store.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>&#10003;Always add a waste factor: 10% for straight layouts, 15–20% for diagonal and herringbone patterns</li>
+            <li>&#10003;A 50 lb bag of thinset covers 40–100 sq ft depending on tile size and trowel notch depth</li>
+            <li>&#10003;Grout coverage varies dramatically by joint width — wider joints consume far more material per square foot</li>
+            <li>&#10003;Per Angi 2026 data, tile installation costs $5–$35/sq ft installed depending on tile type and complexity</li>
+            <li>&#10003;Order tiles from a single dye lot and keep 3–5 tiles after completion for future repairs</li>
+          </ul>
+        
+
+        /* CTA Banner */
+        
+          <h2>Calculate Your Tile Order Instantly</h2>
+          <p>Enter your room dimensions and tile size to get total tiles, mortar bags, and grout needed in seconds.</p>
+          <a href="/tile-calculator/">
+            Try Our Free Tile Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+          </a>
+        
+
+        /* Content */
+        
+
+          <h2>The Tile Quantity Formula</h2>
+          <p >
+            Every tile estimate uses the same core formula. The only variables are your room dimensions, tile size, and how much waste you build in for the layout pattern and room shape.
+          </p>
+          
+            <p>
+              <strong>Step 1:</strong> Room area (sq ft) = Length (ft) × Width (ft)<br />
+              <strong>Step 2:</strong> Coverage per tile (sq ft) = Tile length (in) × Tile width (in) / 144<br />
+              <strong>Step 3:</strong> Raw tile count = Room area ÷ Coverage per tile<br />
+              <strong>Step 4:</strong> Adjusted count = Raw count × (1 + Waste factor)<br />
+              <strong>Step 5:</strong> Round up to the nearest full box
+            </p>
+          
+          <p>
+            Example: A 10×12 bathroom floor (120 sq ft) tiled with 12×12 inch tiles in a straight grid pattern. Coverage per tile = 144 sq in ÷ 144 = 1 sq ft per tile. Raw count = 120 tiles. Add 10% waste: 120 × 1.10 = 132 tiles. If the tile comes 15 per box, order 9 boxes (135 tiles). You will have a few spares for future repairs, which is exactly what you want.
+          </p>
+          <p>
+            For irregular rooms, break the space into rectangles, calculate each section, and add the totals together before applying the waste factor. Do not apply waste to each section separately — that tends to over-order.
+          </p>
+
+          <h2>Common Tile Sizes and Coverage</h2>
+          <p>
+            Tile size affects not just coverage math but also how quickly you can install and how much thinset you use. Larger tiles require larger-notch trowels and more thinset per square foot.
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Tile Size</th>
+                    <th >Sq Ft Per Tile</th>
+                    <th >Typical Use</th>
+                    <th >Notes</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >3×6 in (subway)</td><td >0.125</td><td >Backsplash, shower walls</td><td >8 tiles per sq ft</td></tr>
+                  <tr ><td >4×4 in</td><td >0.111</td><td >Bathroom walls</td><td >9 tiles per sq ft</td></tr>
+                  <tr ><td >6×6 in</td><td >0.25</td><td >Bathroom floors, walls</td><td >4 tiles per sq ft</td></tr>
+                  <tr ><td >12×12 in</td><td >1.00</td><td >General floors, walls</td><td >1 tile per sq ft</td></tr>
+                  <tr ><td >12×24 in</td><td >2.00</td><td >Modern floors, feature walls</td><td >0.5 tiles per sq ft</td></tr>
+                  <tr ><td >18×18 in</td><td >2.25</td><td >Large open floors</td><td >~0.44 tiles per sq ft</td></tr>
+                  <tr><td >24×24 in</td><td >4.00</td><td >Large format, commercial</td><td >0.25 tiles per sq ft</td></tr>
+                </tbody>
+              </table>
+            
+          
+          <p>
+            Large format tiles (18×18 and above) look impressive but create installation challenges. They require a flatter substrate — within 1/8 inch over 10 feet is the industry standard per TCNA (Tile Council of North America). On uneven subfloors, large tiles rock or crack at the corners. Our <a href="/flooring-cost-guide/">flooring cost guide</a> covers subfloor prep costs in more detail.
+          </p>
+
+          <h2>Waste Factors by Layout Pattern</h2>
+          <p>
+            Pattern is the single biggest driver of waste. The more angle cuts your layout requires, the more material you lose to off-cuts that cannot be reused. According to Ceramic Stile Inc. and field data from multiple residential and commercial installations, here are the waste factors I use on every estimate:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Layout Pattern</th>
+                    <th >Waste Add-On</th>
+                    <th >Why</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Straight / stacked grid</td><td >5–10%</td><td >Fewest cuts; use 10% for small rooms</td></tr>
+                  <tr ><td >Running bond / subway offset</td><td >10%</td><td >Standard for most backsplashes</td></tr>
+                  <tr ><td >Diagonal (45°)</td><td >15–20%</td><td >Edge cuts are all angled triangles</td></tr>
+                  <tr ><td >Herringbone</td><td >15–20%</td><td >Numerous angled cuts throughout; use 20% for DIY</td></tr>
+                  <tr><td >Versailles / multi-size</td><td >15–20%</td><td >Complex pattern coordination</td></tr>
+                </tbody>
+              </table>
+            
+          
+          <p>
+            One rule I follow on every project: order at minimum 10% extra regardless of pattern. Rooms are never perfect rectangles in the field. Doors, windows, floor vents, toilet flanges — they all create cuts. On rooms under 50 sq ft, I default to 15% because the ratio of perimeter cuts to total area is much higher in small spaces.
+          </p>
+          <p>
+            After installation, keep 3 to 5 spare tiles in a labeled bag. Tile dye lots change between production runs — a replacement tile ordered two years later may visibly mismatch even if it has the same product number. Those spares are worth more than their purchase price if you ever chip a tile.
+          </p>
+
+          <h2>Thinset Mortar: How Much Do You Need?</h2>
+          <p>
+            Thinset coverage is determined by trowel notch size, which is in turn determined by tile size. The notch must be deep enough to achieve at least 80% back coverage on the tile (95% in wet areas per TCNA guidelines). Use the wrong trowel — even if the tile looks flat — and you create hollow spots that crack under load.
+          </p>
+          
+            <h3>Thinset Coverage Per 50 lb Bag</h3>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Trowel Notch</th>
+                    <th >Sq Ft per 50 lb Bag</th>
+                    <th >Best For</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >1/4&quot; × 1/4&quot; V-notch</td><td >80–100 sq ft</td><td >Mosaic, 4×4, 6×6 tiles</td></tr>
+                  <tr ><td >1/4&quot; × 3/8&quot; U-notch</td><td >60–80 sq ft</td><td >12×12, standard floor tiles</td></tr>
+                  <tr ><td >1/2&quot; × 1/2&quot; square</td><td >40–50 sq ft</td><td >18×18, 24×24 large format</td></tr>
+                  <tr><td >1/2&quot; × 3/4&quot; square</td><td >25–35 sq ft</td><td >Extra-large format, stone</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: TEC Specialty, Mapei, The Tile Shop installation guides</p>
+          
+          <p>
+            Back-buttering — applying a skim coat of thinset to the back of the tile in addition to the floor — adds roughly 25% more thinset consumption but is required for large format tiles, natural stone, and any installation in a wet area like a shower. Do not skip it just to save a bag of mortar.
+          </p>
+          <p>
+            For a practical example: a 10×12 bathroom floor (120 sq ft) with 12×12 tiles using a 1/4×3/8 U-notch trowel needs 120 ÷ 70 = 1.7 bags. Round up and order 2 bags. If you are back-buttering the tiles, buy 3 bags. Thinset is cheap insurance compared to running short mid-project.
+          </p>
+
+          <h2>Grout Quantity Calculator</h2>
+          <p>
+            Grout quantity is the most misunderstood part of a tile order. Many homeowners buy one bag and run out halfway through. Coverage varies enormously based on joint width, tile thickness, and tile size. A small tile with wide joints can use 10 times more grout per square foot than a large tile with narrow joints.
+          </p>
+          <p>
+            The formula from LATICRETE and Mapei grout coverage guides uses the following variables: tile length (L), tile width (W), joint width (J), tile thickness (T), and the weight density factor for the specific grout product (typically 90–115 lb/ft³).
+          </p>
+          
+            <h3>Approximate Coverage Per 25 lb Bag of Sanded Grout</h3>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Tile Size</th>
+                    <th >Joint Width</th>
+                    <th >Sq Ft per 25 lb Bag</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >3×6 subway</td><td >1/16&quot;</td><td >100–150 sq ft</td></tr>
+                  <tr ><td >12×12</td><td >1/8&quot;</td><td >60–80 sq ft</td></tr>
+                  <tr ><td >12×12</td><td >3/16&quot;</td><td >40–60 sq ft</td></tr>
+                  <tr ><td >12×12</td><td >1/4&quot;</td><td >30–45 sq ft</td></tr>
+                  <tr><td >24×24</td><td >3/16–1/4&quot;</td><td >80–120 sq ft</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: LATICRETE, Mapei grout coverage calculators; add 10–15% for unglazed or porous tile</p>
+          
+          <p>
+            Sanded grout is standard for joints 1/8 inch and wider. Unsanded grout is used for joints under 1/8 inch — common with glass tile, polished marble, and rectified porcelain with tight spacing. Using sanded grout on polished stone scratches the surface; using unsanded grout in wide joints causes it to crack as it shrinks during curing.
+          </p>
+          <p>
+            Epoxy grout costs 3 to 5 times more than standard cement grout but is virtually stain-proof and ideal for kitchen floors, commercial kitchens, and anywhere food prep happens. The tradeoff: it has a short working time and requires immediate cleanup before it cures.
+          </p>
+
+          <h2>Project Estimates: Room by Room</h2>
+          <p>
+            Here are complete material estimates for the three most common residential tile projects. All costs use 2026 pricing data from Angi and HomeAdvisor.
+          </p>
+
+          <h3>Bathroom Floor (5×8 ft = 40 sq ft)</h3>
+          <p>
+            Using 12×12 porcelain tile in a straight layout. Order 40 × 1.10 = 44 sq ft (5 boxes at 10 tiles per box). One bag of 50 lb thinset covers the floor with mortar to spare. One 10 lb bag of unsanded grout handles the 1/16-inch joints. Materials: $200–$400. Installed cost per Angi 2026: $10–$30 per sq ft total, so $400–$1,200 for the full project including labor.
+          </p>
+
+          <h3>Kitchen Backsplash (30 sq ft)</h3>
+          <p>
+            Using 3×6 subway tile in a running bond pattern. Order 30 × 1.10 = 33 sq ft. One box of subway tile typically covers 8–10 sq ft, so 4 boxes. One 50 lb bag of thinset covers the job. One 25 lb bag of unsanded grout handles subway tile joints. Total material cost: $100–$350 depending on tile quality. Per Angi 2026, professional installation adds $10–$50 per sq ft in labor, so expect a total of $400–$1,800 installed.
+          </p>
+
+          <h3>Full Shower (Walls + Floor, ~100 sq ft)</h3>
+          <p>
+            Measure each wall face from curb to ceiling, add the shower floor. For a 3×4 ft shower: two 4-ft walls (32 sq ft each), two 3-ft walls (24 sq ft each), plus 12 sq ft floor = 104 sq ft total. Apply 15% waste for the combination of wall cuts, niche framing, and floor drain cuts: 104 × 1.15 = 120 sq ft to order. You will need 2 bags of thinset (back-buttering the wall tiles adds consumption) and 2 bags of sanded grout for 1/8-inch joints. Per HomeAdvisor 2025, full shower retiling costs $400–$5,000, with an average around $2,700.
+          </p>
+
+          <h2>Tile Installation Cost Breakdown (2026)</h2>
+          <p>
+            The tile itself is often not the biggest cost in a tile job. Labor, substrate prep, and setting materials can easily match or exceed the tile cost for budget-tier materials. Here is what you are actually paying for:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Cost Component</th>
+                    <th >Range</th>
+                    <th >Notes</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Ceramic tile (material)</td><td >$1–$5/sq ft</td><td >Budget to mid-range</td></tr>
+                  <tr ><td >Porcelain tile (material)</td><td >$3–$15/sq ft</td><td >Most common residential</td></tr>
+                  <tr ><td >Natural stone (material)</td><td >$5–$25/sq ft</td><td >Marble, travertine, slate</td></tr>
+                  <tr ><td >Thinset mortar</td><td >$0.30–$0.80/sq ft</td><td >Depends on tile size</td></tr>
+                  <tr ><td >Grout</td><td >$0.15–$0.50/sq ft</td><td >Depends on joint width</td></tr>
+                  <tr ><td >Backer board / substrate</td><td >$0.50–$1.50/sq ft</td><td >Required in wet areas</td></tr>
+                  <tr ><td >Labor</td><td >$4–$15/sq ft</td><td >$60–$120/hr; pattern adds 15–25%</td></tr>
+                  <tr><td >Tile removal (old tile)</td><td >$2–$5/sq ft</td><td >Add if existing tile must be removed</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: Angi 2026 data, HomeAdvisor 2025. National average total tile installation project: $2,000–$2,114</p>
+          
+          <p>
+            Diagonal and herringbone layouts typically add 15–25% to labor costs because the installer must work at an angle, manage more cuts, and spend more time on layout planning. If you are price-sensitive, choose a straight or running bond pattern for the floor and save the herringbone for an accent wall where the square footage is small.
+          </p>
+
+          <h2>Substrate and Waterproofing Requirements</h2>
+          <p>
+            Tile fails more often because of the substrate than because of the tile or installation quality. Tile is rigid. When the substrate flexes — as wood subfloors do — the bond breaks, grout cracks, and eventually tiles pop off. Per TCNA guidelines, deflection in a floor for tile installation must not exceed L/360, where L is the span length.
+          </p>
+          <p>
+            For bathroom floors and wet areas, cement backer board (Durock, HardieBacker) or uncoupling membranes (Schluter Ditra) are the standard substrate over wood. Backer board adds about $0.50–$1.50 per square foot. Uncoupling membranes run $1–$2 per square foot installed but eliminate the deflection issue almost entirely and allow tile installation over in-floor heating.
+          </p>
+          <p>
+            In showers and steam rooms, a waterproof membrane behind the tile is non-negotiable. Kerdi-band, RedGard, or similar products seal the substrate from moisture intrusion. This step is often where DIY tile jobs fail — the tile looks fine for years until moisture penetrates a pinhole and causes rot or mold behind the wall.
+          </p>
+
+          <h2>How to Read a Tile Order Correctly</h2>
+          <p>
+            When you place a tile order, make sure every box comes from the same dye lot. The lot number is printed on the box label. Even tiles with identical product codes from different lots may have slight color or shade variations that become visible once installed side by side.
+          </p>
+          <p>
+            Buy all your tile at once from a single order when possible. If you buy 90% now and return for the last 10% three weeks later, there is a real chance the lot has changed. Many tile retailers will hold material for a few weeks if you pay a deposit — take them up on it.
+          </p>
+          <p>
+            Check the tile for warpage before installation. Place four tiles face up on a flat surface in a 2×2 grid. If the center tiles are higher or lower than the corners, the tile has warpage that will show in the finished floor. Return warped tiles before you set a single piece.
+          </p>
+
+          <h2>DIY vs. Hiring a Tile Setter</h2>
+          <p>
+            Tiling is a skill trade. Done well, it lasts 50 years. Done poorly, you are pulling tile within five years. The tools alone — wet saw, notch trowel set, level, spacers, grout float — cost $300–$600 to acquire properly. If you are doing a single small project, hiring a professional often makes more financial sense.
+          </p>
+          <p>
+            Where DIY makes sense: straight-layout backsplashes, simple bathroom floor replacements (no major prep needed), and situations where you have prior tiling experience. Where it does not: shower walls and floors (waterproofing errors lead to expensive structural damage), large format tile on wood subfloors, and complex patterns on irregular rooms.
+          </p>
+          <p>
+            For budgeting purposes, plan your complete bathroom tile project using our <a href="/bathroom-remodel-cost/">bathroom remodel cost guide</a>, which breaks down all the costs including tile, labor, plumbing, and fixtures.
+          </p>
+
+          <h2>Mistakes That Cost Money</h2>
+          <ul>
+            <li><strong>Buying from two dye lots:</strong> Color variations become obvious once the tile is grouted and lit. Always order all tile at once from a single lot number.</li>
+            <li><strong>Underestimating waste on complex patterns:</strong> Herringbone looks easy in the showroom. In the field, it generates 20–25% waste on a real room with corners, doors, and obstructions.</li>
+            <li><strong>Using the wrong trowel notch:</strong> A shallow notch on large format tile leaves voids under the tile. The tile will crack or produce a hollow sound when tapped.</li>
+            <li><strong>Skipping the waterproofing membrane:</strong> In showers and wet areas, moisture always finds a way through grout. A waterproof membrane behind the tile is a one-time cost that prevents catastrophic substrate damage.</li>
+            <li><strong>Mixing grout too wet:</strong> Watery grout shrinks as it dries, creating cracks in the joints. Mix to a thick peanut butter consistency and let it slake for 10 minutes before using.</li>
+            <li><strong>Not planning the layout before starting:</strong> Always dry-lay your tile pattern from the center of the room outward. If your first course starts at the wall, you may end up with a 2-inch sliver at the opposite wall — which looks terrible and signals an amateur job.</li>
+          </ul>
+
+          /* FAQ Section */
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>How do I calculate how many tiles I need?</h3>
+              <p>Multiply the length by the width of your space to get the total square footage. Divide by the square footage of one tile to get the raw count, then multiply by your waste factor (1.10 for straight layouts, 1.15–1.20 for diagonal or herringbone). Always round up to the nearest full box. Use our <a href="/tile-calculator/">tile calculator</a> to skip the math.</p>
+            
+            
+              <h3>How much waste factor should I add for tile?</h3>
+              <p>Use 10% for straight grid layouts, 10–15% for running bond or subway offset patterns, and 15–20% for diagonal or herringbone patterns. For rooms under 50 sq ft or with lots of cutouts — toilets, vanities, floor vents — add at least 15% regardless of pattern to account for the higher ratio of edge cuts.</p>
+            
+            
+              <h3>How many bags of thinset do I need per 100 square feet?</h3>
+              <p>For small tiles (6×6 or smaller) with a 1/4-inch V-notch trowel, one 50 lb bag covers 80–100 sq ft. For 12×12 tiles, expect 60–80 sq ft per bag. Large format tiles (18×18 and up) with a 1/2-inch square notch yield only 40–50 sq ft per bag. If back-buttering, add 25% more thinset. Source: TEC Specialty, Mapei installation guides.</p>
+            
+            
+              <h3>How much does tile installation cost per square foot?</h3>
+              <p>Per Angi 2026 data, tile installation runs $5–$35 per sq ft installed including materials and labor. Basic ceramic averages $5–$10/sq ft. Porcelain runs $8–$20/sq ft. Natural stone costs $15–$30/sq ft. Marble can exceed $40/sq ft. Complex patterns and wet area installations (showers) add 15–25% to labor.</p>
+            
+            
+              <h3>How many boxes of tile do I need for a 100 sq ft floor?</h3>
+              <p>Depends on tile size and box coverage. For 12×12 tiles (10–15 tiles per box, 10–15 sq ft per box), order 7–10 boxes plus 10% waste. For 18×18 tiles (4–6 per box, 9–13.5 sq ft per box), order 8–12 boxes. Always check the box label for exact coverage and make sure all boxes share the same dye lot number.</p>
+            
+            
+              <h3>Do I need sanded or unsanded grout?</h3>
+              <p>Use unsanded grout for joints under 1/8 inch wide — common with glass tile, polished marble, and tight-fitting rectified porcelain. Use sanded grout for joints 1/8 inch and wider, which covers most ceramic, porcelain, and stone installations. Using the wrong type causes cracking or joint failure over time.</p>
+            
+            
+              <h3>Can I tile over existing tile?</h3>
+              <p>Yes, if the existing tile is firmly bonded, flat, and the additional weight and height are acceptable. Check that the floor structure can handle the added load and that the height change at transitions (doorways, adjoining floors) works with your finished floor height. Most building codes allow tiling over tile once, not repeatedly.</p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>Get Your Tile Estimate in Seconds</h2>
+          <p>Enter your room dimensions, tile size, and layout pattern. Get tiles, thinset bags, and grout quantity instantly — no math required.</p>
+          <a href="/tile-calculator/">
+            Open Free Tile Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+          </a>
+        
+
+        /* Explore More Tools */
+        
+          <h2>Explore More Tools</h2>
+          
+            <a href="/square-footage-calculator/">
+              HammerIO
+              <h3>Square Footage Calculator</h3>
+              <p  style=color: 'var(--color-text-light)'>Measure any room shape accurately before calculating tile quantities.</p>
+            </a>
+            <a href="/flooring-cost-guide/">
+              HammerIO
+              <h3>Flooring Cost Guide</h3>
+              <p>Compare tile to hardwood, LVP, and carpet on total installed cost.</p>
+            </a>
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                article.category
+                <h3>article.title</h3>
+              </Link>
+            ))
+          
+        
+      
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.hammerio.com/blog/tile-calculator/">HammerIO</a>.
+      Explore more free tools at <a href="https://www.hammerio.com/">hammerio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.hammerio.com/">HammerIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
