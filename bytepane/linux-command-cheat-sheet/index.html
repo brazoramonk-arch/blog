@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux Command Cheat Sheet: 50+ Essential Terminal Commands - BytePane</title>
+  <meta name="description" content="The essential Linux command reference for developers: file management, text processing, networking, process control, and modern Rust-based CLI tools faster than the classics.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/linux-command-cheat-sheet/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Linux Command Cheat Sheet: 50+ Essential Terminal Commands
+  </nav>
+
+  <article>
+    <h1>Linux Command Cheat Sheet: 50+ Essential Terminal Commands</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/linux-command-cheat-sheet/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    use <code >ip</code> and <code >ss</code> instead.
+          </p>
+          <p>
+            <code >`# Network interfaces
+ip addr                     # Show all interfaces and IP addresses (replaces ifconfig)
+ip addr show eth0           # Specific interface
+ip link                     # Show link layer (MAC addresses, state)
+ip route                    # Routing table (replaces route)
+ip route show default       # Default gateway
+
+# Connectivity testing
+ping -c 4 google.com        # Send 4 ICMP packets
+ping -i 0.2 google.com      # Ping every 200ms
+traceroute google.com       # Trace route to host (may need install)
+mtr google.com              # traceroute + ping combined, real-time
+
+# HTTP
+curl https://api.example.com               # GET request
+curl -X POST -H "Content-Type: application/json" \
+  -d '"key":"value"' https://api.example.com  # POST with JSON body
+curl -I https://example.com                # HEAD request (headers only)
+curl -o file.zip https://example.com/file.zip  # Download to file
+curl -L https://example.com               # Follow redirects
+curl -v https://example.com               # Verbose: show request/response headers
+
+# DNS
+dig example.com             # DNS lookup (full response)
+dig +short example.com      # Just the IP(s)
+dig MX gmail.com            # Mail exchange records
+nslookup example.com        # Alternative DNS lookup
+host example.com            # Quick lookup
+
+# Ports and connections
+ss -tlnp                    # Listening TCP ports + owning process
+ss -tulnp                   # TCP + UDP listening
+ss -tnp state established   # Established connections
+netstat -tlnp               # Legacy equivalent of ss -tlnp
+
+# File transfer
+scp file.txt user@host:/path/     # Secure copy to remote
+scp -r dir/ user@host:/path/      # Recursive copy
+rsync -avz ./src/ user@host:/dst/ # Sync with progress, verbose
+rsync -avz --delete src/ dst/     # Sync + delete files at dest not in src
+
+# SSH
+ssh user@host               # Connect
+ssh -p 2222 user@host       # Custom port
+ssh -L 5432:localhost:5432 user@host  # Local port forward (tunnel DB to local)
+ssh -i ~/.ssh/id_rsa user@host        # Specify key
+
+# Packet analysis
+tcpdump -i eth0 port 443    # Capture HTTPS traffic on eth0
+tcpdump -i any -w capture.pcap  # Write all traffic to file for Wireshark`</code>
+          </pre>
+        
+
+        
+          <h2>File Search: find and the Modern Alternative</h2>
+          <pre >
+            <code >`# find — POSIX standard, available everywhere
+find . -name "*.ts"                    # Files by name pattern
+find . -iname "*.ts"                   # Case-insensitive
+find . -type f -name "*.log"           # Files only (not dirs)
+find . -type d -name "node_modules"    # Directories only
+find . -mtime -7                       # Modified in the last 7 days
+find . -size +10M -type f              # Files larger than 10MB
+find . -perm 777                       # Files with exact permissions
+find . -not -path "*/node_modules/*" -name "*.ts"  # Exclude path
+
+# Execute a command on each result
+find . -name "*.log" -exec rm  +        # Delete all .log files
+find . -name "*.txt" -exec chmod 644  + # Set permissions on all .txt files
+
+# Combine conditions
+find . -type f \( -name "*.jpg" -o -name "*.png" \)  # OR condition
+find . -type f -name "*.ts" -a -newer package.json   # AND: .ts newer than package.json`</code>
+          </pre>
+          <p >
+            For searching file <em>contents</em>, see the grep section above and consider ripgrep. For quick content search without installing ripgrep, the <a href="/blog/git-cheat-sheet/">Git cheat sheet</a> also covers <code >git grep</code>, which searches only tracked files and is faster than recursive grep for repos.
+          </p>
+        
+
+        
+          <h2>System Information and Disk Management</h2>
+          <p>
+            <code >`# System info
+uname -a                   # Kernel version, architecture, hostname
+hostname                   # System hostname
+uptime                     # How long running, load averages
+whoami                     # Current user
+id                         # User ID, group IDs
+cat /etc/os-release        # Distro name and version
+lscpu                      # CPU architecture, cores, threads
+lsmem                      # Memory layout
+nproc                      # Number of available CPU cores (useful for make -j$(nproc))
+
+# Memory and CPU
+free -h                    # RAM and swap usage, human-readable
+vmstat 1 5                 # VM statistics — 5 snapshots, 1 second apart
+cat /proc/meminfo          # Detailed memory information
+cat /proc/cpuinfo          # CPU details per core
+
+# Disk usage
+df -h                      # Disk usage per filesystem, human-readable
+df -h /var                 # Usage for specific mount point
+du -sh /var/log            # Total size of /var/log
+du -sh * | sort -rh        # Largest items in current directory
+lsblk                      # Block devices and mount points
+fdisk -l                   # Disk partition information (requires root)
+
+# Environment variables
+env                        # Print all environment variables
+printenv PATH              # Print a specific variable
+echo $HOME                 # Expand a variable
+export MY_VAR=value        # Set variable for current session and subprocesses
+unset MY_VAR               # Remove variable`</code>
+          </pre>
+          <p >
+            For managing environment variables in applications and CI/CD pipelines, see the <a href="/blog/environment-variables-guide/">environment variables guide</a> — it covers <code >.env</code> file patterns, secrets management, and the difference between shell-level and process-level environment variables.
+          </p>
+        
+
+        
+          <h2>Permissions and User Management</h2>
+          <p>
+            Linux permissions are a three-level model: owner (u), group (g), and other (o). Each level can have read (r=4), write (w=2), and execute (x=1) permissions. The octal value is the sum: 7 = rwx, 6 = rw-, 5 = r-x, 4 = r--. For a deep dive into special permissions (setuid, setgid, sticky bit) and ACLs, see the <a href="/blog/linux-file-permissions/">Linux file permissions guide</a>.
+          </p>
+          <p>
+            <code >`# chmod — change file mode bits
+chmod 755 script.sh          # rwxr-xr-x (owner: full, group/other: read+execute)
+chmod 644 config.yaml        # rw-r--r-- (standard for config files)
+chmod 600 ~/.ssh/id_rsa      # rw------- (required by ssh-agent)
+chmod +x script.sh           # Add execute bit for all
+chmod u+x,g-w,o= script.sh  # Symbolic: add exec to owner, remove write from group, clear other
+
+# chown — change ownership
+chown alice file.txt          # Change owner to alice
+chown alice:developers file.txt  # Change owner and group
+chown -R www-data:www-data /var/www/html  # Recursive
+
+# sudo
+sudo command                  # Run as root
+sudo -u alice command         # Run as specific user
+sudo !!                       # Re-run previous command with sudo
+sudo -l                       # List allowed sudo commands for current user
+sudo -i                       # Interactive root shell (use sparingly)
+sudo -k                       # Invalidate cached sudo credentials
+
+# User management
+useradd -m -s /bin/bash bob  # Create user with home dir and bash shell
+passwd bob                   # Set password for bob
+usermod -aG docker bob        # Add bob to docker group (append, don't replace)
+id bob                       # Show user/group IDs
+groups bob                   # Show group memberships
+su - alice                   # Switch to user alice (full login environment)`</code>
+          </pre>
+        
+
+        
+          <h2>Shell Productivity: Shortcuts and Features</h2>
+          <pre >
+            <code >`# History
+history                    # Show command history
+history | grep docker      # Search history for docker commands
+!!                         # Repeat last command
+!ssh                       # Repeat last command starting with "ssh"
+ctrl+r                     # Reverse-search history interactively (type to filter)
+
+# Navigation shortcuts
+ctrl+a                     # Move cursor to beginning of line
+ctrl+e                     # Move cursor to end of line
+ctrl+u                     # Delete from cursor to beginning of line
+ctrl+k                     # Delete from cursor to end of line
+ctrl+w                     # Delete word before cursor
+alt+f / alt+b              # Move forward/backward by word
+ctrl+l                     # Clear screen (same as clear)
+
+# Useful operators
+command1 && command2       # Run command2 ONLY if command1 succeeds
+command1 || command2       # Run command2 ONLY if command1 fails
+command1 ; command2        # Run both, regardless of success
+command > file.txt         # Redirect stdout to file (overwrite)
+command >> file.txt        # Redirect stdout to file (append)
+command 2> error.log       # Redirect stderr to file
+command > out.log 2>&1     # Redirect both stdout and stderr to file
+command1 | command2        # Pipe stdout of command1 to stdin of command2
+
+# Brace expansion
+mkdir -p project/src,tests,docs   # Create three dirs in one command
+cp config,.backup                 # Copy config to config.backup
+touch file1..10.txt               # Create file1.txt through file10.txt
+
+# Aliases (put in ~/.bashrc or ~/.zshrc)
+alias ll='ls -la'
+alias gs='git status'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# Functions
+deploy() 
+  git push origin "$1" && echo "Deployed branch: $1"
+`</code>
+          </pre>
+        
+
+        
+          <h2>Modern Rust-Based CLI Alternatives</h2>
+          <p >
+            A cohort of Rust-written CLI tools has emerged since 2019 that outperform their POSIX counterparts significantly. These are not cosmetic replacements — the performance differences are measurable and reproducible.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Modern Tool</th>
+                  <th >Replaces</th>
+                  <th >Speed Gain</th>
+                  <th >GitHub Stars</th>
+                  <th >Key Advantage</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >ripgrep (rg)</td>
+                  <td >grep</td>
+                  <td >8–10× faster</td>
+                  <td >61,930</td>
+                  <td >Parallel search, respects .gitignore</td>
+                </tr>
+                <tr >
+                  <td >fd</td>
+                  <td >find</td>
+                  <td >13–23× faster</td>
+                  <td >42,346</td>
+                  <td >Case-insensitive by default, simpler syntax</td>
+                </tr>
+                <tr >
+                  <td >bat</td>
+                  <td >cat</td>
+                  <td >Similar</td>
+                  <td >57,978</td>
+                  <td >Syntax highlighting, Git diff integration</td>
+                </tr>
+                <tr >
+                  <td >eza</td>
+                  <td >ls</td>
+                  <td >Similar</td>
+                  <td >21,034</td>
+                  <td >Colors, icons, Git status per file, tree view</td>
+                </tr>
+                <tr >
+                  <td >zoxide</td>
+                  <td >cd</td>
+                  <td >N/A</td>
+                  <td >35,254</td>
+                  <td >Jump to any visited dir with partial name: z proj</td>
+                </tr>
+                <tr>
+                  <td >delta</td>
+                  <td >diff / git diff</td>
+                  <td >Similar</td>
+                  <td >22,000+</td>
+                  <td >Syntax-highlighted, line-numbered diffs</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The ripgrep benchmark (per <strong>Andrew Gallant&apos;s methodology at burntsushi.net</strong>, the tool&apos;s author) on the Linux kernel source tree (~75,000 files): ripgrep at <strong>0.082 seconds</strong> vs grep at <strong>0.671 seconds</strong>. ripgrep uses CPU SIMD instructions to scan 16–32 bytes per cycle for literal patterns and parallelizes across all CPU cores using a work-stealing thread pool.
+          </p>
+          <p>
+            fd&apos;s benchmark (from its GitHub README, measured by <strong>sharkdp</strong>): on a home directory with ~4 million files, fd is <strong>13× faster</strong> than <code >find -iname</code> and <strong>23× faster</strong> than <code >find -iregex</code>. It achieves this via parallel directory traversal and early exclusion of .gitignore-listed paths before opening them.
+          </p>
+          <p>
+            <code >`# Installation (Ubuntu/Debian)
+sudo apt install ripgrep fd-find bat eza
+
+# On Debian, fd is installed as fdfind to avoid conflict with fdclone
+# Create an alias: alias fd='fdfind'
+
+# Usage examples
+rg "TODO" ./src                      # Find TODOs in ./src (respects .gitignore)
+rg -t ts "useState"                  # Search only .ts files
+rg "console.log" --hidden            # Include hidden files
+
+fd ".env"                            # Find files named .env (case-insensitive)
+fd -e ts -E node_modules             # TypeScript files, excluding node_modules
+fd -t d "components"                 # Find directories named components
+
+bat src/index.ts                     # View with syntax highlighting
+bat -l json config.json              # Force language detection
+
+eza -la --git                        # ls -la with Git status per file
+eza --tree --level=2                 # Directory tree, 2 levels deep
+
+# Shell aliases to replace classic tools
+echo 'alias grep="rg"' >> ~/.bashrc
+echo 'alias fd="fdfind"' >> ~/.bashrc
+echo 'alias cat="batcat"' >> ~/.bashrc
+echo 'alias ls="eza"' >> ~/.bashrc`</code>
+          </pre>
+        
+
+        
+          <h2>systemd and Service Management</h2>
+          <pre >
+            <code >`# systemctl — manage services
+systemctl start nginx             # Start a service
+systemctl stop nginx              # Stop a service
+systemctl restart nginx           # Restart (stop + start)
+systemctl reload nginx            # Reload config without downtime (if supported)
+systemctl enable nginx            # Start at boot
+systemctl disable nginx           # Don't start at boot
+systemctl enable --now nginx      # Enable and start immediately
+systemctl status nginx            # Show status, recent log lines
+systemctl is-active nginx         # Returns "active" or "inactive" (scriptable)
+systemctl list-units --type=service --state=running  # All running services
+
+# Logs
+journalctl -u nginx               # All logs for nginx
+journalctl -u nginx -f            # Follow live
+journalctl -u nginx --since "1 hour ago"  # Recent logs
+journalctl -p err                 # Only error-level messages
+journalctl --disk-usage           # How much disk logs are using
+journalctl --vacuum-size=500M     # Delete old logs to stay under 500MB`</code>
+          </pre>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>What are the most important Linux commands for developers?</h3>
+              <p >
+                The core set you need daily: <code >ls/eza</code> (list), <code >cd/zoxide</code> (navigate), <code >grep/rg</code> (search), <code >find/fd</code> (find files), <code >ps/htop</code> (processes), <code >kill</code> (stop processes), <code >ssh</code> (remote access), <code >curl</code> (HTTP), <code >chmod/chown</code> (permissions), and <code >tar</code> (archives). systemctl and journalctl are also essential for server management.
+              </p>
+            
+            
+              <h3>What percentage of developers use Linux?</h3>
+              <p>
+                According to the Stack Overflow Developer Survey 2024, Ubuntu alone is used by 27.7% of developers. WSL adds another 17.1%, Debian 9.8%, Arch Linux 8%, and Fedora 4.8%. Bash/shell scripting is used by 49% of all developers per the 2025 survey. Linux powers 96.3% of top web servers globally (W3Techs 2024), so even developers not running Linux locally work with it in production.
+              </p>
+            
+            
+              <h3>Is ripgrep faster than grep?</h3>
+              <p>
+                Yes — 8–10× faster on the Linux kernel source tree (~75,000 files) per Andrew Gallant&apos;s benchmarks at burntsushi.net. ripgrep uses SIMD instructions to scan 16–32 bytes per CPU cycle for literal patterns, parallelizes across all cores, and skips binary files and .gitignore-listed paths before opening them. grep still wins for piped stdin processing and strict POSIX compliance requirements.
+              </p>
+            
+            
+              <h3>What is the difference between kill -9 and kill -15?</h3>
+              <p>
+                <code >kill -15</code> sends SIGTERM, requesting graceful shutdown — the process can catch it, flush buffers, close database connections, and exit cleanly. <code >kill -9</code> sends SIGKILL, enforced immediately by the kernel with no chance for cleanup. Always send SIGTERM first and wait; escalate to SIGKILL only if the process is unresponsive. Jumping straight to -9 risks data corruption.
+              </p>
+            
+            
+              <h3>What does sudo !! do in Linux?</h3>
+              <p>
+                <code >!!</code> expands to the last command in your shell history. So <code >sudo !!</code> re-runs your previous command prefixed with sudo — the classic fix when you forget to use sudo. If <code >systemctl restart nginx</code> fails with a permission error, run <code >sudo !!</code> and it executes <code >sudo systemctl restart nginx</code>.
+              </p>
+            
+            
+              <h3>How do I find which process is using a port on Linux?</h3>
+              <p>
+                Use <code >ss -tlnp | grep :3000</code> (replace 3000 with your port). Alternatively, <code >lsof -i :3000</code> shows the process name, PID, and user. <code >ss</code> is the modern replacement for netstat and reads directly from the kernel, so it is always accurate. netstat parses /proc files and can show stale data.
+              </p>
+            
+            
+              <h3>What is the difference between &gt; and &gt;&gt; in Linux shell?</h3>
+              <p>
+                <code >&gt;</code> redirects stdout to a file, overwriting it if it exists. <code >&gt;&gt;</code> appends to the file. For stderr: <code >2&gt;</code> redirects stderr, <code >2&gt;&gt;</code> appends stderr. To capture both stdout and stderr: <code >command &gt; output.log 2&gt;&amp;1</code>. The <code >2&gt;&amp;1</code> means redirect file descriptor 2 (stderr) to wherever file descriptor 1 (stdout) currently points.
+              </p>
+            
+            
+              <h3>How do I run a Linux command in the background?</h3>
+              <p>
+                Append <code >&amp;</code> to run in background: <code >./script.sh &amp;</code>. Use <code >nohup command &amp;</code> to keep it running after terminal close. For processes that survive SSH disconnects, use tmux or screen — create a session, start your process, detach with Ctrl+B D, and reattach later with <code >tmux attach</code>.
+              </p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>Related Developer Tools</h2>
+          <p>
+            Pair this cheat sheet with the BytePane developer toolbox — regex tester, JSON formatter, base64 encoder, hash generator, and more. All tools run in-browser with no sign-up required.
+          </p>
+          
+            <a href="/regex-tester/">
+              Regex Tester
+            </a>
+            <a href="/json-formatter/">
+              JSON Formatter
+            </a>
+            <a href="/hash-generator/">
+              Hash Generator
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/linux-command-cheat-sheet/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
