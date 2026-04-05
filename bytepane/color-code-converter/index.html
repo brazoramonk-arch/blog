@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Code Converter: HEX to RGB, HSL &amp;amp; More Online - BytePane</title>
+  <meta name="description" content="Convert color codes between HEX, RGB, HSL, and OKLCH instantly. Learn the math behind color conversion, browser support data, and when each format is the right choice.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/color-code-converter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Color Code Converter: HEX to RGB, HSL &amp;amp; More Online
+  </nav>
+
+  <article>
+    <h1>Color Code Converter: HEX to RGB, HSL &amp;amp; More Online</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/color-code-converter/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    in OKLCH, equal L values produce equal perceived brightness. For gradients and palette generation, OKLCH is noticeably better.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Why do 79.1% of websites fail color accessibility checks?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'According to the WebAIM Million 2025 report, low contrast text is the most common accessibility failure. Designers often choose colors that look fine on calibrated monitors in bright offices, but fail the 4.5:1 contrast ratio required by WCAG 2.1 AA for normal text. The problem is selecting colors visually rather than checking the mathematical contrast ratio.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What does the # symbol mean in a HEX color code?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'The # prefix identifies a hexadecimal color value in CSS. The six characters following it encode three color channels: red, green, and blue, each as two hexadecimal digits (00–FF, equivalent to 0–255 in decimal). Some contexts accept HEX without the # (e.g., certain SVG attributes or design tools), but in CSS the prefix is required.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Can I use OKLCH in all modern browsers?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Yes, with 92.93% global browser support as of February 2026. Chrome 111+ (March 2023), Firefox 113+ (May 2023), and Safari 15.4+ (March 2022) all support oklch(). For the remaining ~7%, use @supports with a HEX or HSL fallback. Given that Tailwind CSS v4 defaults to OKLCH, production usage is now very mainstream.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between HSL and OKLCH lightness?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'HSL lightness is not perceptually uniform. Yellow at hsl(60 100% 50%) appears far brighter than blue at hsl(240 100% 50%), even though both have L=50%. OKLCH uses the Oklab color space, which is mathematically calibrated to match human perception. The same L value in OKLCH produces the same perceived brightness regardless of hue — critical for accessible, consistent color palettes.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Color Code Converter
+      
+
+      /* Article Header */
+      
+        <h2>
+          Color Code Converter: HEX to RGB, HSL &amp; More Online
+        </h2>
+        
+          Design
+          <time dateTime="2026-04-05">April 5, 2026</time>
+          15 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Opening: Lead with the accessibility problem stat */
+        
+          <p>
+            Here is a number that should be uncomfortable: according to the <strong>WebAIM Million 2025 report</strong>, which analyzed 1,000,000 home pages, <strong>79.1% of websites have low-contrast text that fails WCAG 2.1 AA thresholds</strong>. That is not a niche accessibility problem — it is the single most common failure on the web, averaging 29.6 violations per page. A large part of the cause is not malice but tooling: developers and designers pick colors visually and never convert them to check the actual contrast ratio.
+          </p>
+          <p>
+            Color code conversion — between HEX, RGB, HSL, and OKLCH — is the foundation of working with color correctly in CSS and design systems. This guide covers the conversion math, explains when each format is the right choice, and gives you working JavaScript implementations you can drop into any project.
+          </p>
+          <p>
+            If you need to convert a color right now, use the <a href="/color-converter/">BytePane Color Converter</a> — it converts between HEX, RGB, HSL, and OKLCH with live preview entirely in your browser.
+          </p>
+        
+
+        /* Key Takeaways Box */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸HEX and RGB represent the same sRGB color space — HEX is just base-16 encoded RGB. Converting between them is arithmetic, not lossy.</li>
+            <li>▸HSL maps more closely to human color intuition but has a fatal flaw: its lightness value is not perceptually uniform across hues.</li>
+            <li>▸OKLCH solves HSL&apos;s perceptual problem, supports P3 wide-gamut colors, and has 92.93% browser support (Feb 2026). Tailwind CSS v4 defaulted to it in January 2025.</li>
+            <li>▸Per the HTTP Archive Web Almanac 2022, HEX is still the dominant format at ~74% of web color declarations. HSL is used on fewer than 1% of pages.</li>
+            <li>▸79.1% of websites fail color accessibility (WebAIM 2025). Use the WCAG contrast ratio formula when converting colors for text use.</li>
+          </ul>
+        
+
+        
+          <h2>HEX Color Codes: The Dominant Web Format</h2>
+          <p>
+            HEX is the oldest and most widely used CSS color format. According to <strong>HTTP Archive Web Almanac 2022 CSS data</strong>, 6-digit HEX accounts for 49% of all color declarations and 3-digit shorthand for another 25% — collectively, HEX handles approximately <strong>74% of all web color usage</strong>. It dominated at 93% as recently as 2019, and despite years of HSL advocacy, it remains engineers&apos; default choice.
+          </p>
+          <p>
+            The format is simple: <code >#RRGGBB</code> where each pair of characters is a hex byte (00–FF) encoding one color channel. The alpha channel is appended as a fourth pair in 8-digit notation: <code >#FF573380</code> (50% opacity). HEX is case-insensitive; <code >#ff5733</code> and <code >#FF5733</code> are identical.
+          </p>
+          <p>
+            <code >`/* HEX color notation */
+#FF5733    /* 6-digit: R=FF(255), G=57(87), B=33(51) */
+#F53       /* 3-digit shorthand — only when pairs double: FF→F, 55→5, 33→3 */
+#FF573380  /* 8-digit with alpha: 80 hex = 128 decimal = ~50% opacity */
+
+/* Cannot shorten #FF5733 because the pairs are not doubled */
+/* #F5734F cannot be shortened — each pair is unique */
+
+/* Named colors map to HEX internally */
+red        /* = #FF0000 */
+royalblue  /* = #4169E1 */`</code>
+          </pre>
+
+          <h3>HEX → RGB Conversion: The Algorithm</h3>
+          <p >
+            HEX to RGB conversion is pure base arithmetic — no math beyond integer parsing. Each hex pair is parsed as a base-16 integer: <code >FF</code> = 255, <code >80</code> = 128, <code >00</code> = 0. This is a lossless, reversible operation.
+          </p>
+          <p>
+            <code >`// HEX to RGB — handles 3-digit and 6-digit inputs
+function hexToRgb(hex: string):  r: number; g: number; b: number  | null 
+  // Expand 3-digit to 6-digit: #ABC → #AABBCC
+  const shorthand = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthand, (_, r, g, b) => r + r + g + g + b + b);
+
+  const result = /^#?([a-f\d]2)([a-f\d]2)([a-f\d]2)$/i.exec(hex);
+  if (!result) return null;
+
+  return 
+    r: parseInt(result[1], 16), // FF → 255
+    g: parseInt(result[2], 16), // 57 → 87
+    b: parseInt(result[3], 16), // 33 → 51
+  ;
+
+// RGB to HEX
+function rgbToHex(r: number, g: number, b: number): string 
+  return '#' + [r, g, b]
+    .map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0'))
+    .join('')
+    .toUpperCase();
+
+// Examples
+hexToRgb('#FF5733')  //  r: 255, g: 87, b: 51 
+rgbToHex(255, 87, 51) // '#FF5733'`</code>
+          </pre>
+        
+
+        
+          <h2>RGB → HSL Conversion: The Full Math</h2>
+          <p >
+            RGB to HSL conversion is non-trivial. Unlike HEX↔RGB (which is just base conversion), this involves finding the dominant channel, computing a relative range, and then projecting into cylindrical color space. The algorithm follows the IEC 61966-2-1 sRGB specification.
+          </p>
+          <p>
+            <code >`// RGB to HSL — returns  h: 0-360, s: 0-100, l: 0-100 
+function rgbToHsl(r: number, g: number, b: number):  h: number; s: number; l: number  
+  // Step 1: Normalize to 0–1 range
+  r /= 255; g /= 255; b /= 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const delta = max - min;
+
+  // Step 2: Calculate Lightness
+  const l = (max + min) / 2;
+
+  // Step 3: Calculate Saturation
+  const s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+
+  // Step 4: Calculate Hue (which channel is dominant?)
+  let h = 0;
+  if (delta !== 0) 
+    switch (max) 
+      case r: h = ((g - b) / delta) % 6; break;
+      case g: h = (b - r) / delta + 2; break;
+      case b: h = (r - g) / delta + 4; break;
+    
+    h = Math.round(h * 60);
+    if (h < 0) h += 360;
+  
+
+  return 
+    h,
+    s: Math.round(s * 100),
+    l: Math.round(l * 100),
+  ;
+
+// HSL to RGB — MDN-recommended algorithm
+function hslToRgb(h: number, s: number, l: number):  r: number; g: number; b: number  
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = (n: number) => 
+    const k = (n + h / 30) % 12;
+    return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+  ;
+  return 
+    r: Math.round(f(0) * 255),
+    g: Math.round(f(8) * 255),
+    b: Math.round(f(4) * 255),
+  ;
+
+// Example: #FF5733
+// rgbToHsl(255, 87, 51) →  h: 11, s: 100, l: 60 
+// Meaning: warm orange-red, fully saturated, 60% lightness`</code>
+          </pre>
+          <p >
+            The HSL model is intuitive: hue rotates around a color wheel (0°=red, 120°=green, 240°=blue), saturation controls purity, and lightness controls brightness. It is why CSS custom properties for theming often use HSL — generating a hover state is just <code >hsl(from var(--color) h s calc(l - 10%))</code>.
+          </p>
+          <p>
+            But HSL has a serious flaw that matters for accessibility: its lightness value is perceptually non-uniform. Yellow at <code >hsl(60 100% 50%)</code> appears dramatically brighter than blue at <code >hsl(240 100% 50%)</code> despite identical L values. This makes algorithmic palette generation unreliable — which is why <strong>OKLCH</strong> was developed.
+          </p>
+          <p>
+            For more depth on the full color format landscape, see our guide to <a href="/blog/color-formats-hex-rgb-hsl/">color formats: HEX, RGB, HSL &amp; beyond</a>.
+          </p>
+        
+
+        
+          <h2>OKLCH: The Format That Gets Lightness Right</h2>
+          <p>
+            OKLCH (Lightness, Chroma, Hue in the Oklab color space) solves HSL&apos;s perceptual uniformity problem. It was designed by Björn Ottosson in 2020 specifically to address the hue-lightness inconsistency in earlier CIE Lab-based spaces like LCH. The &ldquo;OK&rdquo; prefix stands for Ottosson&apos;s corrected Oklab space.
+          </p>
+          <p>
+            The critical adoption signal: <strong>Tailwind CSS v4, released January 2025</strong>, migrated its entire 242-color default palette to OKLCH. For the Tailwind team, the primary motivation was supporting P3 wide-gamut colors on modern displays — sRGB (which HEX/RGB/HSL are limited to) covers only about 35% of human-visible colors, while P3 adds roughly 30% more, visible on all iPhones since 2016 and most modern OLED displays.
+          </p>
+          <p>
+            <code >`/* OKLCH syntax */
+/* oklch(L C H) — L: 0–1, C: 0–0.4+, H: 0–360 */
+.brand-color 
+  color: oklch(0.65 0.18 27); /* orange-red, ~equivalent to #FF5733 */
+
+/* The power: manipulating with CSS relative color syntax */
+.brand-hover 
+  /* Darken by reducing lightness — perceptually consistent across ALL hues */
+  color: oklch(from var(--brand) calc(l - 0.1) c h);
+
+/* Generate a full color scale algorithmically */
+:root 
+  --base-hue: 27;
+  --color-100: oklch(0.95 0.04 var(--base-hue));
+  --color-500: oklch(0.65 0.18 var(--base-hue));
+  --color-900: oklch(0.25 0.10 var(--base-hue));
+  /* Each step is perceptually equidistant — unlike HSL */
+
+/* Wide-gamut P3 color (impossible in HEX/RGB/HSL) */
+.vivid-green 
+  color: oklch(0.85 0.30 145); /* Beyond sRGB gamut */
+
+/* Feature detection fallback */
+@supports not (color: oklch(0 0 0)) 
+  .vivid-green 
+    color: #4CAF50; /* sRGB fallback */
+  
+`</code>
+          </pre>
+          <p >
+            Converting RGB to OKLCH requires a chain of matrix transformations: sRGB → Linear RGB (gamma removal) → XYZ-D65 → Oklab (via two 3×3 matrices) → OKLCH (polar coordinates). It is too computationally involved for manual calculation — use the <a href="/color-converter/">Color Converter tool</a> or the <code >colorjs</code> library (the reference implementation).
+          </p>
+        
+
+        
+          <h2>Format Comparison: HEX vs RGB vs HSL vs OKLCH</h2>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Property</th>
+                  <th >HEX</th>
+                  <th >RGB</th>
+                  <th >HSL</th>
+                  <th >OKLCH</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Color gamut</td>
+                  <td >sRGB only</td>
+                  <td >sRGB only</td>
+                  <td >sRGB only</td>
+                  <td >P3, Rec2020+</td>
+                </tr>
+                <tr >
+                  <td >Perceptual uniformity</td>
+                  <td >No</td>
+                  <td >No</td>
+                  <td >Partial</td>
+                  <td >Yes</td>
+                </tr>
+                <tr >
+                  <td >Human-readable</td>
+                  <td >No</td>
+                  <td >Partial</td>
+                  <td >Yes</td>
+                  <td >Yes</td>
+                </tr>
+                <tr >
+                  <td >Browser support</td>
+                  <td >~100%</td>
+                  <td >~100%</td>
+                  <td >~100%</td>
+                  <td >92.93%</td>
+                </tr>
+                <tr >
+                  <td >Copy-paste utility</td>
+                  <td >Excellent</td>
+                  <td >Good</td>
+                  <td >Good</td>
+                  <td >Moderate</td>
+                </tr>
+                <tr >
+                  <td >Gradient quality</td>
+                  <td >Dead zones</td>
+                  <td >Dead zones</td>
+                  <td >Varies</td>
+                  <td >Smooth/natural</td>
+                </tr>
+                <tr >
+                  <td >Figma native support</td>
+                  <td >Yes</td>
+                  <td >Yes</td>
+                  <td >Yes</td>
+                  <td >Plugin only</td>
+                </tr>
+                <tr >
+                  <td >Web usage (HTTP Archive 2022)</td>
+                  <td >~74%</td>
+                  <td >~15%</td>
+                  <td >&lt;1%</td>
+                  <td >Growing</td>
+                </tr>
+                <tr>
+                  <td >Tailwind v4 default</td>
+                  <td >No</td>
+                  <td >No</td>
+                  <td >No</td>
+                  <td >Yes (2025)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The practical recommendation: use HEX for copy-pasting from design tools, RGB when you need programmatic alpha channels in older codebases, HSL for legacy CSS variable systems, and <strong>OKLCH for all new CSS and design tokens in 2026</strong>. The Figma OKLCH gap is real but closing — plugins like OKLCH Picker provide workflow parity.
+          </p>
+        
+
+        
+          <h2>CSS Color Level 4: New Features That Changed the Game</h2>
+          <p>
+            The W3C CSS Color Module Level 4 (Candidate Recommendation Draft, March 2026) introduced three features that make color conversion and manipulation dramatically more powerful directly in CSS.
+          </p>
+
+          <h3>color-mix(): Mixing Colors in Any Color Space</h3>
+          <p>
+            <code >`/* color-mix() — Baseline 2023, all modern browsers */
+.example 
+  /* Mix red and blue, 30% red, 70% blue, computed in oklch space */
+  background: color-mix(in oklch, red 30%, blue);
+
+  /* The color space matters — different spaces produce different results */
+  /* in srgb: produces grey dead zone for opposite hues */
+  /* in oklch: smooth, perceptually uniform mix */
+  background: color-mix(in oklch, #FF0000, #0000FF);      /* vivid purple */
+  background: color-mix(in srgb, #FF0000, #0000FF);       /* muddy grey */
+
+/* Useful for hover states without JavaScript */
+.button 
+  --color: oklch(0.65 0.18 27);
+  background: var(--color);
+
+.button:hover 
+  background: color-mix(in oklch, var(--color) 80%, black);
+`</code>
+          </pre>
+
+          <h3>Relative Color Syntax: Modifying Existing Colors</h3>
+          <pre >
+            <code >`/* Relative color syntax — Baseline 2024 (Chrome 119+, Firefox 128+, Safari 16.4+) */
+:root 
+  --brand: oklch(0.65 0.18 27);
+
+.lighter 
+  /* Take --brand, keep its chroma and hue, add 0.15 to lightness */
+  color: oklch(from var(--brand) calc(l + 0.15) c h);
+
+.desaturated 
+  /* Keep hue and lightness, halve the chroma */
+  color: oklch(from var(--brand) l calc(c * 0.5) h);
+
+.complementary 
+  /* Rotate hue by 180° — creates the complementary color */
+  color: oklch(from var(--brand) l c calc(h + 180));
+
+/* This replaces dozens of CSS variables with one source of truth */`</code>
+          </pre>
+
+          <h3>light-dark(): Theme-Aware Color Values</h3>
+          <pre >
+            <code >`/* light-dark() — Chrome 123+, Firefox 120+, Safari 17.5+ */
+:root 
+  color-scheme: light dark;
+
+.card 
+  background: light-dark(
+    oklch(0.97 0.02 27),  /* light mode: very light orange */
+    oklch(0.20 0.04 27)   /* dark mode: very dark orange */
+  );
+  color: light-dark(
+    oklch(0.20 0.05 27),
+    oklch(0.90 0.05 27)
+  );
+`</code>
+          </pre>
+          <p >
+            These three features together eliminate most JavaScript-based color manipulation from design systems. Converting a brand color to a full accessible palette — hover states, disabled states, dark mode variants — is now achievable in pure CSS.
+          </p>
+          <p>
+            For hands-on color exploration, the <a href="/color-picker/">BytePane Color Picker</a> supports OKLCH and shows the contrast ratio against common background colors in real time.
+          </p>
+        
+
+        
+          <h2>Color Conversion and Accessibility: The WCAG Contrast Ratio</h2>
+          <p>
+            Converting colors is not just a visual workflow — it is a prerequisite for accessibility compliance. WCAG 2.1 requires a <strong>4.5:1 contrast ratio</strong> for normal text (Level AA) and <strong>7:1</strong> for enhanced (Level AAA). Large text (24px+ or 18px+ bold) has a lower minimum of 3:1.
+          </p>
+          <p>
+            The contrast ratio is computed from relative luminance — a value derived from linearized RGB, not from HSL lightness or OKLCH L. This is why you cannot eyeball accessibility: two colors that look fine on a calibrated monitor may fail at 3.2:1 in the math. The <strong>WebAIM Million 2025 report</strong> found 94.8% of all tested home pages had at least one detectable WCAG failure, with low contrast text appearing on 79.1% of all pages.
+          </p>
+          <p>
+            <code >`// WCAG 2.1 contrast ratio calculation
+// Input: two RGB colors
+function getRelativeLuminance(r: number, g: number, b: number): number 
+  // Step 1: Normalize to 0–1
+  const [rs, gs, bs] = [r, g, b].map(c => c / 255);
+
+  // Step 2: Linearize (remove gamma)
+  const linearize = (c: number) =>
+    c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+
+  const [rl, gl, bl] = [rs, gs, bs].map(linearize);
+
+  // Step 3: Compute luminance per WCAG formula
+  return 0.2126 * rl + 0.7152 * gl + 0.0722 * bl;
+
+function getContrastRatio(hex1: string, hex2: string): number 
+  const  r: r1, g: g1, b: b1  = hexToRgb(hex1)!;
+  const  r: r2, g: g2, b: b2  = hexToRgb(hex2)!;
+
+  const l1 = getRelativeLuminance(r1, g1, b1);
+  const l2 = getRelativeLuminance(r2, g2, b2);
+
+  const lighter = Math.max(l1, l2);
+  const darker  = Math.min(l1, l2);
+  lighter + 0.05) / (darker + 0.05);
+
+// Examples
+getContrastRatio('#FFFFFF', '#000000') // 21:1 — maximum contrast
+getContrastRatio('#FFFFFF', '#767676') // 4.54:1 — passes AA normal text
+getContrastRatio('#FFFFFF', '#949494') // 2.85:1 — fails AA normal text`</code>
+          </pre>
+          <p >
+            Notice that the luminance formula uses channel weights (R: 21.26%, G: 71.52%, B: 7.22%) because human eyes are most sensitive to green. This is why yellow text on white is almost always inaccessible despite looking bright — the green and red channels both contribute high luminance, and white contributes even higher, leaving almost no contrast ratio.
+          </p>
+        
+
+        
+          <h2>Complete Color Conversion Reference: All Format Pairs</h2>
+          <p>
+            The table below shows the conversion chain between all four major CSS color formats. Direct conversions exist for HEX↔RGB. All other conversions route through RGB as an intermediate step.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >From → To</th>
+                  <th >Direct?</th>
+                  <th >Intermediate Steps</th>
+                  <th >Lossless?</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >HEX → RGB</td>
+                  <td >Yes</td>
+                  <td >parseInt(hex, 16)</td>
+                  <td >Yes</td>
+                </tr>
+                <tr >
+                  <td >RGB → HEX</td>
+                  <td >Yes</td>
+                  <td >n.toString(16)</td>
+                  <td >Yes</td>
+                </tr>
+                <tr >
+                  <td >HEX → HSL</td>
+                  <td >No</td>
+                  <td >HEX → RGB → HSL</td>
+                  <td >Near-lossless*</td>
+                </tr>
+                <tr >
+                  <td >HSL → HEX</td>
+                  <td >No</td>
+                  <td >HSL → RGB → HEX</td>
+                  <td >Near-lossless*</td>
+                </tr>
+                <tr >
+                  <td >RGB → OKLCH</td>
+                  <td >No</td>
+                  <td >sRGB → Linear → XYZ-D65 → Oklab → OKLCH</td>
+                  <td >Yes (within sRGB)</td>
+                </tr>
+                <tr>
+                  <td >OKLCH → HEX</td>
+                  <td >No</td>
+                  <td >OKLCH → Oklab → XYZ → Linear → sRGB → HEX</td>
+                  <td >May clip P3 colors</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            * Near-lossless: floating-point rounding during HSL conversion may shift RGB values by ±1. Round-tripping HEX→HSL→HEX may not produce identical HEX output.
+          </p>
+        
+
+        
+          <h2>When to Use Each Color Format</h2>
+
+          <h3>Use HEX when:</h3>
+          <ul>
+            <li>•Copying colors from Figma, Sketch, or any design tool (they all export HEX)</li>
+            <li>•Writing utility CSS or Tailwind classes where brevity matters</li>
+            <li>•Setting colors in SVG attributes or HTML inline styles</li>
+            <li>•Legacy codebases where consistency with existing code outweighs other factors</li>
+          </ul>
+
+          <h3>Use HSL when:</h3>
+          <ul>
+            <li>•Building a CSS variable-based design token system that will be modified by non-OKLCH-familiar designers</li>
+            <li>•Working in a codebase that predates CSS Color Level 4 and has established HSL conventions</li>
+            <li>•Need 100% browser compatibility including older mobile browsers</li>
+          </ul>
+
+          <h3>Use OKLCH for all new projects in 2026:</h3>
+          <ul>
+            <li>•New design systems and CSS custom property sets (92.93% browser support)</li>
+            <li>•Gradient generation (no grey dead zones)</li>
+            <li>•Palette generation from a single seed color (consistent perceived lightness)</li>
+            <li>•Any project targeting modern displays (iPhone, OLED) where P3 wide-gamut is a feature</li>
+            <li>•Using Tailwind CSS v4 (it defaults to OKLCH)</li>
+          </ul>
+          <p>
+            Related reading: <a href="/blog/css-flexbox-vs-grid/">CSS Flexbox vs Grid</a> for layout decisions, and see the <a href="/blog/web-accessibility-testing-guide/">Web Accessibility Testing Guide</a> for integrating contrast checking into your CI/CD pipeline.
+          </p>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>How do I convert HEX to RGB?</h3>
+              <p>
+                Split the HEX code into three two-character pairs and convert each from base-16 to decimal. For <code >#FF5733</code>: FF = 255, 57 = 87, 33 = 51, giving <code >rgb(255, 87, 51)</code>. In JavaScript, <code >parseInt(&quot;FF&quot;, 16)</code> returns 255. For 3-digit HEX, expand first: <code >#F53</code> → <code >#FF5533</code>.
+              </p>
+            
+            
+              <h3>What is the difference between RGB and HSL?</h3>
+              <p>
+                RGB and HSL encode the same sRGB colors differently. RGB defines colors by mixing light channels (red, green, blue, 0–255 each). HSL uses hue angle (0–360°), saturation percentage, and lightness percentage. HSL is more intuitive for manipulation — darkening means reducing lightness. They represent identical color ranges; no colors are accessible in one but not the other.
+              </p>
+            
+            
+              <h3>Should I use HSL or OKLCH in CSS in 2026?</h3>
+              <p>
+                OKLCH for new projects. It has 92.93% browser support as of early 2026 and Tailwind CSS v4 adopted it as default in January 2025. Its critical advantage over HSL: equal L values produce equal perceived brightness across all hues, making palette and hover state generation reliable. HSL&apos;s lightness is mathematically defined but perceptually inconsistent — yellow at 50% lightness looks far brighter than blue at 50% lightness.
+              </p>
+            
+            
+              <h3>Why do 79.1% of websites fail color accessibility checks?</h3>
+              <p>
+                According to the WebAIM Million 2025 report, low contrast text is the most common accessibility failure, averaging 29.6 violations per page. The root cause: designers select colors visually on calibrated monitors in bright offices, without checking the WCAG contrast ratio formula. Colors that look fine at high brightness often fail the 4.5:1 AA threshold when rendered under different conditions.
+              </p>
+            
+            
+              <h3>What does the # symbol mean in a HEX color code?</h3>
+              <p>
+                The <code >#</code> prefix identifies a hexadecimal color value in CSS. The six characters following it encode three color channels (red, green, blue) as two hexadecimal digits each (00–FF, equivalent to 0–255 decimal). Some contexts accept HEX without the prefix (certain SVG attributes, some design tools), but in CSS it is required syntax.
+              </p>
+            
+            
+              <h3>Can I use OKLCH in all modern browsers?</h3>
+              <p>
+                Yes. Chrome/Edge 111+ (March 2023), Firefox 113+ (May 2023), and Safari 15.4+ (March 2022) all support <code >oklch()</code>. Global support is 92.93% as of February 2026. For the ~7% remainder, add a HEX or HSL fallback above the OKLCH declaration. CSS ignores properties it does not understand, so the fallback pattern works without <code >@supports</code>.
+              </p>
+            
+            
+              <h3>What is the difference between HSL and OKLCH lightness?</h3>
+              <p>
+                HSL lightness is a mathematical average of the RGB channels — not calibrated to human perception. Yellow at <code >hsl(60 100% 50%)</code> looks far brighter than blue at <code >hsl(240 100% 50%)</code>, despite identical L values. OKLCH derives L from the Oklab model, which is calibrated against psychophysical data. Equal OKLCH L values produce equal perceived brightness across all hues.
+              </p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>Convert Color Codes Instantly</h2>
+          <p>
+            Use the BytePane Color Converter to convert between HEX, RGB, HSL, and OKLCH with live preview — no sign-up, no tracking, runs entirely in your browser.
+          </p>
+          <a href="/color-converter/">
+            Open Color Converter →
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/color-code-converter/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
