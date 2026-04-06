@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mulch Calculator: How Many Bags or Yards for Your Garden - HammerIO</title>
+  <meta name="description" content="Calculate exactly how many bags or cubic yards of mulch you need. Coverage tables by depth, cost by type, and depth recommendations for every application.">
+  <link rel="canonical" href="https://www.hammerio.com/blog/mulch-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/hammerio/">HammerIO</a> &rarr; Mulch Calculator: How Many Bags or Yards for Your Garden
+  </nav>
+
+  <article>
+    <h1>Mulch Calculator: How Many Bags or Yards for Your Garden</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.hammerio.com/blog/mulch-calculator/">hammerio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Mulch Calculator: How Many Bags or Yards for Your Garden',
+    description: 'The complete formula for calculating mulch quantity — cubic yards, bag counts, coverage tables by depth, cost comparison by type, and recommended depths for every landscape application.',
+    datePublished: '2026-04-05',
+    dateModified: '2026-04-05',
+    author: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+    ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+      logo: 
+        '@type': 'ImageObject',
+        url: 'https://hammerio.com/favicon.svg',
+      ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://hammerio.com/blog/mulch-calculator/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://hammerio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://hammerio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Mulch Calculator Guide', item: 'https://hammerio.com/blog/mulch-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do I calculate how much mulch I need?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Use this formula: Cubic Yards = (Area in sq ft × Depth in inches) ÷ 324. For example, a 300 sq ft garden bed at 3 inches deep needs (300 × 3) ÷ 324 = 2.78 cubic yards, which rounds to 3 yards bulk or about 40 bags (2 cu ft each). The number 324 comes from 12 inches per foot × 27 cubic feet per cubic yard.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many bags of mulch equal a cubic yard?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'One cubic yard equals 27 cubic feet. A standard 2 cu ft bag of mulch: 27 ÷ 2 = 13.5 bags. Always buy 14 bags to have a safe cushion. For 1.5 cu ft bags, you need 18; for 3 cu ft bags, you need 9. Buying in bags costs 35–60% more than bulk delivery per cubic yard.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How deep should I lay mulch?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For most flower beds and shrubs, 2–3 inches is the standard recommendation per Iowa State University Extension. Trees need 3–4 inches kept 2–3 inches away from the trunk. Vegetable gardens do best with 1–2 inches of fine material. Playgrounds require 4–6 inches of wood chips. Never exceed 4 inches on ornamental beds — excessive depth causes root rot and anaerobic conditions.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much does a cubic yard of mulch cost?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'According to LawnStarter 2025 data, bulk mulch runs $30–$135 per cubic yard depending on type. Standard shredded hardwood runs $30–$55/cy. Cedar costs $55–$110/cy. Rubber mulch reaches $80–$160/cy. Delivered and installed, expect to pay $77–$94 per cubic yard all-in for labor, delivery, and material per LawnStarter national contractor data.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is bulk mulch or bagged mulch cheaper?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Bulk is almost always cheaper — typically 35–60% less per cubic yard than buying bags. At $4 per 2 cu ft bag, one cubic yard costs $54 in bags vs. $30–$40 for the same volume bulk delivered. Bags make sense for small projects under 2 cubic yards, touch-ups, or when you lack vehicle space for bulk delivery.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many square feet does a yard of mulch cover?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'One cubic yard of mulch covers 324 sq ft at 1 inch deep, 162 sq ft at 2 inches, 108 sq ft at 3 inches, and 81 sq ft at 4 inches. Most homeowners use 3 inches as the standard depth for ornamental beds, meaning a single cubic yard covers roughly a 10×11 foot garden area.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the best mulch for vegetable gardens?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For vegetable gardens, use straw, untreated wood chips, or compost at 1–2 inches deep. Avoid dyed or rubber mulch in edible beds. The USDA Forest Service notes that wood chip mulch improves soil moisture retention and beneficial microbial activity. Fine-textured mulches work better around seedlings; coarser material suits established plants.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How often should mulch be replaced?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Organic mulches — bark, wood chips, straw — break down and typically need replenishment every 1–2 years. Rather than removing old mulch, simply top-dress with 1–2 inches of fresh material to restore depth. The EPA recommends recycled wood mulch as a sustainable option that reduces landfill burden. Rubber mulch lasts 10+ years but does not improve soil health.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Mulch Calculator Guide</li>
+          </ol>
+        
+
+        /* Header */
+        
+          
+            Landscaping
+            12 min read
+            <time  dateTime="2026-04-05">April 5, 2026</time>
+          
+          <h2>
+            Mulch Calculator: How Many Bags or Yards for Your Garden
+          </h2>
+          <p>
+            Every spring I watch homeowners load up pickup trucks with bags of mulch, do the math in the parking lot, and drive back for a second load anyway. The formula takes 30 seconds. Here is everything you need to calculate exactly how much mulch you need — bulk or bagged — before you spend a dollar.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>&#10003;Formula: (sq ft × depth in inches) ÷ 324 = cubic yards needed</li>
+            <li>&#10003;One cubic yard = 13.5 bags of 2 cu ft mulch — buy 14 to be safe</li>
+            <li>&#10003;Standard depth: 2–3" for flower beds; 3–4" for trees; 1–2" for vegetable gardens</li>
+            <li>&#10003;Bulk mulch runs $30–$135/cubic yard; bagged costs 35–60% more per equivalent volume</li>
+            <li>&#10003;Never pile mulch against tree trunks — "mulch volcanoes" kill trees over 3–5 years</li>
+          </ul>
+        
+
+        /* CTA Banner */
+        
+          <h2>Calculate Your Mulch Order in Seconds</h2>
+          <p>Enter your bed dimensions and depth to get cubic yards, bag count, and estimated cost instantly.</p>
+          <a href="/mulch-calculator/">
+            Try Our Free Mulch Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+          </a>
+        
+
+        /* Content */
+        
+
+          <h2>The Mulch Quantity Formula</h2>
+          <p >
+            There is one formula that handles every mulch calculation, whether you are buying bulk by the yard or bagging it from a big-box store:
+          </p>
+          
+            <p>
+              <strong>Cubic Yards = (Area in sq ft × Depth in inches) ÷ 324</strong>
+            </p>
+            <p>
+              <strong>Bags (2 cu ft) = Cubic Yards × 13.5</strong>
+            </p>
+            <p>
+              The constant 324 comes from: 12 in/ft × 27 cu ft/cu yd = 324 sq ft·in per cu yd
+            </p>
+          
+          <p>
+            Worked example: You have a front garden that measures 40 feet wide and 8 feet deep (320 sq ft) and you want to apply 3 inches of mulch.
+          </p>
+          <ul>
+            <li>Cubic yards = (320 × 3) ÷ 324 = 960 ÷ 324 = <strong>2.96 cubic yards</strong> → order 3 yards</li>
+            <li>Bags needed = 2.96 × 13.5 = 39.9 → buy <strong>40 bags</strong> of 2 cu ft mulch</li>
+          </ul>
+          <p>
+            For irregular beds, break the area into rectangles, calculate each section separately, then add all the volumes together before converting to bags. Do not round up on each individual section — that stacks errors and leads to over-ordering.
+          </p>
+          <p>
+            For more complex volume calculations across multiple landscaping materials, the <a href="/blog/cubic-yard-calculator/">cubic yard calculator guide</a> walks through the math for gravel, topsoil, and fill dirt alongside mulch.
+          </p>
+
+          <h2>Coverage Table: How Much Area Does 1 Cubic Yard Cover?</h2>
+          <p>
+            The table below gives the quick reference for anyone who starts from a yard quantity rather than a square footage. These numbers are exact — there is no estimation involved:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Depth Applied</th>
+                    <th >1 Cu Yd Covers</th>
+                    <th >Bags per Cu Yd (2 cu ft)</th>
+                    <th >Approx. Bed Size</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >1 inch</td><td >324 sq ft</td><td >13.5 → buy 14</td><td >18 × 18 ft</td></tr>
+                  <tr ><td >2 inches</td><td >162 sq ft</td><td >13.5 → buy 14</td><td >13 × 12 ft</td></tr>
+                  <tr ><td >3 inches (standard)</td><td >108 sq ft</td><td >13.5 → buy 14</td><td >10 × 11 ft</td></tr>
+                  <tr ><td >4 inches</td><td >81 sq ft</td><td >13.5 → buy 14</td><td >9 × 9 ft</td></tr>
+                  <tr><td >6 inches (playground)</td><td >54 sq ft</td><td >13.5 → buy 14</td><td >7 × 8 ft</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Note: bags per cu yd is constant (always 13.5 for 2 cu ft bags) regardless of depth. Depth only changes how far a yard stretches.</p>
+          
+
+          <h2>Bags vs. Bulk: What Actually Costs Less?</h2>
+          <p>
+            The cost math on this is not even close. According to LawnStarter 2025 contractor survey data, bulk shredded hardwood mulch runs $30–$55 per cubic yard. Standard 2 cu ft bags at a big-box store run $3.25–$6.50 each — meaning you pay $44–$88 per cubic yard equivalent in bags. That is a 35–60% premium to haul it yourself in paper bags.
+          </p>
+          <p>
+            The break-even point for most homeowners is 2 cubic yards. Below that, bags are convenient and the cost difference is small in absolute terms. Above 2 yards, call a mulch supplier. A typical bulk delivery charge runs $50–$100 flat for 2–4 yards, and the material savings pay for it easily.
+          </p>
+          
+            <h3>Mulch Cost Comparison: Bulk vs. Bagged (2026)</h3>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Mulch Type</th>
+                    <th >Bulk (per cu yd)</th>
+                    <th >Bagged equiv. per cu yd</th>
+                    <th >Premium for Bags</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Shredded hardwood</td><td >$30–$55</td><td >$44–$66</td><td >+35–50%</td></tr>
+                  <tr ><td >Pine bark</td><td >$30–$40</td><td >$44–$54</td><td >+35–47%</td></tr>
+                  <tr ><td >Dyed/colored</td><td >$40–$65</td><td >$67–$88</td><td >+40–60%</td></tr>
+                  <tr ><td >Cedar</td><td >$55–$110</td><td >$67–$95</td><td >Varies</td></tr>
+                  <tr><td >Rubber mulch</td><td >$80–$160</td><td >$270–$338 equiv.</td><td >+100–200%</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: LawnStarter 2025 national contractor pricing survey; HomeAdvisor cost data</p>
+          
+          <p>
+            Rubber mulch deserves a special note. At $80–$160 per yard bulk, it looks expensive — but it lasts 10+ years where organic mulch needs refreshing annually. For a playground application where you are installing 4–6 inches over 400 sq ft, the 10-year cost comparison can flip in rubber's favor. For garden beds, organic mulch wins hands down because it decomposes and feeds the soil. The <a href="/blog/landscaping-budget-guide/">landscaping budget guide</a> covers long-term material ROI in more detail.
+          </p>
+
+          <h2>Mulch Depth by Application: What the Research Actually Says</h2>
+          <p>
+            Depth recommendations are not arbitrary — they come from decades of university extension research on soil moisture, weed suppression, and root health. The most common mistake I see on job sites is over-mulching: piling 6–8 inches around ornamental plants and trees because "more seems better." It is not. According to Iowa State University Extension and the University of Florida IFAS Extension, excessive mulch depth creates anaerobic conditions that kill roots and harbor harmful pathogens.
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Application</th>
+                    <th >Recommended Depth</th>
+                    <th >Notes</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Flower / perennial beds</td><td >2–3 inches</td><td >Standard for weed suppression; refresh annually</td></tr>
+                  <tr ><td >Shrub borders</td><td >2–3 inches</td><td >Keep mulch 2–3" from stems</td></tr>
+                  <tr ><td >Trees (drip zone)</td><td >3–4 inches</td><td >Never against trunk — causes crown rot and bark death</td></tr>
+                  <tr ><td >Vegetable garden</td><td >1–2 inches</td><td >Fine-textured only; deeper smothers seedlings</td></tr>
+                  <tr ><td >Pathways / walkways</td><td >3–4 inches</td><td >Coarser materials resist displacement</td></tr>
+                  <tr ><td >Playground safety surface</td><td >4–6 inches</td><td >Per ASTM F1292 fall attenuation standards; wood chips or rubber</td></tr>
+                  <tr><td >Slopes / erosion control</td><td >2–3 inches</td><td >Coarser mulch — straw or larger chips — resists washout</td></tr>
+                </tbody>
+              </table>
+            
+          
+          <p>
+            The "mulch volcano" — where mulch is piled 8–12 inches up against a tree trunk — is one of the most common landscaping mistakes in residential neighborhoods. Colorado State University Extension CMG GardenNotes document exactly why: it keeps bark perpetually moist, invites wood-boring insects, and prevents the root flare from drying out. Trees develop girdling roots in response, strangling themselves. I have seen 30-year-old oaks killed by this practice in under five years.
+          </p>
+
+          <h2>How Much Mulch for Common Project Sizes</h2>
+          <p>
+            Rather than recalculating every time, use the quick-reference table below. These figures are calculated using the standard formula at 3-inch depth — the most common residential application:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Project Area</th>
+                    <th >2" Depth</th>
+                    <th >3" Depth</th>
+                    <th >4" Depth</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >100 sq ft (small bed)</td><td >0.6 yd / 9 bags</td><td >0.9 yd / 13 bags</td><td >1.2 yd / 17 bags</td></tr>
+                  <tr ><td >200 sq ft</td><td >1.2 yd / 17 bags</td><td >1.9 yd / 26 bags</td><td >2.5 yd / 34 bags</td></tr>
+                  <tr ><td >400 sq ft</td><td >2.5 yd / 34 bags</td><td >3.7 yd / 50 bags</td><td >5.0 yd / 67 bags</td></tr>
+                  <tr ><td >500 sq ft (medium yard)</td><td >3.1 yd / 42 bags</td><td >4.6 yd / 62 bags</td><td >6.2 yd / 84 bags</td></tr>
+                  <tr ><td >1,000 sq ft</td><td >6.2 yd / 84 bags</td><td >9.3 yd / 125 bags</td><td >12.3 yd / 167 bags</td></tr>
+                  <tr><td >2,500 sq ft (large yard)</td><td >15.4 yd / 208 bags</td><td >23.1 yd / 312 bags</td><td >30.9 yd / 417 bags</td></tr>
+                </tbody>
+              </table>
+            
+            <p>All bag counts assume 2 cu ft bags; round up to full bags. Source: LawnStarter Mulch Calculator; calculated using (sq ft × depth) ÷ 324 formula</p>
+          
+          <p>
+            At 500+ square feet, you have crossed into bulk territory without question. Bagging that 4.6 cubic yards would cost $44–$54 per yard in bags versus $30–$40 per yard bulk — you would spend $65–$115 extra just for the convenience of carrying bags. At 1,000 sq ft, the savings hit $150–$250 compared to bags.
+          </p>
+
+          <h2>Installed Cost: Labor, Delivery, and Material</h2>
+          <p>
+            If you are hiring this out, understand the full cost structure. According to HomeAdvisor 2025 data (sourced from post-project customer surveys combined with U.S. Bureau of Labor Statistics wage data), a typical residential mulching project costs $100–$350 with a national average near $180. That figure includes delivery and spreading labor but not old mulch removal.
+          </p>
+          
+            <h3>Mulch Installation Cost Breakdown (2026)</h3>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Cost Component</th>
+                    <th >Typical Range</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Material (bulk shredded hardwood)</td><td >$30–$55/cu yd</td></tr>
+                  <tr ><td >Delivery (flat fee, 2–4 yards)</td><td >$50–$100</td></tr>
+                  <tr ><td >Labor (spreading, hand raking)</td><td >$20–$60/cu yd</td></tr>
+                  <tr ><td >Old mulch removal</td><td >$50–$75/hr + $50–$100 disposal</td></tr>
+                  <tr ><td >Blowing service (large jobs)</td><td >$40–$60/cu yd all-in</td></tr>
+                  <tr><td >All-in installed average</td><td >$77–$94/cu yd</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: LawnStarter 2025 contractor pricing survey; HomeAdvisor post-project survey data</p>
+          
+          <p>
+            One cost most homeowners miss: old mulch removal. If you have 3+ inches of decomposed mulch from previous years, contractors charge separately to strip it before adding fresh material. If the old layer is less than 2 inches deep and not compacted, you can often just top-dress over it — no removal needed.
+          </p>
+          <p>
+            Mulch blowing (pneumatic delivery direct from a truck) is the professional standard for large properties. At $40–$60 per cubic yard all-in, it is often cheaper than individual labor plus material once you exceed 15–20 cubic yards — the blower eliminates most of the manual spreading labor.
+          </p>
+
+          <h2>Mulch Types: Which One to Choose</h2>
+          <p>
+            Mulch selection affects cost, longevity, aesthetics, and soil health. The USDA Forest Service notes that urban wood waste generates 14–34.5 million green tonnes per year nationally, with about 67% of that wood residue repurposed as chips or mulch. Understanding what you are buying matters.
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Mulch Type</th>
+                    <th >Bulk Cost/Cu Yd</th>
+                    <th >Lifespan</th>
+                    <th >Best For</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Shredded hardwood</td><td >$30–$55</td><td >1–2 years</td><td >General landscaping, improves soil</td></tr>
+                  <tr ><td >Pine bark nuggets</td><td >$30–$40</td><td >1–3 years</td><td >Acid-loving plants (azaleas, blueberries)</td></tr>
+                  <tr ><td >Cedar</td><td >$55–$110</td><td >2–4 years</td><td >Natural insect repellent; slow to decompose</td></tr>
+                  <tr ><td >Cypress</td><td >$65–$115</td><td >2–4 years</td><td >Slopes, erosion control; knits together</td></tr>
+                  <tr ><td >Dyed/colored</td><td >$40–$65</td><td >1–2 years</td><td >Curb appeal; color fades but mulch stays</td></tr>
+                  <tr ><td >Straw / pine straw</td><td >$20–$55</td><td >6–12 months</td><td >Vegetable gardens; erosion control seeding</td></tr>
+                  <tr><td >Rubber mulch</td><td >$80–$160</td><td >10+ years</td><td >Playgrounds; high-traffic areas</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: LawnStarter 2025 national pricing data; Mulch & Soil Council product standards</p>
+          
+          <p>
+            One note on dyed mulch: the Mulch & Soil Council certifies that water-based colorants (iron oxide for red/brown, carbon black for black) are safe and do not accelerate combustion. The concern with colored mulch is typically wood quality, not the dye — some bulk colored product is made from recycled pallet wood or CCA-treated lumber. Look for MSC-certified product if you are using colored mulch in vegetable beds or near water features.
+          </p>
+
+          <h2>When to Refresh vs. Remove Old Mulch</h2>
+          <p>
+            This is a decision most homeowners get wrong. The EPA specifically recommends recycled wood mulch as a preferred landscaping material and notes that decomposing organic mulch actively improves soil structure, water retention, and microbial activity. Stripping and disposing of partially decomposed mulch every year wastes that value.
+          </p>
+          <p>
+            The correct approach: measure the existing layer. If it is still 2 inches deep or more, top-dress with 1 inch to restore it to 3 inches. Only remove the old layer when it has compacted into a hydrophobic mat (poke it — if water beads off instead of soaking in, it is time to remove), when it contains disease or pest issues, or when accumulated depth would push the bed over 4 inches total.
+          </p>
+          <p>
+            Practically speaking, most residential beds need a fresh 1–2 inch top-dress each spring, not a full rip-out. That cuts your annual mulch quantity roughly in half compared to starting from zero each year.
+          </p>
+
+          <h2>Buying Guide: How to Order Mulch Without Getting Burned</h2>
+          <p>
+            A few practical notes from field experience:
+          </p>
+          <p>
+            <strong>Verify cubic yard measurements before paying.</strong> A "cubic yard" delivered in a dump truck should measure 3 feet × 3 feet × 3 feet. Some suppliers pack loosely and a nominal yard comes up short by 15–20%. Ask if their yards are measured loose or settled. For bagged product, the bag label is your legal protection — a "2 cubic foot" bag is regulated.
+          </p>
+          <p>
+            <strong>Ask about freshness.</strong> Mulch that has been stockpiled for months in a warm pile can develop "sour mulch syndrome" — anaerobic fermentation produces acetic acid and methanol at levels toxic to plants. Fresh bulk mulch should smell like wood or have a neutral earthy odor, not vinegar or alcohol. If you get sour mulch, spread it thin and let it air out for 48 hours before applying.
+          </p>
+          <p>
+            <strong>Calculate with a 5–10% buffer.</strong> I add 5% to all bulk orders to account for uneven spreading, settling, and the inevitable spots you realize you missed. On a 5-yard order, that is just a quarter-yard extra — cheap insurance against having to reorder.
+          </p>
+          <p>
+            For gravel or decorative stone as an alternative to organic mulch, the <a href="/blog/gravel-calculator/">gravel calculator guide</a> covers tonnage calculations and cost by stone type.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>How do I calculate how much mulch I need?</h3>
+              <p>Use the formula: Cubic Yards = (Area in sq ft × Depth in inches) ÷ 324. For example, a 300 sq ft garden at 3 inches deep needs (300 × 3) ÷ 324 = 2.78 cubic yards. Round up to 3 yards bulk or 40 bags. The number 324 comes from 12 inches per foot × 27 cubic feet per cubic yard.</p>
+            
+            
+              <h3>How many bags of mulch equal a cubic yard?</h3>
+              <p>One cubic yard equals 27 cubic feet. A standard 2 cu ft bag: 27 ÷ 2 = 13.5 bags. Always buy 14. For 1.5 cu ft bags, you need 18; for 3 cu ft bags, you need 9. Buying in bags costs 35–60% more than bulk delivery per cubic yard.</p>
+            
+            
+              <h3>How deep should I lay mulch?</h3>
+              <p>For most flower beds and shrubs, 2–3 inches is the standard recommendation per Iowa State University Extension. Trees need 3–4 inches kept away from the trunk. Vegetable gardens: 1–2 inches. Playgrounds: 4–6 inches. Never exceed 4 inches on ornamental beds — anaerobic conditions cause root rot.</p>
+            
+            
+              <h3>How much does a cubic yard of mulch cost?</h3>
+              <p>Per LawnStarter 2025 data, bulk mulch runs $30–$135 per cubic yard depending on type. Standard shredded hardwood: $30–$55/cy. Cedar: $55–$110/cy. Rubber mulch: $80–$160/cy. All-in installed (material + delivery + labor): $77–$94 per cubic yard.</p>
+            
+            
+              <h3>Is bulk mulch or bagged mulch cheaper?</h3>
+              <p>Bulk is typically 35–60% cheaper per cubic yard. At $4/bag for 2 cu ft bags, you pay $54/yard equivalent. Bulk hardwood costs $30–$40/yard. Bags make sense for projects under 2 cubic yards or when no vehicle is available. Above that, bulk delivery saves money every time.</p>
+            
+            
+              <h3>How many square feet does a yard of mulch cover?</h3>
+              <p>One cubic yard covers 324 sq ft at 1 inch, 162 sq ft at 2 inches, 108 sq ft at 3 inches (standard), and 81 sq ft at 4 inches. At the most common 3-inch depth, a single yard covers roughly a 10×11 foot garden area.</p>
+            
+            
+              <h3>What is the best mulch for vegetable gardens?</h3>
+              <p>Use straw, untreated wood chips, or compost at 1–2 inches deep. Avoid dyed or rubber mulch in edible beds. The USDA Forest Service notes wood chip mulch improves soil moisture retention and beneficial microbial activity. Fine-textured mulch works better around seedlings; coarser material suits established plants.</p>
+            
+            
+              <h3>How often should mulch be replaced?</h3>
+              <p>Organic mulches need replenishment every 1–2 years. Rather than removing old mulch, top-dress with 1–2 inches to restore depth to 3 inches. Only remove when compacted into a hydrophobic mat, when infected with disease, or when total depth would exceed 4 inches. The EPA lists recycled wood mulch as a preferred landscaping product.</p>
+            
+          
+
+          /* Final CTA */
+          
+            <h2>Ready to Calculate Your Mulch?</h2>
+            <p>Enter your bed dimensions, choose your depth, and get instant cubic yard, bag count, and cost estimates for any mulch type.</p>
+            <a href="/mulch-calculator/">
+              Open the Mulch Calculator
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+            </a>
+          
+
+        
+
+        /* Related Articles */
+        <aside >
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                article.category
+                <p >article.title</p>
+              </Link>
+            ))
+          
+        </aside>
+      
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.hammerio.com/blog/mulch-calculator/">HammerIO</a>.
+      Explore more free tools at <a href="https://www.hammerio.com/">hammerio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.hammerio.com/">HammerIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
