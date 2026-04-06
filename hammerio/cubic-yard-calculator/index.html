@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cubic Yard Calculator: Convert Dimensions to Cubic Yards - HammerIO</title>
+  <meta name="description" content="Convert any dimensions to cubic yards instantly. Includes weight tables by material, truck load capacities, compaction factors, and 2026 material costs.">
+  <link rel="canonical" href="https://www.hammerio.com/blog/cubic-yard-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/hammerio/">HammerIO</a> &rarr; Cubic Yard Calculator: Convert Dimensions to Cubic Yards
+  </nav>
+
+  <article>
+    <h1>Cubic Yard Calculator: Convert Dimensions to Cubic Yards</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.hammerio.com/blog/cubic-yard-calculator/">hammerio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Cubic Yard Calculator: Convert Dimensions to Cubic Yards',
+    description: 'The complete guide to calculating cubic yards for construction and landscaping — formula, unit conversions, weight by material, truck capacities, compaction factors, and 2026 pricing.',
+    datePublished: '2026-04-08',
+    dateModified: '2026-04-08',
+    author: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+    ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+      logo: 
+        '@type': 'ImageObject',
+        url: 'https://hammerio.com/favicon.svg',
+      ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://hammerio.com/blog/cubic-yard-calculator/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://hammerio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://hammerio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Cubic Yard Calculator Guide', item: 'https://hammerio.com/blog/cubic-yard-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do you calculate cubic yards?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Multiply length (ft) × width (ft) × depth (ft), then divide by 27. The depth must be in feet — convert inches by dividing by 12 first. Example: a 12×20 ft area at 4 inches deep = 12 × 20 × (4÷12) ÷ 27 = 80 ÷ 27 = 2.96 cubic yards. For irregular shapes, calculate each section separately and add them.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many cubic feet are in a cubic yard?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'One cubic yard equals exactly 27 cubic feet (3 ft × 3 ft × 3 ft = 27). To convert cubic feet to cubic yards, divide by 27. To convert cubic yards to cubic feet, multiply by 27. This is the most common conversion in construction and landscaping estimating.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much does a cubic yard of concrete weigh?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A cubic yard of fresh ready-mix concrete weighs approximately 4,050 pounds (just over 2 tons). A cured concrete slab is slightly lighter at about 3,915 lbs per cubic yard. The National Ready Mixed Concrete Association (NRMCA) uses 150 lbs per cubic foot as the standard density for normal-weight concrete, which works out to 4,050 lbs per cubic yard.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many cubic yards fit in a dump truck?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A standard single-axle dump truck holds 10–12 cubic yards. A tandem axle dump truck carries 14–16 cubic yards. Tri-axle trucks hold 16–20 cubic yards. However, weight limits often bind before volume limits for heavy materials like concrete, gravel, or wet soil. A full-size pickup truck holds 1–2 cubic yards of mulch (light) but is weight-limited to about 1 yard of gravel.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much does a cubic yard of gravel weigh?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Dry gravel weighs 2,800–3,400 lbs per cubic yard (1.4–1.7 tons), depending on rock type and particle size. Wet gravel adds 20–30% — up to 3,375 lbs. The USGS Mineral Commodity Summaries 2025 reports that construction sand and gravel production totaled approximately 890 million tons in 2024, with national quarry-gate pricing around $15–$20 per ton.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much does a cubic yard of topsoil weigh?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Topsoil weight varies significantly with moisture content — dry topsoil runs 1,400–2,000 lbs per cubic yard, while wet topsoil can reach 2,700+ lbs per yard. This range matters enormously when loading trucks. A 1-ton pickup rated at 2,000 lb payload may safely carry 1 yard of dry topsoil but be dangerously overloaded with 1 yard of wet clay topsoil.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the compaction factor for fill dirt?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Fill dirt swells about 25% when excavated from bank condition to loose condition. After compaction, general fill shrinks back 10–15% from loose volume. To account for both effects, order 15–25% more material than your raw volume calculation for any project requiring compacted fill. Sandy fill compacts most predictably; clay fill can shrink 15–25% after compaction.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Cubic Yard Calculator Guide</li>
+          </ol>
+        
+
+        /* Header — opens with a common misconception (myth-busting structure) */
+        
+          
+            Estimating
+            13 min read
+            <time  dateTime="2026-04-08">April 8, 2026</time>
+          
+          <h2>
+            Cubic Yard Calculator: Convert Dimensions to Cubic Yards
+          </h2>
+          <p>
+            The single most common error I see on residential job sites is ordering materials by volume while forgetting weight — or vice versa. A full-size pickup "holds a yard of gravel" in the bed. It does not. It holds about a yard by volume before the springs bottom out and the rear axle hits its weight limit. This guide covers cubic yard math end to end: the formula, unit conversions, material weights, truck capacities, compaction factors, and 2026 pricing.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>&#10003;Formula: (Length ft × Width ft × Depth ft) ÷ 27 = cubic yards — depth must be in feet, not inches</li>
+            <li>&#10003;One cubic yard = 27 cubic feet; weight ranges from ~800 lbs (dry mulch) to 4,050 lbs (concrete)</li>
+            <li>&#10003;For compacted fill: order 15–25% more than the raw volume calculation to account for swell and compaction loss</li>
+            <li>&#10003;Ready-mix concrete averaged $179.89/cy nationally in 2024 per NRMCA benchmarking data</li>
+            <li>&#10003;Concrete orders under 8–10 yards trigger a short-load surcharge of $50–$150/load — design pours accordingly</li>
+          </ul>
+        
+
+        /* CTA Banner */
+        
+          <h2>Calculate Cubic Yards Instantly</h2>
+          <p>Enter length, width, and depth to convert any dimensions to cubic yards — for concrete, gravel, mulch, topsoil, and more.</p>
+          <a href="/concrete-calculator/">
+            Try Our Free Construction Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+          </a>
+        
+
+        /* Content */
+        
+
+          <h2>The Cubic Yard Formula</h2>
+          <p >
+            One cubic yard is a cube measuring 3 feet on each side: 3 ft × 3 ft × 3 ft = 27 cubic feet. Every volume calculation in construction and landscaping reduces to this:
+          </p>
+          
+            <p>
+              <strong>Cubic Yards = (Length ft × Width ft × Depth ft) ÷ 27</strong>
+            </p>
+            <p>
+              <strong>If depth is in inches:</strong> Cubic Yards = (Length ft × Width ft × Depth in) ÷ 324
+            </p>
+            <p>
+              The second formula shortcut (dividing by 324) combines the inch-to-foot conversion (÷12) and the cubic yard conversion (÷27) into one step: 12 × 27 = 324.
+            </p>
+          
+          <p>
+            <strong>Worked example — concrete driveway:</strong> You are pouring a 12-foot wide × 40-foot long driveway at 4 inches thick.
+          </p>
+          <ul>
+            <li>Convert 4 inches to feet: 4 ÷ 12 = 0.333 ft</li>
+            <li>Volume: 12 × 40 × 0.333 = 160 cubic feet</li>
+            <li>Cubic yards: 160 ÷ 27 = <strong>5.93 cubic yards</strong></li>
+            <li>Add 10% waste/overage: 5.93 × 1.10 = <strong>order 6.5 yards</strong></li>
+          </ul>
+          <p>
+            Using the shortcut: (12 × 40 × 4) ÷ 324 = 1,920 ÷ 324 = 5.93 cu yd. Same result, fewer steps.
+          </p>
+          <p>
+            For concrete specifically, the <a href="/blog/how-to-estimate-concrete-needs/">concrete estimation guide</a> covers slab thickness selection, reinforcement spacing, and PSI grades in more depth.
+          </p>
+
+          <h2>Unit Conversion Quick Reference</h2>
+          <p>
+            Most calculation errors come from mixing units — measuring length in feet but depth in inches, or confusing cubic feet with cubic yards. Bookmark this table:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Convert From</th>
+                    <th >Convert To</th>
+                    <th >Operation</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Cubic feet</td><td >Cubic yards</td><td >Divide by 27</td></tr>
+                  <tr ><td >Cubic yards</td><td >Cubic feet</td><td >Multiply by 27</td></tr>
+                  <tr ><td >Cubic inches</td><td >Cubic feet</td><td >Divide by 1,728</td></tr>
+                  <tr ><td >Cubic inches</td><td >Cubic yards</td><td >Divide by 46,656</td></tr>
+                  <tr ><td >Depth in inches</td><td >Depth in feet</td><td >Divide by 12</td></tr>
+                  <tr><td >sq ft × depth (in)</td><td >Cubic yards</td><td >Divide by 324</td></tr>
+                </tbody>
+              </table>
+            
+          
+
+          <h2>Coverage at a Glance: 1 Cubic Yard by Depth</h2>
+          <p>
+            This table answers the most common field question: "How far will a yard go?" These figures work for any spreadable material — mulch, topsoil, sand, gravel, or compost:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Depth Applied</th>
+                    <th >Area Covered (1 cu yd)</th>
+                    <th >Example: Approx. Bed</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >1 inch</td><td >324 sq ft</td><td >18 × 18 ft</td></tr>
+                  <tr ><td >2 inches</td><td >162 sq ft</td><td >13 × 12.5 ft</td></tr>
+                  <tr ><td >3 inches</td><td >108 sq ft</td><td >10 × 11 ft</td></tr>
+                  <tr ><td >4 inches</td><td >81 sq ft</td><td >9 × 9 ft</td></tr>
+                  <tr ><td >6 inches</td><td >54 sq ft</td><td >7 × 8 ft</td></tr>
+                  <tr><td >12 inches (1 ft)</td><td >27 sq ft</td><td >5 × 5.5 ft</td></tr>
+                </tbody>
+              </table>
+            
+          
+
+          <h2>Weight Per Cubic Yard by Material</h2>
+          <p>
+            Here is where most homeowners go wrong. Volume and weight are separate constraints, and trucks have limits on both. Mulch and concrete are both measured in cubic yards — but one cubic yard of mulch weighs 400–800 lbs while a cubic yard of concrete weighs over 4,000 lbs. The math matters when you are loading a pickup or estimating structural loads:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Material</th>
+                    <th >Lbs per Cu Yd</th>
+                    <th >Tons per Cu Yd</th>
+                    <th >Notes</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Ready-mix concrete</td><td >~4,050</td><td >~2.03</td><td >NRMCA: 150 lbs/cu ft standard</td></tr>
+                  <tr ><td >Gravel (dry)</td><td >2,800–3,400</td><td >1.4–1.7</td><td >Varies by rock type and size</td></tr>
+                  <tr ><td >Gravel (wet)</td><td >~3,375</td><td >~1.69</td><td >+20–30% over dry weight</td></tr>
+                  <tr ><td >Construction sand (dry)</td><td >~2,700</td><td >~1.35</td><td >Masonry/concrete sand</td></tr>
+                  <tr ><td >Construction sand (wet)</td><td >~3,240</td><td >~1.62</td><td >–</td></tr>
+                  <tr ><td >Topsoil</td><td >1,400–2,700</td><td >0.7–1.35</td><td >Wide range; moisture-dependent</td></tr>
+                  <tr ><td >Fill dirt</td><td >2,000–2,700</td><td >1.0–1.35</td><td >–</td></tr>
+                  <tr><td >Mulch (bark/wood chips)</td><td >400–800</td><td >0.2–0.4</td><td >Dry; dramatically lighter than soil</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: NRMCA standard density for concrete; weight ranges from field-tested data for granular and soil materials</p>
+          
+          <p>
+            Moisture content is the hidden variable. A yard of topsoil at 2,000 lbs dry can hit 2,500+ lbs when wet — which is exactly what you will be dealing with after rain or early spring thaw. The practical implication: if you are loading a pickup, weigh heavy materials at a scale before driving. Most landscaping suppliers have a truck scale at the exit gate.
+          </p>
+
+          <h2>Truck Load Capacities: What a Yard Actually Fits In</h2>
+          <p>
+            The confusion between volume capacity and weight payload causes real problems — bent truck frames, blown rear springs, and overweight fines at weigh stations. Here is the realistic picture:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Vehicle</th>
+                    <th >Volume Capacity</th>
+                    <th >Payload Limit</th>
+                    <th >Practical Gravel Load</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Compact pickup (6 ft bed)</td><td >~0.5 cu yd</td><td >1,000–1,500 lbs</td><td >~0.5 yd gravel max</td></tr>
+                  <tr ><td >Half-ton pickup (5.5 ft bed)</td><td >1–1.5 cu yd mulch</td><td >1,500–2,000 lbs</td><td >~0.7–0.8 yd gravel</td></tr>
+                  <tr ><td >Full-size pickup (8 ft bed)</td><td >2–3 cu yd mulch</td><td >1,800–2,500 lbs</td><td >~1 yd gravel max</td></tr>
+                  <tr ><td >Mini dump truck</td><td >1.5–5 cu yd</td><td >5,000–8,000 lbs</td><td >2–3 yd gravel</td></tr>
+                  <tr ><td >Single-axle dump truck</td><td >10–12 cu yd</td><td >~20,000 lbs</td><td >8–10 yd gravel</td></tr>
+                  <tr ><td >Tandem axle dump truck</td><td >14–16 cu yd</td><td >~26,000 lbs</td><td >12–14 yd gravel</td></tr>
+                  <tr><td >Tri-axle dump truck</td><td >16–20 cu yd</td><td >~30,000+ lbs</td><td >14–18 yd gravel</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Note: payload limits vary by vehicle make/model/year. Always verify your truck's GVWR and subtract curb weight for actual payload. Highway legal limits vary by state.</p>
+          
+          <p>
+            The takeaway: a full-size pickup can physically hold 2–3 cubic yards of fluffy mulch (light enough to stay under payload limits), but for gravel or wet topsoil, you are volume-limited by weight well before you fill the bed. One yard of dry gravel hits 2,800–3,400 lbs — at or above the payload limit of most half-ton trucks.
+          </p>
+          <p>
+            For gravel projects specifically, the <a href="/blog/gravel-calculator/">gravel tonnage calculator guide</a> walks through tonnage-to-yards conversions and how to read supplier quotes that are priced by ton instead of yard.
+          </p>
+
+          <h2>Compaction and Swell: The Calculation Nobody Warns You About</h2>
+          <p>
+            Ordering the raw volume you calculated and then being surprised when you come up short — that is the compaction trap. Earthwork contractors deal with three material states:
+          </p>
+          <ul>
+            <li><strong>Bank:</strong> material in its natural, undisturbed state in the ground</li>
+            <li><strong>Loose:</strong> material after excavation, piled in a truck or stockpile — it expands (swells) 20–30%</li>
+            <li><strong>Compacted:</strong> material placed and mechanically compacted — it shrinks from loose volume</li>
+          </ul>
+          
+            <h3>Compaction Factors by Material</h3>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Material</th>
+                    <th >Swell (Bank → Loose)</th>
+                    <th >Shrinkage (Loose → Compacted)</th>
+                    <th >Order Extra</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Sandy fill</td><td >+10–15%</td><td >−5–10%</td><td >+15%</td></tr>
+                  <tr ><td >General fill dirt</td><td >+20–25%</td><td >−10–15%</td><td >+15–20%</td></tr>
+                  <tr ><td >Clay fill</td><td >+25–35%</td><td >−15–25%</td><td >+20–25%</td></tr>
+                  <tr ><td >Gravel (crushed stone)</td><td >+10–15%</td><td >−5–10%</td><td >+10–15%</td></tr>
+                  <tr><td >Topsoil (screened)</td><td >+15–25%</td><td >−10–20%</td><td >+15–20%</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: Trimble ProContractor swell/yield factor references; industry earthwork estimating standards</p>
+          
+          <p>
+            Practical rule: for any project requiring compacted fill — a graded yard, a retaining wall backfill, a leveled driveway subbase — order 15–25% more than the raw cubic yard calculation. If your math says you need 10 yards of fill, order 12–13. You will not regret it. Bringing in a second delivery load because you came up two yards short adds $150–$300 in delivery charges to a job that should have been done.
+          </p>
+          <p>
+            Concrete is the exception — it does not compress. Add 5–10% overage for concrete to account for irregular subgrade, forms that are not perfectly level, and minor wastage. But do not apply compaction math to concrete.
+          </p>
+
+          <h2>2026 Material Costs Per Cubic Yard</h2>
+          <p>
+            Material costs in 2026 reflect cumulative inflation from supply chain disruptions, energy costs, and tariff impacts. Here are the current national benchmarks:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Material</th>
+                    <th >Cost per Cu Yd (Bulk/Delivered)</th>
+                    <th >Source</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Ready-mix concrete (3,000 PSI)</td><td >$160–$195/cy (avg $179.89)</td><td >NRMCA benchmarking 2024</td></tr>
+                  <tr ><td >Crushed gravel / #57 stone</td><td >$35–$75/cy delivered</td><td >HomeGuide 2026</td></tr>
+                  <tr ><td >Screened topsoil</td><td >$12–$55/cy (avg $15–$30)</td><td >Angi, HomeAdvisor 2026</td></tr>
+                  <tr ><td >Shredded hardwood mulch</td><td >$30–$55/cy bulk</td><td >LawnStarter 2025</td></tr>
+                  <tr ><td >Construction sand</td><td >$15–$40/cy bulk</td><td >HomeGuide 2026</td></tr>
+                  <tr><td >Fill dirt (clean)</td><td >$5–$25/cy (sometimes free)</td><td >HomeAdvisor 2026</td></tr>
+                </tbody>
+              </table>
+            
+          
+          <p>
+            The concrete pricing deserves context. According to NRMCA (National Ready Mixed Concrete Association) benchmarking data, the national average for ready-mix concrete hit $179.89 per cubic yard in 2024 — up from roughly $75/yard in 2008, a 139% increase over 16 years. The RSMeans Q1 2025 historical cost index stands at 293.9 (base 100 = 1913), confirming that construction material inflation has far outpaced general CPI.
+          </p>
+          <p>
+            For crushed stone and construction sand, the USGS Mineral Commodity Summaries 2025 reports that U.S. producers generated approximately 1.5 billion tons of crushed stone and 890 million tons of construction sand and gravel in 2024 — the two largest-volume nonfuel mineral commodities in the country, combined value of $38 billion.
+          </p>
+          <p>
+            One concrete ordering trap worth flagging: short-load surcharges. Most ready-mix plants charge a penalty of $50–$150 for orders under 8–10 cubic yards. On a 3-yard patio pour, that surcharge can add 20–50% to your concrete line item. Design your pours to hit the minimum load threshold, or coordinate multiple small pours on the same day to fill a truck.
+          </p>
+
+          <h2>Common Projects and How Much Material They Require</h2>
+          <p>
+            Using the cubic yard formula applied to real-world project dimensions:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Project</th>
+                    <th >Dimensions</th>
+                    <th >Cubic Yards</th>
+                    <th >With Overage</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Concrete patio</td><td >12×16 ft, 4 in thick</td><td >2.37 cy</td><td >2.6 cy (+10%)</td></tr>
+                  <tr ><td >Concrete driveway</td><td >12×40 ft, 4 in thick</td><td >5.93 cy</td><td >6.5 cy (+10%)</td></tr>
+                  <tr ><td >Gravel driveway base</td><td >12×50 ft, 4 in deep</td><td >7.41 cy</td><td >8.5 cy (+15%)</td></tr>
+                  <tr ><td >Garden topsoil</td><td >20×20 ft, 6 in deep</td><td >7.41 cy</td><td >8.5–9 cy (+15–20%)</td></tr>
+                  <tr ><td >Raised bed fill</td><td >4×8 ft, 12 in deep</td><td >1.19 cy</td><td >1.4 cy (+15%)</td></tr>
+                  <tr ><td >Mulch (garden beds)</td><td >500 sq ft, 3 in deep</td><td >4.63 cy</td><td >4.9 cy (+5%)</td></tr>
+                  <tr><td >Sand play area</td><td >10×10 ft, 6 in deep</td><td >1.85 cy</td><td >2.1 cy (+15%)</td></tr>
+                </tbody>
+              </table>
+            
+            <p>All calculations use L × W × (depth ÷ 12) ÷ 27. Overage percentages reflect material type: concrete 10%, granular fill 15%, compacted soil 15–20%.</p>
+          
+          <p>
+            For detailed concrete project estimating, including footing and pier calculations, see the <a href="/blog/concrete-calculator-guide/">concrete calculator guide</a>. For mulch specifically, see the <a href="/blog/mulch-calculator/">mulch calculator guide</a> with coverage tables, bag counts, and depth recommendations by plant type.
+          </p>
+
+          <h2>The 5 Most Expensive Calculation Mistakes</h2>
+          <p>
+            After years of estimating and reviewing bids, these are the errors I see repeated most often:
+          </p>
+
+          <h3>1. Leaving depth in inches</h3>
+          <p>
+            If you multiply length (ft) × width (ft) × depth (inches) and divide by 27, you get a number that is 12× too large. Convert depth to feet first, or use the ÷324 shortcut when depth is in inches. This is the most frequent arithmetic error on material order forms.
+          </p>
+
+          <h3>2. Ignoring compaction on fill projects</h3>
+          <p>
+            Raw volume calculation × compaction factor shortfall = a second delivery. For general fill, order 15–20% more. For clay, 20–25% more. Not doing this math upfront is how a $300 material order becomes a $500 material order.
+          </p>
+
+          <h3>3. Underestimating wet material weight</h3>
+          <p>
+            Wet fill dirt, gravel, or sand weighs 20–30% more than dry figures. A half-ton pickup loaded with "one yard" of topsoil at 2,700 lbs when wet is at or over axle limit. This is how rear springs get damaged and rear differentials overheat on long hauls.
+          </p>
+
+          <h3>4. Triggering concrete short-load surcharges</h3>
+          <p>
+            Ordering 3 yards of concrete for a walkway without knowing that the minimum load to avoid a surcharge is 8–10 yards is an expensive mistake. Coordinate pours, batch multiple small projects, or work with a supplier who offers smaller batch sizes at reasonable rates.
+          </p>
+
+          <h3>5. Not adding any overage for irregular shapes</h3>
+          <p>
+            Every subgrade has high and low spots. Every form has minor level variations. Even a "flat" 12×20 slab will have 3–5% more volume than the theoretical calculation once you account for subgrade irregularity. Always add at least 5–10% overage on concrete; 10–15% on spreadable materials like gravel or topsoil.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>How do you calculate cubic yards?</h3>
+              <p>Multiply length (ft) × width (ft) × depth (ft), then divide by 27. Depth must be in feet — convert inches by dividing by 12 first. Example: 12×20 ft at 4 inches deep = 12 × 20 × (4÷12) ÷ 27 = 2.96 cubic yards. For irregular shapes, calculate each rectangle separately and add.</p>
+            
+            
+              <h3>How many cubic feet are in a cubic yard?</h3>
+              <p>One cubic yard equals exactly 27 cubic feet (3 ft × 3 ft × 3 ft = 27). To convert cubic feet to cubic yards, divide by 27. To go the other way, multiply by 27. This is the most-used conversion in construction estimating.</p>
+            
+            
+              <h3>How much does a cubic yard of concrete weigh?</h3>
+              <p>A cubic yard of fresh ready-mix concrete weighs approximately 4,050 pounds. The NRMCA uses 150 lbs per cubic foot as the standard density for normal-weight concrete (150 × 27 = 4,050 lbs). A cured slab is slightly lighter at around 3,915 lbs per cubic yard.</p>
+            
+            
+              <h3>How many cubic yards fit in a dump truck?</h3>
+              <p>A standard single-axle dump truck holds 10–12 cubic yards. Tandem axle: 14–16 yards. Tri-axle: 16–20 yards. For heavy materials like gravel, weight limits often bind before volume. A full-size pickup holds 1–2 yards of mulch but is weight-limited to about 1 yard of dry gravel.</p>
+            
+            
+              <h3>How much does a cubic yard of gravel weigh?</h3>
+              <p>Dry gravel weighs 2,800–3,400 lbs per cubic yard (1.4–1.7 tons). Wet gravel adds 20–30%, up to 3,375 lbs. The USGS reports construction sand and gravel production totaled ~890 million tons in 2024. Always confirm with your local supplier since density varies by rock type.</p>
+            
+            
+              <h3>How much does a cubic yard of topsoil weigh?</h3>
+              <p>Dry topsoil: 1,400–2,000 lbs per cubic yard. Wet topsoil: up to 2,700+ lbs. This range matters when loading pickups. A 1-ton truck rated at 2,000 lb payload may safely carry 1 yard of dry topsoil but be overloaded with 1 yard of wet clay soil.</p>
+            
+            
+              <h3>What is the compaction factor for fill dirt?</h3>
+              <p>Fill dirt swells ~25% when excavated. After compaction, general fill shrinks 10–15% from loose volume. Order 15–25% more material than the raw volume calculation for any compacted fill project. Sandy fill is most predictable at +15%; clay can require +25%. Always over-order rather than schedule a second delivery.</p>
+            
+          
+
+          /* Final CTA */
+          
+            <h2>Calculate Your Project Materials Now</h2>
+            <p>Enter your dimensions and get cubic yards, weight estimates, and cost ranges for concrete, gravel, topsoil, and mulch.</p>
+            <a href="/concrete-calculator/">
+              Open the Construction Calculator
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+            </a>
+          
+
+        
+
+        /* Related Articles */
+        <aside >
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                article.category
+                <p >article.title</p>
+              </Link>
+            ))
+          
+        </aside>
+      
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.hammerio.com/blog/cubic-yard-calculator/">HammerIO</a>.
+      Explore more free tools at <a href="https://www.hammerio.com/">hammerio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.hammerio.com/">HammerIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
