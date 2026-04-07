@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Formatter &amp; Beautifier: Clean Up HTML Code Online - BytePane</title>
+  <meta name="description" content="HTML Formatter &amp; Beautifier: Clean Up HTML Code Online">
+  <link rel="canonical" href="https://www.bytepane.com/blog/html-formatter-beautifier/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; HTML Formatter &amp; Beautifier: Clean Up HTML Code Online
+  </nav>
+
+  <article>
+    <h1>HTML Formatter &amp; Beautifier: Clean Up HTML Code Online</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/html-formatter-beautifier/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        HTML Formatter & Beautifier
+      
+
+      /* Article Header */
+      
+        <h2>
+          HTML Formatter & Beautifier: Clean Up HTML Code Online
+        </h2>
+        
+          HTML
+          <time dateTime="2026-04-07">April 7, 2026</time>
+          16 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸HTML whitespace is fundamentally different from JSON or CSS — spaces between inline elements affect browser rendering, making &quot;safe&quot; reformatting impossible without CSS context.</li>
+            <li>▸Prettier (<strong>51,736 GitHub stars, ~55–82M weekly npm downloads</strong>) dominates HTML formatting; its <code >htmlWhitespaceSensitivity</code> option has three modes with documented edge cases in all of them.</li>
+            <li>▸Google&apos;s HTML/CSS Style Guide mandates <strong>2 spaces</strong>, never tabs — this is the industry consensus enforced by both Prettier defaults and major CI setups.</li>
+            <li>▸HTML minification removes 10–30% uncompressed, but after gzip compression the gain shrinks to 2–5% — often not worth the tooling complexity.</li>
+            <li>▸The Beautify VS Code extension (10.6M installs) has been unmaintained since May 2019 — switch to Prettier or js-beautify directly.</li>
+          </ul>
+        
+
+        /* Opening: Myth Busting */
+        
+          <h2>The Myth That Makes HTML Formatting Hard</h2>
+          <p>
+            Here is a common misconception: HTML formatting is trivial — just normalize indentation and call it done. JSON formatters work that way. CSS formatters work that way. But HTML is categorically different, and every engineer who has introduced Prettier into a legacy HTML codebase and shipped layout-breaking whitespace changes has learned this the hard way.
+          </p>
+          <p>
+            The root cause is architectural: HTML whitespace significance is determined by the CSS rendering engine, not the HTML parser. Per the WHATWG HTML specification, the parser must preserve all whitespace — the spec cannot say which spaces are visually meaningful because that depends on the computed CSS <code >display</code> property of each element, which is not known at parse time. A formatter that adds a newline between two <code >''</code> tags can insert a visible gap in rendered text. The same change between two <code >''</code> tags is invisible.
+          </p>
+          <p>
+            According to the Stack Overflow Developer Survey 2025 (49,000+ respondents across 177 countries), HTML/CSS is used by <strong>62% of developers</strong> — ranked third after JavaScript (66%) and Python (62%). That is a massive surface area for formatting inconsistency. Understanding how HTML formatters actually work — and where they fail — is practical knowledge, not pedantry.
+          </p>
+        
+
+        /* How HTML Formatters Work */
+        
+          <h2>How HTML Formatters Work (And Why They Struggle)</h2>
+          <p>
+            A JSON formatter&apos;s job is simple: tokenize the input, parse it to an AST, then serialize with consistent indentation. Because JSON whitespace is completely insignificant between tokens, the formatter can add or remove any whitespace without changing semantics. HTML formatters cannot make the same guarantee.
+          </p>
+          <p>
+            The core challenge is described clearly by developer Ben Wainwright in his analysis of HTML whitespace behavior: &quot;the HTML parser must retain all spaces because it&apos;s actually the CSS layer which decides whether or not those spaces are significant.&quot; This means a correct HTML formatter would need to:
+          </p>
+          <ol>
+            <li>Parse the HTML into a DOM tree</li>
+            <li>Determine the computed CSS <code >display</code> value for every element (which requires loading the stylesheet)</li>
+            <li>Apply whitespace-safe reformatting only where the display type guarantees whitespace is insignificant</li>
+            <li>Preserve all whitespace around inline elements to avoid changing rendered output</li>
+          </ol>
+          <p>
+            No formatter does this correctly for all cases. Instead, tools maintain lookup tables of known HTML elements and their default CSS display values per the HTML5 spec. Custom web components (<code >'<my-header>'</code>), Angular components (<code >'<app-navbar>'</code>), and Vue components (<code >'<ProductCard>'</code>) are unknown, so formatters conservatively treat them as inline — which produces over-cautious formatting even when the component renders as a block.
+          </p>
+          <p>
+            BytePane&apos;s <a href="/html-formatter/">HTML Formatter</a> processes your markup client-side, applying consistent indentation using known HTML5 element semantics.
+          </p>
+        
+
+        /* Tool Comparison */
+        
+          <h2>HTML Formatter Tools: Feature & Popularity Comparison</h2>
+          <p>
+            Five tools dominate the HTML formatting space, with dramatically different philosophies and maintenance status:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool</th>
+                  <th >GitHub Stars</th>
+                  <th >Weekly Downloads</th>
+                  <th >Type</th>
+                  <th >Last Release</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Prettier</td>
+                  <td >51,736</td>
+                  <td >~55–82M</td>
+                  <td >Formatter</td>
+                  <td >v3.7.0 (Nov 2025)</td>
+                </tr>
+                <tr >
+                  <td >js-beautify</td>
+                  <td >~9,000</td>
+                  <td >Several million</td>
+                  <td >Formatter</td>
+                  <td >Active</td>
+                </tr>
+                <tr >
+                  <td >HTMLHint</td>
+                  <td >3,300</td>
+                  <td >~87K–121K</td>
+                  <td >Linter only</td>
+                  <td >v1.9.2 (Mar 2026)</td>
+                </tr>
+                <tr >
+                  <td >Beautify (VS Code ext)</td>
+                  <td >—</td>
+                  <td >10.6M installs</td>
+                  <td >Formatter (js-beautify)</td>
+                  <td >May 2019 ⚠</td>
+                </tr>
+                <tr>
+                  <td >HTML Tidy (tidy-html5)</td>
+                  <td >2,900</td>
+                  <td >CLI/C library</td>
+                  <td >Formatter + repair</td>
+                  <td >v5.8.0 (Jul 2021) ⚠</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The most important number in this table: the <strong>Beautify VS Code extension has 10.6 million installs but has not been updated since May 2019</strong>. It wraps js-beautify, which is itself maintained — but the extension no longer supports modern VS Code APIs, does not handle modern HTML5 features, and has no active maintainer. If you have this extension installed, switch to Prettier&apos;s official VS Code extension (<code >esbenp.prettier-vscode</code>) or use js-beautify directly via the CLI.
+          </p>
+          <p>
+            Biome, the emerging Rust-based formatter claiming 10–25x speed improvements over Prettier for JavaScript and TypeScript, does not yet support HTML as of early 2026 — it remains on the roadmap.
+          </p>
+        
+
+        /* Prettier HTML Whitespace Sensitivity */
+        
+          <h2>Prettier&apos;s <code >htmlWhitespaceSensitivity</code>: All Three Modes Explained</h2>
+          <p>
+            Prettier&apos;s <code >htmlWhitespaceSensitivity</code> option is the single most important configuration decision for HTML formatting. It controls how Prettier decides when whitespace is semantically significant. Set this wrong and you will ship invisible layout changes.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Mode</th>
+                  <th >Behavior</th>
+                  <th >Safe For</th>
+                  <th >Risk</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >css</td>
+                  <td >Respects CSS display defaults — block elements treated as insensitive, inline as sensitive</td>
+                  <td >Standard HTML5 documents</td>
+                  <td >Custom elements default to inline</td>
+                </tr>
+                <tr >
+                  <td >strict</td>
+                  <td >All whitespace around all tags treated as significant — most conservative</td>
+                  <td >Apps with heavy custom CSS overrides</td>
+                  <td >Produces verbose, barely-reformatted output</td>
+                </tr>
+                <tr>
+                  <td >ignore</td>
+                  <td >All whitespace treated as insignificant — maximum reformatting</td>
+                  <td >Email templates, server-rendered HTML</td>
+                  <td >Can alter rendered layout for inline elements</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The <code >css</code> default is the right starting point for most projects, but be aware of its documented limitations. As of early 2026, Prettier GitHub Issue #15724 (open) documents that Angular templates with control flow syntax (<code >@if</code>, <code >@for</code>) do not respect the whitespace sensitivity setting and add incorrect whitespace around text bindings. Issue #16436 notes that <code >--html-whitespace-sensitivity</code> has <strong>no effect on JSX at all</strong> — JSX formatting follows its own rules regardless of this option.
+          </p>
+          <p>
+            The practical recommendation: use <code >css</code> mode, add <code >'<!-- prettier-ignore -->'</code> comments on any markup where whitespace is visually critical, and always review HTML-only diffs carefully in code review.
+          </p>
+
+          
+            .prettierrc
+            <p>`
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "htmlWhitespaceSensitivity": "css",
+  "singleAttributePerLine": false,
+  "bracketSameLine": false
+`</pre>
+          
+        
+
+        /* Void Elements */
+        
+          <h2>The 14 Void Elements: What Every HTML Formatter Must Know</h2>
+          <p >
+            The WHATWG HTML Living Standard defines exactly 14 void elements — elements that cannot have child content and must not have closing tags:
+          </p>
+
+          
+            <p>`area  base  br  col  embed  hr  img  input
+link  meta  param  source  track  wbr`</pre>
+          
+
+          <p >
+            This matters for HTML formatters because these elements have distinct rules:
+          </p>
+          <ul>
+            <li><strong>No closing tag:</strong> <code >'</br>'</code> or <code >'</img>'</code> are syntax errors. A good formatter strips them.</li>
+            <li><strong>Trailing slash is legal but ignored:</strong> <code >'<br />'</code> and <code >'<br>'</code> are functionally identical per the spec. The slash is XML legacy from XHTML and has no semantic effect in HTML5 documents.</li>
+            <li><strong>Self-closing syntax on non-void elements breaks the DOM:</strong> Writing <code >''</code> or <code >'<script />'</code> is a parsing error. HTML parsers treat the slash as part of an attribute name, not as a closing indicator. Everything after <code >''</code> becomes a child node of that div rather than a sibling.</li>
+          </ul>
+          <p>
+            The self-closing non-void pattern is the most common HTML syntax error introduced by developers coming from React/JSX where <code >'<Component />'</code> is idiomatic. HTMLHint catches this with its <code >tag-self-close</code> rule. Prettier strips invalid self-closing slashes from non-void elements when reformatting.
+          </p>
+        
+
+        /* Indentation Standards */
+        
+          <h2>HTML Indentation Standards: 2 Spaces Has Won</h2>
+          <p>
+            The indentation debate is mostly settled for HTML. Here is what the authoritative style guides actually say:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Style Guide</th>
+                  <th >Standard</th>
+                  <th >Tabs?</th>
+                  <th >Note</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Google HTML/CSS Style Guide</td>
+                  <td >2 spaces</td>
+                  <td >Never</td>
+                  <td >&quot;Do not use tabs or mix tabs and spaces&quot;</td>
+                </tr>
+                <tr >
+                  <td >Airbnb Style Guide</td>
+                  <td >2 spaces</td>
+                  <td >Never</td>
+                  <td >Consistent with JS guide</td>
+                </tr>
+                <tr >
+                  <td >Prettier default</td>
+                  <td >2 spaces</td>
+                  <td >Configurable</td>
+                  <td >Via <code >tabWidth</code> / <code >useTabs</code></td>
+                </tr>
+                <tr >
+                  <td >Bootstrap documentation</td>
+                  <td >2 or 4 spaces</td>
+                  <td >Discouraged</td>
+                  <td >Either acceptable</td>
+                </tr>
+                <tr>
+                  <td >W3C style examples</td>
+                  <td >4 spaces</td>
+                  <td >Sometimes</td>
+                  <td >Older, less prescriptive</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            2 spaces is the practical winner. The Google HTML/CSS Style Guide — which is the most widely cited web coding standard in the industry — explicitly forbids tabs and mandates 2-space indentation. Prettier defaults to 2 spaces. For a deeply nested HTML document (8–10 levels of nesting), 2-space indentation keeps lines within a 100-character print width; 4-space indentation pushes deeply-nested content past 80 characters with only 4–5 nesting levels.
+          </p>
+          <p>
+            Tabs are avoided specifically because tab width rendering varies by editor configuration: a developer using VS Code with 4-wide tabs and another using a terminal with 8-wide tabs will see completely different visual indentation from the same source file. For HTML — where visual structure communicates nesting hierarchy — this is a meaningful readability problem.
+          </p>
+        
+
+        /* HTMLHint: Linting vs Formatting */
+        
+          <h2>HTMLHint: Static Analysis for HTML (Linting, Not Just Formatting)</h2>
+          <p>
+            HTMLHint (3,300 GitHub stars, ~87K–121K weekly npm downloads, v1.9.2 released March 2026) is the standard static analysis tool for HTML. It does not reformat code — it detects violations. This distinction matters: a formatter fixes whitespace; HTMLHint catches semantic and structural problems that formatting cannot address.
+          </p>
+          <p>
+            HTMLHint provides 44 rules across 6 categories. The most practically useful:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Rule</th>
+                  <th >Category</th>
+                  <th >What It Catches</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >doctype-first</td>
+                  <td >Doctype</td>
+                  <td >Missing <code >'<!DOCTYPE html>'</code> declaration</td>
+                </tr>
+                <tr >
+                  <td >attr-value-double-quotes</td>
+                  <td >Attributes</td>
+                  <td >Attribute values using single quotes instead of double</td>
+                </tr>
+                <tr >
+                  <td >tag-self-close</td>
+                  <td >Tags</td>
+                  <td >Self-closing syntax on non-void elements</td>
+                </tr>
+                <tr >
+                  <td >tagname-lowercase</td>
+                  <td >Tags</td>
+                  <td >Uppercase tag names (<code >'<DIV>'</code> instead of <code >''</code>)</td>
+                </tr>
+                <tr >
+                  <td >alt-require</td>
+                  <td >Accessibility</td>
+                  <td >Missing <code >alt</code> attributes on <code >'<img>'</code></td>
+                </tr>
+                <tr>
+                  <td >inline-style-disabled</td>
+                  <td >Inline</td>
+                  <td >Inline <code >style</code> attributes on elements</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          
+            .htmlhintrc
+            <p>`
+  "doctype-first": true,
+  "attr-value-double-quotes": true,
+  "tag-self-close": true,
+  "tagname-lowercase": true,
+  "alt-require": true,
+  "id-unique": true,
+  "inline-style-disabled": false,
+  "spec-char-escape": true
+`</pre>
+          
+
+          <p >
+            The recommended workflow pairs both tools: Prettier handles formatting on save, HTMLHint runs in CI to catch structural violations that formatting cannot fix. Use <code >lint-staged</code> to run both on staged files only so your commit pipeline stays fast.
+          </p>
+        
+
+        /* CI/CD Integration */
+        
+          <h2>Automating HTML Formatting in CI/CD</h2>
+          <p>
+            Format-on-save in VS Code is a local convention, not an enforcement mechanism. Any developer who does not have the right extension installed, or who edits HTML files outside the IDE, will commit unformatted code. CI enforcement is the only reliable gate.
+          </p>
+
+          
+            GitHub Actions: .github/workflows/lint.yml
+            <p>`name: Lint & Format Check
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+
+      # Check all HTML files are formatted
+      - name: Prettier format check
+        run: npx prettier --check "**/*.html" "**/*.tsx" "**/*.jsx"
+
+      # Lint HTML for structural issues
+      - name: HTMLHint
+        run: npx htmlhint "src/**/*.html" "public/**/*.html"`</pre>
+          
+
+          <p >
+            For pre-commit hooks, the standard stack is <code >husky</code> + <code >lint-staged</code>:
+          </p>
+
+          
+            package.json
+            <p>`
+  "lint-staged": 
+    "*.html": [
+      "prettier --write",
+      "htmlhint"
+    ],
+    "*.tsx,jsx": [
+      "prettier --write"
+    ]
+  
+`</pre>
+          
+
+          <p >
+            One critical caveat: pre-commit hooks can be bypassed with <code >git commit --no-verify</code>. This is not a hypothetical — developers under deadline pressure use it. Server-side CI enforcement via GitHub Actions <strong>cannot be bypassed</strong> and should be the authoritative gate for format compliance.
+          </p>
+        
+
+        /* Performance: Minification */
+        
+          <h2>HTML Minification vs Formatting: The Performance Trade-off</h2>
+          <p>
+            Developers often conflate HTML formatting (for readability) with HTML minification (for performance). They are opposite operations. Minification removes whitespace, comments, and optional closing tags to reduce file size. Formatting adds whitespace to improve readability. You do one in development and the other in production.
+          </p>
+          <p>
+            The question is: how much does HTML minification actually help? Perfection Kills benchmarked major websites and found the following uncompressed savings:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Site</th>
+                  <th >Original</th>
+                  <th >Minified</th>
+                  <th >Uncompressed Saving</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Amazon.com</td>
+                  <td >217 KB</td>
+                  <td >206.6 KB</td>
+                  <td >4.8%</td>
+                </tr>
+                <tr >
+                  <td >LinkedIn.com</td>
+                  <td >128.8 KB</td>
+                  <td >89.4 KB</td>
+                  <td >30.6%</td>
+                </tr>
+                <tr >
+                  <td >Ajaxian.com</td>
+                  <td >177.6 KB</td>
+                  <td >157.3 KB</td>
+                  <td >11.4%</td>
+                </tr>
+                <tr>
+                  <td >Digg.com</td>
+                  <td >82 KB</td>
+                  <td >74.9 KB</td>
+                  <td >8.5%</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The catch: <strong>gzip compression dramatically reduces these gains</strong>. Gzip works by finding repeated patterns — whitespace is highly repetitive, so it compresses extremely well. LinkedIn&apos;s 30.6% uncompressed saving shrinks to approximately 2–3% after gzip. For sites already serving gzip-compressed HTML (which should be all of them in 2026), HTML minification has negligible performance impact.
+          </p>
+          <p>
+            The real performance wins come from elsewhere: image optimization, JavaScript bundle splitting, Core Web Vitals improvements, and proper caching headers. Our <a href="/blog/web-performance-checklist-2026/">2026 Web Performance Checklist</a> covers the full stack of high-ROI optimizations.
+          </p>
+        
+
+        /* VS Code Setup */
+        
+          <h2>Setting Up HTML Formatting in VS Code</h2>
+          <p>
+            The recommended VS Code setup for HTML formatting combines Prettier for auto-formatting with HTMLHint for linting:
+          </p>
+          <ol>
+            <li>
+              <strong>Install Prettier extension</strong>: <code >esbenp.prettier-vscode</code> — the official extension, actively maintained.
+              ⚠ Do NOT use HookyQR.beautify (10.6M installs but unmaintained since 2019)
+            </li>
+            <li>
+              <strong>Install HTMLHint extension</strong>: <code >htmlhint.vscode-htmlhint</code>
+            </li>
+            <li>
+              <strong>Configure settings.json</strong>:
+            </li>
+          </ol>
+
+          
+            .vscode/settings.json
+            <p>`
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[html]": 
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  ,
+  "prettier.htmlWhitespaceSensitivity": "css",
+  "prettier.printWidth": 100,
+  "prettier.tabWidth": 2
+`</pre>
+          
+
+          <p >
+            For React/Next.js projects, HTML-in-JSX formatting is handled by the JSX formatter, not the HTML formatter. The <code >htmlWhitespaceSensitivity</code> option does not apply to <code >.tsx</code> files — JSX whitespace rules are different and Prettier handles them via its React plugin. Our <a href="/js-beautifier/">JavaScript/TypeScript Beautifier</a> handles JSX formatting directly in the browser.
+          </p>
+          <p>
+            For templating languages (Handlebars, Nunjucks, Liquid), Prettier has official plugins: <code >prettier-plugin-jinja-template</code> for Liquid/Jinja, and <code >prettier-plugin-go-template</code> for Go templates. Configure them as <code >plugins</code> in your <code >.prettierrc</code>.
+          </p>
+        
+
+        /* Practical Formatting Reference */
+        
+          <h2>HTML Formatting Reference: Before and After</h2>
+          <p>
+            These are the most common formatting transformations an HTML beautifier performs. Understanding the before/after helps you catch regressions and configure your formatter correctly.
+          </p>
+
+          <h3>Inconsistent Indentation</h3>
+          
+            
+              Before
+              <p>`
+<ul>
+    <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+`</pre>
+            
+            
+              After (2-space)
+              <pre >`
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+`</pre>
+            
+          
+
+          <h3>Mixed Attribute Quotes</h3>
+          
+            
+              Before
+              <pre >`<img src='logo.png' alt="Logo"
+  class='header-logo' width=120>`</pre>
+            
+            
+              After
+              <pre >`<img
+  src="logo.png"
+  alt="Logo"
+  class="header-logo"
+  width="120"
+/>`</pre>
+            
+          
+
+          <h3>Whitespace Sensitivity (⚠ Inline elements)</h3>
+          
+            
+              This change can alter rendering
+              <pre >`<!-- Renders: "Hello World" (space preserved) -->
+<p>Hello World</p>
+
+<!-- After aggressive formatting -->
+<!-- May render: "HelloWorld" (space lost) -->
+<p>
+  Hello
+  World
+</p>`</pre>
+            
+            
+              Safe: block elements
+              <p>`<!-- Whitespace between divs is
+     always safe to modify -->
+
+  Section 1
+  Section 2
+`</pre>
+            
+          
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What is the best HTML formatter?',
+                a: "Prettier (51,736 GitHub stars, ~55–82M weekly npm downloads) is the dominant choice for projects that use JavaScript and CSS alongside HTML, because it handles all three consistently with a single config. For HTML-only or legacy projects, js-beautify offers more configuration options. The Beautify VS Code extension (10.6M installs) is widely installed but unmaintained since May 2019 — don't use it for new projects.",
+              ,
+              
+                q: 'Does HTML formatting affect browser rendering?',
+                a: "It can. Whitespace between inline elements (like  tags) is semantically significant in HTML and can affect rendered layout. A newline between two inline elements can insert or remove a visible space in the output. Prettier's htmlWhitespaceSensitivity css mode minimizes this risk for standard HTML5 elements, but custom web components are treated as inline by default regardless of their actual CSS display value.",
+              ,
+              
+                q: 'Should I use 2 spaces or 4 spaces for HTML indentation?',
+                a: "2 spaces. Google's HTML/CSS Style Guide explicitly mandates 2 spaces (never tabs), and this is the industry-dominant standard enforced by Prettier's defaults and most team configurations. 4-space indentation becomes unwieldy for HTML with deep nesting — typical templates hit 8–10 levels, and 4 spaces per level pushes content well past 80-character line limits.",
+              ,
+              
+                q: 'What are void elements in HTML?',
+                a: "Void elements are the 14 HTML elements that cannot have children: area, base, br, col, embed, hr, img, input, link, meta, param, source, track, wbr. They must not have closing tags. The HTML5 spec permits trailing slashes like <br /> for XML compatibility, but  on a non-void element is a parse error that causes everything after it to be nested inside, breaking the DOM structure.",
+              ,
+              
+                q: 'How do I format HTML in VS Code?',
+                a: 'Install esbenp.prettier-vscode (the official Prettier extension), set "editor.defaultFormatter" to "esbenp.prettier-vscode" in settings.json, and enable "editor.formatOnSave". Configure htmlWhitespaceSensitivity in .prettierrc. For linting (structural issues, not just whitespace), also install the HTMLHint extension (htmlhint.vscode-htmlhint) which runs 44 rules and highlights violations inline.',
+              ,
+              
+                q: 'Does HTML minification actually improve performance?',
+                a: "In practice, barely. Uncompressed, whitespace removal reduces HTML file sizes by 10–30% (LinkedIn's homepage saw 30.6% per Perfection Kills benchmarks). But gzip compression already collapses repetitive whitespace effectively, so the net gain after gzip is typically 2–5%. The performance ROI of HTML minification is marginal compared to image optimization, JavaScript bundle reduction, or fixing Core Web Vitals.",
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p >a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Format HTML Instantly — No Setup Required</h2>
+          <p>
+            Paste your HTML and get clean, consistently-indented code back in seconds. Runs entirely in your browser — no data sent to any server.
+          </p>
+          <a href="/html-formatter/">
+            Open HTML Formatter →
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/html-formatter-beautifier/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
