@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Counter: Free Online Word &amp;amp; Character Count Tool - BytePane</title>
+  <meta name="description" content="Word Counter: Free Online Word &amp;amp; Character Count Tool">
+  <link rel="canonical" href="https://www.bytepane.com/blog/word-counter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Word Counter: Free Online Word &amp;amp; Character Count Tool
+  </nav>
+
+  <article>
+    <h1>Word Counter: Free Online Word &amp;amp; Character Count Tool</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/word-counter/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Word Counter: Free Online Word & Character Count Tool
+      
+
+      /* Article Header */
+      
+        <h2>
+          Word Counter: Free Online Word &amp; Character Count Tool
+        </h2>
+        
+          Text Tools
+          <time dateTime="2026-04-08">April 8, 2026</time>
+          13 min read
+        
+      
+
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸The same document can produce word counts that differ by <strong>5–15%</strong> across Microsoft Word, Google Docs, and Apple Pages — the algorithms genuinely disagree on hyphenated compounds, URLs, and emails.</li>
+            <li>▸A 2019 meta-analysis of 190 studies (Reading Research Quarterly) found adults read non-fiction silently at <strong>238 WPM</strong> — the basis for reading time estimates on Medium, dev.to, and most publishing platforms.</li>
+            <li>▸JavaScript&apos;s <code >.length</code> property returns <strong>UTF-16 code units</strong>, not Unicode characters — the crystal ball emoji 🔮 has <code >.length === 2</code>. Use <code >Array.from(str).length</code> for a correct count.</li>
+            <li>▸Chinese and Japanese text requires <strong>character-based counting</strong> — there are no word boundaries. Approximately 1,000 Chinese characters equal 600–700 English words per AnyCount&apos;s industry data.</li>
+            <li>▸Per Semrush&apos;s 2025 content study, articles over 3,000 words receive <strong>3× more backlinks</strong> than average-length posts — but only when content depth is genuine, not padding.</li>
+          </ul>
+        
+
+        /* Opening: myth-busting the "word count is trivial" assumption */
+        
+          <h2>The Myth That Word Counting Is Simple</h2>
+          <p>
+            Here is a myth worth busting early: word counting is a solved problem. It is not. Paste the same 500-word paragraph into Microsoft Word, Google Docs, and Apple Pages, and you will likely get three different numbers. The disagreement is not a bug — each tool has made deliberate engineering decisions about what constitutes a &quot;word,&quot; and those decisions produce measurably different results on real-world text.
+          </p>
+          <p>
+            Consider this sentence: &quot;Visit www.example.com or email support@company.com for state-of-the-art help.&quot; How many words is that?
+          </p>
+          <ul>
+            <li><strong>Microsoft Word:</strong> Counts the URL as 1 word, the email as 1 word, the hyphenated compound as 1 word. Result: ~11 words.</li>
+            <li><strong>Google Docs:</strong> Fragments URLs and emails on dots and @ symbols. &quot;www.example.com&quot; becomes 3 words, &quot;support@company.com&quot; becomes 3. Result: ~15 words.</li>
+            <li><strong>Apple Pages:</strong> Includes smart punctuation handling, treats &quot;state-of-the-art&quot; as 4 words, and counts anything in text boxes. Result: ~16 words.</li>
+          </ul>
+          <p>
+            According to research aggregated by Word Count Checker and CountOfWords, tools can diverge by 5–15% on the same document. When word count has contractual or academic significance — a 500-word limit in a grant application, a 10,000-word thesis requirement — this variance matters. The safe practice is to specify which tool&apos;s count applies.
+          </p>
+          <p>
+            BytePane&apos;s <a href="/word-counter/">Word Counter</a> runs entirely in your browser — paste your text and get word count, character count (with and without spaces), sentence count, paragraph count, and estimated reading time instantly. No data leaves your device.
+          </p>
+        
+
+        /* Core algorithm section */
+        
+          <h2>How Word Count Algorithms Actually Work</h2>
+          <p>
+            The canonical approach to word counting in JavaScript is deceptively short:
+          </p>
+
+          
+            Basic word count — works for clean prose
+            <p>`function countWords(text) 
+  return text.trim().split(/\\s+/).filter(Boolean).length
+
+countWords("Hello world")     // 2 ✓
+countWords("  Hello  world  ") // 2 ✓ (trim + split handles extra spaces)
+countWords("")                 // 0 ✓ (filter(Boolean) removes empty string from [""])`</pre>
+          
+
+          <p >
+            That three-liner handles the happy path. The real complexity appears on edge cases that every production word counter must address:
+          </p>
+
+          
+            Production-grade word count with edge case handling
+            <p>`function countWordsRobust(text) 
+  if (!text || !text.trim()) return 0
+
+  return text
+    .trim()
+    // Normalize line endings
+    .replace(/\\r\\n|\\r/g, '\\n')
+    // Collapse all whitespace sequences into a single space
+    .replace(/[\\s]+/g, ' ')
+    // Split on word boundaries
+    .split(' ')
+    .filter(token => 
+      // Reject empty tokens
+      if (!token) return false
+      // Reject pure punctuation sequences
+      if (/^[^\\pL\\pN]+$/u.test(token)) return false
+      return true
+    ).length
+
+// Edge cases:
+countWordsRobust("state-of-the-art")  // 1 (hyphenated = 1 token)
+countWordsRobust("www.example.com")   // 1 (URL = 1 token)
+countWordsRobust("--- --- ---")       // 0 (pure punctuation filtered)
+countWordsRobust("42 items")          // 2 (numbers count as words)`</pre>
+          
+
+          <p >
+            Notice the Unicode property escape <code >\p''L''</code> in the regex. This matches letters in any language, not just ASCII. Without this, Arabic, Greek, Thai, and other non-Latin scripts would be incorrectly filtered out. The <code >u</code> flag is required to enable Unicode property escapes — supported in all modern engines (V8, SpiderMonkey, JavaScriptCore) and Node.js 10+.
+          </p>
+
+          <h3>Sentence and Paragraph Detection</h3>
+          <p>
+            Sentence counting is harder than word counting. The naive approach — split on periods — immediately breaks on abbreviations (&quot;Dr. Smith&quot;), decimal numbers (&quot;3.14&quot;), ellipses (&quot;...&quot;), and domain names. A reasonable heuristic for prose:
+          </p>
+
+          
+            <p>`function countSentences(text) 
+  if (!text.trim()) return 0
+  // Match sentence-ending punctuation followed by whitespace or end of string
+  // The lookbehind ensures at least one word character before the punctuation
+  const matches = text.match(/[\\w][.!?]["'\\)]*(?:\\s|$)/g)
+  return matches ? matches.length : 1
+
+// Paragraph count: non-empty blocks separated by blank lines
+function countParagraphs(text) 
+  return text.split(/\\n\\s*\\n/).filter(p => p.trim().length > 0).length
+`</pre>
+          
+
+          <p >
+            Paragraph detection using blank-line separation works well for plain text. For HTML or Markdown input, you would first strip markup, then apply the same logic. Most professional editors (Notion, Obsidian, VS Code with word-count extensions) take this approach.
+          </p>
+        
+
+        /* Unicode and emoji complexity */
+        
+          <h2>The Unicode Trap: Why Character Count Is Not Trivial</h2>
+          <p>
+            Character counting has a landmine that catches experienced JavaScript developers: <strong>JavaScript strings are UTF-16 encoded</strong>, not Unicode code points. This distinction is invisible for ASCII text but breaks visibly for emoji and characters outside the Basic Multilingual Plane (BMP).
+          </p>
+
+          
+            UTF-16 surrogate pairs — the hidden character count bug
+            <p>`// Crystal ball emoji (U+1F52E) — outside BMP, needs surrogate pair
+"🔮".length        // 2 (WRONG — you see 1 character)
+
+// Family emoji using ZWJ sequence — 4 code points, 11 UTF-16 units!
+"👨‍👩‍👧‍👦".length    // 11 (you see 1 character, JS counts 11)
+
+// The correct way: count Unicode code points
+Array.from("🔮").length          // 1 ✓
+[..."🔮"].length                  // 1 ✓
+"🔮".codePointAt(0)              // 128302 (U+1F52E)
+
+// BUT: ZWJ sequences still break Array.from()
+Array.from("👨‍👩‍👧‍👦").length  // 4 (code points, but visually still 1)
+
+// For true grapheme cluster count (visual characters), use Intl.Segmenter:
+const segmenter = new Intl.Segmenter('en',  granularity: 'grapheme' )
+[...segmenter.segment("👨‍👩‍👧‍👦")].length  // 1 ✓ (correct visual count)`</pre>
+          
+
+          <p >
+            This is documented on MDN Web Docs in the <code >String.prototype.length</code> page: &quot;This property returns the number of code units in the string. JavaScript uses UTF-16 encoding, where some characters (those with code points above 0xFFFF) are represented by two code units.&quot;
+          </p>
+          <p>
+            The <code >Intl.Segmenter</code> API (part of ECMAScript Internationalization API Specification) provides the most correct grapheme cluster count — it understands ZWJ sequences, regional indicator pairs (flag emoji), and combining characters. It is supported in all modern browsers since 2022 and Node.js 16+.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >String</th>
+                  <th >.length (UTF-16)</th>
+                  <th >Array.from() (code points)</th>
+                  <th >Intl.Segmenter (graphemes)</th>
+                  <th >Visual</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >&quot;hello&quot;</td>
+                  <td >5</td>
+                  <td >5</td>
+                  <td >5</td>
+                  <td >5 chars</td>
+                </tr>
+                <tr >
+                  <td >&quot;🔮&quot;</td>
+                  <td >2</td>
+                  <td >1</td>
+                  <td >1</td>
+                  <td >1 emoji</td>
+                </tr>
+                <tr >
+                  <td >&quot;👨‍👩‍👧‍👦&quot;</td>
+                  <td >11</td>
+                  <td >4</td>
+                  <td >1</td>
+                  <td >1 emoji</td>
+                </tr>
+                <tr >
+                  <td >&quot;e\u0301&quot; (é)</td>
+                  <td >2</td>
+                  <td >2</td>
+                  <td >1</td>
+                  <td >1 char</td>
+                </tr>
+                <tr>
+                  <td >&quot;🇺🇸&quot; (flag)</td>
+                  <td >4</td>
+                  <td >2</td>
+                  <td >1</td>
+                  <td >1 flag</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            For most developer use cases — enforcing a database column limit, validating a form field, implementing a character counter for a UI — <code >Array.from(str).length</code> is the correct trade-off: it handles surrogate pairs correctly with no API overhead. Use <code >Intl.Segmenter</code> when you are counting what users will see visually.
+          </p>
+        
+
+        /* Reading time section */
+        
+          <h2>Reading Time Calculations: The Research Behind the Estimate</h2>
+          <p>
+            Every platform that displays &quot;5 min read&quot; is applying a formula that traces back to the same empirical research. A 2019 meta-analysis by Brysbaert et al., published in <em>Reading Research Quarterly</em> and synthesizing 190 studies, established average adult silent reading speeds:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Reading Context</th>
+                  <th >Avg Speed (WPM)</th>
+                  <th >1,200 words</th>
+                  <th >2,500 words</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Non-fiction, silent</td>
+                  <td >238 WPM</td>
+                  <td >~5 min</td>
+                  <td >~10.5 min</td>
+                </tr>
+                <tr >
+                  <td >Fiction, silent</td>
+                  <td >260 WPM</td>
+                  <td >~4.6 min</td>
+                  <td >~9.6 min</td>
+                </tr>
+                <tr >
+                  <td >Oral reading</td>
+                  <td >183 WPM</td>
+                  <td >~6.6 min</td>
+                  <td >~13.7 min</td>
+                </tr>
+                <tr >
+                  <td >Proofreading on screen</td>
+                  <td >180 WPM</td>
+                  <td >~6.7 min</td>
+                  <td >~13.9 min</td>
+                </tr>
+                <tr>
+                  <td >College-educated adults</td>
+                  <td >200–400 WPM</td>
+                  <td >3–6 min</td>
+                  <td >6.3–12.5 min</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            Medium uses 265 WPM. dev.to uses 200 WPM. Most blog reading time plugins default to 200–250 WPM. The formula in code:
+          </p>
+
+          
+            <p>`function readingTime(text, wpm = 238) 
+  const words = text.trim().split(/\\s+/).filter(Boolean).length
+  const minutes = Math.ceil(words / wpm)
+  return \`\$minutes min read\`
+
+readingTime("A 2,400-word blog post...", 238)  // "11 min read"
+readingTime("A 2,400-word blog post...", 200)  // "12 min read"
+
+// For technical content with code blocks, many tools bump the baseline:
+// - Regular prose: 238 WPM
+// - Code snippets: ~50-80 WPM (developers read code ~3x slower)
+// Weighted average for technical articles with significant code coverage`</pre>
+          
+
+          <p >
+            For technical articles with substantial code snippets, a more accurate approach counts code blocks separately and applies a lower WPM (typically 50–80 WPM for code reading) before summing with prose reading time.
+          </p>
+        
+
+        /* Word count and SEO */
+        
+          <h2>Word Count, Content Quality, and SEO: What the Data Actually Shows</h2>
+          <p>
+            This section exists to prevent misuse of word count data. Here is what the research says, precisely:
+          </p>
+          <p>
+            Backlinko&apos;s analysis of 11.8 million Google search results found that the average first-page result is <strong>1,447 words</strong>. Orbit Media&apos;s 2025 Blogging Benchmarks study (1,000+ bloggers surveyed) reported the average blog post is 1,333–1,427 words. Semrush&apos;s 2025 content marketing statistics found articles over 3,000 words receive 3× more backlinks and 3× more organic traffic than average-length posts.
+          </p>
+          <p>
+            What these statistics do <em>not</em> say: that adding words improves rankings. The correlation runs the other way — comprehensively covering a topic requires more words. Google&apos;s Helpful Content guidance explicitly penalizes content that pads length without adding value. Per Orbit Media&apos;s data, only 9% of publishers write posts over 2,000 words — those who do report &quot;strong results&quot; at a higher rate precisely because those posts tend to be genuinely comprehensive, not because they are long.
+          </p>
+          <p>
+            The practical framework: use word count as a <em>symptom</em> diagnostic, not a target. If your article on a complex API is 400 words, you probably have not covered error handling, authentication, rate limits, and debugging. If your article on a single command-line flag is 3,000 words, you are padding.
+          </p>
+        
+
+        /* CJK counting */
+        
+          <h2>Word Counting Across Languages: CJK, Arabic, and Beyond</h2>
+          <p>
+            The word-boundary split approach that works for English, German, Spanish, and other space-delimited languages breaks entirely for CJK text (Chinese, Japanese, Korean).
+          </p>
+
+          <h3>Chinese and Japanese</h3>
+          <p>
+            Chinese and Japanese do not use spaces between words. The sentence 我喜欢编程 (I like programming) is 5 characters with no whitespace at all. Word-boundary detection requires a morphological analyzer — jieba for Chinese, MeCab or kuromoji for Japanese — which segments the character stream into lexical units. For translation and content measurement purposes, the industry standard is <strong>character count</strong>:
+          </p>
+          <ul>
+            <li>1,000 Chinese characters ≈ 600–700 English words (per AnyCount industry data)</li>
+            <li>Chinese reading speed: 300–400 characters per minute (vs 238 WPM for English)</li>
+            <li>Translation agencies quote Chinese/Japanese projects by character count, not word count</li>
+          </ul>
+
+          <h3>Korean</h3>
+          <p>
+            Unlike Chinese and Japanese, modern Korean (Hangul) is written with spaces between words. Korean word counting works with the same whitespace-split algorithm as English. Per 1Stop Asia&apos;s localization industry data, Korean is the only major CJK language where word-based counting is reliable for translation quoting.
+          </p>
+
+          <h3>Arabic, Hebrew, and Right-to-Left Scripts</h3>
+          <p>
+            Arabic and Hebrew are space-delimited like English — the whitespace-split algorithm works correctly for basic word counting. The complexity is in rendering (bidirectional text, ligatures) and in the fact that Arabic morphology is highly inflectional — the same root appears in dozens of surface forms. For word frequency analysis (not raw counting), Arabic requires a stemmer or morphological analyzer.
+          </p>
+
+          
+            Detecting CJK characters for language-appropriate counting
+            <p>`function hasCJK(text) 
+  // Matches CJK Unified Ideographs, Hiragana, Katakana, Hangul
+  return /[\\u4E00-\\u9FFF\\u3040-\\u309F\\u30A0-\\u30FF\\uAC00-\\uD7AF]/.test(text)
+
+function smartCount(text) 
+  if (hasCJK(text)) 
+    // Return character count for CJK text (strip spaces, punctuation)
+    return 
+      words: null,
+      characters: [...text].filter(c => /[\\pL\\pN]/u.test(c)).length,
+      note: 'Character count used for CJK text'
+    
+  
+  return 
+    words: text.trim().split(/\\s+/).filter(Boolean).length,
+    characters: [...text].length,
+    note: 'Word count for space-delimited text'
+  
+`</pre>
+          
+        
+
+        /* npm ecosystem section */
+        
+          <h2>Word Count Libraries: npm Ecosystem Overview</h2>
+          <p >
+            When building word counting into an application, rolling your own handles most cases — but existing packages solve the edge cases for you. Two packages dominate the npm ecosystem:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Package</th>
+                  <th >Weekly Downloads</th>
+                  <th >CJK Support</th>
+                  <th >Notes</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >word-count</td>
+                  <td >11,594</td>
+                  <td >Yes</td>
+                  <td >Used by 25+ published packages. No recent updates.</td>
+                </tr>
+                <tr>
+                  <td >wordcount</td>
+                  <td >1,928</td>
+                  <td >Yes (CJK + Cyrillic)</td>
+                  <td >Smaller, lighter. Active maintenance.</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            For most applications — blog editors, content management systems, writing assistants — the native implementation with <code >Intl.Segmenter</code> and Unicode property escapes is more maintainable than adding a dependency. The npm packages add value when you need battle-tested CJK detection without writing the regex ranges yourself.
+          </p>
+          <p>
+            For VS Code, the &quot;Word Count CJK&quot; extension by holmescn (available on the VS Code Marketplace) provides real-time character and word counting in the status bar with automatic CJK detection — useful for technical writers working in multiple languages.
+          </p>
+        
+
+        /* Word count in different contexts */
+        
+          <h2>Practical Word Count Benchmarks by Content Type</h2>
+          <p>
+            Different writing contexts have different norms, requirements, and audience expectations. Here is a reference table based on industry and academic standards:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Content Type</th>
+                  <th >Typical Range</th>
+                  <th >Source / Authority</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >College application essay</td>
+                  <td >250–650 words</td>
+                  <td >Common App requirement</td>
+                </tr>
+                <tr >
+                  <td >Average blog post (2025)</td>
+                  <td >1,333–1,427 words</td>
+                  <td >Orbit Media Blogging Benchmarks 2025</td>
+                </tr>
+                <tr >
+                  <td >Top-ranking Google content (avg)</td>
+                  <td >~1,447 words</td>
+                  <td >Backlinko 11.8M result study</td>
+                </tr>
+                <tr >
+                  <td >High-backlink content</td>
+                  <td >3,000+ words</td>
+                  <td >Semrush Content Marketing Statistics 2025</td>
+                </tr>
+                <tr >
+                  <td >Academic research paper</td>
+                  <td >2,500–5,000 words</td>
+                  <td >Typical journal submission guidelines</td>
+                </tr>
+                <tr >
+                  <td >Master&apos;s thesis</td>
+                  <td >15,000–50,000 words</td>
+                  <td >University program requirements vary</td>
+                </tr>
+                <tr>
+                  <td >Tweet (X character limit)</td>
+                  <td >280 characters</td>
+                  <td >Twitter/X platform limit</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>Why do different word counters give different results for the same text?</h3>
+              <p>
+                Word count algorithms diverge on edge cases: hyphenated compounds (&quot;state-of-the-art&quot; = 1 word in Word, 4 in some tools), URLs (&quot;www.example.com&quot; = 3 words in Google Docs), emails, and numbers. Apple Pages also counts headers, footers, and text boxes. Research from CountOfWords and Happy Beavers documents 5–15% variance across major tools on typical documents.
+              </p>
+            
+
+            
+              <h3>How is reading time calculated from word count?</h3>
+              <p>
+                Reading time = total words ÷ average reading speed in WPM. A 2019 meta-analysis of 190 studies (Brysbaert et al., <em>Reading Research Quarterly</em>) found adults read non-fiction silently at 238 WPM. Most platforms use 200–250 WPM as their baseline. A 1,200-word article takes roughly 5 minutes at 240 WPM.
+              </p>
+            
+
+            
+              <h3>How do you count words in Chinese, Japanese, or Korean text?</h3>
+              <p>
+                Chinese and Japanese have no word boundaries, so character counting is the industry standard. Per AnyCount&apos;s localization data, 1,000 Chinese characters ≈ 600–700 English words. Korean is space-delimited and can use word-based counting. Professional translation agencies quote CJK projects by character count, not word count.
+              </p>
+            
+
+            
+              <h3>Why does JavaScript count emoji as 2 characters?</h3>
+              <p>
+                JavaScript strings are UTF-16 encoded. Emoji above U+FFFF require two UTF-16 code units (a surrogate pair). The <code >.length</code> property returns code unit count, not code point count. Use <code >Array.from(str).length</code> for Unicode-correct counting, or <code >Intl.Segmenter</code> for grapheme clusters (visual characters).
+              </p>
+            
+
+            
+              <h3>How many words should a blog post be for SEO?</h3>
+              <p>
+                Per Backlinko&apos;s 11.8M result study, average first-page content is 1,447 words. Semrush 2025 found posts over 3,000 words receive 3× more backlinks. But Google&apos;s Helpful Content guidance penalizes padding. Match length to topic depth — a complex API tutorial needs 3,000 words, a simple CLI flag reference does not.
+              </p>
+            
+
+            
+              <h3>What is the difference between character count with and without spaces?</h3>
+              <p>
+                Character count with spaces counts every code point including whitespace. Without spaces counts only non-whitespace. Twitter enforces 280 characters with spaces. Some academic publishers count without spaces to standardize across languages with different average word lengths. When a limit matters, confirm which definition the platform uses.
+              </p>
+            
+
+            
+              <h3>How do I count words programmatically in JavaScript?</h3>
+              <p>
+                Basic: <code >text.trim().split(/\s+/).filter(Boolean).length</code>. For production, add Unicode property escapes to filter pure-punctuation tokens and handle CJK detection. The npm package <code >word-count</code> (11,594 weekly downloads) handles CJK characters and is used by 25+ published packages.
+              </p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>Count Words Instantly</h2>
+          <p>
+            Paste any text — prose, code comments, an email draft, a README — and get word count, character count, sentence count, reading time, and keyword density in real time. Runs entirely in your browser.
+          </p>
+          <a href="/word-counter/">
+            Open Word Counter →
+          </a>
+        
+
+        /* Related tools */
+        
+          <h2>Related Developer Tools</h2>
+          
+            <a href="/json-formatter/">
+              → JSON Formatter & Validator
+            </a>
+            <a href="/url-encoder/">
+              → URL Encoder / Decoder
+            </a>
+            <a href="/base64-encoder/">
+              → Base64 Encoder / Decoder
+            </a>
+            <a href="/markdown-editor/">
+              → Markdown Editor & Preview
+            </a>
+            <a href="/blog/markdown-cheat-sheet/">
+              → Markdown Cheat Sheet
+            </a>
+            <a href="/blog/regex-cheat-sheet/">
+              → Regex Cheat Sheet
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/word-counter/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
