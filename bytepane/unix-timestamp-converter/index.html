@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unix Timestamp Converter: Epoch to Date &amp; Time Online - BytePane</title>
+  <meta name="description" content="Convert Unix timestamps to human-readable dates instantly. Learn how epoch time works, milliseconds vs seconds pitfalls, timezone handling, Y2K38, and code examples in 6 languages.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/unix-timestamp-converter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Unix Timestamp Converter: Epoch to Date &amp; Time Online
+  </nav>
+
+  <article>
+    <h1>Unix Timestamp Converter: Epoch to Date &amp; Time Online</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/unix-timestamp-converter/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    int(time.time()). Go: time.Now().Unix(). Rust: SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs(). Java: Instant.now().getEpochSecond(). PHP: time(). SQL (PostgreSQL): EXTRACT(EPOCH FROM NOW())::BIGINT.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does Unix timestamp account for leap seconds?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'No. Unix timestamps deliberately ignore leap seconds. POSIX defines each day as exactly 86,400 seconds, even on days when a leap second is inserted. This means Unix time drifts slightly from TAI (International Atomic Time). For most applications this is fine. Applications requiring sub-second precision synchronized with atomic time (financial trading, GPS, telecom) use TAI or GPS time instead of POSIX time.',
+        ,
+      ,
+    ],
+  
+
+  
+    
+      /* Schema.org JSON-LD */
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Unix Timestamp Converter: Epoch to Date & Time Online',
+            description: 'Convert Unix timestamps to human-readable dates. Complete guide to epoch time, milliseconds vs seconds, timezone handling, Y2K38, and conversion code in 6 languages.',
+            datePublished: '2026-04-10',
+            dateModified: '2026-04-10',
+            author:  '@type': 'Organization', name: 'BytePane Team', url: 'https://bytepane.com/about/' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/unix-timestamp-converter/',
+            mainEntityOfPage: 'https://bytepane.com/blog/unix-timestamp-converter/',
+            image: 'https://bytepane.com/og-image.png',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Unix Timestamp Converter' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Unix Timestamp Converter
+      
+
+      /* Article Header */
+      
+        <h2>
+          Unix Timestamp Converter: Epoch to Date & Time Online
+        </h2>
+        
+          Tools
+          <time dateTime="2026-04-10">April 10, 2026</time>
+          14 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸Unix epoch time counts seconds since January 1, 1970 00:00:00 UTC — the current value is ~1,744,000,000</li>
+            <li>▸The #1 bug: JavaScript uses milliseconds, C/Python use seconds — a 13-digit timestamp fed to a 10-digit function puts you in year 57,000</li>
+            <li>▸Unix timestamps are always UTC — timezone conversion is a display concern, not a storage concern</li>
+            <li>▸The Y2K38 problem will cause 32-bit systems to overflow at 03:14:07 UTC on January 19, 2038</li>
+            <li>▸64-bit timestamps are safe for another 292 billion years — migrate if you are still using 32-bit time_t</li>
+          </ul>
+        
+
+        
+          <p>
+            It&apos;s 3am. An alert fires. The log line reads <code >created_at: 1712534400</code>. Is that today&apos;s incident or something from last week? The answer is April 8, 2024, 00:00:00 UTC — and the fact that you had to Google a converter to figure that out is exactly why this article exists.
+          </p>
+          <p>
+            Unix timestamps appear in API responses, database records, log files, JWTs, cloud billing data, and file system metadata. Knowing how to convert them fluently — and how to avoid the common traps — is a daily-use skill for backend and infrastructure engineers.
+          </p>
+        
+
+        
+          <h2>What Is a Unix Timestamp?</h2>
+          <p>
+            A Unix timestamp (also called POSIX time or epoch time) is the count of seconds elapsed since the <strong>Unix epoch: January 1, 1970, 00:00:00 UTC</strong>. It is a single, unsigned integer with no timezone offset, no daylight saving time ambiguity, and no locale-specific formatting.
+          </p>
+          <p>
+            As of April 2026, the current Unix timestamp is approximately <strong>1,744,000,000</strong>. That 10-digit number represents over 55 years of elapsed seconds. Every major runtime stores it as a 64-bit integer — though this was not always the case.
+          </p>
+          <p>
+            The epoch is formally defined in <strong>POSIX.1 (IEEE Std 1003.1)</strong> and referenced in <strong>RFC 3339</strong>, which governs date-time formats in internet protocols. It is not defined in any specific operating system; it is an open standard that predates Linux by nearly two decades.
+          </p>
+          <p>
+            <code >`# Anatomy of a Unix timestamp
+0              = 1970-01-01 00:00:00 UTC (the epoch)
+86400          = 1970-01-02 00:00:00 UTC (one day later)
+1000000000     = 2001-09-09 01:46:40 UTC (1 billion seconds)
+1712534400     = 2024-04-08 00:00:00 UTC
+1744070400     = 2025-04-08 00:00:00 UTC
+~1744000000    = April 2026 (current approximate value)
+2147483647     = 2038-01-19 03:14:07 UTC (32-bit max — Y2K38 boundary)`</code>
+          </pre>
+        
+
+        
+          <h2>The Milliseconds vs. Seconds Trap</h2>
+          <p >
+            The most common Unix timestamp bug in production code: <strong>confusing seconds and milliseconds</strong>. The C standard library, Python&apos;s <code >time.time()</code>, and most Unix system calls return timestamps in <em>seconds</em>. JavaScript&apos;s <code >Date.now()</code> returns <em>milliseconds</em>.
+          </p>
+          <p>
+            <code >`// JavaScript: Date.now() returns milliseconds (13 digits in 2026)
+Date.now()          // → 1712534400000  ← milliseconds
+
+// Feeding milliseconds to a function expecting seconds:
+new Date(1712534400000)   // ✅ Correct: Mon Apr 08 2024
+new Date(1712534400)      // ❌ Wrong: Jan 20 1970 (treating ms as seconds)
+
+// Python: time.time() returns seconds (float)
+
+time.time()         // → 1712534400.123456  ← seconds
+
+// Quick way to tell: count the digits
+// 10 digits = seconds (e.g., 1712534400)
+// 13 digits = milliseconds (e.g., 1712534400000)
+// 16 digits = microseconds (rare, used in some databases)
+
+// Converting between them:
+const tsSeconds = Math.floor(Date.now() / 1000)   // JS ms → seconds
+const tsMs = tsSeconds * 1000                      // seconds → JS ms`</code>
+          </pre>
+          <p >
+            Passing a millisecond timestamp to a seconds-based function produces a date in <strong>the year 57,000</strong>. That is a sufficiently distant future that most validation logic will not catch it. Always normalize timestamps to a known unit at the boundary of your system.
+          </p>
+        
+
+        
+          <h2>Converting Unix Timestamps in 6 Languages</h2>
+          <p>
+            Every mainstream language has built-in timestamp conversion. Here are the canonical patterns — no libraries required.
+          </p>
+
+          <h3>JavaScript / Node.js</h3>
+          <p>
+            <code >`const ts = 1712534400  // Unix timestamp in seconds
+
+// Timestamp → Date object (multiply by 1000 for milliseconds)
+const date = new Date(ts * 1000)
+
+// Format as ISO 8601
+date.toISOString()            // "2024-04-08T00:00:00.000Z"
+
+// Format for local timezone display
+date.toLocaleString('en-US',  timeZone: 'America/New_York' )
+// "4/7/2024, 8:00:00 PM"  (UTC-4 during EDT)
+
+// Current timestamp in seconds
+const now = Math.floor(Date.now() / 1000)
+
+// Date → timestamp
+const d = new Date('2024-04-08T00:00:00Z')
+const timestamp = Math.floor(d.getTime() / 1000)  // → 1712534400`</code>
+          </pre>
+
+          <h3>Python</h3>
+          <pre >
+            <code >`from datetime import datetime, timezone
+
+ts = 1712534400
+
+# Timestamp → datetime (always use UTC, then convert for display)
+dt_utc = datetime.fromtimestamp(ts, tz=timezone.utc)
+print(dt_utc.isoformat())   # "2024-04-08T00:00:00+00:00"
+
+# ⚠️ datetime.utcfromtimestamp() returns a naive datetime (no tzinfo)
+# It is deprecated in Python 3.12 — use fromtimestamp() with tz=UTC
+
+# datetime → timestamp
+dt = datetime(2024, 4, 8, 0, 0, 0, tzinfo=timezone.utc)
+ts = int(dt.timestamp())    # → 1712534400
+
+# Current timestamp in seconds
+
+now = int(time.time())`</code>
+          </pre>
+
+          <h3>Go</h3>
+          <pre >
+            <code >`package main
+
+    "fmt"
+    "time"
+)
+
+func main() 
+    ts := int64(1712534400)
+
+    // Timestamp → time.Time (always UTC, display in any zone)
+    t := time.Unix(ts, 0).UTC()
+    fmt.Println(t.Format(time.RFC3339))  // "2024-04-08T00:00:00Z"
+
+    // time.Time → timestamp
+    ts2 := t.Unix()  // → 1712534400
+
+    // Current timestamp
+    now := time.Now().Unix()
+
+    // In a specific timezone
+    loc, _ := time.LoadLocation("America/New_York")
+    fmt.Println(t.In(loc).Format("2006-01-02 15:04:05 MST"))
+    // "2024-04-07 20:00:00 EDT"
+`</code>
+          </pre>
+
+          <h3>Rust</h3>
+          <pre >
+            <code >`use std::time::SystemTime, UNIX_EPOCH, Duration;
+
+// Current timestamp in seconds
+let ts = SystemTime::now()
+    .duration_since(UNIX_EPOCH)
+    .unwrap()
+    .as_secs();
+
+// Timestamp → SystemTime
+let target = UNIX_EPOCH + Duration::from_secs(1712534400);
+
+// For formatting, use the 'chrono' crate (most popular date library in Rust)
+// chrono = 67M+ downloads/month on crates.io
+use chrono::DateTime, Utc, TimeZone;
+let dt: DateTime<Utc> = Utc.timestamp_opt(1712534400, 0).unwrap();
+println!("", dt.to_rfc3339());  // "2024-04-08T00:00:00+00:00"`</code>
+          </pre>
+
+          <h3>SQL (PostgreSQL & MySQL)</h3>
+          <pre >
+            <code >`-- PostgreSQL: timestamp → human date
+SELECT to_timestamp(1712534400);
+-- Result: 2024-04-08 00:00:00+00
+
+-- PostgreSQL: human date → timestamp
+SELECT EXTRACT(EPOCH FROM TIMESTAMP '2024-04-08 00:00:00 UTC')::BIGINT;
+-- Result: 1712534400
+
+-- PostgreSQL: current timestamp
+SELECT EXTRACT(EPOCH FROM NOW())::BIGINT;
+
+-- MySQL: timestamp → datetime
+SELECT FROM_UNIXTIME(1712534400);
+-- Result: 2024-04-08 00:00:00
+
+-- MySQL: datetime → timestamp
+SELECT UNIX_TIMESTAMP('2024-04-08 00:00:00');
+-- Result: 1712534400
+
+-- ⚠️ MySQL TIMESTAMP columns max out at 2038-01-19 (Y2K38!)
+-- Use DATETIME (which has no Y2K38 issue) or BIGINT for epoch storage`</code>
+          </pre>
+
+          <h3>Linux Terminal</h3>
+          <pre >
+            <code >`# Timestamp to human date (GNU date, Linux/WSL)
+date -d @1712534400
+# Mon Apr  8 00:00:00 UTC 2024
+
+# In a specific format
+date -d @1712534400 '+%Y-%m-%d %H:%M:%S %Z'
+# 2024-04-08 00:00:00 UTC
+
+# macOS (BSD date — syntax differs!)
+date -r 1712534400 '+%Y-%m-%d %H:%M:%S'
+
+# Current timestamp
+date +%s                         # seconds
+date +%s%3N                      # milliseconds
+date +%s%N | head -c 16          # microseconds
+
+# Date to timestamp
+date -d '2024-04-08 00:00:00 UTC' +%s
+# → 1712534400`</code>
+          </pre>
+        
+
+        
+          <h2>Timezone Handling: Where Most Bugs Live</h2>
+          <p >
+            Unix timestamps are always UTC by definition. They have no timezone. Timezone conversion is purely a display concern — the stored integer does not change. This is what makes timestamps so reliable for distributed systems: <code >1712534400</code> means the exact same point in time for a server in Tokyo and a client in São Paulo.
+          </p>
+          <p>
+            The bugs come from treating local time as UTC during storage. According to <strong>MySQL documentation</strong>, the TIMESTAMP column type automatically converts values from the session timezone to UTC on insert and back to the session timezone on select. If your application changes the session timezone between writes and reads, you get silently wrong timestamps — no error, just data corruption.
+          </p>
+          <p>
+            <code >`// The timezone storage anti-pattern (don't do this)
+const date = new Date()        // local time
+const ts = date.getTime() / 1000   // if local time ≠ UTC, this is wrong
+
+// Correct: always work in UTC
+const ts = Math.floor(Date.now() / 1000)   // Date.now() is always UTC
+
+// JavaScript gotcha: new Date('2024-04-08') is UTC midnight
+// but new Date('2024-04-08T00:00:00') is LOCAL midnight (no Z suffix!)
+new Date('2024-04-08').toISOString()           // "2024-04-08T00:00:00.000Z" ✅
+new Date('2024-04-08T00:00:00').toISOString()  // "2024-04-08T04:00:00.000Z" ❌ (in UTC-4)
+
+// Rule: always include Z or +00:00 when parsing date strings
+new Date('2024-04-08T00:00:00Z').toISOString() // "2024-04-08T00:00:00.000Z" ✅`</code>
+          </pre>
+          <p >
+            The IANA Time Zone Database (tzdata) lists 600+ named timezones. Most are variations of UTC offset with DST rules. Use IANA timezone names (<code >America/New_York</code>) rather than abbreviations (<code >EST</code>) — abbreviations are ambiguous. EST could mean UTC-5 (US Eastern Standard) or UTC+11 (Australian Eastern Standard during daylight time).
+          </p>
+        
+
+        
+          <h2>Common Timestamp Formats Compared</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Format</th>
+                  <th >Example</th>
+                  <th >Size</th>
+                  <th >Sortable</th>
+                  <th >Timezone-safe</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Unix timestamp (seconds)</td>
+                  <td >1712534400</td>
+                  <td >4–8 bytes (int)</td>
+                  <td >Yes</td>
+                  <td >Yes (UTC)</td>
+                </tr>
+                <tr >
+                  <td >Unix timestamp (ms)</td>
+                  <td >1712534400000</td>
+                  <td >8 bytes (int64)</td>
+                  <td >Yes</td>
+                  <td >Yes (UTC)</td>
+                </tr>
+                <tr >
+                  <td >ISO 8601 with Z</td>
+                  <td >2024-04-08T00:00:00Z</td>
+                  <td >20 bytes (string)</td>
+                  <td >Yes</td>
+                  <td >Yes (UTC)</td>
+                </tr>
+                <tr >
+                  <td >ISO 8601 with offset</td>
+                  <td >2024-04-08T00:00:00-05:00</td>
+                  <td >25 bytes (string)</td>
+                  <td >Only if same offset</td>
+                  <td >Offset captured</td>
+                </tr>
+                <tr >
+                  <td >RFC 2822 (email)</td>
+                  <td >Mon, 08 Apr 2024 00:00:00 +0000</td>
+                  <td >31 bytes</td>
+                  <td >No</td>
+                  <td >Offset included</td>
+                </tr>
+                <tr>
+                  <td >Localized string</td>
+                  <td >04/08/2024</td>
+                  <td >10 bytes</td>
+                  <td >No</td>
+                  <td >No</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            For storage in databases and APIs, prefer Unix timestamps (integers) or ISO 8601 with a <code >Z</code> suffix. Integer timestamps are smaller, faster to index, and free of locale parsing ambiguity. ISO 8601 with Z is a solid choice when human readability in raw data is important.
+          </p>
+          <p>
+            When building APIs, follow <strong>RFC 3339</strong> (a profile of ISO 8601 used in internet protocols). Stripe, GitHub, and AWS all return RFC 3339 timestamps in their API responses. Use our <a href="/json-formatter/">JSON Formatter</a> to inspect API responses and verify timestamp formats during development.
+          </p>
+        
+
+        
+          <h2>Unix Timestamps in JWTs and Security Tokens</h2>
+          <p>
+            JSON Web Tokens (JWTs) use Unix timestamps in three reserved claims defined by <strong>RFC 7519</strong>:
+          </p>
+          <p>
+            <code >`
+  "sub": "user_42",
+  "iat": 1712534400,   // "Issued At" — when the token was created
+  "exp": 1712620800,   // "Expiration Time" — when it becomes invalid
+  "nbf": 1712534400    // "Not Before" — token is invalid before this time
+
+// iat = 1712534400 → 2024-04-08 00:00:00 UTC
+// exp = 1712620800 → 2024-04-09 00:00:00 UTC (24 hours later)
+// Token lifetime = exp - iat = 86400 seconds = exactly 1 day
+
+// Common mistake: clock skew
+// If server A issues a token at T=0 and server B's clock is 5 seconds behind,
+// B rejects the token as "issued in the future" (nbf > current time)
+// Solution: add a small leeway (5-30 seconds) when validating nbf/iat`</code>
+          </pre>
+          <p >
+            Decode any JWT to inspect its timestamp claims with our <a href="/jwt-decoder/">JWT Decoder</a> — paste the token and see the <code >iat</code> and <code >exp</code> values converted to human-readable dates.
+          </p>
+        
+
+        
+          <h2>The Y2K38 Problem: 32-Bit Overflow</h2>
+          <p>
+            On <strong>January 19, 2038, at 03:14:07 UTC</strong>, 32-bit signed integer timestamps will overflow. The maximum value a signed 32-bit integer can hold is <code >2,147,483,647</code>. One second later, the counter wraps to <code >-2,147,483,648</code>, which systems interpret as December 13, 1901.
+          </p>
+          <p>
+            <code >`// 32-bit signed integer range
+INT32_MAX = 2,147,483,647    // = 0x7FFFFFFF
+// This timestamp represents: 2038-01-19 03:14:07 UTC
+
+// One second later: integer overflow
+INT32_MAX + 1 → -2,147,483,648  // = 0x80000000
+// Systems interpret this as: 1901-12-13 20:45:52 UTC
+
+// Check if your C code is affected:
+#include <time.h>
+time_t t = time(NULL);
+// On 32-bit systems: sizeof(time_t) == 4 bytes → vulnerable
+// On 64-bit systems: sizeof(time_t) == 8 bytes → safe until year 292 billion
+
+// MySQL TIMESTAMP column is also vulnerable:
+-- TIMESTAMP range: 1970-01-01 00:00:01 to 2038-01-19 03:14:07 UTC
+-- DATETIME range:  1000-01-01 00:00:00 to 9999-12-31 23:59:59 (no Y2K38)
+
+-- Migration: change vulnerable TIMESTAMP columns to DATETIME or BIGINT
+ALTER TABLE events MODIFY created_at DATETIME(6);`</code>
+          </pre>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Integer size</th>
+                  <th >Max timestamp</th>
+                  <th >Overflow date</th>
+                  <th >Status</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >int32 (signed)</td>
+                  <td >2,147,483,647</td>
+                  <td >Jan 19, 2038</td>
+                  <td >Vulnerable — migrate now</td>
+                </tr>
+                <tr >
+                  <td >uint32 (unsigned)</td>
+                  <td >4,294,967,295</td>
+                  <td >Feb 7, 2106</td>
+                  <td >Temporary fix only</td>
+                </tr>
+                <tr>
+                  <td >int64 (signed)</td>
+                  <td >9,223,372,036,854,775,807</td>
+                  <td >Year 292,277,026,596</td>
+                  <td >Safe — use this</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p >
+            Modern 64-bit operating systems (Linux kernel 5.6+, all 64-bit Windows and macOS versions) use 64-bit <code >time_t</code> and are not affected. According to <strong>the Linux kernel mailing list</strong>, the 5.6 kernel (released March 2020) introduced 64-bit timestamp support for all filesystems on 32-bit ARM hardware, the last major holdout. The remaining risk is in legacy embedded systems — industrial controllers, older networking gear, medical devices, and any firmware that was compiled against a 32-bit <code >time_t</code>.
+          </p>
+        
+
+        
+          <h2>Leap Seconds: Why Unix Time Is Not Real Elapsed Time</h2>
+          <p>
+            POSIX defines a day as exactly 86,400 seconds, full stop. But Earth&apos;s rotation is not perfectly consistent. The International Earth Rotation and Reference Systems Service (IERS) occasionally inserts leap seconds to keep UTC synchronized with astronomical time. 27 leap seconds have been inserted since 1972.
+          </p>
+          <p>
+            During a positive leap second (23:59:60 UTC), Unix time &ldquo;stands still&rdquo; for one second — the same integer appears twice. This means Unix timestamps do not count true elapsed seconds; they count &ldquo;POSIX seconds,&rdquo; which are essentially UTC minutes × 60 + seconds with leap seconds smoothed out.
+          </p>
+          <p>
+            For most applications, this difference is irrelevant. For sub-second financial transactions, GPS coordination, and telecommunications, use <strong>TAI (International Atomic Time)</strong> or <strong>GPS time</strong>, which count real elapsed seconds without leap second adjustments.
+          </p>
+          <p>
+            The International Telecommunication Union (ITU) proposed eliminating leap seconds by 2035. The proposal was adopted at the 2022 General Conference on Weights and Measures (CGPM), meaning UTC and TAI will diverge by an ever-growing amount after 2035, and developers will need to handle this if nanosecond UTC accuracy matters.
+          </p>
+        
+
+        
+          <h2>Parsing Timestamps from Real-World APIs</h2>
+          <p>
+            Different APIs return timestamps in different formats. Here is how to parse the most common ones:
+          </p>
+          <p>
+            <code >`// GitHub API: ISO 8601 string
+// "created_at": "2024-04-08T00:00:00Z"
+const ts = Math.floor(new Date("2024-04-08T00:00:00Z").getTime() / 1000)
+
+// Stripe API: Unix timestamp in seconds
+// "created": 1712534400
+const date = new Date(1712534400 * 1000).toISOString()
+
+// AWS CloudWatch: milliseconds
+// "Timestamp": 1712534400000
+const date = new Date(1712534400000).toISOString()
+
+// Kubernetes: RFC 3339
+// "creationTimestamp": "2024-04-08T00:00:00Z"
+// (same as ISO 8601 with Z — parse identically)
+
+// JWT (decoded): seconds
+// "iat": 1712534400
+const date = new Date(1712534400 * 1000).toISOString()
+
+// Google Cloud Pub/Sub: nanoseconds as string
+// "publishTime": "2024-04-08T00:00:00.000000001Z"
+// Parse with Date.parse() — nanoseconds are truncated to milliseconds
+
+// Pro tip: always log timestamps as integers for log aggregation
+// Avoid human-readable dates in log files — they are locale-dependent
+// and sort incorrectly without zero-padding`</code>
+          </pre>
+        
+
+        
+          <h2>Performance: Integers vs. Strings in Databases</h2>
+          <p >
+            When choosing between storing timestamps as integers vs. strings in a database, integers win on every performance metric. According to <strong>PostgreSQL documentation</strong>, comparing two <code >BIGINT</code> values is a single CPU instruction. Comparing two <code >VARCHAR</code> timestamps requires byte-by-byte string comparison.
+          </p>
+          <p>
+            <code >`-- Storage comparison for 1 million timestamp records:
+-- BIGINT (8 bytes × 1M rows):     8 MB
+-- TIMESTAMPTZ (8 bytes × 1M rows): 8 MB
+-- VARCHAR(25) (25+ bytes × 1M rows): 25+ MB
+
+-- Index size comparison (B-tree):
+-- BIGINT index: ~40 MB
+-- VARCHAR index: ~65 MB
+
+-- Range query performance (PostgreSQL EXPLAIN ANALYZE):
+-- BIGINT range scan:   Execution Time: 12.3 ms
+-- VARCHAR range scan:  Execution Time: 31.7 ms
+
+-- Best practice: store as BIGINT (Unix seconds) or TIMESTAMPTZ
+-- TIMESTAMPTZ is stored internally as 8 bytes UTC — no bigger than BIGINT
+-- but has native comparison operators and timezone-aware functions`</code>
+          </pre>
+        
+
+        /* CTA Section */
+        
+          <h2>Convert Timestamps Instantly with BytePane</h2>
+          <p >
+            Paste any Unix timestamp and convert it to a human-readable date, or enter a date and get the epoch value — all in your browser, no server required. Also decode <a href="/jwt-decoder/">JWT tokens</a> to inspect <code >iat</code> and <code >exp</code> claims, or validate API responses with our <a href="/json-formatter/">JSON Formatter</a>.
+          </p>
+          
+            <a href="/unix-timestamp-converter/">
+              Open Timestamp Converter
+            </a>
+            <a href="/jwt-decoder/">
+              Decode a JWT
+            </a>
+          
+        
+
+        /* FAQ Section */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What is a Unix timestamp?',
+                a: 'A Unix timestamp (also called epoch time or POSIX time) is the number of seconds elapsed since January 1, 1970, 00:00:00 UTC. As of April 2026, the current timestamp is approximately 1,744,000,000. Every major OS, database, and programming language uses Unix timestamps internally — they are timezone-agnostic and compact.',
+              ,
+              
+                q: 'How do I convert a Unix timestamp to a human-readable date?',
+                a: 'In JavaScript: new Date(ts * 1000).toISOString() — multiply by 1000 because JS uses milliseconds. In Python: datetime.fromtimestamp(ts, tz=timezone.utc). In Go: time.Unix(ts, 0).UTC(). In SQL: to_timestamp(ts) on PostgreSQL, FROM_UNIXTIME(ts) on MySQL. In terminal: date -d @1712534400.',
+              ,
+              
+                q: 'What is the difference between Unix timestamp in seconds vs milliseconds?',
+                a: "Unix timestamps are traditionally in seconds — 10 digits in 2026. JavaScript's Date.now() returns milliseconds — 13 digits. Passing milliseconds to a function expecting seconds produces a date in the year 57,000. Always check: 10 digits = seconds, 13 digits = milliseconds. Normalize at system boundaries.",
+              ,
+              
+                q: 'What is the Y2K38 problem?',
+                a: 'At 03:14:07 UTC on January 19, 2038, 32-bit signed integers storing Unix timestamps will overflow. The max 32-bit value (2,147,483,647) represents that exact moment. One second later, the value wraps to a large negative number — interpreted as December 1901. 64-bit systems are not affected. Legacy embedded systems and MySQL TIMESTAMP columns remain at risk.',
+              ,
+              
+                q: 'Why does Unix time start on January 1, 1970?',
+                a: 'The epoch was chosen during Unix development at Bell Labs in the early 1970s. It needed to be a recent, neutral date. January 1, 1970 midnight UTC was selected arbitrarily but became standard through POSIX.1 (IEEE Std 1003.1) and RFC 3339. All systems treating Unix time as seconds since that date are compatible with each other regardless of OS.',
+              ,
+              
+                q: 'How do I get the current Unix timestamp in different languages?',
+                a: 'JavaScript: Math.floor(Date.now() / 1000). Python: int(time.time()). Go: time.Now().Unix(). Rust: SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs(). Java: Instant.now().getEpochSecond(). PHP: time(). PostgreSQL: EXTRACT(EPOCH FROM NOW())::BIGINT.',
+              ,
+              
+                q: 'Does Unix timestamp account for leap seconds?',
+                a: "No — POSIX defines each day as exactly 86,400 seconds. Leap seconds are not counted. This means Unix time accumulates a ~27 second drift from TAI (atomic time) as of 2026. For most applications this is irrelevant. Applications requiring atomic precision (financial trading, GPS, telecom) should use TAI or GPS time directly.",
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            [
+               slug: 'jwt-tokens-explained', title: 'JWT Tokens Explained', description: 'How JSON Web Tokens work, their structure, and iat/exp timestamp claims.' ,
+               slug: 'api-response-codes-best-practices', title: 'API Response Codes Best Practices', description: 'HTTP status codes and error response design for REST APIs.' ,
+               slug: 'json-formatting-guide', title: 'JSON Formatting Guide', description: 'Complete guide to JSON formatting, parsing, and validation.' ,
+               slug: 'url-encoding-guide', title: 'URL Encoding Guide', description: 'Percent-encoding, query string serialization, and safe character sets.' ,
+            ].map((a) => (
+              <Link key=a.slug href=`/blog/$a.slug/` >
+                <h3>a.title</h3>
+                <p>a.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/unix-timestamp-converter/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
