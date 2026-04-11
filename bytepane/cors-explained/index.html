@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CORS Explained: Why It Happens &amp; How to Fix It - BytePane</title>
+  <meta name="description" content="CORS errors explained: why the browser blocks cross-origin requests, how preflight works, and exact header fixes for Express, Django, FastAPI, Nginx, and Cloudflare.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/cors-explained/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; CORS Explained: Why It Happens &amp; How to Fix It
+  </nav>
+
+  <article>
+    <h1>CORS Explained: Why It Happens &amp; How to Fix It</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/cors-explained/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    s check entirely.</li>
+            <li>• <strong>The same-origin policy is the root cause.</strong> CORS is the relaxation mechanism that lets servers selectively allow cross-origin access.</li>
+            <li>• <strong>Preflight (OPTIONS) requests must return 200 or 204.</strong> A 404 or 405 for OPTIONS kills the actual request before it is ever sent.</li>
+            <li>• <strong>Wildcard + credentials = always rejected.</strong> <code >Access-Control-Allow-Origin: *</code> cannot be combined with <code >Access-Control-Allow-Credentials: true</code>.</li>
+            <li>• <strong>The fix lives on the server, not the client.</strong> Disabling browser security or using CORS proxies is a workaround that introduces security holes.</li>
+          </ul>
+        
+
+        
+          <h2>The Same-Origin Policy: Why CORS Exists</h2>
+          <p>
+            The same-origin policy (SOP) is a foundational browser security control defined in <strong>RFC 6454</strong>. It prevents JavaScript on one origin from reading data from a different origin. An origin is the combination of scheme + host + port. All three must match exactly.
+          </p>
+          <p>
+            <code >`# Origin: https://app.example.com
+
+# Same origin ✓
+https://app.example.com/api/users
+https://app.example.com/dashboard
+
+# Cross-origin ✗ — different scheme
+http://app.example.com/api        # http vs https
+
+# Cross-origin ✗ — different host
+https://api.example.com/users     # api. subdomain differs
+https://example.com/api           # different host entirely
+
+# Cross-origin ✗ — different port
+https://app.example.com:8080/api  # explicit port 8080 vs 443
+
+# The policy exists to prevent this attack scenario:
+# 1. User logs into bank.com (session cookie set)
+# 2. User visits evil.com
+# 3. evil.com JavaScript: fetch('https://bank.com/api/balance')
+# 4. Without SOP: browser sends session cookie, returns balance to evil.com
+# 5. With SOP: browser blocks evil.com from reading the response`</code>
+          </pre>
+          <p >
+            CORS is not a restriction — it is an extension to SOP that lets server operators <em>explicitly opt in</em> to cross-origin access. Without CORS headers, the browser assumes the server does not consent to cross-origin reads and blocks JavaScript from seeing the response (even though the request was sent and the server responded).
+          </p>
+        
+
+        
+          <h2>Simple Requests vs Preflighted Requests</h2>
+          <p>
+            Not all cross-origin requests trigger a preflight. The <strong>Fetch specification</strong> defines a class of &quot;simple&quot; requests that can be sent directly, because they are equivalent to what an HTML form or <code >&lt;img&gt;</code> tag could already do before CORS existed.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Criterion</th>
+                  <th >Simple (no preflight)</th>
+                  <th >Non-simple (preflight triggered)</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >HTTP method</td>
+                  <td >GET, HEAD, POST</td>
+                  <td >PUT, DELETE, PATCH, OPTIONS</td>
+                </tr>
+                <tr >
+                  <td >Content-Type (POST)</td>
+                  <td >application/x-www-form-urlencoded, multipart/form-data, text/plain</td>
+                  <td >application/json, application/xml, any other type</td>
+                </tr>
+                <tr >
+                  <td >Custom headers</td>
+                  <td >None (only CORS-safelisted headers)</td>
+                  <td >Any custom header (Authorization, X-API-Key, etc.)</td>
+                </tr>
+                <tr>
+                  <td >Real-world prevalence</td>
+                  <td >Rare in modern APIs</td>
+                  <td >Almost all REST/GraphQL API calls</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            In practice, nearly every modern API call triggers a preflight because it either uses <code >Content-Type: application/json</code> or sends an <code >Authorization</code> header. If you are working with REST APIs or GraphQL, assume preflights are happening.
+          </p>
+        
+
+        
+          <h2>How a Preflight Works</h2>
+          <p>
+            <code >`# Step 1: Browser sends OPTIONS preflight
+OPTIONS /api/users HTTP/1.1
+Origin: https://app.example.com
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: Content-Type, Authorization
+
+# Step 2: Server must respond with 200 or 204
+HTTP/1.1 204 No Content
+Access-Control-Allow-Origin: https://app.example.com
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization
+Access-Control-Max-Age: 86400          # Cache preflight for 24 hours
+Vary: Origin
+
+# Step 3: If preflight succeeds, browser sends actual request
+POST /api/users HTTP/1.1
+Origin: https://app.example.com
+Content-Type: application/json
+Authorization: Bearer eyJhbGci...
+
+# Step 4: Server responds with CORS headers on actual response too
+HTTP/1.1 201 Created
+Access-Control-Allow-Origin: https://app.example.com
+Content-Type: application/json
+
+"id": 42, "name": "Alice"
+
+# Step 5: Browser checks headers, exposes response to JavaScript`</code>
+          </pre>
+          <p >
+            <strong>Access-Control-Max-Age</strong> controls how long the browser caches the preflight result. Chrome caps this at 7200 seconds (2 hours); Firefox allows up to 86400 seconds (24 hours). Setting it avoids a preflight on every single request during a session — a meaningful performance difference if your API serves many endpoints.
+          </p>
+        
+
+        
+          <h2>CORS Headers Reference</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Header</th>
+                  <th >Direction</th>
+                  <th >What It Does</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Access-Control-Allow-Origin</td>
+                  <td >Response</td>
+                  <td >Which origin can read the response. Use exact origin or <code >*</code></td>
+                </tr>
+                <tr >
+                  <td >Access-Control-Allow-Methods</td>
+                  <td >Preflight response</td>
+                  <td >HTTP methods the server permits for cross-origin requests</td>
+                </tr>
+                <tr >
+                  <td >Access-Control-Allow-Headers</td>
+                  <td >Preflight response</td>
+                  <td >Headers the client is allowed to send (must list all custom headers)</td>
+                </tr>
+                <tr >
+                  <td >Access-Control-Allow-Credentials</td>
+                  <td >Response</td>
+                  <td >Allow cookies and auth headers. Requires exact origin, not <code >*</code></td>
+                </tr>
+                <tr >
+                  <td >Access-Control-Max-Age</td>
+                  <td >Preflight response</td>
+                  <td >Seconds to cache the preflight result (reduces OPTIONS round trips)</td>
+                </tr>
+                <tr >
+                  <td >Access-Control-Expose-Headers</td>
+                  <td >Response</td>
+                  <td >Custom headers JavaScript is allowed to read from the response</td>
+                </tr>
+                <tr >
+                  <td >Origin</td>
+                  <td >Request</td>
+                  <td >Set by browser automatically — the origin making the request</td>
+                </tr>
+                <tr>
+                  <td >Vary: Origin</td>
+                  <td >Response</td>
+                  <td >Tells CDNs/caches that the response differs per origin (critical with allowlists)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Fixing CORS: Server-Side Implementations</h2>
+          <p>
+            The fix always lives on the server — the browser cannot be told to ignore CORS from client-side code. Here is the correct configuration for the most common backend stacks.
+          </p>
+
+          <h3>Node.js / Express</h3>
+          <p>
+            <code >`// npm install cors
+const express = require('express')
+const cors = require('cors')
+const app = express()
+
+// Option 1: Allow all origins (development only — NOT production)
+app.use(cors())
+
+// Option 2: Allow specific origin(s)
+app.use(cors(
+  origin: 'https://app.example.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,              // Allow cookies + auth headers
+  maxAge: 86400,                  // Cache preflight for 24 hours
+))
+
+// Option 3: Dynamic origin allowlist (multi-tenant apps)
+const allowedOrigins = [
+  'https://app.example.com',
+  'https://admin.example.com',
+]
+
+app.use(cors(
+  origin: (origin, callback) => 
+    // Allow requests with no origin (curl, Postman, server-to-server)
+    if (!origin || allowedOrigins.includes(origin)) 
+      callback(null, true)
+     else 
+      callback(new Error(\`Origin \$origin not allowed by CORS\`))
+    
+  ,
+  credentials: true,
+))
+
+// CRITICAL: Handle preflight for all routes
+app.options('*', cors())
+
+// Error handler must still set CORS headers
+app.use((err, req, res, next) => 
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*')
+  res.status(500).json( error: err.message )
+)`</code>
+          </pre>
+
+          <h3>Python / FastAPI</h3>
+          <pre >
+            <code >`from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+# Add CORS middleware — must be added BEFORE routes
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://app.example.com",
+        "https://admin.example.com",
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization", "X-Request-ID"],
+    max_age=86400,
+    expose_headers=["X-Request-ID"],   # Headers JS can read from response
+)
+
+# Development: allow all origins
+# allow_origins=["*"]
+# Note: credentials=True requires specific origins, never ["*"]`</code>
+          </pre>
+
+          <h3>Python / Django</h3>
+          <pre >
+            <code >`# pip install django-cors-headers
+# settings.py
+
+INSTALLED_APPS = [
+    ...
+    'corsheaders',
+]
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Must be first
+    'django.middleware.common.CommonMiddleware',
+    ...
+]
+
+# Specific origins (production)
+CORS_ALLOWED_ORIGINS = [
+    "https://app.example.com",
+    "https://admin.example.com",
+]
+
+# Or pattern-based
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://\\w+\\.example\\.com$",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "x-request-id",
+]
+CORS_PREFLIGHT_MAX_AGE = 86400
+
+# Development only: allow all
+# CORS_ALLOW_ALL_ORIGINS = True`</code>
+          </pre>
+
+          <h3>Nginx (Reverse Proxy)</h3>
+          <pre >
+            <code >`# nginx.conf — add CORS at the proxy level
+# Useful when you cannot modify the backend (legacy app, microservice)
+
+server 
+    listen 443 ssl;
+    server_name api.example.com;
+
+    location /api/ 
+        # Handle preflight
+        if ($request_method = OPTIONS) 
+            add_header 'Access-Control-Allow-Origin'  '$http_origin' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+            add_header 'Access-Control-Allow-Credentials' 'true' always;
+            add_header 'Access-Control-Max-Age' '86400' always;
+            add_header 'Content-Length' '0';
+            return 204;
+        
+
+        # Add CORS headers to all non-preflight responses
+        add_header 'Access-Control-Allow-Origin'      '$http_origin' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+        add_header 'Vary'                             'Origin' always;
+
+        proxy_pass http://backend:3000;
+    
+
+# IMPORTANT: "$http_origin" echoes back the request origin.
+# Only use this with an application-level allowlist check,
+# or restrict to known IP ranges — never in public APIs.`</code>
+          </pre>
+
+          <h3>Cloudflare Workers</h3>
+          <pre >
+            <code >`// Cloudflare Worker — intercept and add CORS headers
+const ALLOWED_ORIGINS = new Set([
+  'https://app.example.com',
+  'https://admin.example.com',
+])
+
+export default 
+  async fetch(request, env) 
+    const origin = request.headers.get('Origin')
+    const isAllowed = ALLOWED_ORIGINS.has(origin)
+
+    // Handle preflight
+    if (request.method === 'OPTIONS') 
+      return new Response(null, 
+        status: 204,
+        headers: 
+          'Access-Control-Allow-Origin':      isAllowed ? origin : '',
+          'Access-Control-Allow-Methods':     'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers':     'Content-Type, Authorization',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Max-Age':           '86400',
+          'Vary':                             'Origin',
+        ,
+      )
+    
+
+    // Forward to origin
+    const response = await fetch(request)
+    const newResponse = new Response(response.body, response)
+
+    if (isAllowed) 
+      newResponse.headers.set('Access-Control-Allow-Origin', origin)
+      newResponse.headers.set('Access-Control-Allow-Credentials', 'true')
+      newResponse.headers.set('Vary', 'Origin')
+    
+
+    return newResponse
+  ,
+`</code>
+          </pre>
+        
+
+        
+          <h2>Common CORS Mistakes (and Exact Fixes)</h2>
+          <pre >
+            <code >`# Mistake 1: Wildcard + credentials
+# ✗ Browser rejects this combination
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+
+# ✓ Fix: specify exact origin
+Access-Control-Allow-Origin: https://app.example.com
+Access-Control-Allow-Credentials: true
+
+# ---
+
+# Mistake 2: Missing Vary: Origin header
+# Without it, CDNs and reverse proxies cache a response for one origin
+# and serve it to all others — stripping or wrong-origin the header
+# ✓ Always add:
+Vary: Origin
+
+# ---
+
+# Mistake 3: OPTIONS returns 404 or 405
+# Express default: no route defined for OPTIONS → 404
+# ✓ Fix: explicitly handle OPTIONS
+app.options('*', cors())  # Express
+# or return 204 manually in your router
+
+# ---
+
+# Mistake 4: Header set multiple times
+# Some middleware stacks apply the header twice:
+# Access-Control-Allow-Origin: https://app.example.com, https://app.example.com
+# Browsers reject duplicate values for this header
+# ✓ Fix: ensure only one middleware handles CORS, check middleware order
+
+# ---
+
+# Mistake 5: Error handler fires before CORS middleware
+# An uncaught exception early in the chain can skip CORS middleware
+# ✓ Fix: register CORS middleware first, before any route or error handler
+# In Express:
+app.use(cors())  // ← First
+app.use(router)  // ← After
+
+# ---
+
+# Mistake 6: Exact origin mismatch (trailing slash)
+# Request Origin: https://app.example.com   (no trailing slash)
+# Header value:   https://app.example.com/  (trailing slash)
+# ✗ These are different strings — browser rejects
+# ✓ Always store and compare origins without trailing slashes`</code>
+          </pre>
+        
+
+        
+          <h2>CORS in Development: The Proxy Approach</h2>
+          <p >
+            During local development, if your frontend runs on <code >localhost:5173</code> and your API on <code >localhost:3000</code>, that is a cross-origin request (different port = different origin). A dev proxy makes the browser think everything is on the same origin.
+          </p>
+          <p>
+            <code >`// vite.config.ts — proxy /api/* to backend
+
+export default defineConfig(
+  server: 
+    proxy: 
+      '/api': 
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\\/api/, ''),
+      ,
+    ,
+  ,
+)
+// Browser sees: fetch('/api/users')         → same origin ✓
+// Vite forwards: http://localhost:3000/users → no CORS involved
+
+// package.json (Create React App) — simpler proxy
+
+  "proxy": "http://localhost:3000"
+
+// Next.js rewrites (next.config.ts)
+const nextConfig = 
+  async rewrites() 
+    return [
+      
+        source: '/api/:path*',
+        destination: 'http://localhost:3000/:path*',
+      ,
+    ]
+  ,
+`</code>
+          </pre>
+          <p >
+            Understanding CORS errors requires knowing what status codes the server is actually returning. The <a href="/blog/http-status-codes-guide/">HTTP Status Codes guide</a> covers the codes your preflight should 204, 200) vs what causes failures (404, 405, 500). For API authentication alongside CORS, see the <a href="/blog/api-authentication-methods/">API Authentication Methods guide</a>.
+          </p>
+        
+
+        
+          <h2>CORS and Security: What It Does and Does Not Protect</h2>
+          <p>
+            CORS is frequently misunderstood as a security measure you configure on your API. It is not — it is a browser contract. Misunderstanding this causes developers to either over-restrict (blocking legitimate clients) or under-restrict (false sense of security).
+          </p>
+          <p>
+            <code >`# CORS does NOT:
+# ✗ Block server-to-server requests (curl, Postman, Python requests)
+# ✗ Prevent cross-origin request from being sent (it IS sent)
+# ✗ Protect your API from unauthorized access on its own
+# ✗ Replace authentication (JWTs, API keys, sessions)
+# ✗ Apply to WebSocket connections (different security model)
+# ✗ Apply to server-side rendered pages (SSR fetches server-to-server)
+
+# CORS DOES:
+# ✓ Prevent malicious websites from reading your API responses via browser JS
+# ✓ Block credentials from being sent cross-origin by default
+# ✓ Require explicit server consent before a browser exposes responses
+
+# The correct security stack:
+# 1. Authentication  — who are you? (JWT, API key, session)
+# 2. Authorization   — what can you do? (RBAC, scopes)
+# 3. CORS            — which origins can make browser-based requests?
+# 4. Rate limiting   — how many requests?
+# 5. HTTPS           — encrypted transport
+
+# Real attack CORS prevents:
+# evil.com loads in browser → JS runs → fetch("https://bank.com/balance")
+# Without CORS: browser sends session cookie → bank responds → evil.com reads it
+# With CORS:    browser sends request → bank responds → browser BLOCKS evil.com from reading
+
+# Attack CORS does NOT prevent:
+# Server at evil-host.com → HTTP POST to bank.com/transfer (no browser involved)
+# → Requires authentication to stop, not CORS`</code>
+          </pre>
+          <p >
+            If your API uses <a href="/blog/jwt-tokens-guide/">JWT tokens</a> for authentication, CORS and JWTs are complementary: CORS controls which browser origins can make requests; the JWT controls what the authenticated user is allowed to do. You need both.
+          </p>
+        
+
+        
+          <h2>WebSockets and CORS</h2>
+          <p>
+            WebSocket connections are not governed by CORS. The initial HTTP upgrade request carries an <code >Origin</code> header, but the browser does not enforce CORS on WebSocket upgrades — it sends the request regardless of origin and does not check for <code >Access-Control-Allow-*</code> headers in the response.
+          </p>
+          <p>
+            <code >`// WebSocket — browser sends Origin but does NOT enforce CORS
+const ws = new WebSocket('wss://api.example.com/ws')
+// No CORS preflight. No CORS check on the 101 response.
+
+// Your WebSocket server MUST validate Origin manually:
+
+// Node.js / ws library
+const  WebSocketServer  = require('ws')
+const wss = new WebSocketServer( port: 8080 )
+
+const ALLOWED_ORIGINS = ['https://app.example.com']
+
+wss.on('connection', (socket, request) => 
+  const origin = request.headers.origin
+
+  if (!ALLOWED_ORIGINS.includes(origin)) 
+    socket.close(4001, 'Origin not allowed')
+    return
+  
+
+  // Proceed with authenticated connection
+)
+
+// Python / websockets library
+
+async def handler(websocket, path):
+    origin = websocket.request_headers.get('Origin')
+    if origin not in ALLOWED_ORIGINS:
+        await websocket.close(4001, 'Origin not allowed')
+        return
+    # ...`</code>
+          </pre>
+          <p >
+            For more on WebSocket architecture and security, see the <a href="/blog/websockets-guide/">WebSockets Guide</a>.
+          </p>
+        
+
+        
+          <h2>Debugging CORS Errors Systematically</h2>
+          <p>
+            <code >`# Step 1: Open DevTools → Network tab → find the failing request
+# Check: Is there an OPTIONS request before it? Did OPTIONS get 200/204?
+# If OPTIONS returned 404/405 → your server doesn't handle OPTIONS
+
+# Step 2: Check the OPTIONS response headers
+curl -v -X OPTIONS https://api.example.com/users \\
+  -H "Origin: https://app.example.com" \\
+  -H "Access-Control-Request-Method: POST" \\
+  -H "Access-Control-Request-Headers: Content-Type, Authorization"
+
+# Expected response headers:
+# access-control-allow-origin: https://app.example.com
+# access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS
+# access-control-allow-headers: content-type, authorization
+# access-control-max-age: 86400
+
+# Step 3: Check actual request response (not just preflight)
+curl -v -X POST https://api.example.com/users \\
+  -H "Origin: https://app.example.com" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer TOKEN" \\
+  -d '"name": "test"'
+
+# The actual response also needs Access-Control-Allow-Origin
+
+# Step 4: Check for duplicate headers
+curl -sI -X OPTIONS https://api.example.com/users \\
+  -H "Origin: https://app.example.com" | grep -i access-control
+# If you see a header twice, your middleware is duplicating it
+
+# Step 5: Verify origin string matches exactly
+# Request Origin: https://app.example.com
+# Response header: https://app.example.com   ← must be identical string`</code>
+          </pre>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'Why does CORS only block requests in the browser?',
+                a: 'CORS is enforced by browsers, not servers. curl and Postman send the same request and receive the same server response — they just skip the CORS check. The browser is a shared execution environment where malicious scripts from any domain could run; curl is controlled by the developer running it.',
+              ,
+              
+                q: 'What is a CORS preflight request?',
+                a: 'A preflight is an OPTIONS request the browser sends before a non-simple request to ask the server: do you allow this method and these headers from this origin? The server must respond with Access-Control-Allow-* headers and a 200 or 204 status. If the server fails, the actual request is never sent.',
+              ,
+              
+                q: 'Can I use Access-Control-Allow-Origin: * with credentials?',
+                a: 'No. The browser rejects this combination unconditionally. If your request includes credentials (cookies, Authorization headers), you must set Access-Control-Allow-Credentials: true AND specify the exact origin — the wildcard is not allowed. This is defined in the Fetch specification.',
+              ,
+              
+                q: 'What is a "simple" CORS request that does not trigger a preflight?',
+                a: 'Simple requests use GET, HEAD, or POST with Content-Type of application/x-www-form-urlencoded, multipart/form-data, or text/plain — and no custom headers. Most modern API calls (JSON POST with Authorization) are non-simple and trigger a preflight. The simple category exists for historical HTML form compatibility.',
+              ,
+              
+                q: 'Why does CORS error occur even when the server sends the right headers?',
+                a: 'Common causes: OPTIONS returns wrong status (must be 200/204), Access-Control-Allow-Origin value differs from request Origin (even a trailing slash matters), the header is set twice by stacked middleware, or an error handler fires before CORS middleware adds headers.',
+              ,
+              
+                q: 'How do I fix CORS in development without changing the server?',
+                a: 'Use a development proxy. In Vite: server.proxy in vite.config.ts to forward /api/* to your backend. In CRA: add "proxy" to package.json. The proxy makes requests appear same-origin to the browser. Never use browser extensions that disable CORS checks — they mask real production bugs.',
+              ,
+              
+                q: 'Does CORS apply to WebSocket connections?',
+                a: 'No. WebSocket connections bypass CORS. The browser sends the Origin header but does not enforce any CORS check on the upgrade response. Always validate the Origin header server-side before accepting WebSocket connections — it is your sole defense at the protocol level.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p >a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Debug CORS and API Responses</h2>
+          <p>
+            Inspect your API&apos;s CORS response headers and format the JSON payloads with BytePane&apos;s <a href="/json-formatter/">JSON Formatter</a>. For reference on every HTTP status code your preflight might return, see the <a href="/blog/http-status-codes-guide/">HTTP Status Codes Guide</a>. Working on REST API design alongside CORS? See the <a href="/blog/rest-api-best-practices/">REST API Best Practices</a> guide.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/http-status-codes-guide/">
+              <h3>HTTP Status Codes Guide</h3>
+              <p>What 200, 204, 404, 405 mean for CORS preflight responses.</p>
+            </a>
+            <a href="/blog/api-authentication-methods/">
+              <h3>API Authentication Methods</h3>
+              <p>JWT, API keys, OAuth — authentication works alongside CORS.</p>
+            </a>
+            <a href="/blog/rest-api-best-practices/">
+              <h3>REST API Best Practices</h3>
+              <p>Design patterns for APIs that interact well with browser clients.</p>
+            </a>
+            <a href="/blog/websockets-guide/">
+              <h3>WebSockets Guide</h3>
+              <p>How WebSockets bypass CORS and what origin security means for WS.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/cors-explained/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
