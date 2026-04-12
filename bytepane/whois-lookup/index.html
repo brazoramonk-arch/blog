@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHOIS Lookup: Find Domain Owner &amp; Registration Info - BytePane</title>
+  <meta name="description" content="Run a WHOIS lookup to find domain owner, registrar, expiry date, nameservers, and registration history. Covers RDAP transition, GDPR redaction, and CLI tools.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/whois-lookup/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; WHOIS Lookup: Find Domain Owner &amp; Registration Info
+  </nav>
+
+  <article>
+    <h1>WHOIS Lookup: Find Domain Owner &amp; Registration Info</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/whois-lookup/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    ccTLDs like .uk and .de have their own rules.</li>
+            <li>▸The <code >whois</code> CLI command still works on Linux/macOS; on Windows use Sysinternals or RDAP via curl.</li>
+            <li>▸WhoisXML API maintains a database of 681 million domain records with 5 billion historic WHOIS snapshots — useful for threat intelligence and bulk analysis.</li>
+          </ul>
+        
+
+        
+          <h2>What Is WHOIS?</h2>
+          <p>
+            WHOIS is a query-and-response protocol, first defined in <strong>RFC 812 in 1982</strong>, that lets you retrieve registration data for a domain name, IP address, or autonomous system number (ASN). It operates over TCP port 43, sending a domain name in plain text and receiving a plain-text response from the authoritative registry or registrar.
+          </p>
+          <p>
+            Every domain registrar must maintain WHOIS data as part of their ICANN accreditation agreement. This creates a globally distributed system: <code >whois.verisign-grs.com</code> is authoritative for .com, <code >whois.pir.org</code> for .org, and so on. When you run a WHOIS lookup through a web tool or CLI, it typically queries the appropriate registry first, then redirects to the specific registrar's WHOIS server for full details.
+          </p>
+          <p>
+            The protocol has two major limitations that prompted its replacement: responses are unstructured free text (no standard field names), and it has no authentication mechanism — everyone gets the same data regardless of their identity or purpose. RDAP, finalized in RFC 7480 in 2015, solved both problems.
+          </p>
+        
+
+        
+          <h2>What Data Does a WHOIS Record Contain?</h2>
+          <p>
+            Even with post-GDPR redaction, a standard WHOIS record for a .com domain contains more useful data than most people realize. Here's a real-world example annotated with what each field means:
+          </p>
+          <p>
+            <code >`$ whois github.com
+
+Domain Name: GITHUB.COM
+Registry Domain ID: 1264483280_DOMAIN_COM-VRSN
+Registrar WHOIS Server: whois.markmonitor.com
+Registrar URL: http://www.markmonitor.com
+Updated Date: 2024-09-07T09:10:44Z    # Last record modification
+Creation Date: 2007-01-26T04:39:17Z   # Domain was registered Jan 2007
+Registry Expiry Date: 2026-01-26T04:39:17Z  # CRITICAL for monitoring
+Registrar: MarkMonitor Inc.            # Registrar (not host)
+Registrar IANA ID: 292
+Registrar Abuse Contact Email: abusecomplaints@markmonitor.com
+Registrar Abuse Contact Phone: +1.2086851750
+Domain Status: clientTransferProhibited  # Locked against transfers
+Domain Status: clientUpdateProhibited
+Domain Status: clientDeleteProhibited
+Domain Status: serverTransferProhibited  # Registry-level lock (high-value domain)
+Name Server: DNS1.P08.NSONE.NET        # Who handles DNS for this domain
+Name Server: DNS2.P08.NSONE.NET
+Name Server: DNS3.P08.NSONE.NET
+Name Server: DNS4.P08.NSONE.NET
+DNSSEC: unsigned                       # No DNSSEC signing
+
+# Registrant fields — redacted post-GDPR:
+Registrant Name: REDACTED FOR PRIVACY
+Registrant Organization: GitHub, Inc.  # Company names sometimes remain
+Registrant Email: Please query the RDDS service of the Registrar
+                  of Record for information on how to contact
+                  the Registrant, Admin, or Tech contact`</code>
+          </pre>
+          <p >
+            Notice that even with privacy protection active, you can still determine: the exact registrar, when the domain was created (Jan 2007 — before GitHub launched publicly), when it expires, which DNS provider they use (NS1), and all domain status lock codes. This is enough data for domain monitoring, competitive intelligence, and most abuse investigations.
+          </p>
+        
+
+        
+          <h2>GDPR's Impact: What Got Redacted and When</h2>
+          <p>
+            Before May 25, 2018, a WHOIS record for a privately registered .com domain would display the registrant's full name, mailing address, phone number, and email address publicly. GDPR changed that permanently.
+          </p>
+          <p>
+            ICANN responded with the <strong>Temporary Specification for gTLD Registration Data</strong>, which required registrars to redact personally identifiable information (PII) from public WHOIS responses unless registrants explicitly opted in to public display. "Temporary" turned out to be permanent — as of 2026, ICANN's Registration Data Policy mandates redaction with a tiered access model still being finalized.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >WHOIS Field</th>
+                  <th >Pre-GDPR (before May 2018)</th>
+                  <th >Post-GDPR (current)</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Registrant Name</td>
+                  <td >Visible (full name)</td>
+                  <td >Redacted</td>
+                </tr>
+                <tr >
+                  <td >Registrant Email</td>
+                  <td >Visible (direct email)</td>
+                  <td >Replaced with contact form URL</td>
+                </tr>
+                <tr >
+                  <td >Registrant Phone</td>
+                  <td >Visible</td>
+                  <td >Redacted</td>
+                </tr>
+                <tr >
+                  <td >Registrant Address</td>
+                  <td >Visible</td>
+                  <td >Redacted</td>
+                </tr>
+                <tr >
+                  <td >Registrant Organization</td>
+                  <td >Visible</td>
+                  <td >Often still visible (company name)</td>
+                </tr>
+                <tr >
+                  <td >Registrar Name</td>
+                  <td >Always visible</td>
+                  <td >Always visible</td>
+                </tr>
+                <tr >
+                  <td >Creation / Expiry Dates</td>
+                  <td >Always visible</td>
+                  <td >Always visible</td>
+                </tr>
+                <tr >
+                  <td >Nameservers</td>
+                  <td >Always visible</td>
+                  <td >Always visible</td>
+                </tr>
+                <tr>
+                  <td >Domain Status Codes</td>
+                  <td >Always visible</td>
+                  <td >Always visible</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Country-code TLDs (ccTLDs) operate under their own rules. <code >.uk</code> domains via Nominet have shown minimal public data for years. <code >.de</code> (DENIC) requires member agreement for lookups. <code >.us</code> domains still require public registrant data due to Nexus requirements, making them a useful data source for researchers.
+          </p>
+        
+
+        
+          <h2>RDAP: The Modern Replacement for WHOIS</h2>
+          <p>
+            On <strong>January 28, 2025</strong>, ICANN officially sunset the legacy WHOIS protocol for generic TLDs, mandating the Registration Data Access Protocol (RDAP) as the authoritative source for gTLD registration data. Legacy WHOIS still works at many registrars, but it's no longer a requirement.
+          </p>
+          <p>
+            RDAP's three main improvements over WHOIS:
+          </p>
+          <ul>
+            <li><strong>Structured JSON output</strong> — machine-readable, no text parsing heuristics needed</li>
+            <li><strong>HTTPS transport</strong> — encrypted, authenticated, not cleartext TCP port 43</li>
+            <li><strong>Tiered access</strong> — authenticated requests (law enforcement, registrars) can receive non-redacted data; public requests see the same redacted view as WHOIS</li>
+          </ul>
+          <p>
+            <code >`# Query RDAP directly — returns clean JSON
+curl -s https://rdap.org/domain/github.com | jq '
+  name: .ldhName,
+  status: .status,
+  registrar: .entities[0].vcardArray[1][1][3],
+  created: .events[] | select(.eventAction == "registration") | .eventDate,
+  expires: .events[] | select(.eventAction == "expiration") | .eventDate,
+  nameservers: [.nameservers[].ldhName]
+'
+
+# Output:
+# 
+#   "name": "GITHUB.COM",
+#   "status": ["client transfer prohibited", "server transfer prohibited"],
+#   "created": "2007-01-26T04:39:17Z",
+#   "expires": "2026-01-26T04:39:17Z",
+#   "nameservers": ["DNS1.P08.NSONE.NET", "DNS2.P08.NSONE.NET", ...]
+# 
+
+# RDAP bootstrap — find the correct RDAP server for any TLD
+# IANA maintains the authoritative bootstrap registry:
+curl -s https://data.iana.org/rdap/dns.json | jq '.services[] |
+  select(.[0][] == "com") | .[1]'
+# ["https://rdap.verisign.com/com/v1/"]
+
+# ICANN's own lookup (web UI):
+# https://lookup.icann.org/`</code>
+          </pre>
+          <p >
+            For programmatic access at scale, WhoisXML API maintains a dataset of <strong>681 million domain name records</strong> and over <strong>5 billion historic WHOIS snapshots</strong> — useful for threat intelligence pipelines that need to correlate newly registered domains against known malicious patterns. In March 2026 alone, they catalogued 8.9 million newly registered domains.
+          </p>
+        
+
+        
+          <h2>Running WHOIS from the Command Line</h2>
+          <p>
+            The <code >whois</code> command is installed by default on most Linux distributions and macOS. It sends your query to the appropriate WHOIS server and displays the raw response.
+          </p>
+          <p>
+            <code >`# Basic domain lookup
+whois example.com
+
+# IP address lookup (shows ASN, routing, abuse contact)
+whois 8.8.8.8
+# Returns: Google LLC, AS15169, network range 8.8.8.0/24
+
+# ASN lookup
+whois AS15169
+
+# Query a specific WHOIS server directly
+whois -h whois.verisign-grs.com example.com
+
+# Filter output to just expiry date (Linux)
+whois example.com | grep -i "expiry\|expiration"
+
+# macOS: same syntax, uses different server selection
+whois example.com
+
+# Windows: whois.exe from Microsoft Sysinternals
+# https://learn.microsoft.com/en-us/sysinternals/downloads/whois
+whois.exe example.com
+
+# Bulk lookup via shell loop (rate-limit to avoid blocks)
+for domain in github.com stripe.com vercel.com; do
+  echo "=== $domain ==="
+  whois "$domain" | grep -E "Creation|Expiry|Registrar:"
+  sleep 2  # Respect rate limits
+done`</code>
+          </pre>
+
+          <h3>Python: Programmatic WHOIS Lookup</h3>
+          <pre >
+            <code >`# pip install python-whois
+
+def lookup_domain(domain: str) -> dict:
+    w = whois.whois(domain)
+    return 
+        "domain": w.domain_name,
+        "registrar": w.registrar,
+        "creation_date": str(w.creation_date),
+        "expiration_date": str(w.expiration_date),
+        "nameservers": w.name_servers,
+        "status": w.status,
+    
+
+result = lookup_domain("github.com")
+print(json.dumps(result, indent=2))
+
+# Output:
+# 
+#   "domain": "GITHUB.COM",
+#   "registrar": "MarkMonitor, Inc.",
+#   "creation_date": "2007-01-26 04:39:17",
+#   "expiration_date": "2026-01-26 04:39:17",
+#   "nameservers": ["DNS1.P08.NSONE.NET", "DNS2.P08.NSONE.NET"],
+#   "status": ["clientTransferProhibited", "clientUpdateProhibited"]
+# 
+
+# RDAP alternative (no library needed, HTTPS, returns clean JSON)
+
+def rdap_lookup(domain: str) -> dict:
+    url = f"https://rdap.org/domain/domain"
+    with urllib.request.urlopen(url) as r:
+        data = json.loads(r.read())
+
+    dates = e["eventAction"]: e["eventDate"] for e in data.get("events", [])
+    return 
+        "name": data.get("ldhName"),
+        "status": data.get("status", []),
+        "created": dates.get("registration"),
+        "expires": dates.get("expiration"),
+        "nameservers": [ns["ldhName"] for ns in data.get("nameservers", [])],
+    
+
+print(rdap_lookup("stripe.com"))`</code>
+          </pre>
+        
+
+        
+          <h2>Domain Status Codes Decoded</h2>
+          <p >
+            Domain status codes follow the <strong>Extensible Provisioning Protocol (EPP)</strong> standard defined in RFC 5731. These codes control what operations can be performed on the domain and indicate its lifecycle state. Misreading these is a common source of confusion when transferring domains.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Status Code</th>
+                  <th >Meaning</th>
+                  <th >Action Required?</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >clientTransferProhibited</td>
+                  <td >Registrar lock — prevents unauthorized transfers</td>
+                  <td >Normal — no action needed</td>
+                </tr>
+                <tr >
+                  <td >serverTransferProhibited</td>
+                  <td >Registry lock — highest security tier (common for premium domains)</td>
+                  <td >Normal for important domains</td>
+                </tr>
+                <tr >
+                  <td >clientDeleteProhibited</td>
+                  <td >Cannot be deleted by registrar</td>
+                  <td >Normal</td>
+                </tr>
+                <tr >
+                  <td >clientHold</td>
+                  <td >Domain is suspended — DNS not resolving</td>
+                  <td >Contact registrar immediately</td>
+                </tr>
+                <tr >
+                  <td >pendingTransfer</td>
+                  <td >Transfer initiated, waiting for approval (5-day window)</td>
+                  <td >Check email for approval request</td>
+                </tr>
+                <tr >
+                  <td >redemptionPeriod</td>
+                  <td >Expired; 30-day window to restore (costly)</td>
+                  <td >Renew immediately — restoration fee applies</td>
+                </tr>
+                <tr>
+                  <td >pendingDelete</td>
+                  <td >5-day countdown before deletion, then available to anyone</td>
+                  <td >Domain is gone — monitor for re-registration</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Security and Threat Intelligence Use Cases</h2>
+          <p>
+            WHOIS data is foundational for several security workflows, even in its GDPR-redacted form:
+          </p>
+          <h3>Phishing Domain Detection</h3>
+          <p>
+            Phishing domains are almost always newly registered — attackers don't buy aged domains because they cost more. A domain with a creation date within the last 30 days, privacy protection enabled, and a nameserver pointing to a bulletproof hosting provider is a strong signal. WhoisXML API catalogued <strong>2.1 million domains registered with malicious intent</strong> in March 2026 alone, out of 8.9 million total new registrations.
+          </p>
+          <p>
+            <code >`# Automated phishing signal check
+
+from datetime import datetime, timedelta, timezone
+
+def phishing_signals(domain: str) -> list[str]:
+    signals = []
+    try:
+        w = whois.whois(domain)
+    except Exception:
+        return ["WHOIS lookup failed — possible DNS blocking"]
+
+    # Signal 1: Recently registered (< 30 days)
+    created = w.creation_date
+    if isinstance(created, list):
+        created = created[0]
+    if created and (datetime.now(timezone.utc) - created.replace(tzinfo=timezone.utc)) < timedelta(days=30):
+        signals.append(f"Newly registered (created.date())")
+
+    # Signal 2: Expiry within 1 year (minimum registration)
+    expiry = w.expiration_date
+    if isinstance(expiry, list):
+        expiry = expiry[0]
+    if expiry and created:
+        if (expiry.replace(tzinfo=timezone.utc) - created.replace(tzinfo=timezone.utc)).days < 400:
+            signals.append("Minimum 1-year registration (not committed long-term)")
+
+    # Signal 3: Known bullet-proof nameserver patterns
+    suspicious_ns = ["namecheap", "privacyprotect", "whoisguard"]
+    ns_list = [ns.lower() for ns in (w.name_servers or [])]
+    for ns in ns_list:
+        if any(s in ns for s in suspicious_ns):
+            signals.append(f"Privacy-focused NS: ns")
+
+    return signals
+
+print(phishing_signals("paypa1-secure.com"))
+# ["Newly registered (2026-04-01)", "Minimum 1-year registration", ...]`</code>
+          </pre>
+
+          <h3>Domain Expiry Monitoring</h3>
+          <p >
+            Domain hijacking often happens when a company forgets to renew a domain. The expiry date in WHOIS is always public. Security teams monitor competitor and partner domains for upcoming expirations, and attackers do the same. Learn more about how <a href="/blog/dns-records-explained/">DNS records work</a> to understand what changes when a domain expires and gets re-registered by a bad actor.
+          </p>
+        
+
+        
+          <h2>IP Address WHOIS vs Domain WHOIS</h2>
+          <p>
+            Running <code >whois 8.8.8.8</code> queries a completely different set of databases than domain WHOIS. IP WHOIS is handled by the five Regional Internet Registries (RIRs):
+          </p>
+          <ul>
+            <li><strong>ARIN</strong> — North America (arin.net)</li>
+            <li><strong>RIPE NCC</strong> — Europe, Middle East, Central Asia (ripe.net)</li>
+            <li><strong>APNIC</strong> — Asia-Pacific (apnic.net)</li>
+            <li><strong>LACNIC</strong> — Latin America and Caribbean (lacnic.net)</li>
+            <li><strong>AFRINIC</strong> — Africa (afrinic.net)</li>
+          </ul>
+          <p>
+            IP WHOIS is not subject to GDPR redaction in the same way — it shows network block owner, ASN, country, and abuse contact. This data is used for <a href="/blog/ip-address-lookup/">IP geolocation</a> enrichment and spam filtering. An IP's WHOIS record shows the organization that owns the IP block, not necessarily who is using it — a server on AWS will show Amazon.com, not your application.
+          </p>
+          <p>
+            <code >`$ whois 8.8.8.8
+
+# RDAP equivalent (ARIN):
+NetRange:       8.8.8.0 - 8.8.8.255
+CIDR:           8.8.8.0/24
+NetName:        LVLT-GOGL-8-8-8
+Organization:   Google LLC (GOGL)
+Country:        US
+RegDate:        2014-03-14
+Updated:        2014-03-14
+
+OrgAbuseEmail:  network-abuse@google.com
+OrgTechEmail:   arin-contact@google.com
+
+# Query RDAP for IP:
+curl -s https://rdap.arin.net/registry/ip/8.8.8.8 | jq '.name, .handle'
+# "LVLT-GOGL-8-8-8"
+# "NET-8-8-8-0-1"`</code>
+          </pre>
+        
+
+        
+          <h2>WHOIS Lookup Tools Compared</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool</th>
+                  <th >Type</th>
+                  <th >Best For</th>
+                  <th >Limitation</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >whois CLI</td>
+                  <td >Command-line</td>
+                  <td >Quick terminal lookups, scripting</td>
+                  <td >Plain text, no parsing</td>
+                </tr>
+                <tr >
+                  <td >rdap.org API</td>
+                  <td >HTTPS / JSON</td>
+                  <td >Programmatic use, structured data</td>
+                  <td >Rate limited for heavy use</td>
+                </tr>
+                <tr >
+                  <td >lookup.icann.org</td>
+                  <td >Web UI</td>
+                  <td >Authoritative, official source</td>
+                  <td >Web only, not scriptable easily</td>
+                </tr>
+                <tr >
+                  <td >whois.com</td>
+                  <td >Web UI</td>
+                  <td >Non-technical users, quick checks</td>
+                  <td >May show stale cached data</td>
+                </tr>
+                <tr >
+                  <td >WhoisXML API</td>
+                  <td >Paid API</td>
+                  <td >Bulk lookups, threat intelligence, historic data</td>
+                  <td >Paid; 681M records but gaps exist</td>
+                </tr>
+                <tr>
+                  <td >python-whois</td>
+                  <td >Python library</td>
+                  <td >Automation, parsing, pipeline integration</td>
+                  <td >Parser breaks on unusual registrar formats</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p >
+            For most developers, the combination of the <code >whois</code> CLI for quick checks and <code >https://rdap.org/domain/'domain'</code> for scripted lookups covers 95% of use cases. The RDAP JSON response is easy to parse — use our <a href="/json-formatter/">JSON Formatter</a> to explore the full RDAP response structure.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What information does a WHOIS lookup show?',
+                a: 'A WHOIS lookup shows registrar name, registration date, expiry date, last-updated date, nameservers, and domain status codes. Personal registrant data (name, email, address) is redacted for most gTLD domains post-GDPR unless the owner opted into public display. Company names sometimes remain visible.',
+              ,
+              
+                q: 'Why does WHOIS say "Redacted for Privacy"?',
+                a: 'After GDPR took effect in May 2018, ICANN required registrars to hide personally identifiable information from public WHOIS. Fields like name, address, email, and phone are replaced with "Redacted for Privacy." The registrar must still provide a contact form to reach the owner.',
+              ,
+              
+                q: 'What is the difference between WHOIS and RDAP?',
+                a: 'WHOIS (RFC 3912) returns unstructured plain text over TCP port 43. RDAP (RFC 7480) is its modern replacement — structured JSON over HTTPS, with authentication support for tiered access. As of January 2025, ICANN sunset legacy WHOIS for gTLDs in favor of RDAP.',
+              ,
+              
+                q: 'How do I run a WHOIS lookup from the command line?',
+                a: 'On Linux/macOS run `whois example.com`. For structured JSON via RDAP: `curl https://rdap.org/domain/example.com | jq .`. On Windows use Sysinternals whois.exe. The `dig` command is separate — it queries DNS records, not registration data.',
+              ,
+              
+                q: 'Can I find out who owns a domain if registration is private?',
+                a: 'Not directly through public WHOIS. For legitimate legal or abuse reasons, submit a request via the contact form in the WHOIS record. Law enforcement can request non-public data via ICANN\'s SSAD process, though this remains slow as of 2026.',
+              ,
+              
+                q: 'How do I check when a domain expires?',
+                a: 'The expiry date is always in public WHOIS records even with privacy protection active. Run `whois example.com` and look for "Registry Expiry Date". Most registrars send email reminders 90, 60, and 30 days before expiry.',
+              ,
+              
+                q: 'What are WHOIS domain status codes?',
+                a: 'EPP status codes control what operations can be performed: clientTransferProhibited (registrar lock), serverTransferProhibited (registry lock), clientHold (suspended), redemptionPeriod (expired, 30-day recovery window), pendingDelete (5 days until available for re-registration). Most live domains show clientTransferProhibited.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Parse and Explore RDAP JSON Responses</h2>
+          <p>
+            RDAP returns structured JSON — paste the output into our JSON Formatter to explore the full response tree, validate structure, and extract the fields you need. Pair it with the <a href="/url-encode-decode/">URL Encoder/Decoder</a> for working with internationalized domain names (IDNs) in RDAP queries.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        /* Related */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/dns-records-explained/">
+              <h3>DNS Records Explained</h3>
+              <p>A, AAAA, CNAME, MX, TXT — how DNS resolution works.</p>
+            </a>
+            <a href="/blog/ip-address-lookup/">
+              <h3>IP Address Lookup</h3>
+              <p>How IP geolocation works using WHOIS and BGP data.</p>
+            </a>
+            <a href="/blog/http-status-codes-guide/">
+              <h3>HTTP Status Codes Guide</h3>
+              <p>Complete reference for HTTP status codes and web protocols.</p>
+            </a>
+            <a href="/blog/ssh-keys-guide/">
+              <h3>SSH Keys Guide</h3>
+              <p>Server authentication and secure remote access.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/whois-lookup/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
