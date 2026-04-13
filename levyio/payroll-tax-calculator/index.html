@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payroll Tax Calculator: Estimate FICA, Medicare &amp;amp; Withholding - LevyIO</title>
+  <meta name="description" content="Understand 2026 payroll taxes: 6.2% Social Security on up to $184,500, 1.45% Medicare with no cap, federal income tax withholding, and the Additional Medicare Tax. Full employer and employee breakdowns.">
+  <link rel="canonical" href="https://www.levyio.com/blog/payroll-tax-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/levyio/">LevyIO</a> &rarr; Payroll Tax Calculator: Estimate FICA, Medicare &amp;amp; Withholding
+  </nav>
+
+  <article>
+    <h1>Payroll Tax Calculator: Estimate FICA, Medicare &amp;amp; Withholding</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.levyio.com/blog/payroll-tax-calculator/">levyio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Payroll Tax Calculator: Estimate FICA, Medicare & Withholding',
+    description: 'Understand 2026 payroll taxes: 6.2% Social Security on up to $184,500, 1.45% Medicare with no cap, federal income tax withholding, and the Additional Medicare Tax. Full employer and employee breakdowns.',
+    author:  '@type': 'Organization', name: 'LevyIO', url: 'https://levyio.com/' ,
+    publisher:  '@type': 'Organization', name: 'LevyIO', url: 'https://levyio.com/', logo:  '@type': 'ImageObject', url: 'https://levyio.com/favicon.svg'  ,
+    mainEntityOfPage: 'https://levyio.com/blog/payroll-tax-calculator/',
+    datePublished: '2026-04-12',
+    dateModified: '2026-04-12',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://levyio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://levyio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Payroll Tax Calculator', item: 'https://levyio.com/blog/payroll-tax-calculator/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'What is the FICA tax rate in 2026?',
+        acceptedAnswer:  '@type': 'Answer', text: 'The 2026 FICA tax rate is 7.65% for employees (6.2% Social Security + 1.45% Medicare) and another 7.65% matched by employers, for a total of 15.3%. Social Security tax applies only to wages up to the wage base of $184,500. Medicare has no wage cap. Self-employed individuals pay the full 15.3% themselves but can deduct half on their federal return.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the Social Security wage base for 2026?',
+        acceptedAnswer:  '@type': 'Answer', text: 'The Social Security wage base (also called the contribution and benefit base) is $184,500 for 2026, up from $176,100 in 2025. This means Social Security tax (6.2% for employees) stops once wages hit $184,500. The maximum Social Security tax an employee pays in 2026 is $11,439. Wages above $184,500 still owe Medicare tax and any applicable Additional Medicare Tax.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the Additional Medicare Tax?',
+        acceptedAnswer:  '@type': 'Answer', text: 'The Additional Medicare Tax is an extra 0.9% Medicare tax on wages exceeding $200,000 for single filers ($250,000 for married filing jointly, $125,000 for married filing separately). Employers must withhold this tax once an employee\'s wages exceed $200,000 in the calendar year — regardless of filing status. If your spouse also works, combined wages could trigger the surtax even if neither earns $200,000 alone.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How does federal income tax withholding work?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Employers use Publication 15-T tables and the employee\'s Form W-4 to determine withholding. The W-4 captures filing status, dependents (affecting the Child Tax Credit claim), other income, deductions, and any extra withholding requested. Withholding is not a tax itself — it\'s an advance payment against your annual federal income tax liability. Underwithholding can trigger a penalty under IRC §6654.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is Form 941?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Form 941 is the Employer\'s Quarterly Federal Tax Return, filed four times per year to report wages paid, federal income tax withheld, and both the employee and employer share of Social Security and Medicare taxes. Deadlines are April 30, July 31, October 31, and January 31. Employers who deposit all payroll taxes on time receive an automatic extension to file the form itself.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Do self-employed people pay payroll taxes?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Yes. Self-employed individuals pay self-employment (SE) tax in place of payroll taxes. The SE tax rate is 15.3% on net self-employment income up to $184,500 (covering both the employee and employer FICA share), then 2.9% above that (Medicare only). You calculate SE tax on Schedule SE. The deductible half of SE tax reduces your AGI on Form 1040 — a significant offset. Quarterly estimated payments apply.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How often must employers deposit payroll taxes?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Employer deposit schedules depend on annual payroll tax liability reported in the lookback period. Monthly depositors pay by the 15th of the following month. Semi-weekly depositors pay within 3 business days (Wednesday deposits for Monday–Friday payrolls, Friday deposits for Saturday–Tuesday payrolls). New employers are monthly depositors by default. If total liability exceeds $100,000 in a day, a next-day deposit is required.' ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Payroll Tax Calculator</li>
+          </ol>
+        
+
+        /* Header — opens with a real-world scenario (different structure) */
+        
+          
+            Payroll &amp; FICA
+            April 12, 2026
+            16 min read
+          
+          <h2>
+            Payroll Tax Calculator: Estimate FICA, Medicare &amp; Withholding
+          </h2>
+          <p>
+            Every paycheck you receive has already been reduced by payroll taxes before you see it. For a $75,000 salary, that&apos;s roughly $5,738 in FICA taxes alone — before federal and state income tax withholding. If you&apos;re a small business owner, you match every dollar your employees pay, then report it all quarterly on Form 941. This guide explains exactly how FICA taxes work, the 2026 rates and wage base limits, how federal withholding is calculated, and the employer obligations most business owners get wrong.
+          </p>
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>• <strong>2026 Social Security rate: 6.2%</strong> on wages up to $184,500 — maximum employee contribution is $11,439</li>
+              <li>• <strong>Medicare rate: 1.45%</strong> with no wage cap; 0.9% Additional Medicare Tax kicks in above $200,000</li>
+              <li>• <strong>Total FICA cost to employer: 15.3%</strong> of employee wages up to the SS wage base, 2.9% above it</li>
+              <li>• <strong>Self-employed pay 15.3%</strong> SE tax but deduct half from AGI; quarterly estimated payments required</li>
+              <li>• <strong>Form 941 is due quarterly</strong>: April 30, July 31, October 31, January 31</li>
+            </ul>
+          
+
+          <h2>The Problem Most Employees Don&apos;t Know They Have</h2>
+          <p>
+            When a job posting says &quot;$75,000 salary,&quot; most applicants mentally adjust for income taxes. Far fewer account for payroll taxes — yet those costs are unavoidable and substantial. For the same $75,000 salary, an employee pays $4,650 in Social Security tax and $1,088 in Medicare tax in 2026, totaling $5,738 in FICA. Their employer pays an identical $5,738 on top — bringing the total payroll tax cost of that $75,000 salary to $11,476.
+          </p>
+          <p>
+            This matters when comparing a W-2 job to a freelance contract or business ownership. A $75,000 W-2 salary and a $75,000 1099 contract are not equivalent. The contract worker pays the full 15.3% self-employment tax themselves (on ~92.35% of net income, per IRS Publication 334) — though half is deductible. The IRS collected approximately $1.24 trillion in payroll taxes in fiscal year 2025, per the Congressional Budget Office — making it the second-largest federal revenue source after income taxes.
+          </p>
+          <p>
+            Understanding payroll taxes also matters for withholding accuracy. The IRS&apos;s own data shows that approximately 30 million taxpayers owed additional tax at filing in a recent year — many of them because of underwithholding on side income, a second job, or a new W-4 that wasn&apos;t filled out correctly. The <a href="/tax-calculator/">income tax calculator</a> can help you model your full-year liability and whether your withholding is on track.
+          </p>
+
+          <h2>FICA Taxes Explained: Social Security and Medicare</h2>
+          <p>
+            FICA stands for the Federal Insurance Contributions Act, enacted in 1935 as part of the Social Security Act. It funds two programs: Social Security (Old Age, Survivors, and Disability Insurance — OASDI) and Medicare (Hospital Insurance — HI). According to IRS Topic 751, the 2026 rates are:
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Tax Component</th>
+                  <th >Employee Rate</th>
+                  <th >Employer Rate</th>
+                  <th >Wage Limit</th>
+                  <th >Max Employee Tax</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Social Security (OASDI)</td>
+                  <td >6.2%</td>
+                  <td >6.2%</td>
+                  <td >$184,500</td>
+                  <td >$11,439</td>
+                </tr>
+                <tr >
+                  <td >Medicare (HI)</td>
+                  <td >1.45%</td>
+                  <td >1.45%</td>
+                  <td >No limit</td>
+                  <td >No cap</td>
+                </tr>
+                <tr >
+                  <td >Additional Medicare Tax</td>
+                  <td >0.9%</td>
+                  <td >0% (employer doesn&apos;t match)</td>
+                  <td >$200K+ ($250K MFJ)</td>
+                  <td >No cap</td>
+                </tr>
+                <tr >
+                  <td >Total FICA (employee)</td>
+                  <td >7.65%</td>
+                  <td >7.65%</td>
+                  <td >—</td>
+                  <td >$11,439 + Medicare</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>Source: IRS Topic 751 (Social Security and Medicare Withholding Rates); SSA Contribution and Benefit Base, 2026. The $184,500 Social Security wage base is set annually by the Social Security Administration.</p>
+
+          <h2>The 2026 Social Security Wage Base: $184,500</h2>
+          <p>
+            The Social Security wage base increased from $176,100 in 2025 to $184,500 in 2026 — a $8,400 jump. According to the Social Security Administration, the wage base is adjusted annually based on national average wage indexing. This means higher earners will pay Social Security tax on more of their income year over year.
+          </p>
+          <p>
+            Once an employee&apos;s wages reach $184,500 for the calendar year, Social Security withholding stops. For the rest of the year, only Medicare (1.45%) and any applicable Additional Medicare Tax continue to be withheld. If you work multiple jobs and your combined wages from all employers exceed $184,500, you may overpay Social Security tax during the year — the excess is refunded as a credit on your Form 1040 (Line 11 of Schedule 3).
+          </p>
+          <p>
+            Employers, however, cannot see combined wages from multiple employers. Each employer withholds Social Security tax on the wages it pays until that employer&apos;s wages reach $184,500 — even if the employee has already hit the limit at a different job. The employee claims the excess as a credit at filing; the employer does not get a refund.
+          </p>
+
+          <h3>The Additional Medicare Tax: Who It Hits and When</h3>
+          <p>
+            The Additional Medicare Tax (enacted under the Affordable Care Act, effective 2013) imposes an extra 0.9% Medicare tax on wages and self-employment income above specific thresholds. Per IRS Publication 926 and Form 8959 instructions:
+          </p>
+          <ul>
+            <li><strong>Single / Head of Household / Qualifying Widow(er):</strong> $200,000</li>
+            <li><strong>Married Filing Jointly:</strong> $250,000</li>
+            <li><strong>Married Filing Separately:</strong> $125,000</li>
+          </ul>
+          <p>
+            Employers withhold the 0.9% surtax once any single employee&apos;s wages cross $200,000 in the calendar year — regardless of that employee&apos;s filing status. A married employee earning $180,000 whose spouse earns $100,000 has combined household wages of $280,000, which exceeds the $250,000 MFJ threshold. But the employer withholds nothing extra because no individual wage stream exceeds $200,000. The couple owes the 0.9% on $30,000 — $270 — and may face an underpayment if they don&apos;t adjust withholding or make estimated tax payments.
+          </p>
+          <p>
+            Unlike the base Medicare tax, the employer does not match the Additional Medicare Tax. It is solely an employee (and self-employed person) obligation.
+          </p>
+
+          <h2>Full Worked Example: $75,000 Salary, 2026</h2>
+          <p>
+            Let&apos;s walk through the complete payroll tax calculation for a single filer earning $75,000 annual salary, claiming the standard W-4 (single, no dependents, no additional withholding), paid semi-monthly (24 pay periods).
+          </p>
+
+          
+            <p>Payroll Tax Calculation — $75,000 Annual Salary</p>
+            
+              Gross annual wages$75,000.00
+              
+              <p>FICA TAXES (Employee Share)</p>
+              Social Security (6.2% × $75,000)$4,650.00
+              Medicare (1.45% × $75,000)$1,087.50
+              Additional Medicare Tax$0.00 (below threshold)
+              Total FICA withheld$5,737.50
+              
+              <p>FEDERAL INCOME TAX WITHHOLDING (estimated, 2026 brackets)</p>
+              Standard deduction (single)($15,750.00)
+              Federal taxable income$59,250.00
+              Tax: 10% on first $11,925$1,192.50
+              Tax: 12% on $11,926–$48,475 ($36,549)$4,385.88
+              Tax: 22% on $48,476–$59,250 ($10,774)$2,370.28
+              Est. federal income tax$7,948.66
+              
+              Total federal tax burden$13,686.16
+              Effective total rate18.25%
+              
+              <p>EMPLOYER COST (additional)</p>
+              Employer Social Security match$4,650.00
+              Employer Medicare match$1,087.50
+              Total employer FICA cost$5,737.50
+              True cost of $75K employee to employer$80,737.50
+            
+          
+          <p>Federal income tax estimate uses 2026 brackets (projected) and the standard deduction of $15,750 for single filers. Actual withholding depends on W-4 elections. State income taxes not included.</p>
+
+          <h2>High-Income Scenario: $250,000 Salary with Additional Medicare Tax</h2>
+          <p>
+            Once wages exceed $184,500, the Social Security calculation changes. Here&apos;s the payroll tax math for a single filer earning $250,000:
+          </p>
+
+          
+            <p>Payroll Tax Calculation — $250,000 Annual Salary (Single)</p>
+            
+              Gross annual wages$250,000.00
+              
+              <p>FICA TAXES (Employee Share)</p>
+              Social Security (6.2% × $184,500 wage base)$11,439.00
+              Medicare (1.45% × $250,000)$3,625.00
+              Additional Medicare Tax (0.9% × $50,000 over $200K)$450.00
+              Total FICA withheld$15,514.00
+              
+              <p>EMPLOYER FICA MATCH</p>
+              Employer Social Security match (capped at wage base)$11,439.00
+              Employer Medicare match (1.45% × $250,000)$3,625.00
+              Employer Additional Medicare Tax match$0.00 (employer doesn&apos;t match)
+              Total employer FICA cost$15,064.00
+            
+          
+          <p>Source: IRS Topic 751; IRS Publication 15 (Employer&apos;s Tax Guide), 2026 edition. The employer does not match the 0.9% Additional Medicare Tax.</p>
+
+          <h2>Federal Income Tax Withholding: How Your W-4 Drives the Number</h2>
+          <p>
+            FICA taxes are fixed by law — the rate is the same for everyone regardless of their elections. Federal income tax withholding, however, is highly variable depending on your Form W-4 elections, your pay frequency, and your annual wage level.
+          </p>
+          <p>
+            The IRS redesigned Form W-4 in 2020 to move away from the old &quot;allowance&quot; system. The current W-4 has five steps:
+          </p>
+          <ol>
+            <li><strong>Step 1: Personal Information.</strong> Filing status (Single/MFS, MFJ, or Head of Household). This is the single most important input — it determines your withholding bracket and standard deduction treatment.</li>
+            <li><strong>Step 2: Multiple Jobs or Spouse Works.</strong> If you have multiple jobs simultaneously, or if you&apos;re married and both spouses work, you should complete this step. Failing to do so is a leading cause of underwithholding.</li>
+            <li><strong>Step 3: Claim Dependents.</strong> Enter the Child Tax Credit amount and other dependent credits here. The 2026 Child Tax Credit is $2,000 per qualifying child under 17. Claiming the credit reduces withholding — accurately, if the credit will be on your return.</li>
+            <li><strong>Step 4: Other Adjustments.</strong> For other income (interest, dividends, freelance income) not subject to withholding (Step 4a), deductions if you plan to itemize above the standard deduction (Step 4b), or any extra withholding amount per pay period (Step 4c).</li>
+            <li><strong>Step 5: Sign and date.</strong></li>
+          </ol>
+          <p>
+            Per IRS Publication 15-T, employers use either the Wage Bracket Method (table lookup by pay period and filing status) or the Percentage Method (math-based, required for complex W-4s) to compute withholding. Most payroll software uses the Percentage Method. The goal is for withholding to closely approximate the employee&apos;s final tax liability, though it is not required to be exact.
+          </p>
+          <p>
+            Use the <a href="/tax-refund-calculator/">tax refund calculator</a> to project whether you&apos;ll owe money or receive a refund based on your current withholding and estimated income.
+          </p>
+
+          <h2>Employer Payroll Tax Obligations: Form 941, Deposits, and FUTA</h2>
+          <p>
+            If you employ workers, your payroll tax obligations go well beyond calculating the withholding. You must also:
+          </p>
+
+          <h3>Form 941: Quarterly Federal Tax Return</h3>
+          <p>
+            Per IRS Form 941 instructions (March 2026 revision), employers file Form 941 to report: (1) wages paid to employees, (2) tips employees reported, (3) federal income tax withheld, (4) both employer and employee share of Social Security and Medicare taxes, and (5) Additional Medicare Tax withheld.
+          </p>
+          <p>
+            Filing deadlines:
+          </p>
+          <ul>
+            <li>Q1 (Jan–Mar): Due <strong>April 30, 2026</strong></li>
+            <li>Q2 (Apr–Jun): Due <strong>July 31, 2026</strong></li>
+            <li>Q3 (Jul–Sep): Due <strong>October 31, 2026</strong></li>
+            <li>Q4 (Oct–Dec): Due <strong>January 31, 2027</strong></li>
+          </ul>
+          <p>
+            Employers who deposited all payroll taxes on time and in full receive an automatic 10-day extension to file the return itself — but only the paperwork, not the deposits.
+          </p>
+
+          <h3>Deposit Schedules: Monthly vs. Semi-Weekly</h3>
+          <p>
+            The timing of tax deposits depends on your &quot;lookback period&quot; — the 12-month period ending June 30 of the prior year. Per IRS Publication 15 (Circular E), 2026 edition:
+          </p>
+          <ul>
+            <li><strong>Monthly depositor:</strong> If you reported $50,000 or less in payroll taxes during the lookback period. Deposits due by the 15th of the month following the payroll month.</li>
+            <li><strong>Semi-weekly depositor:</strong> If you reported more than $50,000. Deposits due Wednesday for payrolls on Saturday–Tuesday; due Friday for payrolls on Wednesday–Friday.</li>
+            <li><strong>$100,000 next-day rule:</strong> If your accumulated tax liability in any single day exceeds $100,000, you must deposit by the next business day — regardless of your normal deposit schedule.</li>
+            <li><strong>New employers:</strong> Automatically monthly depositors until the lookback period establishes otherwise.</li>
+          </ul>
+
+          <h3>FUTA: Federal Unemployment Tax</h3>
+          <p>
+            The Federal Unemployment Tax Act (FUTA) is a separate payroll tax paid only by employers — employees do not pay FUTA. The 2026 FUTA rate is 6.0% on the first $7,000 of wages paid to each employee annually. However, employers who pay state unemployment taxes on time receive a credit of up to 5.4%, reducing the effective FUTA rate to 0.6% — a maximum of $42 per employee per year.
+          </p>
+          <p>
+            FUTA is deposited quarterly when the liability reaches $500. Employers with annual FUTA liability under $500 can carry forward and pay with the annual Form 940 (due January 31). FUTA and the state unemployment insurance system together fund unemployment benefit payments to laid-off workers.
+          </p>
+
+          <h2>Self-Employment Tax: The Freelancer&apos;s Full Payroll Tax Burden</h2>
+          <p>
+            Self-employed individuals — sole proprietors, single-member LLCs, independent contractors, and partners in partnerships — pay self-employment (SE) tax instead of payroll taxes. The SE tax rate is 15.3% on net self-employment income up to the Social Security wage base ($184,500), then 2.9% above that (Medicare only, with the 0.9% Additional Medicare Tax applying above the same income thresholds as for employees).
+          </p>
+          <p>
+            One nuance: SE tax applies to 92.35% of net self-employment income, not 100%. This is because employees effectively reduce their Social Security wage base by the employer&apos;s share — the SE tax code replicates this by having self-employed people calculate SE tax on a slightly reduced base. Per Schedule SE instructions:
+          </p>
+          <ol>
+            <li>Calculate net self-employment income (Schedule C profit, less deductible business expenses)</li>
+            <li>Multiply by 92.35% (0.9235) — this is your &quot;SE income subject to tax&quot;</li>
+            <li>Apply 15.3% on the amount up to $184,500; 2.9% above (plus 0.9% over $200K)</li>
+            <li>Deduct half the resulting SE tax from your gross income on Form 1040 Schedule 1, Line 15</li>
+          </ol>
+          <p>
+            For a freelancer with $80,000 in net self-employment income: $80,000 × 0.9235 = $73,880 × 15.3% = $11,304 SE tax. Half of that ($5,652) is deductible from AGI — reducing the income tax bill as well as the SE tax base. For more detail on how this integrates with quarterly payments and deductions, see our <a href="/blog/self-employment-tax/">self-employment tax guide</a>.
+          </p>
+
+          <h2>Payroll Tax Rates Compared to Freelance: The Real Cost Difference</h2>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Scenario</th>
+                  <th >$75K W-2 Employee</th>
+                  <th >$75K 1099 Freelancer</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >Social Security tax</td><td >$4,650 (employee pays)</td><td >$8,553 (full SE share)</td></tr>
+                <tr ><td >Medicare tax</td><td >$1,088 (employee pays)</td><td >$2,001 (full SE share)</td></tr>
+                <tr ><td >Total FICA/SE tax</td><td >$5,738 visible / $11,476 total cost</td><td >$10,554 (before deduction)</td></tr>
+                <tr ><td >SE tax AGI deduction</td><td >N/A</td><td >($5,277) deductible</td></tr>
+                <tr ><td >Net SE tax after deduction</td><td >$5,738</td><td >~$9,374 (net of income tax savings)</td></tr>
+                <tr ><td >Employer also pays</td><td >$5,738 (invisible to employee)</td><td >$0 (client pays no payroll match)</td></tr>
+              </tbody>
+            </table>
+          
+          <p>SE tax calculated on 92.35% of net income per Schedule SE. Freelancer figures assume $75K gross with minimal business expenses for simplicity. Tax savings from SE deduction estimated at 22% bracket.</p>
+
+          <p>
+            This comparison illustrates why a $75,000 freelance contract is not equivalent to a $75,000 salary — the freelancer pays approximately $3,636 more in payroll-equivalent taxes (net of the deduction benefit), in addition to having no employer match for benefits like health insurance or 401(k). A fair freelance rate needs to account for these costs explicitly.
+          </p>
+          <p>
+            If you&apos;re a freelancer, use the <a href="/blog/quarterly-estimated-taxes-freelancers/">quarterly estimated taxes guide</a> to avoid underpayment penalties on your SE tax and federal income tax.
+          </p>
+
+          <h2>State Payroll Taxes: What Employers Also Owe</h2>
+          <p>
+            Federal payroll taxes are only part of the employer&apos;s payroll obligation. Most states impose:
+          </p>
+          <ul>
+            <li><strong>State Income Tax Withholding:</strong> Required in the 41 states that levy income taxes. Rates and withholding tables vary by state. Employers must register with the state revenue department and file state payroll tax returns (often quarterly, matching Form 941&apos;s schedule).</li>
+            <li><strong>State Unemployment Insurance (SUI/SUTA):</strong> All 50 states levy state unemployment insurance taxes, paid only by employers. New employer rates typically run 2–4%, applied to a state-defined wage base that varies from $7,000 (some states use the FUTA base) to $62,500 (Washington state). Experienced employers&apos; rates adjust based on their unemployment claims history.</li>
+            <li><strong>State Disability Insurance (SDI):</strong> California, New York, New Jersey, Hawaii, and Rhode Island mandate employee and/or employer contributions to state short-term disability programs. California&apos;s SDI employee rate for 2026 is 1.1% on all wages with no wage cap (expanded from a prior cap under legislation effective 2024).</li>
+          </ul>
+
+          <h2>Common Payroll Tax Mistakes — and the Penalties</h2>
+          <p>
+            The IRS takes payroll tax compliance seriously. Payroll taxes represent collected trust fund money — amounts withheld from employees&apos; paychecks that the employer holds in trust for the government. Misusing these funds or failing to deposit them triggers severe penalties:
+          </p>
+          <ul>
+            <li><strong>Failure to deposit penalty (IRC §6656):</strong> 2% for deposits 1–5 days late; 5% for 6–15 days late; 10% for more than 15 days late; 15% if amount remains unpaid 10 days after an IRS notice. This applies to each missed deposit.</li>
+            <li><strong>Trust Fund Recovery Penalty (TFRP):</strong> The IRS can pursue 100% of the unpaid trust fund taxes personally against any &quot;responsible person&quot; — which includes business owners, officers, and even bookkeepers who had authority over payroll decisions. This pierces the corporate veil entirely.</li>
+            <li><strong>Failure to file Form 941:</strong> 5% of unpaid tax per month, up to 25%.</li>
+            <li><strong>Misclassifying employees as contractors:</strong> If the IRS reclassifies workers, the employer owes both the employee AND employer share of FICA for the entire misclassification period, plus interest and penalties. The IRS Voluntary Classification Settlement Program (VCSP) allows prospective reclassification at reduced penalty for qualifying employers.</li>
+          </ul>
+
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>What is the FICA tax rate in 2026?</h3>
+              <p>The 2026 FICA rate is 7.65% for employees: 6.2% Social Security on wages up to $184,500, plus 1.45% Medicare on all wages. Employers match each dollar the employee pays, for a combined total of 15.3% up to the wage base. Self-employed individuals pay the full 15.3% themselves but can deduct half from their AGI on Form 1040.</p>
+            
+            
+              <h3>What is the Social Security wage base for 2026?</h3>
+              <p>The 2026 Social Security wage base is $184,500, up from $176,100 in 2025. Social Security tax (6.2%) stops being withheld once wages reach this amount. The maximum Social Security tax an employee pays in 2026 is $11,439. Wages above $184,500 continue to owe Medicare tax (1.45%) and the Additional Medicare Tax if applicable.</p>
+            
+            
+              <h3>What is the Additional Medicare Tax?</h3>
+              <p>The Additional Medicare Tax is 0.9% on wages exceeding $200,000 (single), $250,000 (MFJ), or $125,000 (MFS). Employers withhold starting at $200,000 regardless of filing status. The employer does not match this tax — it&apos;s solely borne by the employee. Married couples with two incomes may owe this even if neither individually crosses $200,000.</p>
+            
+            
+              <h3>How does federal income tax withholding work?</h3>
+              <p>Employers use IRS Publication 15-T tables and your Form W-4 to determine withholding per paycheck. The W-4 captures filing status, dependent credits, other income, and extra withholding. Withholding is not a separate tax — it&apos;s a prepayment of your annual federal income tax liability. Underwithholding can trigger an underpayment penalty under IRC §6654 if you owe more than $1,000 at filing.</p>
+            
+            
+              <h3>What is Form 941?</h3>
+              <p>Form 941 is the Employer&apos;s Quarterly Federal Tax Return. Employers file it four times per year to report wages, federal income tax withheld, and both shares of FICA. Deadlines: April 30 (Q1), July 31 (Q2), October 31 (Q3), January 31 (Q4). Timely depositors get an automatic extension on the paperwork. The 2026 version reflects the current $184,500 Social Security wage base.</p>
+            
+            
+              <h3>Do self-employed people pay payroll taxes?</h3>
+              <p>Yes, via the self-employment (SE) tax on Schedule SE. The rate is 15.3% on 92.35% of net SE income up to $184,500 (then 2.9% above). This covers both the employee and employer FICA share. Half of SE tax is deductible from AGI — a significant tax benefit. Quarterly estimated payments are required to prepay both SE tax and income tax throughout the year.</p>
+            
+            
+              <h3>How often must employers deposit payroll taxes?</h3>
+              <p>Deposit frequency depends on your lookback period liability. Monthly depositors (under $50K annual payroll taxes) pay by the 15th of the following month. Semi-weekly depositors (over $50K) pay within 3 business days of payroll. If a single day&apos;s liability exceeds $100,000, a next-day deposit is required. The IRS&apos;s Electronic Federal Tax Payment System (EFTPS) is required for all federal tax deposits.</p>
+            
+          
+
+          /* CTA */
+          
+            <h3>Check Your Withholding Now</h3>
+            <p>
+              Use the LevyIO income tax calculator to estimate your full-year tax liability — including FICA, federal income tax, and whether your current withholding is on track. Avoid a surprise bill at filing.
+            </p>
+            <a href="/income-tax-calculator/">
+              Calculate My Taxes →
+            </a>
+          
+
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.levyio.com/blog/payroll-tax-calculator/">LevyIO</a>.
+      Explore more free tools at <a href="https://www.levyio.com/">levyio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.levyio.com/">LevyIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
