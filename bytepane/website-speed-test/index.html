@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Speed Test: Check Your Page Load Time Free - BytePane</title>
+  <meta name="description" content="How to run a website speed test, interpret Core Web Vitals scores, compare GTmetrix vs PageSpeed vs WebPageTest, and fix the issues slowing your site down.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/website-speed-test/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Website Speed Test: Check Your Page Load Time Free
+  </nav>
+
+  <article>
+    <h1>Website Speed Test: Check Your Page Load Time Free</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/website-speed-test/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    GTmetrix uses actual network throttling. Neither is wrong — they measure different things. Run tests on multiple tools and look for consistent patterns.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Does website speed affect SEO rankings?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Yes. Core Web Vitals (LCP, INP, CLS) have been a direct Google ranking signal since 2021. Per Google\'s own data, pages that pass Core Web Vitals thresholds are 24% less likely to be abandoned before loading. Slow sites rank lower and convert worse.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between lab data and field data in speed tests?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Lab data (Lighthouse, GTmetrix) is collected in a controlled environment — fixed network, fixed device, single run. Field data (Chrome UX Report, PageSpeed Insights) aggregates real user measurements across thousands of visits. Lab data is reproducible and useful for debugging; field data reflects actual user experience.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How often should I run a website speed test?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Run a speed test before and after every significant deployment. For production sites, set up automated monitoring (GTmetrix Alerts, DebugBear, or SpeedCurve) to catch regressions immediately. Manual audits every 1–2 months catch drift from third-party script additions and content growth.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What causes a slow Time to First Byte (TTFB)?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'The most common TTFB killers are: slow database queries (no indexes, N+1 query patterns), no server-side caching (every request hits the DB), geographic distance to the server, and DNS lookup latency. Google recommends keeping TTFB under 600ms for a "good" score.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Can I speed test a page that requires login?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Yes, with WebPageTest. It supports scripted multi-step flows including login sequences. GTmetrix does not support authenticated pages in its free tier. For authenticated performance testing, Chrome DevTools with network throttling is often the most practical option.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Website Speed Test
+      
+
+      /* Article Header */
+      
+        <h2>
+          Website Speed Test: Check Your Page Load Time Free
+        </h2>
+        
+          Performance
+          <time dateTime="2026-04-11">April 11, 2026</time>
+          15 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸47% of users expect page load under 2 seconds — a 1-second delay reduces conversions by 7% per Akamai research</li>
+            <li>▸Only 51.8% of websites pass Google's Core Web Vitals thresholds as of mid-2025 (Chrome UX Report)</li>
+            <li>▸PageSpeed Insights, GTmetrix, and WebPageTest measure different things — use all three for a complete picture</li>
+            <li>▸TTFB &gt; 600ms and unoptimized images cause 80% of real-world performance failures</li>
+            <li>▸Lab scores and field data diverge significantly — a 90 Lighthouse score does not mean your users experience good performance</li>
+          </ul>
+        
+
+        
+          <p>
+            Here is a statistic that should recalibrate how seriously you take page load time: per Portent's e-commerce research, a site that loads in 1 second converts at 2.5×–3× the rate of a site that loads in 5 seconds. Not 10–20% better. 2.5–3 times better. Yet according to the Chrome UX Report analyzed in mid-2025, only 51.8% of websites pass Google's Core Web Vitals thresholds — meaning nearly half of the web is leaving performance-related revenue on the table.
+          </p>
+          <p>
+            Running a website speed test is the first diagnostic step. But reading the output without context leads to optimizing the wrong things. This guide explains what the tools actually measure, how to interpret the results, and what to fix first — based on the metrics that affect real users, not just lab scores.
+          </p>
+        
+
+        
+          <h2>The Business Case for Speed (With Actual Numbers)</h2>
+          <p>
+            Before diving into tools and techniques, it is worth internalizing why this matters. Anecdotal claims about speed and conversions are everywhere — but the research behind the specific numbers is less often cited:
+          </p>
+          <ul>
+            <li><strong>Akamai (2017, consistently cited):</strong> A 100ms delay in page load reduces conversion rates by 7%. On high-volume e-commerce, that compounds quickly.</li>
+            <li><strong>Google / SOASTA research:</strong> As load time increases from 1s to 3s, the probability of a mobile user bouncing increases by 32%. At 5s, it is 90%. At 10s, 123%.</li>
+            <li><strong>Portent (2019 e-commerce study):</strong> Sites loading in 1 second have a 39% average conversion rate. At 5 seconds: 11%. Every second matters most in that 1–3 second window.</li>
+            <li><strong>Contabo 2026 benchmark data:</strong> The average desktop website loads in 1.7 seconds; mobile averages 1.9 seconds. 47% of users expect sub-2-second loads.</li>
+            <li><strong>WP Engine research:</strong> A 2-second delay in load time increases bounce rates by 103%.</li>
+          </ul>
+          <p>
+            These numbers are why Google made Core Web Vitals a direct ranking signal in 2021, and has tightened the thresholds since. Performance is not an optimization pass you do once — it is an ongoing concern that degrades as teams add tracking pixels, third-party embeds, and larger assets.
+          </p>
+        
+
+        
+          <h2>Core Web Vitals: What You Are Actually Measuring</h2>
+          <p>
+            Google uses three metrics to evaluate page experience. These are the thresholds that matter for ranking — not the overall Lighthouse score, which is a composite metric optimized for lab conditions.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Metric</th>
+                  <th >What It Measures</th>
+                  <th >Good</th>
+                  <th >Poor</th>
+                  <th >% Sites Passing (CrUX 2025)</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >LCP</td>
+                  <td >Largest Contentful Paint — when the main content loads</td>
+                  <td >≤ 2.5s</td>
+                  <td >&gt; 4.0s</td>
+                  <td >66.7%</td>
+                </tr>
+                <tr >
+                  <td >INP</td>
+                  <td >Interaction to Next Paint — responsiveness to user input</td>
+                  <td >≤ 200ms</td>
+                  <td >&gt; 500ms</td>
+                  <td >~74%</td>
+                </tr>
+                <tr>
+                  <td >CLS</td>
+                  <td >Cumulative Layout Shift — visual stability (no jumping content)</td>
+                  <td >≤ 0.1</td>
+                  <td >&gt; 0.25</td>
+                  <td >~78%</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            These thresholds are evaluated at the <strong>75th percentile of page loads</strong> from the Chrome UX Report (CrUX). Your site must pass at p75 — not the median. That means your 25% slowest loads set your score, not your average. This distinction matters enormously when you have a long tail of slow mobile users on poor connections.
+          </p>
+          <p>
+            INP replaced First Input Delay (FID) as the responsiveness metric in March 2024. Unlike FID, which only measured the first interaction, INP captures every interaction during the page lifecycle. Sites with heavy React or Angular apps that passed FID often fail INP — particularly those with large JavaScript bundles that block the main thread.
+          </p>
+        
+
+        
+          <h2>Website Speed Test Tools Compared</h2>
+          <p>
+            There is no single "best" speed test tool — each measures different things under different conditions. Using only one gives you an incomplete picture. Here is an honest breakdown:
+          </p>
+
+          <h3>Google PageSpeed Insights</h3>
+          <p>
+            PageSpeed Insights (PSI) is the most important tool if you care about SEO, because it directly reflects what Google sees. It combines lab data from Lighthouse with real-user field data from the Chrome UX Report (CrUX), shown side by side.
+          </p>
+          <p>
+            <strong>The critical limitation:</strong> PSI uses <em>simulated throttling</em> rather than actual network throttling. The CPU slowdown factor (4×) and network profile (Slow 4G) are applied through software emulation, not real hardware. This means scores can vary significantly between runs — sometimes by 10–15 Lighthouse points. Always run PSI 3–5 times and take the median. The field data section (top of the report) is far more reliable than the Lighthouse score for understanding real-world performance.
+          </p>
+          <p>
+            <strong>Best for:</strong> Checking Core Web Vitals field data, getting Google-specific optimization recommendations, and verifying what the Googlebot experience looks like.
+          </p>
+
+          <h3>GTmetrix</h3>
+          <p>
+            GTmetrix uses Lighthouse under the hood but applies <em>real</em> network throttling rather than simulated — the network connection is actually throttled to 20 Mbps, 4 Mbps, or custom speeds. This makes GTmetrix scores more reproducible than PSI. The free tier offers testing from Vancouver, Canada (with account registration unlocking global test locations and mobile device testing).
+          </p>
+          <p>
+            GTmetrix's waterfall view is excellent for diagnosing blocking resources. The "Top Issues" tab provides actionable recommendations ranked by estimated impact. GTmetrix also supports scheduled monitoring with alerts — useful for catching performance regressions after deployments without manual re-testing.
+          </p>
+          <p>
+            <strong>Best for:</strong> Reproducible benchmarking, waterfall analysis, and monitoring over time. Paid plans start at $14.95/month for advanced monitoring.
+          </p>
+
+          <h3>WebPageTest</h3>
+          <p>
+            WebPageTest is the power tool. It is entirely free, open source (you can self-host it), and offers capabilities the others do not: 40+ global test locations, testing on real Android devices, scripted multi-step flows (including authenticated page testing), filmstrip and video comparison between tests, and the most detailed waterfall breakdown of any free tool.
+          </p>
+          <p>
+            WebPageTest's connection view groups requests by domain, making it easy to identify which third-party services are the worst offenders. The "Opportunities & Experiments" section runs automated experiments (e.g., "What would this page score with images optimized?") and shows projected impact before you make any changes.
+          </p>
+          <p>
+            <strong>Best for:</strong> Deep performance debugging, authenticated page testing, multi-location comparisons, and when you need to understand <em>exactly</em> what is happening in the network waterfall.
+          </p>
+
+          <h3>Pingdom Tools</h3>
+          <p>
+            Pingdom is the most user-friendly tool in this group. It provides a clean, simple report with a performance grade, load time, page size, and a basic waterfall. It does not use Lighthouse, so its metrics and scoring differ significantly from Google's. Pingdom's "performance insights" are somewhat generic compared to GTmetrix or WebPageTest.
+          </p>
+          <p>
+            <strong>Best for:</strong> Quick gut-checks and sharing results with non-technical stakeholders. Do not use Pingdom as your primary tool for Core Web Vitals optimization.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool</th>
+                  <th >Engine</th>
+                  <th >Field Data</th>
+                  <th >Test Locations</th>
+                  <th >Authenticated Testing</th>
+                  <th >Free Tier</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >PageSpeed Insights</td>
+                  <td >Lighthouse (simulated)</td>
+                  <td >Yes (CrUX)</td>
+                  <td >1 (Google's servers)</td>
+                  <td >No</td>
+                  <td >Unlimited</td>
+                </tr>
+                <tr >
+                  <td >GTmetrix</td>
+                  <td >Lighthouse (real throttle)</td>
+                  <td >No</td>
+                  <td >7 (1 free)</td>
+                  <td >No</td>
+                  <td >Limited</td>
+                </tr>
+                <tr >
+                  <td >WebPageTest</td>
+                  <td >Custom + Lighthouse</td>
+                  <td >No</td>
+                  <td >40+</td>
+                  <td >Yes (scripted)</td>
+                  <td >Unlimited</td>
+                </tr>
+                <tr>
+                  <td >Pingdom</td>
+                  <td >Proprietary</td>
+                  <td >No</td>
+                  <td >7</td>
+                  <td >No</td>
+                  <td >Limited</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>How to Run a Speed Test (Step by Step)</h2>
+          <p>
+            Speed testing is not just "paste URL, hit Go." These steps will give you reliable, actionable data:
+          </p>
+          <ol>
+            <li>
+              <strong>Test the right pages.</strong> Your homepage is usually not your highest-traffic page. Test the pages that matter to your business: landing pages, product detail pages, key blog posts. Google Search Console → Performance → Pages shows which URLs get the most clicks.
+            </li>
+            <li>
+              <strong>Test mobile first.</strong> Over 60% of web traffic is mobile (Statcounter, 2025). Google uses mobile-first indexing. If you only test desktop, you are optimizing for the minority of your traffic.
+            </li>
+            <li>
+              <strong>Run 3–5 tests, take the median.</strong> Single-run scores are noisy. Network conditions, server load, and CDN cache state all vary. The median of 5 runs is far more representative than a single run — especially on PageSpeed Insights with its simulated throttling.
+            </li>
+            <li>
+              <strong>Test from multiple locations.</strong> If your server is in Virginia and you test from Virginia, you are not simulating a user in London or Tokyo. Use WebPageTest to test from your top user geographies.
+            </li>
+            <li>
+              <strong>Test both cold and warm cache.</strong> GTmetrix and WebPageTest let you configure this. A cold-cache test simulates a first-time visitor (most critical for conversion). A warm-cache test simulates a returning user and reveals browser caching effectiveness.
+            </li>
+            <li>
+              <strong>Check field data if available.</strong> PageSpeed Insights will show CrUX field data above the lab results if your URL has enough traffic. This data — actual 28-day rolling p75 measurements from real Chrome users — is more important than the Lighthouse score for ranking purposes.
+            </li>
+          </ol>
+        
+
+        
+          <h2>Reading a Speed Test Report: What to Focus On</h2>
+          <p>
+            A Lighthouse report or GTmetrix result contains dozens of metrics and diagnostics. Here is how a senior engineer prioritizes them:
+          </p>
+
+          <h3>1. Time to First Byte (TTFB)</h3>
+          <p>
+            TTFB is the time from when the browser sends a request until it receives the first byte of the response. Google's "good" threshold is under 600ms. If TTFB is slow, everything else is slow — you cannot fix LCP without fixing TTFB first, because LCP cannot start until the document arrives.
+          </p>
+          <p>
+            A TTFB above 600ms almost always means one of: no server-side caching, slow database queries, or geographic distance from the server. A CDN edge cache hit should produce TTFB under 50ms.
+          </p>
+
+          <h3>2. Render-Blocking Resources</h3>
+          <p>
+            Look for the "Eliminate render-blocking resources" diagnostic. Synchronous <code >&lt;script&gt;</code> tags in the <code >&lt;head&gt;</code> and synchronous CSS <code >@import</code> statements block HTML parsing. Each render-blocking resource adds a full network round-trip before the browser can display anything. Adding <code >defer</code> to scripts and moving non-critical CSS to async loading are almost always the highest-impact fixes.
+          </p>
+
+          <h3>3. LCP Element</h3>
+          <p>
+            PageSpeed Insights and WebPageTest both identify which DOM element is the Largest Contentful Paint. In most cases it is a hero image, a heading, or a large text block. If it is an image: is it being lazy-loaded (bad — never lazy-load the LCP image)? Is it using a modern format like WebP/AVIF? Is it preloaded with <code >&lt;link rel="preload"&gt;</code>? Is it served from a CDN close to your users?
+          </p>
+
+          <h3>4. Total Blocking Time (TBT) as an INP Proxy</h3>
+          <p>
+            INP is a field metric — it cannot be measured accurately in a synthetic lab test. TBT (Total Blocking Time) is the closest lab proxy. TBT measures how long the main thread is blocked by long tasks (tasks over 50ms). High TBT predicts poor INP. The fix is always the same: reduce JavaScript execution time, code-split, or move work to web workers.
+          </p>
+
+          <h3>5. The Network Waterfall</h3>
+          <p>
+            The waterfall view shows every resource loaded, in chronological order, with timing breakdowns. Key things to look for:
+          </p>
+          <ul>
+            <li>Long DNS lookup times — consider DNS prefetch hints or changing DNS providers</li>
+            <li>Third-party domains with long connection times — <code >rel="preconnect"</code> helps with known third-parties</li>
+            <li>Large uncompressed files — Brotli compression should shrink text assets 15–25% vs gzip</li>
+            <li>Redirect chains — each redirect adds a full round-trip, often 100–300ms</li>
+            <li>Requests that block the critical path — any request on the critical path delays paint</li>
+          </ul>
+        
+
+        
+          <h2>The 5 Highest-Impact Speed Fixes</h2>
+          <p>
+            After analyzing hundreds of speed test reports, the same five issues account for the vast majority of performance problems on real-world websites:
+          </p>
+
+          
+            
+              <h3>1. Unoptimized Images</h3>
+              <p>
+                Images are the #1 cause of slow LCP. A PNG hero image served at 1.2MB that could be 180KB as WebP at the same visual quality is a 6× payload improvement. Use <code >fetchpriority="high"</code> on the LCP image and <code >loading="lazy"</code> on everything below the fold. Never both on the same image.
+              </p>
+            
+            
+              <h3>2. No Caching Layer</h3>
+              <p>
+                If your server generates a full database query on every request for content that changes hourly, you are wasting CPU and adding 200–800ms of TTFB. Redis/Memcached at the application level, or a CDN cache at the edge, can reduce TTFB from 800ms to under 50ms for cached pages. Set <code >Cache-Control: max-age=31536000, immutable</code> on hashed static assets.
+              </p>
+            
+            
+              <h3>3. Undeferred Third-Party Scripts</h3>
+              <p>
+                Analytics tags, chat widgets, A/B testing scripts, and social embeds that load synchronously can block render for 500ms–2s. Every third-party script that does not need to be on the critical path should have <code >defer</code> or <code >async</code>. Lazy-initialize chat widgets and social embeds using Intersection Observer.
+              </p>
+            
+            
+              <h3>4. No Compression</h3>
+              <p>
+                Brotli compression reduces text asset (HTML, CSS, JS, JSON) transfer sizes by 15–25% compared to gzip. For a 500KB JavaScript bundle, that is 75–125KB saved on every page load. This is a server/CDN configuration change — no code changes required. Verify with <code >curl -H "Accept-Encoding: br" -I https://yoursite.com</code> and check for <code >Content-Encoding: br</code> in the response headers.
+              </p>
+            
+            
+              <h3>5. Missing width/height on Images</h3>
+              <p>
+                This is the easiest CLS fix in existence. Images without explicit <code >width</code> and <code >height</code> attributes cause layout shifts as they load. The browser cannot reserve space without knowing the aspect ratio. Add both attributes, or use CSS <code >aspect-ratio</code>. This single change often moves CLS from "Poor" to "Good."
+              </p>
+            
+          
+        
+
+        
+          <h2>Automating Speed Test Monitoring</h2>
+          <p>
+            Running a speed test manually once per quarter is not a performance strategy — it is performance theater. Real performance engineering requires continuous monitoring so that regressions are caught at deployment time, not three months later when SEO rankings have dropped.
+          </p>
+
+          <h3>CI/CD Integration with Lighthouse</h3>
+          <p>
+            Running Lighthouse in CI blocks deployments that regress performance. Here is a practical setup using the Lighthouse CI package:
+          </p>
+          <p>
+            <code >`# .github/workflows/lighthouse.yml
+name: Lighthouse CI
+on: [push]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci && npm run build
+      - name: Run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.13.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: \$ secrets.LHCI_GITHUB_APP_TOKEN 
+
+# lighthouserc.js
+module.exports = 
+  ci: 
+    collect: 
+      startServerCommand: 'npm run start',
+      url: ['http://localhost:3000/', 'http://localhost:3000/about/'],
+      numberOfRuns: 3,
+    ,
+    assert: 
+      assertions: 
+        'categories:performance': ['error',  minScore: 0.8 ],
+        'first-contentful-paint': ['warn',  maxNumericValue: 2000 ],
+        'largest-contentful-paint': ['error',  maxNumericValue: 2500 ],
+        'total-blocking-time': ['warn',  maxNumericValue: 300 ],
+        'cumulative-layout-shift': ['error',  maxNumericValue: 0.1 ],
+      ,
+    ,
+  ,
+;`</code>
+          </pre>
+
+          <h3>Measuring Real User Performance</h3>
+          <p >
+            Lab tests tell you what could happen. Real User Monitoring (RUM) tells you what is happening. The <code >web-vitals</code> library (maintained by Google) is the standard way to collect Core Web Vitals from real users and send them to your analytics:
+          </p>
+          <p>
+            <code >`import  onCLS, onINP, onLCP, onFCP, onTTFB  from 'web-vitals';
+
+function sendToAnalytics( name, delta, value, id, navigationType ) 
+  // Send to Google Analytics 4
+  gtag('event', name, 
+    event_category: 'Web Vitals',
+    event_label: id,
+    value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+    non_interaction: true,
+    // Attribution data for debugging
+    navigation_type: navigationType,
+  );
+
+// Measure all Core Web Vitals + supporting metrics
+onCLS(sendToAnalytics);
+onINP(sendToAnalytics);
+onLCP(sendToAnalytics);
+onFCP(sendToAnalytics);  // First Contentful Paint
+onTTFB(sendToAnalytics); // Time to First Byte
+
+// For INP debugging: capture interaction details
+onINP((metric) => 
+  const entry = metric.entries.find(
+    (e) => e.duration === metric.value
+  );
+  console.log('Slow interaction target:', entry?.target);
+);`</code>
+          </pre>
+          <p >
+            See the <a href="/blog/web-performance-checklist-2026/">2026 Web Performance Checklist</a> for a full breakdown of optimization steps organized by impact.
+          </p>
+        
+
+        
+          <h2>Why Your Lighthouse Score Lies to You</h2>
+          <p>
+            This is the most important section for developers who have spent hours chasing a perfect Lighthouse score. A score of 90+ in Lighthouse does not mean your real users experience good performance. Here is why:
+          </p>
+          <ul>
+            <li><strong>Test conditions do not match reality.</strong> Lighthouse tests from a single location (usually the tool's server location) under fixed throttling conditions. Your users are on different devices, networks, and geographic locations.</li>
+            <li><strong>Cold cache vs. warm cache.</strong> Lighthouse always tests cold cache. If your repeat visitors benefit from browser caching, the lab score understates their experience.</li>
+            <li><strong>Personalized content is not tested.</strong> Dynamic content served based on login state, A/B test variant, or user preferences is not what Lighthouse sees. Your authenticated dashboard may be far slower than your marketing homepage.</li>
+            <li><strong>INP cannot be measured in lab tests.</strong> INP requires actual user interactions — clicking, typing, tapping. Lighthouse's TBT is a proxy, but a high TBT score does not guarantee a low real-world INP.</li>
+            <li><strong>The 75th percentile problem.</strong> Google ranks based on CrUX field data at p75. Your median Lighthouse score does not predict your p75 field performance, especially if you have traffic from low-end Android devices in regions with poor connectivity.</li>
+          </ul>
+          <p>
+            The right workflow: use Lighthouse and GTmetrix to identify <em>what</em> to fix, then validate improvements with real-world CrUX field data in PageSpeed Insights or the CrUX Dashboard. The lab tests guide development; the field data confirms results.
+          </p>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>What is a good website load time?</h3>
+              <p>
+                Google defines "good" LCP as under 2.5 seconds. For overall load time, under 3 seconds on desktop and under 5 seconds on mobile is a strong target. The average website loads in 1.9 seconds on mobile per the 2025 Chrome UX Report — though "average" hides enormous variance across geographies and device classes. Target p75 performance, not the median.
+              </p>
+            
+            
+              <h3>Why do different speed test tools give different scores?</h3>
+              <p>
+                Each tool uses different test locations, network throttling profiles, CPU emulation levels, and scoring algorithms. PageSpeed Insights uses simulated throttling; GTmetrix applies actual network throttling. Neither is wrong — they measure different conditions. Run tests on multiple tools and look for consistent patterns rather than trusting any single score.
+              </p>
+            
+            
+              <h3>Does website speed affect SEO rankings?</h3>
+              <p>
+                Yes. Core Web Vitals (LCP, INP, CLS) have been a direct Google ranking signal since 2021. Per Google's own research, pages passing Core Web Vitals thresholds are 24% less likely to be abandoned before loading. Slow pages rank lower for competitive queries and convert worse — the SEO and conversion impacts compound each other.
+              </p>
+            
+            
+              <h3>What is the difference between lab data and field data?</h3>
+              <p>
+                Lab data (Lighthouse, GTmetrix) is collected under controlled conditions — fixed network, fixed device, single run. Field data (Chrome UX Report, PageSpeed Insights) aggregates real user measurements across thousands of visits. Lab data is reproducible and useful for debugging specific issues. Field data reflects actual user experience. Both are necessary.
+              </p>
+            
+            
+              <h3>How often should I run a website speed test?</h3>
+              <p>
+                Run a speed test before and after every significant deployment. For production sites, automated monitoring with GTmetrix Alerts, DebugBear, or SpeedCurve catches regressions immediately after they ship. Manual audits every 4–6 weeks catch gradual drift from third-party script additions and content growth that automated tests might miss.
+              </p>
+            
+            
+              <h3>What causes a slow Time to First Byte (TTFB)?</h3>
+              <p>
+                The most common TTFB killers: slow database queries (missing indexes, N+1 patterns), no server-side caching (every request hits the DB cold), geographic distance from the server to the user, and DNS lookup latency. Google recommends keeping TTFB under 600ms. A CDN edge cache hit should produce TTFB under 50ms.
+              </p>
+            
+            
+              <h3>Can I speed test a page that requires login?</h3>
+              <p>
+                Yes, with WebPageTest. It supports scripted multi-step flows including form submission and authentication. GTmetrix does not support authenticated pages in its free tier. For authenticated performance testing, Chrome DevTools with network throttling applied is often the most practical option for one-off analysis.
+              </p>
+            
+          
+        
+
+        /* CTA Section */
+        
+          <h2>Analyze Your Code for Performance Issues</h2>
+          <p>
+            Slow CSS and unminified JavaScript are two of the most common causes of poor speed test results. Use BytePane's free tools to inspect and optimize your code before the next test run.
+          </p>
+          
+            <a href="/css-minifier/">
+              CSS Minifier
+            </a>
+            <a href="/js-beautifier/">
+              JS Beautifier
+            </a>
+            <a href="/json-formatter/">
+              JSON Formatter
+            </a>
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((a) => (
+              <Link key=a.slug href=`/blog/$a.slug/` >
+                <h3>a.title</h3>
+                <p>a.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/website-speed-test/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
