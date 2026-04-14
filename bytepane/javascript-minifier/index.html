@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Minifier: Compress JS Code Online Free - BytePane</title>
+  <meta name="description" content="JavaScript Minifier: Compress JS Code Online Free">
+  <link rel="canonical" href="https://www.bytepane.com/blog/javascript-minifier/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; JavaScript Minifier: Compress JS Code Online Free
+  </nav>
+
+  <article>
+    <h1>JavaScript Minifier: Compress JS Code Online Free</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/javascript-minifier/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        JavaScript Minifier
+      
+
+      /* Article Header */
+      
+        <h2>
+          JavaScript Minifier: Compress JS Code Online Free
+        </h2>
+        
+          Performance
+          <time dateTime="2026-04-12">April 12, 2026</time>
+          16 min read
+        
+      
+
+      
+
+        /* Opening: Scenario-driven problem statement */
+        
+          <h2>Your Bundle Is 847KB. Here&apos;s What Switching Minifiers Actually Does</h2>
+          <p>
+            A React SPA. Production build finishes in 38 seconds. The lead dev suggests switching from Terser to esbuild. &quot;It&apos;s 10x faster,&quot; they say. The argument starts: does faster build time justify the risk of a larger output bundle?
+          </p>
+          <p>
+            The answer, per the <strong>privatenumber/minification-benchmarks</strong> project — the most cited JS minification benchmark on GitHub, last updated March 31, 2026 — is more nuanced than either side admits. On the React package (a representative real-world artifact), esbuild produces a gzipped output of <strong>8.22KB</strong> in around <strong>10–15ms</strong>. Terser produces <strong>8.26KB</strong> in <strong>215ms</strong>. The size difference? Under 50 bytes after gzip. The speed difference? 15x.
+          </p>
+          <p>
+            That&apos;s the core trade-off in JS minification in 2026: the best-compressing tools (UglifyJS, Terser) are also the slowest. The fastest tools (oxc-minify, esbuild) produce output within 1–2% of optimal. For most teams, that 2% size delta is irrelevant — but 20 minutes of saved CI time per day is real money.
+          </p>
+          <p>
+            This article gives you the data you need to make that call for your specific project — along with how to set up whichever tool you choose.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸<strong>oxc-minify</strong> is the fastest JS minifier in 2026 (3ms on React), but @swc/core offers the best balance of speed and compression quality per March 2026 benchmarks.</li>
+            <li>▸<strong>UglifyJS</strong> produces the smallest gzipped output (8.18KB on React) but takes 420ms — 140x slower than oxc-minify. Worth it only when every byte matters.</li>
+            <li>▸Per the <strong>HTTP Archive 2025 Web Almanac</strong>, the median page ships 509KB of JS. A 40% reduction saves ~200KB, cutting Time to Interactive by 1–2 seconds on 3G.</li>
+            <li>▸Minification + gzip cuts JS transfer size by <strong>70–85%</strong>. Brotli compression compounds this to 80–90% reduction.</li>
+            <li>▸Safe minification <strong>never changes runtime behavior</strong>. Aggressive optimization (dead code elimination, function inlining) can in edge cases — always run tests against minified output.</li>
+          </ul>
+        
+
+        /* What JS Minification Does */
+        
+          <h2>What JavaScript Minification Actually Does</h2>
+          <p>
+            Minification is a pipeline of transformations, each targeting a different source of bloat. Understanding which transformations are &quot;safe&quot; (semantically guaranteed) vs. &quot;aggressive&quot; (behavior-preserving only under certain assumptions) matters when debugging post-minification regressions.
+          </p>
+
+          <h3>Level 1: Cosmetic Removal (Always Safe)</h3>
+          <p>
+            Every minifier does this, and none of it can change behavior:
+          </p>
+
+          
+            Before minification — 347 bytes
+            <p>`// Fetch user data from the API
+async function fetchUser(userId) 
+  // Validate input
+  if (!userId || typeof userId !== 'string') 
+    throw new Error('Invalid user ID');
+  
+
+  const response = await fetch(\`/api/users/\$userId\`);
+
+  if (!response.ok) 
+    throw new Error(\`HTTP error: \$response.status\`);
+  
+
+  return response.json();
+`</pre>
+          
+
+          
+            After Level 1 (whitespace + comments) — 178 bytes (49% smaller)
+            <pre >`async function fetchUser(userId)if(!userId||typeof userId!=="string")throw new Error("Invalid user ID")const response=await fetch(\`/api/users/\$userId\`);if(!response.ok)throw new Error(\`HTTP error: \$response.status\`)return response.json()`</pre>
+          
+
+          <h3>Level 2: Identifier Mangling (Safe with Source Maps)</h3>
+          <p >
+            Renaming local variables from descriptive names to single characters. This is where the real size gains come from on large codebases. <code >userId</code> becomes <code >n</code>. <code >response</code> becomes <code >r</code>. The mangled names are shorter to type and compress better under gzip due to higher repetition density.
+          </p>
+
+          
+            After Level 2 (+ mangling) — 134 bytes (61% smaller than original)
+            <p>`async function fetchUser(n)if(!n||"string"!=typeof n)throw new Error("Invalid user ID");const r=await fetch(\`/api/users/\$n\`);if(!r.ok)throw new Error(\`HTTP error: \$r.status\`);return r.json()`</pre>
+          
+
+          <p >
+            Note that only <em>local</em> variables are mangled. Properties, exported names, and anything accessible from the outside world are left intact — mangling those would break runtime behavior. Terser&apos;s <code >mangle.properties</code> option can mangle properties too, but this requires careful configuration and allowlisting of external API surfaces.
+          </p>
+
+          <h3>Level 3: Compression Passes (Test Required)</h3>
+          <p>
+            Advanced minifiers apply multiple optimization passes before final output: dead code elimination, constant folding, function inlining, and loop unrolling. These can occasionally interact with side effects in unexpected ways. <strong>Terser&apos;s <code >compress</code> option</strong> exposes 50+ tuning parameters for this reason. The defaults are conservative; the &quot;maximum compression&quot; presets require testing.
+          </p>
+        
+
+        /* 2026 Minifier Comparison */
+        
+          <h2>2026 Minifier Benchmark: The Full Comparison</h2>
+          <p>
+            The <strong>privatenumber/minification-benchmarks</strong> project runs all major minifiers against a consistent test corpus and publishes results with every update. The March 2026 run used the React 19 package as the primary benchmark artifact.
+          </p>
+
+          /* Comparison Table */
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Minifier</th>
+                  <th >Speed (React pkg)</th>
+                  <th >Gzipped Output</th>
+                  <th >vs Best Size</th>
+                  <th >Written In</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >oxc-minify</td>
+                  <td >3 ms</td>
+                  <td >8.40 KB</td>
+                  <td >+2.7%</td>
+                  <td >Rust</td>
+                </tr>
+                <tr >
+                  <td >@swc/core</td>
+                  <td >18 ms</td>
+                  <td >8.19 KB</td>
+                  <td >+0.1%</td>
+                  <td >Rust</td>
+                </tr>
+                <tr >
+                  <td >esbuild</td>
+                  <td >12–20 ms</td>
+                  <td >8.22 KB</td>
+                  <td >+0.5%</td>
+                  <td >Go</td>
+                </tr>
+                <tr >
+                  <td >Terser</td>
+                  <td >215 ms</td>
+                  <td >8.26 KB</td>
+                  <td >+1.0%</td>
+                  <td >JavaScript</td>
+                </tr>
+                <tr >
+                  <td >UglifyJS</td>
+                  <td >420 ms</td>
+                  <td >8.18 KB</td>
+                  <td >baseline</td>
+                  <td >JavaScript</td>
+                </tr>
+                <tr >
+                  <td >Google Closure</td>
+                  <td >1,400+ ms</td>
+                  <td >~8.10 KB</td>
+                  <td >-1.0%</td>
+                  <td >Java</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Source: privatenumber/minification-benchmarks, March 2026 update. React 19 package as test corpus. All times single-threaded on Apple M2. Gzip level 6.
+          </p>
+
+          <h3>Reading the Data Honestly</h3>
+          <p>
+            The spread between best (UglifyJS at 8.18KB) and worst (oxc-minify at 8.40KB) is <strong>270 bytes after gzip</strong>. On a single file load over HTTP/2 with Brotli, that&apos;s imperceptible. The decision should be driven by build time at your project&apos;s scale.
+          </p>
+          <p>
+            The scoring methodology used by the benchmark project weights output size at 85% and speed at 15% by default — shifting to 50/50 when a tool is dramatically slow. Under this weighted score, <strong>@swc/core consistently ranks first</strong> for teams that run thousands of builds per month.
+          </p>
+          <p>
+            For teams that run one build per day, output size matters more than build speed. In that case, UglifyJS or Terser is the rational choice.
+          </p>
+        
+
+        /* Tool Deep Dives */
+        
+          <h2>Each Tool, Honestly Assessed</h2>
+
+          <h3>Terser — The Production Standard</h3>
+          <p>
+            Terser is the default minifier in Webpack 5, Rollup, and Parcel. It&apos;s a fork of UglifyJS that added ES6+ support when UglifyJS stalled on ES5. According to npm download statistics, Terser receives over <strong>50 million weekly downloads</strong>, making it the most-used JS minifier by a wide margin.
+          </p>
+          <p>
+            Terser&apos;s compress pipeline runs multiple passes: it evaluates constant expressions, removes unreachable branches, inlines small functions, and hoists variable declarations. This is why it produces smaller output than esbuild despite the speed disadvantage — esbuild explicitly opts out of multi-pass optimization to preserve single-pass speed.
+          </p>
+          <p>
+            <strong>Honest criticism:</strong> Terser is written in JavaScript and runs single-threaded. On a 500KB input file, it can take 2–5 seconds. For a monorepo with 50 entry points building in parallel, this becomes the build bottleneck. The tool has not been rewritten in a native language and has limited parallelism support.
+          </p>
+
+          <h3>esbuild — The Speed Record-Holder</h3>
+          <p>
+            esbuild is written in Go and uses parallelism aggressively — it saturates all CPU cores during builds. Evan Wallace (its author) published benchmarks showing <strong>10–100x speed improvements</strong> over Webpack+Terser, which drove Vite to adopt esbuild as its development bundler and production minifier option.
+          </p>
+          <p>
+            esbuild&apos;s minifier is intentionally conservative — it runs in a single pass and avoids the complex optimization sequences that make Terser and UglifyJS slow. The trade-off is slightly larger output. On gzipped bundles, this difference almost always disappears into noise.
+          </p>
+          <p>
+            <strong>Honest criticism:</strong> esbuild&apos;s TypeScript support is transpile-only — it does not type-check. For projects that rely on type errors at build time, you need <code >tsc --noEmit</code> as a separate step. Also, esbuild has a stated policy of not supporting all Babel transforms, which can cause issues in legacy codebases.
+          </p>
+
+          <h3>@swc/core — The Emerging Standard</h3>
+          <p>
+            SWC (Speedy Web Compiler) is written in Rust and targets both transpilation and minification. Next.js adopted SWC as its default compiler in version 12, replacing Babel for most projects. The minifier component runs separately from the transpiler and produces near-optimal output at Rust speed.
+          </p>
+          <p>
+            Per March 2026 benchmarks, @swc/core achieves <strong>8.19KB gzipped output on React</strong> (within 10 bytes of UglifyJS&apos;s best-in-class 8.18KB) while completing in 18ms. This makes it the first Rust-native minifier to match JavaScript-based tools on output quality while dramatically outperforming them on speed.
+          </p>
+          <p>
+            <strong>Honest criticism:</strong> SWC&apos;s minifier configuration API is less mature than Terser&apos;s. Some edge cases in its compress passes have caused regressions in real projects. The GitHub issues tracker has several open bugs related to minification of complex class hierarchies and generators.
+          </p>
+
+          <h3>oxc-minify — The New Rust Challenger</h3>
+          <p>
+            OXC (Oxidation Compiler) is a newer Rust-based JavaScript toolchain that includes a minifier component. Per the March 2026 benchmark, oxc-minify completes in <strong>3 milliseconds</strong> — fastest of all tools tested. Its output (8.40KB gzipped) is slightly larger than SWC or Terser, but the 30–90x speed advantage over Terser makes it compelling for CI-heavy workflows.
+          </p>
+          <p>
+            <strong>Honest criticism:</strong> oxc-minify is the newest tool in this list and has the smallest production deployment footprint. The optimization passes are still maturing. For greenfield projects it&apos;s excellent; for legacy codebases, test thoroughly before deploying.
+          </p>
+        
+
+        /* Build Tool Integration */
+        
+          <h2>Build Tool Integration: The Exact Config You Need</h2>
+          <p>
+            Configuring a minifier through your build tool is the correct production pattern. Never commit minified JavaScript — always minify at build time from readable source.
+          </p>
+
+          <h3>Vite</h3>
+          <p>
+            Vite uses esbuild for minification by default in production builds. To switch to Terser (for maximum compression) or SWC:
+          </p>
+          
+            vite.config.ts
+            <p>`import  defineConfig  from 'vite'
+
+export default defineConfig(
+  build: 
+    // Default: 'esbuild' — fastest builds
+    // Switch to 'terser' for maximum compression (requires: npm i terser)
+    minify: 'terser',
+    terserOptions: 
+      compress: 
+        passes: 3,           // More passes = smaller output, slower build
+        drop_console: true,  // Remove console.log in production
+        drop_debugger: true,
+        pure_funcs: ['console.info', 'console.debug'],
+      ,
+      mangle: 
+        safari10: true,      // Fix Safari 10 let/const bug
+      ,
+      format: 
+        comments: false,     // Strip all comments including licenses
+      ,
+    ,
+    sourcemap: true,  // Always generate source maps alongside minified output
+  ,
+)`</pre>
+          
+
+          <h3>Webpack 5</h3>
+          <p >
+            Webpack 5 uses TerserPlugin by default. To switch to esbuild (dramatically faster builds):
+          </p>
+          
+            webpack.config.js — switching to esbuild minifier
+            <p>`const  EsbuildPlugin  = require('esbuild-loader')
+
+module.exports = 
+  mode: 'production',
+  optimization: 
+    minimizer: [
+      new EsbuildPlugin(
+        target: 'es2020',    // Target modern browsers; smaller output than es5
+        css: true,           // Also minify CSS extracted by MiniCssExtractPlugin
+      ),
+    ],
+  ,
+`</pre>
+          
+
+          <h3>Next.js</h3>
+          <p >
+            Next.js 12+ uses SWC by default. If you have a <code >.babelrc</code> file, Next.js falls back to Babel — a common performance trap. To force SWC and configure minification:
+          </p>
+          
+            next.config.ts
+            <p>`import type  NextConfig  from 'next'
+
+const nextConfig: NextConfig = 
+  // SWC minification is the default in Next.js 13+
+  // swcMinify: true is now the default (no longer needed to explicitly set)
+
+  // To use Terser instead (not recommended — SWC is faster and equally good):
+  // experimental:  forceSwcTransforms: true 
+
+  compiler: 
+    // Remove console.log statements in production
+    removeConsole: 
+      exclude: ['error', 'warn'],
+    ,
+  ,
+
+export default nextConfig`</pre>
+          
+
+          <h3>Rollup</h3>
+          
+            rollup.config.js — three minifier options
+            <pre >`import terser from '@rollup/plugin-terser'   // Option 1: max compression
+
+export default 
+  input: 'src/index.ts',
+  output: 
+    file: 'dist/bundle.min.js',
+    format: 'esm',
+    sourcemap: true,
+  ,
+  plugins: [
+    // Use ONE of these:
+    terser( compress:  passes: 2 , mangle: true ),  // Smaller output
+    // esbuild( minify: true, target: 'es2020' ),       // Faster build
+  ],
+`</pre>
+          
+        
+
+        /* Online Minification */
+        
+          <h2>Online JS Minification: When to Use It</h2>
+          <p >
+            Online minifiers serve a specific niche: quick, one-off compression of a single file when you don&apos;t have a build pipeline set up — prototyping, CDN snippets, or minifying a vendored library you&apos;re patching manually.
+          </p>
+          <p>
+            The security-conscious approach: use a client-side tool that runs the minifier in your browser via WebAssembly. BytePane&apos;s <a href="/js-minifier/">JavaScript minifier tool</a> runs Terser compiled to WASM — your code never leaves the browser tab. Avoid tools that upload your source to a server unless you&apos;ve verified their data handling policy.
+          </p>
+
+          
+            <h4 >Use online minification when:</h4>
+            <ul>
+              <li>✓Minifying a single file for a quick demo or CDN upload</li>
+              <li>✓Checking what a minifier does to a specific code pattern</li>
+              <li>✓Compressing a vendored third-party library you can&apos;t rebuild from source</li>
+            </ul>
+            <h4 >Don&apos;t use online minification when:</h4>
+            <ul>
+              <li>✗You have a build pipeline — let it handle minification automatically</li>
+              <li>✗The file contains proprietary business logic and the tool uploads to a server</li>
+              <li>✗You&apos;re tempted to commit the minified output — always commit source, minify at build time</li>
+            </ul>
+          
+        
+
+        /* Source Maps */
+        
+          <h2>Source Maps: Non-Negotiable for Production Debugging</h2>
+          <p>
+            Every minifier covered here generates source maps. A source map is a JSON file that maps positions in the minified output back to corresponding lines in the original source. Without it, a production error stack trace looks like:
+          </p>
+          
+            <p>`TypeError: Cannot read properties of undefined (reading 'map')
+    at r (main.a7f3b2c.js:1:4291)
+    at n (main.a7f3b2c.js:1:7823)`</pre>
+          
+          <p >
+            With source maps uploaded to your error tracker (Sentry, Datadog, etc.) the same error becomes:
+          </p>
+          
+            <p>`TypeError: Cannot read properties of undefined (reading 'map')
+    at ProductList.render (src/components/ProductList.tsx:47:12)
+    at CartContext.Provider (src/context/CartContext.tsx:103:8)`</pre>
+          
+          <p >
+            Always generate source maps in production. Never expose them publicly via your web server (they contain your full source code). Upload them to your error tracker using their CLI or CI integration, then configure your server to block direct access to <code >*.map</code> files.
+          </p>
+
+          
+            Nginx — block public source map access
+            <p>`location ~* \\.map$ 
+    deny all;
+    return 404;
+`</pre>
+          
+        
+
+        /* Tree Shaking Context */
+        
+          <h2>Minification Alone Won&apos;t Save You: Tree Shaking First</h2>
+          <p >
+            A common misconception: &quot;just minify harder and the bundle will be smaller.&quot; Switching from esbuild to UglifyJS saves a few hundred bytes. Properly tree-shaking an <code >import * as _</code> from lodash to individual imports can save <strong>70–500KB</strong>.
+          </p>
+          <p>
+            Tree shaking removes unused exports from ES modules before minification runs. The minifier then compresses what&apos;s left. The correct optimization sequence is:
+          </p>
+          <ol>
+            <li><strong>Audit your bundle</strong> with <code >webpack-bundle-analyzer</code> or <code >vite-plugin-visualizer</code> — find which dependencies are largest</li>
+            <li><strong>Tree shake aggressively</strong> — replace barrel imports with direct imports, mark packages as <code >sideEffects: false</code> in package.json</li>
+            <li><strong>Code split</strong> — lazy-load routes and large dependencies behind <code >React.lazy()</code> or dynamic <code >import()</code></li>
+            <li><strong>Minify the result</strong> — now the minifier is working on a smaller, cleaner input</li>
+            <li><strong>Enable Brotli compression</strong> — compounds with minification for maximum transfer savings</li>
+          </ol>
+          <p>
+            The <strong>HTTP Archive 2025 Web Almanac</strong> reports that the median JavaScript page weight is 509KB transferred — but <strong>67% of pages ship more than 1MB of JS before gzip</strong>. Minification accounts for 30–60% savings on raw bytes; tree shaking and code splitting can eliminate entire megabytes that never needed to be shipped at all.
+          </p>
+          <p>
+            For a broader look at JS performance optimization in the full stack, see BytePane&apos;s <a href="/blog/web-performance-checklist-2026/">web performance checklist</a>.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+
+          
+            [
+              
+                q: 'What is JavaScript minification?',
+                a: 'JavaScript minification removes whitespace, comments, and renames local variables to shorter names without changing program behavior. The result is a smaller file that downloads and parses faster. Minified output is semantically identical to source — just harder for humans to read. Production builds should always minify JS; development builds should not, to keep stack traces readable.',
+              ,
+              
+                q: 'Which JavaScript minifier is fastest in 2026?',
+                a: 'Per the privatenumber/minification-benchmarks project (updated March 2026), oxc-minify is fastest at 3ms on the React package. @swc/core is 18ms. esbuild completes in 10–20ms. Terser runs at 215ms. UglifyJS is slowest at 420ms but produces the smallest output. The right choice depends on whether you optimize for build speed or output size.',
+              ,
+              
+                q: 'Does minification affect how JavaScript runs?',
+                a: 'Safe minification never changes runtime behavior. Whitespace removal, comment stripping, and identifier shortening are purely cosmetic. However, aggressive optimizations — like inlining functions or removing dead branches — can theoretically affect edge cases involving side effects. Always run your test suite against minified output in CI.',
+              ,
+              
+                q: 'Should I use Terser or esbuild for Webpack?',
+                a: 'Webpack 5 ships TerserPlugin as the default. For most projects this is fine — Terser produces excellent output quality. If build time is a bottleneck, switch to esbuild-minimizer-webpack-plugin. esbuild runs 10–20x faster than Terser with under 2% size difference on gzipped bundles.',
+              ,
+              
+                q: 'What is the difference between minification and uglification?',
+                a: '"Uglification" is minification plus identifier mangling — renaming variables from descriptive names to single letters. Mangling adds meaningful size savings on top of whitespace removal, but makes stack traces in production nearly unreadable. Always configure source maps alongside uglification so you can still debug production errors.',
+              ,
+              
+                q: 'How much does JavaScript minification reduce file size?',
+                a: 'Minification alone reduces raw JS by 30–60%. Combined with gzip, total transfer savings reach 70–85%. Brotli compression achieves 80–90% reduction from the original. Per HTTP Archive 2025 Web Almanac, the median page ships 509KB of JS — a 40% reduction saves ~200KB, cutting Time to Interactive by 1–2 seconds on 3G.',
+              ,
+              
+                q: 'What is tree shaking and is it the same as minification?',
+                a: 'Tree shaking and minification are complementary but distinct. Tree shaking removes entire exported functions never imported anywhere — dead code elimination at the module graph level. Minification compresses what remains. Tree shaking happens during bundling (Rollup, Webpack, esbuild), minification as a final pass. Do both for optimal bundle size.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Minify JavaScript Instantly</h2>
+          <p>
+            Paste your JS and compress it in one click. Runs Terser in WebAssembly — your code never leaves your browser.
+          </p>
+          <a href="/js-minifier/">
+            Open JavaScript Minifier →
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/javascript-minifier/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
