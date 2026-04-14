@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YAML to JSON Converter: Convert YAML Files Online Instantly - BytePane</title>
+  <meta name="description" content="Convert YAML to JSON online with a free tool. Understand why developers convert between formats, edge cases in YAML parsing, and code examples in Python, Node.js, and Go.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/yaml-to-json-converter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; YAML to JSON Converter: Convert YAML Files Online Instantly
+  </nav>
+
+  <article>
+    <h1>YAML to JSON Converter: Convert YAML Files Online Instantly</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/yaml-to-json-converter/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    json.dump(yaml.safe_load(sys.stdin), sys.stdout, indent=2)" < input.yaml. With yq (a dedicated YAML CLI): yq -o json input.yaml. With Node.js: node -e "const y=require(\'js-yaml\'); const fs=require(\'fs\'); console.log(JSON.stringify(y.load(fs.readFileSync(\'input.yaml\',\'utf8\')),null,2))"',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between YAML safe_load and full_load?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'yaml.safe_load() (PyYAML) only processes basic YAML types: strings, numbers, lists, dicts, booleans, null. yaml.full_load() (or the deprecated yaml.load()) also processes Python-specific YAML tags like !!python/object, which can be used to execute arbitrary Python code. Always use safe_load when processing YAML from untrusted sources. This is a real security vulnerability — PyYAML deserialization attacks are documented in the wild.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        YAML to JSON Converter
+      
+
+      /* Article Header */
+      
+        <h2>
+          YAML to JSON Converter: Convert YAML Files Online Instantly
+        </h2>
+        
+          Data Formats
+          <time dateTime="2026-04-13">April 13, 2026</time>
+          14 min read
+        
+      
+
+      /* Article Content */
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸YAML is a superset of JSON — every valid JSON document is valid YAML, but the reverse is not true</li>
+            <li>▸YAML's type coercion rules (the Norway Problem, boolean strings) are the #1 source of silent data corruption during conversion</li>
+            <li>▸Always use <code >yaml.safe_load()</code> in Python — <code >yaml.load()</code> without a Loader is a remote code execution vulnerability</li>
+            <li>▸Kubernetes accepts both YAML and JSON natively — the kubectl CLI converts YAML to JSON before sending to the API server</li>
+            <li>▸JSON parses 5–10× faster than YAML — for data interchange at scale, convert config YAML to JSON at build time</li>
+          </ul>
+        
+
+        
+          <h2>The Problem: Two Worlds That Need to Talk</h2>
+          <p>
+            Here is a scenario that plays out dozens of times a day in backend and DevOps workflows: a Kubernetes manifest or GitHub Actions workflow is written in YAML (as all Kubernetes and CI/CD configs are), but the tool consuming it — a validation script, a configuration management system, a REST API — expects JSON. Or the reverse: an API returns JSON, but the infrastructure-as-code tool consuming it expects YAML.
+          </p>
+          <p>
+            Converting between YAML and JSON is a constant need in modern software stacks. Docker Compose, Kubernetes, Ansible, GitHub Actions, AWS CloudFormation (YAML variant), Helm charts — all use YAML. APIs, databases, message queues, and most programming language data structures use JSON. The two formats dominate different layers of the stack, and they frequently need to communicate.
+          </p>
+          <p>
+            The conversion sounds trivial — and for simple files, it is. But YAML has features JSON cannot represent, YAML parsers have type coercion behaviors that silently corrupt data, and security vulnerabilities in YAML deserialization have been exploited in production systems. This guide covers the full picture.
+          </p>
+          <p>
+            For a quick conversion, use the <a href="/yaml-to-json/">BytePane YAML to JSON converter</a> — paste your YAML, get JSON instantly in your browser. For understanding the underlying mechanics, read on.
+          </p>
+        
+
+        
+          <h2>YAML vs JSON: The Structural Differences</h2>
+          <p>
+            YAML 1.2 is officially a superset of JSON — every valid JSON document is valid YAML. But in practice, the two formats have very different design philosophies and syntactic rules:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >YAML</th>
+                  <th >JSON</th>
+                  <th >Conversion Impact</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Comments</td>
+                  <td >Yes (<code ># comment</code>)</td>
+                  <td >No</td>
+                  <td >Lost on conversion</td>
+                </tr>
+                <tr >
+                  <td >Anchors &amp; Aliases</td>
+                  <td >Yes (<code >&amp;name / *name</code>)</td>
+                  <td >No</td>
+                  <td >Dereferenced (duplicated)</td>
+                </tr>
+                <tr >
+                  <td >Multi-document</td>
+                  <td >Yes (<code >---</code> separator)</td>
+                  <td >No (NDJSON workaround)</td>
+                  <td >Requires document splitting</td>
+                </tr>
+                <tr >
+                  <td >Type coercion</td>
+                  <td >Automatic (YES → true)</td>
+                  <td >Explicit only</td>
+                  <td >Silent data corruption risk</td>
+                </tr>
+                <tr >
+                  <td >Binary data</td>
+                  <td >Yes (<code >!!binary</code> tag)</td>
+                  <td >No (use Base64 string)</td>
+                  <td >Converted to Base64 string</td>
+                </tr>
+                <tr >
+                  <td >Integer keys</td>
+                  <td >Allowed</td>
+                  <td >Strings only</td>
+                  <td >Coerced to strings</td>
+                </tr>
+                <tr>
+                  <td >Trailing commas</td>
+                  <td >N/A (indentation-based)</td>
+                  <td >Not allowed</td>
+                  <td >No issue</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The structural differences matter less than the type coercion differences when it comes to data integrity. A comment being dropped is annoying but expected. Silently converting the string <code >"NO"</code> to the boolean <code >false</code> is a production bug.
+          </p>
+        
+
+        
+          <h2>The Norway Problem and Other YAML Type Traps</h2>
+          <p>
+            The single most dangerous thing about YAML-to-JSON conversion is YAML's type coercion rules. In YAML 1.1 (used by PyYAML before 6.0, and still the default in many libraries), a number of unquoted strings are automatically interpreted as booleans:
+          </p>
+          <p>
+            <code >`# YAML 1.1 boolean coercion — these all become true/false in PyYAML < 6.0
+coerced_true: yes
+also_true: YES
+also_true_2: Yes
+also_true_3: on
+also_true_4: ON
+also_true_5: true
+
+coerced_false: no
+also_false: NO      # ← "NO" (country code for Norway) becomes false!
+also_false_2: off
+also_false_3: false
+
+# JSON output (PyYAML 5.x):
+# 
+#   "coerced_true": true,
+#   "coerced_false": false,
+#   "also_false": false   ← NO is now false
+# `</code>
+          </pre>
+          <p >
+            This is the famous <strong>Norway Problem</strong> — a well-documented YAML 1.1 parsing quirk where the ISO 3166-1 alpha-2 country code for Norway ("NO") is silently parsed as <code >false</code>. It became notorious when it caused data corruption in systems where country codes were stored as unquoted YAML strings.
+          </p>
+          <p>
+            YAML 1.2 fixed this — only <code >true</code> and <code >false</code> (lowercase) are booleans. But many libraries still default to YAML 1.1. The fix is simple: <strong>quote all string values that could be misinterpreted</strong>.
+          </p>
+          <p>
+            <code >`# Safe YAML — explicit quoting prevents type coercion
+country: "NO"       # stays "NO", not false
+status: "yes"       # stays "yes", not true
+port: "8080"        # stays "8080" string, not integer 8080
+version: "1.0"      # stays "1.0" string, not float 1.0
+
+# Or check your library's YAML version:
+# Python: yaml.safe_load() with PyYAML >= 6.0 uses YAML 1.1 rules
+# ruamel.yaml with version='1.2' uses strict YAML 1.2
+
+yml = ruamel.yaml.YAML()
+yml.version = (1, 2)  # Enforce YAML 1.2 — "NO" stays "NO"`</code>
+          </pre>
+
+          <h3>The Octal Number Trap</h3>
+          <p >
+            Another silent type coercion that trips up developers: numbers that start with <code >0</code> in YAML 1.1 are parsed as octal. This is a direct consequence of YAML's POSIX shell heritage:
+          </p>
+          <p>
+            <code >`# YAML 1.1 octal parsing
+file_permissions: 0755   # → integer 493 (0755 octal = 493 decimal)
+mode: 0644               # → integer 420
+
+# This is why Kubernetes file permission configs use quoted strings:
+# spec.securityContext.runAsUser: "0755" — not the same as 0755!
+
+# YAML 1.2 (Go's gopkg.in/yaml.v3, ruamel.yaml v1.2):
+# 0755 stays as integer 755, not 493. Octal requires 0o755.
+
+# Safe practice: always quote values that look like octal or hex
+file_permissions: "0755"  # Explicit string, no ambiguity`</code>
+          </pre>
+        
+
+        
+          <h2>YAML Anchors and Aliases: DRY Configs</h2>
+          <p >
+            One of YAML's most useful features for configuration files — and one that has no JSON equivalent — is anchors (<code >&amp;</code>) and aliases (<code >*</code>). They let you define a value once and reference it multiple times:
+          </p>
+          <p>
+            <code >`# YAML with anchors — define once, reference everywhere
+defaults: &defaults
+  image: node:20-alpine
+  restart: unless-stopped
+  environment:
+    NODE_ENV: production
+    LOG_LEVEL: info
+
+services:
+  api:
+    <<: *defaults          # Merge all defaults into api service
+    ports: ["3000:3000"]
+
+  worker:
+    <<: *defaults          # Same defaults for worker
+    ports: []
+    command: node worker.js`</code>
+          </pre>
+          <p >
+            When this YAML is converted to JSON, the anchors are <em>dereferenced</em> — the referenced content is fully copied to each alias location:
+          </p>
+          <p>
+            <code >`
+  "defaults": 
+    "image": "node:20-alpine",
+    "restart": "unless-stopped",
+    "environment": 
+      "NODE_ENV": "production",
+      "LOG_LEVEL": "info"
+    
+  ,
+  "services": 
+    "api": 
+      "image": "node:20-alpine",
+      "restart": "unless-stopped",
+      "environment":  "NODE_ENV": "production", "LOG_LEVEL": "info" ,
+      "ports": ["3000:3000"]
+    ,
+    "worker": 
+      "image": "node:20-alpine",
+      "restart": "unless-stopped",
+      "environment":  "NODE_ENV": "production", "LOG_LEVEL": "info" ,
+      "ports": [],
+      "command": "node worker.js"
+    
+  
+`</code>
+          </pre>
+          <p >
+            The JSON output is larger (the shared content is duplicated), but it is functionally identical. This is why Kubernetes and Docker Compose tooling can consume both YAML and JSON — they process YAML, dereference all anchors, and work with a flat JSON-equivalent data structure internally.
+          </p>
+        
+
+        
+          <h2>Converting YAML to JSON in Code</h2>
+          <p>
+            For one-off conversions, an online tool is fastest. For programmatic conversion in a pipeline or application, here are production-grade implementations in the three most common environments:
+          </p>
+
+          <h3>Python (PyYAML / ruamel.yaml)</h3>
+          <p>
+            <code >`import yaml
+
+def yaml_to_json(yaml_input: str, indent: int = 2) -> str:
+    """
+    Convert YAML string to JSON string.
+    Uses safe_load to prevent arbitrary code execution.
+    """
+    try:
+        # safe_load only processes basic YAML types
+        # NEVER use yaml.load() without Loader=yaml.SafeLoader
+        data = yaml.safe_load(yaml_input)
+    except yaml.YAMLError as e:
+        raise ValueError(f"Invalid YAML: e")
+
+    return json.dumps(data, indent=indent, ensure_ascii=False)
+
+# From file
+def convert_file(yaml_path: str, json_path: str) -> None:
+    with open(yaml_path, 'r', encoding='utf-8') as f:
+        yaml_content = f.read()
+
+    json_content = yaml_to_json(yaml_content)
+
+    with open(json_path, 'w', encoding='utf-8') as f:
+        f.write(json_content)
+
+# From stdin (for shell pipelines)
+if __name__ == '__main__':
+    yaml_input = sys.stdin.read()
+    print(yaml_to_json(yaml_input))
+
+# CLI usage:
+# python3 convert.py < config.yaml > config.json
+# cat k8s-manifest.yaml | python3 convert.py`</code>
+          </pre>
+          <p >
+            For YAML 1.2 compliance (fixing the Norway Problem at the library level), use <code >ruamel.yaml</code>:
+          </p>
+          <p>
+            <code >`from ruamel.yaml import YAML
+
+def yaml_to_json_strict(yaml_input: str) -> str:
+    yml = YAML(typ='safe')     # Safe mode — no Python-specific tags
+    yml.version = (1, 2)       # YAML 1.2 — "NO" stays "NO"
+
+    import io
+    data = yml.load(io.StringIO(yaml_input))
+    return json.dumps(data, indent=2, ensure_ascii=False)
+
+# ruamel.yaml also handles multi-document YAML:
+def convert_multidoc(yaml_input: str) -> list:
+    yml = YAML(typ='safe')
+    documents = list(yml.load_all(io.StringIO(yaml_input)))
+    return [json.dumps(doc, indent=2) for doc in documents]`</code>
+          </pre>
+
+          <h3>Node.js (js-yaml)</h3>
+          <pre >
+            <code >`// npm install js-yaml
+
+/**
+ * Convert YAML string to formatted JSON string.
+ * js-yaml defaults to YAML 1.2 behavior — correct boolean parsing.
+ */
+function yamlToJson(yamlInput: string, indent: number = 2): string 
+  try 
+    // yaml.load() in js-yaml is safe by default (no !!js/eval tags)
+    const data = yaml.load(yamlInput);
+    return JSON.stringify(data, null, indent);
+   catch (err) 
+    if (err instanceof yaml.YAMLException) 
+      throw new Error(\`YAML parse error at line \$err.mark?.line: \$err.reason\`);
+    
+    throw err;
+  
+
+// Process a Kubernetes manifest file
+async function convertK8sManifest(inputPath: string, outputPath: string) 
+  const yamlContent = await fs.readFile(inputPath, 'utf-8');
+
+  // Handle multi-document YAML (multiple --- separated docs)
+  const docs = yaml.loadAll(yamlContent);
+  const jsonContent = JSON.stringify(docs, null, 2);
+
+  await fs.writeFile(outputPath, jsonContent, 'utf-8');
+  console.log(\`Converted \$docs.length documents to \$outputPath\`);
+
+// Example: validate a converted config schema
+
+const ajv = new Ajv();
+
+async function validateYamlConfig(yamlPath: string, schemaPath: string) 
+  const [yamlContent, schemaContent] = await Promise.all([
+    fs.readFile(yamlPath, 'utf-8'),
+    fs.readFile(schemaPath, 'utf-8'),
+  ]);
+
+  const data = yaml.load(yamlContent);
+  const schema = JSON.parse(schemaContent);
+
+  const validate = ajv.compile(schema);
+  const valid = validate(data);
+
+  if (!valid) 
+    console.error('Validation errors:', validate.errors);
+    process.exit(1);
+  
+
+  console.log('Config valid ✓');
+`</code>
+          </pre>
+
+          <h3>Go (gopkg.in/yaml.v3)</h3>
+          <pre >
+            <code >`// go get gopkg.in/yaml.v3
+package main
+
+    "encoding/json"
+    "fmt"
+    "os"
+
+    "gopkg.in/yaml.v3"
+)
+
+// YAMLToJSON converts a YAML byte slice to a JSON byte slice.
+// gopkg.in/yaml.v3 uses YAML 1.2 — correct boolean/octal handling.
+func YAMLToJSON(yamlData []byte) ([]byte, error) 
+    // Unmarshal YAML into a generic interface
+    var yamlObj interface
+    if err := yaml.Unmarshal(yamlData, &yamlObj); err != nil 
+        return nil, fmt.Errorf("yaml parse: %w", err)
+    
+
+    // yaml.v3 unmarshals maps as map[string]interface
+    // which is directly JSON-serializable
+    jsonData, err := json.MarshalIndent(yamlObj, "", "  ")
+    if err != nil 
+        return nil, fmt.Errorf("json marshal: %w", err)
+    
+
+    return jsonData, nil
+
+func main() 
+    yamlData, err := os.ReadFile("config.yaml")
+    if err != nil 
+        fmt.Fprintf(os.Stderr, "read file: %v\\n", err)
+        os.Exit(1)
+    
+
+    jsonData, err := YAMLToJSON(yamlData)
+    if err != nil 
+        fmt.Fprintf(os.Stderr, "convert: %v\\n", err)
+        os.Exit(1)
+    
+
+    fmt.Println(string(jsonData))
+
+// Note: yaml.v2 uses YAML 1.1 (Norway Problem exists)
+// Always use yaml.v3 for new code.`</code>
+          </pre>
+        
+
+        
+          <h2>Command-Line Conversion: yq and Python One-Liners</h2>
+          <p >
+            For shell scripting and CI/CD pipelines, you often need YAML-to-JSON conversion without writing code. There are two reliable options:
+          </p>
+
+          <h3>yq — The YAML Command-Line Processor</h3>
+          <p>
+            <code >yq</code> (Mike Farah's Go implementation, not the older Python version) is the Swiss Army knife for YAML on the command line. It follows jq's filter syntax and handles multi-document YAML correctly:
+          </p>
+          <p>
+            <code >`# Install: brew install yq  OR  go install github.com/mikefarah/yq/v4@latest
+
+# Basic conversion
+yq -o json config.yaml
+
+# Pretty-printed JSON
+yq -o json -I 2 config.yaml
+
+# Multi-document YAML → JSON array
+yq -o json '. | [.]' multi-doc.yaml
+
+# Convert in pipeline (Kubernetes manifest → JSON)
+kubectl get deployment my-app -o yaml | yq -o json
+
+# Extract specific field and convert
+yq '.spec.template.spec.containers[0]' deployment.yaml | yq -o json
+
+# Process all YAML files in directory
+for f in configs/*.yaml; do
+  yq -o json "$f" > "output/$(basename "$f" .yaml).json"
+done`</code>
+          </pre>
+
+          <h3>Python One-Liner (No Dependencies)</h3>
+          <pre >
+            <code >`# Python is on virtually every Unix/macOS system — no install needed
+python3 -c "import sys, yaml, json; json.dump(yaml.safe_load(sys.stdin), sys.stdout, indent=2)" < input.yaml
+
+# Read from file, write to file
+python3 -c "
+
+with open('input.yaml') as f:
+    data = yaml.safe_load(f)
+with open('output.json', 'w') as f:
+    json.dump(data, f, indent=2)
+"
+
+# Handle multi-document YAML
+python3 -c "
+
+docs = list(yaml.safe_load_all(sys.stdin))
+json.dump(docs, sys.stdout, indent=2)
+" < multi-doc.yaml`</code>
+          </pre>
+        
+
+        
+          <h2>Security Warning: YAML Deserialization Attacks</h2>
+          <p >
+            This deserves its own section because it is a real vulnerability that has been exploited in production Ruby on Rails applications, Python services, and Java microservices.
+          </p>
+          <p>
+            YAML parsers that support the full YAML spec allow type tags like <code >!!python/object/apply</code> or <code >!!java.lang.Runtime</code>. When a parser processes YAML with these tags, it can instantiate arbitrary objects and execute code:
+          </p>
+          <p>
+            <code >`# Malicious YAML — DO NOT process this with yaml.load() / yaml.full_load()
+# This executes "rm -rf /tmp/evil" when parsed by PyYAML without SafeLoader
+evil: !!python/object/apply:subprocess.check_output
+  - ["rm", "-rf", "/tmp/evil"]
+
+# CVE-2017-18342 (PyYAML) — arbitrary code execution via YAML
+# CVE-2021-25326 (Ruby psych) — similar vector in Ruby`</code>
+          </pre>
+          <p >
+            The rules for safe YAML processing are non-negotiable:
+          </p>
+          <ul>
+            <li><strong>Python:</strong> Always use <code >yaml.safe_load()</code>. Never use <code >yaml.load()</code> without <code >Loader=yaml.SafeLoader</code>.</li>
+            <li><strong>Ruby:</strong> Use <code >Psych.safe_load()</code> instead of <code >YAML.load()</code>.</li>
+            <li><strong>Java (SnakeYAML):</strong> Use <code >new Yaml(new SafeConstructor())</code>.</li>
+            <li><strong>Node.js (js-yaml):</strong> <code >yaml.load()</code> is safe by default (no arbitrary object instantiation) — but avoid <code >yaml.load(input, &#123; schema: yaml.DEFAULT_SCHEMA &#125;)</code> with untrusted input.</li>
+            <li><strong>Go:</strong> <code >gopkg.in/yaml.v3</code> is safe by default — it does not support arbitrary type instantiation.</li>
+          </ul>
+          <p>
+            For input validation before conversion, use <a href="/json-formatter/">BytePane's JSON Formatter</a> to verify the output structure is what you expect before consuming it in downstream systems.
+          </p>
+        
+
+        
+          <h2>Real-World Use Cases: Why Developers Convert Between Formats</h2>
+
+          <h3>1. Kubernetes Manifest Validation</h3>
+          <p>
+            Kubernetes manifests are always YAML. But JSON Schema validation tools — including many CI/CD pipeline validators — expect JSON. Converting YAML manifests to JSON before validation is a standard step in Kubernetes GitOps pipelines:
+          </p>
+          <p>
+            <code >`# .github/workflows/validate-manifests.yml
+steps:
+  - name: Validate Kubernetes manifests
+    run: |
+      for f in k8s/**/*.yaml; do
+        # Convert to JSON for schema validation
+        json=$(yq -o json "$f")
+        # Validate against Kubernetes JSON Schema
+        echo "$json" | ajv validate -s k8s-schema.json -d -
+      done`</code>
+          </pre>
+
+          <h3>2. OpenAPI / Swagger Spec Conversion</h3>
+          <p >
+            OpenAPI 3.x specifications can be written in either YAML or JSON. Many teams write in YAML (more readable, supports comments), but API mocking tools, SDK generators, and documentation platforms often require JSON:
+          </p>
+          <p>
+            <code >`# Convert OpenAPI YAML to JSON for Postman/Insomnia import
+yq -o json openapi.yaml > openapi.json
+
+# Or with js-yaml in a build script
+
+const spec = yaml.load(readFileSync('openapi.yaml', 'utf-8'));
+writeFileSync('openapi.json', JSON.stringify(spec, null, 2));`</code>
+          </pre>
+
+          <h3>3. GitHub Actions Configuration Debugging</h3>
+          <p >
+            GitHub Actions workflows are YAML. When debugging complex matrix configurations or conditional expressions, converting to JSON can make the structure easier to reason about:
+          </p>
+          <p>
+            <code >`# Extract and inspect the matrix configuration
+yq '.jobs.build.strategy.matrix' .github/workflows/ci.yml | yq -o json`</code>
+          </pre>
+
+          <h3>4. Config File Preprocessing</h3>
+          <p >
+            Some teams maintain application configuration in YAML for readability (comments, anchors, multiline strings) but convert to JSON at build/deploy time for parsing performance. JSON parsers are 5–10× faster than YAML parsers, and since config files are read on every application startup, the difference adds up at scale.
+          </p>
+          <p>
+            For reference on understanding format trade-offs, see our comparison of <a href="/blog/json-vs-yaml-vs-xml/">JSON vs YAML vs XML</a> covering when each format is the right tool.
+          </p>
+        
+
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>Can all YAML be converted to JSON?</h3>
+              <p>
+                Not always. YAML has features JSON cannot represent: comments (stripped on conversion), anchors and aliases (dereferenced), multi-document streams (need splitting), and binary data types. Well-formed YAML that avoids these features converts to JSON losslessly. The most common lossy conversion is comments — always keep your original YAML source, not just the converted JSON.
+              </p>
+            
+            
+              <h3>Why do Kubernetes and Helm use YAML instead of JSON?</h3>
+              <p>
+                Kubernetes manifests use YAML because YAML supports comments and multi-document files, making configuration easier to annotate and reason about. Kubernetes actually accepts both YAML and JSON — kubectl converts YAML to JSON before sending to the API server. Helm templates use YAML with Go templating layered on top, enabling DRY configuration with anchors and variables.
+              </p>
+            
+            
+              <h3>What is the Norway Problem in YAML?</h3>
+              <p>
+                The Norway Problem is a YAML 1.1 parsing bug where the country code "NO" is interpreted as the boolean false. "YES", "ON", "OFF" are similarly parsed as booleans. YAML 1.2 fixed this — only lowercase "true"/"false" are booleans. Many libraries (PyYAML before 6.0) still default to YAML 1.1. Fix: quote bare strings, or use a YAML 1.2-compliant library like ruamel.yaml.
+              </p>
+            
+            
+              <h3>Does YAML to JSON conversion preserve data types?</h3>
+              <p>
+                Depends on the parser's type resolution. Strings that look like numbers ("1.0") may be parsed as floats. Strings that look like booleans ("true", "yes") become booleans in YAML 1.1 parsers. Quote all string values in YAML that could be misinterpreted. The YAML spec's type coercion rules are the most frequent source of subtle bugs in configuration pipelines.
+              </p>
+            
+            
+              <h3>What happens to YAML anchors when converting to JSON?</h3>
+              <p>
+                YAML anchors (&amp;name) and aliases (*name) create references to shared values. JSON has no equivalent reference mechanism. Converters dereference anchors — the shared value is duplicated at each alias location. Output is functionally equivalent but larger. This is expected behavior; keep the original YAML source if you need the DRY reference structure.
+              </p>
+            
+            
+              <h3>Is YAML faster to parse than JSON?</h3>
+              <p>
+                No. JSON is 5–10× faster to parse than YAML. JSON parsing is a well-solved problem — V8's JSON.parse() is implemented in highly optimized C++. YAML parsers handle a more complex grammar: indentation tracking, type coercion, anchors, multi-document support. For data interchange at scale, JSON is the right choice. YAML's advantages are human readability and authoring ergonomics, not performance.
+              </p>
+            
+            
+              <h3>How do I convert YAML to JSON on the command line?</h3>
+              <p>
+                With Python (on most Unix/macOS systems): <code >python3 -c "import sys, yaml, json; json.dump(yaml.safe_load(sys.stdin), sys.stdout, indent=2)" &lt; input.yaml</code>. With yq (a dedicated YAML CLI tool): <code >yq -o json input.yaml</code>. With Node.js: install js-yaml and use <code >yaml.load()</code> then <code >JSON.stringify()</code>.
+              </p>
+            
+            
+              <h3>What is the difference between yaml.safe_load and yaml.full_load?</h3>
+              <p>
+                yaml.safe_load() (PyYAML) only processes basic YAML types: strings, numbers, lists, dicts, booleans, null. yaml.full_load() also processes Python-specific YAML tags like !!python/object, which can execute arbitrary code. Always use safe_load when processing YAML from untrusted sources — PyYAML deserialization attacks are a real, documented vulnerability class with assigned CVEs.
+              </p>
+            
+          
+        
+
+        /* CTA Section */
+        
+          <h2>Convert YAML to JSON Instantly</h2>
+          <p>
+            Paste your YAML into the BytePane converter and get clean, formatted JSON in your browser — no server uploads, no size limits. Also available: JSON to YAML, JSON formatting and validation, and more.
+          </p>
+          
+            <a href="/yaml-to-json/">
+              YAML to JSON Converter
+            </a>
+            <a href="/json-to-yaml/">
+              JSON to YAML
+            </a>
+            <a href="/json-formatter/">
+              JSON Formatter
+            </a>
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((a) => (
+              <Link key=a.slug href=`/blog/$a.slug/` >
+                <h3>a.title</h3>
+                <p>a.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/yaml-to-json-converter/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
