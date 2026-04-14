@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OAuth 2.0 Explained: How Authorization Works Step by Step - BytePane</title>
+  <meta name="description" content="OAuth 2.0 Explained: How Authorization Works Step by Step">
+  <link rel="canonical" href="https://www.bytepane.com/blog/oauth-2-0-explained/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; OAuth 2.0 Explained: How Authorization Works Step by Step
+  </nav>
+
+  <article>
+    <h1>OAuth 2.0 Explained: How Authorization Works Step by Step</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/oauth-2-0-explained/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        OAuth 2.0 Explained
+      
+
+      /* Article Header */
+      
+        <h2>
+          OAuth 2.0 Explained: How Authorization Works Step by Step
+        </h2>
+        
+          Security
+          <time dateTime="2026-04-14">April 14, 2026</time>
+          18 min read
+        
+      
+
+      
+
+        /* Opening: Case study / real-world scenario */
+        
+          <h2>A 3-Million Account Breach That Started With One OAuth Misconfiguration</h2>
+          <p>
+            In 2022, security researcher Youssef Sammouda disclosed a critical OAuth vulnerability in Facebook&apos;s login flow that allowed account takeover at scale. The root cause: a redirect_uri validation bypass that let an attacker redirect authorization codes to an attacker-controlled endpoint. Facebook awarded a $44,625 bug bounty. The vulnerability class — improper redirect URI validation — is consistently listed in <strong>OWASP&apos;s testing guide for OAuth weaknesses</strong> as one of the most common and most severe OAuth implementation errors.
+          </p>
+          <p>
+            OAuth 2.0 is simultaneously the most widely deployed authorization protocol on the web and one of the most frequently misconfigured. Per the <strong>Portswigger Web Security Academy</strong>, OAuth vulnerabilities appear in their top 10 web security topics by search volume, indicating how commonly developers encounter — and misunderstand — OAuth implementation details.
+          </p>
+          <p>
+            This article explains OAuth 2.0 from the ground up: the problem it solves, how each grant type works mechanically, where the security traps are, and what changed in OAuth 2.1. No hand-waving — actual request/response flows with real header shapes.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸OAuth 2.0 is an <strong>authorization</strong> framework, not authentication. It controls what an app can access — not who the user is. OpenID Connect (OIDC) adds the identity layer on top.</li>
+            <li>▸The <strong>Authorization Code + PKCE</strong> flow is the correct choice for almost all user-facing apps in 2026 — web apps, SPAs, and mobile apps. PKCE is now mandatory in the OAuth 2.1 draft.</li>
+            <li>▸The <strong>implicit flow is formally deprecated</strong> (RFC 9700, 2024). It returned tokens in URL fragments, exposing them to browser history, referrer headers, and XSS. Never implement it for new applications.</li>
+            <li>▸Access tokens should be <strong>short-lived (15–60 min)</strong>. Refresh tokens should be stored in HttpOnly cookies or secure storage — never localStorage, which is XSS-accessible.</li>
+            <li>▸Per <strong>Auth0&apos;s 2025 State of Identity report</strong>, 78% of enterprise applications use OAuth 2.0 or OIDC as their primary authorization mechanism, up from 61% in 2022.</li>
+          </ul>
+        
+
+        /* The Problem OAuth Solves */
+        
+          <h2>The Problem OAuth Solves: The Password Anti-Pattern</h2>
+          <p>
+            Before OAuth, the common pattern for third-party integrations was to ask users for their credentials directly. Want to connect your email marketing tool to Gmail? Enter your Gmail password in the email tool. This was catastrophically bad:
+          </p>
+          <ul>
+            <li>The third-party app had full access — not just what it needed</li>
+            <li>Revoking access required changing your password, which affected all other services</li>
+            <li>You had no visibility into what the app was actually doing with your credentials</li>
+            <li>If the third-party app was breached, your primary account was compromised</li>
+          </ul>
+          <p>
+            OAuth 2.0 replaces credential-sharing with <strong>delegated authorization</strong>. Instead of your password, the third-party app receives a scoped, time-limited <em>access token</em> — a credential that represents specific permissions (read email, send email), not your identity. You can revoke that token at any time from your account settings without affecting your password or other connected apps.
+          </p>
+          <p>
+            This is the conceptual foundation. Everything else in OAuth 2.0 — grant types, token endpoints, redirect URIs — is implementation machinery for delivering this delegation securely.
+          </p>
+        
+
+        /* The Four Roles */
+        
+          <h2>The Four OAuth Roles (RFC 6749 §1.1)</h2>
+          <p>
+            OAuth 2.0 defines four parties, each with a distinct role in the authorization flow:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Role</th>
+                  <th >Definition</th>
+                  <th >Real-World Example</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Resource Owner</td>
+                  <td >The user who owns the data and grants access</td>
+                  <td >You, authorizing a photo app to read your Google Photos</td>
+                </tr>
+                <tr >
+                  <td >Client</td>
+                  <td >The application requesting access on behalf of the resource owner</td>
+                  <td >The photo printing app</td>
+                </tr>
+                <tr >
+                  <td >Authorization Server</td>
+                  <td >Issues tokens after authenticating the user and obtaining consent</td>
+                  <td >accounts.google.com</td>
+                </tr>
+                <tr >
+                  <td >Resource Server</td>
+                  <td >Hosts the protected resources; validates access tokens on each request</td>
+                  <td >photos.googleapis.com</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            In practice, the authorization server and resource server are often operated by the same organization (Google runs both <code >accounts.google.com</code> and <code >*.googleapis.com</code>), but the spec defines them as logically separate to allow for different trust relationships.
+          </p>
+
+          <h3>Public vs. Confidential Clients</h3>
+          <p>
+            OAuth 2.0 distinguishes between two client types based on whether they can keep a secret:
+          </p>
+          <ul>
+            <li><strong>Confidential clients</strong> can securely store a <code >client_secret</code> — traditional server-side web apps where the secret lives in environment variables on the server, never exposed to users.</li>
+            <li><strong>Public clients</strong> cannot keep secrets — SPAs (JavaScript runs in the browser), mobile apps (APKs can be decompiled), and desktop apps. Public clients use PKCE instead of client secrets to prove their identity.</li>
+          </ul>
+          <p>
+            This distinction drives which grant types are appropriate and how strictly the authorization server should validate the client. OAuth 2.1 formalizes the distinction and removes all flows that assumed public clients could be trusted with secrets.
+          </p>
+        
+
+        /* Grant Types */
+        
+          <h2>OAuth 2.0 Grant Types: A Complete Comparison</h2>
+          <p>
+            A &quot;grant type&quot; defines how a client obtains an access token. OAuth 2.0 defined four in RFC 6749; subsequent RFCs added more. In 2026, two are dominant and two are deprecated:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Grant Type</th>
+                  <th >Use Case</th>
+                  <th >Status (2026)</th>
+                  <th >RFC</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Authorization Code + PKCE</td>
+                  <td >All user-facing apps (web, SPA, mobile)</td>
+                  <td >✓ Recommended</td>
+                  <td >6749 + 7636</td>
+                </tr>
+                <tr >
+                  <td >Client Credentials</td>
+                  <td >Machine-to-machine, no user involved</td>
+                  <td >✓ Recommended</td>
+                  <td >6749</td>
+                </tr>
+                <tr >
+                  <td >Device Authorization</td>
+                  <td >TVs, CLIs, limited-input devices</td>
+                  <td >✓ Recommended</td>
+                  <td >8628</td>
+                </tr>
+                <tr >
+                  <td >Implicit</td>
+                  <td >Originally SPAs (pre-PKCE)</td>
+                  <td >✗ Deprecated (RFC 9700)</td>
+                  <td >6749</td>
+                </tr>
+                <tr >
+                  <td >Resource Owner Password</td>
+                  <td >Direct credential submission (legacy)</td>
+                  <td >✗ Deprecated (OAuth 2.1)</td>
+                  <td >6749</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        /* Authorization Code + PKCE Deep Dive */
+        
+          <h2>Authorization Code + PKCE: The Full Request-by-Request Flow</h2>
+          <p>
+            This is the flow you should implement for any application that has human users. Here is every request and response, with real header shapes.
+          </p>
+
+          <h3>Step 1: Generate PKCE Parameters</h3>
+          <p>
+            Before the user touches anything, the client generates two values:
+          </p>
+          
+            client — PKCE parameter generation
+            <p>`// Generate a cryptographically random code_verifier (43–128 chars, URL-safe)
+const codeVerifier = base64URLEncode(crypto.getRandomValues(new Uint8Array(32)))
+// e.g.: "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"
+
+// Hash it with SHA-256 to create the code_challenge
+const codeChallenge = base64URLEncode(
+  await crypto.subtle.digest('SHA-256', new TextEncoder().encode(codeVerifier))
+)
+// e.g.: "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM"
+
+// Store codeVerifier in sessionStorage (needed for step 3)
+sessionStorage.setItem('pkce_verifier', codeVerifier)`</pre>
+          
+          <p >
+            The <code >code_verifier</code> is a secret the client holds. The <code >code_challenge</code> is the SHA-256 hash of it — safe to send to the authorization server because it&apos;s a one-way hash. This is the mechanism: the auth server stores the challenge, and later verifies the verifier matches it.
+          </p>
+
+          <h3>Step 2: Authorization Request (Browser Redirect)</h3>
+          <p>
+            The client redirects the user&apos;s browser to the authorization server with the code challenge:
+          </p>
+          
+            GET request — browser redirect to authorization server
+            <p>`GET https://auth.example.com/oauth/authorize
+  ?response_type=code          ← always "code" for this flow
+  &client_id=app_client_id     ← identifies your app
+  &redirect_uri=https://app.example.com/callback  ← MUST match exactly
+  &scope=read:photos write:albums    ← space-separated permissions
+  &state=xyzABC123             ← CSRF protection token
+  &code_challenge=E9Melho...   ← SHA-256(code_verifier), base64url-encoded
+  &code_challenge_method=S256  ← always S256 (SHA-256)`</pre>
+          
+          <p >
+            The <code >state</code> parameter is your CSRF token — generate it randomly, store it in session storage, and verify it matches when the callback arrives. Per <strong>OWASP&apos;s OAuth security testing guide</strong>, missing state validation is the second most common OAuth implementation vulnerability after redirect URI bypass.
+          </p>
+
+          <h3>Step 3: User Authenticates and Consents</h3>
+          <p>
+            The authorization server handles everything at this step: it presents a login form if needed, shows a consent screen listing the requested scopes, and upon approval redirects back to the client with an authorization code:
+          </p>
+          
+            redirect back to client — callback URL
+            <p>`GET https://app.example.com/callback
+  ?code=SplxlOBeZQQYbYS6WxSbIA  ← short-lived authorization code (5–10 min)
+  &state=xyzABC123               ← verify this matches what you sent`</pre>
+          
+          <p >
+            The authorization code is single-use and short-lived. It is not an access token — it cannot be used to call APIs. Its only purpose is to be exchanged for tokens in the next step.
+          </p>
+
+          <h3>Step 4: Token Exchange (Server-to-Server)</h3>
+          <p>
+            This is where PKCE proves its value. The client POSTs to the token endpoint from its <em>server</em> (not the browser), sending the authorization code and the original code_verifier:
+          </p>
+          
+            POST to token endpoint
+            <p>`POST https://auth.example.com/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code
+&code=SplxlOBeZQQYbYS6WxSbIA
+&redirect_uri=https://app.example.com/callback   ← must match step 2
+&client_id=app_client_id
+&client_secret=super_secret_value               ← confidential clients only
+&code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r  ← proves you initiated the flow`</pre>
+          
+          <p >
+            The authorization server re-hashes the <code >code_verifier</code> and compares it to the <code >code_challenge</code> stored from step 2. If they match, it issues tokens:
+          </p>
+          
+            token response
+            <p>`
+  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "refresh_token": "8xLOxBtZp8",
+  "scope": "read:photos write:albums"
+`</pre>
+          
+
+          <h3>Step 5: Calling Protected APIs</h3>
+          
+            API request with Bearer token
+            <pre >`GET https://api.example.com/photos
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+
+# The resource server validates the token on every request:
+# 1. Verify the JWT signature using the auth server's public key
+# 2. Check exp claim (not expired)
+# 3. Check iss claim (from the expected issuer)
+# 4. Check aud claim (for this resource server)
+# 5. Check scope claim contains "read:photos"`</pre>
+          
+        
+
+        /* Client Credentials Flow */
+        
+          <h2>Client Credentials Flow: Machine-to-Machine Authentication</h2>
+          <p >
+            When there&apos;s no user involved — a background job calling an internal API, a microservice authenticating to another service, a CI/CD pipeline — use the Client Credentials flow. It&apos;s the simplest OAuth flow: one POST, one token.
+          </p>
+          
+            <p>`POST https://auth.example.com/oauth/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic base64(client_id:client_secret)
+
+grant_type=client_credentials
+&scope=read:internal-api
+
+# Response:
+
+  "access_token": "eyJhbGciOiJSUzI1NiIs...",
+  "token_type": "Bearer",
+  "expires_in": 3600
+  // No refresh_token — just re-request when expired
+`</pre>
+          
+          <p >
+            Client credentials tokens expire and must be refreshed. Cache them close to their expiry — a common pattern is to subtract 60 seconds from <code >expires_in</code> and invalidate the cached token that many seconds before expiry. Never hardcode client secrets; load them from environment variables or a secrets manager like AWS Secrets Manager or HashiCorp Vault.
+          </p>
+        
+
+        /* Token Types */
+        
+          <h2>Access Tokens, Refresh Tokens, and ID Tokens: What Each One Is For</h2>
+
+          <h3>Access Tokens</h3>
+          <p>
+            Access tokens represent authorization to access specific resources. They are sent with every API request in the <code >Authorization: Bearer</code> header. They should be:
+          </p>
+          <ul>
+            <li><strong>Short-lived</strong> — 15 minutes to 1 hour is typical. Short lifetimes limit the damage window if a token is stolen.</li>
+            <li><strong>Scoped</strong> — only contain the permissions actually granted. The resource server validates scopes on every request.</li>
+            <li><strong>JWTs or opaque strings</strong> — JWTs let resource servers validate tokens locally (no auth server round-trip). Opaque tokens require the resource server to call the auth server&apos;s introspection endpoint.</li>
+          </ul>
+          <p>
+            Access tokens are typically JWTs. To understand the JWT format in depth, see BytePane&apos;s <a href="/blog/jwt-tokens-explained/">JWT tokens guide</a>.
+          </p>
+
+          <h3>Refresh Tokens</h3>
+          <p>
+            Refresh tokens are long-lived credentials that can obtain new access tokens without user interaction. They are <em>not</em> sent to resource servers — only to the authorization server&apos;s token endpoint.
+          </p>
+          
+            <p>`POST https://auth.example.com/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token
+&refresh_token=8xLOxBtZp8
+&client_id=app_client_id
+&client_secret=secret_value   ← confidential clients only`</pre>
+          
+          <p >
+            <strong>Storage rule:</strong> Never store refresh tokens in localStorage (XSS-accessible). Server-side apps should store them in the session or database. SPAs should use HttpOnly, Secure, SameSite=Strict cookies. The <strong>OAuth 2.1 draft</strong> requires refresh tokens for public clients to be either sender-constrained (bound to the client&apos;s DPoP key) or one-time-use with rotation on each use.
+          </p>
+
+          <h3>ID Tokens (OpenID Connect)</h3>
+          <p>
+            ID tokens are issued by OIDC, not OAuth 2.0 directly. They are JWTs containing claims about the authenticated user — <code >sub</code> (user identifier), <code >email</code>, <code >name</code>, <code >iat</code>, <code >exp</code>. They are meant for the <em>client</em> to read (to know who the user is), not for sending to resource servers. Do not confuse them with access tokens.
+          </p>
+        
+
+        /* Security Pitfalls */
+        
+          <h2>The Five Most Exploited OAuth Vulnerabilities</h2>
+          <p>
+            Per <strong>PortSwigger Web Security Academy&apos;s OAuth testing guide</strong> and <strong>OWASP&apos;s OAuth Weaknesses checklist</strong>, these are the implementation errors that appear most frequently in bug bounty reports and penetration tests:
+          </p>
+
+          
+            
+              <h3>1. Lax Redirect URI Validation</h3>
+              <p>
+                Authorization servers that match redirect URIs by prefix (<code >https://app.com</code> matches <code >https://app.com.evil.net</code>) or allow wildcards. This lets attackers redirect authorization codes to attacker-controlled endpoints.
+              </p>
+              <p><strong>Fix:</strong> Require exact redirect URI matching. Pre-register all valid redirect URIs. Reject any request where the redirect_uri doesn&apos;t exactly match a pre-registered value.</p>
+            
+
+            
+              <h3>2. Missing State Parameter (CSRF)</h3>
+              <p>
+                If the client doesn&apos;t use the <code >state</code> parameter, an attacker can craft a malicious authorization request and trick the victim into completing it — resulting in the attacker&apos;s account being linked to the victim&apos;s session.
+              </p>
+              <p><strong>Fix:</strong> Always generate a cryptographically random state, store it in session, verify it on callback. Reject any callback where state doesn&apos;t match.</p>
+            
+
+            
+              <h3>3. Access Token Stored in localStorage</h3>
+              <p>
+                localStorage is accessible to all JavaScript on the page. A single XSS vulnerability allows an attacker to steal tokens and make authenticated requests until they expire.
+              </p>
+              <p><strong>Fix:</strong> For SPAs, keep tokens in memory only. Use a secure backend-for-frontend (BFF) pattern where token storage happens server-side. If you must persist tokens, use HttpOnly cookies.</p>
+            
+
+            
+              <h3>4. Insufficient Scope Validation</h3>
+              <p>
+                Resource servers that check token validity but not token scope. An access token with <code >read:photos</code> scope should not be accepted by an endpoint that requires <code >write:admin</code>.
+              </p>
+              <p><strong>Fix:</strong> Validate both token authenticity AND required scopes on every protected endpoint. Never trust the presence of a valid token as sufficient authorization.</p>
+            
+
+            
+              <h3>5. Authorization Code Without PKCE on Public Clients</h3>
+              <p>
+                On mobile and SPA clients, authorization codes can be intercepted by malicious apps registered for the same redirect URI scheme. Without PKCE, the intercepted code can be exchanged for tokens.
+              </p>
+              <p><strong>Fix:</strong> PKCE is mandatory for all public clients. PKCE is required in OAuth 2.1 for all clients, including confidential ones.</p>
+            
+          
+        
+
+        /* OAuth 2.0 vs OAuth 2.1 */
+        
+          <h2>OAuth 2.1: What Changes (And What Doesn&apos;t)</h2>
+          <p>
+            OAuth 2.1 is an <em>opinionated simplification</em> of OAuth 2.0, consolidating the core spec with security best practices from a decade of deployment. It does not introduce new flows — it removes the dangerous ones and mandates the correct behaviors.
+          </p>
+          <p>
+            Per <strong>Descope&apos;s OAuth 2.1 vs 2.0 comparison (2025)</strong> and the draft specification, the changes are:
+          </p>
+          <ul>
+            <li><strong>PKCE is mandatory</strong> for all authorization code flows — both public and confidential clients. Previously optional for confidential clients.</li>
+            <li><strong>Implicit grant removed</strong> — use Authorization Code + PKCE instead.</li>
+            <li><strong>Resource Owner Password Credentials (ROPC) removed</strong> — it required sharing the user&apos;s password with the client, defeating OAuth&apos;s core purpose.</li>
+            <li><strong>Redirect URIs must match exactly</strong> — no partial matching, no wildcards.</li>
+            <li><strong>Refresh tokens must be sender-constrained or one-time-use</strong> for public clients — prevents stolen refresh tokens from being usable from a different client.</li>
+            <li><strong>Bearer tokens in URI query strings are prohibited</strong> — tokens only via Authorization header or request body.</li>
+          </ul>
+          <p>
+            If you implement OAuth 2.1 practices today, your OAuth 2.0 implementation is effectively OAuth 2.1-compatible. There is no breaking change for clients following current best practices — the changes only remove things that shouldn&apos;t have been there.
+          </p>
+        
+
+        /* OAuth vs OIDC vs SAML */
+        
+          <h2>OAuth 2.0 vs. OpenID Connect vs. SAML: When to Use Which</h2>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Protocol</th>
+                  <th >Type</th>
+                  <th >Token Format</th>
+                  <th >Best For</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >OAuth 2.0</td>
+                  <td >Authorization</td>
+                  <td >JWT or opaque</td>
+                  <td >API access delegation</td>
+                </tr>
+                <tr >
+                  <td >OpenID Connect</td>
+                  <td >Authentication + Authorization</td>
+                  <td >JWT (ID token)</td>
+                  <td >&quot;Login with Google/GitHub&quot;, SSO for modern apps</td>
+                </tr>
+                <tr >
+                  <td >SAML 2.0</td>
+                  <td >Authentication + Authorization</td>
+                  <td >XML assertions</td>
+                  <td >Enterprise SSO, ADFS, legacy systems</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            For new applications, prefer OIDC over SAML — it&apos;s simpler, uses JSON instead of XML, works over standard HTTPS, and has broad library support. SAML remains dominant in enterprise environments because of legacy Active Directory integration and compliance requirements (HIPAA, FedRAMP) that specify it by name.
+          </p>
+          <p>
+            Both OIDC and SAML build on top of OAuth-style flows. Understanding OAuth 2.0 deeply makes both protocols easier to reason about. For the JWT format that OAuth access tokens and OIDC ID tokens use, see BytePane&apos;s <a href="/blog/jwt-tokens-guide/">JWT vs session cookies comparison</a>.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What is OAuth 2.0 and what does it do?',
+                a: 'OAuth 2.0 is an authorization framework (RFC 6749) that lets applications request limited access to a user\'s resources without receiving their credentials. It issues scoped, time-limited access tokens representing specific permissions. Classic example: letting a photo printing app read your Google Photos without giving it your Google password.',
+              ,
+              
+                q: 'What is the difference between OAuth and OpenID Connect?',
+                a: 'OAuth 2.0 is authorization only — it grants access to resources but says nothing about who the user is. OpenID Connect (OIDC) adds an identity layer on top with ID tokens (JWTs containing user claims), a /userinfo endpoint, and standardized scopes like "openid profile email". Use OIDC for "Login with X." Use OAuth alone for API access delegation.',
+              ,
+              
+                q: 'Why was the OAuth 2.0 implicit flow deprecated?',
+                a: 'The implicit flow returned access tokens in URL fragments (#access_token=...). This exposed tokens to browser history, server logs, and referrer headers. RFC 9700 formally deprecated it in 2024. SPAs should use Authorization Code + PKCE instead — equally browser-compatible but tokens never appear in URLs.',
+              ,
+              
+                q: 'What is PKCE and why is it required?',
+                a: 'PKCE (RFC 7636) prevents authorization code interception attacks. The client generates a code_verifier, hashes it to a code_challenge, and sends the challenge with the auth request. When exchanging the code for tokens, it sends the verifier — proving it initiated the flow. Without PKCE, a malicious app could intercept the code and exchange it for tokens.',
+              ,
+              
+                q: 'What is the difference between access tokens and refresh tokens?',
+                a: 'Access tokens are short-lived (15 min–1 hour) and sent with every API request. Refresh tokens are long-lived (days to months) and used only to get new access tokens when the current one expires. Store refresh tokens in HttpOnly cookies or server-side sessions — never in localStorage which is XSS-accessible.',
+              ,
+              
+                q: 'What changed between OAuth 2.0 and OAuth 2.1?',
+                a: 'OAuth 2.1 mandates PKCE for all flows, removes the implicit grant, removes the Resource Owner Password Credentials grant, requires exact redirect URI matching, and requires refresh tokens for public clients to be sender-constrained or one-time-use. It\'s a consolidation of best practices, not a redesign.',
+              ,
+              
+                q: 'When should I use the Client Credentials flow?',
+                a: 'Use Client Credentials for machine-to-machine communication — no human user involved. Background workers, microservice-to-microservice auth, CI/CD pipelines deploying to APIs. The client sends client_id and client_secret directly to the token endpoint and gets an access token. No redirect, no browser, no user consent.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Decode OAuth Access Tokens (JWTs)</h2>
+          <p>
+            Paste a JWT access token to inspect its header, payload claims, and signature. Useful for debugging OAuth flows — no server-side processing, runs entirely in your browser.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter / Token Inspector →
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/oauth-2-0-explained/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
