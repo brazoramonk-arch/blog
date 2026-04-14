@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hex to Decimal Converter: Convert Hexadecimal to Decimal - BytePane</title>
+  <meta name="description" content="Hex to Decimal Converter: Convert Hexadecimal to Decimal">
+  <link rel="canonical" href="https://www.bytepane.com/blog/hex-to-decimal-converter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Hex to Decimal Converter: Convert Hexadecimal to Decimal
+  </nav>
+
+  <article>
+    <h1>Hex to Decimal Converter: Convert Hexadecimal to Decimal</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/hex-to-decimal-converter/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Hex to Decimal Converter
+      
+
+      /* Article Header */
+      
+        <h2>
+          Hex to Decimal Converter: Convert Hexadecimal to Decimal
+        </h2>
+        
+          Number Systems
+          <time dateTime="2026-04-11">April 11, 2026</time>
+          13 min read
+        
+      
+
+      
+
+        /* Opening: Myth-busting */
+        
+          <h2>The Myth: Hex Is Only for Low-Level Programmers</h2>
+          <p>
+            Web developers work with hexadecimal every day — usually without thinking about it. The <code >#7C3AED</code> in your CSS is a hex color. The <code >0xFF</code> in a bitmask check is hex. The <code >2001:0db8::</code> at the top of an IPv6 configuration is hex. The <code >a3f5b2c1</code> in a git commit hash, the <code >0x7FFEE4B2</code> in a crash dump, the <code >%20</code> in a URL — all hex representations of binary data.
+          </p>
+          <p>
+            Hex isn&apos;t an esoteric systems-programming artifact. It&apos;s the default human-readable encoding for binary data across almost every domain of software engineering. Understanding the conversion between hex and decimal takes five minutes and removes a persistent cognitive overhead that shows up constantly in debugging, configuration, and code review.
+          </p>
+          <p>
+            This article explains the math from first principles, covers where you&apos;ll encounter hex as a working developer, and gives you copy-paste conversion code for every language you&apos;re likely to use.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸Hex (base 16) uses digits 0–9 and letters A–F. <strong>One hex digit = 4 bits</strong>. Two hex digits = 1 byte (0–255). Eight hex digits = 4 bytes (0–4,294,967,295).</li>
+            <li>▸Conversion: multiply each digit by <strong>16 raised to its position</strong> (right to left, starting at 0) and sum the results.</li>
+            <li>▸Hex is everywhere: CSS colors, <strong>IPv6 addresses</strong> (128-bit = 32 hex digits), memory pointers, SHA-256 hashes, UUID formats, bitmasks.</li>
+            <li>▸In JavaScript: <strong><code >parseInt(&apos;FF&apos;, 16)</code></strong> → 255. In Python: <code >int(&apos;FF&apos;, 16)</code> → 255. In Go: <code >strconv.ParseInt(&quot;FF&quot;, 16, 64)</code>.</li>
+            <li>▸The <strong>0x prefix</strong> signals hex in almost every language (C, C++, Java, JS, Python, Go, Rust). Without it, the same digits parse as decimal.</li>
+          </ul>
+        
+
+        /* The Math */
+        
+          <h2>The Math Behind Hexadecimal: Base 16 Explained</h2>
+          <p>
+            Every number system is built on the same principle: <strong>positional notation</strong>. Each digit&apos;s contribution to the total is its face value multiplied by the base raised to its position.
+          </p>
+          <p>
+            In decimal (base 10), the number 419 means:
+          </p>
+          
+            <p>`4 × 10² + 1 × 10¹ + 9 × 10⁰
+= 4 × 100 + 1 × 10 + 9 × 1
+= 400 + 10 + 9
+= 419`</pre>
+          
+          <p >
+            In hexadecimal (base 16), the same value is written as <code >1A3</code>. To convert to decimal, apply the same positional formula but with base 16, mapping A → 10:
+          </p>
+          
+            <p>`1 × 16² + A × 16¹ + 3 × 16⁰
+= 1 × 256 + 10 × 16 + 3 × 1
+= 256   +  160     +  3
+= 419`</pre>
+          
+
+          <h3>The Hex Digit Alphabet</h3>
+          <p >
+            Base 16 requires 16 distinct digit symbols. The first 10 are borrowed from decimal (0–9). The remaining six use letters:
+          </p>
+
+          /* Digit mapping table */
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Hex Digit</th>
+                  <th >0</th>
+                  <th >1</th>
+                  <th >2</th>
+                  <th >…</th>
+                  <th >9</th>
+                  <th >A</th>
+                  <th >B</th>
+                  <th >C</th>
+                  <th >D</th>
+                  <th >E</th>
+                  <th >F</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Decimal Value</td>
+                  <td >0</td>
+                  <td >1</td>
+                  <td >2</td>
+                  <td >…</td>
+                  <td >9</td>
+                  <td >10</td>
+                  <td >11</td>
+                  <td >12</td>
+                  <td >13</td>
+                  <td >14</td>
+                  <td >15</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            Hex is case-insensitive: <code >FF</code>, <code >ff</code>, and <code >Ff</code> all equal decimal 255. CSS uses both conventions — <code >#ffffff</code> and <code >#FFFFFF</code> are identical. Crypto outputs (SHA hashes, UUIDs) typically use lowercase by convention.
+          </p>
+        
+
+        /* Step-by-Step Conversion Examples */
+        
+          <h2>Step-by-Step Conversion Examples</h2>
+
+          <h3>Example 1: FF → 255</h3>
+          
+            <p>`F F
+│ └─ position 0: F (15) × 16⁰ = 15 × 1  =  15
+└─── position 1: F (15) × 16¹ = 15 × 16 = 240
+                                             ───
+                                             255`</pre>
+          
+
+          <h3>Example 2: 7C3AED → CSS purple color</h3>
+          
+            <pre >`# Split into byte pairs: 7C | 3A | ED
+7C = 7 × 16 + 12 = 112 + 12 = 124  → Red:   124
+3A = 3 × 16 + 10 =  48 + 10 =  58  → Green:  58
+ED = 14 × 16 + 13 = 224 + 13 = 237 → Blue:  237
+
+Result: rgb(124, 58, 237)  ← this is #7C3AED`</pre>
+          
+
+          <h3>Example 3: DEADBEEF → memory address</h3>
+          
+            <pre >`D  E  A  D  B  E  E  F
+│  │  │  │  │  │  │  └─ pos 0: 15 × 16⁰ =           15
+│  │  │  │  │  │  └──── pos 1: 14 × 16¹ =          224
+│  │  │  │  │  └─────── pos 2: 14 × 16² =        3,584
+│  │  │  │  └────────── pos 3: 11 × 16³ =       45,056
+│  │  │  └───────────── pos 4: 13 × 16⁴ =      851,968
+│  │  └──────────────── pos 5: 10 × 16⁵ =   10,485,760
+│  └─────────────────── pos 6: 14 × 16⁶ =  939,524,096
+└────────────────────── pos 7: 13 × 16⁷ = 3,741,376,000
+                                           ─────────────
+                                           3,735,928,559`</pre>
+          
+          <p >
+            <code >DEADBEEF</code> = 3,735,928,559 in decimal. It&apos;s a famous test value (a &quot;magic number&quot;) used to fill uninitialized memory in debuggers — memorable in hex, completely opaque as a decimal integer.
+          </p>
+        
+
+        /* Common Powers of 16 Reference */
+        
+          <h2>Powers of 16: The Reference Table Every Developer Should Know</h2>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Hex Digits</th>
+                  <th >Bits</th>
+                  <th >Max Value (FF…F)</th>
+                  <th >Common Use Case</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >1 digit</td>
+                  <td >4 bits (nibble)</td>
+                  <td >15</td>
+                  <td >Nibble flags, BCD</td>
+                </tr>
+                <tr >
+                  <td >2 digits</td>
+                  <td >8 bits (1 byte)</td>
+                  <td >255</td>
+                  <td >RGB channels, ASCII, IPv4 octets</td>
+                </tr>
+                <tr >
+                  <td >4 digits</td>
+                  <td >16 bits (2 bytes)</td>
+                  <td >65,535</td>
+                  <td >IPv6 groups, Unicode code points, port numbers</td>
+                </tr>
+                <tr >
+                  <td >6 digits</td>
+                  <td >24 bits (3 bytes)</td>
+                  <td >16,777,215</td>
+                  <td >RGB color space (16.7M colors)</td>
+                </tr>
+                <tr >
+                  <td >8 digits</td>
+                  <td >32 bits (4 bytes)</td>
+                  <td >4,294,967,295</td>
+                  <td >IPv4 addresses, 32-bit integers, memory addresses (x86)</td>
+                </tr>
+                <tr >
+                  <td >16 digits</td>
+                  <td >64 bits (8 bytes)</td>
+                  <td >18.4 quintillion</td>
+                  <td >64-bit pointers, timestamps (nanoseconds), large IDs</td>
+                </tr>
+                <tr >
+                  <td >32 digits</td>
+                  <td >128 bits (16 bytes)</td>
+                  <td >3.4 × 10³⁸</td>
+                  <td >IPv6 full address, UUIDs, MD5 hashes</td>
+                </tr>
+                <tr >
+                  <td >64 digits</td>
+                  <td >256 bits (32 bytes)</td>
+                  <td >1.16 × 10⁷⁷</td>
+                  <td >SHA-256 hashes, Ethereum addresses</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        /* Where Hex Appears for Developers */
+        
+          <h2>Where Hex Shows Up in Real Development Work</h2>
+
+          <h3>CSS Color Codes</h3>
+          <p>
+            The CSS color specification (CSS Color Level 4) supports hex notation in three forms. According to <strong>MDN Web Docs</strong>, hex color syntax is the most widely used color format in CSS codebases, appearing in over 85% of stylesheets analyzed in HTTP Archive data.
+          </p>
+          
+            <p>`/* 6-digit: #RRGGBB */
+color: #7C3AED;   /* rgb(124, 58, 237) — purple */
+
+/* 3-digit shorthand: #RGB expands to #RRGGBB */
+color: #F0A;      /* expands to #FF00AA */
+
+/* 8-digit: #RRGGBBAA (with alpha) */
+color: #7C3AED80; /* 50% transparent purple */
+
+/* Converting with JavaScript */
+const r = parseInt('7C', 16);  // 124
+const g = parseInt('3A', 16);  // 58
+const b = parseInt('ED', 16);  // 237`</pre>
+          
+          <p >
+            You can explore color formats and conversions in detail with BytePane&apos;s <a href="/blog/color-formats-hex-rgb-hsl/">color formats guide</a>.
+          </p>
+
+          <h3>IPv6 Addresses</h3>
+          <p>
+            IPv6 addresses are 128-bit numbers expressed as eight groups of four hex digits, separated by colons. Per <strong>ARIN (American Registry for Internet Numbers)</strong>, IPv6 adoption has been growing steadily — Google&apos;s IPv6 statistics show over 45% of users globally now access Google over IPv6 as of early 2026.
+          </p>
+          
+            <p>`# Full IPv6 address (128 bits = 32 hex digits)
+2001:0db8:85a3:0000:0000:8a2e:0370:7334
+
+# RFC 5952 compression rules:
+# 1. Leading zeros in each group may be omitted
+2001:db8:85a3:0:0:8a2e:370:7334
+
+# 2. One consecutive run of all-zero groups → ::
+2001:db8:85a3::8a2e:370:7334
+
+# localhost in IPv6
+::1   (expands to 0000:0000:0000:0000:0000:0000:0000:0001)`</pre>
+          
+
+          <h3>Bitmasks and Bitwise Operations</h3>
+          <p >
+            When working with permission flags, feature flags, or hardware registers, bitmasks expressed in hex are dramatically easier to reason about than decimal equivalents. One hex digit = 4 bits, so the relationship between hex and binary is direct.
+          </p>
+          
+            <p>`// Unix file permission flags (octal, but same principle applies to hex bitmasks)
+const PERMISSION_READ    = 0x04  // 0000 0100
+const PERMISSION_WRITE   = 0x02  // 0000 0010
+const PERMISSION_EXECUTE = 0x01  // 0000 0001
+
+// Set multiple permissions with OR
+const permissions = PERMISSION_READ | PERMISSION_WRITE  // 0x06 = 0000 0110
+
+// Check if a permission is set with AND
+const canRead = (permissions & PERMISSION_READ) !== 0   // true
+
+// In decimal: 4 | 2 = 6. In hex: 0x04 | 0x02 = 0x06
+// The hex version makes the bit patterns immediately visible.
+
+// Real-world: Node.js fs.constants
+
+console.log(constants.O_RDONLY.toString(16))   // '0'
+console.log(constants.O_WRONLY.toString(16))   // '1'
+console.log(constants.O_RDWR.toString(16))     // '2'`</pre>
+          
+
+          <h3>Cryptographic Hashes</h3>
+          <p >
+            SHA-256 produces a 256-bit digest — always represented as 64 lowercase hex characters. <strong>Git commit hashes</strong> are SHA-1 (160 bits = 40 hex chars, though Git is transitioning to SHA-256). <strong>Ethereum addresses</strong> are the last 20 bytes (40 hex chars) of a Keccak-256 hash of the public key.
+          </p>
+          
+            <p>`# SHA-256 of "hello" — 64 hex characters = 256 bits
+2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+
+# Git commit hash — 40 hex characters = 160 bits (SHA-1)
+a3f5b2c1e8d9f4a2b7c6e1d0f3a5b8c2e4d7f9a1
+
+# Ethereum address — 40 hex chars = 20 bytes
+0x742d35Cc6634C0532925a3b844Bc454e4438f44e`</pre>
+          
+
+          <h3>Memory Addresses and Debugging</h3>
+          <p >
+            When a Node.js process crashes with a segfault, or you&apos;re reading a Rust core dump, memory addresses appear as hex. A 64-bit address like <code >0x7FFEE4B2C830</code> is 16 hex digits = 64 bits. Reading it in decimal (<code >140,732,826,060,848</code>) tells you nothing useful about its location in the address space. In hex, the leading <code >7F</code> immediately signals &quot;user space on Linux x86_64&quot; — a structural signal invisible in decimal.
+          </p>
+        
+
+        /* Conversion Code */
+        
+          <h2>Hex ↔ Decimal Conversion Code in Every Language</h2>
+
+          <h3>JavaScript / TypeScript</h3>
+          
+            <p>`// Hex string → decimal number
+parseInt('FF', 16)           // 255
+parseInt('7C3AED', 16)       // 8141549
+parseInt('0x7C3AED', 16)     // 255 — 0x prefix handled automatically
+Number('0x7C3AED')           // 8141549 — alternative syntax
+
+// Decimal number → hex string
+(255).toString(16)           // 'ff'
+(255).toString(16).toUpperCase()  // 'FF'
+
+// Pad to fixed length (e.g., always 2 hex chars for a byte)
+(14).toString(16).padStart(2, '0')  // '0e' (not 'e')
+
+// Convert RGB to hex color
+function rgbToHex(r: number, g: number, b: number): string 
+  return '#' + [r, g, b]
+    .map(v => v.toString(16).padStart(2, '0'))
+    .join('')
+    .toUpperCase()
+
+rgbToHex(124, 58, 237)  // '#7C3AED'
+
+// Convert hex color to RGB
+function hexToRgb(hex: string):  r: number; g: number; b: number  
+  const clean = hex.replace('#', '')
+  return 
+    r: parseInt(clean.slice(0, 2), 16),
+    g: parseInt(clean.slice(2, 4), 16),
+    b: parseInt(clean.slice(4, 6), 16),
+  
+
+hexToRgb('#7C3AED')  //  r: 124, g: 58, b: 237 `</pre>
+          
+
+          <h3>Python</h3>
+          
+            <pre >`# Hex string → int
+int('FF', 16)           # 255
+int('7C3AED', 16)       # 8141549
+int('0x7C3AED', 16)     # 8141549 — 0x prefix handled
+int('0x7C3AED', 0)      # 8141549 — base 0 auto-detects prefix
+
+# Hex literal → int (Python evaluates at parse time)
+value = 0x7C3AED        # int 8141549
+
+# int → hex string
+hex(255)                # '0xff'
+hex(255)[2:]            # 'ff' — strip 0x prefix
+f'255:x'              # 'ff' — format specifier
+f'255:X'              # 'FF' — uppercase
+f'255:02x'            # 'ff' — zero-padded to 2 chars
+f'14:02x'             # '0e' — leading zero added
+
+# bytes → hex string
+b'\xde\xad\xbe\xef'.hex()  # 'deadbeef'
+bytes.fromhex('deadbeef')   # b'\xde\xad\xbe\xef'`</pre>
+          
+
+          <h3>Go</h3>
+          
+            <pre >`import (
+    "encoding/hex"
+    "fmt"
+    "strconv"
+)
+
+// Hex string → int64
+n, err := strconv.ParseInt("7C3AED", 16, 64)  // 8141549, nil
+n, err := strconv.ParseInt("FF", 16, 64)       // 255, nil
+
+// int → hex string
+hex := strconv.FormatInt(255, 16)    // "ff"
+hex := fmt.Sprintf("%X", 255)        // "FF" — uppercase
+hex := fmt.Sprintf("%02x", 14)       // "0e" — zero-padded
+
+// []byte → hex string
+data := []byte0xDE, 0xAD, 0xBE, 0xEF
+s := hex.EncodeToString(data)         // "deadbeef"
+
+// hex string → []byte
+decoded, err := hex.DecodeString("deadbeef")  // [222 173 190 239], nil`</pre>
+          
+
+          <h3>Rust</h3>
+          
+            <pre >`// Hex literal (Rust evaluates at compile time)
+let n: u32 = 0x7C3AED;  // 8141549
+
+// Hex string → integer
+let n = u32::from_str_radix("7C3AED", 16).unwrap();  // 8141549
+let n = i64::from_str_radix("FF", 16).unwrap();       // 255
+
+// integer → hex string
+let s = format!(":x", 255u32);    // "ff"
+let s = format!(":X", 255u32);    // "FF"
+let s = format!(":08X", 255u32);  // "000000FF" — zero-padded to 8 chars`</pre>
+          
+        
+
+        /* Common Gotchas */
+        
+          <h2>Common Hex Conversion Gotchas (and How to Avoid Them)</h2>
+
+          
+            
+              <h3>parseInt Without Radix</h3>
+              <p >
+                In JavaScript, calling <code >parseInt(&apos;09&apos;)</code> returns 9 in modern engines, but historically some interpreters treated a leading <code >0</code> as octal. Always pass the radix: <code >parseInt(&apos;FF&apos;, 16)</code>. ESLint&apos;s <code >radix</code> rule enforces this.
+              </p>
+            
+
+            
+              <h3>JavaScript&apos;s 53-Bit Integer Limit</h3>
+              <p>
+                JavaScript&apos;s <code >Number</code> type can only represent integers exactly up to 2⁵³ − 1 (<code >Number.MAX_SAFE_INTEGER</code>). For 64-bit values like crypto hashes or nanosecond timestamps, use <code >BigInt(&apos;0x&apos; + hexString)</code>:
+              </p>
+              
+                <p>`// WRONG — loses precision for values > 2^53
+parseInt('FFFFFFFFFFFFFFFF', 16)  // 18446744073709552000 (wrong!)
+
+// CORRECT — BigInt preserves full 64-bit precision
+BigInt('0x' + 'FFFFFFFFFFFFFFFF')  // 18446744073709551615n (correct)`</pre>
+              
+            
+
+            
+              <h3>Signed vs. Unsigned Interpretation</h3>
+              <p >
+                The hex value <code >0xFFFFFFFF</code> is 4,294,967,295 as an unsigned 32-bit integer — but −1 as a signed 32-bit integer using two&apos;s complement. Languages differ: C&apos;s <code >unsigned int</code> gives the unsigned value; JavaScript&apos;s bitwise operators always return signed 32-bit integers (<code >0xFFFFFFFF | 0</code> returns −1). Use <code >&gt;&gt;&gt; 0</code> in JavaScript to force unsigned interpretation.
+              </p>
+            
+
+            
+              <h3>URL Percent-Encoding Uses Hex</h3>
+              <p>
+                URL encoding (<code >%20</code> for a space) uses the hex encoding of the UTF-8 byte sequence. <code >%20</code> = 0x20 = decimal 32 = ASCII space. <code >%C3%A9</code> = the two-byte UTF-8 encoding of é (U+00E9). See the full explanation in BytePane&apos;s <a href="/blog/url-encoding-guide/">URL encoding guide</a>.
+              </p>
+            
+          
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'How do you convert hexadecimal to decimal?',
+                a: 'Multiply each hex digit by 16 raised to its positional power (starting at 0 from the right) and sum the results. For 1A3: (1 × 256) + (10 × 16) + (3 × 1) = 419. Hex digits A–F map to 10–15. In JavaScript: parseInt("1A3", 16) → 419. In Python: int("1A3", 16) → 419.',
+              ,
+              
+                q: 'Why do programmers use hexadecimal instead of decimal?',
+                a: 'Hexadecimal maps cleanly to binary: one hex digit = exactly 4 bits. So a 32-bit address needs 8 hex digits vs. 10 decimal digits. This compactness makes hex the default for memory addresses, color values, network addresses, cryptographic hashes, and bitmask constants in source code.',
+              ,
+              
+                q: 'What does 0x mean in programming?',
+                a: '0x is a prefix signaling that the following number is hexadecimal (base 16). For example, 0xFF equals decimal 255. The convention originates in C and is adopted across C++, Java, JavaScript, Python, Go, Rust, and most other languages. Without 0x, the same digits are interpreted as decimal.',
+              ,
+              
+                q: 'How do I convert hex color codes to decimal RGB values?',
+                a: 'Split the 6-digit hex color into three 2-digit pairs and convert each to decimal. #7C3AED → 7C = 124, 3A = 58, ED = 237 → rgb(124, 58, 237). In JavaScript: const [r, g, b] = ["7C","3A","ED"].map(h => parseInt(h, 16)).',
+              ,
+              
+                q: 'What is the largest number you can represent in 2 hex digits?',
+                a: 'The largest 2-digit hex value is FF = decimal 255. This is why RGB channels max at 255 — each is stored as one byte (8 bits = 2 hex digits). A 4-digit hex value maxes at FFFF = 65,535. An 8-digit hex value maxes at FFFFFFFF = 4,294,967,295 (the 32-bit unsigned int limit).',
+              ,
+              
+                q: 'How do IPv6 addresses use hexadecimal?',
+                a: 'IPv6 addresses are 128-bit numbers written as eight groups of four hex digits separated by colons: 2001:0db8:85a3::8a2e:370:7334. Hex makes 128 bits human-readable in 32 characters vs. 39 decimal digits. RFC 5952 allows compressing consecutive all-zero groups with :: for brevity.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Convert Hex to Decimal Instantly</h2>
+          <p>
+            Paste any hex value and get the decimal equivalent with step-by-step breakdown. Supports hex colors, memory addresses, and arbitrary hex integers.
+          </p>
+          <a href="/hex-to-decimal/">
+            Open Hex to Decimal Converter →
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/hex-to-decimal-converter/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
