@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pace Calculator: Running, Walking &amp; Cycling Time Estimates - Calorique</title>
+  <meta name="description" content="How to calculate pace, speed, and finish time for running, walking, and cycling. Pace formulas, conversion tables, average speeds by activity, and training pace zones explained.">
+  <link rel="canonical" href="https://www.calorique.io/blog/pace-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/calorique/">Calorique</a> &rarr; Pace Calculator: Running, Walking &amp; Cycling Time Estimates
+  </nav>
+
+  <article>
+    <h1>Pace Calculator: Running, Walking &amp; Cycling Time Estimates</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.calorique.io/blog/pace-calculator/">calorique.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Pace Calculator: Running, Walking & Cycling Time Estimates',
+    description: 'How to calculate pace, speed, and finish time for running, walking, and cycling. Pace formulas, conversion tables, average speeds by activity, and training pace zones explained.',
+    author:  '@type': 'Organization', name: 'Calorique' ,
+    publisher:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    mainEntityOfPage: 'https://calorique.io/blog/pace-calculator/',
+    datePublished: '2026-04-15',
+    dateModified: '2026-04-15',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://calorique.io/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://calorique.io/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Pace Calculator', item: 'https://calorique.io/blog/pace-calculator/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do you calculate pace for running, walking, or cycling?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Pace = Total Time ÷ Distance. If you cycle 20 miles in 1 hour 20 minutes (80 minutes), your cycling pace is 80 ÷ 20 = 4:00 per mile. For a run: 45 minutes over 5 miles = 9:00 per mile pace. Knowing any two of pace, time, and distance lets you calculate the third. Speed (in mph) = 60 ÷ pace (in minutes per mile). A 10:00/mile pace equals 60 ÷ 10 = 6.0 mph.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is a good walking pace?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The CDC and American Heart Association define brisk walking as 3.0 to 4.0 mph — a pace of 15 to 20 minutes per mile. This intensity qualifies as moderate aerobic activity, which meets the AHA recommendation of 150 minutes per week for cardiovascular health. A "good" walking pace for fitness is 3.5 mph (17 min/mile). Recreational pace is typically 2.5 to 3.0 mph. Power walkers reach 4.5 to 5.0 mph without jogging.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is a good cycling pace for beginners?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Beginner cyclists typically average 10 to 14 mph on flat roads, which corresponds to a pace of 4:17 to 6:00 per mile. Intermediate cyclists average 15 to 18 mph (3:20 to 4:00 per mile). Advanced cyclists sustain 18 to 22 mph. The average recreational cyclist on a group ride travels about 12 to 14 mph. These figures assume flat terrain, no headwind, and a road or hybrid bike — mountain biking and e-bikes shift these benchmarks significantly.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do you convert pace per mile to speed in mph?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Speed (mph) = 60 ÷ Pace (minutes per mile). Examples: 8:00/mile = 60 ÷ 8 = 7.5 mph. 10:00/mile = 60 ÷ 10 = 6.0 mph. 15:00/mile (walking) = 60 ÷ 15 = 4.0 mph. Going the other direction: Pace (min/mile) = 60 ÷ Speed (mph). For km: Speed (km/h) = 60 ÷ Pace (min/km). A 6:00/km pace = 60 ÷ 6 = 10.0 km/h.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the difference between pace and speed?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Pace expresses how much time you take to cover one unit of distance (e.g., 9:00 per mile), while speed expresses how much distance you cover per unit of time (e.g., 6.7 mph). They are mathematical inverses: pace = 60 ÷ speed (mph) and speed = 60 ÷ pace (min/mile). Runners and walkers typically use pace because it directly answers "how long will this mile take?", while cyclists often use speed because their training tools (GPS computers, power meters) display it natively.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do you calculate a triathlon finish time?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Triathlon finish time = Swim time + T1 (transition 1) + Bike time + T2 (transition 2) + Run time. For a standard Olympic-distance triathlon (0.93-mile swim, 24.8-mile bike, 6.2-mile run), estimate each segment: Swim at ~2:00 per 100m = ~30 min; Bike at 18 mph average = ~83 min; Run at 9:30/mile = ~59 min; Transitions ~4 min each. Total estimate: ~2:56. Most first-time Olympic tri finishers complete in 2:30 to 3:30.',
+        ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          Pace Calculator
+        
+
+        
+          
+            Fitness
+            15 min read
+          
+          <h2>Pace Calculator: Running, Walking & Cycling Time Estimates</h2>
+          <p>
+            A common misconception: pace is a running thing. In reality, pace — the relationship between distance, time, and speed — governs every endurance activity you do, from a 15-minute-mile walk to a 20-mph bike ride to a triathlon. Understanding the universal pace formula, how it applies differently across activities, and what &ldquo;good&rdquo; looks like for your age and ability level transforms vague effort into measurable progress. This guide covers the math, the benchmarks, and the practical tools for every type of aerobic training.
+          </p>
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>One formula governs all activities: Pace = Time ÷ Distance. Speed (mph) = 60 ÷ Pace (min/mile)</li>
+              <li>Brisk walking pace: 3.5–4.0 mph (15–17 min/mile). Average running: 9–10 min/mile. Recreational cycling: 12–14 mph</li>
+              <li>The CDC defines moderate-intensity aerobic activity as 3.0–5.9 METs — brisk walking and cycling meet this threshold; slow walking does not</li>
+              <li>ACSM confirms consistent pacing improves oxygen economy and reduces perceived exertion in events over 30 minutes</li>
+              <li>For triathlons, cycling pace predicts overall finish time most reliably — it accounts for ~50% of total race time in Olympic distance events</li>
+            </ul>
+          
+
+          /* Calculator CTA */
+          
+            <h2>Pace Calculator</h2>
+            <p>Enter any two values — time, distance, or pace — to calculate the third. Works for running, walking, and cycling in miles or kilometers.</p>
+            <a href="/pace-calculator/">
+              Open Pace Calculator
+            </a>
+          
+
+          <h2>The Universal Pace Formula</h2>
+          <p>
+            Every pace calculation — whether you are walking a 5K, cycling a century ride, or planning a marathon — uses the same three-variable relationship:
+          </p>
+          
+            <strong>Pace</strong> = Time ÷ Distance
+            <strong>Time</strong> = Pace × Distance
+            <strong>Distance</strong> = Time ÷ Pace
+            <strong>Speed (mph)</strong> = 60 ÷ Pace (min/mile)
+            <strong>Pace (min/mile)</strong> = 60 ÷ Speed (mph)
+          
+          <p>
+            <strong>Example 1 — Running:</strong> You run 3.1 miles (5K) in 28:30. Pace = 28.5 ÷ 3.1 = 9:11 per mile.
+          </p>
+          <p>
+            <strong>Example 2 — Walking:</strong> You walk at 3.5 mph. Pace = 60 ÷ 3.5 = 17:08 per mile. In 45 minutes: Distance = 45 ÷ 17.13 = 2.63 miles.
+          </p>
+          <p>
+            <strong>Example 3 — Cycling:</strong> You plan a 40-mile bike ride at 16 mph. Time = 40 ÷ 16 = 2.5 hours = 2:30:00. Pace = 60 ÷ 16 = 3:45 per mile.
+          </p>
+          <p>
+            <strong>Example 4 — Mile/km conversion:</strong> A 9:00/mile running pace converts to km by dividing by 1.60934: 9 ÷ 1.60934 = 5:35 per kilometer. Going the other direction: multiply km pace by 1.60934. A 6:00/km cycling pace = 6 × 1.60934 = 9:39 per mile. For instant calculations without the math, use our <a href="/pace-calculator/">pace calculator</a>.
+          </p>
+
+          <h2>Walking Pace: What the Numbers Mean for Health</h2>
+          <p>
+            Not all walking paces deliver the same health benefit. The Centers for Disease Control and Prevention distinguishes between light-intensity walking (below 3.0 mph) — which does not count toward physical activity guidelines — and moderate-intensity brisk walking (3.0 to 4.5 mph), which does. According to the 2018 Physical Activity Guidelines for Americans, adults need 150 to 300 minutes per week of moderate-intensity activity like brisk walking to achieve meaningful cardiovascular and metabolic health benefits.
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Walking Speed</th>
+                  <th >Pace (min/mi)</th>
+                  <th >MET</th>
+                  <th >Intensity Category</th>
+                  <th >Counts Toward Guidelines?</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['2.0 mph', '30:00/mi', '2.5', 'Light', 'No'],
+                  ['2.5 mph', '24:00/mi', '2.8', 'Light', 'No'],
+                  ['3.0 mph', '20:00/mi', '3.5', 'Light-Moderate', 'Borderline'],
+                  ['3.5 mph', '17:08/mi', '4.3', 'Moderate', 'Yes'],
+                  ['4.0 mph', '15:00/mi', '5.0', 'Moderate', 'Yes'],
+                  ['4.5 mph', '13:20/mi', '6.3', 'Moderate-Vigorous', 'Yes'],
+                  ['5.0 mph', '12:00/mi', '8.3', 'Vigorous', 'Yes (vigorous)'],
+                ].map(([speed, pace, met, intensity, counts]) => (
+                  <tr key=speed className=`hover:bg-surface/50 $['3.5 mph', '4.0 mph'].includes(speed) ? 'bg-green-50/30' : ''`>
+                    <td >speed</td>
+                    <td >pace</td>
+                    <td >met</td>
+                    <td >intensity</td>
+                    <td className=`px-4 py-2.5 font-medium $counts.startsWith('Yes') ? 'text-green-700' : 'text-text-muted'`>counts</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+            <p>Intensity classification per ACSM and Physical Activity Guidelines for Americans. Moderate intensity defined as MET 3.0–5.9. Vigorous: MET ≥6.0.</p>
+          
+
+          <p>
+            A practical walking pace benchmark: if you can speak in full sentences but would find it difficult to sing, you are in the moderate-intensity zone — approximately 3.5 to 4.0 mph for most adults. This is what the American Heart Association means by &ldquo;brisk walking.&rdquo; For calorie estimates at any walking pace, our <a href="/blog/walking-calorie-calculator/">walking calorie calculator guide</a> provides MET-based tables across body weights and speeds.
+          </p>
+
+          <h2>Running Pace: From Beginner to Elite</h2>
+          <p>
+            Running pace benchmarks are better established than walking or cycling, largely because of the vast race dataset available from millions of registered participants globally. According to Running Level population data compiled from more than 3 million recreational athletes, the average adult male 5K pace is 9:03 per mile (22:31 finish) and average adult female is 10:21 per mile (26:07 finish). Marathon averages from the Association of Road Racing Statisticians (ARRS) database: 4:29:53 overall average for 2024 US marathon finishers, or 10:18 per mile.
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Experience Level</th>
+                  <th >Typical 5K Pace</th>
+                  <th >Easy Run Pace</th>
+                  <th >Marathon Estimate</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['Beginner (0–6 months)', '11:00–14:00/mi', '13:00–17:00/mi', '5:00–6:00+'],
+                  ['Novice (6 mo–2 years)', '9:30–11:00/mi', '11:30–13:30/mi', '4:15–5:00'],
+                  ['Intermediate (2–5 years)', '8:00–9:30/mi', '9:45–11:15/mi', '3:35–4:15'],
+                  ['Advanced (5+ years)', '6:30–8:00/mi', '8:00–9:45/mi', '2:55–3:35'],
+                  ['Competitive', '5:30–6:30/mi', '7:00–8:00/mi', '2:30–2:55'],
+                  ['Elite (open race)', 'Under 5:00/mi', 'Under 7:00/mi', 'Under 2:30'],
+                ].map(([level, k5, easy, marathon]) => (
+                  <tr key=level >
+                    <td >level</td>
+                    <td >k5</td>
+                    <td >easy</td>
+                    <td >marathon</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+            <p>Easy run pace estimates based on Jack Daniels&apos; VDOT system: easy pace = approximately 59–74% of max heart rate, roughly 60–90 seconds per mile slower than 5K race pace. Marathon estimates are for trained runners targeting that distance specifically.</p>
+          
+
+          <p>
+            For runners, the relationship between 5K pace and other race distances is highly predictable. Exercise physiologist Jack Daniels&apos; VDOT tables allow you to estimate marathon potential from any race distance. A 5K in 25:00 predicts a half marathon of approximately 55:00 and a full marathon of approximately 1:55:00 for a similarly trained athlete. These predictions assume appropriate training volume for each distance — a 5K-trained runner often falls short of these predictions at marathon distance due to insufficient long run training. For a detailed breakdown of running pace zones and training distributions, see our <a href="/blog/running-pace-calculator/">running pace calculator guide</a>.
+          </p>
+
+          <h2>Cycling Pace: Speed Benchmarks by Rider Type</h2>
+          <p>
+            Cycling pace is almost always expressed in miles per hour or kilometers per hour rather than minutes per mile, simply because GPS cycling computers have displayed speed natively since the 1990s. However, for multi-sport planning (triathlons, bike-run bricks, or calorie tracking), converting cycling speed to minutes per mile is often necessary.
+          </p>
+          <p>
+            The Strava 2025 Year in Sport dataset, which analyzed over 2 billion activities from 135 countries, found the average cycling activity speed was 12.4 mph for recreational cyclists and 15.8 mph for those classified as committed athletes (defined as 100+ activities per year). These figures include hills, wind, stops, and urban riding — which substantially reduce average speed compared to sustained flat-road performance.
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Cyclist Level</th>
+                  <th >Average Speed</th>
+                  <th >Pace (min/mi)</th>
+                  <th >40-Mile Ride Time</th>
+                  <th >100-Mile Ride Time</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['Casual / Beginner', '8–10 mph', '6:00–7:30/mi', '4:00–5:00', '10:00–12:30'],
+                  ['Recreational', '10–14 mph', '4:17–6:00/mi', '2:51–4:00', '7:09–10:00'],
+                  ['Intermediate', '14–17 mph', '3:32–4:17/mi', '2:21–2:51', '5:53–7:09'],
+                  ['Experienced', '17–20 mph', '3:00–3:32/mi', '2:00–2:21', '5:00–5:53'],
+                  ['Advanced / Competitive', '20–24 mph', '2:30–3:00/mi', '1:40–2:00', '4:10–5:00'],
+                  ['Cat 1/Pro', '25+ mph', 'Under 2:24/mi', 'Under 1:36', 'Under 4:00'],
+                ].map(([level, speed, pace, forty, hundred]) => (
+                  <tr key=level >
+                    <td >level</td>
+                    <td >speed</td>
+                    <td >pace</td>
+                    <td >forty</td>
+                    <td >hundred</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+            <p>Cycling speeds for road bikes on flat terrain in calm conditions. Strava global average: 12.4 mph (recreational), 15.8 mph (committed athletes). Mountain bike speeds typically 20–30% lower for equivalent effort. E-bikes excluded.</p>
+          
+
+          <p>
+            An important caveat for cycling pace calculations: wind, elevation, and bike type create variance that does not exist to the same degree in running. A 10 mph headwind adds approximately 30 to 40 percent resistance, cutting average speed by 3 to 5 mph. A 5 percent sustained climb on a road bike drops average speed from 18 mph to approximately 10 to 12 mph for most intermediate riders. When planning a cycling route, use elevation-adjusted estimates rather than flat-road benchmarks to avoid significantly underestimating ride time.
+          </p>
+
+          <h2>Pace vs Speed: When Each Metric Matters</h2>
+          <p>
+            Pace and speed are mathematical inverses that describe the same reality from different angles. Speed = Distance ÷ Time; Pace = Time ÷ Distance. A 9:00/mile running pace equals 6.67 mph. A 15 mph cycling speed equals a 4:00/mile pace. Despite conveying identical information, runners universally prefer pace and cyclists universally prefer speed — a pattern that reflects how each group plans and executes training.
+          </p>
+          <p>
+            <strong>Why runners use pace:</strong> A training plan says &ldquo;run 8 miles at 9:30 pace.&rdquo; This directly answers the question every runner cares about: how long will this mile take? Working backward from a race goal time requires pace. A 3:45 marathon needs 8:35/mile. Knowing this, a runner can program their watch, set their effort, and check each mile split. Speed is not intuitive in this context — &ldquo;run 6.7 mph for 8 miles&rdquo; is harder to operationalize on the road.
+          </p>
+          <p>
+            <strong>Why cyclists use speed:</strong> Cycling computers have displayed speed in real time since GPS became affordable. Cycling pace varies so much with grade and wind that a fixed pace number becomes almost meaningless mid-ride — a cyclist climbing at 8 mph is working as hard as one descending at 35 mph. Power (watts) has largely replaced both speed and pace as the gold standard training metric for serious cyclists, because it measures actual work output independent of conditions.
+          </p>
+          <p>
+            <strong>For walkers:</strong> Neither metric is well-established culturally, so use whichever is more intuitive. A 15-minute-per-mile walking pace is equivalent to 4.0 mph. For health tracking purposes, expressing activity in minutes per mile is useful when comparing walking to running on the same route — it normalizes distance. For calorie tracking, the <a href="/calories-burned/">calories burned calculator</a> uses speed (mph) as input to retrieve the correct MET value.
+          </p>
+
+          <h2>Pace to Speed Conversion Table</h2>
+          <p>
+            The following reference table covers the full spectrum from competitive walking to elite running, including the equivalent speed in mph and km/h. Use this to translate any pace to speed or vice versa without calculation.
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Pace/Mile</th>
+                  <th >Pace/km</th>
+                  <th >Speed (mph)</th>
+                  <th >Speed (km/h)</th>
+                  <th >Activity</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['20:00/mi', '12:26/km', '3.0 mph', '4.8 km/h', 'Slow walk'],
+                  ['17:08/mi', '10:39/km', '3.5 mph', '5.6 km/h', 'Brisk walk'],
+                  ['15:00/mi', '9:19/km', '4.0 mph', '6.4 km/h', 'Fast walk'],
+                  ['13:20/mi', '8:17/km', '4.5 mph', '7.2 km/h', 'Power walk'],
+                  ['12:00/mi', '7:27/km', '5.0 mph', '8.0 km/h', 'Jog / race walk'],
+                  ['10:00/mi', '6:13/km', '6.0 mph', '9.7 km/h', 'Easy run'],
+                  ['9:00/mi', '5:35/km', '6.7 mph', '10.7 km/h', 'Moderate run'],
+                  ['8:00/mi', '4:58/km', '7.5 mph', '12.1 km/h', 'Tempo run'],
+                  ['7:00/mi', '4:21/km', '8.6 mph', '13.8 km/h', 'Fast run'],
+                  ['6:00/mi', '3:44/km', '10.0 mph', '16.1 km/h', 'Race pace'],
+                  ['5:00/mi', '3:06/km', '12.0 mph', '19.3 km/h', 'Elite pace'],
+                ].map(([mi, km, mph, kph, act]) => (
+                  <tr key=mi >
+                    <td >mi</td>
+                    <td >km</td>
+                    <td >mph</td>
+                    <td >kph</td>
+                    <td >act</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+
+          <h2>Multi-Sport Pace Planning: Triathlons and Combined Events</h2>
+          <p>
+            Triathlons require pace management across three distinct activities — swim, bike, and run — each with different efficiency characteristics and recovery demands. A key insight from triathlon research: pacing the bike leg conservatively is more predictive of a strong run leg than almost any other variable. Research published in the <em>International Journal of Sports Physiology and Performance</em> found that triathletes who started the bike segment 3 to 5 percent below their maximum sustainable pace ran the subsequent run leg an average of 8.5 percent faster than those who pushed the bike to their limit.
+          </p>
+          <p>
+            For the standard Sprint triathlon (0.5-mile swim, 12.4-mile bike, 3.1-mile run), here are typical finish time estimates by experience level:
+          </p>
+          
+            <p>Sprint Triathlon Finish Time Estimates (0.5 mi swim / 12.4 mi bike / 3.1 mi run):</p>
+            <ul>
+              <li><strong>First-timer:</strong> 1:30 to 1:50 total — swim ~18 min, T1 ~3 min, bike ~55 min, T2 ~2 min, run ~35 min</li>
+              <li><strong>Beginner (1–2 races):</strong> 1:20 to 1:35 — swim ~15 min, bike ~48 min, run ~30 min, transitions ~4 min</li>
+              <li><strong>Intermediate:</strong> 1:05 to 1:20 — swim ~12 min, bike ~40 min, run ~26 min, transitions ~3 min</li>
+              <li><strong>Competitive age-grouper:</strong> Under 1:05 — sub-10 min swim, sub-35 min bike, sub-22 min run</li>
+            </ul>
+          
+          <p>
+            For calorie tracking across a multisport event, use MET values for each segment separately: swimming MET 7.0 to 10.0, cycling MET 8.0 to 14.0, running MET 9.8 to 14.5. A first-time sprint triathlete burning approximately 700 to 1,000 total calories during the race — accounting for the calorie cost of all three segments plus transitions. Our <a href="/calories-burned/">calories burned calculator</a> supports activity-specific calculations for each discipline.
+          </p>
+
+          <h2>How Pace Affects Calorie Burn</h2>
+          <p>
+            Across all three activities, pace dramatically affects calories burned <em>per hour</em> but has a more modest effect on calories burned <em>per mile</em>. The physics explain why: moving a fixed mass across a fixed distance requires approximately the same energy regardless of how fast you do it (with adjustments for efficiency and aerodynamics). The primary calorie variable is total time at a given intensity.
+          </p>
+          <p>
+            For walking, the per-mile calorie difference between 2.5 mph and 4.0 mph is about 25 percent — meaningful, but not dramatic. For running, per-mile calorie burn is remarkably stable across paces — a 7-minute mile and a 12-minute mile burn almost the same calories per mile, as documented in research from the University of Wisconsin. For cycling, per-mile calorie burn varies more dramatically because air resistance scales with the square of velocity — doubling your speed quadruples your wind resistance, requiring exponentially more energy. This means fast cycling is far more calorie-intensive per mile than slow cycling in a way that running and walking are not.
+          </p>
+          <p>
+            The practical implication for weight management: to maximize walking calorie burn, add incline rather than speed. To maximize running calorie burn, increase distance (total miles) rather than pace. For cycling, higher speeds genuinely produce proportionally more calorie burn per mile — so if weight loss is the goal, cycling faster (with appropriate fitness) is more efficient than cycling longer at a slow pace. Align your <a href="/tdee-calculator/">total daily energy needs</a> with your training volume to avoid both under-fueling and overcompensating.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>How do you calculate pace for running, walking, or cycling?</h3>
+              <p>Pace = Total Time ÷ Distance. If you cycle 20 miles in 1:20 (80 min), pace = 80 ÷ 20 = 4:00/mile. For running: 45 min over 5 miles = 9:00/mile. Speed (mph) = 60 ÷ Pace. A 10:00/mile pace equals 6.0 mph. Use our <a href="/pace-calculator/">pace calculator</a> to handle any of the three variables automatically.</p>
+            
+            
+              <h3>What is a good walking pace?</h3>
+              <p>The CDC and AHA define brisk walking as 3.0 to 4.0 mph (15–20 min/mile) — this intensity qualifies as moderate aerobic activity meeting the 150 min/week guideline for cardiovascular health. A good fitness walking pace is 3.5 mph (17 min/mile). Slow recreational walking at 2.5 mph does not meet the moderate-intensity threshold per the Physical Activity Guidelines for Americans.</p>
+            
+            
+              <h3>What is a good cycling pace for beginners?</h3>
+              <p>Beginner cyclists typically average 10 to 14 mph on flat roads (4:17–6:00/mile pace). Intermediate riders average 15 to 18 mph. The Strava 2025 global average was 12.4 mph for recreational cyclists. These figures assume flat terrain, no headwind, and a road or hybrid bike. Mountain biking and e-bikes shift benchmarks significantly.</p>
+            
+            
+              <h3>How do you convert pace per mile to speed in mph?</h3>
+              <p>Speed (mph) = 60 ÷ Pace (min/mile). Examples: 8:00/mile = 7.5 mph; 10:00/mile = 6.0 mph; 15:00/mile = 4.0 mph. Reverse: Pace = 60 ÷ Speed. For kilometers: Speed (km/h) = 60 ÷ Pace (min/km). A 6:00/km pace = 10.0 km/h.</p>
+            
+            
+              <h3>What is the difference between pace and speed?</h3>
+              <p>Pace = Time ÷ Distance (how long per unit of distance). Speed = Distance ÷ Time (how far per unit of time). They are inverses: Pace = 60 ÷ Speed (mph). Runners use pace because it directly answers &ldquo;how long will this mile take?&rdquo; Cyclists use speed because GPS computers display it natively and the metric is more intuitive over variable terrain.</p>
+            
+            
+              <h3>How do you calculate a triathlon finish time?</h3>
+              <p>Add each segment: Swim time + T1 + Bike time + T2 + Run time. For an Olympic-distance tri (0.93-mi swim, 24.8-mi bike, 6.2-mi run): Swim ~30 min, T1 ~3 min, Bike at 18 mph ~83 min, T2 ~3 min, Run at 9:30/mi ~59 min = ~2:58 total. Research shows cycling 3–5% below max pace predicts a significantly faster run leg.</p>
+            
+          
+
+          
+            <h2>Calculate Your Pace Instantly</h2>
+            <p>Enter any two values — time, distance, or pace — and get the third instantly. Works for running, walking, and cycling in miles or kilometers.</p>
+            <a href="/pace-calculator/">
+              Open Pace Calculator
+            </a>
+          
+
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/running-pace-calculator/">
+              <h3>Running Pace Calculator</h3>
+              <p>5K, 10K, half marathon, and marathon pace charts with average times by age and gender.</p>
+            </a>
+            <a href="/blog/walking-calorie-calculator/">
+              <h3>Walking Calorie Calculator</h3>
+              <p>Calories burned per mile and per step across body weights and walking speeds.</p>
+            </a>
+            <a href="/blog/calories-burned-calculator/">
+              <h3>Calories Burned Calculator</h3>
+              <p>MET-based calorie burn for 50+ activities including cycling, swimming, and HIIT.</p>
+            </a>
+            <a href="/blog/calorie-deficit-guide/">
+              <h3>Calorie Deficit Guide</h3>
+              <p>How to use your cardio training to create a sustainable daily calorie deficit.</p>
+            </a>
+          
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.calorique.io/blog/pace-calculator/">Calorique</a>.
+      Explore more free tools at <a href="https://www.calorique.io/">calorique.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.calorique.io/">Calorique</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
