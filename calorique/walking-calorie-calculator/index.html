@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walking Calorie Calculator: Calories Burned Per Mile &amp; Step - Calorique</title>
+  <meta name="description" content="MET-based calorie burn tables for walking at every speed and body weight. Per-mile, per-step, and per-hour breakdowns with incline adjustments and a step-to-calorie conversion guide.">
+  <link rel="canonical" href="https://www.calorique.io/blog/walking-calorie-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/calorique/">Calorique</a> &rarr; Walking Calorie Calculator: Calories Burned Per Mile &amp; Step
+  </nav>
+
+  <article>
+    <h1>Walking Calorie Calculator: Calories Burned Per Mile &amp; Step</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.calorique.io/blog/walking-calorie-calculator/">calorique.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Walking Calorie Calculator: Calories Burned Per Mile & Step',
+    description: 'MET-based calorie burn tables for walking at every speed and body weight. Per-mile, per-step, and per-hour breakdowns with incline adjustments and a step-to-calorie conversion guide.',
+    author:  '@type': 'Organization', name: 'Calorique' ,
+    publisher:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    mainEntityOfPage: 'https://calorique.io/blog/walking-calorie-calculator/',
+    datePublished: '2026-04-13',
+    dateModified: '2026-04-13',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://calorique.io/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://calorique.io/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Walking Calorie Calculator', item: 'https://calorique.io/blog/walking-calorie-calculator/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How many calories does walking 1 mile burn?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Walking 1 mile burns approximately 70 to 100 calories depending on your body weight and pace. A 150-pound person burns roughly 80 to 85 calories per mile at a brisk 3.5 mph walk. The rule of thumb from exercise physiology research: multiply your body weight in pounds by 0.53 for a gross calorie estimate per mile. Heavier walkers burn proportionally more because they move greater mass against gravity with every step.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many calories does 10,000 steps burn?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: '10,000 steps burns approximately 350 to 500 calories for the average adult, depending on body weight and stride length. A 150-pound person with a typical stride of about 2.5 feet covers roughly 4.7 miles in 10,000 steps, burning around 400 calories. A 200-pound person burns approximately 520 calories for the same steps. These are gross calories — net calorie burn above resting is roughly 10 to 15 percent lower.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does walking faster burn more calories per mile?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Yes, walking faster burns more calories per mile, but the difference is moderate. A 155-pound person burns about 75 calories per mile at 2.5 mph but approximately 90 calories per mile at 4.0 mph — about a 20 percent increase. The bigger impact of faster walking is calories per minute: you cover the same mile faster, so you can do more miles in the same time. Very fast walking (above 4.5 mph) has a sharper calorie jump as the gait approaches a jogging motion.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many calories does walking burn per hour?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Walking burns 200 to 400 calories per hour depending on your body weight and speed. A 130-pound person walking at 3.5 mph burns about 207 calories per hour. A 185-pound person at the same pace burns about 294 calories per hour. Brisk walking at 4.0 mph increases these figures by roughly 25 to 30 percent. Add a 5 percent incline and calorie burn jumps another 30 to 40 percent per hour.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How accurate are treadmill calorie counters for walking?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Treadmill calorie displays overestimate calorie burn by an average of 15 to 25 percent according to research published in the Journal of Sports Medicine and Physical Fitness. The primary reason is that most treadmills do not account for individual body composition or resting metabolic rate — they use population averages. Holding the handrails also reduces calorie burn by up to 20 percent but most treadmills do not adjust for this. MET-based calculations using your actual body weight are more accurate.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does incline walking burn significantly more calories?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Yes — significantly. Research from the American College of Sports Medicine confirms that each 1 percent increase in treadmill incline adds approximately 0.18 MET to the energy cost of walking. A 5 percent incline increases calorie burn by roughly 30 to 40 percent compared to flat walking at the same speed. A 10 percent incline essentially doubles the calorie cost per mile. This is why incline walking is one of the most efficient low-impact calorie-burning exercises available.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many steps equal a mile of walking?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Most adults take 1,900 to 2,200 steps per mile when walking, with the average around 2,000 steps per mile. The exact count depends on stride length, which is approximately 40 to 42 percent of your height. A 5-foot-5 person has a stride of about 26 inches and takes roughly 2,400 steps per mile. A 6-foot person with a 29-inch stride takes about 2,200 steps per mile. Running steps per mile are fewer — typically 1,400 to 1,700 — due to the longer stride.',
+        ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          Walking Calorie Calculator
+        
+
+        
+          
+            Walking & Cardio
+            16 min read
+          
+          <h2>Walking Calorie Calculator: Calories Burned Per Mile & Step</h2>
+          <p>
+            Maria, a 47-year-old teacher, started walking 45 minutes every morning before work. After 8 weeks, she had lost 6 pounds — without changing anything she ate. Her fitness tracker said she was burning 340 calories per session. Her doctor&apos;s MET-based calculation said 290. The treadmill at the gym showed 410. Who was right? Understanding exactly how walking calorie burn is calculated — and why different tools disagree — is the foundation of using walking effectively for weight management.
+          </p>
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>Walking 1 mile burns roughly 0.53 calories per pound of body weight — a 150 lb person burns ~80 calories per mile</li>
+              <li>Treadmill displays overestimate calorie burn by 15–25% per Journal of Sports Medicine research; MET-based calculations are more accurate</li>
+              <li>A 5% incline increases calorie burn by 30–40% over flat walking at the same pace — the most efficient way to amplify walking</li>
+              <li>10,000 steps burns ~350–500 calories depending on body weight and stride length</li>
+              <li>Brisk walking (3.5–4.0 mph) doubles calorie burn per minute compared to slow walking (2.0 mph) while remaining low-impact</li>
+            </ul>
+          
+
+          /* Calculator CTA */
+          
+            <h2>Walking Calorie Calculator</h2>
+            <p>Enter your weight, pace, and duration to get a personalized MET-based calorie estimate for your walk.</p>
+            <a href="/calories-burned/">
+              Calculate Walking Calories
+            </a>
+          
+
+          <h2>How Walking Calorie Calculators Actually Work</h2>
+          <p>
+            Every credible walking calorie calculator is built on the same foundation: the Metabolic Equivalent of Task (MET) system, developed by exercise physiologist William Haskell and codified in the Compendium of Physical Activities maintained by researchers at Arizona State University. A MET value of 1.0 represents your resting metabolic rate — the energy you burn lying still. Walking at 3.0 mph has a MET of approximately 3.5, meaning your body is working 3.5 times harder than at rest.
+          </p>
+          <p>
+            The formula is: <strong>Calories = MET × body weight in kilograms × duration in hours</strong>. For example, a 70 kg (154 lb) person walking at 3.5 mph (MET 4.3) for 1 hour burns: 4.3 × 70 × 1 = 301 calories. This is a gross calorie figure — it includes the approximately 70 calories you would have burned at rest during that hour anyway. Net calorie burn (purely from walking) is about 10 to 15 percent lower: roughly 256 to 271 net calories in this example.
+          </p>
+          <p>
+            The reason fitness trackers and gym equipment diverge from MET-based estimates: most consumer devices use algorithms that incorporate heart rate, movement patterns, and population-average equations rather than pure MET values. Some devices use proprietary formulas that have not been peer-reviewed. Research published in the <em>Journal of Sports Medicine and Physical Fitness</em> tested multiple fitness trackers and found calorie estimates varied from 27 percent under to 93 percent over the actual measured value. MET-based calculations, while not perfect, represent the most consistent and reproducible standard available to the general public. Use our <a href="/calories-burned/">calories burned calculator</a> for a MET-based estimate using your exact body weight and activity data.
+          </p>
+
+          <h2>Calories Burned Walking Per Mile by Body Weight</h2>
+          <p>
+            Body weight is the dominant factor in per-mile calorie burn for walking. Unlike running — where pace has a meaningful but modest effect on per-mile cost — walking pace makes a larger relative difference because the MET values for different walking speeds span a wider range proportionally. The following table shows calories burned per mile at a moderate brisk walking pace (approximately 3.5 mph) across common body weights, using Compendium MET values.
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Body Weight</th>
+                  <th >Slow Walk (2.5 mph)</th>
+                  <th >Brisk Walk (3.5 mph)</th>
+                  <th >Fast Walk (4.0 mph)</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['120 lbs (54 kg)', '55 cal/mi', '63 cal/mi', '70 cal/mi'],
+                  ['140 lbs (64 kg)', '64 cal/mi', '74 cal/mi', '82 cal/mi'],
+                  ['155 lbs (70 kg)', '71 cal/mi', '82 cal/mi', '91 cal/mi'],
+                  ['170 lbs (77 kg)', '78 cal/mi', '90 cal/mi', '100 cal/mi'],
+                  ['185 lbs (84 kg)', '85 cal/mi', '98 cal/mi', '109 cal/mi'],
+                  ['200 lbs (91 kg)', '92 cal/mi', '106 cal/mi', '117 cal/mi'],
+                  ['220 lbs (100 kg)', '101 cal/mi', '116 cal/mi', '129 cal/mi'],
+                  ['250 lbs (113 kg)', '115 cal/mi', '132 cal/mi', '147 cal/mi'],
+                ].map(([weight, slow, brisk, fast]) => (
+                  <tr key=weight >
+                    <td >weight</td>
+                    <td >slow</td>
+                    <td >brisk</td>
+                    <td >fast</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+            <p>Calculated using MET values from the Compendium of Physical Activities (Ainsworth et al., 2011, updated 2024): Slow walk (2.5 mph) = MET 2.8; Brisk walk (3.5 mph) = MET 4.3; Fast walk (4.0 mph) = MET 5.0.</p>
+          
+
+          <p>
+            A practical shortcut: research from the University of Tennessee Knoxville found that net calorie cost for walking flat ground averages approximately <strong>0.53 calories per pound of body weight per mile</strong> for moderate-paced walking. This means a 180-pound person burns approximately 95 net calories per mile regardless of whether they walk slowly or briskly — the gross figure (including resting metabolic cost) is about 10 to 15 percent higher. For weight management purposes, calculate your <a href="/calorie-calculator/">daily calorie needs</a> first, then use walking to create or supplement your deficit.
+          </p>
+
+          <h2>Walking Calorie Burn Per Hour by Pace</h2>
+          <p>
+            Per-hour calorie burn is especially useful when you have a fixed time window for exercise. The table below shows calories burned per hour for a 155-pound (70 kg) person at different walking speeds, along with the MET values and approximate equivalent activities.
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Walking Pace</th>
+                  <th >MET</th>
+                  <th >Cal/Hour (155 lbs)</th>
+                  <th >Cal/30 Min</th>
+                  <th >Intensity</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['Very slow (2.0 mph)', '2.5', '175', '88', 'Light'],
+                  ['Slow (2.5 mph)', '2.8', '196', '98', 'Light'],
+                  ['Moderate (3.0 mph)', '3.5', '245', '122', 'Light-Moderate'],
+                  ['Brisk (3.5 mph)', '4.3', '301', '150', 'Moderate'],
+                  ['Fast (4.0 mph)', '5.0', '350', '175', 'Moderate'],
+                  ['Very fast (4.5 mph)', '6.3', '441', '221', 'Moderate-Vigorous'],
+                  ['Race walk (5.0 mph)', '8.3', '581', '291', 'Vigorous'],
+                ].map(([pace, met, hourly, half, intensity]) => (
+                  <tr key=pace >
+                    <td >pace</td>
+                    <td >met</td>
+                    <td >hourly</td>
+                    <td >half</td>
+                    <td >intensity</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+            <p>Values for a 155 lb (70 kg) person on flat terrain. Source: Compendium of Physical Activities (2011 update). The MET values transition from light to moderate intensity around 3.0–3.5 mph, which is where meaningful cardiovascular benefit begins per ACSM guidelines.</p>
+          
+
+          <h2>Steps to Calories: How Many Calories Per Step?</h2>
+          <p>
+            Converting steps to calories requires knowing your stride length and body weight. The average adult burns approximately <strong>0.04 to 0.06 calories per step</strong>, with heavier individuals on the higher end of that range. Here is how the math works: a 150-pound person walking with a typical stride of 2.5 feet covers about 1 mile every 2,112 steps. At approximately 80 calories per mile, that is 0.038 calories per step. A 200-pound person burning 106 calories over the same distance burns 0.050 calories per step.
+          </p>
+          <p>
+            Fitness apps that show calories per step use your height to estimate stride length (typically 40 to 42 percent of height) and then apply MET-based calculations or proprietary algorithms. The result is a reasonable approximation, but individual variation in gait efficiency can cause 10 to 20 percent error. More important than per-step precision is total daily movement — research published in the <em>JAMA Internal Medicine</em> analysis tracking 16,741 women found that mortality risk continued to decline up to approximately 7,500 steps per day, with benefits plateauing beyond that for older adults.
+          </p>
+
+          
+            <p>Steps to Calories Quick Reference (average adult, ~150 lbs):</p>
+            <ul>
+              <li><strong>1,000 steps:</strong> approximately 40–50 calories</li>
+              <li><strong>2,000 steps (roughly 1 mile):</strong> approximately 80–95 calories</li>
+              <li><strong>5,000 steps:</strong> approximately 200–240 calories</li>
+              <li><strong>7,500 steps:</strong> approximately 295–360 calories</li>
+              <li><strong>10,000 steps:</strong> approximately 390–470 calories</li>
+              <li><strong>15,000 steps:</strong> approximately 580–700 calories</li>
+              <li><strong>20,000 steps:</strong> approximately 780–940 calories</li>
+            </ul>
+          
+
+          <p>
+            For a deeper dive into step goals and the research behind the 10,000-step target, see our article on <a href="/blog/how-many-steps-per-day/">how many steps per day are optimal</a>. Short version: the 10,000-step goal originated from a 1964 Japanese marketing campaign, not clinical research. The optimal step target for longevity is closer to 7,000 to 8,000 steps per day per a 2025 Lancet meta-analysis of 57 studies.
+          </p>
+
+          <h2>Incline Walking: The Multiplier Most People Ignore</h2>
+          <p>
+            Incline walking is one of the most underutilized tools in fitness. Adding a modest grade dramatically increases calorie burn while maintaining the low-impact nature of walking — making it ideal for individuals who cannot run due to joint issues, injury recovery, or cardiovascular limitations. The American College of Sports Medicine position stand on exercise and physical activity confirms that incline increases calorie cost linearly with grade.
+          </p>
+          <p>
+            The biomechanics: walking uphill requires your hip extensors and glutes to generate more force per step to lift your center of mass against gravity. Unlike flat walking — where a significant portion of energy is recovered through the pendulum mechanics of your legs — incline walking disrupts this energy recovery system, forcing your muscles to do more actual work. Research from the Journal of Experimental Biology found that positive work by leg muscles increases substantially with incline, with minimal change in the elastic energy recovery that makes flat walking so economical.
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Incline Grade</th>
+                  <th >Calorie Multiplier</th>
+                  <th >Cal/Mile (155 lbs, 3.5 mph)</th>
+                  <th >Cal/30 Min (155 lbs, 3.5 mph)</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['0% (flat)', '1.0×', '82 cal', '150 cal'],
+                  ['2%', '1.15×', '94 cal', '173 cal'],
+                  ['4%', '1.28×', '105 cal', '192 cal'],
+                  ['5%', '1.35×', '111 cal', '203 cal'],
+                  ['7%', '1.55×', '127 cal', '233 cal'],
+                  ['10%', '1.85×', '152 cal', '278 cal'],
+                  ['12%', '2.05×', '168 cal', '308 cal'],
+                  ['15%', '2.35×', '193 cal', '353 cal'],
+                ].map(([grade, mult, perMile, per30]) => (
+                  <tr key=grade >
+                    <td >grade</td>
+                    <td >mult</td>
+                    <td >perMile</td>
+                    <td >per30</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+            <p>Multipliers derived from ACSM metabolic equations for walking. Each 1% grade adds approximately 0.18 MET at 3.5 mph pace. A 12% grade at 3.5 mph elevates the activity to a MET of ~8.8 — equivalent to easy jogging.</p>
+          
+
+          <p>
+            The viral "12-3-30" treadmill protocol (12% incline, 3 mph, 30 minutes) burns approximately 260 to 360 calories depending on body weight — more than jogging at the same pace on a flat surface. For a 155-pound person this equates to MET 8.5, firmly in the vigorous-intensity category per the Physical Activity Guidelines for Americans. This is why the protocol has become popular for individuals who want vigorous calorie burn without running impact.
+          </p>
+
+          <h2>Walking for Weight Loss: What the Research Actually Shows</h2>
+          <p>
+            Walking is consistently underestimated as a weight loss tool. The evidence base is stronger than most people realize. A systematic review and meta-analysis published in the <em>British Journal of Sports Medicine</em> analyzed 32 trials and found that brisk walking interventions produced an average weight loss of 1.5 kg (3.3 lbs) over 12 weeks without dietary changes. When combined with a modest calorie deficit, the results improve substantially — a 2020 meta-analysis in <em>Obesity Reviews</em> found walking plus calorie restriction produced 3.4 kg more weight loss at 12 months than calorie restriction alone.
+          </p>
+          <p>
+            The mechanism beyond simple calorie burn: walking increases NEAT (Non-Exercise Activity Thermogenesis) beyond the walk itself. According to research by Dr. James Levine at the Mayo Clinic, NEAT can vary by up to 2,000 calories per day between individuals of the same body weight — and habitual walkers tend to be more active throughout the day even in non-walking hours. A walking habit appears to shift overall lifestyle patterns in ways that amplify the direct calorie benefit.
+          </p>
+
+          <h3>A Practical 8-Week Walking Progression for Weight Loss</h3>
+          <p>
+            Based on the Physical Activity Guidelines for Americans and ACSM position stands, the following progression builds from minimal activity to the 150 to 300 minutes per week of moderate-intensity activity recommended for weight management:
+          </p>
+          
+            <ul>
+              <li><strong>Weeks 1–2:</strong> 20 minutes daily at 3.0 mph, flat — approximately 105 calories per session, 735 calories per week</li>
+              <li><strong>Weeks 3–4:</strong> 30 minutes daily at 3.5 mph, flat — approximately 150 calories per session, 1,050 calories per week</li>
+              <li><strong>Weeks 5–6:</strong> 35 minutes at 3.5 mph with 2% incline 3×/week, flat 2×/week — ~165–175 calories per session, ~1,200 calories per week</li>
+              <li><strong>Weeks 7–8:</strong> 40 minutes at 3.5–4.0 mph with 4–5% incline — 200–230 calories per session, ~1,400–1,600 calories per week</li>
+            </ul>
+          
+          <p>
+            At week 8, you are burning approximately 1,400 to 1,600 calories per week from walking — equivalent to roughly 0.4 to 0.46 pounds of fat per week from exercise alone. Combined with a modest dietary <a href="/blog/calorie-deficit-guide/">calorie deficit</a> of 200 to 300 calories per day, total weight loss of 0.75 to 1.0 pound per week is achievable without extreme restriction. Calculate your personal targets with our <a href="/calorie-deficit-calculator/">calorie deficit calculator</a>.
+          </p>
+
+          <h2>Variables That Affect Walking Calorie Accuracy</h2>
+          <p>
+            MET-based calculations provide a solid estimate, but your individual results may differ based on several factors that most calculators cannot account for:
+          </p>
+
+          <p>
+            <strong>Body composition.</strong> Two people of identical weight with different body fat percentages will burn different amounts of calories walking the same distance. Lean mass has a higher metabolic demand during exercise. However, the difference for moderate-intensity walking is relatively small — perhaps 5 to 10 percent — compared to strength training where the gap is more pronounced.
+          </p>
+          <p>
+            <strong>Walking efficiency.</strong> Experienced walkers develop better neuromuscular coordination that makes their gait more economical over time. A beginner may burn 5 to 15 percent more calories per mile than a trained walker of the same weight due to inefficient muscle recruitment patterns and higher vertical oscillation. This is why total calorie burn can decrease over time even as fitness improves — you become better at the activity.
+          </p>
+          <p>
+            <strong>Surface and terrain.</strong> Walking on sand increases calorie burn by 20 to 50 percent compared to pavement at the same speed. Trail walking on uneven surfaces increases energy cost by 15 to 25 percent due to additional stabilization demands. Even sidewalks vs. treadmills differ slightly — outdoor walking without a treadmill belt&apos;s assistance burns approximately 3 to 5 percent more calories at the same speed.
+          </p>
+          <p>
+            <strong>Carrying weight.</strong> Wearing a weighted vest or backpack increases calorie burn proportionally to the added weight. A 10 percent body weight load (15 lbs on a 150 lb person) increases walking calorie burn by approximately 8 to 12 percent. Carrying weight in your hands has less effect because arm swing is a natural walking motion that does not require additional vertical work the way a loaded torso does. For those interested in the relationship between training load and caloric needs, our <a href="/tdee-calculator/">TDEE calculator</a> adjusts for activity level.
+          </p>
+
+          <h2>Walking vs Other Cardio: Calorie Burn Comparison</h2>
+          <p>
+            Walking is not the highest-intensity cardio option, but it offers a uniquely sustainable combination of calorie burn and recovery demand. The following comparison shows 30-minute calorie burn for a 155-pound person across common cardio modalities:
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Activity</th>
+                  <th >MET</th>
+                  <th >Cal/30 Min (155 lbs)</th>
+                  <th >Recovery Demand</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['Slow walking (2.0 mph)', '2.5', '88', 'Minimal'],
+                  ['Brisk walking (3.5 mph)', '4.3', '150', 'Minimal'],
+                  ['Incline walk (12%, 3 mph)', '8.5', '298', 'Low'],
+                  ['Easy jogging (5 mph)', '8.3', '291', 'Moderate'],
+                  ['Running (6 mph)', '9.8', '344', 'Moderate'],
+                  ['Cycling moderate (12–14 mph)', '8.0', '280', 'Low'],
+                  ['Swimming laps (moderate)', '7.0', '245', 'Low'],
+                  ['HIIT training', '12.0+', '420+', 'High'],
+                ].map(([activity, met, cal30, recovery]) => (
+                  <tr key=activity >
+                    <td >activity</td>
+                    <td >met</td>
+                    <td >cal30</td>
+                    <td >recovery</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+            <p>Source: MET values from Ainsworth et al. Compendium of Physical Activities. Recovery demand is qualitative and based on typical post-exercise soreness and fatigue in untrained adults.</p>
+          
+
+          <p>
+            The standout insight from this comparison: incline walking at 12 percent grade burns calories nearly equivalent to easy jogging — with dramatically lower joint loading. Ground reaction forces during running are 2 to 3 times body weight per stride. Walking forces are 1.0 to 1.5 times body weight. For anyone managing knee pain, hip arthritis, or recovering from lower extremity injuries, progressive incline walking is often the highest-yield cardio available. Our guide on <a href="/blog/walking-for-weight-loss/">walking for weight loss</a> covers the clinical evidence in more detail.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>How many calories does walking 1 mile burn?</h3>
+              <p>Walking 1 mile burns approximately 70 to 100 calories depending on your body weight and pace. A 150-pound person burns roughly 80 to 85 calories per mile at a brisk 3.5 mph walk. The rule of thumb: multiply your body weight in pounds by 0.53 for a gross calorie estimate per mile. Heavier walkers burn proportionally more because they move greater mass against gravity with every step.</p>
+            
+            
+              <h3>How many calories does 10,000 steps burn?</h3>
+              <p>10,000 steps burns approximately 350 to 500 calories for the average adult, depending on body weight and stride length. A 150-pound person covers roughly 4.7 miles in 10,000 steps, burning around 400 calories. A 200-pound person burns approximately 520 calories for the same steps. Net calorie burn (above resting) is roughly 10–15% lower than these gross figures.</p>
+            
+            
+              <h3>Does walking faster burn more calories per mile?</h3>
+              <p>Yes, but moderately. A 155-pound person burns about 75 calories per mile at 2.5 mph but approximately 90 calories per mile at 4.0 mph — a 20 percent increase. Very fast walking above 4.5 mph shows a sharper calorie jump as gait approaches jogging mechanics. The bigger impact of faster walking is calories per minute — you can cover more miles in the same time.</p>
+            
+            
+              <h3>How many calories does walking burn per hour?</h3>
+              <p>Walking burns 200 to 400 calories per hour depending on body weight and speed. A 130-pound person at 3.5 mph burns about 207 calories per hour. A 185-pound person at the same pace burns about 294 calories. Brisk walking at 4.0 mph increases these figures 25–30%. Add a 5% incline for another 30–40% increase.</p>
+            
+            
+              <h3>How accurate are treadmill calorie counters for walking?</h3>
+              <p>Treadmill calorie displays overestimate burn by an average of 15 to 25 percent per Journal of Sports Medicine and Physical Fitness research. Most treadmills use population averages and do not account for individual body composition. Holding the handrails reduces calorie burn by up to 20 percent without any adjustment. MET-based calculations using your actual body weight are more accurate.</p>
+            
+            
+              <h3>Does incline walking burn significantly more calories?</h3>
+              <p>Yes — dramatically. Per ACSM metabolic equations, each 1 percent grade adds approximately 0.18 MET to walking energy cost. A 5% incline increases calorie burn by 30–40% over flat walking. A 10% incline essentially doubles calorie cost per mile. This makes incline walking one of the highest-yield low-impact cardio options, particularly for those who cannot run.</p>
+            
+            
+              <h3>How many steps equal a mile of walking?</h3>
+              <p>Most adults take 1,900 to 2,200 steps per mile when walking, with the average around 2,000 steps per mile. Stride length is approximately 40–42% of your height. A 5&apos;5&quot; person with a 26-inch stride takes roughly 2,400 steps per mile. Running steps per mile are fewer — typically 1,400–1,700 — due to the longer stride.</p>
+            
+          
+
+          
+            <h2>Get Your Personalized Walking Calorie Estimate</h2>
+            <p>Enter your weight, walking pace, and duration for an accurate MET-based calorie calculation tailored to you.</p>
+            <a href="/calories-burned/">
+              Use the Calories Burned Calculator
+            </a>
+          
+
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/walking-for-weight-loss/">
+              <h3>Walking for Weight Loss</h3>
+              <p>Clinical evidence, step protocols, and how walking stacks up against other cardio.</p>
+            </a>
+            <a href="/blog/how-many-steps-per-day/">
+              <h3>How Many Steps Per Day?</h3>
+              <p>The 10,000-step myth debunked with 2025 Lancet meta-analysis data.</p>
+            </a>
+            <a href="/blog/calorie-deficit-guide/">
+              <h3>Calorie Deficit Guide</h3>
+              <p>How to pair your walking program with a safe, sustainable calorie deficit.</p>
+            </a>
+            <a href="/blog/how-many-calories-does-walking-burn/">
+              <h3>How Many Calories Does Walking Burn?</h3>
+              <p>Full MET tables by speed, weight, and time for every walking scenario.</p>
+            </a>
+          
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.calorique.io/blog/walking-calorie-calculator/">Calorique</a>.
+      Explore more free tools at <a href="https://www.calorique.io/">calorique.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.calorique.io/">Calorique</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
