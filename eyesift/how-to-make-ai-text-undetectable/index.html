@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Make AI Text Undetectable: Complete Guide - EyeSift</title>
+  <meta name="description" content="How to Make AI Text Undetectable: Complete Guide">
+  <link rel="canonical" href="https://www.eyesift.com/blog/how-to-make-ai-text-undetectable/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/eyesift/">EyeSift</a> &rarr; How to Make AI Text Undetectable: Complete Guide
+  </nav>
+
+  <article>
+    <h1>How to Make AI Text Undetectable: Complete Guide</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.eyesift.com/blog/how-to-make-ai-text-undetectable/">eyesift.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    <>
+      
+        
+          
+            <a href="/">Home</a>
+            /
+            <a href="/blog/">Blog</a>
+            /
+            How to Make AI Text Undetectable
+          
+          
+            Research Analysis
+            Apr 8, 2026
+            &middot; 18 min read
+          
+          <h2>How to Make AI Text Undetectable: Complete Guide</h2>
+          <p>A research analyst&apos;s honest breakdown of what actually works in 2026 — and why most of the advice online is wrong, outdated, or dangerous to act on.</p>
+        
+      
+
+      
+        
+          
+
+            /* Myth-bust opening */
+            
+              <p>The Myth: &ldquo;Just run it through a humanizer tool and you&apos;re done.&rdquo;</p>
+              <p>Turnitin&apos;s August 2025 model update was specifically trained on outputs from Humbot, StealthWriter, WriteHuman, and other major humanizer tools. Those tools now produce their own detectable fingerprints. QuillBot achieves only a ~4% bypass rate against Originality.ai. If your strategy is &ldquo;paste into an app and click humanize,&rdquo; it is not working the way you think it is.</p>
+            
+
+            /* Key Takeaways */
+            
+              <h2>Key Takeaways</h2>
+              <ul>
+                <li>▸<strong>Detection has hardened significantly in 2025–2026.</strong> Turnitin trained dedicated models against QuillBot-style paraphrasing (July 2024) and major humanizer tool outputs (August 2025).</li>
+                <li>▸<strong>Prompt engineering during generation outperforms post-processing.</strong> A Stanford HAI study found that simply instructing ChatGPT to &ldquo;employ literary language&rdquo; reduced detection to near zero across 7 detectors — more effective than most paid humanizer tools.</li>
+                <li>▸<strong>Deep structural editing is the highest-effectiveness manual approach.</strong> Changing clause order, paragraph rhythm, and argument sequencing simultaneously — not just swapping words — achieves the highest bypass rates.</li>
+                <li>▸<strong>Watermarking is the long-term countermeasure.</strong> Google&apos;s SynthID (open-sourced October 2024) embeds cryptographic signals that survive minor edits. Current bypass techniques address statistical patterns, not cryptographic ones.</li>
+                <li>▸<strong>Context determines whether this is legitimate or fraud.</strong> Fixing a falsely-flagged authentic document is different from submitting AI work as original in academic contexts where AI is prohibited.</li>
+              </ul>
+            
+
+            <p>The query &ldquo;how to make AI text undetectable&rdquo; generates over 20,000 monthly searches. The population asking it is heterogeneous: students at institutions with AI-prohibition policies, professionals whose authentic writing was incorrectly flagged, non-native English speakers dealing with systematic detector bias, and content creators trying to understand the landscape. What most of them find is a commercial ecosystem of humanizer tools making aggressive, often false claims about 100% bypass rates.</p>
+
+            <p>This guide cuts through the noise with an evidence-based analysis of what detection systems actually measure, which evasion techniques have documented effectiveness, which tools are now being actively countered, and where the technology is heading. The goal is not to encourage fraud — the guide closes with an honest treatment of when reducing detection scores is ethically legitimate and when it is not. The goal is accuracy.</p>
+
+            <h2>What AI Detectors Actually Measure</h2>
+
+            <p>Effective humanization requires understanding what you are trying to change. Detection is not a single test — it is a composite of several signals analyzed simultaneously:</p>
+
+            <p><strong>Perplexity</strong> measures how statistically predictable each token is. AI language models are trained to generate the most probable continuation of any text sequence. The result is low-perplexity prose: predictable word choices, common grammatical patterns, efficient sentence constructions. Human writers are less statistically optimized — they introduce unexpected words, idiomatic phrases, and structural choices that reflect individual cognition rather than statistical frequency. Ending a sentence with an unusual noun rather than the obvious one raises perplexity. Humanization strategies that raise perplexity throughout a document reduce detection scores.</p>
+
+            <p><strong>Burstiness</strong> measures variation in perplexity across a document. AI models tend to produce text with remarkably uniform sentence rhythm — typically averaging around 15 words per English sentence — because they apply the same optimization function throughout. Human writing alternates between long, complex sentences and short ones in less regular patterns. A document with high burstiness looks human; a document with low, uniform burstiness looks machine-generated. This is why simply adding longer sentences at the end of paragraphs reduces detection scores somewhat — it introduces variance in rhythm.</p>
+
+            <p><strong>Stylometry</strong> is increasingly standard in modern detection tools. This analyzes deeper linguistic fingerprints: function word frequencies (how often you use &ldquo;the,&rdquo; &ldquo;of,&rdquo; &ldquo;however&rdquo;), clause ordering habits, punctuation patterns, syntactic templates, and transition phrase usage. These are the hardest signals to manually override because they require consistent stylistic decisions throughout an entire document, not just word-level changes. A 2025 study in <em>Nature Humanities and Social Sciences Communications</em> found stylometric classifiers achieved 99.8% accuracy on controlled datasets — though this figure collapses significantly against adversarially edited real-world content.</p>
+
+            <p><strong>Neural classifier layers</strong> in tools like GPTZero and Turnitin go beyond surface statistics. GPTZero now uses a seven-component analysis system. These classifiers are trained on large corpora of human and AI text and learn to identify higher-level patterns that statistical metrics alone cannot capture — semantic coherence, reasoning structure, hedging language patterns, and cognitive-linguistic markers that differ between human and AI composition.</p>
+
+            <p>Understanding these four layers clarifies why most simple humanization strategies fail against modern detectors: they address surface statistics (perplexity, burstiness) without addressing the deeper stylometric and neural classifier layers. Word substitution can raise perplexity without touching stylometry.</p>
+
+            <h2>What Has Already Been Defeated: The Detection Graveyard</h2>
+
+            <p>Before covering what works, it is worth being specific about what no longer works. A significant portion of advice online reflects the detection landscape of 2023 — before Turnitin deployed three major countermeasures in 2024–2025:</p>
+
+            
+              
+                ✗
+                
+                  <p>Synonym swapping / word-level paraphrasing</p>
+                  <p>Creates its own detectable fingerprint — the vocabulary distribution of synonym-swapped text is statistically distinct from both natural human writing and original AI output. Turnitin now detects the spinner fingerprint directly. AI detectors catch 87% of basic humanization attempts.</p>
+                
+              
+              
+                ✗
+                
+                  <p>QuillBot paraphrasing</p>
+                  <p>Turnitin launched dedicated AI paraphrasing detection in July 2024, trained specifically against QuillBot-style syntactic transformations. QuillBot achieves only ~4% bypass against Originality.ai and approximately 43.6% average bypass across all detectors. Not reliable.</p>
+                
+              
+              
+                ✗
+                
+                  <p>Major humanizer tools (Humbot, StealthWriter, WriteHuman, Undetectable.ai)</p>
+                  <p>Turnitin&apos;s August 2025 AI bypasser detection update was trained on outputs from these specific tools. The tools now produce recognizable signatures. Results against Turnitin are substantially degraded from their pre-August 2025 performance.</p>
+                
+              
+              
+                ✗
+                
+                  <p>Unicode obfuscation / character substitution</p>
+                  <p>The 2025 PAN/ELOQUENT shared task found Unicode substitution to be detectable. Obfuscation approaches generally failed to beat simple baselines in controlled testing.</p>
+                
+              
+            
+
+            <h2>What Still Works: Evidence-Based Techniques</h2>
+
+            <p>The effective approaches share a common feature: they change what detectors measure, rather than just obscuring the surface of text.</p>
+
+            <h3>1. Prompt Engineering During Generation (Most Underused)</h3>
+
+            <p>A Stanford HAI research finding (Zou et al., 2023/cited through 2025) demonstrated that simply instructing ChatGPT to &ldquo;employ literary language&rdquo; when generating or self-editing content caused detection rates to drop to near zero across all seven detectors tested. This is one of the most effective documented techniques — and it requires no post-processing tool.</p>
+
+            <p>The mechanism: detectors are calibrated against average AI output. When generation is explicitly steered toward linguistic patterns that deviate from statistical averages — literary vocabulary, unusual syntactic structures, high-register prose with unconventional rhythm — the resulting text falls outside the distribution most classifiers were trained on.</p>
+
+            <p>Effective prompt strategies include:</p>
+            <ul>
+              <li>Instructions to use unexpected metaphors, literary allusions, or field-specific jargon throughout</li>
+              <li>Instructions to alternate sentence lengths deliberately — short, then long, then medium — in irregular patterns</li>
+              <li>Instructions to express personal analytical opinions rather than neutral summaries</li>
+              <li>Instructions to include specific named examples, data points, or anecdotes rather than generalizations</li>
+              <li>Instructions to use first-person perspective with distinctive voice markers</li>
+            </ul>
+
+            <h3>2. Deep Structural Rewriting (Highest Effectiveness, Most Labor-Intensive)</h3>
+
+            <p>Research from Studydrop.io&apos;s 2025 analysis found that advanced structural techniques achieve approximately 94% bypass rates versus 67% for basic methods. Deep structural rewriting is the most labor-intensive approach but remains the most effective against the full range of detectors because it changes all four signal layers simultaneously.</p>
+
+            <p>What deep structural rewriting involves:</p>
+            <ul>
+              <li><strong>Clause-level reorganization:</strong> Change the order of information within sentences, not just the words. Move subordinate clauses to different positions. Start sentences with prepositional phrases, gerunds, or dependent clauses rather than subjects.</li>
+              <li><strong>Paragraph rhythm disruption:</strong> Vary opening sentence types across paragraphs. Follow a long analytical paragraph with a one-sentence paragraph. Include section-opening questions, commands, or fragments.</li>
+              <li><strong>Argument resequencing:</strong> Change the order in which evidence and claims appear. Move the thesis within a paragraph rather than always opening with it. Let conclusions emerge rather than being stated upfront.</li>
+              <li><strong>Specificity injection:</strong> Replace any generic claim with a named, specific example. &ldquo;Studies show&rdquo; becomes &ldquo;A 2024 University of Pennsylvania benchmark found.&rdquo; This simultaneously raises perplexity and shifts stylometric markers.</li>
+            </ul>
+
+            <h3>3. Manual Expert Editing Over AI Drafts</h3>
+
+            <p>Using AI to produce a comprehensive research draft and then manually editing it with a skilled writer&apos;s revisions remains the highest-effectiveness approach that is also ethical in non-academic contexts. The key is that the editing must be substantive — changing clause order, adding specific anecdotes, introducing distinctive voice patterns — rather than surface corrections.</p>
+
+            <p>A 2025 study in <em>Computers in Human Behavior</em> found that comprehensive manual editing combined with automated tools produced approximately 2.3x better bypass results than either approach alone. The limitation is obvious: it defeats much of the time-saving purpose of AI drafting.</p>
+
+            <h2>Tool Comparison: 2026 Performance Against Major Detectors</h2>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Tool</th>
+                    <th >Type</th>
+                    <th >Avg. Claimed Bypass</th>
+                    <th >vs. Turnitin (Post-Aug 2025)</th>
+                    <th >Key Limitation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td >Undetectable.ai</td>
+                    <td >Purpose-built humanizer</td>
+                    <td >~95%</td>
+                    <td >Degraded — trained against</td>
+                    <td >Turnitin Aug 2025 model</td>
+                  </tr>
+                  <tr >
+                    <td >StealthWriter</td>
+                    <td >Purpose-built humanizer</td>
+                    <td >~85%</td>
+                    <td >Degraded — trained against</td>
+                    <td >Turnitin Aug 2025 model</td>
+                  </tr>
+                  <tr >
+                    <td >HIX Bypass</td>
+                    <td >Purpose-built humanizer</td>
+                    <td >~82%</td>
+                    <td >Degraded</td>
+                    <td >Consistent rewriting fingerprint</td>
+                  </tr>
+                  <tr >
+                    <td >QuillBot</td>
+                    <td >Paraphraser (not bypass-specific)</td>
+                    <td >~43.6% avg</td>
+                    <td >Poor — dedicated model</td>
+                    <td >4% vs Originality.ai</td>
+                  </tr>
+                  <tr >
+                    <td >Prompt Engineering</td>
+                    <td >Generation-phase technique</td>
+                    <td >Near 0% detection</td>
+                    <td >Strongest approach</td>
+                    <td >Requires generation control</td>
+                  </tr>
+                  <tr >
+                    <td >Deep Structural Edit</td>
+                    <td >Manual technique</td>
+                    <td >~94%</td>
+                    <td >Highest effectiveness</td>
+                    <td >Time-intensive; requires skill</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+
+            <p>Note: Claimed bypass rates are largely self-reported by vendors or from tests conducted under favorable conditions. Independent academic benchmarks consistently show lower rates, especially against Turnitin&apos;s post-2025 models. Use these figures as directional guidance, not guarantees.</p>
+
+            <h2>The Current Limits of All Detection: What Detectors Still Miss</h2>
+
+            <p>Understanding what detectors cannot reliably catch is as important as understanding bypass techniques. The limitations are structural, not just temporary weaknesses waiting to be fixed:</p>
+
+            <p><strong>Short texts under ~300 words</strong> provide insufficient signal for reliable classification. Nearly all detectors reduce confidence significantly or decline to produce a reliable score for short passages. This is not a bypass — it is a fundamental limitation of statistical inference on limited data.</p>
+
+            <p><strong>Domain-specific technical writing</strong> where experts naturally write with high terminological consistency poses persistent false positive risk but also means genuine expert writing may be harder to detect as AI. A human expert and an AI model trained on the same domain corpus will produce text with similar statistical properties — low perplexity, consistent terminology, predictable structure.</p>
+
+            <p><strong>Translated content</strong> significantly degrades both detection accuracy and watermark confidence. Google&apos;s SynthID watermarking documentation specifically notes that thorough translation &ldquo;greatly reduces confidence scores.&rdquo; Statistical detection models trained on English also perform substantially worse on translated text.</p>
+
+            <p><strong>Mixed-authorship documents</strong> — where some sections are clearly human-written and others are AI-generated — present detection challenges that most tools handle inconsistently. Turnitin breaks documents into overlapping segments for this reason, but consistent hybrid scoring is still a known weakness.</p>
+
+            <h2>The Watermarking Horizon: Why This All Changes</h2>
+
+            <p>All current bypass techniques target statistical patterns — the measurable properties of text that differ between human and AI writers. Cryptographic watermarking addresses a fundamentally different layer.</p>
+
+            <p>Google&apos;s SynthID, open-sourced in October 2024, embeds statistical watermarks into the token probability distributions used during generation. Rather than changing what the text looks like, it changes the subtle bias of which tokens are chosen from among statistically equivalent candidates. The watermark survives minor edits, sentence reordering, and synonym substitution because those operations change surface text without changing the statistical token selection pattern.</p>
+
+            <p>The current limitation: &ldquo;thorough rewriting or translation greatly reduces confidence scores,&rdquo; per Google DeepMind&apos;s own documentation. SynthID does not function reliably on factual prompts where token variance is constrained by accuracy requirements — if a question has one correct answer, the token distribution is too constrained to embed a robust signal. And watermarking is not yet universally deployed across major models.</p>
+
+            <p>But the direction is clear. Once watermarking becomes standard infrastructure across OpenAI, Anthropic, Google, and Meta models, current bypass techniques will largely cease to function. Detection will shift from statistical inference about text properties to cryptographic verification of generation provenance. The arms race as currently constituted has an expiration date.</p>
+
+            <h2>When Reducing Detection Scores Is Legitimate</h2>
+
+            <p>This topic cannot be addressed honestly without a direct treatment of the ethical dimension. The ethics depend entirely on context, not on the technology:</p>
+
+            <p><strong>Legitimate use cases for reducing AI detection scores:</strong></p>
+            <ul>
+              <li>Authentic human writing that has been incorrectly flagged due to formal register, ESL vocabulary patterns, or domain-specific terminology</li>
+              <li>Commercial content creation where no claim of sole authorship is being made</li>
+              <li>Marketing copy, product descriptions, and business documents where AI assistance is disclosed to the client</li>
+              <li>Content in fields where AI assistance is standard and undisclosed (many advertising, publishing, and tech contexts)</li>
+              <li>Non-native English speakers whose authentic writing is systematically biased against by detection tools</li>
+            </ul>
+
+            <p><strong>Not legitimate:</strong></p>
+            <ul>
+              <li>Academic submissions where AI use is prohibited and the work is submitted as original</li>
+              <li>Professional contexts where authorship is materially claimed (research publications, credential assessments, hiring samples)</li>
+              <li>Any context where a false authorship claim is being made and the person relying on that claim would act differently if they knew</li>
+            </ul>
+
+            <p>The ethical question is not about technology — it is about false authorship claims. A watermark-free, detection-proof AI text is not ethically different from an easily-detected one if the intent is academic fraud. Conversely, applying humanization techniques to authentic writing that has been wrongly flagged is not fraud regardless of how it scores on a detector. Context is the only thing that determines the ethics.</p>
+
+            <p>If you want to understand how your own writing or an AI draft currently scores before taking any action, <a href="/text-analysis/">EyeSift&apos;s free AI detector</a> provides a baseline analysis using the same signal categories described in this guide — perplexity, burstiness, and stylometric patterns.</p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            
+              
+                <h3>Can AI text be made truly undetectable in 2026?</h3>
+                <p>Not reliably, not against all detectors simultaneously. The best-performing humanizer tools achieve claimed bypass rates of 85–95%, but these are largely self-reported. Turnitin&apos;s August 2025 anti-humanizer update was trained on outputs from major tools — those tools now produce their own detectable fingerprints. Deep manual editing by a skilled writer remains the highest-success approach, but it defeats the time-saving purpose of AI drafting.</p>
+              
+              
+                <h3>Does QuillBot bypass AI detection?</h3>
+                <p>Poorly. QuillBot&apos;s average bypass rate across detectors is approximately 43.6%. Against Originality.ai specifically, it achieves only about 4% bypass — meaning 96% of QuillBot-rewritten content is still detected. Turnitin launched dedicated AI paraphrasing detection in July 2024 explicitly targeting QuillBot-style syntactic outputs. This tool should not be relied on for detection reduction.</p>
+              
+              
+                <h3>What is the most effective AI humanizer tool in 2026?</h3>
+                <p>Purpose-built humanizer tools like Undetectable.ai outperform general paraphrasers, with claimed bypass rates of around 95%. However, Turnitin&apos;s August 2025 update was specifically trained on these tools&apos; outputs. No single tool provides consistent bypass across Turnitin, GPTZero, and Originality.ai simultaneously. Prompt engineering during generation and deep structural manual editing outperform any post-processing tool against the full detector stack.</p>
+              
+              
+                <h3>What does perplexity mean in AI detection?</h3>
+                <p>Perplexity measures how statistically predictable a text is — essentially how &ldquo;surprised&rdquo; a language model would be by each word choice. AI models generate low-perplexity text because they default to the most probable next word. Human writing tends to include more unexpected word choices, producing higher perplexity. Effective humanization raises perplexity by introducing less predictable vocabulary and phrasing throughout the document.</p>
+              
+              
+                <h3>Can prompt engineering reduce AI detection?</h3>
+                <p>Yes — and it is more effective than most people realize. A Stanford HAI study (Zou et al.) found that simply asking ChatGPT to &ldquo;employ literary language&rdquo; when self-editing caused detection rates to drop to near zero across seven tested detectors. More recent 2025 approaches using detailed style instructions during generation — rather than post-processing — show similar results. Detectors calibrated against average AI output struggle with outputs that deliberately target linguistic outliers.</p>
+              
+              
+                <h3>What are the ethical implications of making AI text undetectable?</h3>
+                <p>The ethics depend entirely on context. Reducing AI detection scores on authentic human writing that has been incorrectly flagged is legitimate self-defense against a flawed tool. Commercial content where no authorship claim is made raises no unique ethical issues. Submitting AI-generated academic work as original where AI is prohibited is fraud regardless of whether it evades detection. The ethical question is about false authorship claims, not about the technology.</p>
+              
+              
+                <h3>Will watermarking make AI text permanently detectable?</h3>
+                <p>Cryptographic watermarking like Google&apos;s SynthID — open-sourced in October 2024 — is substantially more robust than statistical fingerprinting. It embeds signals into token probability distributions that survive minor edits. However, thorough rewriting or translation &ldquo;greatly reduces confidence scores,&rdquo; per Google DeepMind&apos;s own documentation. As watermarking adoption expands across major LLM providers, it will change the detection landscape fundamentally — most current bypass techniques address statistical patterns, not cryptographic signals.</p>
+              
+              
+                <h3>What techniques do modern AI detectors now catch?</h3>
+                <p>Modern detectors have hardened against: word-level synonym swapping (creates a detectable spinner fingerprint), basic QuillBot-style paraphrasing (Turnitin trained dedicated models on this in July 2024), known humanizer tool outputs (Turnitin&apos;s August 2025 update), and Unicode character substitution. What detectors still struggle with: deep structural rewrites changing clause order and paragraph rhythm, manual editing by skilled writers, short texts under 300 words, and translated content.</p>
+              
+            
+
+          
+
+          
+            <h2>Check Any Text&apos;s Detection Score</h2>
+            <p>EyeSift&apos;s free AI detector shows you exactly how your text scores on perplexity, burstiness, and AI confidence — the same signals used by institutional detectors.</p>
+            <a href="/text-analysis/">
+              Analyze Text Free
+            </a>
+          
+
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/bypass-ai-detection/">
+                Analysis
+                <h3>How to Bypass AI Detection</h3>
+                <p>7 methods tested — only 2 work. Full benchmark data.</p>
+              </a>
+              <a href="/blog/ai-detection-false-positives/">
+                Research
+                <h3>AI Detection False Positives</h3>
+                <p>Why detectors get it wrong and who is most affected.</p>
+              </a>
+              <a href="/blog/humanize-ai-text/">
+                Writing Tools
+                <h3>How to Humanize AI Text</h3>
+                <p>7 proven methods for making AI writing sound human.</p>
+              </a>
+            
+          
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.eyesift.com/blog/how-to-make-ai-text-undetectable/">EyeSift</a>.
+      Explore more free tools at <a href="https://www.eyesift.com/">eyesift.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.eyesift.com/">EyeSift</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
