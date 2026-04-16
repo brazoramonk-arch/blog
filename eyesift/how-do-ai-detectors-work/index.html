@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Do AI Detectors Work? The Science Explained Simply - EyeSift</title>
+  <meta name="description" content="How Do AI Detectors Work? The Science Explained Simply">
+  <link rel="canonical" href="https://www.eyesift.com/blog/how-do-ai-detectors-work/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/eyesift/">EyeSift</a> &rarr; How Do AI Detectors Work? The Science Explained Simply
+  </nav>
+
+  <article>
+    <h1>How Do AI Detectors Work? The Science Explained Simply</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.eyesift.com/blog/how-do-ai-detectors-work/">eyesift.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    <>
+      
+        
+          
+            <a href="/">Home</a>
+            /
+            <a href="/blog/">Blog</a>
+            /
+            How AI Detectors Work
+          
+          
+            Technical Deep Dive
+            Apr 1, 2026
+            &middot; 16 min read
+          
+          <h2>How Do AI Detectors Work? The Science Explained Simply</h2>
+          <p>Myth: AI detectors reliably catch AI writing. Reality: OpenAI shut down its own detector after it achieved 26% detection rates. Here is what the science actually shows.</p>
+        
+      
+
+      
+        
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>→AI text detectors work by measuring perplexity (statistical predictability), burstiness (sentence variance), and transformer-level linguistic fingerprints</li>
+              <li>→Stanford University (Liang et al., 2023) found 61.22% of TOEFL essays by non-native English speakers were falsely flagged as AI — the highest-documented false positive rate for any detection technology</li>
+              <li>→OpenAI shut down its own AI Classifier in July 2023: 26% detection rate, 9% false positive rate on human text</li>
+              <li>→Watermarking (Google SynthID, Kirchenbauer et al. 2023) is theoretically more robust than statistical detection but is vulnerable to recursive paraphrasing attacks</li>
+              <li>→University of Maryland researchers proved that as LLMs improve, reliable AI detection may become theoretically impossible (arXiv:2303.11156)</li>
+            </ul>
+          
+
+          
+
+            <p>
+              Let us start by debunking the most common misconception about AI detectors: that they work by recognizing specific phrases or stylistic tics that AI models always produce. They do not. Modern AI detection is fundamentally a <strong>statistical inference problem</strong> — and like all statistical inference, it involves uncertainty, error rates, and failure modes that most users never see.
+            </p>
+
+            <p>
+              The stakes of getting this wrong are substantial. Vanderbilt University calculated that Turnitin&apos;s claimed 1% false positive rate, applied to their real submission volume of roughly 75,000 papers per year, would wrongly accuse approximately <strong>750 students</strong> of AI misuse annually. They disabled the feature campus-wide in August 2023. Multiple UC campuses followed. Understanding the mechanics behind these systems is no longer optional for educators, publishers, and HR professionals deploying them at scale.
+            </p>
+
+            <h2>The Foundational Signal: Perplexity</h2>
+
+            <p>
+              Perplexity is the mathematical backbone of most AI text detectors. Technically, it measures how &ldquo;surprised&rdquo; a language model is by a sequence of tokens. The formula derives from cross-entropy: perplexity = 2^H(p), where H(p) is the cross-entropy of the text under the model&apos;s probability distribution.
+            </p>
+
+            <p>
+              When a large language model generates text, it selects tokens with high probability given the preceding context — words the model considers statistically expected. This produces <strong>low-perplexity output</strong>. Human writing, by contrast, makes unexpected lexical choices, employs idiomatic expressions, introduces unconventional framings, and deliberately varies phrasing. That produces higher perplexity.
+            </p>
+
+            <p>
+              GPTZero uses a perplexity threshold — scores below roughly 40 are treated as a strong AI signal, when combined with other features. But the signal is imperfect in a specific way: <strong>low perplexity is not unique to AI</strong>. Any writing that uses constrained, predictable vocabulary produces low perplexity — including formal academic prose, legal writing, and non-native English. The Declaration of Independence notoriously scores as &ldquo;likely AI-generated&rdquo; on most perplexity-based detectors.
+            </p>
+
+            <h2>The Second Signal: Burstiness</h2>
+
+            <p>
+              Burstiness measures the <em>variance</em> of perplexity across a document — how much sentence-level complexity fluctuates. Human writers naturally oscillate between short, punchy sentences and long, complex constructions. That oscillation is burstiness.
+            </p>
+
+            <p>
+              AI models, constrained by their smoothing objectives, tend toward uniformly structured sentences at consistent complexity levels. GPTZero considers burstiness scores below 0.30 a strong AI indicator; human writing typically scores 0.65–0.85. The intuition is sound, but the threshold is fragile: academic writing is deliberately low-burstiness. Technical documentation is deliberately low-burstiness. A writer under instruction to &ldquo;be concise&rdquo; produces low-burstiness text indistinguishable, statistically, from AI output.
+            </p>
+
+            <h2>The Equity Problem: Who Gets Falsely Accused</h2>
+
+            <p>
+              The perplexity/burstiness approach has a documented, severe bias that goes beyond theoretical concern. In April 2023, Weixin Liang, Mert Yuksekgonul, Yining Mao, Eric Wu, and James Zou at <strong>Stanford University</strong> published &ldquo;GPT detectors are biased against non-native English writers&rdquo; (arXiv:2304.02819) in <em>Patterns</em> (Cell Press).
+            </p>
+
+            <p>
+              They tested seven leading AI detectors — including GPTZero, ZeroGPT, Writer, Crossplag, CopyLeaks, Sapling, and Originality.ai — against TOEFL essays by non-native English speakers and essays by U.S.-born 8th graders. The results:
+            </p>
+
+            <ul>
+              <li><strong>61.22% of TOEFL essays</strong> (by non-native speakers) were misclassified as AI-generated</li>
+              <li><strong>97% of TOEFL essays</strong> were flagged by at least one of the seven detectors</li>
+              <li>For U.S.-born 8th graders: detectors were &ldquo;near-perfect&rdquo; at correctly identifying human-written text</li>
+            </ul>
+
+            <p>
+              Root cause: non-native speakers use constrained, predictable vocabulary that produces low perplexity — the exact same statistical signature detectors associate with AI. The Stanford study exposed that AI detection tools are not measuring &ldquo;AI-ness&rdquo; — they are measuring <strong>linguistic conformity</strong>. Non-native speakers, ESL students, and writers with formal styles all get caught in the same net.
+            </p>
+
+            <p>
+              Stanford HAI published guidance on this finding. The Markup followed with documented cases of international students falsely accused of cheating at U.S. universities. Vanderbilt University subsequently became one of the first institutions to disable Turnitin AI detection entirely, citing these risks explicitly in their public statement (August 2023).
+            </p>
+
+            <h2>Beyond Statistics: How Transformer Classifiers Work</h2>
+
+            <p>
+              More sophisticated detection approaches replace simple perplexity thresholds with fine-tuned transformer classifiers. Models like RoBERTa or DistilBERT are trained on millions of labeled human/AI text pairs. The classifier learns not just surface vocabulary patterns but deep distributional differences — patterns in attention distributions, embedding space clustering, and conditional probability sequences that are characteristic of specific LLM families.
+            </p>
+
+            <p>
+              RoBERTa achieved <strong>96.1% accuracy</strong> in competitive benchmarks (SemEval-2024 Task 8), outperforming LSTM and GRU architectures. Research published in March 2025 (arXiv:2503.01659, &ldquo;Detecting Stylistic Fingerprints of Large Language Models&rdquo;) demonstrated that different LLM families leave distinct fingerprints beyond generic AI-vs-human classification — identifiable by patterns in sentence-initial word distributions, punctuation frequency, subordinate clause usage, and characteristic lexical preferences.
+            </p>
+
+            <p>
+              The limitation is model-specificity. Classifiers trained on GPT-3.5 outputs degrade when Claude, Gemini, or newly released models generate text. Each major model release partially invalidates existing classifiers. The RAID benchmark (arXiv:2405.07940) — the largest independent evaluation of AI detectors, comprising over 6 million generations across 11 LLMs, 8 domains, and 12 adversarial attack methods — found that detectors are &ldquo;easily fooled by adversarial attacks and unseen generative models.&rdquo;
+            </p>
+
+            <h2>DetectGPT: Probability Curvature Analysis</h2>
+
+            <p>
+              Eric Mitchell, Yann-A&euml;l Le Bras, Ariel Khazatsky, Christopher D. Manning, and Chelsea Finn at <strong>Stanford University</strong> published DetectGPT at ICML 2023 (arXiv:2301.11305). It introduced a method that requires no training on labeled examples.
+            </p>
+
+            <p>
+              The key insight: text sampled from an LLM tends to occupy <strong>negative curvature regions</strong> of the log probability function. When you take an AI-generated passage and apply small random perturbations (via a T5 paraphrasing model), the perturbed versions are consistently <em>less</em> probable than the original under the source model — the original sits at a local maximum. For human text, perturbations show no systematic directional effect.
+            </p>
+
+            <p>
+              DetectGPT improved fake news detection AUROC from 0.81 (the best prior zero-shot method) to <strong>0.95 AUROC</strong> on standard benchmarks — without any labeled training data. The limitation is computational: it requires running multiple forward passes through a large model for each detection call, making it expensive at scale.
+            </p>
+
+            <h2>Watermarking: The More Reliable Alternative</h2>
+
+            <p>
+              Watermarking does not detect AI text after the fact — it embeds a signal at the point of generation. John Kirchenbauer, Jonas Geiping, Yuxin Wen, John Katz, Ian Miers, and Tom Goldstein at the <strong>University of Maryland</strong> published the foundational paper in January 2023 (arXiv:2301.10226, presented at ICML 2023).
+            </p>
+
+            <p>
+              The mechanism:
+            </p>
+
+            <ol>
+              <li>Before each token is generated, a cryptographic hash of the preceding token produces a pseudorandom seed</li>
+              <li>That seed splits the full vocabulary into a &ldquo;green list&rdquo; (~50% of tokens) and a &ldquo;red list&rdquo; (~50%)</li>
+              <li>A small bias (delta δ) is added to the logits of all green-list tokens, softly promoting their selection</li>
+              <li>The signal is imperceptible to readers — the shift is statistically subtle</li>
+              <li>Detection: count the fraction of green tokens in a passage. Watermarked text shows a statistically significant excess above 50% (z-test with interpretable p-values)</li>
+            </ol>
+
+            <p>
+              The paper demonstrated the watermark on multi-billion parameter models with negligible text quality impact. Detection achieves statistical significance with roughly <strong>200–300 tokens</strong>. Scott Aaronson, then at OpenAI, confirmed OpenAI was developing a similar system internally, calling it potentially &ldquo;virtually undetectable to the human eye.&rdquo;
+            </p>
+
+            <p>
+              Google DeepMind deployed this approach as <strong>SynthID Text</strong>, now active in Gemini. SynthID uses a pseudorandom g-function keyed to a secret, applied at every token generation step. It is robust to mild paraphrasing, cropping, and word substitution — but degrades significantly under thorough rewriting or translation.
+            </p>
+
+            <h2>The Accuracy Gap: What Benchmarks Actually Show</h2>
+
+            <p>
+              The RAID benchmark (Dugan et al., University of Pennsylvania, May 2024 — arXiv:2405.07940) is the most rigorous independent evaluation of AI text detectors. It uses TPR@FPR=1% as its primary metric — the true positive rate (AI correctly identified) when the false positive rate is held to just 1%. Testing across 11 LLMs, 8 domains, and 12 adversarial attack methods:
+            </p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Detector</th>
+                    <th >Vendor Claim</th>
+                    <th >RAID / Independent Result</th>
+                    <th >Notable Failure Mode</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td >GPTZero</td>
+                    <td >99%+</td>
+                    <td >95.7% TPR @ 1% FPR (RAID)</td>
+                    <td >Formal writing, non-native English</td>
+                  </tr>
+                  <tr >
+                    <td >Turnitin</td>
+                    <td >98% (self-reported)</td>
+                    <td >~80–84% real-world</td>
+                    <td >~4% false positive at sentence level</td>
+                  </tr>
+                  <tr >
+                    <td >Copyleaks</td>
+                    <td >99.52%</td>
+                    <td >~79% independent testing</td>
+                    <td >~5% false positive (1 in 20 docs)</td>
+                  </tr>
+                  <tr >
+                    <td >Originality.ai</td>
+                    <td >~90%+</td>
+                    <td >~79% (best in one independent test)</td>
+                    <td >Variable across content types</td>
+                  </tr>
+                  <tr >
+                    <td >OpenAI Classifier</td>
+                    <td >Not disclosed</td>
+                    <td ><strong>26% detection rate</strong></td>
+                    <td >~9% false positive; <strong>shut down July 2023</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            
+
+            <p>Sources: RAID Benchmark (arXiv:2405.07940); independent testing by walterwrites.ai (2024); OpenAI public statement July 2023; Turnitin methodology documentation</p>
+
+            <p>
+              The most striking data point: no commercial tool exceeded 80% overall accuracy in real-world independent testing, despite vendor claims of 95–99.52%. GPTZero&apos;s strong RAID results are from a formal, controlled benchmark — real-world accuracy on mixed, post-processed, or adversarially altered text is substantially lower. Understanding this gap is critical for anyone deploying these tools in consequential contexts.
+            </p>
+
+            <p>
+              For a broader analysis of how these limitations play out specifically in educational settings, see our article on <a href="/blog/does-turnitin-detect-ai/">how Turnitin AI detection works</a> and its real-world accuracy for student submissions.
+            </p>
+
+            <h2>The Arms Race: Why Detection Always Lags Generation</h2>
+
+            <p>
+              The adversarial dynamic between AI generators and detectors follows a predictable escalation cycle that has now run through four distinct rounds:
+            </p>
+
+            <p>
+              <strong>Round 1 (2022): Statistical detectors.</strong> Simple perplexity thresholds. Defeated almost immediately by temperature-adjusted sampling — increasing the model&apos;s generation temperature raises perplexity without changing content quality.
+            </p>
+
+            <p>
+              <strong>Round 2 (early 2023): Classifier-based detectors.</strong> Fine-tuned models trained on GPT-3 outputs. Defeated by paraphrasing tools (Quillbot, etc.) and prompting AI to &ldquo;write more naturally.&rdquo; OpenAI&apos;s own classifier could not detect ChatGPT output run through basic paraphrasing.
+            </p>
+
+            <p>
+              <strong>Round 3 (2023): Watermarking.</strong> Kirchenbauer-style token biasing. Defeated by recursive paraphrasing attacks, as demonstrated by Sadasivan et al. at the University of Maryland (arXiv:2303.11156). Repeated paraphrasing with a second LLM removes the green/red token statistical pattern while preserving semantic content. The same paper showed a spoofing attack: an attacker can infer the hidden watermark signature and frame human-written text as AI-generated.
+            </p>
+
+            <p>
+              <strong>Round 4 (2024): Adversarial humanization.</strong> arXiv:2404.01907 demonstrated that current detection models can be compromised in under 10 seconds using minor targeted word substitutions — adversarial perturbations that preserve semantic meaning while defeating classification. Paraphrasing in a single pass reduces detector accuracy by over 54 percentage points.
+            </p>
+
+            <p>
+              Behind all four rounds is a <strong>theoretical limit</strong>, formalized by Sadasivan et al. (arXiv:2303.11156): as LLMs improve, the statistical distance between human and AI text distributions approaches zero. This implies that the AUROC of any possible detector approaches 0.5 — random chance — as model quality increases. Reliable AI text detection may be theoretically impossible for sufficiently advanced models generating text in their training distribution.
+            </p>
+
+            <h2>What Detectors Cannot Do</h2>
+
+            <p>
+              Understanding the hard boundaries matters as much as understanding the methods. Current AI detectors reliably fail in these specific conditions:
+            </p>
+
+            <ul>
+              <li><strong>Short text:</strong> Statistical significance requires volume. Most detectors are unreliable below 150–250 words. The OpenAI Classifier explicitly warned users it was inaccurate on short snippets.</li>
+              <li><strong>Mixed/hybrid content:</strong> Human-edited AI text, or AI-assisted human text, breaks binary classification. No tool reliably handles the spectrum between fully human and fully AI.</li>
+              <li><strong>New model releases:</strong> Each major LLM release (GPT-4o, Claude 3 Opus, Gemini 1.5 Pro) partially invalidates existing classifiers. The RAID benchmark confirmed detectors are &ldquo;easily fooled by unseen generative models.&rdquo;</li>
+              <li><strong>Multilingual content:</strong> Most detectors were trained primarily on English. Accuracy drops sharply for other languages. Cross-lingual detection is described as &ldquo;still in its infancy&rdquo; in recent surveys.</li>
+              <li><strong>Domain shift:</strong> Detectors trained on news articles and essays fail on code, poetry, dialogue, and technical documentation.</li>
+              <li><strong>Formal registers:</strong> Academic writing, legal prose, and medical documentation are low-perplexity by design — systematic false positives in precisely the contexts where detection is most often deployed.</li>
+            </ul>
+
+            <h2>How to Use AI Detectors Responsibly</h2>
+
+            <p>
+              Given these documented limitations, responsible deployment means:
+            </p>
+
+            <p>
+              <strong>For educators:</strong> Treat detector output as one data point, not a verdict. A positive signal warrants a conversation with the student — not automatic punishment. Ask students about their writing process. Look at prior work for consistency. Vanderbilt&apos;s published rationale for disabling AI detection is worth reading for anyone setting institutional policy.
+            </p>
+
+            <p>
+              <strong>For publishers and HR:</strong> Never reject a submission or candidate based solely on an AI detection score. Use detection as a first-pass filter that flags content for human review — not as a standalone decision. Keep the false positive implications of the Stanford study in mind when screening applicants whose first language is not English.
+            </p>
+
+            <p>
+              <strong>For anyone:</strong> Submit the most complete text available. Short excerpts are statistically unreliable. Run multiple tools and compare — convergence increases confidence, divergence signals ambiguity. Use <a href="/text-analysis/">EyeSift&apos;s text analysis tool</a> alongside contextual judgment rather than as a replacement for it.
+            </p>
+
+            <p>
+              For the parallel question of how detectors work on images rather than text — frequency fingerprinting, neural classifiers, and C2PA provenance metadata — see our in-depth guide on <a href="/blog/ai-image-detector/">AI image detectors</a>.
+            </p>
+
+            <h2>Frequently Asked Questions</h2>
+
+            
+              
+                <h3>What is perplexity in AI detection?</h3>
+                <p>Perplexity measures how statistically predictable a piece of text is. AI text tends to be low-perplexity because language models select high-probability tokens. Human writing is less predictable. GPTZero uses a perplexity threshold (roughly below 40) as one signal among several, but low perplexity is not unique to AI — formal, repetitive human writing produces the same signature.</p>
+              
+
+              
+                <h3>Are AI detectors accurate?</h3>
+                <p>On controlled benchmarks, GPTZero reaches 95.7% TPR at a 1% false positive rate (RAID Benchmark, 2024). In real-world conditions, independent testing found no tool exceeded 80% overall accuracy. OpenAI shut down its own classifier in July 2023 after it achieved only a 26% detection rate with a 9% false positive rate on human text.</p>
+              
+
+              
+                <h3>Why do AI detectors falsely flag non-native English speakers?</h3>
+                <p>Non-native speakers use constrained, predictable vocabulary — the same low-perplexity signature detectors associate with AI. A Stanford University study (Liang et al., 2023) found 61.22% of TOEFL essays were misclassified as AI-generated by seven leading detectors. Vanderbilt University subsequently disabled Turnitin AI detection campus-wide citing these risks.</p>
+              
+
+              
+                <h3>Can paraphrasing fool AI detectors?</h3>
+                <p>Yes. University of Maryland researchers (Sadasivan et al., 2023) showed recursive paraphrasing with a second LLM defeats both watermarking and statistical detectors while preserving semantic content. One study found paraphrasing reduced detector accuracy by over 54 percentage points. This is the primary bypass technique used in practice.</p>
+              
+
+              
+                <h3>What is SynthID and how does watermarking work?</h3>
+                <p>Google DeepMind&apos;s SynthID Text embeds an invisible signal by biasing token selection during generation using a pseudorandom function keyed to a secret. Detection compares the token sequence against the expected watermarked distribution. SynthID is deployed in Gemini and is robust to mild paraphrasing, but degrades significantly under thorough rewriting or translation to another language.</p>
+              
+
+              
+                <h3>What is DetectGPT?</h3>
+                <p>DetectGPT (Stanford University, Mitchell et al., ICML 2023) detects AI text by analyzing probability curvature. AI-generated text occupies negative curvature regions — random perturbations consistently decrease its probability. DetectGPT achieved 0.95 AUROC on fake news detection without requiring labeled training examples, using only forward passes through a base language model for inference.</p>
+              
+
+              
+                <h3>Do AI detectors work on short text?</h3>
+                <p>No — they are unreliable below 150–250 words. Statistical methods need sufficient token count for significance. The now-discontinued OpenAI Classifier explicitly warned users it was inaccurate on short snippets. Most commercial tools recommend submitting at least 250 words for meaningful results. Email-length submissions should not be assessed with these tools.</p>
+              
+            
+
+          
+
+          
+            <h2>Run a Free AI Detection Analysis</h2>
+            <p>EyeSift&apos;s text analysis uses multiple detection methods — statistical, transformer-based, and contextual — to give you a more complete picture than any single metric alone.</p>
+            <a href="/text-analysis/">
+              Analyze Text Now
+            </a>
+          
+
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/best-ai-detectors-2026/">
+                Comparison
+                <h3>Best AI Detectors 2026</h3>
+                <p>Tested head-to-head: accuracy, pricing, and use cases compared.</p>
+              </a>
+              <a href="/blog/ai-image-detector/">
+                Image Detection
+                <h3>AI Image Detector Guide</h3>
+                <p>Frequency analysis, C2PA, and neural classifiers for images.</p>
+              </a>
+              <a href="/blog/does-turnitin-detect-ai/">
+                Education
+                <h3>Does Turnitin Detect AI?</h3>
+                <p>Real accuracy data, false positive rates, and institutional implications.</p>
+              </a>
+            
+          
+
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.eyesift.com/blog/how-do-ai-detectors-work/">EyeSift</a>.
+      Explore more free tools at <a href="https://www.eyesift.com/">eyesift.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.eyesift.com/">EyeSift</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
