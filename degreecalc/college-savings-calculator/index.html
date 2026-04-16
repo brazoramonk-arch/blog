@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Savings Calculator: How Much Should You Save Each Month? - DegreeCalc</title>
+  <meta name="description" content="How much should you save for college? Monthly savings benchmarks by child age, 529 vs UGMA comparisons, and FAFSA impact explained. College Board &amp; Sallie Mae data.">
+  <link rel="canonical" href="https://www.degreecalc.com/blog/college-savings-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/degreecalc/">DegreeCalc</a> &rarr; College Savings Calculator: How Much Should You Save Each Month?
+  </nav>
+
+  <article>
+    <h1>College Savings Calculator: How Much Should You Save Each Month?</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.degreecalc.com/blog/college-savings-calculator/">degreecalc.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'College Savings Calculator: How Much Should You Save Each Month?',
+    description: 'A comprehensive guide to college savings using current College Board, Sallie Mae, and Vanguard data — including monthly savings benchmarks, 529 plan strategies, FAFSA treatment, and the real savings gap most families face.',
+    datePublished: '2026-04-13',
+    dateModified: '2026-04-13',
+    author:  '@type': 'Organization', name: 'DegreeCalc' ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'DegreeCalc',
+      url: 'https://degreecalc.com/',
+      logo:  '@type': 'ImageObject', url: 'https://degreecalc.com/favicon.svg' ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://degreecalc.com/blog/college-savings-calculator/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://degreecalc.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://degreecalc.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'College Savings Calculator Guide', item: 'https://degreecalc.com/blog/college-savings-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How much should I save for college each month?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'It depends on your child\'s age and your target school. A parent starting at birth needs roughly $300–$500/month to fund a public in-state university education, assuming 7% annual returns and current tuition trends. Starting at age 5 requires $400–$700/month; starting at age 10 requires $700–$1,200/month. T. Rowe Price benchmarks suggest having 0.6x the annual tuition cost saved by age 5 as a milestone checkpoint.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does a 529 plan hurt financial aid eligibility?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Very minimally, if the account is parent-owned. Parent-owned 529 plans are assessed at a maximum 5.64% rate on FAFSA — meaning a $30,000 balance reduces expected financial aid by at most $1,692. Grandparent-owned 529 plans now have zero FAFSA impact as of the 2024–25 rule changes. The long-term tax-free growth benefit of a 529 far outweighs the modest financial aid impact for most families.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the average 529 plan balance?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'According to Investment Company Institute data from December 2024, the average 529 account balance is $30,960 — up from $30,295 in 2023, an 11.45% increase year-over-year. Total 529 assets across all accounts reached $525.1 billion held in 17 million accounts. However, this average masks wide variation: many accounts are newly opened with small balances, while established accounts saving for near-term enrollment often hold $80,000–$150,000.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is a 529 plan or UGMA/UTMA better for college savings?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For families confident the funds will be used for college, a 529 plan is almost always superior: tax-free growth, tax-free withdrawals for qualified expenses, and only a 5.64% FAFSA impact. UGMA/UTMA custodial accounts offer more investment flexibility and can be used for any purpose — not just education — but are taxed annually and assessed at 20% on FAFSA (vs. 5.64% for parent-owned 529s), substantially reducing aid eligibility.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What happens to 529 money if my child does not go to college?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'You have several options. As of 2024, up to $35,000 in unused 529 funds can be rolled into the beneficiary\'s Roth IRA (with conditions: the account must be 15+ years old and annual Roth contribution limits apply). You can also change the beneficiary to another family member — including a sibling, cousin, or even yourself — for their qualified education expenses. Alternatively, funds can pay for trade school, apprenticeship programs, or K-12 tuition ($10,000/year limit). Non-qualified withdrawals incur income tax plus a 10% penalty on earnings only.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is college superfunding and how does it work?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Superfunding allows you to front-load 5 years of gift tax exclusions into a 529 plan in one lump sum. In 2026, the annual gift exclusion is $18,000 per person, so one contributor can superfund $90,000 ($180,000 for a married couple filing jointly) without triggering gift taxes. No additional contributions to that beneficiary\'s 529 can be made during the 5-year window from the same contributor. Getting money invested early maximizes compound growth over the full savings horizon.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+      <Header />
+      
+        
+
+          /* Breadcrumb */
+          
+            <a href="/">Home</a>
+            /
+            <a href="/blog/">Blog</a>
+            /
+            College Savings Calculator Guide
+          
+
+          /* Header */
+          
+            Paying for College
+            <h2>
+              College Savings Calculator: How Much Should You Save Each Month?
+            </h2>
+            
+              <time dateTime="2026-04-13">April 13, 2026</time>
+              17 min read
+            
+          
+
+          
+
+            /* Data-led opener */
+            <p>
+              Here is the statistic that should motivate every parent of a young child: according to Sallie Mae&apos;s 2024 <em>How America Pays for College</em> report, families say they hope to cover 67% of their child&apos;s college costs through savings. Based on actual savings behavior, they realistically cover about 30%. That 37-percentage-point gap translates directly into student loan debt — and the earlier you start closing it, the less expensive it is to fix.
+            </p>
+            <p>
+              This guide gives you real monthly savings benchmarks by child age, a comparison of every major savings vehicle, and a clear understanding of how a college savings account affects financial aid. Whether you are starting at birth or scrambling in middle school, there is a path forward.
+            </p>
+
+            /* Key Takeaways */
+            
+              <p>Key Takeaways</p>
+              <ul>
+                <li>&#x2022; A public in-state university costs an average of $29,900/year all-in (2024–25 College Board data) — about $119,600 over four years</li>
+                <li>&#x2022; Families realistically cover only 30% of college costs through savings; scholarships cover 27%, loans cover 23%</li>
+                <li>&#x2022; The average 529 account balance is $30,960 (Investment Company Institute, Dec 2024) — far below the $55,342 families report as their savings goal</li>
+                <li>&#x2022; Parent-owned 529 plans reduce financial aid eligibility by at most 5.64% of account value; grandparent-owned 529s now have zero FAFSA impact</li>
+                <li>&#x2022; Starting at birth vs. age 10 doubles or triples your required monthly savings contribution for the same final balance</li>
+              </ul>
+            
+
+            <h2>What College Actually Costs in 2026</h2>
+            <p>
+              Before calculating how much to save, you need the right starting number. Per College Board&apos;s 2024–2025 <em>Trends in College Pricing</em> report, here are average annual costs:
+            </p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >School Type</th>
+                    <th >Published Tuition</th>
+                    <th >Total COA (w/ Room &amp; Board)</th>
+                    <th >4-Year Total</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr>
+                    <td >Public 2-Year (community college)</td>
+                    <td >$4,050/yr</td>
+                    <td >$20,570/yr</td>
+                    <td >$41,140</td>
+                  </tr>
+                  <tr>
+                    <td >Public 4-Year (in-state)</td>
+                    <td >$11,610/yr</td>
+                    <td >$29,900/yr</td>
+                    <td >$119,600</td>
+                  </tr>
+                  <tr>
+                    <td >Public 4-Year (out-of-state)</td>
+                    <td >$30,780/yr</td>
+                    <td >$48,590/yr</td>
+                    <td >$194,360</td>
+                  </tr>
+                  <tr>
+                    <td >Private Nonprofit 4-Year</td>
+                    <td >$43,350/yr</td>
+                    <td >$63,000/yr</td>
+                    <td >$252,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+
+            <p>
+              These are the published sticker prices. After financial aid, the picture improves: average net price is approximately $20,800/year at public universities and $36,200/year at private universities per College Board data. The right savings target depends on your specific expected family contribution — which you can estimate using the FAFSA4caster or our <a href="/college-cost-calculator/">college cost calculator</a>.
+            </p>
+
+            <h3>Projecting Future Costs: The Inflation Factor</h3>
+            <p>
+              College costs have risen at an average of 3.88% annually since 2010, according to Education Data Initiative analysis. Recent years have seen more moderate increases — the 2024–25 average tuition increase was approximately 2.7–3.9% depending on school type. Financial planners typically use a 3% annual inflation assumption for college cost projections.
+            </p>
+            <p>
+              What this means in practice: a child born today who enrolls in a public in-state university in 18 years will face estimated costs of approximately $180,000–$200,000 for a four-year degree (in today&apos;s dollars, adjusted for inflation). A private university could approach $380,000–$420,000 in nominal terms. These projections underscore why starting savings early — and investing, not just depositing — makes such a dramatic difference.
+            </p>
+
+            <h2>Monthly Savings Benchmarks by Child Age</h2>
+            <p>
+              The following benchmarks assume a 7% average annual investment a common planning assumption for diversified stock-heavy portfolios over long horizons) and a target of funding 100% of average public in-state costs ($29,900/year in 2024–25 dollars, inflated at 3% annually). Adjust the target down if you expect significant financial aid, scholarships, or if you plan for the student to contribute through work-study or part-time employment.
+            </p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Child&apos;s Current Age</th>
+                    <th >Years to College</th>
+                    <th >Monthly (Public In-State)</th>
+                    <th >Monthly (Private)</th>
+                    <th >Milestone Balance Now</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr>
+                    <td >Newborn (0)</td>
+                    <td >18 years</td>
+                    <td >~$320/mo</td>
+                    <td >~$680/mo</td>
+                    <td >—</td>
+                  </tr>
+                  <tr>
+                    <td >Age 2</td>
+                    <td >16 years</td>
+                    <td >~$380/mo</td>
+                    <td >~$810/mo</td>
+                    <td >$8,000+</td>
+                  </tr>
+                  <tr>
+                    <td >Age 5</td>
+                    <td >13 years</td>
+                    <td >~$500/mo</td>
+                    <td >~$1,060/mo</td>
+                    <td >$18,000+</td>
+                  </tr>
+                  <tr>
+                    <td >Age 8</td>
+                    <td >10 years</td>
+                    <td >~$700/mo</td>
+                    <td >~$1,490/mo</td>
+                    <td >$30,000+</td>
+                  </tr>
+                  <tr>
+                    <td >Age 10</td>
+                    <td >8 years</td>
+                    <td >~$900/mo</td>
+                    <td >~$1,900/mo</td>
+                    <td >$40,000+</td>
+                  </tr>
+                  <tr>
+                    <td >Age 13</td>
+                    <td >5 years</td>
+                    <td >~$1,600/mo</td>
+                    <td >~$3,400/mo</td>
+                    <td >$60,000+</td>
+                  </tr>
+                  <tr>
+                    <td >Age 15</td>
+                    <td >3 years</td>
+                    <td >~$2,800/mo</td>
+                    <td >~$5,900/mo</td>
+                    <td >$75,000+</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+
+            <p>
+              The &quot;Milestone Balance Now&quot; column uses T. Rowe Price&apos;s age-based savings benchmarks, which suggest families should have roughly 0.6x the annual tuition cost saved by age 5, growing to approximately 2x by age 10 and 4x by age 15. These are starting-point benchmarks — falling short does not mean you have failed, but it clarifies the catch-up contribution needed.
+            </p>
+            <p>
+              A critically important note: these monthly figures assume you are starting fresh with no existing savings. If you already have $20,000 in a 529 plan and your child is 8, your required monthly contribution drops significantly. Use our <a href="/college-cost-calculator/">college cost calculator</a> to model your specific starting balance.
+            </p>
+
+            <h2>The Reality Gap: What Families Actually Save</h2>
+            <p>
+              The benchmarks above represent what families <em>should</em> save. The actual picture is considerably different. According to Sallie Mae&apos;s 2024 research:
+            </p>
+            <ul>
+              <li>Only <strong>35% of families</strong> use a dedicated college savings account (529, ESA, or UGMA)</li>
+              <li>The average 529 balance among families actively saving is <strong>$30,960</strong> (Investment Company Institute, December 2024) — against an average savings goal of $55,342</li>
+              <li>Families cover college costs through: savings and income (48%), scholarships and grants (27%), borrowing (23%), and gifts from others (2%)</li>
+              <li>Despite having a plan, families typically cover only about <strong>30% of total four-year costs</strong> through dedicated savings — not the 67% they hope to cover</li>
+            </ul>
+            <p>
+              This gap is not a moral failing — it reflects competing financial priorities (retirement, housing, childcare, emergency funds) that make aggressive college saving difficult for many families. The practical implication is that most students will need a combination of family savings, scholarships, work, and loans to fund college. Our <a href="/blog/529-plan-guide/">529 plan guide</a> covers strategies for maximizing even modest monthly contributions.
+            </p>
+
+            
+              <p>How $200/Month Grows Over Time (7% Annual Return)</p>
+              <ul>
+                <li><strong>5 years:</strong> $14,280 contributed → $14,757 balance</li>
+                <li><strong>10 years:</strong> $24,000 contributed → $34,748 balance</li>
+                <li><strong>15 years:</strong> $36,000 contributed → $65,086 balance</li>
+                <li><strong>18 years:</strong> $43,200 contributed → $91,612 balance</li>
+                <li>Investment growth adds $48,412 beyond contributions over 18 years at $200/month.</li>
+              </ul>
+            
+
+            <h2>529 Plan: The Gold Standard for College Savings</h2>
+            <p>
+              For families confident their savings will go toward college expenses, the 529 plan offers the most tax-efficient vehicle available. As of December 2024, 529 plans hold <strong>$525.1 billion</strong> in assets across <strong>17 million accounts</strong> — an 11.45% increase from 2023, per Investment Company Institute data.
+            </p>
+            <p>
+              The 529 advantages are straightforward:
+            </p>
+            <ul>
+              <li><strong>Tax-free growth:</strong> Earnings are never taxed as long as they are used for qualified education expenses</li>
+              <li><strong>Tax-free withdrawals:</strong> Qualified distributions — tuition, fees, books, room and board, computers — are entirely tax-free</li>
+              <li><strong>State tax deductions:</strong> More than 30 states offer a deduction or credit on contributions to their state plan. Some states (like Utah and Indiana) offer credits worth 4–5% of contributions</li>
+              <li><strong>No income limits:</strong> Unlike Coverdell ESAs, there is no income restriction on who can contribute to a 529</li>
+              <li><strong>High contribution limits:</strong> Most state plans allow total contributions of $350,000–$550,000 per beneficiary</li>
+              <li><strong>New: Roth IRA rollover option:</strong> Beginning in 2024, up to $35,000 in unused 529 funds can be rolled into the beneficiary&apos;s Roth IRA, eliminating the &quot;what if they don&apos;t go to college&quot; concern</li>
+            </ul>
+
+            <h3>How a 529 Affects Financial Aid (The Answer Surprises Most Families)</h3>
+            <p>
+              Many parents avoid 529 plans fearing they will hurt financial aid eligibility. The actual impact is much smaller than most realize.
+            </p>
+            <p>
+              A <strong>parent-owned 529 plan</strong> is assessed at a maximum rate of <strong>5.64%</strong> on FAFSA. A $30,000 balance reduces expected financial aid by at most $1,692 per year. Meanwhile, that same $30,000 earns investment returns tax-free — likely generating $2,100 or more annually at a 7% return. The math overwhelmingly favors the 529.
+            </p>
+            <p>
+              <strong>Grandparent-owned 529 plans</strong> now have <strong>zero FAFSA impact</strong> under the 2024–25 FAFSA Simplification Act changes. Previously, distributions from grandparent accounts were counted as student income at a devastating 50% assessment rate. That rule is gone. Grandparents who want to help fund a grandchild&apos;s education should strongly consider contributing to a 529 plan in their own name.
+            </p>
+
+            <h2>Comparing Your College Savings Options</h2>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Feature</th>
+                    <th >529 Plan</th>
+                    <th >Coverdell ESA</th>
+                    <th >UGMA/UTMA</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr>
+                    <td >Annual Contribution Limit</td>
+                    <td >No limit (gift tax applies over $18K)</td>
+                    <td >$2,000/year</td>
+                    <td >No limit</td>
+                  </tr>
+                  <tr>
+                    <td >Tax-Free Growth</td>
+                    <td >Yes</td>
+                    <td >Yes</td>
+                    <td >No (annual taxes)</td>
+                  </tr>
+                  <tr>
+                    <td >Income Restrictions</td>
+                    <td >None</td>
+                    <td >$110K / $220K limit</td>
+                    <td >None</td>
+                  </tr>
+                  <tr>
+                    <td >Investment Flexibility</td>
+                    <td >Plan-limited options</td>
+                    <td >Broader options</td>
+                    <td >Broadest (any asset)</td>
+                  </tr>
+                  <tr>
+                    <td >FAFSA Impact</td>
+                    <td >5.64% (parent-owned)</td>
+                    <td >5.64% (parent-owned)</td>
+                    <td >Up to 20% (student asset)</td>
+                  </tr>
+                  <tr>
+                    <td >Control After 18</td>
+                    <td >Parent retains control</td>
+                    <td >Parent retains control</td>
+                    <td >Child takes control</td>
+                  </tr>
+                  <tr>
+                    <td >K-12 Use</td>
+                    <td >$10,000/yr limit</td>
+                    <td >Unlimited</td>
+                    <td >Any purpose</td>
+                  </tr>
+                  <tr>
+                    <td >Non-College Flexibility</td>
+                    <td >$35K Roth IRA rollover option</td>
+                    <td >Age 30 deadline</td>
+                    <td >Any purpose, anytime</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+
+            <p>
+              The Coverdell ESA is genuinely useful for families with significant K-12 private school costs — it covers those expenses without the $10,000 annual cap that applies to 529 plans. However, the $2,000 annual contribution limit is so low that it is rarely the primary college savings vehicle; most families use it as a supplement to a 529.
+            </p>
+            <p>
+              UGMA/UTMA accounts are best suited for families who are uncertain whether funds will be used for college, or who want to transfer assets to a minor for broader wealth-building purposes. The 20% FAFSA assessment rate is a significant penalty for college-specific savings — a $50,000 UGMA balance reduces aid eligibility by up to $10,000, versus only $2,820 for the same amount in a parent-owned 529.
+            </p>
+
+            <h2>Three Advanced Strategies for Accelerating College Savings</h2>
+
+            <h3>Strategy 1: Superfunding — The Lump-Sum Accelerator</h3>
+            <p>
+              The IRS allows a special election called &quot;superfunding&quot; that lets you contribute five years of gift tax exclusions to a 529 plan in one lump sum. In 2026, the annual gift exclusion is $18,000 per person, so one contributor can superfund $90,000 in a single year. A married couple filing jointly can contribute $180,000 at once.
+            </p>
+            <p>
+              The compounding advantage is significant. An $80,000 contribution at birth invested at 8% returns grows to approximately $319,600 over 18 years. The same $80,000 spread over 5 years grows to only $292,600 — a $27,000 difference from investing earlier. Superfunding is an especially powerful strategy for grandparents with appreciated assets looking to reduce taxable estates while benefiting grandchildren&apos;s education.
+            </p>
+            <p>
+              Important rules: during the 5-year election period, no additional taxable gifts from the same contributor can be made to that beneficiary. And if the contributor dies within the 5-year period, a prorated portion of the contribution reverts to their estate.
+            </p>
+
+            <h3>Strategy 2: Age-Based Investment Allocation</h3>
+            <p>
+              Most 529 plans offer an age-based investment option that automatically shifts from aggressive (stock-heavy) to conservative (bond-heavy) as your child approaches college age. This is the appropriate default strategy for most families.
+            </p>
+            <p>
+              Vanguard uses a 6% annual return assumption in its 529 illustrations. Fidelity uses 4.5%. The right assumption for your plan depends on your asset allocation. When a child is young (10+ years to college), an 80% equity allocation is reasonable and historically has delivered 7–9% annual returns over long horizons. As college approaches within 3–5 years, shifting toward capital preservation protects against a market correction right before you need the funds.
+            </p>
+            <p>
+              Never be fully invested in stocks with money you need in less than three years. A 30–40% market decline in the 12 months before freshman year could permanently reduce your college fund if you do not have time to recover.
+            </p>
+
+            <h3>Strategy 3: Dollar-Cost Averaging Through Market Volatility</h3>
+            <p>
+              Setting up automatic monthly contributions to a 529 — even a modest amount — accomplishes two things. First, it enforces savings discipline: money transferred automatically before hitting your checking account is money you will not spend elsewhere. Second, regular investing through market cycles (dollar-cost averaging) ensures you buy more shares when prices are low and fewer when prices are high.
+            </p>
+            <p>
+              According to Investment Company Institute data, 38% of 529 accounts use automatic contribution settings. The remaining 62% rely on manual deposits — which research consistently shows results in lower average contribution rates due to procrastination and market timing attempts. Set it up automatically. Adjust the amount annually as your income grows. Do not try to time the market.
+            </p>
+
+            <h2>If You Are Starting Late: A Realistic Playbook</h2>
+            <p>
+              Many parents arrive at this topic when their child is already in middle school. The compound growth math is less favorable, but the situation is far from hopeless. Here is the late-start framework:
+            </p>
+            <ul>
+              <li>
+                <strong>Be honest about the gap, then plan to close part of it.</strong> You will likely not fund 100% of college costs starting fresh at 13. Aim to cover 30–40% through savings, and identify scholarship, work-study, and manageable loan options for the remainder. Our <a href="/blog/scholarships-for-college-2026/">scholarship guide</a> covers realistic award ranges by student profile.
+              </li>
+              <li>
+                <strong>Maximize contributions in the remaining years.</strong> Even three years of $800/month in a 529 generates nearly $33,000 by enrollment. That is a meaningful first-year contribution that reduces borrowing.
+              </li>
+              <li>
+                <strong>Target in-state public universities first.</strong> At $29,900/year all-in, a public in-state degree is nearly three times cheaper than a private alternative. For families with limited savings, school selection is a direct financial decision. Community college for two years followed by university transfer is another powerful cost-cutting strategy — often saving $40,000–$60,000.
+              </li>
+              <li>
+                <strong>Maximize the student&apos;s scholarship applications.</strong> Sallie Mae data shows 80% of families used scholarships in 2024, but many leave money on the table by not applying broadly. Even $5,000–$10,000 per year in external scholarships significantly changes the calculus.
+              </li>
+              <li>
+                <strong>Know the student loan limits.</strong> If loans are necessary, the federal loan limits for dependent undergraduates are $5,500 (freshman), $6,500 (sophomore), and $7,500 (junior/senior). Total federal limit for dependent students: $31,000. Staying within federal limits avoids the higher interest rates and fewer protections of private loans. Use our <a href="/student-loan-calculator/">student loan calculator</a> to model payment scenarios.
+              </li>
+            </ul>
+
+            /* FAQ Section */
+            <h2>Frequently Asked Questions</h2>
+            
+              
+                <h3>How much should I save for college each month?</h3>
+                <p>
+                  It depends on your child&apos;s age and target school. Starting at birth: roughly $320/month reaches a public in-state university goal (7% return assumption). Starting at age 10: approximately $900/month for the same target. The older the child, the more dramatically the required monthly contribution increases. Use our <a href="/college-cost-calculator/">college cost calculator</a> to model your specific situation with existing savings.
+                </p>
+              
+              
+                <h3>Does a 529 plan hurt financial aid eligibility?</h3>
+                <p>
+                  Very minimally. Parent-owned 529 plans are assessed at a maximum 5.64% rate — a $30,000 balance reduces aid by at most $1,692/year. Grandparent-owned 529 plans now have zero FAFSA impact (major 2024 rule change). The tax-free growth benefit of a 529 far outweighs the modest aid reduction for most families.
+                </p>
+              
+              
+                <h3>What is the average 529 plan balance?</h3>
+                <p>
+                  According to Investment Company Institute data from December 2024, the average 529 account balance is $30,960 across 17 million accounts — up 11.45% year-over-year. Total 529 assets reached $525.1 billion. This average masks wide variation; many accounts are newly opened. Families saving for imminent enrollment often hold $80,000–$150,000.
+                </p>
+              
+              
+                <h3>Is a 529 plan or UGMA/UTMA better for college savings?</h3>
+                <p>
+                  For families confident funds will be used for education, the 529 is almost always superior: tax-free growth, tax-free withdrawals, and only 5.64% FAFSA impact. UGMA/UTMA accounts are more flexible (any purpose) but taxed annually and assessed at up to 20% on FAFSA — nearly 4x the impact of a parent-owned 529 on financial aid eligibility.
+                </p>
+              
+              
+                <h3>What happens to 529 money if my child does not go to college?</h3>
+                <p>
+                  Several options: (1) Roll up to $35,000 into the beneficiary&apos;s Roth IRA (new 2024 rule, conditions apply); (2) Change the beneficiary to another family member; (3) Use funds for trade school, apprenticeships, or K-12 tuition ($10,000/year limit); (4) Take a non-qualified withdrawal, paying income tax plus 10% penalty on earnings only — not the original contributions.
+                </p>
+              
+              
+                <h3>What is college superfunding and how does it work?</h3>
+                <p>
+                  Superfunding lets you front-load 5 years of gift tax exclusions ($18,000 × 5 = $90,000 per person; $180,000 for married couples) into a 529 plan at once. No gift taxes owed if within these limits. No additional gifts to that beneficiary from the same contributor during the 5-year election period. The compounding advantage of early lump-sum investment is significant — up to $27,000 more growth versus the same amount spread over 5 years.
+                </p>
+              
+            
+
+            /* CTA */
+            
+              <h2>Calculate Your College Savings Target</h2>
+              <p>
+                Enter your child&apos;s age, target school type, and existing savings to see your personalized monthly contribution target — and what net price looks like after estimated financial aid.
+              </p>
+              <a href="/college-cost-calculator/">
+                Open College Cost Calculator
+              </a>
+            
+
+            /* Related Articles */
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/529-plan-guide/">
+                <h3>529 Plan Guide 2026</h3>
+                <p>How to choose a plan, contribution limits, state tax deductions, and the new Roth rollover option.</p>
+              </a>
+              <a href="/blog/financial-aid/">
+                <h3>Financial Aid Guide 2026</h3>
+                <p>Grants, loans, FAFSA strategy, and how to negotiate a better aid package.</p>
+              </a>
+              <a href="/blog/scholarships-for-college-2026/">
+                <h3>Scholarships for College 2026</h3>
+                <p>How to find and apply for scholarships — external, institutional, and merit-based awards.</p>
+              </a>
+              <a href="/blog/college-cost-breakdown/">
+                <h3>College Cost Breakdown 2026</h3>
+                <p>What the cost of attendance really includes — and the hidden expenses most families miss.</p>
+              </a>
+            
+          
+        
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.degreecalc.com/blog/college-savings-calculator/">DegreeCalc</a>.
+      Explore more free tools at <a href="https://www.degreecalc.com/">degreecalc.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.degreecalc.com/">DegreeCalc</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
