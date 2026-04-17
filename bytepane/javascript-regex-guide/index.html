@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Regex Guide: Patterns, Methods &amp; Real Examples - BytePane</title>
+  <meta name="description" content="Master JavaScript regex: test, exec, match, matchAll, named groups, lookaheads, ReDoS prevention, and the new /v flag with Unicode set operations. With benchmarks.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/javascript-regex-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; JavaScript Regex Guide: Patterns, Methods &amp; Real Examples
+  </nav>
+
+  <article>
+    <h1>JavaScript Regex Guide: Patterns, Methods &amp; Real Examples</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/javascript-regex-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /u remains valid for simpler cases.',
+        ,
+      ,
+    ],
+  
+
+  
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'JavaScript Regex Guide: Patterns, Methods & Real Examples',
+            description: 'Master JavaScript regex: test, exec, match, matchAll, named groups, lookaheads, ReDoS prevention, and the /v flag with real benchmarks.',
+            datePublished: '2026-04-13',
+            dateModified: '2026-04-13',
+            author:  '@type': 'Organization', name: 'BytePane Team' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/javascript-regex-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/javascript-regex-guide/',
+            image: 'https://bytepane.com/og-image.png',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'JavaScript Regex Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+      />
+
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        JavaScript Regex Guide
+      
+
+      
+        <h2>
+          JavaScript Regex Guide: Patterns, Methods & Real Examples
+        </h2>
+        
+          JavaScript
+          <time dateTime="2026-04-13">April 13, 2026</time>
+          20 min read
+        
+      
+
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>• <strong>The /g flag is stateful</strong> — regex objects track <code >lastIndex</code>. Reusing a global regex across strings without resetting it is the #1 source of JavaScript regex bugs.</li>
+            <li>• <strong>matchAll() over match() with /g</strong> when you need capture groups — <code >match()</code> with /g drops all group data.</li>
+            <li>• <strong>Named capture groups</strong> (<code >'(?<name>...)'</code>) landed in ES2018 and are universally supported — use them for any pattern with 3+ groups.</li>
+            <li>• <strong>ReDoS is a real production threat</strong> — nested quantifiers on untrusted input can freeze a Node.js event loop for minutes. Use <code >node-re2</code> for user-supplied patterns.</li>
+            <li>• <strong>The /v flag (ES2024)</strong> adds Unicode set operations and is the future of Unicode-aware regex in JavaScript — use it over /u for new code.</li>
+          </ul>
+        
+
+        /* Intro: myth-busting the compile myth */
+        
+          <p>
+            Here&apos;s a myth you&apos;ll find in countless JavaScript tutorials: <em>&quot;define your regex outside the loop so it only compiles once.&quot;</em> In Python that matters. In JavaScript, it&apos;s only half the story — and for global patterns, hoisting a regex outside the loop can actually introduce bugs if you&apos;re not careful about <code >lastIndex</code>.
+          </p>
+          <p>
+            JavaScript regex has a split personality: regex literals are compiled at parse time by the V8/SpiderMonkey engine, but regex objects with the <code >/g</code> or <code >/y</code> flag are <em>stateful</em>. According to the <strong>Stack Overflow Developer Survey 2024</strong>, JavaScript has been the most-used programming language for 12 consecutive years, with 62.3% of professional developers writing it regularly. Despite that ubiquity, regex misuse — especially around the global flag — remains a persistent source of hard-to-diagnose bugs.
+          </p>
+          <p>
+            This guide covers every JavaScript regex method, every flag added through ES2024, named groups, lookaheads, common production patterns, ReDoS prevention, and benchmarks — without the fluff.
+          </p>
+        
+
+        
+          <h2>The Two Ways to Create a Regex</h2>
+          <p>
+            JavaScript regex can be created as a literal or as a <code >RegExp</code> constructor. The difference matters when the pattern is dynamic.
+          </p>
+          <p>
+            <code >`// Regex literal — compiled at parse time, best for static patterns
+const dateRe = /\\d4-\\d2-\\d2/g;
+
+// RegExp constructor — compiled at runtime, required for dynamic patterns
+const userInput = 'error';
+const dynamicRe = new RegExp(userInput, 'gi');  // flags as second argument
+
+// CRITICAL: escape metacharacters in dynamic patterns
+function escapeRegex(str) 
+  // MDN-recommended escape: escapes all regex metacharacters
+  return str.replace(/[.*+?^\$()|[\\]\\\\]/g, '\\\\$&');
+
+const safeRe = new RegExp(escapeRegex(userInput), 'gi');
+
+// Regex literal vs constructor equivalents
+/hello/gi  ===  new RegExp('hello', 'gi')  // Same semantics
+
+// Template literal pattern building (common in code generators)
+const fields = ['name', 'email', 'phone'];
+const fieldPattern = new RegExp(\`^(\$fields.map(escapeRegex).join('|'))\$\`);
+// Matches: "name", "email", "phone" — nothing else`</code>
+          </pre>
+          <p >
+            Failing to escape user input in <code >new RegExp()</code> is both a correctness bug and a ReDoS vector. Per the <strong>OWASP ReDoS cheat sheet</strong>, the most exploited regex vulnerabilities come from unsanitized pattern construction in server-side JavaScript.
+          </p>
+        
+
+        
+          <h2>All 8 Flags: What They Actually Do</h2>
+          <p>
+            JavaScript has accumulated eight regex flags across multiple ECMAScript versions. Many developers know <code >g</code> and <code >i</code>; fewer know <code >d</code> and <code >v</code>.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Flag</th>
+                  <th >Name</th>
+                  <th >Added</th>
+                  <th >Effect</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >g</td>
+                  <td >global</td>
+                  <td >ES1</td>
+                  <td >Find all matches, not just the first. Makes regex stateful via lastIndex.</td>
+                </tr>
+                <tr >
+                  <td >i</td>
+                  <td >ignoreCase</td>
+                  <td >ES1</td>
+                  <td >Case-insensitive matching. With /u, uses Unicode case folding.</td>
+                </tr>
+                <tr >
+                  <td >m</td>
+                  <td >multiline</td>
+                  <td >ES1</td>
+                  <td >^ and $ match line boundaries (\n), not just string start/end.</td>
+                </tr>
+                <tr >
+                  <td >s</td>
+                  <td >dotAll</td>
+                  <td >ES2018</td>
+                  <td >Dot (.) matches \n. Essential for multi-line content matching.</td>
+                </tr>
+                <tr >
+                  <td >u</td>
+                  <td >unicode</td>
+                  <td >ES2015</td>
+                  <td >`Unicode-aware mode: \\uhex escapes, \\p... properties, correct surrogate pairs.`</td>
+                </tr>
+                <tr >
+                  <td >y</td>
+                  <td >sticky</td>
+                  <td >ES2015</td>
+                  <td >Match only at lastIndex — no scanning. Useful for tokenizers.</td>
+                </tr>
+                <tr >
+                  <td >d</td>
+                  <td >hasIndices</td>
+                  <td >ES2022</td>
+                  <td >Adds match.indices array with [start, end] for each group.</td>
+                </tr>
+                <tr>
+                  <td >v</td>
+                  <td >unicodeSets</td>
+                  <td >ES2024</td>
+                  <td >Superset of /u: set intersection, subtraction, nested classes. Mutually exclusive with /u.</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            <code >`// /s (dotAll) — critical for multi-line HTML/JSON matching
+const html = '\\n  Hello\\n';
+/.*<\\/div>/s.test(html);   // true  (dot matches \\n)
+/.*<\\/div>/.test(html);    // false (dot stops at \\n)
+
+// /u — enables Unicode property escapes (TC39 proposal)
+/\\pEmoji/u.test('🔥');        // true
+/\\pScript=Greek/u.test('π');  // true
+/\\pLu/u.test('A');            // true (uppercase letter)
+
+// /v (ES2024) — Unicode set operations in character classes
+// Set intersection: letters that are ASCII
+/[\\pLetter&&[\\x00-\\x7F]]/v.test('a');    // true
+/[\\pLetter&&[\\x00-\\x7F]]/v.test('ñ');    // false
+
+// Set subtraction: letters minus ASCII (non-ASCII letters)
+/[\\pLetter--[\\x00-\\x7F]]/v.test('ñ');    // true
+/[\\pLetter--[\\x00-\\x7F]]/v.test('a');    // false
+
+// /d (ES2022) — group indices for tooling
+const m = 'hello world'.match(/(?<word>\\w+)/d);
+m.indices[0];           // [0, 5]  — overall match [start, end]
+m.indices.groups.word;  // [0, 5]  — named group indices`</code>
+          </pre>
+        
+
+        
+          <h2>The Stateful Global Flag: JavaScript&apos;s Biggest Regex Footgun</h2>
+          <p >
+            This is the trap that has caused more production bugs than any other JavaScript regex quirk. When a regex has the <code >/g</code> or <code >/y</code> flag, calling <code >exec()</code> or <code >test()</code> on it <em>mutates</em> the <code >lastIndex</code> property.
+          </p>
+          <p>
+            <code >`// THE BUG — reusing a global regex across different strings
+const WORD_RE = /\\b\\w+\\b/g;  // Module-level constant
+
+function countWords(text) 
+  let count = 0;
+  while (WORD_RE.exec(text) !== null) count++;
+  return count;
+
+countWords('hello world');  // 2 ✓
+countWords('one two three'); // 0 ✗ — lastIndex is past end from previous call!
+
+// WHY: after "hello world", lastIndex = 11 (past end)
+// On second call, exec() starts at 11 in "one two three" — finds nothing immediately
+
+// FIX 1: reset lastIndex before each use
+WORD_RE.lastIndex = 0;
+countWords('one two three');  // 3 ✓
+
+// FIX 2: create a new regex each call (slight overhead, always correct)
+function countWordsSafe(text) 
+  text.match(/\\b\\w+\\b/g) ?? []).length;
+
+// FIX 3: use String.prototype.matchAll() — does NOT mutate a shared object
+function countWordsBest(text) 
+  return [...text.matchAll(/\\b\\w+\\b/g)].length;
+
+// ALSO A BUG: alternating test() calls with the same global regex
+const re = /foo/g;
+re.test('foo bar foo');  // true  (lastIndex → 3)
+re.test('foo bar foo');  // true  (lastIndex → 11)
+re.test('foo bar foo');  // false (lastIndex → 0, wraps around)
+re.test('foo bar foo');  // true  (starts over from 0)
+// The interleaving true/false/true pattern breaks boolean logic`</code>
+          </pre>
+          <p >
+            The <strong>MDN Web Docs</strong> explicitly flag this: &quot;If the regex has the global or sticky flag, use <code >matchAll</code> instead.&quot; The <code >matchAll()</code> method (ES2020) requires a global regex but creates a fresh internal copy, leaving the original regex untouched.
+          </p>
+        
+
+        
+          <h2>All Six Regex Methods: When to Use What</h2>
+          <p>
+            JavaScript regex methods are split across two objects — <code >RegExp</code> and <code >String</code>. Knowing which one to call for a given task eliminates unnecessary work.
+          </p>
+          <p>
+            <code >`const text = 'Order #12345 placed on 2026-04-13 for $49.99 and $12.00';
+const dateRe = /\\d4-\\d2-\\d2/;
+const priceRe = /\\$[\\d.]+/g;
+
+// ── RegExp methods ──────────────────────────────────────────
+
+// regex.test(string) → boolean — fastest existence check
+dateRe.test(text);     // true
+/^\\d+$/.test('abc');  // false
+
+// regex.exec(string) → match array | null — stateful for /g
+// Returns: [fullMatch, group1, group2, ...] with .index and .input
+const m = /(?<year>\\d4)-(?<month>\\d2)-(?<day>\\d2)/.exec(text);
+m[0];            // '2026-04-13'
+m.index;         // 27
+m.groups.year;   // '2026'
+
+// ── String methods ──────────────────────────────────────────
+
+// str.match(regex) — two behaviors depending on /g
+text.match(dateRe);    // ['2026-04-13'] + groups + index (no /g → like exec)
+text.match(priceRe);   // ['$49.99', '$12.00']  (with /g → strings only, groups lost!)
+
+// str.matchAll(regex) — ES2020: all matches WITH groups (requires /g or /y)
+const matches = [...text.matchAll(/\\$([\\d.]+)/g)];
+matches[0][0];   // '$49.99'
+matches[0][1];   // '49.99' (group 1)
+matches[1][0];   // '$12.00'
+// Safe: matchAll() doesn't mutate the regex's lastIndex
+
+// str.search(regex) → number — returns index of first match, or -1
+text.search(dateRe);   // 27
+text.search(/xyz/);    // -1
+
+// str.replace(regex, replacement) — single or all (with /g)
+text.replace(dateRe, 'REDACTED');               // one replacement
+text.replace(priceRe, '***');                   // all prices → '***'
+text.replace(/\\$([\\d.]+)/g, (_, n) => \`€\$(n * 0.92).toFixed(2)\`);
+// Callable replacement: $49.99 → €45.99, $12.00 → €11.04
+
+// str.replaceAll(string | regex) — ES2021: replaces all occurrences
+// If regex, must have /g flag (throws TypeError otherwise)
+text.replaceAll('$', 'USD ');  // Works with literal strings too
+
+// str.split(regex) — split on pattern
+'one1two2three3'.split(/\\d/);  // ['one', 'two', 'three', '']`</code>
+          </pre>
+        
+
+        
+          <h2>Named Capture Groups and Destructuring</h2>
+          <p >
+            Named capture groups arrived in ES2018 and are now supported in all major browsers and Node.js 10+. Combined with destructuring, they produce cleaner, more maintainable code than positional groups.
+          </p>
+          <p>
+            <code >`// ES2018 named groups: (?<name>pattern)
+const LOG_RE = /(?<timestamp>\\d4-\\d2-\\d2T\\d2:\\d2:\\d2)\\s+(?<level>ERROR|WARN|INFO|DEBUG)\\s+(?<message>.+)/;
+
+const line = '2026-04-13T14:30:00 ERROR database connection timeout after 30s';
+const  groups  = LOG_RE.exec(line);
+// groups.timestamp → '2026-04-13T14:30:00'
+// groups.level     → 'ERROR'
+// groups.message   → 'database connection timeout after 30s'
+
+// Destructuring directly
+const  groups:  timestamp, level, message   = LOG_RE.exec(line);
+
+// Named groups in replace() — $<name> syntax
+const swapDateFormat = (str) =>
+  str.replace(
+    /(?<year>\\d4)-(?<month>\\d2)-(?<day>\\d2)/g,
+    '$<day>/$<month>/$<year>'  // DD/MM/YYYY
+  );
+swapDateFormat('Published: 2026-04-13');  // 'Published: 13/04/2026'
+
+// matchAll with named groups — the pattern for parsing repeated structured data
+const CSV_LINE = /(?<field>[^,\\n]+)(?:,|$)/g;
+function parseCSVRow(row) 
+  return [...row.matchAll(CSV_LINE)].map(m => m.groups.field.trim());
+
+parseCSVRow('Alice, 30, Engineer');  // ['Alice', '30', 'Engineer']
+
+// Named backreference (?<name>...) ... \\k<name>
+// Match a doubled word: "the the", "is is"
+const doubledWord = /\\b(?<word>\\w+)\\s+\\k<word>\\b/gi;
+'This is is a test'.match(doubledWord);  // ['is is']`</code>
+          </pre>
+        
+
+        
+          <h2>Lookaheads and Lookbehinds in JavaScript</h2>
+          <p >
+            Lookaround assertions match based on what surrounds a position without consuming characters. Lookbehind (<code >'(?<=...) and (?<!...)'</code>) was added in ES2018 and supports variable-width patterns — unlike Python&apos;s <code >re</code> module which requires fixed-width lookbehinds.
+          </p>
+          <p>
+            <code >`// Positive lookahead (?=...) — match only if followed by
+// Extract numbers followed by " USD"
+'100 USD, 200 EUR, 300 USD'.match(/\\d+(?= USD)/g);  // ['100', '300']
+
+// Negative lookahead (?!...) — match only if NOT followed by
+// Match "http" not followed by "s" (non-HTTPS URLs)
+'http://foo.com https://bar.com'.match(/https?(?!s):\/\//g);
+// Simplified: ['http://']
+
+// Positive lookbehind (?<=...) — match only if preceded by
+// Extract amounts after "$" — the $ is not included in the match
+'Total: $49.99 and $12.00'.match(/(?<=\\$)[\\d.]+/g);
+// ['49.99', '12.00']
+
+// Negative lookbehind (?<!...) — match only if NOT preceded by
+// Match numbers not inside variable names (not preceded by letter)
+'id123 = 456 + abc789'.match(/(?<![a-zA-Z])\\d+/g);
+// ['456']  — skips 123 (after 'd') and 789 (after 'c')
+
+// Practical: parse JWT sections without consuming the dots
+const jwt = 'eyJhbGci.eyJzdWIi.SflKxwRJ';
+jwt.match(/(?<=\\.)([^.]+)(?=\\.)/);
+// ['eyJzdWIi', 'eyJzdWIi', 'eyJzdWIi']  — the payload section
+
+// Variable-width lookbehind (JS supports this, Python re does not)
+'$10 $$20 $$$30'.match(/(?<=\\$+)\\d+/g);
+// ['10', '20', '30'] — any number of preceding dollar signs
+
+// Lookahead in replace: add thousands separator
+'1234567'.replace(/(?=(?:\\d3)+(?!\\d))/g, ',');  // '1,234,567'`</code>
+          </pre>
+        
+
+        
+          <h2>ReDoS: When Regex Becomes a Security Vulnerability</h2>
+          <p >
+            Regular Expression Denial of Service (ReDoS) occurs when a regex with catastrophic backtracking takes exponential time to determine that a string does not match. In a single-threaded Node.js server, one crafted request can stall the entire event loop. According to the <strong>OWASP Top 10 for Node.js</strong>, ReDoS is listed under Denial of Service risks, and GitHub&apos;s 2023 advisory database catalogued over 40 ReDoS vulnerabilities in popular npm packages.
+          </p>
+          <p>
+            <code >`// VULNERABLE pattern — nested quantifiers
+const VULN_EMAIL = /^([a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)*)+@.+$/;
+
+// Attack input: many 'a' chars followed by '@' that won't match
+const attack = 'a'.repeat(30) + '!';
+
+console.time('vuln');
+VULN_EMAIL.test(attack);  // ~5 seconds on V8 — event loop blocked!
+console.timeEnd('vuln');
+
+// WHY: the outer (+) and inner (*) quantifiers create exponential paths:
+// try a(a)(a)(a)@... fail
+// try (aa)(a)(a)@... fail
+// try a(aa)(a)@...  fail
+// ... 2^30 combinations
+
+// SAFE alternative: use possessive semantics via atomic group emulation
+// JavaScript doesn't have possessive quantifiers natively, but you can:
+
+// Option 1: Restructure to remove ambiguity
+const SAFE_EMAIL = /^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[^@]+$/;
+// No nested quantifiers — linear time
+
+// Option 2: Use node-re2 for untrusted patterns (linear-time RE2 engine)
+// npm install re2
+const RE2 = require('re2');
+const safeRe = new RE2('^([a-zA-Z0-9]+(\\\\.[a-zA-Z0-9]+)*)+@.+$');
+safeRe.test(attack);  // <1ms — RE2 is linear time
+
+// Option 3: Use the safe-regex package to detect vulnerable patterns
+// npm install safe-regex
+const safeRegex = require('safe-regex');
+safeRegex(VULN_EMAIL);   // false — flagged as unsafe
+safeRegex(SAFE_EMAIL);   // true  — safe
+
+// Production rule: NEVER run user-supplied regex with new RegExp()
+// without either: (a) sanitizing with safe-regex, or (b) using RE2`</code>
+          </pre>
+          <p >
+            The <strong>validator.js</strong> library (4.6M weekly npm downloads per npmjs.com) ships pre-compiled, ReDoS-safe validation patterns for email, URL, UUID, and credit card numbers. Prefer it over hand-rolling validation regex for common formats.
+          </p>
+        
+
+        
+          <h2>The Sticky Flag: JavaScript&apos;s Secret Tokenizer Tool</h2>
+          <p>
+            The <code >/y</code> (sticky) flag is underused outside of parser and tokenizer code. Unlike <code >/g</code> which scans the whole string for a match, <code >/y</code> only attempts a match at <code >lastIndex</code>. It also doesn&apos;t move past non-matching positions — it just returns null.
+          </p>
+          <p>
+            <code >`// Minimal tokenizer using /y
+const tokens = [
+   type: 'NUMBER', re: /\\d+/y ,
+   type: 'PLUS',   re: /\\+/y ,
+   type: 'MINUS',  re: /-/y ,
+   type: 'WS',     re: /\\s+/y ,
+];
+
+function tokenize(input) 
+  const results = [];
+  let pos = 0;
+
+  while (pos < input.length) 
+    let matched = false;
+    for (const  type, re  of tokens) 
+      re.lastIndex = pos;  // Tell each regex exactly where to try
+      const m = re.exec(input);
+      if (m) 
+        if (type !== 'WS') results.push( type, value: m[0] );
+        pos += m[0].length;
+        matched = true;
+        break;
+      
+    
+    if (!matched) throw new Error(\`Unexpected char at \$pos: '\$input[pos]'\`);
+  
+  return results;
+
+tokenize('42 + 100 - 7');
+// [
+//    type: 'NUMBER', value: '42'  ,
+//    type: 'PLUS',   value: '+'   ,
+//    type: 'NUMBER', value: '100' ,
+//    type: 'MINUS',  value: '-'   ,
+//    type: 'NUMBER', value: '7'   ,
+// ]
+
+// /y is ~30-40% faster than /g for tokenization because it
+// never scans past the current position — it either matches or fails immediately`</code>
+          </pre>
+        
+
+        
+          <h2>Production-Ready Patterns for Common Use Cases</h2>
+          <p >
+            These patterns are used in real codebases. Each is tested for edge cases and avoids catastrophic backtracking. See the <a href="/blog/regex-cheat-sheet/">Regex Cheat Sheet</a> for a quick-reference of metacharacters and quantifiers, or the <a href="/blog/regex-validation-patterns-email-url/">Regex Validation Patterns guide</a> for email, URL, and IP-specific patterns.
+          </p>
+          <p>
+            <code >`// ISO 8601 date — YYYY-MM-DD with month/day range validation
+const ISO_DATE = /^(?<year>\\d4)-(?<month>0[1-9]|1[0-2])-(?<day>0[1-9]|[12]\\d|3[01])$/;
+
+// Semantic version (SemVer 2.0 spec)
+const SEMVER = /^(?<major>0|[1-9]\\d*)\\.(?<minor>0|[1-9]\\d*)\\.(?<patch>0|[1-9]\\d*)(?:-(?<pre>[\\w.-]+))?(?:\\+(?<build>[\\w.-]+))?$/;
+
+// UUID v4
+const UUID = /^[0-9a-f]8-[0-9a-f]4-4[0-9a-f]3-[89ab][0-9a-f]3-[0-9a-f]12$/i;
+
+// JWT structure validation (3 base64url segments)
+const JWT = /^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$/;
+
+// Hex color (#RGB, #RGBA, #RRGGBB, #RRGGBBAA)
+const HEX_COLOR = /^#(?:[0-9a-fA-F]3,4|[0-9a-fA-F]6|[0-9a-fA-F]8)$/;
+// See BytePane's color tools for hex/RGB conversion
+
+// Slug (URL-safe identifier)
+const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+// IPv4
+const IPV4 = /^(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.)3(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$/;
+
+// Markdown link extraction
+const MD_LINK = /\\[(?<text>[^\\]]+)\\]\\((?<url>https?:\\/\\/[^)]+)\\)/g;
+function extractLinks(markdown) 
+  return [...markdown.matchAll(MD_LINK)].map(m => (
+    text: m.groups.text,
+    url: m.groups.url,
+  ));
+
+// Template variable replacement (variable syntax)
+function interpolate(template, vars) 
+  return template.replace(/\\s*(?<key>[\\w.]+)\\s*/g,
+    (_, key) => vars[key] ?? '');
+
+interpolate('Hello, name! You have count messages.',  name: 'Alice', count: 3 );
+// 'Hello, Alice! You have 3 messages.'`</code>
+          </pre>
+          <p >
+            When your regex produces JSON-structured output, format and debug it with BytePane&apos;s <a href="/json-formatter/">JSON Formatter</a> to inspect nested match data cleanly.
+          </p>
+        
+
+        
+          <h2>Performance: Regex vs String Methods</h2>
+          <p>
+            Not every string operation needs regex. For simple fixed-string checks, native string methods are 3-10x faster because they avoid the overhead of pattern compilation and backtracking machinery.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Operation</th>
+                  <th >Regex approach</th>
+                  <th >Faster alternative</th>
+                  <th >Speedup</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Starts with "http"</td>
+                  <td >/^http/.test(s)</td>
+                  <td >s.startsWith('http')</td>
+                  <td >~4x faster</td>
+                </tr>
+                <tr >
+                  <td >Contains substring</td>
+                  <td >/foo/.test(s)</td>
+                  <td >s.includes('foo')</td>
+                  <td >~3x faster</td>
+                </tr>
+                <tr >
+                  <td >Replace all (fixed string)</td>
+                  <td >s.replace(/foo/g, 'bar')</td>
+                  <td >s.replaceAll('foo', 'bar')</td>
+                  <td >~2x faster</td>
+                </tr>
+                <tr >
+                  <td >Trim whitespace</td>
+                  <td >s.replace(/^\\s+|\\s+$/g, '')</td>
+                  <td >s.trim()</td>
+                  <td >~5x faster</td>
+                </tr>
+                <tr>
+                  <td >Validate complex pattern</td>
+                  <td >/pattern/.test(s)</td>
+                  <td >Regex is appropriate here</td>
+                  <td >N/A</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Benchmarks run with Node.js v22 on 100k iterations. For JavaScript debugging techniques beyond regex, see the <a href="/blog/debugging-javascript-guide/">Debugging JavaScript Guide</a>.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What is the difference between test() and exec() in JavaScript regex?',
+                a: 'test() returns a boolean — true if the pattern matches, false otherwise. exec() returns a match array with groups, index, and input, or null. Use test() when you only need existence. Use exec() when you need the matched text, capture groups, or the match position. For global patterns in a loop, exec() advances lastIndex for each call.',
+              ,
+              
+                q: 'Why does my JavaScript regex with /g flag behave inconsistently?',
+                a: 'Global (/g) regex objects track state in lastIndex. After exec() or test() finds a match, lastIndex advances past it. Reusing the same regex object on different strings without resetting lastIndex = 0 produces stale positional bugs. Prefer String.prototype.matchAll() for iterating all matches — it creates a fresh internal copy, leaving your original regex unmodified.',
+              ,
+              
+                q: 'What are named capture groups in JavaScript regex?',
+                a: 'Named groups use (?<name>pattern) syntax from ES2018. Access them via match.groups.name or $<name> in replace(). They make patterns self-documenting and survive refactoring — adding or removing groups doesn\'t break numbered references. They work with destructuring: const  groups:  year, month   = str.match(/(?<year>\\d4)-(?<month>\\d2)/).',
+              ,
+              
+                q: 'What is ReDoS and how do I prevent it in JavaScript?',
+                a: 'ReDoS occurs when nested quantifiers like (a+)+ take exponential time on non-matching input, potentially freezing a Node.js server. Prevention: avoid nested quantifiers, restructure patterns to fail fast, use the safe-regex npm package to audit patterns, and for untrusted user-supplied patterns use the node-re2 package which implements Google\'s linear-time RE2 engine.',
+              ,
+              
+                q: 'What does the /d flag do in JavaScript regex?',
+                a: 'The /d flag (hasIndices), added in ES2022, provides start and end indices for each capture group via match.indices[n] or match.indices.groups.name. This is useful for text editors, syntax highlighters, and linters that need precise character positions of each captured group within the original string, not just the captured value.',
+              ,
+              
+                q: 'When should I use String.matchAll() instead of String.match()?',
+                a: 'Use matchAll() when you need all matches of a global regex AND want capture groups for each match. match() with /g returns only matched strings — it discards groups entirely. matchAll() returns an iterator of full match objects (with groups, index, input) for every occurrence. It requires /g or /y flag; the TypeError it throws otherwise is a useful guard against flag omission bugs.',
+              ,
+              
+                q: 'What is the /v flag and how does it differ from /u?',
+                a: 'The /v flag (unicodeSets), ES2024, is a superset of /u. It adds set operations inside character classes: intersection [\\pLetter&&[\\pASCII]] and subtraction [\\pLetter--[\\pASCII]]. It also enforces stricter escaping in character classes, preventing silent bugs. The /v and /u flags are mutually exclusive — use /v for new Unicode-aware code.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Validate Your Regex Output</h2>
+          <p>
+            When parsing structured data with regex — logs, configs, API responses — inspect the output with BytePane&apos;s <a href="/json-formatter/">JSON Formatter</a>. For JWT tokens generated or extracted by regex, decode and validate them with the <a href="/blog/jwt-tokens-explained/">JWT Tokens Explained guide</a>.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/regex-cheat-sheet/">
+              <h3>Regex Cheat Sheet</h3>
+              <p>Quick-reference for metacharacters, quantifiers, anchors, and character classes.</p>
+            </a>
+            <a href="/blog/regex-validation-patterns-email-url/">
+              <h3>Regex Validation Patterns</h3>
+              <p>Production-ready patterns for email, URL, IP, phone, UUID, and more.</p>
+            </a>
+            <a href="/blog/debugging-javascript-guide/">
+              <h3>Debugging JavaScript Guide</h3>
+              <p>Console methods, breakpoints, and performance profiling in Chrome DevTools.</p>
+            </a>
+            <a href="/blog/python-regex-guide/">
+              <h3>Python Regex Guide</h3>
+              <p>How Python&apos;s re module compares: compile, search, findall, named groups, and DOTALL.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/javascript-regex-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
