@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Formatter: Beautify &amp;amp; Minify CSS Code Online - BytePane</title>
+  <meta name="description" content="CSS Formatter: Beautify &amp;amp; Minify CSS Code Online">
+  <link rel="canonical" href="https://www.bytepane.com/blog/css-formatter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; CSS Formatter: Beautify &amp;amp; Minify CSS Code Online
+  </nav>
+
+  <article>
+    <h1>CSS Formatter: Beautify &amp;amp; Minify CSS Code Online</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/css-formatter/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        CSS Formatter
+      
+
+      /* Article Header */
+      
+        <h2>
+          CSS Formatter: Beautify &amp; Minify CSS Code Online
+        </h2>
+        
+          CSS
+          <time dateTime="2026-04-16">April 16, 2026</time>
+          16 min read
+        
+      
+
+      
+
+        /* Opening: Myth-busting */
+        
+          <h2>The &quot;Tabs vs. Spaces&quot; Debate Is the Wrong Conversation</h2>
+          <p>
+            For years, the CSS formatting debate inside teams was about individual preferences: 2 spaces or 4? Tabs or spaces? Properties sorted alphabetically or by type? These debates produced style guide documents that nobody followed consistently, passive-aggressive code review comments, and CSS files that looked like they were authored by six different people — because they were.
+          </p>
+          <p>
+            The real answer was never a style guide. It was automation. According to npm registry data from April 2026, <strong>Prettier downloads 86.3 million packages per week</strong> — making it one of the most downloaded developer tools in the npm ecosystem. Teams that adopt a CSS formatter eliminate formatting debates by removing human discretion from the equation entirely. The tool decides; engineers ship features.
+          </p>
+          <p>
+            This article covers what CSS formatters actually do under the hood (it is not just regex), when to use a formatter vs. a linter vs. a minifier (three different tools solving three different problems), and how to set up a complete CSS quality pipeline from editor to CI.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸<strong>Formatter ≠ Linter ≠ Minifier.</strong> Each solves a different problem. Use all three together — Prettier for formatting, Stylelint for linting, and LightningCSS or cssnano for minification at build time.</li>
+            <li>▸Prettier uses an <strong>AST pipeline</strong> — it parses CSS into a syntax tree, throws away all original formatting, and reprints from scratch. Output is deterministic regardless of input style.</li>
+            <li>▸Prettier downloads <strong>86.3M packages per week</strong> (npm, April 2026). Stylelint downloads 8.2M/week. The 10x gap reflects the formatter/linter adoption split.</li>
+            <li>▸<strong>Never format in isolation</strong>: pair Prettier with EditorConfig (consistent file-level settings) and Stylelint (bug detection and naming conventions) for a complete CSS quality toolchain.</li>
+            <li>▸Enforce formatting in CI with <code >prettier --check</code>. Use lint-staged + husky to auto-format on commit. Unformatted CSS should never reach the repository.</li>
+          </ul>
+        
+
+        /* What a formatter actually does */
+        
+          <h2>How CSS Formatting Actually Works: AST vs. Regex</h2>
+          <p>
+            Most developers assume a CSS formatter works like a sophisticated find-and-replace — match a pattern, substitute a formatted version. This is how basic online beautifiers work, and it is why they fail on complex CSS. Prettier works completely differently.
+          </p>
+
+          <h3>Prettier&apos;s AST Pipeline</h3>
+          <p>
+            Prettier&apos;s CSS formatting follows a strict three-step pipeline:
+          </p>
+          <ol>
+            <li>
+              <strong>Parse:</strong> Input CSS is parsed into an Abstract Syntax Tree (AST) — a tree structure representing selectors, declarations, at-rules, and values as nodes. Prettier uses PostCSS as its CSS parser. At this stage, all original whitespace, comments structure, and formatting are represented but not yet discarded.
+            </li>
+            <li>
+              <strong>Discard and rebuild:</strong> Prettier discards original whitespace and formatting entirely. It rebuilds an intermediate document representation (IR) using its own Algebraic Document Format — a set of primitives like <em>text</em>, <em>line</em>, <em>group</em>, and <em>indent</em> that describe the desired structure without encoding specific whitespace values.
+            </li>
+            <li>
+              <strong>Print:</strong> The printer walks the IR and emits formatted CSS, making line-break decisions based on the configured print width (default: 80 characters). Multi-value properties that fit on one line stay on one line; those that exceed the print width get split across lines.
+            </li>
+          </ol>
+          <p>
+            The consequence of this design: Prettier&apos;s output is <em>always deterministic</em>. Given the same input and configuration, it always produces identical output. Two engineers can independently format the same CSS file and get identical results — which is exactly why formatting stops being a source of merge conflicts.
+          </p>
+
+          <h3>Why Regex-Based Beautifiers Fail</h3>
+          <p>
+            Simple online beautifiers apply regex substitutions without understanding the CSS structure. This produces correct output for simple cases but breaks on:
+          </p>
+          <ul>
+            <li><strong>Nested at-rules:</strong> <code >@media</code> containing <code >@supports</code> containing regular rules — indentation depth requires context that regex does not track.</li>
+            <li><strong>Multi-value properties with functions:</strong> <code >background: linear-gradient(to right, rgba(0,0,0,0), #fff) no-repeat center</code> — commas appear inside the gradient function and between gradient arguments; splitting naively on commas produces broken output.</li>
+            <li><strong>Custom properties and CSS nesting:</strong> New CSS features require updated parsers. AST-based tools update their parser; regex-based tools require regex updates for each new syntax.</li>
+          </ul>
+
+          <p>
+            Here is what the AST pipeline produces for the same input regardless of how it was originally written:
+          </p>
+
+          
+            Input (inconsistently formatted by two engineers)
+            <p>`.card  background:#fff;  padding:  1rem 1.5rem;
+  border-radius:8px;   box-shadow:0 2px 8px rgba(0,0,0,.1);    
+
+.card:hover    box-shadow:  0 4px 16px rgba(0,0,0,.15);  transform:translateY(-2px); `</pre>
+          
+
+          
+            After Prettier (deterministic, always the same)
+            <pre >`.card 
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+.card:hover 
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+`</pre>
+          
+        
+
+        /* Tool comparison */
+        
+          <h2>CSS Tooling Compared: Formatter vs. Linter vs. Minifier</h2>
+          <p >
+            These three tool categories are frequently confused. They solve different problems and run at different stages of the development cycle.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool Category</th>
+                  <th >Examples</th>
+                  <th >What It Does</th>
+                  <th >When It Runs</th>
+                  <th >Output</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Formatter</td>
+                  <td >Prettier, CSSTidy</td>
+                  <td >Rewrites CSS layout for human readability</td>
+                  <td >Editor save / pre-commit</td>
+                  <td >Readable, consistent CSS</td>
+                </tr>
+                <tr >
+                  <td >Linter</td>
+                  <td >Stylelint, CSSLint</td>
+                  <td >Detects errors, enforces rules, catches bad patterns</td>
+                  <td >CI / editor diagnostics</td>
+                  <td >Error/warning report</td>
+                </tr>
+                <tr>
+                  <td >Minifier</td>
+                  <td >LightningCSS, cssnano</td>
+                  <td >Removes whitespace/comments to reduce file size</td>
+                  <td >Production build pipeline</td>
+                  <td >Compressed CSS for deployment</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h3>Prettier vs. Stylelint: A Clear Division of Labor</h3>
+          <p>
+            Prettier handles formatting decisions. Stylelint handles correctness and policy decisions. They are not alternatives — they are designed to work together.
+          </p>
+          <p>
+            According to npm data from April 2026, Prettier downloads <strong>86.3 million packages per week</strong> and Stylelint downloads <strong>8.2 million</strong>. Prettier is used by 19,800+ npm packages as a dependency and 9.8M+ GitHub repositories. Facebook uses it across React core; Shopify rolled it out across 500+ engineers; Airbnb&apos;s style guide recommends it over manual ESLint formatting rules.
+          </p>
+          <p>
+            The one configuration required when running both: use <code >stylelint-config-prettier</code> to disable Stylelint rules that would conflict with Prettier&apos;s formatting decisions. Otherwise, Stylelint will report formatting issues that Prettier will immediately fix — creating a noisy feedback loop.
+          </p>
+
+          
+            .stylelintrc.json — paired with Prettier correctly
+            <p>`
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-prettier"  // Must be last — disables conflicting rules
+  ],
+  "rules": 
+    // Prettier handles formatting; Stylelint handles correctness
+    "color-no-invalid-hex": true,
+    "unit-no-unknown": true,
+    "property-no-unknown": true,
+    "selector-class-pattern": "^[a-z][a-z0-9-]*$",  // kebab-case only
+    "declaration-block-no-duplicate-properties": true,
+    "no-duplicate-selectors": true,
+    "alpha-value-notation": "percentage",  // rgba(0, 0, 0, 50%) not 0.5
+    "color-function-notation": "modern"   // color(srgb ...) not rgb()
+  
+`</pre>
+          
+        
+
+        /* Prettier configuration */
+        
+          <h2>Configuring Prettier for CSS</h2>
+          <p >
+            Prettier is intentionally opinionated with minimal configuration surface area. For CSS specifically, the relevant options are:
+          </p>
+
+          
+            .prettierrc — CSS-relevant configuration
+            <p>`
+  "printWidth": 80,        // Line length before Prettier wraps multi-value props
+  "tabWidth": 2,           // 2 spaces (industry default)
+  "useTabs": false,        // Spaces, not tabs
+  "singleQuote": false,    // CSS convention: double quotes for string values
+  "trailingComma": "all",  // Trailing commas in multi-line CSS (e.g., @font-face src)
+
+  // Per-file overrides if needed
+  "overrides": [
+    
+      "files": "*.css",
+      "options": 
+        "singleQuote": false  // Explicit for CSS files
+      
+    ,
+    
+      "files": "*.scss",
+      "options": 
+        "singleQuote": true   // SCSS convention prefers single quotes
+      
+    
+  ]
+`</pre>
+          
+
+          <p >
+            Prettier supports CSS, SCSS, Less, and PostCSS out of the box. For CSS-in-JS (styled-components, Emotion), use <code >prettier-plugin-styled-components</code> which formats the CSS template strings inside your JavaScript files.
+          </p>
+
+          <h3>What Prettier Cannot Format</h3>
+          <p>
+            Prettier does not touch: property ordering (alphabetical vs. type-grouped — use Stylelint for that), selector specificity, naming conventions (BEM, SUIT, utility-first), or semantic structure. It only formats whitespace, indentation, and line breaks — purely cosmetic transformations.
+          </p>
+        
+
+        /* EditorConfig integration */
+        
+          <h2>EditorConfig + Prettier: Two Tools, Two Layers</h2>
+          <p>
+            EditorConfig and Prettier solve overlapping but distinct problems, and using them together is the correct pattern:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Setting</th>
+                  <th >EditorConfig</th>
+                  <th >Prettier</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Indent style (tabs/spaces)</td>
+                  <td >Yes</td>
+                  <td >Yes (reads EditorConfig)</td>
+                </tr>
+                <tr >
+                  <td >Indent width</td>
+                  <td >Yes</td>
+                  <td >Yes (reads EditorConfig)</td>
+                </tr>
+                <tr >
+                  <td >Line endings (LF/CRLF)</td>
+                  <td >Yes</td>
+                  <td >Yes</td>
+                </tr>
+                <tr >
+                  <td >Trailing whitespace</td>
+                  <td >Yes</td>
+                  <td >No (Prettier handles via reprint)</td>
+                </tr>
+                <tr >
+                  <td >Applies to Makefiles, .gitignore, etc.</td>
+                  <td >Yes</td>
+                  <td >No</td>
+                </tr>
+                <tr >
+                  <td >Print width (line wrapping)</td>
+                  <td >No</td>
+                  <td >Yes</td>
+                </tr>
+                <tr>
+                  <td >CSS-specific formatting decisions</td>
+                  <td >No</td>
+                  <td >Yes</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            Prettier automatically reads <code >.editorconfig</code> and converts matching settings into its own configuration. If you set <code >indent_size = 4</code> in EditorConfig, Prettier will use 4-space indentation unless you explicitly override it in <code >.prettierrc</code>. Keep both files — EditorConfig handles non-JS/CSS files (YAML, Markdown, shell scripts) that Prettier does not touch.
+          </p>
+        
+
+        /* VS Code setup */
+        
+          <h2>VS Code Setup for CSS Auto-Formatting</h2>
+          <p>
+            Format on save eliminates the need to run Prettier manually. Configure it once in the repository:
+          </p>
+
+          
+            .vscode/settings.json — team-wide VS Code configuration
+            <p>`
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Language-specific overrides
+  "[css]": 
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  ,
+  "[scss]": 
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  ,
+  "[less]": 
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  ,
+
+  // Stylelint integration
+  "stylelint.validate": ["css", "scss", "less"],
+  "css.validate": false,    // Disable VS Code's built-in CSS validator
+  "scss.validate": false,   // Let Stylelint handle validation instead
+  "less.validate": false
+`</pre>
+          
+
+          
+            .vscode/extensions.json — recommended extensions for the team
+            <pre >`
+  "recommendations": [
+    "esbenp.prettier-vscode",     // Prettier formatter
+    "stylelint.vscode-stylelint", // Stylelint linting
+    "EditorConfig.EditorConfig"   // EditorConfig support
+  ]
+`</pre>
+          
+
+          <p >
+            Commit <code >.vscode/settings.json</code> and <code >.vscode/extensions.json</code> to your repository so all team members get consistent editor behavior automatically. This is one of the highest-leverage steps in CSS quality tooling — zero friction adoption across the entire team.
+          </p>
+        
+
+        /* CI/CD enforcement */
+        
+          <h2>Enforcing CSS Formatting in CI/CD</h2>
+          <p>
+            Editor integration is convenient. CI enforcement is mandatory. Developers forget to run formatters, use different editor versions, or contribute from environments without the tooling configured. CI is the final gate.
+          </p>
+
+          <h3>GitHub Actions: Prettier Check</h3>
+          
+            .github/workflows/lint.yml
+            <p>`name: CSS Quality
+
+on: [push, pull_request]
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+
+      # Check CSS formatting — exits 1 if any file is not formatted
+      - name: Check CSS formatting (Prettier)
+        run: npx prettier --check "**/*.css" "**/*.scss" "**/*.less"
+
+      # Check CSS linting — exits 1 on errors
+      - name: Lint CSS (Stylelint)
+        run: npx stylelint "**/*.css" "**/*.scss" --ignore-path .gitignore`</pre>
+          
+
+          <h3>Pre-Commit Hooks with Husky + lint-staged</h3>
+          <p >
+            Format at commit time so developers get immediate feedback and clean code reaches the repository before CI even runs:
+          </p>
+          
+            Setup lint-staged and husky for CSS auto-formatting on commit
+            <p>`# Install husky and lint-staged
+npm install --save-dev husky lint-staged
+
+# Initialize husky
+npx husky init
+
+# .husky/pre-commit
+npx lint-staged
+
+# package.json — lint-staged config
+
+  "lint-staged": 
+    "*.css,scss,less": [
+      "stylelint --fix",    // Auto-fix linting issues
+      "prettier --write"    // Format after linting
+    ]
+  
+`</pre>
+          
+          <p >
+            Note the order: run Stylelint with <code >--fix</code> before Prettier. Some Stylelint auto-fixes change whitespace that Prettier needs to normalize. Running them in this order ensures the output is both lint-clean and formatted correctly.
+          </p>
+        
+
+        /* SCSS and CSS nesting */
+        
+          <h2>Formatting SCSS, Less, and CSS Nesting</h2>
+          <p>
+            Prettier formats SCSS and Less with the same AST pipeline, applying the same rules adjusted for each language&apos;s syntax. CSS nesting (now natively supported in all major browsers as of 2024) is formatted correctly by Prettier when using a PostCSS parser that understands nesting syntax.
+          </p>
+
+          
+            Native CSS nesting — Prettier formats this correctly in 2026
+            <p>`/* Input — inconsistently formatted */
+.buttonbackground:#7c3aed;  padding:.5rem 1rem;
+  &:hover   background:#6d28d9;  transform:translateY(-1px);  
+  &:activetransform:translateY(0);  
+  &.disabled     opacity:.5;  cursor:not-allowed;
+    &:hoverbackground:#7c3aed;  transform:none;  
+
+/* After Prettier */
+.button 
+  background: #7c3aed;
+  padding: 0.5rem 1rem;
+
+  &:hover 
+    background: #6d28d9;
+    transform: translateY(-1px);
+  
+
+  &:active 
+    transform: translateY(0);
+  
+
+  &.disabled 
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover 
+      background: #7c3aed;
+      transform: none;
+    
+  
+`</pre>
+          
+
+          <p >
+            You can use BytePane&apos;s <a href="/css-minifier/">CSS minifier</a> to see the contrast between formatted source and minified production output — the same CSS, optimized for two different audiences: developers and browsers.
+          </p>
+        
+
+        /* Online CSS formatters */
+        
+          <h2>When to Use an Online CSS Formatter</h2>
+          <p>
+            For production codebases, the answer is clear: automate formatting with Prettier in your build pipeline. Online formatters serve a different use case: one-off cleanup of CSS you did not write, quick debugging of minified CSS someone gave you, or formatting small snippets outside of a project context.
+          </p>
+          <p>
+            The honest difference between BytePane&apos;s online CSS formatter and Prettier in your project: Prettier has full context of your project configuration (<code >.prettierrc</code>, <code >.editorconfig</code>) and handles every CSS feature including custom properties and nesting. Online formatters apply reasonable defaults and work without any setup — the right tool for quick tasks that do not justify spinning up a project.
+          </p>
+          <p>
+            For context on the output side of the equation — what production CSS looks like after both formatting and minification — see the <a href="/blog/css-minifier/">CSS minifier guide</a> covering LightningCSS benchmarks and build pipeline setup.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What is a CSS formatter and what does it do?',
+                a: 'A CSS formatter (also called a CSS beautifier) takes CSS code and reformats it with consistent indentation, line breaks, and spacing. Unlike a minifier, a formatter makes code more readable for humans — it expands compressed CSS, ensures one declaration per line, normalizes quote styles, and enforces consistent whitespace. Formatters are used during development; minifiers run at build time.',
+              ,
+              
+                q: 'What is the difference between Prettier and Stylelint for CSS?',
+                a: 'Prettier is a formatter — it rewrites CSS layout, spacing, and structure to enforce consistent style, with minimal configuration. Stylelint is a linter — it checks for errors, enforces naming conventions, property order rules, and custom policies without reformatting code. They solve different problems and work best together: Stylelint catches bugs, Prettier ensures consistent formatting.',
+              ,
+              
+                q: 'How does CSS formatting differ from CSS minification?',
+                a: 'CSS formatting expands code to maximize human readability: indentation, one rule per line, clear whitespace. CSS minification removes all whitespace and comments to minimize file size for network transfer. Format your source CSS for development readability, then minify the production output in your build pipeline.',
+              ,
+              
+                q: 'Can I use Prettier to format CSS automatically in VS Code?',
+                a: 'Yes. Install the Prettier VS Code extension, set editor.defaultFormatter to esbenp.prettier-vscode in settings.json, and enable editor.formatOnSave. Prettier will format .css, .scss, and .less files on every save. Add stylelint-config-prettier to your Stylelint config to prevent conflicts between the two tools.',
+              ,
+              
+                q: 'Does CSS formatting affect file size or performance?',
+                a: 'Formatted CSS has larger file sizes than minified CSS, but this is irrelevant for production because your build pipeline should minify before deployment. Never serve formatted CSS to end users. Write formatted source CSS, commit to git, then minify at build time — formatted CSS belongs in development, minified CSS in production.',
+              ,
+              
+                q: 'What CSS formatting rules does Prettier enforce?',
+                a: 'Prettier enforces: 2-space indentation (configurable), double quotes for string values (configurable), one declaration per line within rule blocks, a blank line between top-level rule blocks, consistent trailing commas in multi-value properties, and normalized whitespace around selectors and braces.',
+              ,
+              
+                q: 'How do I enforce CSS formatting in a CI/CD pipeline?',
+                a: 'Use Prettier in check mode: npx prettier --check "**/*.css". This exits with code 1 if any file is not formatted, failing the CI step. Add it as a GitHub Actions step alongside your test suite. For pre-commit enforcement, use lint-staged with husky: run prettier --write on staged .css files before each commit.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Format Your CSS Instantly Online</h2>
+          <p>
+            Paste your CSS and get beautifully formatted output in one click. No installation required — runs entirely in your browser.
+          </p>
+          <a href="/css-formatter/">
+            Open CSS Formatter →
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/css-formatter/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
