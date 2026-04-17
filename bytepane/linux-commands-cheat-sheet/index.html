@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux Commands Cheat Sheet: Essential Terminal Commands (2026) - BytePane</title>
+  <meta name="description" content="Linux Commands Cheat Sheet: Essential Terminal Commands (2026)">
+  <link rel="canonical" href="https://www.bytepane.com/blog/linux-commands-cheat-sheet/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Linux Commands Cheat Sheet: Essential Terminal Commands (2026)
+  </nav>
+
+  <article>
+    <h1>Linux Commands Cheat Sheet: Essential Terminal Commands (2026)</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/linux-commands-cheat-sheet/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Linux Commands Cheat Sheet: Essential Terminal Commands
+      
+
+      /* Article Header */
+      
+        <h2>
+          Linux Commands Cheat Sheet: Essential Terminal Commands (2026)
+        </h2>
+        
+          Linux
+          <time dateTime="2026-04-16">April 16, 2026</time>
+          22 min read
+        
+      
+
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸Per the Stack Overflow Developer Survey 2025, <strong>47.2% of professional developers</strong> work with Linux as their primary OS — the highest share of any platform, and growing.</li>
+            <li>▸<code >ripgrep</code> (rg) is <strong>8–35× faster than GNU grep</strong> in benchmarks by Andrew Gallant (Burntsushi) — and respects <code >.gitignore</code> by default. It should be your primary code search tool.</li>
+            <li>▸<code >fd</code> replaces <code >find</code> with <strong>23× better performance</strong> on warm cache benchmarks, a human-friendly syntax, and parallel execution — published by the fd-find project on GitHub.</li>
+            <li>▸The pipe (<code >|</code>) is Linux&apos;s most powerful primitive — chaining <code >grep</code>, <code >awk</code>, <code >sort</code>, and <code >uniq</code> replaces entire scripts that would take hours to write in another language.</li>
+            <li>▸In a benchmarks by David Lyness, <code >sed</code> outperformed <code >awk</code> and Python by <strong>42 seconds over 10 iterations</strong> on two-billion-character base64 parsing — use the right tool for each task.</li>
+          </ul>
+        
+
+        /* Opening: statistics-driven */
+        
+          <h2>Why Terminal Fluency Matters More Than Ever in 2026</h2>
+          <p>
+            The Stack Overflow Developer Survey 2025 (90,000+ respondents) found that Linux is now the primary development OS for 47.2% of professional developers — up from 40.2% in 2020. This shift is driven by Docker adoption, cloud-native development workflows, and the dominance of Linux-based CI/CD infrastructure. Even developers on macOS spend the majority of their work time in terminals that behave like Linux.
+          </p>
+          <p>
+            Yet the same survey reveals a persistent gap: a significant portion of developers who use Linux daily describe themselves as &ldquo;terminal users&rdquo; rather than &ldquo;power users&rdquo; — comfortable with basic navigation but slow on text processing, process management, and pipeline composition. This cheat sheet bridges that gap.
+          </p>
+          <p>
+            The commands here are organized by workflow, not alphabetically. We cover file operations, text processing (the grep/sed/awk triad), process management, networking, permissions, SSH, and modern Rust-based alternatives that have become standard in high-performance developer environments. Every command includes the flags you actually use, not every flag in the man page.
+          </p>
+        
+
+        /* Section 1: File and directory */
+        
+          <h2>File and Directory Operations</h2>
+
+          
+            Navigation and listing
+            <p>`# Navigate directories
+cd /var/log          # absolute path
+cd ..                # up one level
+cd -                 # switch to previous directory
+cd ~                 # home directory
+
+# List files
+ls -la               # long format, including hidden (dot) files
+ls -lh               # human-readable sizes (KB, MB, GB)
+ls -lt               # sort by modification time, newest first
+ls -lS               # sort by size, largest first
+ls --color=auto      # colorized output (usually aliased)
+
+# Modern alternative: exa (Rust-based)
+exa --long --git --header   # shows git status per file
+exa --tree --level=2        # directory tree, 2 levels deep
+
+# Show current directory path
+pwd
+
+# Change to directory and run command
+cd /app && npm start
+
+# Navigate with fzf (fuzzy finder — install separately)
+cd $(find . -type d | fzf)  # fuzzy-select a directory`</pre>
+          
+
+          
+            Create, copy, move, delete
+            <pre >`# Create
+mkdir -p /path/to/nested/dir   # -p creates parents as needed
+touch file.txt                 # create empty file or update timestamp
+touch a,b,c.txt              # brace expansion: creates a.txt, b.txt, c.txt
+
+# Copy
+cp source.txt dest.txt
+cp -r source_dir/ dest_dir/    # recursive (directory)
+cp -a source/ dest/            # -a preserves permissions, timestamps, symlinks
+cp -v source.txt dest.txt      # verbose — shows what was copied
+
+# Move / Rename
+mv old.txt new.txt             # rename
+mv file.txt /tmp/              # move to directory
+mv -n source dest              # -n: never overwrite existing file
+
+# Delete
+rm file.txt
+rm -r directory/               # recursive delete
+rm -rf directory/              # force (skip confirmation, ignore missing)
+# WARNING: rm -rf with a typo can delete critical data. Consider trash-cli.
+
+# Safer delete alternatives
+trash file.txt                 # moves to trash (apt install trash-cli)
+
+# Hard links and symlinks
+ln -s /path/to/real /path/to/link  # symbolic link
+ln /path/to/real /path/to/hard     # hard link (same inode, different name)`</pre>
+          
+
+          
+            Read files
+            <pre >`# Print full file
+cat file.txt                   # concatenate to stdout
+cat -n file.txt                # with line numbers
+
+# Modern alternative: bat (cat with syntax highlighting)
+bat file.txt                   # syntax highlighting, git diff markers, line numbers
+bat --plain file.txt           # no decorations (pipe-safe)
+
+# Paged reading
+less file.txt                  # scroll with j/k, search with /, q to quit
+# less is better than more — it loads incrementally (huge files)
+
+# First / last lines
+head -n 20 file.txt            # first 20 lines
+tail -n 20 file.txt            # last 20 lines
+tail -f /var/log/nginx/access.log  # follow (stream new lines in real time)
+tail -F logfile.log            # follow, even if file is rotated/recreated
+
+# File metadata
+file image.png                 # detect file type by content (not extension)
+wc -l file.txt                 # line count
+wc -c file.txt                 # byte count
+wc -w file.txt                 # word count
+stat file.txt                  # full metadata: size, inode, permissions, timestamps`</pre>
+          
+        
+
+        /* Section 2: Find */
+        
+          <h2>Finding Files: find, fd, and locate</h2>
+          <p >
+            The standard <code >find</code> command is powerful but has a notoriously verbose syntax. The <code >fd</code> tool (from the fd-find project on GitHub) solves this with a simpler interface and dramatically better performance — the fd GitHub README documents 23× faster warm-cache performance versus <code >find</code> on real codebases, using parallel execution internally.
+          </p>
+
+          
+            find vs fd comparison
+            <p>`# find — GNU standard, always available
+find . -name "*.log"                         # files ending in .log
+find . -name "*.log" -mtime -7               # modified in last 7 days
+find . -type f -size +100M                   # files over 100MB
+find . -type f -name "*.py" -exec wc -l  \\; # count lines in all .py files
+find /var -name "*.log" -delete              # find and delete
+find . -type f -not -name "*.git"            # exclude pattern
+
+# fd — faster, respects .gitignore, regex support
+fd "\.log$"                   # files matching pattern (regex)
+fd -e py                      # files with extension py
+fd -t f --changed-within 7d   # files modified last 7 days
+fd -s 100m                    # files over 100MB (--size)
+fd -x wc -l                   # parallel exec with 
+fd . --exec-batch ls -lh      # batch exec
+# fd ignores .git/ and respects .gitignore by default
+
+# locate — uses pre-built database, instant results
+locate nginx.conf             # instant (database search, not filesystem)
+sudo updatedb                 # update the database (usually runs via cron)`</pre>
+          
+        
+
+        /* Section 3: Text processing */
+        
+          <h2>Text Processing: grep, sed, awk, and Pipelines</h2>
+          <p >
+            The grep/sed/awk trinity is Linux&apos;s core text-processing toolkit. Each solves a different problem:
+          </p>
+          <ul>
+            <li><strong>grep</strong> — find lines matching a pattern (read-only, no transformation)</li>
+            <li><strong>sed</strong> — stream editor: substitute, delete, insert lines</li>
+            <li><strong>awk</strong> — field-based text processing with programming constructs (conditions, arithmetic, output formatting)</li>
+          </ul>
+          <p>
+            Per benchmarks by David Lyness (published on blog.davidlyness.com), sed outperformed awk by 42 seconds over 10 iterations on two billion base64 characters — for simple substitution tasks, sed is the right choice. AWK wins when you need multi-field processing, counting, or conditional logic.
+          </p>
+
+          
+            grep — search patterns
+            <p>`grep "error" access.log            # lines containing "error"
+grep -i "error" access.log         # case-insensitive
+grep -n "error" access.log         # with line numbers
+grep -c "error" access.log         # count matching lines
+grep -v "200" access.log           # INVERT: lines NOT matching
+grep -r "TODO" ./src               # recursive search in directory
+grep -rl "TODO" ./src              # only filenames, not content
+grep -A 3 "error" access.log       # 3 lines AFTER match (context)
+grep -B 3 "error" access.log       # 3 lines BEFORE match
+grep -C 3 "error" access.log       # 3 lines before AND after
+grep -E "error|warn" access.log    # extended regex (ERE) — same as egrep
+grep -F "exact string" file        # fixed string (no regex — faster)
+grep -P "(?<=error: )\\w+" file    # Perl-compatible regex (PCRE)
+grep -o "\\d+" file                # print only the matched part, not whole line
+grep --color=auto "error" file     # highlight match
+
+# ripgrep — 8-35x faster, respects .gitignore
+rg "error" .                       # recursive by default
+rg -i "error" .                    # case-insensitive
+rg --type py "import" .            # only Python files
+rg -l "TODO" .                     # filenames only
+rg -g "!*.test.js" "console.log" . # exclude test files
+rg -P "(?<=\\/\\/).*TODO" .       # PCRE2 patterns
+rg --stats "error" .               # show search statistics`</pre>
+          
+
+          
+            sed — stream editing
+            <pre >`# Substitute (most common sed use)
+sed 's/old/new/' file.txt          # replace first occurrence per line
+sed 's/old/new/g' file.txt         # replace ALL occurrences per line
+sed 's/old/new/gi' file.txt        # case-insensitive, all occurrences
+sed -i 's/old/new/g' file.txt      # in-place edit (modifies file)
+sed -i.bak 's/old/new/g' file.txt  # in-place with backup (.bak created)
+
+# Multiple substitutions
+sed -e 's/foo/bar/g' -e 's/baz/qux/g' file.txt
+
+# Delete lines
+sed '/pattern/d' file.txt          # delete lines matching pattern
+sed '5d' file.txt                  # delete line 5
+sed '5,10d' file.txt               # delete lines 5 to 10
+sed '/^$/d' file.txt               # delete empty lines
+
+# Print specific lines
+sed -n '5,10p' file.txt            # print lines 5–10 only (-n suppresses default)
+sed -n '/start/,/end/p' file.txt   # print from "start" to "end"
+
+# Insert and append
+sed '3i\\inserted line' file.txt  # insert before line 3
+sed '3a\\appended line' file.txt  # append after line 3
+
+# Real-world example: remove ANSI color codes from log
+sed 's/\\x1B\\[[0-9;]*m//g' colored.log > plain.log`</pre>
+          
+
+          
+            awk — field processing and reporting
+            <pre >`# awk divides each line into fields: $1, $2, ..., $NF (last field)
+# Default field separator: whitespace
+
+# Print specific columns from CSV / log
+awk 'print $1, $4' access.log         # print columns 1 and 4
+awk -F',' 'print $2' data.csv         # comma-separated, print column 2
+awk -F: 'print $1' /etc/passwd        # print usernames from passwd
+
+# Conditional processing
+awk '$3 > 1000 print $0' file         # print lines where column 3 > 1000
+awk '/error/ print $0' file           # print lines matching "error"
+awk '!/^#/ print' config.conf        # skip comment lines
+
+# Computation
+awk 'sum += $5 END print "Total:", sum' file    # sum column 5
+awk 'END print NR' file                           # count lines (like wc -l)
+awk 'NR==5' file                                    # print line 5
+
+# Multiple actions
+awk 'BEGIN print "Start" /error/ count++ END print count " errors"' app.log
+
+# Real-world: top 10 IPs from Nginx access log
+awk 'print $1' /var/log/nginx/access.log | sort | uniq -c | sort -rn | head -10
+
+# Real-world: disk usage report, filter >1GB
+df -h | awk '$5+0 > 80 print $0'   # filesystems over 80% full`</pre>
+          
+
+          <h3>Pipeline Patterns: Combining Commands</h3>
+          <p >
+            The Unix pipe (<code >|</code>) connects the stdout of one command to the stdin of the next. Mastery of pipes turns individual commands into powerful one-liners. Here are the pipeline patterns senior engineers use regularly:
+          </p>
+
+          
+            Pipeline patterns for log analysis and data processing
+            <p>`# Most common 404 URLs
+cat access.log | grep " 404 " | awk 'print $7' | sort | uniq -c | sort -rn | head -20
+
+# Count unique visitors by IP
+awk 'print $1' access.log | sort -u | wc -l
+
+# Find the largest files in a directory
+du -sh ./* | sort -rh | head -10
+# -s: summarize, -h: human-readable, -r: reverse, -h on sort: human sort (MB/GB)
+
+# Extract all email addresses from a file
+grep -oE '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]2,' file.txt | sort -u
+
+# Find processes using the most CPU
+ps aux --sort=-%cpu | head -10
+
+# Monitor a command's output in real time
+watch -n 2 'df -h'   # refresh every 2 seconds
+
+# Count occurrences of each log level
+grep -oE '(ERROR|WARN|INFO|DEBUG)' app.log | sort | uniq -c | sort -rn
+
+# Join two files on a common field
+join -t',' -1 1 -2 1 <(sort file1.csv) <(sort file2.csv)
+
+# Remove duplicate lines while preserving order
+awk '!seen[$0]++' file.txt
+
+# Tee: write to file AND continue piping
+cat access.log | tee raw.log | grep "error" | wc -l`</pre>
+          
+        
+
+        /* Section 4: Process management */
+        
+          <h2>Process Management</h2>
+
+          
+            Viewing and controlling processes
+            <pre >`# View processes
+ps aux                        # all processes: user, PID, CPU%, MEM%, command
+ps aux | grep nginx           # filter for specific process
+pgrep nginx                   # get PID(s) of named process
+pgrep -a nginx                # PID and full command line
+
+# Interactive process viewers
+top                           # real-time process list (q to quit)
+htop                          # enhanced top with mouse support (apt install htop)
+btop                          # modern resource monitor (shows graphs)
+
+# Kill processes
+kill 1234                     # send SIGTERM (graceful shutdown) to PID 1234
+kill -9 1234                  # send SIGKILL (immediate) — use as last resort
+kill -HUP 1234                # SIGHUP: reload config without restart (common for nginx)
+pkill nginx                   # kill all processes named "nginx"
+pkill -9 -f "python app.py"   # kill by matching full command string
+killall nginx                 # similar to pkill
+
+# Background and foreground
+command &              # run command in background
+jobs                   # list background jobs
+fg %1                  # bring job 1 to foreground
+bg %1                  # resume job 1 in background
+Ctrl+Z                 # suspend foreground job → run bg %1 to resume
+nohup command &        # run in background, immune to hangup (won't die when SSH closes)
+disown %1              # detach job from shell (it continues after shell closes)
+
+# Process priority
+nice -n 10 command            # run with lower priority (0=normal, 19=lowest)
+renice -n 15 -p 1234         # change priority of running process`</pre>
+          
+        
+
+        /* Section 5: Disk and system */
+        
+          <h2>Disk Usage and System Information</h2>
+
+          
+            Disk, memory, and system monitoring
+            <pre >`# Disk space
+df -h                          # filesystem disk usage (human-readable)
+df -h /                        # just the root filesystem
+du -sh /var/log                # total size of a directory
+du -sh ./*                     # size of each item in current directory
+du -sh * | sort -rh | head -20 # top 20 largest items, sorted
+
+# Interactive disk usage: ncdu
+ncdu /var                      # TUI browser for disk usage (apt install ncdu)
+
+# Memory
+free -h                        # RAM usage: total, used, free, buffers, cache
+vmstat 1 5                     # virtual memory stats, 5 samples 1 second apart
+
+# CPU and system
+lscpu                          # CPU architecture, cores, threads, speed
+nproc                          # number of available processors
+uptime                         # system uptime and load averages
+# Load averages: 1m, 5m, 15m — compare to nproc. >1.0 per core = saturated
+
+# System info
+uname -a                       # kernel version, architecture
+hostnamectl                    # hostname, OS, kernel info
+lsb_release -a                 # Linux distribution info
+cat /etc/os-release            # distribution info (universal)
+
+# Hardware
+lshw -short                    # hardware summary
+lsblk                          # block devices (disks, partitions)
+lsblk -o NAME,SIZE,TYPE,MOUNTPOINT  # custom columns
+fdisk -l                       # partition table (requires root)`</pre>
+          
+        
+
+        /* Section 6: Networking */
+        
+          <h2>Networking Commands</h2>
+
+          
+            Network diagnostics and connections
+            <pre >`# Network interfaces
+ip addr                        # show IP addresses (modern replacement for ifconfig)
+ip addr show eth0              # specific interface
+ip link show                   # interface status (up/down)
+ip route                       # routing table
+ifconfig                       # legacy — not installed by default on modern Linux
+
+# DNS
+nslookup example.com           # DNS lookup
+dig example.com                # detailed DNS query
+dig +short example.com         # just the IP
+dig MX example.com             # mail exchange records
+dig @8.8.8.8 example.com       # query specific DNS server (Google)
+host example.com               # simple hostname → IP
+
+# Connectivity testing
+ping -c 5 8.8.8.8              # 5 packets to Google DNS
+ping -i 0.2 8.8.8.8            # fast ping (0.2s interval)
+traceroute google.com          # trace network hops to destination
+mtr google.com                 # live traceroute (combines ping + traceroute)
+
+# Ports and connections
+ss -tulnp                      # listening ports (modern replacement for netstat)
+# -t: TCP, -u: UDP, -l: listening, -n: numeric, -p: show process
+netstat -tulnp                 # legacy equivalent
+lsof -i :8080                  # what's using port 8080
+lsof -i -P -n | grep LISTEN    # all listening ports with process names
+
+# HTTP testing
+curl -I https://example.com    # HTTP headers only (HEAD request)
+curl -v https://example.com    # verbose: show request/response headers
+curl -o /dev/null -w "%http_code" https://example.com  # just status code
+curl -s -f https://api.example.com/health && echo "OK"   # health check
+
+# File transfer
+wget -O output.tar.gz https://example.com/file.tar.gz  # download with curl-like syntax
+scp user@host:/remote/path ./local/     # secure copy from remote
+rsync -avz user@host:/remote/ ./local/ # sync with progress, compression`</pre>
+          
+        
+
+        /* Section 7: Permissions */
+        
+          <h2>File Permissions and Ownership</h2>
+          <p >
+            Linux permissions follow a 9-bit model: owner (rwx), group (rwx), others (rwx). Each set of three bits maps to read (4), write (2), and execute (1). The octal sum determines the permission number.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Octal</th>
+                  <th >Symbolic</th>
+                  <th >Meaning</th>
+                  <th >Typical Use</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >644</td>
+                  <td >-rw-r--r--</td>
+                  <td >Owner: rw. Group+others: r</td>
+                  <td >Config files, static assets</td>
+                </tr>
+                <tr >
+                  <td >755</td>
+                  <td >-rwxr-xr-x</td>
+                  <td >Owner: rwx. Group+others: rx</td>
+                  <td >Executables, web directories</td>
+                </tr>
+                <tr >
+                  <td >600</td>
+                  <td >-rw-------</td>
+                  <td >Owner: rw. Group+others: none</td>
+                  <td >SSH private keys, secrets</td>
+                </tr>
+                <tr >
+                  <td >700</td>
+                  <td >-rwx------</td>
+                  <td >Owner: rwx. Group+others: none</td>
+                  <td >User scripts, private dirs</td>
+                </tr>
+                <tr>
+                  <td >777</td>
+                  <td >-rwxrwxrwx</td>
+                  <td >Full access for everyone</td>
+                  <td >Avoid in production — security risk</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          
+            chmod, chown, and special permissions
+            <p>`# chmod — change permissions
+chmod 755 script.sh             # octal notation
+chmod +x script.sh              # add execute bit for all (u+x, g+x, o+x)
+chmod u+x,g-w,o-rwx script.sh  # symbolic: u=user, g=group, o=others
+chmod -R 644 ./static/          # recursive
+
+# chown — change owner
+chown user:group file.txt       # change owner and group
+chown -R www-data:www-data /var/www/html   # recursive (web server)
+chown :developers file.txt      # change group only
+
+# Check permissions
+ls -la file.txt                 # shows permissions in ls output
+stat file.txt                   # full permission detail including octal
+
+# umask — default permissions for new files
+umask                           # show current umask (e.g., 022)
+# New file permission = 666 - umask. New dir = 777 - umask.
+# umask 022 → files get 644, dirs get 755 (common default)
+
+# Special permission bits
+chmod u+s script               # setuid: runs as owner (not caller) — use with caution
+chmod g+s directory/           # setgid: new files inherit group of directory
+chmod +t /tmp                  # sticky bit: only owner can delete their own files`</pre>
+          
+        
+
+        /* Section 8: Archive and compression */
+        
+          <h2>Archive and Compression</h2>
+
+          
+            tar, gzip, zip reference
+            <pre >`# tar — tape archive (container format, no compression by itself)
+tar -czf archive.tar.gz directory/     # create: compress with gzip
+tar -cjf archive.tar.bz2 directory/   # create: compress with bzip2
+tar -cJf archive.tar.xz directory/    # create: compress with xz (best ratio)
+tar -cf archive.tar directory/         # create: no compression
+
+tar -xzf archive.tar.gz               # extract gzip tar
+tar -xzf archive.tar.gz -C /target/   # extract to specific directory
+tar -tf archive.tar.gz                 # list contents without extracting
+tar -xzf archive.tar.gz specific/file  # extract single file
+
+# Quick memory trick: c=create, x=extract, t=list, z=gzip, j=bzip2, J=xz, f=file
+
+# gzip / gunzip
+gzip file.txt                  # compress → file.txt.gz (original deleted)
+gzip -k file.txt               # keep original
+gunzip file.txt.gz             # decompress
+gzip -d file.txt.gz            # same as gunzip
+gzip -9 file.txt               # maximum compression (slowest)
+
+# zip / unzip
+zip archive.zip file1 file2    # create zip
+zip -r archive.zip directory/  # recursive
+unzip archive.zip              # extract
+unzip -l archive.zip           # list contents
+unzip archive.zip -d /target/  # extract to directory
+
+# Compression comparison (typical ratios on source code)
+# gzip:  fast, ~60% size reduction — standard for tarballs
+# bzip2: slower, ~65% reduction — legacy
+# xz:    slowest, ~70-75% reduction — best for distribution packages
+# zstd:  fast AND ~65-70% reduction — modern choice (apt install zstd)`</pre>
+          
+        
+
+        /* Section 9: Shell productivity */
+        
+          <h2>Shell Productivity and Shortcuts</h2>
+
+          
+            Bash shortcuts and history
+            <pre >`# History
+history                        # list command history
+!!                             # repeat last command
+!grep                          # repeat last command starting with "grep"
+!42                            # repeat command 42 from history
+Ctrl+R                         # reverse-i-search: fuzzy search history (type to filter)
+history | grep docker          # search history for "docker"
+
+# Keyboard shortcuts
+Ctrl+L                         # clear screen (same as clear)
+Ctrl+C                         # interrupt/kill current command
+Ctrl+D                         # EOF / logout
+Ctrl+A                         # jump to start of line
+Ctrl+E                         # jump to end of line
+Ctrl+W                         # delete word before cursor
+Ctrl+U                         # delete from cursor to start of line
+Ctrl+K                         # delete from cursor to end of line
+Alt+.                          # insert last argument of previous command
+
+# Aliases (put in ~/.bashrc or ~/.zshrc)
+alias ll='ls -la'
+alias la='ls -A'
+alias gs='git status'
+alias gp='git push'
+alias dc='docker compose'
+alias k='kubectl'
+
+# Variable usage
+MY_DIR="/var/log/nginx"
+ls "$MY_DIR"                   # always quote variables
+
+# Brace expansion
+echo a..z                    # a b c ... z
+echo 1..10                   # 1 2 3 ... 10
+mkdir -p /app/frontend,backend,shared/src  # create multiple dirs
+
+# Process substitution (Bash/Zsh only)
+diff <(ls dir1) <(ls dir2)     # compare directory listings without temp files
+
+# Heredoc — multi-line input
+cat <<EOF > config.txt
+key1=value1
+key2=value2
+EOF`</pre>
+          
+        
+
+        /* Modern alternatives table */
+        
+          <h2>Modern Rust-Based Alternatives to Classic Tools</h2>
+          <p >
+            The Rust systems programming language has produced a wave of drop-in replacements for classic Unix tools that are significantly faster and more user-friendly. These are not toys — they are production tools used by the engineering teams at major companies.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Classic Tool</th>
+                  <th >Modern Alternative</th>
+                  <th >Key Advantage</th>
+                  <th >GitHub Stars (2026)</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >grep</td>
+                  <td >ripgrep (rg)</td>
+                  <td >8–35× faster, respects .gitignore, PCRE2</td>
+                  <td >50k+</td>
+                </tr>
+                <tr >
+                  <td >find</td>
+                  <td >fd</td>
+                  <td >23× faster warm cache, parallel, .gitignore</td>
+                  <td >35k+</td>
+                </tr>
+                <tr >
+                  <td >cat</td>
+                  <td >bat</td>
+                  <td >Syntax highlighting, git diff markers, paging</td>
+                  <td >50k+</td>
+                </tr>
+                <tr >
+                  <td >ls</td>
+                  <td >eza (fork of exa)</td>
+                  <td >Git status per file, icons, tree view</td>
+                  <td >12k+</td>
+                </tr>
+                <tr >
+                  <td >du</td>
+                  <td >dust</td>
+                  <td >Visual tree of disk usage, parallel</td>
+                  <td >8k+</td>
+                </tr>
+                <tr >
+                  <td >top/htop</td>
+                  <td >btop</td>
+                  <td >Full TUI with graphs, mouse support</td>
+                  <td >17k+</td>
+                </tr>
+                <tr>
+                  <td >sed/awk</td>
+                  <td >sd</td>
+                  <td >Simpler regex substitution syntax</td>
+                  <td >5k+</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The ripgrep performance data comes from the ripgrep GitHub repository&apos;s benchmarks by Andrew Gallant (BurntSushi), who tested against GNU grep, ag (The Silver Searcher), and The Platinum Searcher on Linux with warm caches. Ripgrep won on every benchmark, with 8× to 35× improvements depending on the pattern type. It is now the default search engine in VS Code (configured via <code >search.exclude</code>) and the underlying engine for several IDE search features.
+          </p>
+          <p>
+            These tools are installable via package managers: <code >apt install ripgrep fd-find bat</code> on Ubuntu/Debian (note: <code >fd</code> installs as <code >fdfind</code> on Ubuntu). On macOS: <code >brew install ripgrep fd bat eza</code>.
+          </p>
+          <p>
+            See also our <a href="/blog/git-cheat-sheet/">Git cheat sheet</a> for version control commands that complement your terminal workflow, and the <a href="/blog/docker-cheat-sheet/">Docker cheat sheet</a> for container management commands.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>What is the difference between grep, sed, and awk?</h3>
+              <p>
+                grep searches for pattern matches and outputs matching lines — read-only. sed transforms text: substitutions, deletions, insertions. awk is a full programming language for field-based text processing with arithmetic, conditionals, and output formatting. Rule of thumb: grep to find, sed to transform single patterns, awk when you need multi-field logic or computation. Per Linode&apos;s documentation, these three tools are the core of Linux text processing pipelines.
+              </p>
+            
+
+            
+              <h3>How do I search for text inside files recursively in Linux?</h3>
+              <p>
+                Use <code >grep -r &quot;pattern&quot; /path/</code> for recursive search. For better performance on large codebases, use ripgrep (<code >rg &quot;pattern&quot;</code>) — 8–35× faster than grep (benchmarked by BurntSushi on GitHub), respects .gitignore by default, and supports PCRE2 patterns with <code >-P</code>. Install with <code >apt install ripgrep</code> or <code >brew install ripgrep</code>.
+              </p>
+            
+
+            
+              <h3>What does chmod 755 mean?</h3>
+              <p>
+                <code >chmod 755</code> sets permissions: owner gets read+write+execute (7 = 4+2+1), group gets read+execute (5 = 4+1), others get read+execute (5). Written symbolically: <code >-rwxr-xr-x</code>. Common for executable scripts and web server directories. Use <code >chmod 644</code> for files that need to be readable but only writable by the owner, and <code >chmod 600</code> for SSH private keys.
+              </p>
+            
+
+            
+              <h3>How do I kill a process in Linux?</h3>
+              <p>
+                Find the PID with <code >ps aux | grep processname</code> or <code >pgrep processname</code>. Then <code >kill PID</code> (SIGTERM, graceful). If unresponsive, <code >kill -9 PID</code> (SIGKILL, immediate). <code >pkill processname</code> kills by name without looking up PIDs. Use <code >htop</code> for an interactive process tree with kill functionality.
+              </p>
+            
+
+            
+              <h3>What is the difference between &gt; and &gt;&gt; in Linux?</h3>
+              <p>
+                <code >&gt;</code> redirects stdout to a file, overwriting existing content. <code >&gt;&gt;</code> appends stdout to a file. For stderr: <code >2&gt;</code> redirects errors, <code >2&gt;&gt;</code> appends. To redirect both stdout and stderr: <code >command &gt; file.log 2&gt;&amp;1</code> or with Bash 4+: <code >command &amp;&gt; file.log</code>. Both create the file if it does not exist.
+              </p>
+            
+
+            
+              <h3>How do I find large files in Linux?</h3>
+              <p>
+                <code >find / -type f -size +100M -exec ls -lh `` \;</code> lists files over 100MB. <code >du -sh ./* | sort -rh | head -20</code> shows top 20 largest items in current directory. <code >ncdu /var</code> provides an interactive TUI browser. <code >df -h</code> shows filesystem-level disk usage.
+              </p>
+            
+
+            
+              <h3>What does the pipe | symbol do in Linux?</h3>
+              <p>
+                The pipe (<code >|</code>) connects the stdout of one command to the stdin of the next. <code >cat access.log | grep &quot;404&quot; | awk &apos;`print $7`&apos; | sort | uniq -c | sort -rn</code> prints 404 URLs ranked by frequency — five commands that together replace dozens of lines of application code. The shell executes each segment of a pipeline concurrently in its own subshell.
+              </p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>More Developer Tools & References</h2>
+          <p>
+            BytePane provides free, no-signup developer tools: JSON formatter, Base64 encoder, regex tester, color converter, URL encoder, and more. All run in your browser — no data sent to any server.
+          </p>
+          <a href="/blog/git-cheat-sheet/">
+            Git Cheat Sheet →
+          </a>
+        
+
+        /* Related tools */
+        
+          <h2>Related Cheat Sheets & Guides</h2>
+          
+            <a href="/blog/git-cheat-sheet/">
+              → Git Cheat Sheet
+            </a>
+            <a href="/blog/docker-cheat-sheet/">
+              → Docker Cheat Sheet
+            </a>
+            <a href="/blog/regex-cheat-sheet/">
+              → Regex Cheat Sheet
+            </a>
+            <a href="/blog/linux-file-permissions/">
+              → Linux File Permissions Explained
+            </a>
+            <a href="/blog/cron-jobs-tutorial/">
+              → Cron Jobs Tutorial
+            </a>
+            <a href="/blog/ssh-keys-guide/">
+              → SSH Keys Guide
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/linux-commands-cheat-sheet/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
