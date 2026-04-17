@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>curl Command Guide: HTTP Requests, Headers &amp; API Testing - BytePane</title>
+  <meta name="description" content="The definitive curl guide for developers: GET/POST/PUT/DELETE, authentication headers, JSON bodies, file uploads, cookies, TLS options, and debugging flags with real examples.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/curl-command-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; curl Command Guide: HTTP Requests, Headers &amp; API Testing
+  </nav>
+
+  <article>
+    <h1>curl Command Guide: HTTP Requests, Headers &amp; API Testing</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/curl-command-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    re integrating a third-party API. Their docs show a curl command with eight flags you don&apos;t recognize. You copy-paste it, it works, and you move on — until it doesn&apos;t work in staging, and you have no idea why. This guide explains every flag, every edge case, so you can read and write curl commands cold.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>• <strong>curl is installed on 10 billion+ devices</strong> — per the curl project&apos;s own count, making it the most widely deployed HTTP client in existence.</li>
+            <li>• <strong>-d implies POST</strong> — you can omit <code >-X POST</code> when sending a body with <code >-d</code>.</li>
+            <li>• <strong>-v vs -w</strong>: use <code >-v</code> for interactive debugging, <code >-w</code> for scripted metrics (status codes, latency).</li>
+            <li>• <strong>-L does not preserve method</strong> by default — a POSTed request that gets 301-redirected becomes a GET unless you explicitly prevent it.</li>
+            <li>• <strong>Never use -k in production scripts</strong> — skipping TLS verification defeats the entire point of HTTPS.</li>
+          </ul>
+        
+
+        
+          <h2>What curl Is (and Isn&apos;t)</h2>
+          <p>
+            curl (originally <em>Client for URLs</em>, written by Daniel Stenberg in 1998) is a command-line tool and library for transferring data over URLs. It speaks 28 protocols — HTTP/1.1, HTTP/2, HTTP/3, FTP, SFTP, SMTP, WebSocket — but its primary use case in 2026 is HTTP API testing and scripting.
+          </p>
+          <p>
+            According to the <strong>curl project&apos;s installation statistics</strong>, curl ships in macOS, most Linux distributions, Windows 10+, Android, iOS, and thousands of embedded systems — giving it an estimated 10 billion+ deployment count. The <strong>Stack Overflow Developer Survey 2024</strong> lists it as one of the top command-line tools used by developers globally. It is not a GUI, not a full API client (that&apos;s Postman&apos;s job), and not wget — though the two overlap on basic downloads.
+          </p>
+        
+
+        
+          <h2>The Anatomy of a curl Command</h2>
+          <p>
+            <code >`curl [OPTIONS] [URL]
+
+# Minimal GET request
+curl https://api.example.com/users
+
+# The most complete form you'll see in API docs:
+curl \\
+  --request POST \\                              # HTTP method
+  --url https://api.example.com/v1/orders \\    # Target URL
+  --header 'Content-Type: application/json' \\ # Request header
+  --header 'Authorization: Bearer $TOKEN' \\   # Auth header
+  --data '"item":"widget","qty":3' \\         # Request body
+  --silent \\                                   # Suppress progress meter
+  --fail \\                                     # Exit non-zero on HTTP errors
+  --output response.json \\                     # Write response to file
+  --write-out '%http_code\\n'                 # Print status code to stdout
+
+# Short-form equivalent:
+curl -X POST https://api.example.com/v1/orders \\
+  -H 'Content-Type: application/json' \\
+  -H 'Authorization: Bearer $TOKEN' \\
+  -d '"item":"widget","qty":3' \\
+  -sSf -o response.json -w '%http_code\\n'`</code>
+          </pre>
+        
+
+        
+          <h2>GET Requests: Fundamentals and Query Strings</h2>
+          <pre >
+            <code >`# Basic GET — no flag needed, GET is default
+curl https://httpbin.org/get
+
+# With query parameters — URL-encode manually or use --data-urlencode
+curl 'https://api.example.com/search?q=hello+world&limit=10'
+
+# --get (-G) + --data-urlencode: curl handles encoding for you
+curl -G https://api.example.com/search \\
+  --data-urlencode 'q=hello world' \\
+  --data-urlencode 'filter=status:active'
+# Sends: GET /search?q=hello%20world&filter=status%3Aactive
+
+# Accept specific content type
+curl -H 'Accept: application/json' https://api.example.com/users
+
+# Custom User-Agent (some APIs block curl's default agent)
+curl -A 'MyApp/2.0' https://api.example.com/data
+
+# Inspect response headers only (no body)
+curl -I https://api.example.com/health
+# -I sends HEAD request — response has headers, no body
+# Useful for checking Cache-Control, Content-Type, ETag
+
+# Show both headers and body (append -i to any request)
+curl -i https://api.example.com/health`</code>
+          </pre>
+          <p >
+            When inspecting response headers, look for <code >X-RateLimit-Remaining</code>, <code >Retry-After</code>, and <code >X-Request-ID</code> — these are critical for debugging rate limiting and distributed tracing. See the <a href="/blog/http-status-codes/">HTTP Status Codes guide</a> for what each response code means.
+          </p>
+        
+
+        
+          <h2>POST, PUT, PATCH, DELETE: Sending Data</h2>
+          <p>
+            <code >`# POST with JSON body — -d implies POST, -X POST is redundant here
+curl https://api.example.com/users \\
+  -H 'Content-Type: application/json' \\
+  -d '"name":"Alice","email":"alice@example.com"'
+
+# POST from a JSON file — @ prefix reads file contents
+curl https://api.example.com/users \\
+  -H 'Content-Type: application/json' \\
+  -d @user.json
+
+# POST form data (application/x-www-form-urlencoded — default for -d)
+curl https://api.example.com/login \\
+  -d 'username=alice&password=secret'
+
+# POST multipart form (file upload — sets Content-Type: multipart/form-data automatically)
+curl https://api.example.com/upload \\
+  -F 'file=@photo.jpg' \\
+  -F 'caption=Profile photo' \\
+  -F 'user_id=123'
+
+# Upload with specific MIME type override
+curl https://api.example.com/documents \\
+  -F 'file=@report.pdf;type=application/pdf'
+
+# PUT — full resource replacement
+curl -X PUT https://api.example.com/users/123 \\
+  -H 'Content-Type: application/json' \\
+  -d '"name":"Alice Smith","email":"alice@example.com","role":"admin"'
+
+# PATCH — partial update
+curl -X PATCH https://api.example.com/users/123 \\
+  -H 'Content-Type: application/json' \\
+  -d '"role":"admin"'
+
+# DELETE
+curl -X DELETE https://api.example.com/users/123
+
+# DELETE with body (unusual but some APIs require it)
+curl -X DELETE https://api.example.com/items \\
+  -H 'Content-Type: application/json' \\
+  -d '"ids":[1,2,3]'`</code>
+          </pre>
+        
+
+        
+          <h2>Authentication: Every Method You&apos;ll Encounter</h2>
+          <p >
+            curl supports every authentication scheme used in modern APIs. Per <strong>Postman&apos;s 2024 State of the API report</strong>, 98% of APIs require some form of authentication. Here&apos;s how to provide each type from the command line.
+          </p>
+          <p>
+            <code >`# API Key in header (most common)
+curl -H 'X-API-Key: your_api_key_here' https://api.example.com/data
+
+# Bearer token (OAuth 2.0 / JWT)
+curl -H 'Authorization: Bearer eyJhbGci...' https://api.example.com/data
+
+# Basic auth — curl encodes user:pass as Base64 automatically
+curl -u alice:secretpassword https://api.example.com/data
+# Equivalent to: -H 'Authorization: Basic YWxpY2U6c2VjcmV0cGFzc3dvcmQ='
+
+# Basic auth — password prompt (never put passwords in commands)
+curl -u alice https://api.example.com/data
+# curl prompts for password — doesn't appear in shell history
+
+# Digest auth
+curl --digest -u alice:secret https://api.example.com/data
+
+# API key in query string (less secure — appears in server logs)
+curl 'https://api.example.com/data?api_key=your_key'
+
+# OAuth 1.0a — curl doesn't support natively; use oauth tool
+curl -H "Authorization: OAuth oauth_consumer_key=...,oauth_token=..." \\
+  https://api.example.com/data
+
+# Client certificate (mTLS)
+curl --cert client.crt --key client.key \\
+  --cacert ca.crt \\
+  https://api.example.com/data
+
+# Netrc file — store credentials without exposing them in commands
+# ~/.netrc format:
+# machine api.example.com
+#   login alice
+#   password secretpassword
+curl --netrc https://api.example.com/data  # Reads from ~/.netrc
+
+# Store token in env var — prevents it appearing in process list
+export API_TOKEN="eyJhbGci..."
+curl -H "Authorization: Bearer $API_TOKEN" https://api.example.com/data`</code>
+          </pre>
+          <p >
+            For a deeper comparison of authentication methods including JWT structure and OAuth flows, see the <a href="/blog/api-authentication-methods/">API Authentication Methods guide</a> and the <a href="/blog/jwt-tokens-explained/">JWT Tokens Explained article</a>.
+          </p>
+        
+
+        
+          <h2>Debugging: -v, -i, --trace, and -w</h2>
+          <p>
+            Knowing which debugging flag to use for which problem saves significant time. The four flags serve different purposes and aren&apos;t interchangeable.
+          </p>
+          <p>
+            <code >`# -i: Show response headers before body (non-verbose)
+curl -i https://httpbin.org/get
+# HTTP/2 200
+# content-type: application/json
+# ...followed by body...
+
+# -v: Full conversation log (request + response headers + TLS info)
+curl -v https://httpbin.org/get
+# * Connected to httpbin.org (34.227.213.82) port 443
+# * SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384
+# > GET /get HTTP/2
+# > Host: httpbin.org
+# > User-Agent: curl/8.7.1
+# > Accept: */*
+# >
+# < HTTP/2 200
+# < content-type: application/json
+# ...body...
+
+# --trace: Byte-level hex dump (debugging binary protocols, WebSockets)
+curl --trace trace.txt https://httpbin.org/get
+curl --trace - https://httpbin.org/get  # Print trace to stdout
+
+# -w: Scripted metrics — prints formatted data after transfer
+# Great for health checks and latency testing
+curl -s -o /dev/null -w '%http_code\\n' https://api.example.com/health
+# 200
+
+# Full timing breakdown
+curl -s -o /dev/null -w \\
+  'DNS: %time_namelookups\\nConnect: %time_connects\\nTLS: %time_appconnects\\nTTFB: %time_starttransfers\\nTotal: %time_totals\\n' \\
+  https://api.example.com
+# DNS:     0.018s
+# Connect: 0.054s
+# TLS:     0.121s
+# TTFB:    0.243s
+# Total:   0.251s
+
+# -w variables reference:
+# %http_code        — HTTP status code (200, 404, 500...)
+# %time_total       — Total transfer time in seconds
+# %time_connect     — Time to TCP connect
+# %time_appconnect  — Time to TLS handshake completion
+# %time_starttransfer — Time to first byte (TTFB)
+# %size_download    — Response body size in bytes
+# %speed_download   — Average download speed (bytes/sec)
+# %url_effective    — Final URL after redirects
+# %redirect_count   — Number of redirects followed
+# %num_connects     — Number of new connections made`</code>
+          </pre>
+        
+
+        
+          <h2>TLS, Certificates, and the -k Flag You Should Never Use in CI</h2>
+          <pre >
+            <code >`# Default: curl verifies TLS certificates
+curl https://api.example.com/data  # Fails if cert is invalid/self-signed
+
+# -k (--insecure): Skip TLS verification — DEVELOPMENT ONLY
+curl -k https://localhost:8443/api
+# NEVER use in production scripts — defeats the point of HTTPS
+# CI pipelines: if you're tempted to use -k, fix the certificate instead
+
+# Trust a specific CA certificate (for internal/staging APIs)
+curl --cacert /path/to/internal-ca.crt https://internal-api.company.com/data
+
+# Specify exact server certificate to pin against
+curl --pinnedpubkey sha256//AAAAAAA...= https://api.example.com/data
+
+# Client certificates (mutual TLS)
+curl --cert client.pem --key client.key https://api.example.com/data
+
+# Separate cert and key files
+curl --cert /certs/client.crt --key /certs/client.key \\
+  --cacert /certs/ca-bundle.crt \\
+  https://api.example.com/data
+
+# Specify TLS version (useful for debugging compatibility)
+curl --tls-max 1.2 https://api.example.com/data     # Limit to TLS 1.2
+curl --tlsv1.3 https://api.example.com/data          # Require at least TLS 1.3
+
+# Check certificate expiry
+curl -vI https://api.example.com/health 2>&1 | grep -E 'expire|issue'
+# *  SSL certificate verify ok.
+# *  subject: CN=api.example.com
+# *  start date: Jan  1 00:00:00 2026 GMT
+# *  expire date: Jan  1 00:00:00 2027 GMT`</code>
+          </pre>
+        
+
+        
+          <h2>Cookies, Sessions, and State</h2>
+          <pre >
+            <code >`# Send a specific cookie
+curl -b 'session_id=abc123; theme=dark' https://app.example.com/dashboard
+
+# Save cookies from response to a file
+curl -c cookies.txt https://app.example.com/login
+
+# Load cookies from file AND save new cookies back to it
+# This maintains a session across multiple requests
+curl -b cookies.txt -c cookies.txt \\
+  -X POST https://app.example.com/login \\
+  -d 'username=alice&password=secret'
+
+# Use the session for subsequent requests
+curl -b cookies.txt https://app.example.com/dashboard
+
+# Complete login flow example
+# Step 1: Login and capture session cookie
+curl -s -c session.jar \\
+  -X POST https://app.example.com/auth/login \\
+  -H 'Content-Type: application/json' \\
+  -d '"email":"alice@example.com","password":"secret"' \\
+  | python3 -m json.tool  # Pretty-print response
+
+# Step 2: Use session for authenticated request
+curl -s -b session.jar \\
+  https://app.example.com/api/profile \\
+  | python3 -m json.tool
+
+# Delete a specific cookie
+curl -b 'session_id=; expires=Thu, 01 Jan 1970 00:00:00 GMT' \\
+  https://app.example.com/logout`</code>
+          </pre>
+        
+
+        
+          <h2>Redirects, Retries, and Timeouts</h2>
+          <pre >
+            <code >`# Follow redirects (-L / --location)
+curl -L https://short.url/abc  # Follows to final destination
+
+# Limit redirect depth
+curl -L --max-redirs 5 https://example.com
+
+# Follow redirects and preserve POST method (don't convert to GET on 301)
+curl -L --post301 --post302 \\
+  -X POST https://api.example.com/v1/orders \\
+  -d '"item":"widget"'
+
+# Show final URL after redirects
+curl -s -o /dev/null -w '%url_effective\\n' -L https://bit.ly/abc
+
+# Connection timeout — how long to wait for a TCP connection
+curl --connect-timeout 5 https://api.example.com/data
+
+# Total operation timeout — including transfer time
+curl --max-time 30 https://api.example.com/large-export
+
+# Retry on failure (transient network errors, not HTTP errors)
+curl --retry 3 --retry-delay 2 https://api.example.com/data
+# Waits 2 seconds between retries
+
+# Retry with exponential backoff
+curl --retry 5 --retry-delay 1 --retry-max-time 60 https://api.example.com/data
+
+# Exit with non-zero status on HTTP errors (4xx, 5xx)
+# Without -f, curl exits 0 even if server returns 404
+curl -f https://api.example.com/data || echo "Request failed"
+# -fsSL is a common CI idiom: fail-fast + silent + follow redirects
+curl -fsSL https://api.example.com/health | jq .status`</code>
+          </pre>
+        
+
+        
+          <h2>HTTP/2 and HTTP/3</h2>
+          <pre >
+            <code >`# Force HTTP/2 (requires curl built with nghttp2)
+curl --http2 https://api.example.com/data
+
+# Force HTTP/1.1 (useful for debugging protocol-specific issues)
+curl --http1.1 https://api.example.com/data
+
+# HTTP/3 (QUIC) — requires curl 7.66+ with quiche or ngtcp2
+curl --http3 https://api.example.com/data
+
+# Check which protocol was used
+curl -v https://api.example.com/data 2>&1 | grep 'HTTP/'
+# * Using HTTP2, server supports multiplexing
+
+# HTTP/2 multiplexing: multiple requests over one connection
+# curl handles this automatically with --http2 when the server supports it
+# Visible in -v output: "Re-using existing connection"
+
+# Detect if a server supports HTTP/2
+curl -sI --http2 https://api.example.com/ | grep -i 'HTTP/'
+# HTTP/2 200  — server accepted HTTP/2
+# HTTP/1.1 200 OK — server downgraded to HTTP/1.1`</code>
+          </pre>
+        
+
+        
+          <h2>Scripting Patterns for CI/CD and Automation</h2>
+          <p >
+            curl is a first-class tool in CI/CD pipelines. These patterns extract structured output reliably, handle errors, and integrate with tools like <code >jq</code>.
+          </p>
+          <p>
+            <code >`#!/bin/bash
+
+# Pattern 1: Health check with status code validation
+STATUS=$(curl -s -o /dev/null -w '%http_code' https://api.example.com/health)
+if [ "$STATUS" != "200" ]; then
+  echo "Health check failed: HTTP $STATUS"
+  exit 1
+fi
+
+# Pattern 2: Capture response body AND status code separately
+HTTP_RESPONSE=$(curl -s -w '\\n%http_code' https://api.example.com/users)
+HTTP_BODY=$(echo "$HTTP_RESPONSE" | head -n -1)
+HTTP_STATUS=$(echo "$HTTP_RESPONSE" | tail -n 1)
+
+# Pattern 3: Extract a JSON field with jq
+TOKEN=$(curl -s -X POST https://api.example.com/auth/token \\
+  -H 'Content-Type: application/json' \\
+  -d '"client_id":"app","client_secret":"secret"' \\
+  | jq -r '.access_token')
+
+# Pattern 4: Paginate through results
+PAGE=1
+while true; do
+  RESPONSE=$(curl -s "https://api.example.com/items?page=$PAGE&per_page=100" \\
+    -H "Authorization: Bearer $TOKEN")
+
+  # Process items
+  echo "$RESPONSE" | jq '.items[]'
+
+  # Check if there's a next page
+  HAS_NEXT=$(echo "$RESPONSE" | jq -r '.pagination.has_next')
+  [ "$HAS_NEXT" = "true" ] || break
+  PAGE=$((PAGE + 1))
+done
+
+# Pattern 5: Webhook testing — send and verify
+curl -X POST https://webhook.site/your-uuid \\
+  -H 'Content-Type: application/json' \\
+  -H 'X-Webhook-Secret: shared_secret' \\
+  -d @payload.json \\
+  -w '\\nStatus: %http_code\\n'
+
+# Pattern 6: Upload a file and poll for processing status
+UPLOAD_ID=$(curl -s -X POST https://api.example.com/jobs \\
+  -F 'file=@data.csv' | jq -r '.job_id')
+
+until [ "$(curl -s "https://api.example.com/jobs/$UPLOAD_ID" | jq -r '.status')" = "complete" ]; do
+  echo "Waiting for job $UPLOAD_ID..."
+  sleep 5
+done`</code>
+          </pre>
+        
+
+        
+          <h2>curl vs HTTPie vs wget: When to Use Each</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >curl</th>
+                  <th >HTTPie</th>
+                  <th >wget</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Installed by default</td>
+                  <td >macOS, Linux, Windows 10+</td>
+                  <td >No (pip install httpie)</td>
+                  <td >Most Linux distros</td>
+                </tr>
+                <tr >
+                  <td >JSON ergonomics</td>
+                  <td >Manual (-H + -d)</td>
+                  <td >Auto JSON (key=value)</td>
+                  <td >Poor</td>
+                </tr>
+                <tr >
+                  <td >Colored output</td>
+                  <td >No</td>
+                  <td >Yes (syntax highlighted)</td>
+                  <td >No</td>
+                </tr>
+                <tr >
+                  <td >Scripting reliability</td>
+                  <td >Excellent (-w, -f, --retry)</td>
+                  <td >Good</td>
+                  <td >Limited</td>
+                </tr>
+                <tr >
+                  <td >File download</td>
+                  <td >Full-featured (-o, --range)</td>
+                  <td >Basic</td>
+                  <td >Excellent (--mirror, recursive)</td>
+                </tr>
+                <tr >
+                  <td >Protocol support</td>
+                  <td >28 protocols</td>
+                  <td >HTTP/HTTPS only</td>
+                  <td >HTTP, HTTPS, FTP</td>
+                </tr>
+                <tr>
+                  <td >Best use case</td>
+                  <td >Scripting, CI, API testing</td>
+                  <td >Interactive API exploration</td>
+                  <td >Recursive site download</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p >
+            In CI/CD pipelines, always prefer curl — it&apos;s universally available, has stable flag semantics across versions, and its <code >-w</code> flag makes it trivial to extract structured metrics. HTTPie is excellent for interactive exploration and produces human-readable output, but shouldn&apos;t be a CI dependency.
+          </p>
+        
+
+        
+          <h2>The 20 Flags You&apos;ll Actually Use</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Flag</th>
+                  <th >Long form</th>
+                  <th >Purpose</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >-X</td><td >--request</td><td >Set HTTP method (GET, POST, PUT, PATCH, DELETE)</td></tr>
+                <tr ><td >-H</td><td >--header</td><td >Add request header (repeatable)</td></tr>
+                <tr ><td >-d</td><td >--data</td><td >Request body; @filename reads from file</td></tr>
+                <tr ><td >-F</td><td >--form</td><td >Multipart form data (file uploads)</td></tr>
+                <tr ><td >-u</td><td >--user</td><td >Basic auth user:password</td></tr>
+                <tr ><td >-i</td><td >--include</td><td >Include response headers in output</td></tr>
+                <tr ><td >-I</td><td >--head</td><td >Send HEAD request (headers only)</td></tr>
+                <tr ><td >-v</td><td >--verbose</td><td >Full request/response + TLS conversation</td></tr>
+                <tr ><td >-s</td><td >--silent</td><td >Suppress progress meter and errors</td></tr>
+                <tr ><td >-S</td><td >--show-error</td><td >Show errors even when -s is set (use -sS together)</td></tr>
+                <tr ><td >-f</td><td >--fail</td><td >Exit non-zero on HTTP 4xx/5xx responses</td></tr>
+                <tr ><td >-L</td><td >--location</td><td >Follow HTTP redirects (301, 302, etc.)</td></tr>
+                <tr ><td >-o</td><td >--output</td><td >Write response body to file</td></tr>
+                <tr ><td >-O</td><td >--remote-name</td><td >Save to filename from URL</td></tr>
+                <tr ><td >-w</td><td >--write-out</td><td >Print formatted metrics after transfer</td></tr>
+                <tr ><td >-b</td><td >--cookie</td><td >Send cookie string or load from file</td></tr>
+                <tr ><td >-c</td><td >--cookie-jar</td><td >Save received cookies to file</td></tr>
+                <tr ><td >-k</td><td >--insecure</td><td >Skip TLS verification (dev only!)</td></tr>
+                <tr ><td >--retry</td><td >--retry N</td><td >Retry N times on transient failures</td></tr>
+                <tr><td >--max-time</td><td >--max-time N</td><td >Total time limit in seconds</td></tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Practical Examples: Real API Workflows</h2>
+          <p>
+            <code >`# GitHub API — list repos for a user
+curl -s \\
+  -H 'Accept: application/vnd.github+json' \\
+  -H "Authorization: Bearer $GITHUB_TOKEN" \\
+  'https://api.github.com/users/torvalds/repos?per_page=5&sort=stars' \\
+  | jq '.[].full_name'
+
+# Stripe API — create a payment intent
+curl -s https://api.stripe.com/v1/payment_intents \\
+  -u "$STRIPE_SECRET_KEY:" \\
+  -d amount=2000 \\
+  -d currency=usd \\
+  -d 'payment_method_types[]=card'
+
+# AWS S3 — pre-signed URL upload (no auth header needed)
+curl -X PUT 'https://bucket.s3.amazonaws.com/file.txt?AWSAccessKeyId=...&Expires=...&Signature=...' \\
+  -H 'Content-Type: text/plain' \\
+  --upload-file ./file.txt
+
+# OpenAI API — chat completion
+curl https://api.openai.com/v1/chat/completions \\
+  -H "Authorization: Bearer $OPENAI_API_KEY" \\
+  -H 'Content-Type: application/json' \\
+  -d '
+    "model": "gpt-4o",
+    "messages": ["role":"user","content":"Explain curl in one sentence"],
+    "max_tokens": 100
+  ' | jq -r '.choices[0].message.content'
+
+# Slack webhook — post a message
+curl -X POST "$SLACK_WEBHOOK_URL" \\
+  -H 'Content-Type: application/json' \\
+  -d '"text":"Deployment complete :rocket:"'
+
+# Test a locally running service
+curl -s localhost:3000/api/health | jq .
+curl -s localhost:3000/api/users \\
+  -H 'Authorization: Bearer test-token' | jq '.users | length'`</code>
+          </pre>
+          <p >
+            When testing REST APIs, understanding the response status codes is as important as the request construction. The <a href="/blog/rest-api-best-practices/">REST API Best Practices guide</a> covers status code semantics, versioning, and error response formats in depth.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What does curl -X POST actually do?',
+                a: '-X (--request) explicitly sets the HTTP method. For POST with a body you can usually omit it — curl infers POST when you use -d. Use -X explicitly for PUT, PATCH, DELETE, OPTIONS. Gotcha: -X POST persists across redirects. If a server 301-redirects a POST, curl re-sends POST to the new URL. Use --post301 or --post302 to preserve method intentionally.',
+              ,
+              
+                q: 'What is the difference between curl -d and --data-raw?',
+                a: '-d (--data) treats values starting with @ as filenames to read: -d @file.json sends file contents. --data-raw treats the value literally — @ has no special meaning. For JSON bodies with characters that might be shell-expanded or misinterpreted, --data-raw or storing the body in a file with -d @body.json is safer than complex quoting.',
+              ,
+              
+                q: 'How do I send JSON with curl?',
+                a: 'Set Content-Type and provide the body: curl -X POST https://api.example.com/data -H "Content-Type: application/json" -d \'"key":"value"\'. On Windows, use double quotes with escaped inner quotes. Alternatively, write JSON to a file and use -d @body.json to avoid shell quoting issues. Pair with -H "Accept: application/json" if the server serves multiple formats.',
+              ,
+              
+                q: 'What does curl -v output and how do I read it?',
+                a: '-v shows the full request/response conversation. > lines are request headers sent. < lines are response headers received. * lines are curl\'s informational messages (TLS handshake, connection events). The response body appears after the headers. For machine-readable output, use -w with %http_code instead of parsing -v with grep.',
+              ,
+              
+                q: 'How do I follow redirects with curl?',
+                a: 'Use -L (--location). curl does not follow redirects by default — a 301 just prints the Location header. -L follows up to 30 redirects. Add --max-redirs N to change the limit. Note: -L converts POST to GET on 301/302 by default. Use --post301 or --post302 to preserve the POST method through the redirect.',
+              ,
+              
+                q: 'How do I test an API that requires a Bearer token?',
+                a: 'Add the Authorization header: curl -H "Authorization: Bearer YOUR_TOKEN" https://api.example.com/resource. Store the token in an environment variable (export TOKEN=...) rather than pasting it directly into commands — it won\'t appear in shell history or process lists. Chain multiple -H flags for APIs requiring both auth and content type.',
+              ,
+              
+                q: 'What is the curl -w flag and what can it measure?',
+                a: '-w prints formatted data after transfer. Key variables: %http_code (status), %time_total (total seconds), %time_starttransfer (TTFB), %size_download (bytes). Example: curl -s -o /dev/null -w "%http_code %time_totals" https://example.com prints "200 0.342s" — ideal for scripted health checks and latency monitoring in CI pipelines.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Format and Inspect Your API Responses</h2>
+          <p>
+            When curl returns JSON, pipe it through BytePane&apos;s <a href="/json-formatter/">JSON Formatter</a> to validate structure and explore nested data. Need to encode URL parameters by hand? Use the <a href="/blog/url-encoding-guide/">URL Encoding Guide</a> to understand percent-encoding, or look up what HTTP status codes mean in the <a href="/blog/http-status-codes/">HTTP Status Codes reference</a>.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/rest-api-best-practices/">
+              <h3>REST API Best Practices</h3>
+              <p>URL design, versioning, authentication, error handling, and performance.</p>
+            </a>
+            <a href="/blog/http-status-codes/">
+              <h3>HTTP Status Codes</h3>
+              <p>What every 1xx/2xx/3xx/4xx/5xx code means and when to return each.</p>
+            </a>
+            <a href="/blog/api-authentication-methods/">
+              <h3>API Authentication Methods</h3>
+              <p>API keys, JWT, OAuth 2.0, and mTLS compared with decision framework.</p>
+            </a>
+            <a href="/blog/url-encoding-guide/">
+              <h3>URL Encoding Guide</h3>
+              <p>Percent-encoding, query string rules, and when to use encodeURIComponent.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/curl-command-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
