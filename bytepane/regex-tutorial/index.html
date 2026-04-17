@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regex Tutorial: Learn Regular Expressions Step by Step (2026) - BytePane</title>
+  <meta name="description" content="Regex Tutorial: Learn Regular Expressions Step by Step (2026)">
+  <link rel="canonical" href="https://www.bytepane.com/blog/regex-tutorial/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Regex Tutorial: Learn Regular Expressions Step by Step (2026)
+  </nav>
+
+  <article>
+    <h1>Regex Tutorial: Learn Regular Expressions Step by Step (2026)</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/regex-tutorial/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Regex Tutorial: Learn Regular Expressions Step by Step
+      
+
+      /* Article Header */
+      
+        <h2>
+          Regex Tutorial: Learn Regular Expressions Step by Step (2026)
+        </h2>
+        
+          Text Processing
+          <time dateTime="2026-04-15">April 15, 2026</time>
+          20 min read
+        
+      
+
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸According to Stack Overflow&apos;s developer surveys, approximately <strong>78% of professional developers</strong> use regex at least monthly — it is a core competency for backend, data engineering, and DevOps roles.</li>
+            <li>▸Research published in ASE 2019 (Servant, Davis, et al.) found that <strong>65% of developers found regex daunting when learning</strong> — most production regex bugs come from quantifier ambiguity and greedy vs. lazy mismatches.</li>
+            <li>▸ReDoS (Regular Expression Denial of Service) vulnerabilities exploit <strong>catastrophic backtracking</strong> in nested quantifiers — real exploits have caused outages at Cloudflare, Node.js, and Ruby on Rails.</li>
+            <li>▸Go&apos;s RE2 engine guarantees <strong>O(n) linear time matching</strong> by prohibiting backreferences and lookaheads — the trade-off is worth it for user-facing input validation at scale.</li>
+            <li>▸Named capture groups (<code >(?&lt;name&gt;pattern)</code>) were added to JavaScript in <strong>ES2018</strong> and dramatically improve regex readability for complex patterns — use them in any pattern with 2+ groups.</li>
+          </ul>
+        
+
+        /* Opening: real-world case study */
+        
+          <h2>The Log File That Took Down the Monitoring System</h2>
+          <p>
+            In 2019, a misconfigured regular expression in Cloudflare&apos;s Web Application Firewall caused a global outage lasting 27 minutes, dropping HTTP traffic by approximately 82%. The root cause: a new WAF rule introduced a regex with a catastrophically backtracking pattern — specifically, a sequence involving a wildcard pattern matching against itself. The CPU on every core handling HTTP traffic pegged at 100%, starving legitimate requests.
+          </p>
+          <p>
+            This was not an exotic edge case. The same class of regex — one with nested quantifiers that can explore exponentially many paths — appears routinely in production codebases written by developers who understand regex syntax but not the underlying NFA engine. Per research by Davis et al. published in IEEE/ACM ASE 2019, 13% of regexes extracted from npm packages showed potential super-linear worst-case behavior.
+          </p>
+          <p>
+            This tutorial starts from the basics — literals, metacharacters, quantifiers — and builds to the advanced concepts that separate regex competence from regex expertise: atomic groups, possessive quantifiers, lookaheads, backreferences, and the crucial question of when to use a regex engine vs. a parser. Along the way, we will build the mental model that prevents the Cloudflare class of bugs.
+          </p>
+        
+
+        /* Part 1: Fundamentals */
+        
+          <h2>Part 1: Regex Fundamentals</h2>
+
+          <h3>Literal Characters and Metacharacters</h3>
+          <p>
+            The simplest regex is a literal string. The pattern <code >hello</code> matches the sequence &ldquo;hello&rdquo; anywhere in the input. What makes regex powerful — and complex — is the set of metacharacters that represent classes of characters or control matching behavior:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Metacharacter</th>
+                  <th >Meaning</th>
+                  <th >Example</th>
+                  <th >Matches</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >.</td>
+                  <td >Any character (except newline)</td>
+                  <td >c.t</td>
+                  <td >cat, cut, c8t, c-t</td>
+                </tr>
+                <tr >
+                  <td >\d</td>
+                  <td >Any digit [0-9]</td>
+                  <td >\d\d\d</td>
+                  <td >123, 042, 999</td>
+                </tr>
+                <tr >
+                  <td >\w</td>
+                  <td >Word char [a-zA-Z0-9_]</td>
+                  <td >\w+</td>
+                  <td >hello, foo_bar, ABC123</td>
+                </tr>
+                <tr >
+                  <td >\s</td>
+                  <td >Whitespace (space, tab, newline)</td>
+                  <td >foo\sbar</td>
+                  <td >&quot;foo bar&quot;, &quot;foo\tbar&quot;</td>
+                </tr>
+                <tr >
+                  <td >^</td>
+                  <td >Start of string (or line in /m)</td>
+                  <td >^Hello</td>
+                  <td >&quot;Hello world&quot; (not &quot;Say Hello&quot;)</td>
+                </tr>
+                <tr >
+                  <td >$</td>
+                  <td >End of string (or line in /m)</td>
+                  <td >world$</td>
+                  <td >&quot;Hello world&quot; (not &quot;worldwide&quot;)</td>
+                </tr>
+                <tr >
+                  <td >[abc]</td>
+                  <td >Character class — a, b, or c</td>
+                  <td >[aeiou]</td>
+                  <td >Any single vowel</td>
+                </tr>
+                <tr >
+                  <td >[^abc]</td>
+                  <td >Negated class — NOT a, b, or c</td>
+                  <td >[^0-9]</td>
+                  <td >Any non-digit character</td>
+                </tr>
+                <tr >
+                  <td >\b</td>
+                  <td >Word boundary</td>
+                  <td >\bcat\b</td>
+                  <td >&quot;cat&quot; not &quot;cats&quot; or &quot;concatenate&quot;</td>
+                </tr>
+                <tr>
+                  <td >|</td>
+                  <td >Alternation (OR)</td>
+                  <td >cat|dog</td>
+                  <td >&quot;cat&quot; or &quot;dog&quot;</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The uppercase versions negate the shorthand: <code >\D</code> matches non-digits, <code >\W</code> matches non-word characters, <code >\S</code> matches non-whitespace. These are equivalent to their negated class counterparts: <code >\D</code> = <code >[^0-9]</code>.
+          </p>
+
+          <h3>Quantifiers: Controlling Repetition</h3>
+          <p>
+            Quantifiers attach to the preceding element and specify how many times it can repeat:
+          </p>
+
+          
+            Quantifier reference with examples
+            <p>`// * — zero or more (greedy)
+/go*gle/.test("ggle")   // true (0 o's)
+/go*gle/.test("google") // true (2 o's)
+/go*gle/.test("gooogle") // true (3 o's)
+
+// + — one or more (greedy)
+/go+gle/.test("ggle")   // false (needs at least 1 o)
+/go+gle/.test("google") // true
+
+// ? — zero or one (optional)
+/colou?r/.test("color")  // true (u is optional)
+/colou?r/.test("colour") // true
+
+// n — exactly n times
+/\\d4/.test("2026") // true — exactly 4 digits
+
+// n,m — between n and m times (inclusive)
+/\\w2,5/.test("hi")      // true (2 chars)
+/\\w2,5/.test("hello")   // true (5 chars)
+/\\w2,5/.test("a")       // false (1 char)
+/\\w2,5/.test("toolong") // true — matches first 5 chars ("toolo")
+
+// n, — n or more times
+/\\d3,/.test("12")    // false (only 2 digits)
+/\\d3,/.test("12345") // true`</pre>
+          
+        
+
+        /* Part 2: Greedy vs Lazy */
+        
+          <h2>Part 2: Greedy vs. Lazy Quantifiers</h2>
+          <p >
+            This is where the majority of regex bugs live. By default, all quantifiers are <strong>greedy</strong> — they match as much as possible while still allowing the overall pattern to succeed. Adding <code >?</code> after a quantifier makes it <strong>lazy</strong> (minimal) — it matches as little as possible.
+          </p>
+
+          
+            Greedy vs lazy — the HTML tag extraction problem
+            <p>`const html = '<b>bold</b> and <em>italic</em>'
+
+// Greedy: <.*> matches from first < to LAST >
+html.match(/<.*>/)
+// → ['<b>bold</b> and <em>italic</em>']
+// The .* consumed everything between the first and LAST angle bracket
+
+// Lazy: <.*?> matches from < to the NEAREST >
+html.match(/<.*?>/g)
+// → ['<b>', '</b>', '<em>', '</em>']
+
+// Better solution: character class negation (no backtracking risk)
+html.match(/<[^>]+>/g)
+// → ['<b>', '</b>', '<em>', '</em>']
+// [^>]+ means "one or more chars that are NOT >"
+// This is preferred because it has no backtracking ambiguity
+
+// Quantifier lazy variants:
+// *?   →  *  with lazy matching
+// +?   →  +  with lazy matching
+// ??   →  ?  with lazy matching
+// n,m? → n,m with lazy matching`</pre>
+          
+
+          <p >
+            The character class negation approach (<code >[^&gt;]+</code>) is generally preferable to lazy quantifiers for two reasons: it is more explicit about intent (matches everything <em>except</em> the delimiter), and it eliminates backtracking ambiguity — the engine knows immediately when to stop without exploring alternative paths.
+          </p>
+        
+
+        /* Part 3: Groups */
+        
+          <h2>Part 3: Capturing Groups, Named Groups, and Non-Capturing Groups</h2>
+          <p>
+            Parentheses in regex serve two purposes simultaneously: they group subpatterns (allowing quantifiers to apply to multiple characters), and they <em>capture</em> the matched substring for later use.
+          </p>
+
+          
+            Groups: capturing, non-capturing, and named (ES2018+)
+            <p>`// Capturing group: (pattern)
+// Captures are accessible at result[1], result[2], etc.
+const dateStr = '2026-04-15'
+const match = dateStr.match(/(\\d4)-(\\d2)-(\\d2)/)
+// match[0] = '2026-04-15'  (full match)
+// match[1] = '2026'        (capture group 1)
+// match[2] = '04'          (capture group 2)
+// match[3] = '15'          (capture group 3)
+
+// Non-capturing group: (?:pattern)
+// Groups without capturing — use for alternation without polluting capture indices
+const version = '3.14.159'
+const semver = version.match(/(?:\\d+\\.)2\\d+/)
+// Groups without creating match[1], match[2]
+
+// Named capturing group: (?<name>pattern) — ES2018+
+const namedMatch = dateStr.match(/(?<year>\\d4)-(?<month>\\d2)-(?<day>\\d2)/)
+const  year, month, day  = namedMatch.groups
+// year  = '2026'
+// month = '04'
+// day   = '15'
+
+// Named groups in replacement strings
+'2026-04-15'.replace(
+  /(?<year>\\d4)-(?<month>\\d2)-(?<day>\\d2)/,
+  '$<month>/$<day>/$<year>'
+)
+// → '04/15/2026'
+
+// Backreference to named group in the same pattern
+// Match repeated words: "the the" or "a a"
+/\\b(?<word>\\w+)\\s+\\k<word>\\b/i.test('the the')  // true
+/\\b(?<word>\\w+)\\s+\\k<word>\\b/i.test('the The')  // true (i flag)
+/\\b(?<word>\\w+)\\s+\\k<word>\\b/i.test('the cat')  // false`</pre>
+          
+
+          <p >
+            Named capture groups were standardized in ECMAScript 2018 (V8 6.0+, Node.js 10+). Per the ES2018 specification (TC39 proposal by Gorkem Yakin and Daniel Ehrenberg), named groups are referenced in patterns via <code >\k&lt;name&gt;</code> and in replacement strings via <code >$&lt;name&gt;</code>. They are available in Python (via <code >(?P&lt;name&gt;)</code> syntax), PHP, .NET, Java 7+, and PCRE.
+          </p>
+          <p>
+            For any pattern with more than two capture groups, named groups are not optional — they are required for maintainability. The cognitive load of tracking which index corresponds to which field is eliminated.
+          </p>
+        
+
+        /* Part 4: Lookaheads and lookbehinds */
+        
+          <h2>Part 4: Lookahead and Lookbehind Assertions</h2>
+          <p>
+            Lookaround assertions match a position in the string based on what comes before or after, without consuming characters. They are zero-width — they assert context without advancing the match position.
+          </p>
+
+          
+            All four lookaround types with practical examples
+            <p>`// Positive lookahead: (?=pattern)
+// "match X only if followed by Y" — Y is not part of the match
+
+// Extract version numbers from "v1.2.3" format
+'Release v1.2.3 is ready'.match(/\\d+\\.\\d+\\.\\d+(?= is ready)/)
+// → ['1.2.3']  (the " is ready" is not captured)
+
+// Password validation: at least one digit
+/^(?=.*\\d).8,$/.test('password1')  // true
+/^(?=.*\\d).8,$/.test('password')   // false (no digit)
+
+// Negative lookahead: (?!pattern)
+// "match X only if NOT followed by Y"
+
+// Match "foo" not followed by "bar"
+'foobar foobaz fooqux'.match(/foo(?!bar)\\w*/g)
+// → ['foobaz', 'fooqux']  ('foobar' excluded)
+
+// Positive lookbehind: (?<=pattern) — ES2018+
+// "match X only if preceded by Y"
+
+// Extract dollar amounts after "$"
+'Price: $42.00, Cost: $15'.match(/(?<=\\$)\\d+\\.?\\d*/g)
+// → ['42.00', '15']
+
+// Negative lookbehind: (?<!pattern) — ES2018+
+// "match X only if NOT preceded by Y"
+
+// Match numbers not preceded by "$"
+'Buy $5 and save 10 dollars'.match(/(?<!\\$)\\b\\d+\\b/g)
+// → ['10']  (the '$5' is excluded)
+
+// Note: Lookbehind was added in ES2018 (V8 6.2+, Node.js 9.11.2+)
+// Go's RE2 does NOT support lookahead or lookbehind
+// Python's re module supports lookahead/lookbehind`</pre>
+          
+
+          <p >
+            Lookbehind assertions were proposed by Gorkem Yakin and Nozomu Katō and accepted into ES2018. They are fully supported in V8 (Chrome, Node.js), SpiderMonkey (Firefox), and JavaScriptCore (Safari 16.4+). The key limitation: Go&apos;s RE2 engine does not support any lookaround assertions — this is a deliberate design choice to guarantee O(n) matching time. If your Go application needs lookahead-style behavior, restructure the pattern using alternation or process the match result in code.
+          </p>
+        
+
+        /* Part 5: Flags */
+        
+          <h2>Part 5: Regex Flags — The Behavior Modifiers</h2>
+          <p>
+            Flags are appended after the closing delimiter: <code >/pattern/flags</code>. JavaScript has seven flags as of ES2024:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Flag</th>
+                  <th >Name</th>
+                  <th >Effect</th>
+                  <th >Added</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >g</td>
+                  <td >Global</td>
+                  <td >Find all matches, not just first. Makes exec() stateful via lastIndex.</td>
+                  <td >ES1</td>
+                </tr>
+                <tr >
+                  <td >i</td>
+                  <td >Case-insensitive</td>
+                  <td >A matches both A and a.</td>
+                  <td >ES1</td>
+                </tr>
+                <tr >
+                  <td >m</td>
+                  <td >Multiline</td>
+                  <td >^ and $ match line boundaries, not just string start/end.</td>
+                  <td >ES3</td>
+                </tr>
+                <tr >
+                  <td >s</td>
+                  <td >DotAll</td>
+                  <td >. matches newlines. Without /s, . matches any char except \n.</td>
+                  <td >ES2018</td>
+                </tr>
+                <tr >
+                  <td >u</td>
+                  <td >Unicode</td>
+                  <td >Enables Unicode property escapes (\p''L''). Required for \p''...'' syntax.</td>
+                  <td >ES2015</td>
+                </tr>
+                <tr >
+                  <td >d</td>
+                  <td >Indices</td>
+                  <td >Adds match.indices array with start/end positions for each group.</td>
+                  <td >ES2022</td>
+                </tr>
+                <tr>
+                  <td >v</td>
+                  <td >UnicodeSets</td>
+                  <td >Enables set notation in character classes [A--Z] and \p inside classes.</td>
+                  <td >ES2024</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          
+            The /g flag's stateful lastIndex trap — a common bug source
+            <p>`// /g makes exec() stateful — it remembers where it left off via lastIndex
+const re = /\\d+/g  // stored in a variable — gets reused
+
+re.exec('42 and 100')  //  0: '42',  index: 0 , re.lastIndex = 2
+re.exec('42 and 100')  //  0: '100', index: 7 , re.lastIndex = 10
+re.exec('42 and 100')  // null (no more matches), re.lastIndex = 0
+
+// BUG: if you call exec on a different string, lastIndex is still set
+const re2 = /\\w+/g
+re2.exec('hello world')  //  0: 'hello', index: 0 , lastIndex = 5
+re2.exec('abc')          //  0: 'bc', index: 1  ← WRONG! started at 5, wrapped
+// This is why regex with /g in module scope causes hard-to-reproduce bugs
+
+// Solution 1: Create a new regex each call (avoid regex literal in module scope)
+function findAll(str) 
+  return [...str.matchAll(/\\d+/g)]  // matchAll always creates fresh iterator
+
+// Solution 2: Reset lastIndex manually
+const reGlobal = /\\d+/g
+function safeExec(str) 
+  reGlobal.lastIndex = 0  // reset before use
+  return reGlobal.exec(str)
+`</pre>
+          
+        
+
+        /* Part 6: ReDoS */
+        
+          <h2>Part 6: ReDoS — When Regex Becomes a Security Vulnerability</h2>
+          <p >
+            ReDoS (Regular Expression Denial of Service) is a real attack class, not a theoretical concern. The Cloudflare outage mentioned earlier is one of dozens of documented incidents. Node.js has shipped multiple ReDoS-related CVEs. The root cause is always the same: backtracking NFA engines with nested quantifiers.
+          </p>
+
+          
+            Classic ReDoS pattern — exponential worst case
+            <p>`// (a+)+ is the canonical ReDoS example
+// For input "aaaaaaaaac" (n 'a's then 'c'):
+// The engine tries EVERY way to partition n 'a's into groups of one or more
+// This is 2^(n-1) partitions — exponential in n
+
+const vulnerable = /(a+)+/
+const payload = 'a'.repeat(30) + 'c'  // 30 a's then 'c'
+
+// DON'T RUN THIS — it will hang your process
+// console.time(); vulnerable.test(payload); console.timeEnd()
+
+// Patterns with ReDoS risk:
+// (a|a)+   — alternation between identical patterns + outer quantifier
+// (a*)*    — nested quantifiers
+// \\w+\\s*;  — at line end without anchor (in certain contexts)
+
+// Real-world vulnerable pattern from CVE-2022-25883 (semver npm package):
+// /^\\s*(\\d+\\.\\d+\\.\\d+)\\s*$/ — NOT vulnerable
+// /^(\\s+|\\s*,\\s*)*$/         — POTENTIALLY vulnerable
+
+// Safe alternatives:
+// 1. Use possessive quantifiers if your engine supports them (PCRE/Java)
+//    (a++)+ — does not backtrack within the group
+// 2. Use atomic groups: (?>a+)+
+// 3. Use Go's RE2 — linear time, no backtracking
+// 4. Validate with the 'safe-regex' npm package
+// 5. Set regex timeout limits at the gateway level`</pre>
+          
+
+          
+            Defending against ReDoS in Node.js applications
+            <pre >`// Option 1: node-re2 — RE2 engine for Node.js, O(n) guaranteed
+
+const re = new RE2('(a+)+')  // RE2 rejects patterns it can't guarantee-safe
+// RE2 throws: "Invalid argument (re2): parentheses not balanced: (a+)+"
+// Or silently converts to safe equivalent in some versions
+
+// Option 2: safe-regex package — static analysis
+
+safeRegex(/(a+)+/)    // false — flagged as potentially catastrophic
+safeRegex(/\\d+/)      // true — simple, linear
+
+// Option 3: regex-timeout — wraps regex with a time limit
+// When user-supplied patterns are evaluated (e.g., search feature),
+// always use a timeout wrapper or compile in a Worker with a kill timer
+
+// Option 4: Pattern design — avoid nested quantifiers on same chars
+// RISKY: (\\w+\\s*)+
+// SAFE:  \\w+(\\s+\\w+)*   — same semantic, no ambiguity in partition`</pre>
+          
+
+          <p >
+            Per research by Davis et al. (2019), regular expressions with potentially super-linear worst-case behavior appeared in approximately <strong>5.6% of npm packages</strong> sampled. The authors specifically called out the npm ecosystem as high-risk because many packages expose regex to user-controlled input (search, routing, validation) without ReDoS analysis.
+          </p>
+        
+
+        /* Part 7: Cross-language */
+        
+          <h2>Part 7: Regex Across Languages — Key Differences</h2>
+          <p>
+            The PCRE (Perl Compatible Regular Expressions) standard is the de facto baseline, but each language&apos;s implementation diverges in important ways. Understanding these differences prevents &ldquo;it works in Python but not Go&rdquo; debugging sessions.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Feature</th>
+                  <th >JavaScript (V8)</th>
+                  <th >Python (re)</th>
+                  <th >Go (RE2)</th>
+                  <th >Rust (regex)</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Engine type</td>
+                  <td >NFA (backtracking)</td>
+                  <td >NFA (backtracking)</td>
+                  <td >RE2 (linear DFA)</td>
+                  <td >RE2 (linear DFA)</td>
+                </tr>
+                <tr >
+                  <td >Backreferences</td>
+                  <td >Yes (\1, \k&lt;name&gt;)</td>
+                  <td >Yes (\1, (?P=name))</td>
+                  <td >No</td>
+                  <td >No</td>
+                </tr>
+                <tr >
+                  <td >Lookahead</td>
+                  <td >Yes (?=) (?!)</td>
+                  <td >Yes</td>
+                  <td >No</td>
+                  <td >No</td>
+                </tr>
+                <tr >
+                  <td >Lookbehind</td>
+                  <td >Yes (ES2018)</td>
+                  <td >Yes (fixed width)</td>
+                  <td >No</td>
+                  <td >No</td>
+                </tr>
+                <tr >
+                  <td >Named groups</td>
+                  <td >Yes (?&lt;name&gt;)</td>
+                  <td >Yes (?P&lt;name&gt;)</td>
+                  <td >Yes (?P&lt;name&gt;)</td>
+                  <td >Yes (?P&lt;name&gt;)</td>
+                </tr>
+                <tr >
+                  <td >Unicode property \p''L''</td>
+                  <td >Yes (with /u flag)</td>
+                  <td >Via regex lib</td>
+                  <td >Yes</td>
+                  <td >Yes</td>
+                </tr>
+                <tr>
+                  <td >Worst-case complexity</td>
+                  <td >Exponential (ReDoS)</td>
+                  <td >Exponential</td>
+                  <td >O(n) guaranteed</td>
+                  <td >O(n) guaranteed</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The practical guidance from this table: if you are building a feature where user-supplied input is matched against a pattern (search, routing, form validation), reach for Go or Rust (or <code >node-re2</code> in Node.js) to get RE2&apos;s linear-time guarantee. Reserve Python&apos;s <code >re</code> or JavaScript&apos;s built-in engine for patterns you control — log processing, internal data transformation, where inputs are trusted.
+          </p>
+
+          <p>
+            For ready-to-use production patterns in JavaScript and Python, see our <a href="/blog/regex-cheat-sheet/">regex cheat sheet</a> and <a href="/blog/python-regex-guide/">Python regex guide</a>. For validated email/URL/phone patterns with real-world trade-off analysis, see <a href="/blog/regex-validation-patterns-email-url/">regex validation patterns</a>.
+          </p>
+        
+
+        /* Part 8: Practical patterns */
+        
+          <h2>Part 8: Practical Regex Patterns You Will Actually Use</h2>
+          <p>
+            The real test of regex knowledge is building patterns for messy, real-world data. Here are production-tested patterns with commentary on the trade-offs:
+          </p>
+
+          
+            Production patterns — with commentary
+            <p>`// Semantic version (semver: major.minor.patch, optional pre-release)
+const SEMVER = /^(?<major>0|[1-9]\\d*)\\.(?<minor>0|[1-9]\\d*)\\.(?<patch>0|[1-9]\\d*)(?:-(?<prerelease>[\\w.-]+))?$/
+SEMVER.test('1.0.0')        // true
+SEMVER.test('2.1.0-beta.1') // true
+SEMVER.test('1.01.0')       // false (leading zero)
+
+// ISO 8601 date (basic — not exhaustive)
+const ISO_DATE = /^\\d4-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$/
+ISO_DATE.test('2026-04-15') // true
+ISO_DATE.test('2026-13-01') // false (month 13)
+ISO_DATE.test('2026-04-32') // false (day 32)
+
+// IPv4 address (validates 0–255 range)
+const IPV4 = /^(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.)3(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$/
+IPV4.test('192.168.1.1')  // true
+IPV4.test('256.0.0.1')    // false
+
+// Slugify: URL-safe lowercase string
+function slugify(str) 
+  return str
+    .toLowerCase()
+    .replace(/[^\\w\\s-]/g, '')  // remove non-word, non-space, non-hyphen
+    .replace(/[\\s_]+/g, '-')   // spaces and underscores → hyphens
+    .replace(/--+/g, '-')       // collapse multiple hyphens
+    .replace(/^-|-$/g, '')      // trim leading/trailing hyphens
+
+slugify('Hello, World! How Are You?')  // 'hello-world-how-are-you'
+
+// Extract all log timestamps (format: [2026-04-15 14:30:00.123])
+const LOG_TIMESTAMP = /\\[(?<ts>\\d4-\\d2-\\d2 \\d2:\\d2:\\d2\\.\\d3)\\]/g
+const logLine = '[2026-04-15 14:30:00.123] ERROR: connection refused'
+const tsMatch = LOG_TIMESTAMP.exec(logLine)
+// tsMatch.groups.ts = '2026-04-15 14:30:00.123'
+
+// Remove HTML tags (safe for simple stripping — use DOMParser for complex HTML)
+const stripTags = (html) => html.replace(/<[^>]+>/g, '')
+stripTags('<p>Hello <strong>world</strong></p>')  // 'Hello world'`</pre>
+          
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+
+          
+            
+              <h3>What does .* mean in regex?</h3>
+              <p>
+                <code >.*</code> means &ldquo;match any character (except newline) zero or more times.&rdquo; The dot matches any single character except <code >\n</code> by default. The asterisk is a greedy quantifier that matches 0 or more repetitions. Combined, <code >.*</code> matches any sequence of characters on a line. Use <code >.*?</code> (lazy) to match as few characters as possible. With the <code >/s</code> flag, dot also matches newlines.
+              </p>
+            
+
+            
+              <h3>What is the difference between .* and .+?</h3>
+              <p>
+                <code >.*</code> matches zero or more characters (can match an empty string). <code >.+</code> matches one or more characters (must match at least one). Use <code >.+</code> when you need to guarantee the pattern captured something non-empty. The same distinction applies to all quantifiers: <code >*</code> vs <code >+</code>, <code >`0,5`</code> vs <code >`1,5`</code>.
+              </p>
+            
+
+            
+              <h3>What is catastrophic backtracking in regex?</h3>
+              <p>
+                Catastrophic backtracking occurs when a regex with nested quantifiers (like <code >(a+)+</code>) must explore exponentially many match paths to reject a string. A pattern like <code >(a+)+b</code> takes microseconds on valid input but exponential time on a string of &apos;a&apos; characters without a trailing &apos;b&apos;. This is the ReDoS (Regular Expression Denial of Service) vulnerability class that caused the 2019 Cloudflare global outage.
+              </p>
+            
+
+            
+              <h3>What does ^ and $ mean in regex?</h3>
+              <p>
+                <code >^</code> is the start-of-string anchor. <code >$</code> is the end-of-string anchor. Together, <code >^pattern$</code> forces the entire string to match — not just a substring. Without anchors, <code >/\d+/</code> matches the digits in &ldquo;abc123def&rdquo;. With anchors, <code >/^\d+$/</code> requires the entire string to be digits. In multiline mode (<code >/m</code> flag), they match line boundaries.
+              </p>
+            
+
+            
+              <h3>What is a named capture group in regex?</h3>
+              <p>
+                Named capture groups use <code >(?&lt;name&gt;pattern)</code> syntax. In JavaScript (ES2018+): <code >const ` year ` = /(?&lt;year&gt;\d4)/.exec(&apos;2026&apos;).groups</code>. Supported in Python (<code >(?P&lt;name&gt;)</code>), PHP, .NET, Java 7+, and PCRE. Named groups eliminate magic index numbers in complex patterns and are essential for maintainable regex with multiple captures.
+              </p>
+            
+
+            
+              <h3>How is regex different across JavaScript, Python, and Go?</h3>
+              <p>
+                JavaScript and Python use backtracking NFA engines — powerful (backreferences, lookaheads) but vulnerable to ReDoS. Go uses RE2, a linear-time DFA engine that prohibits backreferences and lookaheads for guaranteed O(n) performance. Rust&apos;s <code >regex</code> crate also uses RE2. For user-facing input validation at scale, prefer RE2-based engines. For data transformation on trusted input, any engine works.
+              </p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>Test Your Regex Patterns</h2>
+          <p>
+            Use our JavaScript regex guide and cheat sheet to build and validate production patterns. Syntax reference, quantifier tables, and copy-paste validation patterns for email, URL, IP, semver, and more.
+          </p>
+          <a href="/blog/regex-cheat-sheet/">
+            Open Regex Cheat Sheet →
+          </a>
+        
+
+        /* Related tools */
+        
+          <h2>Related Guides & Tools</h2>
+          
+            <a href="/blog/regex-cheat-sheet/">
+              → Regex Cheat Sheet
+            </a>
+            <a href="/blog/javascript-regex-guide/">
+              → JavaScript Regex Guide
+            </a>
+            <a href="/blog/python-regex-guide/">
+              → Python Regex Guide
+            </a>
+            <a href="/blog/regex-validation-patterns-email-url/">
+              → Regex Validation Patterns (Email, URL, Phone)
+            </a>
+            <a href="/blog/regex-patterns-cheat-sheet/">
+              → 30+ Essential Regex Patterns
+            </a>
+            <a href="/blog/linux-commands-cheat-sheet/">
+              → Linux Commands Cheat Sheet
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/regex-tutorial/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
