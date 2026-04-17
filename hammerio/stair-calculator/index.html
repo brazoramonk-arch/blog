@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stair Calculator: Rise, Run, Stringer Length &amp; Code Compliance - HammerIO</title>
+  <meta name="description" content="How to calculate stair rise, run, stringer length, and step count for any floor-to-floor height. IRC building code requirements, comfort formula, and material estimates.">
+  <link rel="canonical" href="https://www.hammerio.com/blog/stair-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/hammerio/">HammerIO</a> &rarr; Stair Calculator: Rise, Run, Stringer Length &amp; Code Compliance
+  </nav>
+
+  <article>
+    <h1>Stair Calculator: Rise, Run, Stringer Length &amp; Code Compliance</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.hammerio.com/blog/stair-calculator/">hammerio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const relatedArticles = [
+   slug: 'staircase-design-cost-guide', title: 'Staircase Design & Cost Guide 2026: Styles, Materials & Codes', category: 'Stairs' ,
+   slug: 'deck-building-guide', title: 'Deck Building Guide: Materials, Costs & Planning', category: 'Decking' ,
+   slug: 'building-permit-cost', title: 'Building Permit Cost by Project Type: Complete Fee Guide (2026)', category: 'Permits' ,
+];
+
+  const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Stair Calculator: Rise, Run, Stringer Length & Code Compliance',
+    description: 'How to calculate stair rise, run, stringer length, and step count for any floor-to-floor height. IRC building code requirements, comfort formula, and material estimates.',
+    datePublished: '2026-04-14',
+    dateModified: '2026-04-14',
+    author:  '@type': 'Organization', name: 'HammerIO' ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+      logo:  '@type': 'ImageObject', url: 'https://hammerio.com/favicon.svg' ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://hammerio.com/blog/stair-calculator/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://hammerio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://hammerio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Stair Calculator Guide', item: 'https://hammerio.com/blog/stair-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do I calculate the number of stairs I need?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Divide the total rise (floor-to-floor height in inches) by your target riser height (typically 7 to 7.5 inches). Round up to the nearest whole number to get the number of risers. For example, 109 inches ÷ 7.25 = 15.03, so you need 15 risers. Then recalculate the actual riser height: 109 ÷ 15 = 7.27 inches per riser, which is within the IRC maximum of 7.75 inches.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the formula for stringer length?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Stringer length equals the square root of (total rise squared plus total run squared) — the Pythagorean theorem applied to stairs. If your total rise is 109 inches and total run is 168 inches (14 treads × 12 inches each), the stringer length is √(109² + 168²) = √(11881 + 28224) = √40105 = approximately 200 inches, or 16 feet 8 inches. Add 6 to 12 inches for the top and bottom cuts.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the maximum riser height per IRC code?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The International Residential Code (IRC Section R311.7.5) sets a maximum riser height of 7¾ inches (7.75 inches) and a minimum riser height of 4 inches for residential stairs. All risers in a single flight must be within ⅜ inch of each other in height. A riser that is even ½ inch taller than the others is a code violation and a tripping hazard.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the comfort formula for stairs?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The stair comfort formula states that 2 × riser height + tread depth should equal 24 to 25 inches. A 7-inch riser with an 11-inch tread gives 2(7) + 11 = 25, which is ideal. The IRC minimum of 7.75-inch risers with 10-inch treads gives 25.5 — technically legal but steep. For the most comfortable stair, target 7 to 7.5-inch risers and 10.5 to 11.5-inch treads.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much lumber do I need for stair stringers?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Most residential stairs use two or three 2×12 stringers. Add 20% to the calculated stringer length for waste from the top and bottom cuts. For a stringer length of 16 feet 8 inches, buy 20-foot 2×12 boards. A typical 14-step staircase needs two or three 2×12 boards at 16 to 20 feet each. Verify the effective depth at the notch cut is at least 3.5 inches per IRC requirements.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Do I need a permit to build stairs?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'New staircase construction and structural modifications typically require a building permit. Cosmetic work — refinishing treads, replacing balusters, painting — generally does not. Permit costs range from $100 to $500. Most jurisdictions require one or two inspections: a framing inspection with stringers up but before treads are installed, and a final inspection after completion.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many steps are in a standard 8-foot ceiling?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'An 8-foot floor-to-floor height (including the framing and flooring thickness, typically 9 to 10 inches) results in a total rise of roughly 105 to 109 inches. At a 7-inch riser, you need 15 risers (and 14 treads, since the top floor acts as the final tread). At 7.5-inch risers, you need 14 risers. Most builders target 13 to 15 steps for a standard story height.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Stair Calculator Guide</li>
+          </ol>
+        
+
+        /* Header */
+        
+          
+            Stairs
+            14 min read
+            <time  dateTime="2026-04-14">April 14, 2026</time>
+          
+          <h2>
+            Stair Calculator: Rise, Run, Stringer Length & Code Compliance
+          </h2>
+          <p>
+            Every staircase starts with the same three numbers: total rise, target riser height, and tread depth. Get those right and everything else — stringer length, lumber quantities, headroom clearance, code compliance — flows from them automatically. Get them wrong and you are looking at a failed inspection and a complete rebuild. This guide walks through the full calculation sequence the way a licensed carpenter actually does it, with the formulas, the code limits, and the material takeoff process for any staircase from a simple deck flight to a full interior staircase.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>→IRC maximum riser height is 7¾ inches; all risers in one flight must be within ⅜ inch of each other</li>
+            <li>→Stringer length = √(total rise² + total run²) — the Pythagorean theorem applied to the stair diagonal</li>
+            <li>→The comfort formula: 2 × riser + tread = 24–25 inches; target 7–7.5&quot; risers and 10.5–11.5&quot; treads</li>
+            <li>→A standard 9-foot story height requires 13–15 risers depending on material stack-up</li>
+            <li>→Most residential stairs need two or three 2×12 stringers — verify the net depth at the notch is ≥ 3.5&quot;</li>
+          </ul>
+        
+
+        /* Calculator CTA */
+        
+          <h2>Calculate Your Stairs Now</h2>
+          <p>Enter your floor-to-floor height and get riser count, riser height, tread depth, stringer length, and total run — all checked against IRC code.</p>
+          <a href="/stair-calculator/">
+            Open the Free Stair Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+          </a>
+        
+
+        
+
+          /* Section 1 */
+          <h2>The Problem With &quot;Eyeballing&quot; Stairs</h2>
+          <p >
+            Here is a call I get more than I should: a homeowner had a contractor build new stairs, and now the inspector won&apos;t sign off. The reason is almost always one of two things: the risers are not consistent (the last riser at the top or bottom is a different height because nobody measured the actual floor-to-floor distance carefully), or the riser height exceeds 7.75 inches because the builder divided wrong.
+          </p>
+          <p>
+            According to the National Association of Home Builders (NAHB), stair-related inspection failures are among the most common framing deficiencies cited in residential construction. The IRC is not vague on this — the math has to work out, and the measurements have to be field-verified before you cut a single stringer.
+          </p>
+          <p>
+            The calculation sequence I use on every stair job, whether it is a three-step deck landing or a full two-story interior staircase, is the same: measure total rise, determine riser count, calculate individual riser height, set tread depth, compute total run, then calculate stringer length. That is the order. Do not skip steps.
+          </p>
+
+          /* Section 2: IRC Code */
+          <h2>IRC Building Code Requirements You Cannot Ignore</h2>
+          <p>
+            The International Residential Code (IRC) Section R311.7 governs residential stairways. These are the hard limits that determine whether your staircase passes inspection. Most local jurisdictions adopt IRC verbatim; a few add stricter requirements for handrail graspability or headroom.
+          </p>
+          
+            <h3>IRC R311.7 Residential Stair Requirements</h3>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Dimension</th>
+                    <th >IRC Requirement</th>
+                    <th >Practical Target</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Riser height (max)</td><td >7¾ inches (7.75&quot;)</td><td >7.0–7.5&quot;</td></tr>
+                  <tr ><td >Riser height (min)</td><td >4 inches</td><td >Never below 6&quot; in practice</td></tr>
+                  <tr ><td >Tread depth (min)</td><td >10 inches</td><td >10.5–11.5&quot;</td></tr>
+                  <tr ><td >Nosing projection</td><td >¾&quot; to 1¼&quot;</td><td >Required on closed-riser stairs</td></tr>
+                  <tr ><td >Stair width (min)</td><td >36 inches</td><td >36–42&quot; for comfort</td></tr>
+                  <tr ><td >Headroom (min)</td><td >6 ft 8 in</td><td >Measure at tightest point</td></tr>
+                  <tr ><td >Handrail height</td><td >34–38 inches</td><td >Measured from nosing</td></tr>
+                  <tr ><td >Guardrail height</td><td >36 inches min</td><td >At open sides</td></tr>
+                  <tr ><td >Baluster spacing</td><td >4 inches max</td><td >4&quot; sphere must not pass through</td></tr>
+                  <tr><td >Riser variation</td><td >⅜ inch max</td><td >Most commonly failed item</td></tr>
+                </tbody>
+              </table>
+            
+          
+          <p>
+            The riser variation rule trips up more builds than any other requirement. Let me be explicit: the tallest riser and the shortest riser in a single flight cannot differ by more than ⅜ inch. That is 0.375 inches. If you have 14 risers and your floor-to-floor height is 105 inches, each riser must be 7.5 inches — exactly. If the subfloor is slightly thicker on one end or the top landing elevation is off by half an inch, you will have one riser at 7.5&quot; and another at 8&quot;, which fails.
+          </p>
+          <p>
+            This is why the first step on any stair job is measuring the actual floor-to-floor height at multiple points — not the plan dimension. Floors are not always perfectly level. Measure at both sides of the stairwell opening and at the center. Use the largest measurement as your design dimension so you are not cutting short on any end.
+          </p>
+
+          /* Section 3: The Calculation */
+          <h2>Step-by-Step Stair Calculation: The Full Process</h2>
+          <p>
+            Let me walk through a complete example. We have a floor-to-floor height of 109 inches — a standard 9-foot ceiling with framing, subfloor, and finish flooring. Here is how the calculation unfolds:
+          </p>
+
+          <h3>Step 1: Determine the Number of Risers</h3>
+          <p>
+            Divide total rise by your target riser height and round up to find the minimum number of risers needed to stay below the IRC maximum:
+          </p>
+          
+            <p>Total rise: 109 inches</p>
+            <p>Target riser: 7.25 inches</p>
+            <p>109 ÷ 7.25 = 15.03 → round up to <strong>15 risers</strong></p>
+          
+          <p>
+            Always round up, never down. Rounding down gives you risers above the target height, which may push you over the 7.75&quot; code maximum.
+          </p>
+
+          <h3>Step 2: Calculate Actual Riser Height</h3>
+          <p>
+            Divide total rise by the number of risers to get the exact height each riser must be:
+          </p>
+          
+            <p>109 ÷ 15 = <strong>7.267 inches per riser</strong></p>
+            <p>Check: 7.267 &lt; 7.75 ✓ (within IRC max)</p>
+            <p>In fractions: 7 and ¼ inches (close enough — cut to 7-9/32&quot;)</p>
+          
+          <p>
+            This is the number you mark on every riser. Every single one. Cut them all identical using a stair gauge clamped to a framing square or a dedicated stair-marking jig.
+          </p>
+
+          <h3>Step 3: Set Tread Depth Using the Comfort Formula</h3>
+          <p>
+            With riser height set at 7.267 inches, the comfort formula (2R + T = 24–25) gives us:
+          </p>
+          
+            <p>2 × 7.267 = 14.53</p>
+            <p>24 − 14.53 = 9.47 (minimum tread for 24&quot; formula)</p>
+            <p>25 − 14.53 = 10.47 (maximum tread for 25&quot; formula)</p>
+            <p>Target: <strong>10.5 to 11 inches</strong> (also above 10&quot; IRC minimum ✓)</p>
+          
+          <p>
+            We will use 11-inch treads. This satisfies both the comfort formula and the IRC minimum tread depth, and it is a standard dimension for red oak treads available off the shelf at most lumber yards. Note: tread depth is measured from the face of one riser to the face of the next — the nosing overhang of ¾ to 1¼ inches is in addition to this measurement.
+          </p>
+
+          <h3>Step 4: Calculate Total Run</h3>
+          <p>
+            Total run is the horizontal distance the staircase occupies. There is one fewer tread than riser, because the top landing surface is the final &quot;tread.&quot; With 15 risers, we have 14 treads:
+          </p>
+          
+            <p>14 treads × 11 inches = <strong>154 inches (12 ft 10 in) total run</strong></p>
+          
+          <p>
+            This is the floor space the staircase consumes. Add 36 to 42 inches for landing clearance at the top and bottom — the IRC requires at least 36 inches of floor space in the direction of travel at both ends. Total floor space needed for this staircase: roughly 19 to 20 feet.
+          </p>
+
+          <h3>Step 5: Calculate Stringer Length</h3>
+          <p>
+            Stringer length is the hypotenuse of the right triangle formed by total rise (vertical) and total run (horizontal):
+          </p>
+          
+            <p>Stringer length = √(total rise² + total run²)</p>
+            <p>= √(109² + 154²)</p>
+            <p>= √(11881 + 23716)</p>
+            <p>= √35597</p>
+            <p>= <strong>188.7 inches ≈ 15 ft 9 in</strong></p>
+            <p>Purchase length: 18–20 ft 2×12 boards (add 15–20% for top/bottom cuts)</p>
+          
+          <p>
+            Buy 20-foot 2×12 boards and you will have comfortable material to work with. For this 15-riser staircase, you need two or three stringers depending on the stair width. A 36-inch stair needs two stringers; anything over 36 inches wide should have three. Our <a href="/stair-calculator/">stair calculator</a> computes all of this automatically — enter your floor-to-floor height and tread width and get the full material list.
+          </p>
+
+          /* Section 4: Stringer Notch Depth */
+          <h2>The Stringer Notch Depth Rule Nobody Tells You About</h2>
+          <p>
+            Here is something that catches even experienced framers: when you notch a 2×12 stringer for each tread and riser, you reduce the structural depth of the board. The IRC requires that the remaining net depth at the cut — the section of uncut material from the notch to the opposite edge — must be at least 3.5 inches.
+          </p>
+          <p>
+            A 2×12 is 11.25 inches deep. If your riser is 7.267 inches and your tread is 11 inches, the notch cuts 7.267 inches deep on the vertical and 11 inches deep on the horizontal. The net depth from the deepest point of the notch to the bottom edge of the stringer is roughly 11.25 − 7.267 = 3.98 inches. That barely clears the 3.5-inch minimum.
+          </p>
+          <p>
+            Push those dimensions and you are cutting into structurally compromised territory. If you have a high riser (7.5&quot;+) combined with a deep tread (11.5&quot;+), verify the remaining net depth before you commit to 2×12 stock. Some situations require engineered LVL stringer stock or steel stringers to provide adequate structural depth.
+          </p>
+
+          /* Section 5: Common Heights Reference */
+          <h2>Quick Reference: Steps for Common Ceiling Heights</h2>
+          <p>
+            Ceiling height in architectural plans is the rough-framed height from subfloor to underside of floor joists above, but the actual floor-to-floor height depends on the finish floor thickness above and below. Here are typical calculations for common situations:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Ceiling Height</th>
+                    <th >Typical Total Rise</th>
+                    <th >Risers Needed</th>
+                    <th >Actual Riser Height</th>
+                    <th >Total Run (11&quot; tread)</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >8 ft ceiling</td><td >~105–109&quot;</td><td >14–15</td><td >7.0–7.79&quot;</td><td >143–154&quot; (11&apos;11&quot;–12&apos;10&quot;)</td></tr>
+                  <tr ><td >9 ft ceiling</td><td >~117–121&quot;</td><td >15–17</td><td >7.06–7.47&quot;</td><td >154–176&quot; (12&apos;10&quot;–14&apos;8&quot;)</td></tr>
+                  <tr ><td >10 ft ceiling</td><td >~129–133&quot;</td><td >17–19</td><td >6.9–7.53&quot;</td><td >176–198&quot; (14&apos;8&quot;–16&apos;6&quot;)</td></tr>
+                  <tr><td >Basement (7 ft)</td><td >~93–97&quot;</td><td >13–14</td><td >6.64–7.46&quot;</td><td >132–143&quot; (11&apos;0&quot;–11&apos;11&quot;)</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Total rise includes structural floor depth (typically 10–12&quot; for joists + subfloor + finish flooring). Measure your actual dimension — never rely on plan dimensions alone.</p>
+          
+
+          /* Section 6: Deck Stairs */
+          <h2>Calculating Deck and Exterior Stairs</h2>
+          <p>
+            Exterior stairs for <a href="/blog/deck-building-guide/">decks</a> and porches follow the same calculation process as interior stairs, but with one important difference: the landing elevation changes seasonally due to frost heaving and soil settlement. On any exterior stair, build the landing grade 1 to 2 inches below your calculated total rise so minor settling does not create an oversize bottom riser over time.
+          </p>
+          <p>
+            Pressure-treated 2×12 stringers are standard for deck stairs. The 2×12 needs to be rated for ground contact (UC4A or UC4B) if it will sit within 6 inches of grade. Composite decking boards make excellent exterior treads — 5/4×6 boards at 11.25 inches wide fit a standard 11-inch tread with minimal cutting. Plan on two boards per tread for a 36-inch wide stair.
+          </p>
+          <p>
+            Exterior stair railing requirements match interior: 36-inch guardrail height with 4-inch maximum baluster spacing. In practice, most deck builders go to 42 inches because it looks more proportional on an elevated deck and provides better fall protection above 30 inches of deck height, where 42-inch rails are actually required by IRC.
+          </p>
+
+          /* Section 7: Material Quantities */
+          <h2>Complete Material Takeoff for a 15-Step Interior Staircase</h2>
+          <p>
+            To illustrate the full material calculation, here is a complete takeoff for our 15-riser, 14-tread staircase (109&quot; total rise, 11&quot; treads, red oak finish, iron balusters). Prices based on Q1 2026 national averages from RSMeans Building Construction Cost Data:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Material</th>
+                    <th >Quantity</th>
+                    <th >Unit Cost</th>
+                    <th >Total</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >2×12 stringers (20 ft)</td><td >3 boards</td><td >$65–$85 ea</td><td >$195–$255</td></tr>
+                  <tr ><td >Red oak treads (4&apos;, 1&quot; thick)</td><td >14 treads</td><td >$45–$65 ea</td><td >$630–$910</td></tr>
+                  <tr ><td >Poplar risers (4&apos; × 7.5&quot;)</td><td >15 risers</td><td >$18–$28 ea</td><td >$270–$420</td></tr>
+                  <tr ><td >Iron balusters (¾&quot; square)</td><td >~35 pcs</td><td >$12–$18 ea</td><td >$420–$630</td></tr>
+                  <tr ><td >Oak handrail (16 ft)</td><td >1 piece</td><td >$90–$140</td><td >$90–$140</td></tr>
+                  <tr ><td >Newel posts (starting + landing)</td><td >2–3 posts</td><td >$85–$200 ea</td><td >$170–$600</td></tr>
+                  <tr ><td >Stain, poly, sandpaper</td><td >1 lot</td><td >$80–$140</td><td >$80–$140</td></tr>
+                  <tr ><td >Fasteners, glue, misc</td><td >1 lot</td><td >$40–$80</td><td >$40–$80</td></tr>
+                  <tr ><td >Materials Total</td><td ></td><td ></td><td >$1,895–$3,175</td></tr>
+                  <tr ><td >Finish carpenter labor (16–24 hrs)</td><td >At $75–$100/hr</td><td ></td><td >$1,200–$2,400</td></tr>
+                  <tr ><td >Total Installed Cost</td><td ></td><td ></td><td >$3,095–$5,575</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Labor rates per RSMeans Q1 2026 data. Finish carpenter: $60–$90/hr base plus overhead and profit = $75–$110 fully loaded. Project includes layout, cutting, installation, and initial finish work.</p>
+          
+
+          /* Section 8: Angles and Stair Gauges */
+          <h2>The Stair Angle and How It Affects Everything</h2>
+          <p>
+            Stair angle is the arctangent of total rise divided by total run, expressed in degrees. Our 109-inch rise and 154-inch run example: angle = arctan(109/154) = arctan(0.708) = approximately 35.3 degrees. Comfortable residential stairs range from 30 to 38 degrees. The IRC-maximum stair (7.75&quot; risers, 10&quot; treads) calculates to arctan(7.75/10) = 37.8 degrees — workable but steep. The code minimum values are not the design targets; they are the outer boundary of legal construction.
+          </p>
+          <p>
+            Knowing the angle lets you set a sliding bevel or digital angle gauge to mark your cut lines directly on the stringer stock, which is faster and more accurate than measuring each cut individually. Set the bevel to 35.3 degrees and use it consistently on every stringer board. This approach also helps when cutting the plumb cut at the top of the stringer (where it bears against the header) and the level cut at the bottom (where it bears on the floor or rim joist).
+          </p>
+
+          /* Section 9: Headroom Check */
+          <h2>Checking Headroom Before You Commit</h2>
+          <p>
+            Headroom is the vertical distance from the nosing of any tread to the ceiling or structural element directly above it. The IRC minimum is 6 feet 8 inches. For existing homes with lower ceilings, headroom often forces the staircase to start further out from the upper floor or limits the stair angle.
+          </p>
+          <p>
+            Here is how to verify headroom before cutting: draw the stair profile to scale on a piece of cardboard or use a layout on the subfloor. Mark the nosing locations at the stair angle. Draw a vertical line 6&apos;8&quot; above each nosing. If any of those lines intersect the ceiling framing or header above the stairwell opening, you have a headroom problem.
+          </p>
+          <p>
+            Headroom problems are solved in three ways: increasing the floor opening (requires structural framing work), lowering the starting point of the stair (requires more horizontal run), or reducing the stair angle (requires less riser height, which adds risers). None of these are cheap — which is why verifying headroom during layout, before cutting anything, is non-negotiable.
+          </p>
+
+          /* Section 10: DIY vs Contractor */
+          <h2>When to DIY and When to Hire a Stair Contractor</h2>
+          <p>
+            A simple exterior deck stair is within reach for a competent DIYer. The stakes are lower, the materials are forgiving, and the geometry is straightforward. If you can operate a circular saw accurately and use a framing square, you can build a three- to four-step deck stair.
+          </p>
+          <p>
+            Interior staircase replacement is a different matter. Per HomeAdvisor&apos;s 2025 True Cost Guide, homeowners who attempted DIY interior stair replacements spent an average of $2,100 more than estimated due to rework, failed inspections, and material waste from incorrect cuts. A finish carpenter who builds stairs regularly will complete the same job in 16 to 24 hours. An inexperienced DIYer may spend 40 to 60 hours — and still have code problems.
+          </p>
+          <p>
+            My recommendation: use a <a href="/stair-calculator/">stair calculator</a> to work out the dimensions and material quantities yourself. Then get a quote from a finish carpenter. If the labor quote is reasonable (roughly $1,200 to $2,400 for a standard 14-step interior stair), hire it out. Use the saved time and reduced rework risk to justify the cost.
+          </p>
+
+          /* FAQ */
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>How do I calculate the number of stairs I need?</h3>
+              <p>Divide the total rise (floor-to-floor height in inches) by your target riser height (typically 7 to 7.5 inches). Round up to the nearest whole number to get the number of risers. For example, 109 inches ÷ 7.25 = 15.03, so you need 15 risers. Then recalculate the actual riser height: 109 ÷ 15 = 7.27 inches per riser, which is within the IRC maximum of 7.75 inches.</p>
+            
+            
+              <h3>What is the formula for stringer length?</h3>
+              <p>Stringer length equals the square root of (total rise squared plus total run squared) — the Pythagorean theorem applied to stairs. If your total rise is 109 inches and total run is 154 inches (14 treads × 11 inches each), the stringer length is √(109² + 154²) = √35,597 = approximately 188.7 inches, or 15 feet 9 inches. Add 15–20% for top and bottom cut waste when purchasing lumber.</p>
+            
+            
+              <h3>What is the maximum riser height per IRC code?</h3>
+              <p>The International Residential Code (IRC Section R311.7.5) sets a maximum riser height of 7¾ inches (7.75 inches) and a minimum riser height of 4 inches for residential stairs. All risers in a single flight must be within ⅜ inch of each other. A riser even ½ inch taller than the others is a code violation and a tripping hazard that will fail inspection.</p>
+            
+            
+              <h3>What is the comfort formula for stairs?</h3>
+              <p>The stair comfort formula states that 2 × riser height + tread depth should equal 24 to 25 inches. A 7-inch riser with an 11-inch tread gives 2(7) + 11 = 25, which is ideal. The IRC minimum of 7.75-inch risers with 10-inch treads gives 25.5 — technically legal but steep. For the most comfortable stair, target 7 to 7.5-inch risers and 10.5 to 11.5-inch treads.</p>
+            
+            
+              <h3>How much lumber do I need for stair stringers?</h3>
+              <p>Most residential stairs use two or three 2×12 stringers. Add 20% to the calculated stringer length for waste from the top and bottom cuts. For a stringer length of 15 feet 9 inches, buy 20-foot 2×12 boards. A typical 14-step staircase needs two or three 2×12 boards at 16 to 20 feet each. The net depth at each notch cut must be at least 3.5 inches per IRC requirements.</p>
+            
+            
+              <h3>Do I need a permit to build stairs?</h3>
+              <p>New staircase construction and structural modifications typically require a building permit. Cosmetic work — refinishing treads, replacing balusters, painting — generally does not. Permit costs range from $100 to $500. Most jurisdictions require a framing inspection with stringers up before treads, and a final inspection after completion. See our <a href="/blog/building-permit-cost/" >building permit cost guide</a> for jurisdiction-specific fee ranges.</p>
+            
+            
+              <h3>How many steps are in a standard 8-foot ceiling?</h3>
+              <p>An 8-foot ceiling with standard framing and flooring produces a total rise of roughly 105 to 109 inches. At a 7-inch riser, you need 15 risers and 14 treads. At 7.5-inch risers, you need 14 risers and 13 treads. Most builders target 13 to 15 steps for a standard story height. Always measure the actual floor-to-floor dimension — plan heights are not reliable for stair layout.</p>
+            
+          
+        
+
+        /* CTA */
+        
+          <h2>Run Your Stair Calculation Now</h2>
+          <p>Enter your floor-to-floor height and get riser count, riser height, tread depth, stringer length, total run, and stringer lumber quantities — instantly and free.</p>
+          <a href="/stair-calculator/">
+            Open the Stair Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M6 3l5 5-5 5V3z" /></svg>
+          </a>
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                article.category
+                <h3>article.title</h3>
+              </Link>
+            ))
+          
+        
+      
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.hammerio.com/blog/stair-calculator/">HammerIO</a>.
+      Explore more free tools at <a href="https://www.hammerio.com/">hammerio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.hammerio.com/">HammerIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
