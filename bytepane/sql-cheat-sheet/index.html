@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Cheat Sheet: Quick Reference for All SQL Commands (2026) - BytePane</title>
+  <meta name="description" content="Complete SQL command reference: SELECT, JOIN, GROUP BY, window functions, CTEs, indexes, and optimization. Copy-paste ready with real examples for PostgreSQL, MySQL, and SQLite.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/sql-cheat-sheet/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; SQL Cheat Sheet: Quick Reference for All SQL Commands (2026)
+  </nav>
+
+  <article>
+    <h1>SQL Cheat Sheet: Quick Reference for All SQL Commands (2026)</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/sql-cheat-sheet/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    HAVING COUNT(*) > 10 runs after GROUP BY.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between INNER JOIN and LEFT JOIN?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'INNER JOIN returns only rows that have matching values in both tables — unmatched rows from either side are excluded. LEFT JOIN returns all rows from the left table plus matched rows from the right; unmatched right-side columns are NULL. Use LEFT JOIN when you need to keep all records from one table regardless of whether a related record exists in the other.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is a CTE in SQL and when should I use it?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'A Common Table Expression (CTE) defined with WITH creates a named, temporary result set that you can reference within the same query. Use CTEs to break complex queries into readable steps, avoid repeating subquery logic, or write recursive queries (hierarchical data like org charts or category trees). Unlike a subquery, a recursive CTE can reference itself.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What are window functions in SQL?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Window functions (OVER clause) compute a value across a set of rows related to the current row without collapsing them into a single output row like GROUP BY does. ROW_NUMBER() assigns sequential integers, RANK() leaves gaps after ties, DENSE_RANK() does not. LAG() and LEAD() access previous or next row values. PARTITION BY divides the window into groups; ORDER BY controls the frame order.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'How do SQL indexes work and when should I add one?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'A B-tree index stores a sorted copy of the indexed column(s) with pointers to the full row, allowing the database to skip full table scans. Add indexes on columns in WHERE clauses, JOIN conditions, and ORDER BY. Avoid indexing low-cardinality columns (boolean, status enum) or every column — writes become slower and storage grows. Run EXPLAIN ANALYZE to confirm an index is being used.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is the difference between DELETE, TRUNCATE, and DROP?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'DELETE removes specific rows (with optional WHERE) and is fully logged and transactional — it can be rolled back. TRUNCATE removes all rows without logging individual row deletions, making it much faster but non-rollbackable in most databases. DROP removes the entire table structure, all data, and all associated indexes. Use DELETE for targeted removal, TRUNCATE to empty a table quickly, DROP to eliminate the table entirely.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'Does SQL syntax differ between PostgreSQL, MySQL, and SQLite?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'Core ANSI SQL (SELECT, INSERT, UPDATE, DELETE, JOIN, GROUP BY) is consistent across all three. Differences include: pagination uses LIMIT/OFFSET in all three but MySQL also supports LIMIT x, y syntax; PostgreSQL uses ILIKE for case-insensitive LIKE; string concatenation is || in PostgreSQL/SQLite but CONCAT() in MySQL; window functions are available in all three since MySQL 8.0 and SQLite 3.25.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        SQL Cheat Sheet
+      
+
+      
+        <h2>
+          SQL Cheat Sheet: Quick Reference for All SQL Commands (2026)
+        </h2>
+        
+          SQL
+          <time dateTime="2026-04-16">April 16, 2026</time>
+          22 min read
+        
+      
+
+      
+
+        
+          <p>
+            According to the <strong>Stack Overflow Developer Survey 2025</strong>, SQL is the third most-used language overall, with <strong>51.6% of professional developers</strong> working with it regularly — more than TypeScript, C#, or Go. It has held a top-5 position every year since the survey began in 2011. Despite the proliferation of NoSQL databases, the <strong>DB-Engines ranking</strong> shows relational databases occupying 7 of the top 10 positions as of Q1 2026, with PostgreSQL overtaking MySQL for the #2 spot behind Oracle.
+          </p>
+          <p>
+            The problem most developers face is not that SQL is hard — it is that the full syntax space is enormous, and most people use about 20% of it. This reference covers all of it: the everyday commands you already know, the joins that trip people up, window functions that replace dozens of self-joins, and the query patterns that survive EXPLAIN ANALYZE without regret.
+          </p>
+          <p>
+            Dialect notes are included where syntax differs meaningfully between <strong>PostgreSQL 16</strong>, <strong>MySQL 8.0+</strong>, and <strong>SQLite 3.35+</strong>.
+          </p>
+        
+
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸<strong>WHERE vs HAVING</strong>: WHERE filters rows before grouping; HAVING filters groups after. Aggregate functions like COUNT() only work in HAVING, not WHERE.</li>
+            <li>▸<strong>Window functions</strong> replace the most complex self-joins: ROW_NUMBER(), RANK(), LAG(), LEAD(), and running totals via SUM() OVER(ORDER BY ...) are all available since PostgreSQL 8.4, MySQL 8.0, SQLite 3.25.</li>
+            <li>▸<strong>CTEs with WITH</strong> dramatically improve readability for multi-step transformations and are the only way to write recursive queries for hierarchical data.</li>
+            <li>▸<strong>Never put functions on indexed columns in WHERE</strong> — WHERE YEAR(created_at) = 2026 cannot use an index. Use range conditions instead.</li>
+            <li>▸<strong>EXPLAIN ANALYZE</strong> (PostgreSQL) or EXPLAIN (MySQL/SQLite) is the only honest way to verify an index is being used and a query is performant.</li>
+          </ul>
+        
+
+        
+          <h2>SELECT — Retrieving Data</h2>
+          <p>
+            The SELECT statement is the entry point for every read query. Its full logical execution order differs from the written order — understanding this explains most WHERE vs HAVING confusion:
+          </p>
+          <p>
+            <code >`-- Basic structure
+SELECT column1, column2
+FROM table_name
+WHERE condition
+GROUP BY column1
+HAVING aggregate_condition
+ORDER BY column1 DESC
+LIMIT 10 OFFSET 20;
+
+-- Logical execution order (not written order):
+-- 1. FROM / JOIN   — identify the source rows
+-- 2. WHERE         — filter rows
+-- 3. GROUP BY      — group remaining rows
+-- 4. HAVING        — filter groups
+-- 5. SELECT        — project columns and expressions
+-- 6. DISTINCT      — remove duplicates
+-- 7. ORDER BY      — sort
+-- 8. LIMIT/OFFSET  — paginate
+
+-- Select all (avoid in production — use explicit columns)
+SELECT * FROM users;
+
+-- Column aliases
+SELECT first_name AS name, created_at AS registered FROM users;
+
+-- Computed columns
+SELECT price, quantity, price * quantity AS total FROM order_items;
+
+-- Distinct values
+SELECT DISTINCT country FROM users;
+
+-- Conditional expressions
+SELECT
+  name,
+  CASE
+    WHEN score >= 90 THEN 'A'
+    WHEN score >= 80 THEN 'B'
+    WHEN score >= 70 THEN 'C'
+    ELSE 'F'
+  END AS grade
+FROM students;`</code>
+          </pre>
+
+          <h3>Filtering with WHERE</h3>
+          <pre >
+            <code >`-- Comparison operators
+WHERE price > 100
+WHERE status != 'inactive'   -- or <>
+WHERE created_at >= '2026-01-01'
+
+-- Multiple conditions
+WHERE country = 'US' AND status = 'active'
+WHERE role = 'admin' OR role = 'moderator'
+WHERE NOT deleted
+
+-- Range
+WHERE price BETWEEN 10 AND 100   -- inclusive on both ends
+
+-- Pattern matching
+WHERE name LIKE 'J%'       -- starts with J (case-sensitive in MySQL, case-sensitive by default in PostgreSQL)
+WHERE name ILIKE 'j%'      -- case-insensitive (PostgreSQL only)
+WHERE email LIKE '%@gmail.com'
+
+-- IN list
+WHERE country IN ('US', 'CA', 'GB')
+WHERE id NOT IN (SELECT user_id FROM banned_users)
+
+-- NULL handling
+WHERE email IS NULL
+WHERE email IS NOT NULL
+
+-- EXISTS (often faster than IN for large subqueries)
+WHERE EXISTS (
+  SELECT 1 FROM orders WHERE orders.user_id = users.id
+)`</code>
+          </pre>
+        
+
+        
+          <h2>JOINs — Combining Tables</h2>
+          <p >
+            JOINs are the most commonly misunderstood part of SQL. The visual below maps each JOIN type to its output, but the key insight is that all JOINs work the same way internally — they differ only in what happens to unmatched rows.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >JOIN Type</th>
+                  <th >Keeps</th>
+                  <th >Unmatched rows</th>
+                  <th >Typical use case</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >INNER JOIN</td>
+                  <td >Rows matching in both tables</td>
+                  <td >Excluded</td>
+                  <td >Orders with valid customers</td>
+                </tr>
+                <tr >
+                  <td >LEFT JOIN</td>
+                  <td >All left rows + matched right</td>
+                  <td >Right side → NULL</td>
+                  <td >Users with or without orders</td>
+                </tr>
+                <tr >
+                  <td >RIGHT JOIN</td>
+                  <td >All right rows + matched left</td>
+                  <td >Left side → NULL</td>
+                  <td >Rare — rewrite as LEFT JOIN</td>
+                </tr>
+                <tr >
+                  <td >FULL OUTER JOIN</td>
+                  <td >All rows from both tables</td>
+                  <td >Both sides → NULL where unmatched</td>
+                  <td >Reconciling two datasets</td>
+                </tr>
+                <tr >
+                  <td >CROSS JOIN</td>
+                  <td >Cartesian product (every combination)</td>
+                  <td >N/A — no condition</td>
+                  <td >Generating date/product matrices</td>
+                </tr>
+                <tr >
+                  <td >SELF JOIN</td>
+                  <td >Table joined to itself (aliased)</td>
+                  <td >Depends on join type used</td>
+                  <td >Employee → manager hierarchy</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            <code >`-- INNER JOIN
+SELECT u.name, o.total
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id;
+
+-- LEFT JOIN (users who may or may not have orders)
+SELECT u.name, COUNT(o.id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name;
+
+-- Find users with NO orders (anti-join pattern)
+SELECT u.name
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE o.id IS NULL;
+
+-- Multi-table join
+SELECT u.name, p.name AS product, oi.quantity
+FROM users u
+JOIN orders o ON u.id = o.user_id
+JOIN order_items oi ON o.id = oi.order_id
+JOIN products p ON oi.product_id = p.id;
+
+-- Self-join: employees and their managers
+SELECT e.name AS employee, m.name AS manager
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id;`</code>
+          </pre>
+        
+
+        
+          <h2>Aggregation: GROUP BY, HAVING, and Aggregate Functions</h2>
+          <pre >
+            <code >`-- Core aggregate functions
+SELECT
+  COUNT(*)                AS total_rows,
+  COUNT(email)            AS rows_with_email,   -- NULLs not counted
+  COUNT(DISTINCT country) AS unique_countries,
+  SUM(amount)             AS total_revenue,
+  AVG(amount)             AS avg_order,
+  MIN(created_at)         AS first_order,
+  MAX(created_at)         AS last_order
+FROM orders;
+
+-- GROUP BY — one output row per group
+SELECT country, COUNT(*) AS users
+FROM users
+GROUP BY country
+ORDER BY users DESC;
+
+-- GROUP BY multiple columns
+SELECT country, status, COUNT(*) AS cnt
+FROM users
+GROUP BY country, status;
+
+-- HAVING — filter groups (not individual rows)
+SELECT user_id, SUM(amount) AS total
+FROM orders
+GROUP BY user_id
+HAVING SUM(amount) > 1000;   -- only high-value customers
+
+-- HAVING with COUNT
+SELECT category, COUNT(*) AS product_count
+FROM products
+GROUP BY category
+HAVING COUNT(*) >= 5;
+
+-- WHERE + GROUP BY + HAVING together
+SELECT country, COUNT(*) AS active_users
+FROM users
+WHERE created_at >= '2025-01-01'   -- WHERE runs first (filters rows)
+GROUP BY country
+HAVING COUNT(*) > 100;             -- HAVING runs after GROUP BY (filters groups)`</code>
+          </pre>
+        
+
+        
+          <h2>Window Functions: The Most Underused Feature in SQL</h2>
+          <p >
+            Window functions perform calculations across a set of related rows without collapsing them into one row — unlike GROUP BY. They are available in <strong>PostgreSQL 8.4+</strong>, <strong>MySQL 8.0+</strong>, and <strong>SQLite 3.25+</strong>. According to the <strong>Mode Analytics 2024 SQL Report</strong>, window functions are the single most requested SQL skill in data engineering job postings, yet only 34% of SQL users report feeling comfortable with them.
+          </p>
+          <p>
+            <code >`-- Syntax: function() OVER (PARTITION BY ... ORDER BY ...)
+
+-- ROW_NUMBER: unique sequential number per partition
+SELECT
+  user_id,
+  order_id,
+  created_at,
+  ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at) AS order_seq
+FROM orders;
+
+-- RANK vs DENSE_RANK
+-- RANK: 1, 2, 2, 4 (gap after tie)
+-- DENSE_RANK: 1, 2, 2, 3 (no gap)
+SELECT
+  name,
+  score,
+  RANK() OVER (ORDER BY score DESC) AS rank,
+  DENSE_RANK() OVER (ORDER BY score DESC) AS dense_rank
+FROM scores;
+
+-- Running total (cumulative sum)
+SELECT
+  order_date,
+  amount,
+  SUM(amount) OVER (ORDER BY order_date) AS running_total
+FROM orders;
+
+-- Running total per user (partition resets per customer)
+SELECT
+  user_id,
+  order_date,
+  amount,
+  SUM(amount) OVER (PARTITION BY user_id ORDER BY order_date) AS user_running_total
+FROM orders;
+
+-- LAG / LEAD: access previous/next row's value
+SELECT
+  order_date,
+  amount,
+  LAG(amount)  OVER (ORDER BY order_date) AS prev_day_amount,
+  LEAD(amount) OVER (ORDER BY order_date) AS next_day_amount,
+  amount - LAG(amount) OVER (ORDER BY order_date) AS delta
+FROM daily_sales;
+
+-- NTILE: split rows into N buckets (e.g. quartiles)
+SELECT
+  customer_id,
+  total_spend,
+  NTILE(4) OVER (ORDER BY total_spend) AS spend_quartile
+FROM customer_totals;
+
+-- Deduplication: keep only the most recent order per user
+SELECT *
+FROM (
+  SELECT *,
+    ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at DESC) AS rn
+  FROM orders
+) t
+WHERE rn = 1;`</code>
+          </pre>
+        
+
+        
+          <h2>CTEs: Common Table Expressions with WITH</h2>
+          <p >
+            CTEs were standardized in SQL:1999 and are supported by all modern databases. They define named temporary result sets scoped to a single query. Their primary value is readability: a 5-subquery monstrosity becomes a readable sequence of named steps.
+          </p>
+          <p>
+            <code >`-- Basic CTE
+WITH active_users AS (
+  SELECT id, name, email
+  FROM users
+  WHERE status = 'active' AND created_at >= '2025-01-01'
+)
+SELECT au.name, COUNT(o.id) AS orders
+FROM active_users au
+LEFT JOIN orders o ON au.id = o.user_id
+GROUP BY au.id, au.name;
+
+-- Multiple CTEs (chain them with commas)
+WITH
+  revenue AS (
+    SELECT user_id, SUM(amount) AS total
+    FROM orders
+    WHERE status = 'completed'
+    GROUP BY user_id
+  ),
+  top_customers AS (
+    SELECT user_id, total
+    FROM revenue
+    WHERE total > 5000
+  )
+SELECT u.name, tc.total
+FROM top_customers tc
+JOIN users u ON u.id = tc.user_id
+ORDER BY tc.total DESC;
+
+-- Recursive CTE: org chart (manager → employee hierarchy)
+WITH RECURSIVE org_chart AS (
+  -- Base case: CEO (no manager)
+  SELECT id, name, manager_id, 0 AS depth
+  FROM employees
+  WHERE manager_id IS NULL
+
+  UNION ALL
+
+  -- Recursive case: employees of each level
+  SELECT e.id, e.name, e.manager_id, oc.depth + 1
+  FROM employees e
+  INNER JOIN org_chart oc ON e.manager_id = oc.id
+)
+SELECT name, depth
+FROM org_chart
+ORDER BY depth, name;`</code>
+          </pre>
+        
+
+        
+          <h2>INSERT, UPDATE, DELETE, and UPSERT</h2>
+          <pre >
+            <code >`-- INSERT
+INSERT INTO users (name, email, created_at)
+VALUES ('Alice', 'alice@example.com', NOW());
+
+-- Multi-row INSERT (single round-trip, much faster than looping)
+INSERT INTO products (name, price, category)
+VALUES
+  ('Widget A', 9.99, 'hardware'),
+  ('Widget B', 14.99, 'hardware'),
+  ('Gadget X', 49.99, 'electronics');
+
+-- INSERT from SELECT
+INSERT INTO archive_orders
+SELECT * FROM orders WHERE created_at < '2024-01-01';
+
+-- UPDATE
+UPDATE users
+SET status = 'inactive', updated_at = NOW()
+WHERE last_login < NOW() - INTERVAL '90 days';
+
+-- UPDATE with JOIN (PostgreSQL syntax)
+UPDATE orders o
+SET status = 'cancelled'
+FROM users u
+WHERE o.user_id = u.id AND u.fraud_flag = true;
+
+-- DELETE
+DELETE FROM sessions WHERE expires_at < NOW();
+
+-- DELETE with JOIN (PostgreSQL)
+DELETE FROM order_items oi
+USING orders o
+WHERE oi.order_id = o.id AND o.status = 'cancelled';
+
+-- UPSERT: PostgreSQL (INSERT ... ON CONFLICT)
+INSERT INTO user_scores (user_id, score, updated_at)
+VALUES (42, 1500, NOW())
+ON CONFLICT (user_id)
+DO UPDATE SET score = EXCLUDED.score, updated_at = EXCLUDED.updated_at;
+
+-- UPSERT: MySQL (INSERT ... ON DUPLICATE KEY UPDATE)
+INSERT INTO user_scores (user_id, score, updated_at)
+VALUES (42, 1500, NOW())
+ON DUPLICATE KEY UPDATE
+  score = VALUES(score),
+  updated_at = VALUES(updated_at);`</code>
+          </pre>
+        
+
+        
+          <h2>DDL: Tables, Indexes, and Constraints</h2>
+          <pre >
+            <code >`-- CREATE TABLE
+CREATE TABLE users (
+  id         SERIAL PRIMARY KEY,            -- PostgreSQL auto-increment
+  email      VARCHAR(255) NOT NULL UNIQUE,
+  name       VARCHAR(100) NOT NULL,
+  status     VARCHAR(20) DEFAULT 'active'
+               CHECK (status IN ('active', 'inactive', 'banned')),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- MySQL equivalent (AUTO_INCREMENT instead of SERIAL)
+CREATE TABLE users (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  email      VARCHAR(255) NOT NULL,
+  ...
+);
+
+-- Foreign key
+CREATE TABLE orders (
+  id         SERIAL PRIMARY KEY,
+  user_id    INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  amount     NUMERIC(10, 2) NOT NULL CHECK (amount > 0),
+  status     VARCHAR(20) DEFAULT 'pending',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_orders_user_id ON orders(user_id);
+CREATE INDEX idx_orders_created ON orders(created_at DESC);
+
+-- Composite index (column order matters — leftmost prefix rule)
+CREATE INDEX idx_orders_user_status ON orders(user_id, status);
+
+-- Partial index (PostgreSQL) — only index active users
+CREATE INDEX idx_users_active ON users(email) WHERE status = 'active';
+
+-- ALTER TABLE
+ALTER TABLE users ADD COLUMN phone VARCHAR(20);
+ALTER TABLE users DROP COLUMN phone;
+ALTER TABLE users ALTER COLUMN name SET NOT NULL;
+ALTER TABLE users ADD CONSTRAINT uq_users_email UNIQUE(email);
+
+-- DROP (irreversible)
+DROP TABLE temp_data;
+DROP TABLE IF EXISTS temp_data;   -- no error if doesn't exist
+TRUNCATE TABLE sessions;          -- empty table, keep structure
+
+-- Transactions
+BEGIN;
+  UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+  UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT;   -- or ROLLBACK; to undo both changes`</code>
+          </pre>
+        
+
+        
+          <h2>String, Date, and Numeric Functions</h2>
+          <pre >
+            <code >`-- String functions
+SELECT UPPER(name), LOWER(email), LENGTH(name) FROM users;
+SELECT TRIM('  hello  ');                -- 'hello'
+SELECT LTRIM('  hello'), RTRIM('hello ');
+SELECT SUBSTRING(name, 1, 3) FROM users; -- first 3 chars
+SELECT REPLACE(phone, '-', '') FROM users;
+SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM users;
+-- PostgreSQL string concat: first_name || ' ' || last_name
+SELECT POSITION('@' IN email) FROM users;  -- character position
+
+-- Date / time functions
+SELECT NOW();                              -- current timestamp
+SELECT CURRENT_DATE;                       -- date only
+SELECT DATE_TRUNC('month', created_at) FROM orders;  -- PostgreSQL
+SELECT DATE_FORMAT(created_at, '%Y-%m') FROM orders; -- MySQL
+
+-- Date arithmetic
+SELECT created_at + INTERVAL '7 days' FROM orders;  -- PostgreSQL
+SELECT DATE_ADD(created_at, INTERVAL 7 DAY) FROM orders; -- MySQL
+
+-- Extract parts
+SELECT EXTRACT(YEAR FROM created_at)  AS yr FROM orders;
+SELECT EXTRACT(MONTH FROM created_at) AS mo FROM orders;
+
+-- Numeric functions
+SELECT ROUND(3.14159, 2);     -- 3.14
+SELECT CEIL(4.1);             -- 5
+SELECT FLOOR(4.9);            -- 4
+SELECT ABS(-42);              -- 42
+SELECT MOD(17, 5);            -- 2 (remainder)
+
+-- Null handling
+SELECT COALESCE(phone, email, 'no contact') FROM users;  -- first non-null
+SELECT NULLIF(status, 'unknown') FROM users;             -- NULL if equal`</code>
+          </pre>
+        
+
+        
+          <h2>Query Optimization: What EXPLAIN Tells You</h2>
+          <p >
+            The <strong>PostgreSQL documentation</strong> is clear: never guess whether a query is slow — run <code >EXPLAIN ANALYZE</code> and read the actual execution plan. A query returning the right results in 40 seconds can often be fixed in 10 minutes once you see it performing a 5-million-row sequential scan that a single index would eliminate.
+          </p>
+          <p>
+            <code >`-- PostgreSQL: EXPLAIN ANALYZE (runs the query and shows real timing)
+EXPLAIN ANALYZE SELECT * FROM orders WHERE user_id = 42;
+
+-- Output nodes to look for:
+-- Seq Scan: full table scan — bad on large tables
+-- Index Scan: using an index — good
+-- Index Only Scan: no heap access needed — best
+-- Hash Join / Merge Join / Nested Loop: join strategy
+-- cost=X..Y: estimated cost (X=startup, Y=total)
+-- actual time=X..Y: real time in ms (ANALYZE mode only)
+-- rows=N: estimated vs actual row count
+
+-- EXPLAIN without ANALYZE (no actual execution — safe for slow queries)
+EXPLAIN SELECT * FROM orders WHERE user_id = 42;
+
+-- MySQL
+EXPLAIN SELECT * FROM orders WHERE user_id = 42;
+EXPLAIN FORMAT=JSON SELECT * FROM orders WHERE user_id = 42;
+
+-- SQLite
+EXPLAIN QUERY PLAN SELECT * FROM orders WHERE user_id = 42;
+
+-- Common anti-patterns that break index usage:
+-- BAD: function on indexed column
+WHERE YEAR(created_at) = 2026
+-- GOOD: range condition
+WHERE created_at >= '2026-01-01' AND created_at < '2027-01-01'
+
+-- BAD: leading wildcard
+WHERE name LIKE '%smith'
+-- GOOD: trailing wildcard (can use B-tree index)
+WHERE name LIKE 'smith%'
+
+-- BAD: implicit type conversion
+WHERE user_id = '42'   -- id is INT, string forces cast
+-- GOOD:
+WHERE user_id = 42`</code>
+          </pre>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Anti-pattern</th>
+                  <th >Why it's slow</th>
+                  <th >Fix</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >WHERE YEAR(col) = 2026</td>
+                  <td >Function call prevents index use</td>
+                  <td >WHERE col &gt;= '2026-01-01' AND col &lt; '2027-01-01'</td>
+                </tr>
+                <tr >
+                  <td >WHERE LOWER(email) = 'x'</td>
+                  <td >Function wraps indexed column</td>
+                  <td >Store emails lowercase; use functional index or ILIKE</td>
+                </tr>
+                <tr >
+                  <td >SELECT *</td>
+                  <td >Fetches all columns including unused large ones</td>
+                  <td >Name only the columns you need</td>
+                </tr>
+                <tr >
+                  <td >N+1 queries in a loop</td>
+                  <td >1 query per row instead of one joined query</td>
+                  <td >JOIN or WHERE id IN (...) with one query</td>
+                </tr>
+                <tr >
+                  <td >LIKE '%keyword%'</td>
+                  <td >Leading % forces full scan</td>
+                  <td >Full-text search (pg_trgm, FULLTEXT INDEX, Elasticsearch)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Subqueries vs JOINs vs CTEs: When to Use Each</h2>
+          <p >
+            Modern query optimizers (PostgreSQL, MySQL 8.0+) will often produce the same execution plan for a correlated subquery and an equivalent JOIN. Still, the conventional wisdom holds for readability: prefer JOINs for simple lookups, CTEs for multi-step logic, and subqueries in HAVING or WHERE when you need a computed threshold.
+          </p>
+          <p>
+            <code >`-- Scalar subquery (single value)
+SELECT name,
+  (SELECT COUNT(*) FROM orders WHERE orders.user_id = users.id) AS order_count
+FROM users;
+-- Better rewritten as JOIN for large tables:
+SELECT u.name, COUNT(o.id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name;
+
+-- Subquery in WHERE
+SELECT * FROM products
+WHERE price > (SELECT AVG(price) FROM products);  -- above average price
+
+-- Derived table (subquery in FROM)
+SELECT dept, avg_salary
+FROM (
+  SELECT department AS dept, AVG(salary) AS avg_salary
+  FROM employees
+  GROUP BY department
+) dept_averages
+WHERE avg_salary > 80000;
+
+-- EXISTS (efficient: stops after first match)
+SELECT * FROM customers c
+WHERE EXISTS (
+  SELECT 1 FROM orders o
+  WHERE o.customer_id = c.id AND o.amount > 500
+);`</code>
+          </pre>
+        
+
+        
+          <h2>FAQ</h2>
+          
+            [
+              
+                q: 'What is the difference between WHERE and HAVING in SQL?',
+                a: 'WHERE filters individual rows before any grouping happens. HAVING filters groups after GROUP BY and aggregation. You cannot use aggregate functions like COUNT() or SUM() in a WHERE clause — use HAVING for that. Execution order: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT.',
+              ,
+              
+                q: 'What is the difference between INNER JOIN and LEFT JOIN?',
+                a: 'INNER JOIN returns only rows with matching values in both tables — unmatched rows from either side are excluded. LEFT JOIN returns all rows from the left table, plus matched rows from the right; unmatched right-side columns become NULL. Use LEFT JOIN when you need all records from one table regardless of whether a related record exists.',
+              ,
+              
+                q: 'What is a CTE and when should I use it?',
+                a: 'A CTE (Common Table Expression) defined with WITH creates a named temporary result set referenced in the same query. Use CTEs to break complex queries into readable steps, avoid repeating subquery logic, or write recursive queries (hierarchical data like org charts). Unlike a subquery, a recursive CTE can reference itself.',
+              ,
+              
+                q: 'What are window functions in SQL?',
+                a: 'Window functions compute a value across rows related to the current row without collapsing them like GROUP BY does. ROW_NUMBER() assigns sequential integers, RANK() leaves gaps after ties, DENSE_RANK() does not. LAG() and LEAD() access previous or next row values. PARTITION BY divides the window into groups; ORDER BY controls the frame order within each partition.',
+              ,
+              
+                q: 'How do SQL indexes work and when should I add one?',
+                a: 'A B-tree index stores a sorted copy of the indexed column(s) with pointers to the full row, letting the database skip full table scans. Add indexes on columns in WHERE, JOIN conditions, and ORDER BY. Avoid indexing low-cardinality columns (boolean, status enum). Run EXPLAIN ANALYZE (PostgreSQL) to confirm an index is actually being used.',
+              ,
+              
+                q: 'What is the difference between DELETE, TRUNCATE, and DROP?',
+                a: 'DELETE removes specific rows (with optional WHERE) and is fully transactional — rollbackable. TRUNCATE removes all rows without logging individual deletes — much faster but non-rollbackable in most databases. DROP removes the entire table structure and all data. Use DELETE for targeted removal, TRUNCATE to empty a table quickly, DROP to eliminate the table entirely.',
+              ,
+              
+                q: 'Does SQL syntax differ between PostgreSQL, MySQL, and SQLite?',
+                a: 'Core ANSI SQL is consistent across all three. Key differences: PostgreSQL uses ILIKE for case-insensitive LIKE; string concatenation is || in PostgreSQL/SQLite but CONCAT() in MySQL; auto-increment is SERIAL or GENERATED AS IDENTITY in PostgreSQL, AUTO_INCREMENT in MySQL, INTEGER PRIMARY KEY in SQLite. Window functions are available in all three since MySQL 8.0 and SQLite 3.25.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p >a</p>
+              
+            ))
+          
+        
+
+        
+          <h2>Format and Validate Your SQL</h2>
+          <p>
+            Working with complex queries? Use BytePane&rsquo;s SQL formatter to instantly beautify and standardize your SQL code, or check our JSON formatter for API response data.
+          </p>
+          
+            <a href="/sql-formatter/">
+              SQL Formatter →
+            </a>
+            <a href="/blog/sql-joins-explained/">
+              SQL JOINs Explained →
+            </a>
+            <a href="/blog/json-formatting-guide/">
+              JSON Formatting Guide →
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/sql-cheat-sheet/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
