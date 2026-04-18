@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Is DNS? How the Domain Name System Works (2026) - BytePane</title>
+  <meta name="description" content="DNS explained for developers: how resolvers, root nameservers, TLD servers, and authoritative servers work together. Covers DNS record types, TTL, caching, DNSSEC, and common attack vectors.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/what-is-dns/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; What Is DNS? How the Domain Name System Works (2026)
+  </nav>
+
+  <article>
+    <h1>What Is DNS? How the Domain Name System Works (2026)</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/what-is-dns/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    authoritative servers store the original records.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What DNS record types should every developer know?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'The essential records: A (domain to IPv4 address), AAAA (domain to IPv6 address), CNAME (alias to another domain), MX (mail servers), TXT (verification strings, SPF, DKIM), NS (which nameservers are authoritative), and SOA (zone metadata including TTL defaults). SRV records specify service locations and ports. CAA records restrict which certificate authorities can issue TLS certs for your domain.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is DNS TTL and how does it affect deployments?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'TTL (Time to Live) is a value in seconds that tells resolvers how long to cache a DNS record before re-querying. A TTL of 3600 means resolvers cache the answer for 1 hour. Before a major DNS change (server migration, failover), lower your TTL to 60–300 seconds 24 hours in advance so changes propagate quickly. After the migration is stable, raise TTL back to 3600+ to reduce resolver query load.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is DNS caching and how do I flush it?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'DNS caching stores resolved records locally (in resolvers, OS, and browsers) for the duration of the record\'s TTL. To flush the OS DNS cache: macOS uses "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder", Windows uses "ipconfig /flushdns", Linux (systemd-resolved) uses "sudo systemd-resolve --flush-caches". Browsers also maintain their own DNS cache — in Chrome, navigate to chrome://net-internals/#dns and click "Clear host cache".',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What is DNSSEC and should I enable it?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'DNSSEC (DNS Security Extensions) adds cryptographic signatures to DNS responses, letting resolvers verify that an answer actually came from the authoritative nameserver and was not tampered with in transit — preventing DNS spoofing/cache poisoning attacks. Enable DNSSEC if your registrar and DNS provider both support it (Cloudflare, Route 53, and most major providers do). It requires no changes to applications — only DNS configuration.',
+                ,
+              ,
+              
+                '@type': 'Question',
+                name: 'What are common DNS attack types?',
+                acceptedAnswer: 
+                  '@type': 'Answer',
+                  text: 'DNS cache poisoning injects forged records into a resolver\'s cache, redirecting users to malicious servers (DNSSEC prevents this). DNS amplification uses open resolvers to flood victims with large DNS responses using a spoofed source IP — a common DDoS vector. DNS hijacking redirects queries by compromising resolver configuration. Subdomain takeover occurs when a CNAME points to an expired/unclaimed external service that an attacker re-registers.',
+                ,
+              ,
+            ],
+          ),
+        
+      />
+
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        What Is DNS
+      
+
+      
+        <h2>
+          What Is DNS? How the Domain Name System Works (2026)
+        </h2>
+        
+          Networking
+          <time dateTime="2026-04-18">April 18, 2026</time>
+          18 min read
+        
+      
+
+      
+
+        /* Opening: myth-busting the "phone book" metaphor */
+        
+          <p>
+            Every DNS explainer calls it &ldquo;the phone book of the internet.&rdquo; That metaphor is accurate enough for a five-year-old but fails the moment you try to debug a misconfigured CNAME, understand why your DNS change is not propagating after 6 hours, or explain why a DNS amplification attack can take down a CDN. DNS is not a lookup table. It is a <strong>globally distributed, hierarchical, heavily cached database</strong> — and understanding those three properties explains almost every DNS behavior that seems mysterious at first.
+          </p>
+          <p>
+            The scale is worth stating explicitly: <strong>Cloudflare&rsquo;s 1.1.1.1 resolver processes 4.3 trillion DNS queries per day</strong> as of 2025. <strong>ICANN reports 368.4 million registered domain names</strong> across all TLDs as of Q1 2025, with .com and .net alone accounting for 169.8 million. Every page load typically triggers 5–20 DNS lookups — for the main domain, CDN assets, analytics scripts, fonts, and API endpoints.
+          </p>
+          <p>
+            DNS was designed by <strong>Paul Mockapetris and Jon Postel in 1983</strong> (formalized in RFC 882/883, then the current RFC 1034/1035 in 1987). The core protocol is unchanged. DNS over HTTPS (DoH, RFC 8484, 2018) and DNS over TLS (DoT, RFC 7858, 2016) are the most significant modern additions — they encrypt queries that have always been plaintext by default.
+          </p>
+        
+
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸<strong>DNS is hierarchical</strong>: root nameservers → TLD nameservers → authoritative nameservers. Your resolver traverses this chain on a cache miss.</li>
+            <li>▸<strong>TTL controls propagation speed</strong>: lower TTL before DNS migrations (to 60–300s), raise it afterward (3600+). Lowering TTL has no effect if you do it the same day as the change.</li>
+            <li>▸<strong>CNAME cannot coexist with other records at the zone apex</strong> — you cannot have a CNAME for example.com (the root) alongside an MX record. Use ALIAS/ANAME or Cloudflare&rsquo;s flattened CNAME to work around this.</li>
+            <li>▸<strong>DNS is plaintext by default</strong> — every query leaks the domain you are visiting to your ISP and any network observer. DNS over HTTPS (DoH) and DNS over TLS (DoT) encrypt queries.</li>
+            <li>▸<strong>There are only 13 root nameserver IP addresses</strong> — but each is an anycast cluster of hundreds of physical servers worldwide. ICANN manages the root zone file.</li>
+          </ul>
+        
+
+        
+          <h2>The DNS Hierarchy: Four Levels</h2>
+          <p>
+            DNS is organized in a tree structure read right to left. The domain <code >api.example.com.</code> (note the trailing dot — the root) has four components:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Level</th>
+                  <th >Label in example.com.</th>
+                  <th >Managed by</th>
+                  <th >Count worldwide</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Root zone</td>
+                  <td >. (dot)</td>
+                  <td >ICANN / IANA</td>
+                  <td >13 root server IPs (anycast clusters)</td>
+                </tr>
+                <tr >
+                  <td >TLD</td>
+                  <td >.com</td>
+                  <td >Verisign (.com/.net), ICANN, registries</td>
+                  <td >~1,500 TLDs (gTLDs + ccTLDs)</td>
+                </tr>
+                <tr >
+                  <td >Second-level domain</td>
+                  <td >example</td>
+                  <td >Domain registrant (you)</td>
+                  <td >368.4M registered domains (Q1 2025, per ICANN)</td>
+                </tr>
+                <tr >
+                  <td >Subdomain</td>
+                  <td >api, www, mail</td>
+                  <td >Domain owner (DNS records)</td>
+                  <td >Unlimited, defined in zone file</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>A Complete DNS Lookup, Step by Step</h2>
+          <p>
+            When you type <code >example.com</code> into your browser and the answer is not cached anywhere, here is the exact sequence of 8 steps:
+          </p>
+          
+            [
+              
+                step: '1',
+                title: 'Browser checks its own cache',
+                desc: 'Chrome caches DNS responses for the duration of the TTL (or a minimum of 1 minute). If the record is cached and not expired, the lookup ends here — no network traffic at all.',
+              ,
+              
+                step: '2',
+                title: 'OS checks its local resolver cache',
+                desc: 'The operating system maintains its own DNS cache (mDNSResponder on macOS, nscd or systemd-resolved on Linux, DNS Client service on Windows). Also checks /etc/hosts (or C:\\Windows\\System32\\drivers\\etc\\hosts on Windows) for static overrides.',
+              ,
+              
+                step: '3',
+                title: 'Query goes to the recursive resolver',
+                desc: 'The OS sends a UDP query (port 53) to the configured DNS resolver — typically your ISP\'s resolver, or a public resolver like 1.1.1.1 (Cloudflare) or 8.8.8.8 (Google). The resolver checks its own cache first.',
+              ,
+              
+                step: '4',
+                title: 'Resolver queries a root nameserver',
+                desc: 'On a full cache miss, the resolver asks one of the 13 root nameserver addresses: "Who is authoritative for .com?" The root server responds with the IP addresses of .com\'s TLD nameservers — it does not know the answer, just who to ask next.',
+              ,
+              
+                step: '5',
+                title: 'Resolver queries the TLD nameserver',
+                desc: 'The resolver asks a .com TLD nameserver: "Who is authoritative for example.com?" Verisign\'s servers respond with the NS records for example.com — the names of the domain\'s own nameservers.',
+              ,
+              
+                step: '6',
+                title: 'Resolver queries the authoritative nameserver',
+                desc: 'The resolver asks example.com\'s authoritative nameserver (e.g., ns1.cloudflare.com) for the A record for example.com. This server holds the actual DNS records configured by the domain owner and returns the IP address.',
+              ,
+              
+                step: '7',
+                title: 'Resolver caches the answer',
+                desc: 'The resolver caches the A record for the duration of its TTL. Subsequent queries from any client using this resolver will get the cached answer instantly — no traversal needed until the TTL expires.',
+              ,
+              
+                step: '8',
+                title: 'Answer returned to browser',
+                desc: 'The resolver returns the IP address (e.g., 93.184.216.34) to the OS, which returns it to the browser. The browser caches it, then initiates a TCP connection (or QUIC for HTTP/3) to that IP on port 443.',
+              ,
+            ].map(( step, title, desc ) => (
+              
+                
+                  step
+                
+                
+                  <h3>title</h3>
+                  <p>desc</p>
+                
+              
+            ))
+          
+          <p>
+            The full traversal (steps 3–7) typically completes in <strong>20–120ms</strong> depending on geographic proximity to the resolver and nameservers. Subsequent lookups hit the resolver cache and typically complete in <strong>1–5ms</strong>. This is why DNS performance matters for page load times: a cold DNS lookup for each subdomain adds meaningful latency before any TCP connection is established.
+          </p>
+        
+
+        
+          <h2>DNS Record Types: Complete Reference</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Record</th>
+                  <th >Purpose</th>
+                  <th >Example value</th>
+                  <th >Notes</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >A</td>
+                  <td >Domain → IPv4 address</td>
+                  <td >93.184.216.34</td>
+                  <td >Most common record type</td>
+                </tr>
+                <tr >
+                  <td >AAAA</td>
+                  <td >Domain → IPv6 address</td>
+                  <td >2606:2800:220:1:...</td>
+                  <td >Dual-stack — add alongside A</td>
+                </tr>
+                <tr >
+                  <td >CNAME</td>
+                  <td >Alias to another domain</td>
+                  <td >www → example.com.</td>
+                  <td >Cannot coexist at zone apex. No other records allowed on same name.</td>
+                </tr>
+                <tr >
+                  <td >MX</td>
+                  <td >Mail server for domain</td>
+                  <td >10 mail.example.com.</td>
+                  <td >Priority number — lower = higher priority</td>
+                </tr>
+                <tr >
+                  <td >TXT</td>
+                  <td >Arbitrary text data</td>
+                  <td >"v=spf1 include:..."</td>
+                  <td >SPF, DKIM, domain verification (Google, GitHub)</td>
+                </tr>
+                <tr >
+                  <td >NS</td>
+                  <td >Authoritative nameservers</td>
+                  <td >ns1.cloudflare.com.</td>
+                  <td >Configured at registrar — delegates zone authority</td>
+                </tr>
+                <tr >
+                  <td >SOA</td>
+                  <td >Zone metadata</td>
+                  <td >Serial, refresh, retry, expire, minimum TTL</td>
+                  <td >One per zone — auto-managed by providers</td>
+                </tr>
+                <tr >
+                  <td >PTR</td>
+                  <td >Reverse DNS (IP → domain)</td>
+                  <td >34.216.184.93.in-addr.arpa. → example.com.</td>
+                  <td >Configured by IP owner (ISP/cloud provider). Required for mail servers.</td>
+                </tr>
+                <tr >
+                  <td >SRV</td>
+                  <td >Service location and port</td>
+                  <td >_https._tcp priority weight port target</td>
+                  <td >Used by SIP, XMPP, Kubernetes service discovery</td>
+                </tr>
+                <tr >
+                  <td >CAA</td>
+                  <td >Restrict TLS certificate issuers</td>
+                  <td >0 issue "letsencrypt.org"</td>
+                  <td >CAs must check before issuing — prevents rogue certs</td>
+                </tr>
+                <tr >
+                  <td >ALIAS/ANAME</td>
+                  <td >CNAME-like at zone apex</td>
+                  <td >example.com → other.domain.com</td>
+                  <td >Provider-specific (Cloudflare CNAME flattening, Route 53 ALIAS). Not an RFC standard.</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h3>The CNAME-at-Apex Problem</h3>
+          <p>
+            RFC 1034 prohibits a CNAME record from coexisting with any other record on the same name. This means you cannot put a CNAME on your bare domain (<code >example.com</code>) because the zone apex requires NS and SOA records. This breaks a common use case: pointing your apex domain to a CDN or PaaS provider that only gives you a hostname, not an IP.
+          </p>
+          <p>
+            Solutions: <strong>Cloudflare CNAME Flattening</strong> resolves the CNAME to its IP at query time and serves an A record — invisible to clients. <strong>AWS Route 53 ALIAS records</strong> work similarly and are free (unlike standard Route 53 queries). Both are provider-specific extensions. Vercel, Netlify, and Render all document this issue in their custom domain setup guides.
+          </p>
+        
+
+        
+          <h2>TTL: Time to Live and DNS Propagation</h2>
+          <p>
+            &ldquo;DNS propagation&rdquo; is not a global broadcast — it is <em>cache expiration</em>. When you change a DNS record, existing cached answers persist until their TTL expires. A record with a TTL of 86400 (24 hours) will continue to be served by resolvers that cached it for up to 24 hours after you change it.
+          </p>
+          <p>
+            <code >`# View DNS records and their TTLs with dig
+dig example.com A                    # A record
+dig example.com MX                   # mail servers
+dig example.com NS                   # nameservers
+dig example.com TXT                  # TXT records
+dig @8.8.8.8 example.com A           # query a specific resolver (Google)
+dig @1.1.1.1 example.com A           # query Cloudflare's resolver
+dig +short example.com A             # just the IP(s), no extra output
+
+# Check a specific nameserver directly (bypass cache)
+dig @ns1.cloudflare.com example.com A
+
+# Trace the full resolution chain
+dig +trace example.com A
+
+# Reverse DNS lookup (IP → domain)
+dig -x 93.184.216.34
+
+# View TTL in dig output:
+# example.com.    300    IN    A    93.184.216.34
+#              ^^^ TTL in seconds
+
+# nslookup (available everywhere, less detail than dig)
+nslookup example.com
+nslookup example.com 8.8.8.8         # against specific resolver
+
+# Flush local DNS cache (to test changes immediately)
+# macOS:
+sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder
+# Windows:
+ipconfig /flushdns
+# Linux (systemd-resolved):
+sudo systemd-resolve --flush-caches`</code>
+          </pre>
+
+          <h3>TTL Strategy for DNS Migrations</h3>
+          <p >
+            The standard playbook for a zero-downtime DNS migration, based on <strong>Cloudflare&rsquo;s infrastructure documentation</strong>:
+          </p>
+          
+            [
+               time: '24h before', action: 'Lower TTL to 300 seconds (5 minutes). Wait 24 hours — this ensures all caches holding the old TTL have expired and refreshed with the new 300s TTL.' ,
+               time: 'Migration time', action: 'Update the DNS record (change A record IP, update CNAME target, etc.). Resolvers will refresh within 5 minutes. Keep old server running.' ,
+               time: '1–2h after', action: 'Monitor traffic — watch access logs on both old and new servers. When old server shows minimal traffic, it is safe to decommission.' ,
+               time: '24h after', action: 'Raise TTL back to 3600 or 86400 to reduce resolver query load and improve resolution latency for users.' ,
+            ].map(( time, action ) => (
+              
+                time
+                action
+              
+            ))
+          
+        
+
+        
+          <h2>DNS Security: DNSSEC, DoH, and Attack Vectors</h2>
+
+          <h3>DNSSEC: Cryptographic Validation</h3>
+          <p>
+            DNSSEC (DNS Security Extensions, RFC 4033–4035) adds digital signatures to DNS records. When a resolver receives a signed response, it can verify the signature using the zone&rsquo;s public key — which is in turn signed by the parent zone, creating a chain of trust from the root. This prevents <strong>DNS cache poisoning</strong> (the Kaminsky attack, 2008), where an attacker injects forged records into a resolver&rsquo;s cache.
+          </p>
+          <p>
+            According to <strong>APNIC&rsquo;s DNSSEC statistics</strong>, roughly 30% of DNS queries globally are DNSSEC-validated as of 2025, up from 18% in 2021. Enable DNSSEC through your registrar and DNS provider — both must support it. Cloudflare, AWS Route 53, Google Cloud DNS, and most major registrars support DNSSEC with a one-click setup.
+          </p>
+
+          <h3>DNS Over HTTPS (DoH) and DNS Over TLS (DoT)</h3>
+          <p>
+            Traditional DNS uses UDP (and sometimes TCP) on port 53 — completely unencrypted. Your ISP, network admin, and any network observer can see every domain you look up. DoH (RFC 8484) wraps DNS queries in HTTPS, making them indistinguishable from regular HTTPS traffic. DoT (RFC 7858) uses TLS on port 853.
+          </p>
+          <p>
+            <code >`# DoH query with curl
+curl -s -H 'accept: application/dns-json' \
+  'https://1.1.1.1/dns-query?name=example.com&type=A' | jq .
+
+# DoH query with dig (if compiled with DoH support, dig 9.17+)
+dig +https @cloudflare-dns.com example.com A
+
+# DoT query with kdig (knot-dns package)
+kdig @1.1.1.1 +tls example.com A
+
+# Configure system-wide DoH on Linux (systemd-resolved)
+# /etc/systemd/resolved.conf
+[Resolve]
+DNS=1.1.1.1#cloudflare-dns.com 8.8.8.8#dns.google
+DNSOverTLS=yes`</code>
+          </pre>
+
+          <h3>Common DNS Attack Types</h3>
+          
+            [
+              
+                name: 'DNS Cache Poisoning',
+                severity: 'Critical',
+                desc: 'An attacker sends forged DNS responses to a resolver before the legitimate response arrives, injecting a false IP for a domain. The resolver caches the forged record and serves it to all users. DNSSEC prevents this — signed records cannot be forged without the private key. The Kaminsky attack (2008) revealed a fundamental weakness in DNS that took years to fully patch.',
+              ,
+              
+                name: 'DNS Amplification (DDoS)',
+                severity: 'High',
+                desc: 'Attacker sends DNS queries with a spoofed source IP (the victim\'s IP) to many open resolvers, requesting large DNS responses (ANY queries, DNSSEC responses). The resolvers send amplified responses (100:1 amplification ratio) to the victim. Cloudflare documented a 71 million RPS DDoS attack in 2023 that used DNS amplification as a component.',
+              ,
+              
+                name: 'Subdomain Takeover',
+                severity: 'High',
+                desc: 'A CNAME record points to an external service (e.g., a Heroku, GitHub Pages, or Netlify app) that has since been deregistered. An attacker registers the same service name, claiming the subdomain. All traffic to your subdomain now goes to the attacker. Audit all CNAME records for targets that no longer exist.',
+              ,
+              
+                name: 'DNS Hijacking',
+                severity: 'High',
+                desc: 'Attacker modifies DNS resolver configuration (compromising a home router, a corporate DNS server, or the DNS settings in your domain registrar account). All queries resolve to attacker-controlled IPs. Use DNSSEC and registrar account 2FA to mitigate.',
+              ,
+            ].map(( name, severity, desc ) => (
+              
+                
+                  <h3>name</h3>
+                  
+                    severity
+                  
+                
+                <p >desc</p>
+              
+            ))
+          
+        
+
+        
+          <h2>DNS Providers: Comparing Performance and Features</h2>
+          <p>
+            According to <strong>DNSPerf&rsquo;s global benchmarks (Q1 2026)</strong>, the fastest authoritative DNS providers by median query time are Cloudflare (10ms), AWS Route 53 (15ms), Akamai Edge DNS (18ms), and Google Cloud DNS (19ms). For recursive resolvers, Cloudflare 1.1.1.1 consistently leads on latency, Google 8.8.8.8 leads on reliability. GoDaddy DNS leads by company count with <strong>32.84% of the domain-name-services category</strong> globally, but lags significantly on performance.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Provider</th>
+                  <th >Type</th>
+                  <th >Free tier</th>
+                  <th >Notable features</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Cloudflare DNS</td>
+                  <td >Authoritative + Recursive</td>
+                  <td >Yes (unlimited)</td>
+                  <td >CNAME flattening, DDoS protection, DNSSEC, DoH/DoT, analytics</td>
+                </tr>
+                <tr >
+                  <td >AWS Route 53</td>
+                  <td >Authoritative</td>
+                  <td >$0.50/zone/mo</td>
+                  <td >ALIAS records, health checks, routing policies (latency, geo, failover)</td>
+                </tr>
+                <tr >
+                  <td >Google Cloud DNS</td>
+                  <td >Authoritative</td>
+                  <td >$0.20/zone/mo</td>
+                  <td >DNSSEC, low latency, 100% uptime SLA</td>
+                </tr>
+                <tr >
+                  <td >1.1.1.1 (Cloudflare)</td>
+                  <td >Recursive resolver</td>
+                  <td >Free (public)</td>
+                  <td >Fastest public resolver (DNSPerf), DoH/DoT, no-logging policy</td>
+                </tr>
+                <tr >
+                  <td >8.8.8.8 (Google)</td>
+                  <td >Recursive resolver</td>
+                  <td >Free (public)</td>
+                  <td >Highly reliable, DoH/DoT support, 4.3T+ queries/day</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>DNS for Developers: Common Configurations</h2>
+          <p>
+            <code >`# Typical DNS setup for a web application:
+
+# Apex domain → server IP
+example.com.          300  IN  A     93.184.216.34
+
+# www subdomain → apex (via CNAME or separate A)
+www.example.com.      300  IN  CNAME example.com.
+
+# API subdomain
+api.example.com.      300  IN  A     93.184.216.34
+
+# CDN via CNAME
+static.example.com.   300  IN  CNAME example.b-cdn.net.
+
+# Mail configuration
+example.com.          300  IN  MX    10 mail.example.com.
+mail.example.com.     300  IN  A     198.51.100.10
+
+# SPF record (who can send email as @example.com)
+example.com.          300  IN  TXT   "v=spf1 include:_spf.google.com ~all"
+
+# DKIM (mail signing key — provider generates this)
+google._domainkey.example.com. 300 IN TXT "v=DKIM1; k=rsa; p=MIIBIj..."
+
+# DMARC (mail policy)
+_dmarc.example.com.   300  IN  TXT   "v=DMARC1; p=reject; rua=mailto:dmarc@example.com"
+
+# Domain verification for Google Search Console / GitHub, etc.
+example.com.          300  IN  TXT   "google-site-verification=abc123..."
+
+# CAA: only Let's Encrypt and Sectigo can issue TLS certs
+example.com.          300  IN  CAA   0 issue "letsencrypt.org"
+example.com.          300  IN  CAA   0 issue "sectigo.com"`</code>
+          </pre>
+        
+
+        
+          <h2>FAQ</h2>
+          
+            [
+              
+                q: 'What is DNS and why is it needed?',
+                a: 'DNS translates domain names like example.com into IP addresses like 93.184.216.34 that computers use to route traffic. Without DNS, every user would need to memorize IP addresses for every site — and those IPs change when servers move. DNS is hierarchical, distributed, and cached at multiple levels to handle billions of queries per day at low latency.',
+              ,
+              
+                q: 'What is the difference between a DNS resolver and an authoritative nameserver?',
+                a: 'A recursive resolver is the server that does the lookup work on your behalf — it traverses the DNS hierarchy (root → TLD → authoritative) and caches results. An authoritative nameserver is the final source of truth for a specific domain — it holds the actual records configured by the domain owner. Resolvers cache answers; authoritative servers store the originals.',
+              ,
+              
+                q: 'What DNS record types should every developer know?',
+                a: 'Essential records: A (domain to IPv4), AAAA (domain to IPv6), CNAME (alias to another domain), MX (mail servers), TXT (SPF, DKIM, domain verification), NS (which nameservers are authoritative), SOA (zone metadata), CAA (restrict which CAs can issue TLS certs). ALIAS/ANAME records are provider-specific CNAME equivalents for use at the zone apex.',
+              ,
+              
+                q: 'What is DNS TTL and how does it affect deployments?',
+                a: 'TTL (Time to Live) tells resolvers how long to cache a DNS record in seconds. A TTL of 3600 = cached for 1 hour. Before a DNS migration, lower TTL to 60–300 seconds 24 hours in advance so changes propagate quickly. After migration is stable, raise TTL back to 3600+ to reduce resolver load.',
+              ,
+              
+                q: 'What is DNS caching and how do I flush it?',
+                a: 'DNS caching stores resolved records locally (in resolvers, OS, and browsers) for the TTL duration. Flush macOS cache: sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder. Windows: ipconfig /flushdns. Linux (systemd-resolved): sudo systemd-resolve --flush-caches. Chrome: chrome://net-internals/#dns → Clear host cache.',
+              ,
+              
+                q: 'What is DNSSEC and should I enable it?',
+                a: 'DNSSEC adds cryptographic signatures to DNS responses, letting resolvers verify answers came from the real authoritative nameserver and were not tampered with in transit — preventing DNS cache poisoning. Enable it through your registrar and DNS provider (Cloudflare, Route 53, and most major providers support one-click setup). No application changes required.',
+              ,
+              
+                q: 'What are common DNS attack types?',
+                a: 'DNS cache poisoning injects forged records into a resolver\'s cache (DNSSEC prevents this). DNS amplification uses open resolvers to flood victims with large responses via a spoofed source IP — a common DDoS vector. Subdomain takeover occurs when a CNAME points to an expired/unclaimed external service an attacker re-registers. DNS hijacking redirects queries by compromising resolver or registrar account configuration.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p >a</p>
+              
+            ))
+          
+        
+
+        
+          <h2>Look Up Any Domain&rsquo;s DNS Records</h2>
+          <p>
+            Use BytePane&rsquo;s IP address and WHOIS tools to investigate any domain or IP, or dig deeper into networking concepts.
+          </p>
+          
+            <a href="/ip-address-lookup/">
+              IP Address Lookup →
+            </a>
+            <a href="/whois-lookup/">
+              WHOIS Lookup →
+            </a>
+            <a href="/blog/dns-records-explained/">
+              DNS Records Explained →
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/what-is-dns/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
