@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Use Git: Beginner&amp;rsquo;s Guide to Version Control (2026) - BytePane</title>
+  <meta name="description" content="Learn Git from scratch: init, commit, branch, merge, rebase, remotes, and collaboration workflows. Practical examples for real projects with common mistakes explained.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/how-to-use-git/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; How to Use Git: Beginner&amp;rsquo;s Guide to Version Control (2026)
+  </nav>
+
+  <article>
+    <h1>How to Use Git: Beginner&amp;rsquo;s Guide to Version Control (2026)</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/how-to-use-git/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    s Guide to Version Control (2026)
+        </h1>
+        
+          Git
+          <time dateTime="2026-04-17">April 17, 2026</time>
+          21 min read
+        
+      
+
+      
+
+        /* Opening: problem-solution framework */
+        
+          <p>
+            Here is what development looks like without version control: you rename <code >app_final.py</code> to <code >app_final_v2.py</code> to <code >app_FINAL_USE_THIS.py</code>. A teammate overwrites your changes. You need to roll back a change from last Tuesday but cannot find where the working version is. You are afraid to refactor anything because you might break something and have no way back.
+          </p>
+          <p>
+            Git solves all of this. According to the <strong>Stack Overflow Developer Survey 2025</strong>, Git is used by <strong>97.7% of professional developers</strong> — the most universally adopted tool in the survey&rsquo;s history. Git was created by <strong>Linus Torvalds in 2005</strong> specifically to manage the Linux kernel, which receives thousands of patches from hundreds of contributors per release cycle. As of 2025, the Linux kernel Git repository contains over <strong>1.1 million commits</strong> from more than 25,000 contributors.
+          </p>
+          <p>
+            This guide covers everything from your first <code >git init</code> to the branching workflows used at companies with hundreds of engineers. Every section includes the mistakes beginners make and the mental models that prevent them.
+          </p>
+        
+
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸<strong>The three-area model is everything</strong>: working directory → staging area → repository. All Git commands move changes between these three areas.</li>
+            <li>▸<strong>Branches are free</strong>: creating a branch takes milliseconds and costs almost no disk space. Use one per feature, bug fix, or experiment — never commit directly to main.</li>
+            <li>▸<strong>git fetch vs git pull</strong>: fetch downloads changes but does not apply them. Pull = fetch + merge. Always fetch first on shared branches to see what is incoming.</li>
+            <li>▸<strong>Never rebase pushed commits</strong>: rebase rewrites commit hashes. Rebasing commits already on a shared remote branch will break your teammates&rsquo; histories.</li>
+            <li>▸<strong>Write meaningful commit messages</strong>: &ldquo;fix bug&rdquo; is useless in 6 months. Format: imperative verb + what changed + why if non-obvious. E.g., &ldquo;Fix pagination off-by-one on last page&rdquo;.</li>
+          </ul>
+        
+
+        
+          <h2>Installing Git and First-Time Setup</h2>
+          <p>
+            <code >`# Install
+# macOS (via Homebrew)
+brew install git
+
+# Ubuntu / Debian
+sudo apt update && sudo apt install git
+
+# Windows — download Git for Windows (includes Git Bash)
+# https://git-scm.com/download/win
+
+# Verify installation
+git --version   # git version 2.47.x
+
+# First-time global config (required before your first commit)
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+# Set default branch name to 'main' (Git 2.28+)
+git config --global init.defaultBranch main
+
+# Set your preferred editor for commit messages
+git config --global core.editor "code --wait"   # VS Code
+git config --global core.editor "vim"            # Vim
+git config --global core.editor "nano"           # Nano
+
+# Useful aliases
+git config --global alias.st status
+git config --global alias.co checkout
+git config --global alias.lg "log --oneline --graph --decorate --all"
+
+# Verify your config
+git config --list --global`</code>
+          </pre>
+        
+
+        
+          <h2>The Three-Area Model: The Mental Model That Unlocks Git</h2>
+          <p >
+            Every confusing Git behavior becomes logical once you internalize the three areas Git uses to track your work:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Area</th>
+                  <th >What it is</th>
+                  <th >How to move changes here</th>
+                  <th >How to undo</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Working Directory</td>
+                  <td >Your file system — what you see in your editor</td>
+                  <td >Edit files normally</td>
+                  <td >git restore &lt;file&gt;</td>
+                </tr>
+                <tr >
+                  <td >Staging Area (Index)</td>
+                  <td >A snapshot of what your next commit will contain</td>
+                  <td >git add &lt;file&gt;</td>
+                  <td >git restore --staged &lt;file&gt;</td>
+                </tr>
+                <tr >
+                  <td >Repository (.git)</td>
+                  <td >The full history of committed snapshots</td>
+                  <td >git commit</td>
+                  <td >git reset / git revert</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The staging area is what surprises most beginners. It exists so you can craft precise commits: you can edit 10 files but stage only 3 of them for a focused commit, then stage the rest later. This is called <strong>atomic committing</strong> — each commit represents one logical change, making history navigable and blame meaningful.
+          </p>
+        
+
+        
+          <h2>Starting a Repository</h2>
+          <p>
+            <code >`# Option A: Start a new repository from scratch
+mkdir my-project && cd my-project
+git init            # creates a hidden .git directory
+                    # this is the entire Git database for your project
+
+# Option B: Clone an existing repository from GitHub / GitLab
+git clone https://github.com/org/repo.git
+git clone https://github.com/org/repo.git my-custom-folder   # into custom directory
+git clone git@github.com:org/repo.git        # SSH (faster for frequent pushes)
+
+# After init, check what Git sees
+git status    # shows working directory and staging area state`</code>
+          </pre>
+
+          <h3>Creating a .gitignore Before Your First Commit</h3>
+          <p >
+            The biggest mistake beginners make is committing <code >node_modules</code>, <code >.env</code> files, or IDE folders. Create your <code >.gitignore</code> <em>before</em> your first commit:
+          </p>
+          <p>
+            <code >`# .gitignore — Node.js project example
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.*.local
+*.log
+logs/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Python project example
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+.env
+.pytest_cache/
+
+# Patterns
+*.log          # any file ending in .log
+logs/          # any directory named logs
+!logs/.gitkeep # exception: keep the directory but not its contents
+/config.json   # only config.json at root level, not nested ones
+config?.json   # config1.json, configA.json (? = one character)`</code>
+          </pre>
+        
+
+        
+          <h2>The Core Workflow: Stage, Commit, Repeat</h2>
+          <pre >
+            <code >`# Check current state — run this constantly when learning
+git status
+
+# Stage specific files
+git add src/auth.js
+git add src/auth.js src/middleware.js   # multiple files
+
+# Stage an entire directory
+git add src/
+
+# Stage all changes in the current directory
+git add .    # use with care — check git status first
+
+# Stage parts of a file interactively (hunk by hunk)
+git add -p src/auth.js    # shows each change, y/n to stage
+
+# Review what is staged before committing
+git diff --staged     # shows staged changes (not working dir)
+git diff              # shows unstaged changes (working dir vs staging)
+
+# Commit what is staged
+git commit -m "Add JWT validation to auth middleware"
+
+# Stage all tracked files and commit in one step (skips staging for untracked files)
+git commit -am "Fix typo in error message"
+
+# Amend the last commit (only if not yet pushed)
+git commit --amend -m "Better commit message"
+git commit --amend --no-edit   # add staged changes to last commit without editing message`</code>
+          </pre>
+
+          <h3>Writing Good Commit Messages</h3>
+          <p >
+            The <strong>Conventional Commits specification</strong>, adopted by major projects including Angular, Vue.js, and Electron, defines a structured commit message format that makes automated changelog generation and semantic versioning possible. Even without tooling, the format improves readability:
+          </p>
+          <p>
+            <code >`# Format: type(scope): description
+# Types: feat, fix, docs, style, refactor, test, chore, perf
+
+feat(auth): add OAuth2 login with Google
+fix(api): handle null user_id in order creation
+docs(readme): update local development setup steps
+refactor(db): extract connection pooling to separate module
+test(auth): add unit tests for JWT expiry edge cases
+chore(deps): upgrade express from 4.18 to 4.21
+
+# Multi-line commit (first line = title, blank line, then body)
+git commit -m "Fix race condition in session refresh
+
+The session refresh endpoint was not atomic — two concurrent requests
+could both pass the expiry check and both get new tokens. Fixed with
+a database-level lock on the session row.
+
+Fixes #342"
+
+# BAD commit messages (avoid these)
+git commit -m "fix"
+git commit -m "wip"
+git commit -m "changes"
+git commit -m "asdf"`</code>
+          </pre>
+        
+
+        
+          <h2>Viewing History</h2>
+          <pre >
+            <code >`# Full log
+git log
+
+# Compact one-line view
+git log --oneline
+
+# With branch graph (essential for visualizing branches)
+git log --oneline --graph --decorate --all
+
+# Show commits by a specific author
+git log --author="Alice"
+
+# Show commits that changed a specific file
+git log --oneline -- src/auth.js
+
+# Show commits since a date
+git log --since="2026-01-01" --until="2026-04-01"
+
+# Search commit messages
+git log --grep="authentication"
+
+# Show what changed in each commit
+git log -p            # full diffs
+git log --stat        # summary of files changed
+
+# Inspect a specific commit
+git show abc1234          # by hash
+git show HEAD             # most recent commit
+git show HEAD~2           # two commits before HEAD
+
+# Who last modified each line of a file
+git blame src/auth.js
+git blame -L 10,25 src/auth.js   # only lines 10–25`</code>
+          </pre>
+        
+
+        
+          <h2>Branching: The Core of Git Collaboration</h2>
+          <p >
+            A Git branch is a 41-byte file containing a commit hash. Creating or switching branches is instant. This is fundamentally different from version control systems like SVN or Perforce, where branching was expensive enough that teams avoided it. In Git, branching is the default pattern for all work.
+          </p>
+          <p>
+            <code >`# List branches
+git branch            # local branches
+git branch -a         # local + remote branches
+git branch -v         # with last commit message
+
+# Create a branch
+git branch feature/user-auth
+
+# Switch to a branch
+git checkout feature/user-auth
+git switch feature/user-auth      # modern syntax (Git 2.23+)
+
+# Create and switch in one step
+git checkout -b feature/user-auth
+git switch -c feature/user-auth   # modern syntax
+
+# Rename a branch
+git branch -m old-name new-name
+
+# Delete a branch (must be merged)
+git branch -d feature/user-auth
+
+# Force delete (unmerged — data loss possible)
+git branch -D feature/user-auth
+
+# Show which branches are fully merged into main
+git branch --merged main`</code>
+          </pre>
+
+          <h3>Merging Branches</h3>
+          <pre >
+            <code >`# Merge a feature branch into main
+git checkout main
+git merge feature/user-auth
+
+# Types of merges:
+# Fast-forward: no divergence — main pointer just moves forward
+# Three-way merge: branches diverged — Git creates a merge commit
+
+# Force a merge commit even when fast-forward is possible
+git merge --no-ff feature/user-auth   # preserves branch topology in history
+
+# Squash: combine all feature commits into one before merging
+git merge --squash feature/user-auth
+git commit -m "feat: add user authentication"
+
+# Abort a merge in progress
+git merge --abort
+
+# When a merge conflict occurs:
+# 1. Git marks the conflicted files
+git status              # shows 'both modified' files
+
+# 2. Open the file — look for conflict markers:
+# <<<<<<< HEAD
+# your changes
+# =======
+# incoming changes
+# >>>>>>> feature/user-auth
+
+# 3. Edit the file to resolve, then:
+git add src/auth.js     # mark as resolved
+git commit              # complete the merge`</code>
+          </pre>
+        
+
+        
+          <h2>Rebasing: Linear History Without Merge Commits</h2>
+          <p >
+            Rebase replays your branch&rsquo;s commits on top of another branch&rsquo;s tip. The result is a linear history with no merge commits — cleaner in theory, but it rewrites commit hashes. The golden rule of rebasing: <strong>never rebase commits that have already been pushed to a shared remote branch</strong>. Your teammates&rsquo; histories will diverge and you will have a very bad day.
+          </p>
+          <p>
+            <code >`# Rebase your feature branch onto main
+# (safe: your feature branch is local / not shared)
+git checkout feature/user-auth
+git rebase main
+
+# Rebase conflicts work like merge conflicts:
+# Fix the file, then:
+git add src/auth.js
+git rebase --continue    # apply next commit
+git rebase --abort       # undo the entire rebase
+
+# Interactive rebase: edit, squash, reorder your local commits
+# Rewrite the last 3 commits:
+git rebase -i HEAD~3
+
+# In the editor that opens, each line is a commit:
+# pick abc1234 Add login endpoint
+# pick def5678 Fix typo in login endpoint
+# pick ghi9012 Add tests for login endpoint
+
+# Change 'pick' to:
+# squash (s): combine with previous commit
+# fixup (f): combine, discard this commit's message
+# reword (r): keep commit, edit the message
+# drop (d): delete this commit entirely
+# edit (e): pause to amend this commit`</code>
+          </pre>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Scenario</th>
+                  <th >Use merge or rebase?</th>
+                  <th >Why</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Integrating a feature into main</td>
+                  <td >Merge (or squash merge)</td>
+                  <td >Preserves branch context; safe on shared branches</td>
+                </tr>
+                <tr >
+                  <td >Updating a local feature branch with latest main</td>
+                  <td >Rebase</td>
+                  <td >Keeps linear history, not yet pushed</td>
+                </tr>
+                <tr >
+                  <td >Cleaning up messy local commits before PR</td>
+                  <td >Interactive rebase</td>
+                  <td >Squash WIP commits into logical units</td>
+                </tr>
+                <tr >
+                  <td >Updating a branch already pushed to remote</td>
+                  <td >Never rebase</td>
+                  <td >Rewrites hashes, breaks teammates&rsquo; history</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Working with Remotes (GitHub, GitLab, Bitbucket)</h2>
+          <pre >
+            <code >`# List remotes
+git remote -v
+
+# Add a remote (typically done automatically by git clone)
+git remote add origin https://github.com/you/repo.git
+
+# Push to remote
+git push origin main                  # push main branch
+git push -u origin feature/user-auth  # push and set upstream tracking
+git push                              # push current branch (after -u set)
+git push --force-with-lease           # safer force push (fails if remote changed)
+
+# Fetch without merging (safe — look before you merge)
+git fetch origin          # download all remote changes
+git fetch origin main     # download only main
+
+# Inspect what is on the remote before pulling
+git log origin/main --not main --oneline   # commits on remote not in local
+
+# Pull (fetch + merge)
+git pull origin main
+git pull              # from tracked upstream
+
+# Pull with rebase (keeps history linear)
+git pull --rebase origin main
+git config --global pull.rebase true   # make rebase the default for all pulls
+
+# Delete a remote branch
+git push origin --delete feature/old-branch
+
+# Show remote tracking branches
+git branch -r`</code>
+          </pre>
+        
+
+        
+          <h2>Undoing Mistakes</h2>
+          <p >
+            Git&rsquo;s undo commands are the most feared part of the tool for beginners — mostly because the difference between <code >--soft</code>, <code >--mixed</code>, and <code >--hard</code> is not obvious. Here is the complete map:
+          </p>
+          <p>
+            <code >`# Discard changes in working directory (un-edit a file)
+git restore src/auth.js           # Git 2.23+
+git checkout -- src/auth.js       # older syntax
+
+# Unstage a file (keep changes in working directory)
+git restore --staged src/auth.js  # Git 2.23+
+git reset HEAD src/auth.js        # older syntax
+
+# Undo the last commit (keep changes staged)
+git reset --soft HEAD~1
+
+# Undo the last commit (keep changes in working directory, unstaged)
+git reset --mixed HEAD~1          # default if you just run: git reset HEAD~1
+
+# Undo the last commit and DISCARD all changes (destructive)
+git reset --hard HEAD~1
+
+# Undo a pushed commit safely: create a new commit that reverses it
+git revert HEAD             # revert last commit, opens editor
+git revert abc1234          # revert a specific commit
+git revert HEAD~3..HEAD     # revert last 3 commits
+
+# Find lost commits (reflog is a safety net)
+git reflog                  # shows every HEAD movement including resets
+git checkout abc1234        # check out a "lost" commit to recover work
+git branch recovery-branch abc1234   # create branch from lost commit
+
+# Temporarily save work without committing
+git stash                   # stash all uncommitted changes
+git stash save "WIP: user auth flow"  # with description
+git stash list              # see all stashes
+git stash pop               # apply most recent stash and remove it
+git stash apply stash@2   # apply specific stash, keep in stash list
+git stash drop stash@2    # remove a specific stash`</code>
+          </pre>
+        
+
+        
+          <h2>Git Workflows for Teams</h2>
+          <p >
+            According to <strong>GitHub&rsquo;s 2025 Octoverse report</strong>, there are over <strong>4 billion contributions</strong> annually across GitHub repositories. Coordination at that scale requires consistent branching conventions. Three workflows dominate:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Workflow</th>
+                  <th >Branch structure</th>
+                  <th >Best for</th>
+                  <th >Complexity</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >GitHub Flow</td>
+                  <td >main + feature branches</td>
+                  <td >Continuous deployment, SaaS</td>
+                  <td >Low</td>
+                </tr>
+                <tr >
+                  <td >Git Flow</td>
+                  <td >main, develop, feature, release, hotfix</td>
+                  <td >Versioned software releases</td>
+                  <td >High</td>
+                </tr>
+                <tr >
+                  <td >Trunk-Based</td>
+                  <td >main only (short-lived branches, ≤1 day)</td>
+                  <td >High-velocity CI/CD teams</td>
+                  <td >Low (with feature flags)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            For most teams, <strong>GitHub Flow</strong> is the right default: every change starts on a feature branch, gets reviewed via a pull request, then merges into main which deploys immediately. Git Flow&rsquo;s additional layers (develop, release branches) add overhead that only makes sense when you ship versioned software on a fixed release cadence.
+          </p>
+          <p>
+            For a deep dive on branching models with real tradeoffs, see <a href="/blog/git-branching-strategies/">Git Branching Strategies</a> and <a href="/blog/git-rebase-vs-merge/">Git Rebase vs Merge</a>.
+          </p>
+        
+
+        
+          <h2>Useful Git Commands You Probably Missed</h2>
+          <p>
+            <code >`# Cherry-pick: apply a specific commit from another branch
+git cherry-pick abc1234               # apply commit to current branch
+git cherry-pick abc1234 def5678       # multiple commits
+
+# Bisect: binary search to find which commit introduced a bug
+git bisect start
+git bisect bad                        # current commit has the bug
+git bisect good v1.0.0                # this tag was good
+# Git checks out the middle commit — test it, then:
+git bisect good   # or git bisect bad
+# Git halves the range each time — finds the culprit in O(log n) steps
+git bisect reset  # when done, return to original HEAD
+
+# Clean: remove untracked files
+git clean -n      # dry run — show what would be removed
+git clean -fd     # remove untracked files and directories
+
+# Worktree: check out multiple branches simultaneously (different directories)
+git worktree add ../project-hotfix hotfix/payment-bug
+# Now you have two working directories on two branches at once
+
+# Tags: mark release points
+git tag v1.0.0                          # lightweight tag
+git tag -a v1.0.0 -m "Initial release" # annotated (preferred for releases)
+git push origin v1.0.0                  # push a specific tag
+git push origin --tags                  # push all tags
+git tag --list                          # list all tags`</code>
+          </pre>
+        
+
+        
+          <h2>FAQ</h2>
+          
+            [
+              
+                q: 'What is the difference between git fetch and git pull?',
+                a: 'git fetch downloads commits from the remote and updates remote-tracking branches (origin/main) without touching your working directory or local branches. git pull is git fetch followed by git merge (or rebase if configured). Use git fetch first on shared branches to review incoming changes before merging: run git fetch origin, then git log origin/main to inspect.',
+              ,
+              
+                q: 'What is the difference between git merge and git rebase?',
+                a: 'git merge creates a merge commit that preserves the full history of when branches diverged and reunited. git rebase replays your commits on top of another branch, producing a linear history without merge commits. Rebase rewrites commit hashes — never rebase commits already pushed to a shared remote branch.',
+              ,
+              
+                q: 'How do I undo a git commit?',
+                a: 'To undo the last commit but keep changes staged: git reset --soft HEAD~1. To undo and unstage (keep files modified): git reset --mixed HEAD~1. To completely discard: git reset --hard HEAD~1. If the commit was already pushed, prefer git revert HEAD to create a new undoing commit — never force-push to shared branches.',
+              ,
+              
+                q: 'What is a Git branch and why use one?',
+                a: 'A branch is a lightweight movable pointer to a commit — creating one takes milliseconds and costs almost no disk space. Branches let you develop features or fix bugs in complete isolation from the main codebase. The pattern: create a branch per task, commit to it, merge or rebase back into main when done. Main stays always deployable.',
+              ,
+              
+                q: 'What should I put in a .gitignore file?',
+                a: 'Exclude generated files (node_modules/, dist/, __pycache__/), environment secrets (.env, credentials.json), OS files (.DS_Store, Thumbs.db), IDE configs (.idea/, .vscode/), log files (*.log), and build artifacts. Use gitignore.io to generate a template for your stack. Add .gitignore before your first commit.',
+              ,
+              
+                q: 'How do I resolve a merge conflict in Git?',
+                a: 'Git marks conflicts with <<<<<<< HEAD (your changes), ======= (separator), >>>>>>> branch-name (incoming). Open each conflicted file, edit to keep the right version, remove conflict markers, then git add the resolved file and git commit to complete the merge. Run git status to see which files still have conflicts.',
+              ,
+              
+                q: 'What is git stash and when should I use it?',
+                a: 'git stash temporarily shelves uncommitted changes so you can switch branches with a clean working directory. Use it when you need to pull updates or switch context mid-task without committing half-finished work. git stash pop restores the latest stash. git stash list shows all saved stashes. Stash is short-term — commit or branch for anything you need longer.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p >a</p>
+              
+            ))
+          
+        
+
+        
+          <h2>Keep a Git Command Reference Handy</h2>
+          <p>
+            Once you have the concepts down, keep the Git Cheat Sheet open for command syntax. For CI/CD and environment variable management, see the guides below.
+          </p>
+          
+            <a href="/blog/git-cheat-sheet/">
+              Git Cheat Sheet →
+            </a>
+            <a href="/blog/git-workflow-best-practices/">
+              Git Workflow Best Practices →
+            </a>
+            <a href="/blog/ci-cd-pipeline-guide/">
+              CI/CD Pipeline Guide →
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/how-to-use-git/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
