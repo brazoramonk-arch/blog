@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rafter Calculator: Roof Rafter Length, Angle &amp;amp; Birdsmouth Cut - HammerIO</title>
+  <meta name="description" content="How to calculate common rafter length, pitch angle, birdsmouth cut seat and heel dimensions, and tail length — with formulas, IRC code limits, and a full material takeoff.">
+  <link rel="canonical" href="https://www.hammerio.com/blog/rafter-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/hammerio/">HammerIO</a> &rarr; Rafter Calculator: Roof Rafter Length, Angle &amp;amp; Birdsmouth Cut
+  </nav>
+
+  <article>
+    <h1>Rafter Calculator: Roof Rafter Length, Angle &amp;amp; Birdsmouth Cut</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.hammerio.com/blog/rafter-calculator/">hammerio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const relatedArticles = [
+   slug: 'roofing-calculator', title: 'Roofing Calculator: Estimate Materials, Cost & Labor', category: 'Roofing' ,
+   slug: 'stair-calculator', title: 'Stair Calculator: Rise, Run, Stringer Length & Code Compliance', category: 'Framing' ,
+   slug: 'lumber-prices', title: 'Lumber Prices 2026: Current Costs for Framing, Plywood & More', category: 'Materials' ,
+];
+
+  const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Rafter Calculator: Roof Rafter Length, Angle & Birdsmouth Cut',
+    description: 'How to calculate common rafter length, pitch angle, birdsmouth cut seat and heel dimensions, and tail length — with formulas, IRC code limits, and a full material takeoff.',
+    datePublished: '2026-04-17',
+    dateModified: '2026-04-17',
+    author:  '@type': 'Organization', name: 'HammerIO' ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+      logo:  '@type': 'ImageObject', url: 'https://hammerio.com/favicon.svg' ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://hammerio.com/blog/rafter-calculator/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://hammerio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://hammerio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Rafter Calculator', item: 'https://hammerio.com/blog/rafter-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do you calculate rafter length?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Rafter length equals the square root of (run² + rise²), where run is half the building width minus half the ridge board thickness, and rise equals run multiplied by the pitch fraction. For a 24-foot-wide building with a 6/12 pitch, run = 12 feet, rise = 6 feet, and rafter length = √(144 + 36) = √180 = 13.42 feet (161 inches). Add tail length separately.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is a birdsmouth cut on a rafter?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A birdsmouth is a notch cut into the underside of a rafter where it bears on the top plate of the exterior wall. It consists of a seat cut (horizontal cut that rests on the plate) and a heel cut (vertical plumb cut against the outside of the wall). The seat cut depth should not exceed 1/3 of the rafter depth per IRC Section R802.7.1 to maintain structural integrity.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is roof pitch and how is it measured?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Roof pitch is expressed as rise over run — the number of inches of vertical rise per 12 inches of horizontal run. A 6/12 pitch rises 6 inches for every 12 inches of run. Pitch can also be expressed as an angle: a 6/12 pitch equals 26.57 degrees. To measure an existing roof, hold a level against the rafter for 12 inches and measure the vertical rise from the 12-inch mark.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How deep can a birdsmouth seat cut be?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: "IRC Section R802.7.1 limits the birdsmouth seat cut depth to 1/3 of the rafter depth. For a 2x8 rafter (7.25 inches actual), the maximum seat cut is 2.42 inches. Exceeding this weakens the rafter at the bearing point and is a code violation. If your wall plate width requires a deeper cut, use a larger rafter or add a rafter seat block instead.",
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What size rafter do I need for my roof span?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Rafter sizing depends on span, species, spacing, and load. Per the 2021 IRC Table R802.4.1, common Southern Yellow Pine No. 2 rafters at 16-inch on-center span: 2x6 up to 13 feet 2 inches, 2x8 up to 17 feet 4 inches, 2x10 up to 22 feet 1 inch, 2x12 up to 26 feet 9 inches. Douglas Fir spans about 8 to 12 percent shorter. Always verify with your local code and a structural engineer for unusual loads.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many rafters do I need?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: "Divide the roof length by the rafter spacing (typically 16 or 24 inches on-center) and add one for the starting rafter. For a 40-foot-long roof at 16-inch spacing: 40 feet ÷ 1.33 feet = 30, plus 1 = 31 rafter pairs, or 62 total rafters. You'll also need doubled rafters (headers) at any valleys, hips, or roof openings. Add 10 percent for waste and mistakes.",
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Rafter Calculator</li>
+          </ol>
+        
+
+        /* Header */
+        
+          
+            Roofing
+            15 min read
+            <time  dateTime="2026-04-17">April 17, 2026</time>
+          
+          <h2>
+            Rafter Calculator: Roof Rafter Length, Angle &amp; Birdsmouth Cut
+          </h2>
+          <p>
+            Calculating rafter length is a four-step process that every framing carpenter works through before touching a saw. Get the run, calculate the line length using the Pythagorean theorem, determine the pitch angle, then lay out the birdsmouth. This guide walks through every step with real numbers and the IRC code limits that govern each dimension.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>•Rafter line length = <strong>√(run² + rise²)</strong> — the Pythagorean theorem applied to your roof slope</li>
+            <li>•Run = half the building span <strong>minus half the ridge board thickness</strong></li>
+            <li>•Birdsmouth seat cut maximum depth: <strong>1/3 of rafter depth</strong> per IRC R802.7.1</li>
+            <li>•Use pitch multipliers for fast calculation: multiply run by the <strong>rafter length factor</strong> for your pitch</li>
+            <li>•Add <strong>10% waste</strong> and order full-length stock — short-cutting rafters wastes a lot of lumber</li>
+          </ul>
+        
+
+        /* CTA Banner */
+        
+          <h2>Use the Roofing Calculator</h2>
+          <p>Estimate total roofing materials — sheathing, underlayment, and shingles — for your full roof area once you have your rafter count.</p>
+          <a href="/roofing-calculator/">
+            Open Roofing Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+          </a>
+        
+
+        /* Content */
+        
+
+          <h2>Understanding the Parts of a Common Rafter</h2>
+          <p >
+            Before running numbers, you need to know which dimension you are actually calculating. Carpenters distinguish between three different &ldquo;lengths&rdquo; of the same rafter, and confusing them is a common and expensive mistake.
+          </p>
+          <ul>
+            <li><strong>Line length:</strong> The theoretical distance from the centerline of the ridge to the outer edge of the top plate, measured along the rafter. This is what the Pythagorean theorem gives you. It does not account for the ridge board or the tail overhang.</li>
+            <li><strong>Actual rafter length:</strong> Line length minus half the ridge board thickness (typically 3/4 inch for a 1-1/2 inch ridge board) plus the tail length beyond the wall plate.</li>
+            <li><strong>Tail length:</strong> The portion of the rafter that extends beyond the exterior wall to create the roof overhang. A 12-inch overhang measured horizontally (run) requires a tail length equal to 12 inches × the pitch multiplier.</li>
+          </ul>
+          <p>
+            Most rafter calculators — including tools like those at BlockLayer and SpikeVM — compute line length only. You add the tail yourself and subtract for the ridge. This guide walks through both.
+          </p>
+
+          <h2>Step 1: Determine the Rafter Run</h2>
+          <p>
+            The run is the horizontal distance the rafter covers from the centerline of the building to the outer face of the top plate. For a simple gable roof:
+          </p>
+          
+            <p>Formula</p>
+            <p>Run = (Building Span ÷ 2) − (Ridge Board Thickness ÷ 2)</p>
+            <p>Example: 28-foot span, 1.5-inch ridge board</p>
+            <p>Run = (336 in ÷ 2) − (1.5 in ÷ 2) = 168 − 0.75 = 167.25 inches</p>
+          
+          <p>
+            The building span is measured from exterior face to exterior face of the stud walls — not including siding or sheathing. Measure at the top plate level, since walls can have slight bows. If you are working from architectural plans, verify the dimension is clear-span framing, not finish-to-finish.
+          </p>
+
+          <h2>Step 2: Calculate the Rise</h2>
+          <p>
+            Rise is the vertical height of the rafter from the top plate to the ridge. It is directly determined by the roof pitch, expressed as a ratio of rise to run in units of &ldquo;X inches per 12 inches of run.&rdquo;
+          </p>
+          
+            <p>Formula</p>
+            <p>Rise = Run × (Pitch ÷ 12)</p>
+            <p>Example: Run = 167.25 in, Pitch = 6/12</p>
+            <p>Rise = 167.25 × (6 ÷ 12) = 167.25 × 0.5 = 83.625 inches</p>
+          
+          <p>
+            Note that the rise is calculated using the adjusted run (with the ridge deduction), not the full half-span. This is where many DIYers get their first measurement wrong — they calculate rise from the raw half-span and end up with a ridge that sits slightly too high.
+          </p>
+
+          <h2>Step 3: Calculate Rafter Line Length</h2>
+          <p>
+            With run and rise determined, the line length is a straightforward application of the Pythagorean theorem:
+          </p>
+          
+            <p>Formula</p>
+            <p>Line Length = √(Run² + Rise²)</p>
+            <p>Example: Run = 167.25 in, Rise = 83.625 in</p>
+            <p>Line Length = √(167.25² + 83.625²)</p>
+            <p>= √(27972.56 + 6993.14)</p>
+            <p>= √34965.7 = 187.0 inches (15 ft 7 in)</p>
+          
+          <p>
+            Alternatively, use the pitch multiplier method: multiply the run by the pitch&apos;s slope factor. This is faster when cutting many rafters to the same dimension. Per the Western Wood Products Association Span Book, pitch multipliers are:
+          </p>
+
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Pitch</th>
+                    <th >Slope Factor (Multiplier)</th>
+                    <th >Angle (degrees)</th>
+                    <th >Classification</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >2/12</td><td >1.014</td><td >9.46°</td><td >Low slope</td></tr>
+                  <tr ><td >3/12</td><td >1.031</td><td >14.04°</td><td >Low slope</td></tr>
+                  <tr ><td >4/12</td><td >1.054</td><td >18.43°</td><td >Moderate</td></tr>
+                  <tr ><td >5/12</td><td >1.083</td><td >22.62°</td><td >Moderate</td></tr>
+                  <tr ><td >6/12</td><td >1.118</td><td >26.57°</td><td >Most common</td></tr>
+                  <tr ><td >7/12</td><td >1.158</td><td >30.26°</td><td >Steep</td></tr>
+                  <tr ><td >8/12</td><td >1.202</td><td >33.69°</td><td >Steep</td></tr>
+                  <tr ><td >9/12</td><td >1.250</td><td >36.87°</td><td >Steep</td></tr>
+                  <tr ><td >10/12</td><td >1.302</td><td >39.81°</td><td >Very steep</td></tr>
+                  <tr ><td >12/12</td><td >1.414</td><td >45.00°</td><td >Very steep</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: Western Wood Products Association Span Calculator; angle conversion formula: arctan(pitch/12). Multiply Run × Slope Factor to get line length.</p>
+          
+
+          <p>
+            Using the multiplier method for our example: 167.25 in × 1.118 = 186.98 in ≈ 187 inches. Matches the Pythagorean result — use whichever method you find faster on the job.
+          </p>
+
+          <h2>Step 4: The Birdsmouth Cut — Dimensions and Code Limits</h2>
+          <p>
+            The birdsmouth is the notch that allows the rafter to bear squarely on the top plate of the exterior wall. Without it, the rafter would bear only on its corner — concentrating load on a tiny area and allowing the rafter to slide outward. The birdsmouth transfers rafter load directly onto the wall plate in bearing.
+          </p>
+          <p>
+            A birdsmouth has two cuts made in the same operation:
+          </p>
+          <ul>
+            <li><strong>Seat cut (level cut):</strong> The horizontal cut that rests on the top plate. Its length should match the plate width — typically 3.5 inches for a 2x4 wall or 5.5 inches for a 2x6 wall.</li>
+            <li><strong>Heel cut (plumb cut):</strong> The vertical cut at the outer edge of the wall, perpendicular to the plate. This cut is made at the pitch angle.</li>
+          </ul>
+          <p>
+            <strong>The critical code limit:</strong> IRC Section R802.7.1 states that the birdsmouth seat cut depth shall not exceed one-third of the rafter depth. For common rafter sizes:
+          </p>
+          <ul>
+            <li>2×6 rafter (5.5 in actual): max seat cut = 1.83 inches</li>
+            <li>2×8 rafter (7.25 in actual): max seat cut = 2.42 inches</li>
+            <li>2×10 rafter (9.25 in actual): max seat cut = 3.08 inches</li>
+            <li>2×12 rafter (11.25 in actual): max seat cut = 3.75 inches</li>
+          </ul>
+          <p>
+            For steep pitches (9/12 and above), the geometry of the birdsmouth can push the seat cut depth beyond the 1/3 limit. In those cases, you have two solutions: use a larger rafter dimension, or use a &ldquo;rafter seat block&rdquo; — a separate short block attached to the plate that provides the bearing without notching into the rafter at all.
+          </p>
+
+          <h3>Calculating Birdsmouth Dimensions</h3>
+          <p>
+            Given a seat cut length (L) and pitch angle (θ), the heel cut depth is:
+          </p>
+          
+            <p>Formula</p>
+            <p>Heel Cut Depth = Seat Cut Length × tan(pitch angle)</p>
+            <p>Example: 3.5-inch seat cut, 6/12 pitch (26.57°)</p>
+            <p>Heel Cut Depth = 3.5 × tan(26.57°) = 3.5 × 0.5 = 1.75 inches</p>
+            <p>Check: 1.75 in &lt; 2.42 in (1/3 of 2×8) ✓ Within code</p>
+          
+
+          <h2>Step 5: Adding the Tail (Overhang)</h2>
+          <p>
+            The tail is the rafter section that extends beyond the wall to form the roof overhang (eave). The overhang dimension on architectural plans is usually given as a horizontal projection — how far out from the wall face the fascia sits. To find the tail length along the rafter slope, multiply the horizontal overhang by the slope factor.
+          </p>
+          
+            <p>Formula</p>
+            <p>Tail Length = Horizontal Overhang × Slope Factor</p>
+            <p>Example: 18-inch overhang, 6/12 pitch (slope factor 1.118)</p>
+            <p>Tail Length = 18 × 1.118 = 20.12 inches (20-1/8 in)</p>
+          
+
+          <h2>Complete Rafter Calculation Example</h2>
+          <p>
+            Let us put the full sequence together. I am framing a 28-foot-wide garage with a 6/12 pitch, 18-inch overhang, and a 1.5-inch ridge board. What is my total rafter stock length?
+          </p>
+          
+            <ol>
+              <li><strong>Span:</strong> 28 feet = 336 inches</li>
+              <li><strong>Half span:</strong> 336 ÷ 2 = 168 inches</li>
+              <li><strong>Run</strong> (half span minus half ridge): 168 − 0.75 = 167.25 inches</li>
+              <li><strong>Rise</strong> (run × pitch/12): 167.25 × 0.5 = 83.625 inches</li>
+              <li><strong>Line length</strong> = √(167.25² + 83.625²) = <strong>187.0 inches</strong></li>
+              <li><strong>Tail length</strong> (18-in overhang × 1.118) = 20.1 inches</li>
+              <li><strong>Total rafter stock:</strong> 187.0 + 20.1 = <strong>207.1 inches ≈ 17 ft 3 in</strong></li>
+              <li><strong>Order:</strong> 18-foot 2×8 stock (common lengths: 16 ft, 18 ft, 20 ft)</li>
+            </ol>
+          
+
+          <h2>Rafter Sizing: IRC Span Tables</h2>
+          <p>
+            Rafter size is not just about the length — it is about the structural capacity to carry roof loads. The 2021 IRC Table R802.4.1 governs maximum allowable rafter spans for common lumber species at standard roof loads (20 psf live load, 10 psf dead load). Here are the key limits for the two most common species in residential framing:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Rafter Size</th>
+                    <th >Douglas Fir-Larch No. 2<br />16″ o.c.</th>
+                    <th >Southern Pine No. 2<br />16″ o.c.</th>
+                    <th >Southern Pine No. 2<br />24″ o.c.</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >2×6</td><td >12&apos; 3&quot;</td><td >13&apos; 2&quot;</td><td >10&apos; 9&quot;</td></tr>
+                  <tr ><td >2×8</td><td >16&apos; 2&quot;</td><td >17&apos; 4&quot;</td><td >14&apos; 2&quot;</td></tr>
+                  <tr ><td >2×10</td><td >20&apos; 8&quot;</td><td >22&apos; 1&quot;</td><td >18&apos; 1&quot;</td></tr>
+                  <tr><td >2×12</td><td >25&apos; 1&quot;</td><td >26&apos; 9&quot;</td><td >21&apos; 10&quot;</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: 2021 IRC Table R802.4.1 (20 psf live load, 10 psf dead load, ceiling not attached). Spans are horizontal projections. In high-snow or high-wind zones, use the 30 psf or 50 psf load tables instead.</p>
+          
+
+          <h2>How Many Rafters Do You Need?</h2>
+          <p>
+            Once you know the rafter size, calculate the quantity. Most residential roofs use 16-inch on-center (o.c.) spacing per IRC R802.4, though 24-inch o.c. is code-compliant with appropriate sizing and is common in sheathing-heavy designs like SIPs panels.
+          </p>
+          
+            <p>Formula</p>
+            <p>Number of Rafters = (Roof Length ÷ Spacing) + 1</p>
+            <p>Example: 40-foot roof, 16-inch o.c. spacing</p>
+            <p>= (480 in ÷ 16 in) + 1 = 30 + 1 = 31 rafters per side</p>
+            <p>= 62 total rafters (both sides of gable)</p>
+            <p>Add 10% waste → order 69 pieces</p>
+          
+          <p>
+            This count does not include valley rafters, hip rafters, jack rafters, ridge board, or collar ties — those require separate calculations. For a comprehensive lumber estimate, use our <a href="/lumber-calculator/">lumber calculator</a> which accounts for all framing members.
+          </p>
+
+          <h2>Roof Pitch Considerations for Material Selection</h2>
+          <p>
+            Pitch does not just determine rafter length — it determines what roofing materials you can legally use. Per the Asphalt Roofing Manufacturers Association (ARMA) and the NRCA Roofing Manual, minimum pitch requirements are:
+          </p>
+          <ul>
+            <li><strong>3-tab asphalt shingles:</strong> Minimum 2/12 pitch (with double underlayment)</li>
+            <li><strong>Architectural asphalt shingles:</strong> Minimum 2/12 pitch (with ice and water shield)</li>
+            <li><strong>Metal standing seam panels:</strong> Can go as low as 1/4:12 with factory-sealed panels</li>
+            <li><strong>Metal exposed fastener:</strong> Minimum 3/12</li>
+            <li><strong>Clay or concrete tile:</strong> Minimum 4/12; 7/12 preferred for longevity</li>
+            <li><strong>Wood shingles:</strong> Minimum 3/12; wood shakes require 4/12</li>
+            <li><strong>EPDM / modified bitumen (flat/low slope):</strong> 1/4:12 to 2/12</li>
+          </ul>
+          <p>
+            For roofing material estimates once you have your rafter layout and roof area, our <a href="/roofing-calculator/">roofing calculator</a> converts roof area to squares, bundles, and squares of underlayment with waste factor included.
+          </p>
+
+          <h2>Rafter vs. Truss: Which to Use?</h2>
+          <p>
+            Before you calculate a rafter order, consider whether your project would be better served by engineered trusses. This is a legitimate trade-off question, not a clear winner either way.
+          </p>
+          <p>
+            <strong>Cut rafters are better when:</strong> You need usable attic space (trusses sacrifice this entirely), the roof has complex geometry (hips, valleys, dormers that would require custom trusses), or the project is small enough that truss lead time and delivery cost exceeds the labor savings.
+          </p>
+          <p>
+            <strong>Engineered trusses are better when:</strong> You are framing a large, simple gable roof where speed and precision matter, your crew is not experienced with layout work, or you need to span distances that would require very large sawn rafter stock. According to the Structural Building Components Association (SBCA), trusses can reduce framing labor by 30 to 50 percent on simple rectangular buildings. Truss material costs $3.50 to $7.50 per square foot of roof area vs. $2.50 to $5.00 for sawn rafters, but the labor savings typically offset this.
+          </p>
+
+          <h2>Common Rafter Calculation Mistakes</h2>
+          <ul>
+            <li><strong>Not deducting for ridge board:</strong> Forgetting to subtract half the ridge board thickness from each run makes every rafter 3/4 inch too long, causing the ridge to sit too high.</li>
+            <li><strong>Confusing line length with stock length:</strong> Line length is the structural dimension; actual stock must be longer to include the tail, ridge cut, and plumb cut waste at the top.</li>
+            <li><strong>Ignoring tail plumb cut waste:</strong> The plumb cut at the fascia end wastes some material depending on pitch. At steep pitches, account for 1 to 3 extra inches of stock per rafter.</li>
+            <li><strong>Excessive birdsmouth depth:</strong> Cutting deeper than 1/3 of rafter depth to get the seat length right is a structural failure waiting to happen. Size up the rafter instead.</li>
+            <li><strong>Not accounting for species and grade:</strong> Rafter span tables vary significantly by species. Hem-Fir spans about 12 percent less than Southern Pine for the same size and spacing.</li>
+          </ul>
+
+          /* FAQ */
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'How do you calculate rafter length?',
+                a: 'Rafter length equals the square root of (run² + rise²), where run is half the building width minus half the ridge board thickness, and rise equals run multiplied by the pitch fraction. For a 24-foot-wide building with a 6/12 pitch, run = 12 feet, rise = 6 feet, and rafter length = √(144 + 36) = √180 = 13.42 feet (161 inches). Add tail length separately.',
+              ,
+              
+                q: 'What is a birdsmouth cut on a rafter?',
+                a: 'A birdsmouth is a notch cut into the underside of a rafter where it bears on the top plate of the exterior wall. It consists of a seat cut (horizontal cut that rests on the plate) and a heel cut (vertical plumb cut against the outside of the wall). The seat cut depth should not exceed 1/3 of the rafter depth per IRC Section R802.7.1 to maintain structural integrity.',
+              ,
+              
+                q: 'What is roof pitch and how is it measured?',
+                a: 'Roof pitch is expressed as rise over run — the number of inches of vertical rise per 12 inches of horizontal run. A 6/12 pitch rises 6 inches for every 12 inches of run. Pitch can also be expressed as an angle: a 6/12 pitch equals 26.57 degrees. To measure an existing roof, hold a level against the rafter for 12 inches and measure the vertical rise from the 12-inch mark.',
+              ,
+              
+                q: 'How deep can a birdsmouth seat cut be?',
+                a: 'IRC Section R802.7.1 limits the birdsmouth seat cut depth to 1/3 of the rafter depth. For a 2x8 rafter (7.25 inches actual), the maximum seat cut is 2.42 inches. Exceeding this weakens the rafter at the bearing point and is a code violation. If your wall plate width requires a deeper cut, use a larger rafter or add a rafter seat block instead.',
+              ,
+              
+                q: 'What size rafter do I need for my roof span?',
+                a: 'Rafter sizing depends on span, species, spacing, and load. Per the 2021 IRC Table R802.4.1, common Southern Yellow Pine No. 2 rafters at 16-inch on-center span: 2×6 up to 13 feet 2 inches, 2×8 up to 17 feet 4 inches, 2×10 up to 22 feet 1 inch, 2×12 up to 26 feet 9 inches. Always verify with your local code and a structural engineer for unusual loads.',
+              ,
+              
+                q: 'How many rafters do I need?',
+                a: "Divide the roof length by the rafter spacing (typically 16 or 24 inches on-center) and add one for the starting rafter. For a 40-foot-long roof at 16-inch spacing: 40 feet ÷ 1.33 feet = 30, plus 1 = 31 rafter pairs, or 62 total rafters. You'll also need doubled rafters at valleys, hips, or roof openings. Add 10 percent for waste.",
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Estimate Your Full Roofing Material Order</h2>
+          <p>Once you have your rafter count and roof area, calculate sheathing, underlayment, and shingles in one step.</p>
+          
+            <a href="/roofing-calculator/">
+              Roofing Calculator
+            </a>
+            <a href="/lumber-calculator/">
+              Lumber Calculator
+            </a>
+          
+        
+
+        /* Explore More Tools */
+        
+          <h2>Explore More Tools</h2>
+          
+            <a href="/blog/stair-calculator/">
+              HammerIO
+              <h3>Stair Calculator</h3>
+              <p>Rise, run, stringer length, and IRC code compliance — same Pythagorean approach as rafter framing.</p>
+            </a>
+            <a href="/square-footage-calculator/">
+              HammerIO
+              <h3>Square Footage Calculator</h3>
+              <p>Calculate roof area, footprint, and material quantities for irregular shapes.</p>
+            </a>
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                article.category
+                <h3>article.title</h3>
+              </Link>
+            ))
+          
+        
+      
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.hammerio.com/blog/rafter-calculator/">HammerIO</a>.
+      Explore more free tools at <a href="https://www.hammerio.com/">hammerio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.hammerio.com/">HammerIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
