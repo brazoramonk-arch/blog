@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brick Calculator: How Many Bricks Do You Need for Your Wall? - HammerIO</title>
+  <meta name="description" content="Calculate exactly how many bricks you need for a wall project — standard coverage rates by brick size, mortar quantities, waste factor, and 2026 material cost estimates.">
+  <link rel="canonical" href="https://www.hammerio.com/blog/brick-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/hammerio/">HammerIO</a> &rarr; Brick Calculator: How Many Bricks Do You Need for Your Wall?
+  </nav>
+
+  <article>
+    <h1>Brick Calculator: How Many Bricks Do You Need for Your Wall?</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.hammerio.com/blog/brick-calculator/">hammerio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const relatedArticles = [
+   slug: 'concrete-calculator-guide', title: 'Concrete Calculator: How Many Yards Do You Need?', category: 'Concrete' ,
+   slug: 'retaining-wall-cost', title: 'Retaining Wall Cost: Materials, Labor & Installation Guide', category: 'Masonry' ,
+   slug: 'tile-calculator', title: 'Tile Calculator: Estimate Floor & Wall Tile Quantities', category: 'Tile' ,
+];
+
+  const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Brick Calculator: How Many Bricks Do You Need for Your Wall?',
+    description: 'Calculate exactly how many bricks you need for a wall project — standard coverage rates by brick size, mortar quantities, waste factor, and 2026 material cost estimates.',
+    datePublished: '2026-04-16',
+    dateModified: '2026-04-16',
+    author:  '@type': 'Organization', name: 'HammerIO' ,
+    publisher: 
+      '@type': 'Organization',
+      name: 'HammerIO',
+      url: 'https://hammerio.com/',
+      logo:  '@type': 'ImageObject', url: 'https://hammerio.com/favicon.svg' ,
+    ,
+    mainEntityOfPage: 
+      '@type': 'WebPage',
+      '@id': 'https://hammerio.com/blog/brick-calculator/',
+    ,
+  ;
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://hammerio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://hammerio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Brick Calculator', item: 'https://hammerio.com/blog/brick-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How many bricks do I need per square foot?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Standard modular bricks (3-5/8 × 2-1/4 × 7-5/8 inches) laid in running bond with 3/8-inch mortar joints require 6.75 bricks per square foot of wall face. King-size bricks require 4.5 per square foot, and engineer bricks require 5.1 per square foot. Always add 10 percent for waste — cuts, breakage, and odd courses at corners typically consume 8 to 12 percent of your order.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do I calculate the number of bricks for a wall?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Multiply wall height × wall length to get the face area in square feet. Subtract any openings (windows, doors). Multiply the net area by the bricks-per-square-foot rate for your brick size (6.75 for standard modular). Add 10 percent for waste. For a single-wythe wall 20 feet long × 6 feet tall = 120 sq ft × 6.75 = 810 bricks × 1.10 = 891 bricks. Order 900.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much mortar do I need for a brick wall?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'One standard 60-pound bag of mortar mix covers approximately 25 standard bricks in a single-wythe wall with 3/8-inch joints, or about 3.7 square feet of wall face. For a 100-square-foot wall, you need approximately 27 bags. Pre-mixed mortar is sold in 60-lb bags; budget 1 bag per 25 bricks and add 15 percent for waste and joints that run wide.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the difference between a single-wythe and double-wythe brick wall?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A wythe is a single vertical layer of masonry, one brick thick. A single-wythe wall (4 inches thick) is used for decorative garden walls and veneer applications. A double-wythe wall (8 inches thick) is used for load-bearing construction and provides better thermal mass, sound insulation, and structural capacity. Double-wythe walls require roughly twice the bricks and mortar per square foot of face area.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How much does a brick wall cost per square foot in 2026?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Per HomeGuide 2026 data, brick wall installation costs $15 to $60 per square foot installed, depending on wall type and complexity. A garden wall or retaining wall runs $15 to $30 per square foot. A structural single-wythe wall costs $20 to $45 per square foot. A double-wythe load-bearing wall costs $40 to $80 per square foot. Labor is the largest component at $40 to $100 per hour for a licensed mason.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the waste factor for bricks?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Add 10 percent waste for a simple rectangular wall with no openings. Increase to 15 percent for walls with many corners or curves, walls with arched or angled openings, or any project using specialty-cut bricks. For veneer work on complex elevations, 15 to 20 percent waste is standard. Buying short wastes money on reordering — buying 10 percent over is cheap insurance.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many bricks are on a pallet?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A standard brick pallet holds 500 to 525 standard modular bricks, depending on the manufacturer and pallet configuration. Pallets are the most economical way to buy bricks for large projects, typically priced at $300 to $700 per pallet for standard face brick. For small quantities (under 200 bricks), buying loose from a masonry supplier avoids pallet minimums.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Brick Calculator</li>
+          </ol>
+        
+
+        /* Header */
+        
+          
+            Masonry
+            13 min read
+            <time  dateTime="2026-04-16">April 16, 2026</time>
+          
+          <h2>
+            Brick Calculator: How Many Bricks Do You Need for Your Wall?
+          </h2>
+          <p>
+            A homeowner in Nashville called me last year after running short 300 bricks on a garden wall — he had calculated area correctly but used the wrong bricks-per-square-foot rate and forgot the waste factor. The second delivery cost him two weeks and $400 in restock fees. Here is how to get the count right the first time.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>•Standard modular brick: <strong>6.75 bricks per square foot</strong> with 3/8-inch mortar joints</li>
+            <li>•Always add <strong>10% waste</strong> (15% for complex shapes or curved walls)</li>
+            <li>•One 60-lb mortar bag covers approximately <strong>25 standard bricks</strong></li>
+            <li>•Brick wall installation costs <strong>$15–$60 per square foot</strong> installed in 2026 (HomeGuide)</li>
+            <li>•A standard pallet holds <strong>500–525 modular bricks</strong> — the most economical unit to buy</li>
+          </ul>
+        
+
+        /* CTA Banner */
+        
+          <h2>Calculate Your Concrete Needs Too</h2>
+          <p>Most brick wall projects need a concrete footing. Estimate concrete volume for footings alongside your brick count.</p>
+          <a href="/concrete-calculator/">
+            Concrete Calculator
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><p></svg>
+          </a>
+        
+
+        /* Content */
+        
+
+          <h2>Brick Sizes: Why Your Coverage Rate Depends on Getting This Right</h2>
+          <p >
+            Not all bricks are the same size, and the difference matters enormously for your material estimate. The Brick Industry Association (BIA) publishes standardized sizes for common brick types. Modular dimensions assume 3/8-inch mortar joints on all faces.
+          </p>
+
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Brick Type</th>
+                    <th >Actual Size (W×H×L)</th>
+                    <th >Modular Size (with joints)</th>
+                    <th >Bricks / Sq Ft</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr >
+                    <td >Standard Modular</td>
+                    <td >3-5/8 × 2-1/4 × 7-5/8&quot;</td>
+                    <td >4 × 2-2/3 × 8&quot;</td>
+                    <td >6.75</td>
+                  </tr>
+                  <tr >
+                    <td >Closure Modular</td>
+                    <td >3-5/8 × 3-5/8 × 7-5/8&quot;</td>
+                    <td >4 × 4 × 8&quot;</td>
+                    <td >5.06</td>
+                  </tr>
+                  <tr >
+                    <td >Roman</td>
+                    <td >3-5/8 × 1-5/8 × 11-5/8&quot;</td>
+                    <td >4 × 2 × 12&quot;</td>
+                    <td >6.00</td>
+                  </tr>
+                  <tr >
+                    <td >Norman</td>
+                    <td >3-5/8 × 2-1/4 × 11-5/8&quot;</td>
+                    <td >4 × 2-2/3 × 12&quot;</td>
+                    <td >4.50</td>
+                  </tr>
+                  <tr >
+                    <td >Engineer Modular</td>
+                    <td >3-5/8 × 2-13/16 × 7-5/8&quot;</td>
+                    <td >4 × 3-1/5 × 8&quot;</td>
+                    <td >5.06</td>
+                  </tr>
+                  <tr >
+                    <td >King</td>
+                    <td >3-3/4 × 2-5/8 × 9-5/8&quot;</td>
+                    <td >—</td>
+                    <td >4.80</td>
+                  </tr>
+                  <tr>
+                    <td >Queen</td>
+                    <td >3-1/8 × 2-3/4 × 9-5/8&quot;</td>
+                    <td >—</td>
+                    <td >4.61</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            <p>Source: Brick Industry Association Technical Note 10 — Dimensioning and Estimating Brick Masonry (BIA, 2023). Coverage rates assume 3/8-inch mortar joints, running bond pattern, single-wythe wall.</p>
+          
+
+          <p>
+            The most important column in that table is &ldquo;Bricks / Sq Ft.&rdquo; Using 6.75 (standard modular) when you are actually buying King bricks (4.80 per sq ft) means you will order 40 percent more brick than you need — or worse, use 6.75 and buy King bricks and end up 40 percent short. Confirm your brick size with your supplier before calculating.
+          </p>
+
+          <h2>The Brick Calculation Formula</h2>
+          <p>
+            The full brick quantity calculation is a four-step process. Here it is, applied to a concrete example: a 6-foot-tall garden wall that runs 40 feet along a property line, with one 36-inch-wide gate opening.
+          </p>
+
+          
+            <h3>Example: 40 ft × 6 ft Garden Wall, One 36&quot; Gate Opening, Standard Modular Brick</h3>
+            <ol>
+              <li>
+                <strong>Calculate gross wall area:</strong>
+                <br />40 ft × 6 ft = 240 sq ft
+              </li>
+              <li>
+                <strong>Subtract openings:</strong>
+                <br />Gate: 3 ft × 6 ft = 18 sq ft
+                <br />Net area = 240 − 18 = 222 sq ft
+              </li>
+              <li>
+                <strong>Multiply by bricks per square foot:</strong>
+                <br />222 sq ft × 6.75 bricks/sq ft = 1,498.5 bricks
+              </li>
+              <li>
+                <strong>Add 10% waste:</strong>
+                <br />1,498.5 × 1.10 = 1,648 bricks → <strong>Order 1,650 bricks (≈ 3.3 pallets)</strong>
+              </li>
+            </ol>
+          
+
+          <p>
+            That 10 percent waste factor is not conservative — it is standard industry practice. The BIA Technical Note 10 recommends 5 to 10 percent for simple rectangular walls and 10 to 15 percent for walls with many corners, arches, or curves. I have seen complex curved brick walls consume 18 to 20 percent in cuts alone.
+          </p>
+
+          <h2>Single-Wythe vs. Double-Wythe Walls: Doubling Your Material</h2>
+          <p>
+            A wythe is a single vertical layer of brickwork, one brick wide. Most residential applications use:
+          </p>
+          <ul>
+            <li><strong>Single-wythe (4-inch wall):</strong> Garden walls, decorative screens, non-load-bearing partitions, and brick veneer over a structural backup wall. Uses the coverage rates in the table above.</li>
+            <li><strong>Double-wythe (8-inch wall):</strong> Load-bearing structural walls, freestanding walls over 3 to 4 feet tall, and any wall that needs to resist lateral pressure (retaining walls, columns). Requires twice the brick count per square foot of face area.</li>
+            <li><strong>Brick veneer over CMU:</strong> Common in commercial construction — a single wythe of face brick backed by concrete masonry units. Calculate the brick wythe separately from the CMU backup.</li>
+          </ul>
+          <p>
+            For a freestanding garden wall over 3 feet tall, I always build double-wythe. A single-wythe wall that tall has almost no lateral stability and will crack within a few freeze-thaw cycles in cold climates. The extra cost is modest relative to the labor investment.
+          </p>
+
+          <h2>Calculating Mortar Quantities</h2>
+          <p>
+            Mortar is the second material you need to quantify. The most common masonry mortar types for residential work are:
+          </p>
+          <ul>
+            <li><strong>Type S:</strong> High-strength (1,800 psi), good bond and durability. Use for below-grade work, retaining walls, and any structural application.</li>
+            <li><strong>Type N:</strong> Medium-strength (750 psi), good workability. The standard choice for above-grade exterior walls and garden walls.</li>
+            <li><strong>Type M:</strong> Very high-strength (2,500 psi). Only needed for foundations and structures in contact with soil.</li>
+          </ul>
+          <p>
+            Mortar quantity is typically expressed in bags of pre-mixed dry mortar. One 60-pound bag of mortar mix (combined with water) covers approximately 25 standard modular bricks, or 3.7 square feet of single-wythe wall face. The BIA standard formula is:
+          </p>
+          
+            <p>Formula</p>
+            <p>Bags of mortar = Total Bricks ÷ 25</p>
+            <p>Add 15% for waste and thick joints</p>
+            <p>Example: 1,650 bricks → 1,650 ÷ 25 = 66 bags × 1.15 = 76 bags</p>
+          
+          <p>
+            Alternatively, estimate by wall area: 1 cubic foot of mortar covers approximately 27 square feet of standard modular brick wall face. A 100 sq ft wall needs about 3.7 cubic feet of mortar, which equals roughly 7 bags of 60-lb pre-mixed mortar (each bag makes approximately 0.5 cubic feet of mortar).
+          </p>
+
+          <h2>2026 Brick Material Costs</h2>
+          <p>
+            Brick prices have increased 12 to 18 percent since 2022, driven by natural gas price increases affecting kiln costs and domestic manufacturing constraints per the Brick Industry Association&apos;s 2025 Annual Industry Report. Here is the current pricing landscape:
+          </p>
+
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Brick Type</th>
+                    <th >Per Brick</th>
+                    <th >Per 1,000 Bricks</th>
+                    <th >Per Pallet (~500)</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Standard face brick (common)</td><td >$0.50–$1.20</td><td >$500–$1,200</td><td >$250–$600</td></tr>
+                  <tr ><td >Premium face brick</td><td >$1.00–$2.50</td><td >$1,000–$2,500</td><td >$500–$1,250</td></tr>
+                  <tr ><td >Antique / reclaimed brick</td><td >$2.00–$6.00</td><td >$2,000–$6,000</td><td >Varies</td></tr>
+                  <tr ><td >Firebrick</td><td >$2.50–$5.00</td><td >$2,500–$5,000</td><td >$1,250–$2,500</td></tr>
+                  <tr><td >Thin brick veneer</td><td >$0.80–$2.50</td><td >$800–$2,500</td><td >$400–$1,250</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: HomeGuide 2026 Brick Prices report; Brick Industry Association 2025 Annual Industry Report; Angi national pricing data. Prices are material only, FOB masonry supplier. Delivery adds $100–$300 per load.</p>
+          
+
+          <h2>Brick Wall Installation Costs: Labor Rates in 2026</h2>
+          <p>
+            Labor is the dominant cost in brick work — masonry is one of the most labor-intensive trades in residential construction. According to the Bureau of Labor Statistics Occupational Employment and Wage Statistics (May 2025), brick masons and blocklayers earn a median wage of $58,720 annually, translating to shop rates of $65 to $120 per hour when overhead and profit are included.
+          </p>
+          <p>
+            An experienced mason can lay 300 to 500 standard modular bricks per day on a straightforward running bond wall. Complex patterns like herringbone, basket weave, or Flemish bond drop productivity to 150 to 250 bricks per day. Here is how that translates to project costs:
+          </p>
+
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Wall Type</th>
+                    <th >Labor Cost / Sq Ft</th>
+                    <th >Materials / Sq Ft</th>
+                    <th >Total Installed</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Garden / Landscape Wall</td><td >$8–$18</td><td >$5–$12</td><td >$13–$30</td></tr>
+                  <tr ><td >Exterior Single-Wythe</td><td >$12–$22</td><td >$5–$15</td><td >$17–$37</td></tr>
+                  <tr ><td >Brick Veneer (over backup)</td><td >$15–$28</td><td >$5–$15</td><td >$20–$43</td></tr>
+                  <tr ><td >Double-Wythe Load-Bearing</td><td >$22–$38</td><td >$10–$24</td><td >$32–$62</td></tr>
+                  <tr><td >Premium / Complex Pattern</td><td >$30–$55</td><td >$15–$40</td><td >$45–$95</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Source: HomeGuide 2026 brick wall cost data; Angi national pricing. Does not include footing/foundation costs or demolition. Labor rates vary 30–40% by region.</p>
+          
+
+          <h2>Brick Footing Requirements</h2>
+          <p>
+            Almost every brick wall project needs a concrete footing — the foundation that transfers wall loads into stable soil below the frost line. Footing requirements depend on wall height, frost depth, and local code. The general rule from the IRC and most state codes:
+          </p>
+          <ul>
+            <li>Footing depth: at least 12 inches below the frost line in your area (USDA Frost Depth Map shows 0 inches in Miami to 60 inches in Minnesota)</li>
+            <li>Footing width: at least twice the wall width — for a 4-inch single-wythe wall, a minimum 8-inch-wide footing</li>
+            <li>Footing thickness: at least 6 inches of concrete</li>
+            <li>Reinforcement: #4 rebar every 24 inches for walls over 4 feet tall is standard practice even where code is silent</li>
+          </ul>
+          <p>
+            To calculate your footing concrete volume, use our <a href="/concrete-calculator/">concrete calculator</a> — enter the footing dimensions (length × width × depth) to get cubic yards and bags.
+          </p>
+
+          <h2>Brick Bond Patterns and Their Effect on Material Count</h2>
+          <p>
+            The pattern in which bricks are laid (the &ldquo;bond&rdquo;) affects both appearance and the amount of cutting required. Most patterns use the same coverage rate per square foot but generate different amounts of cut waste:
+          </p>
+          <ul>
+            <li><strong>Running bond:</strong> The standard pattern — each course offset by half a brick. Lowest waste (10% is sufficient). The fastest to lay and most structurally efficient.</li>
+            <li><strong>Stack bond:</strong> Bricks stacked directly above each other with continuous vertical joints. Minimal cuts, but structurally weak — requires metal reinforcement ties every 16 inches vertically.</li>
+            <li><strong>Flemish bond:</strong> Alternating headers (bricks turned perpendicular) and stretchers (bricks laid lengthwise) in each course. Requires 15% waste allowance for header cuts at corners.</li>
+            <li><strong>English bond:</strong> Alternating full courses of headers and stretchers. Classic load-bearing pattern for double-wythe walls. Requires extra headers — add 20% to brick count.</li>
+            <li><strong>Herringbone:</strong> Diagonal pattern, commonly used for paving and fireplace hearths. Requires 25 to 30% waste due to angled cuts at edges.</li>
+          </ul>
+
+          <h2>Complete Material Takeoff: 40 ft Garden Wall Example</h2>
+          <p>
+            Returning to our garden wall example — 40 feet long, 6 feet tall, one 36-inch gate — here is the complete material list with current 2026 pricing:
+          </p>
+          
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Material</th>
+                    <th >Quantity</th>
+                    <th >Unit Cost</th>
+                    <th >Total</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr ><td >Standard face bricks</td><td >1,650 bricks</td><td >$0.70/brick</td><td >$1,155</td></tr>
+                  <tr ><td >Type S mortar mix (60-lb bags)</td><td >76 bags</td><td >$12/bag</td><td >$912</td></tr>
+                  <tr ><td >Concrete footing (40 ft × 10 in × 12 in)</td><td >1.5 cu yd</td><td >$170/cu yd delivered</td><td >$255</td></tr>
+                  <tr ><td >#4 rebar (horizontal ties)</td><td >160 linear ft</td><td >$0.55/ft</td><td >$88</td></tr>
+                  <tr ><td >Wall ties / brick ties</td><td >50 ties</td><td >$0.30/each</td><td >$15</td></tr>
+                  <tr ><td >Total Materials</td><td  colSpan=2></td><td >$2,425</td></tr>
+                  <tr ><td >Labor (222 sq ft @ $18/sq ft)</td><td  colSpan=2></td><td >$3,996</td></tr>
+                  <tr ><td >Total Project Estimate</td><td  colSpan=2></td><td >~$6,400</td></tr>
+                </tbody>
+              </table>
+            
+            <p>Estimates based on 2026 national average pricing. Labor varies 30–40% by region. Delivery and disposal not included.</p>
+          
+
+          <h2>Brick Veneer vs. Full Brick: What You Are Actually Buying</h2>
+          <p>
+            A lot of homeowners confuse &ldquo;brick house&rdquo; with &ldquo;solid brick house.&rdquo; The overwhelming majority of residential construction since the 1980s uses brick veneer — a single wythe of face brick attached to a wood-frame or CMU backup wall with metal ties, with a small air gap between them for drainage. Solid brick (all-masonry) construction is rare in residential and primarily found in pre-1950s homes.
+          </p>
+          <p>
+            For a new brick veneer installation over an existing wood-framed wall, the brick calculation is the same (6.75 bricks per sq ft for standard modular) but you will also need:
+          </p>
+          <ul>
+            <li>Metal wall ties (one per 2 sq ft of wall face, embedded in mortar joints and attached to studs)</li>
+            <li>Weep holes at the base of the wall every 24 to 33 inches to drain moisture from the cavity</li>
+            <li>Flashing at the base of the wall and above every window and door opening</li>
+            <li>A concrete or steel lintel over every window and door opening to carry brick loads</li>
+          </ul>
+          <p>
+            For projects involving tile work in adjacent areas, our <a href="/tile-calculator/">tile calculator</a> can help estimate materials for complementary tile installations.
+          </p>
+
+          <h2>Regional Cost Variation</h2>
+          <p>
+            Masonry labor rates vary significantly by region, primarily driven by union scale rates and local demand. Per RSMeans 2026 City Cost Indexes, the masonry labor cost index ranges from 65 (rural Southeast) to 148 (New York City). As a rule of thumb for budgeting:
+          </p>
+          <ul>
+            <li><strong>Northeast / Mid-Atlantic:</strong> 20 to 40% above national averages</li>
+            <li><strong>Midwest / Great Lakes:</strong> Near national averages</li>
+            <li><strong>Southeast:</strong> 15 to 25% below national averages</li>
+            <li><strong>West Coast:</strong> 25 to 50% above national averages</li>
+            <li><strong>Mountain West:</strong> 5 to 20% above national averages</li>
+          </ul>
+          <p>
+            For a rough cost estimate on your full project, take your material count, price the bricks and mortar locally, and add labor at the going mason rate in your market. Getting two to three quotes from licensed masons is the only reliable way to nail the number.
+          </p>
+
+          /* FAQ */
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'How many bricks do I need per square foot?',
+                a: 'Standard modular bricks (3-5/8 × 2-1/4 × 7-5/8 inches) laid in running bond with 3/8-inch mortar joints require 6.75 bricks per square foot of wall face. King-size bricks require 4.8 per square foot, and Norman bricks require 4.5 per square foot. Always add 10 percent for waste — cuts, breakage, and odd courses at corners typically consume 8 to 12 percent of your order.',
+              ,
+              
+                q: 'How do I calculate the number of bricks for a wall?',
+                a: 'Multiply wall height × wall length to get the face area in square feet. Subtract any openings (windows, doors). Multiply the net area by the bricks-per-square-foot rate for your brick size (6.75 for standard modular). Add 10 percent for waste. For a single-wythe wall 20 feet long × 6 feet tall = 120 sq ft × 6.75 = 810 bricks × 1.10 = 891 bricks. Order 900.',
+              ,
+              
+                q: 'How much mortar do I need for a brick wall?',
+                a: 'One standard 60-pound bag of mortar mix covers approximately 25 standard bricks in a single-wythe wall with 3/8-inch joints, or about 3.7 square feet of wall face. For a 100-square-foot wall, you need approximately 27 bags. Add 15 percent for waste and joints that run wide.',
+              ,
+              
+                q: 'What is the difference between a single-wythe and double-wythe brick wall?',
+                a: 'A wythe is a single vertical layer of masonry, one brick thick. A single-wythe wall (4 inches thick) is used for decorative garden walls and veneer applications. A double-wythe wall (8 inches thick) is used for load-bearing construction. Double-wythe walls require roughly twice the bricks and mortar per square foot of face area.',
+              ,
+              
+                q: 'How much does a brick wall cost per square foot in 2026?',
+                a: 'Per HomeGuide 2026 data, brick wall installation costs $15 to $60 per square foot installed, depending on wall type and complexity. A garden wall or retaining wall runs $15 to $30 per square foot. A structural single-wythe wall costs $20 to $45 per square foot. Labor is the largest component at $40 to $100 per hour for a licensed mason.',
+              ,
+              
+                q: 'What is the waste factor for bricks?',
+                a: 'Add 10 percent waste for a simple rectangular wall with no openings. Increase to 15 percent for walls with many corners or curves, walls with arched or angled openings, or any project using specialty-cut bricks. For veneer work on complex elevations, 15 to 20 percent waste is standard. Buying 10 percent over is cheap insurance against a costly reorder.',
+              ,
+              
+                q: 'How many bricks are on a pallet?',
+                a: 'A standard brick pallet holds 500 to 525 standard modular bricks, depending on the manufacturer and pallet configuration. Pallets are the most economical way to buy bricks for large projects, typically priced at $300 to $700 per pallet for standard face brick. For small quantities (under 200 bricks), buying loose from a masonry supplier avoids pallet minimums.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Calculate Your Concrete Footing</h2>
+          <p>Every brick wall needs a footing. Estimate concrete volume in cubic yards and bags before calling your concrete supplier.</p>
+          
+            <a href="/concrete-calculator/">
+              Concrete Calculator
+            </a>
+            <a href="/square-footage-calculator/">
+              Square Footage Calculator
+            </a>
+          
+        
+
+        /* Explore More Tools */
+        
+          <h2>Explore More Tools</h2>
+          
+            <a href="/tile-calculator/">
+              HammerIO
+              <h3>Tile Calculator</h3>
+              <p>Estimate tile quantity, grout, and thinset for any floor or wall project.</p>
+            </a>
+            <a href="/gravel-calculator/">
+              HammerIO
+              <h3>Gravel Calculator</h3>
+              <p>Calculate gravel and base material tonnage for drainage and landscape projects.</p>
+            </a>
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            relatedArticles.map((article) => (
+              <Link key=article.slug href=`/blog/$article.slug/` >
+                article.category
+                <h3>article.title</h3>
+              </Link>
+            ))
+          
+        
+      
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.hammerio.com/blog/brick-calculator/">HammerIO</a>.
+      Explore more free tools at <a href="https://www.hammerio.com/">hammerio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.hammerio.com/">HammerIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
