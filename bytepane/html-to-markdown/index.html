@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML to Markdown Converter: Convert HTML to MD Online - BytePane</title>
+  <meta name="description" content="Convert HTML to Markdown instantly. Learn why turndown, html2text, and Rust-based converters handle edge cases differently — with benchmarks and code.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/html-to-markdown/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; HTML to Markdown Converter: Convert HTML to MD Online
+  </nav>
+
+  <article>
+    <h1>HTML to Markdown Converter: Convert HTML to MD Online</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/html-to-markdown/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    [^&gt;]*&gt;/g, '')</code> — destroy structure along with the noise. What you need is a parser-backed rule engine that maps HTML semantics to Markdown syntax one element at a time.
+          </p>
+        
+
+        
+          <h2>Why Regex HTML Stripping Fails</h2>
+          <p>
+            The temptation to strip HTML with a regular expression is understandable — it looks like a one-liner. The reality is that HTML is not a regular language. Attributes contain quoted strings that can include angle brackets. CDATA sections, HTML entities, self-closing tags, and malformed markup all break simple regex assumptions.
+          </p>
+          <p>
+            <code >`// ❌ Naive approach: destroys all structure
+const text = html.replace(/<[^>]*>/g, '')
+// Input:  <p>Visit <a href="https://example.com">our site</a></p>
+// Output: "Visit our site"
+// Link is gone. No way to recover the URL.
+
+// ❌ Still wrong: doesn't handle nested quotes in attributes
+const text = html.replace(/<[^"]*>/g, '')
+// Breaks on: <img alt="A <cat> photo" src="cat.jpg">
+
+// ❌ Misses HTML entities
+// &amp; → &, &lt; → <, &gt; → >, &nbsp; → space (or not?)
+// "AT&amp;T" → "AT&T" only if you also decode entities
+
+// ✅ What you actually need: DOM parsing + structured traversal
+// Every production library does this:
+// 1. Parse HTML into a DOM tree (JSDOM, node-html-parser, or browser DOM)
+// 2. Walk the tree recursively
+// 3. Apply per-element conversion rules
+// 4. Concatenate output with correct whitespace handling`</code>
+          </pre>
+          <p>
+            According to the <strong>CommonMark specification</strong>, Markdown itself has 652 edge cases in its reference implementation. Mapping HTML to Markdown correctly requires handling all of them — nested emphasis, code spans inside link text, raw HTML passthrough, and more. No regex can do this.
+          </p>
+        
+
+        
+          <h2>The Core Conversion Mapping</h2>
+          <p>
+            Most HTML structure maps cleanly to Markdown when processed by a proper rule engine. Here is what good conversion looks like in practice:
+          </p>
+          <p>
+            <code >`// Input HTML → Output Markdown
+
+// Headings
+<h2>Title</h2>              → # Title
+<h2>Section</h2>            → ## Section
+
+// Emphasis
+<strong>bold</strong>        → **bold**
+<em>italic</em>              → _italic_
+<code>inline</code>          → \`inline\`
+
+// Links (with URL preservation)
+<a href="/page">text</a>    → [text](/page)
+<a href="/x" title="T">y</a> → [y](/x "T")
+
+// Images
+<img src="cat.jpg" alt="A cat"> → ![A cat](cat.jpg)
+
+// Code blocks
+<pre><code class="language-js">
+const x = 1
+</code></pre>
+→
+\`\`\`js
+const x = 1
+\`\`\`
+
+// Lists
+<ul><li>First</li><li>Second</li></ul>
+→
+- First
+- Second
+
+// Ordered lists
+<ol><li>One</li><li>Two</li></ol>
+→
+1. One
+2. Two
+
+// Blockquotes
+<blockquote><p>A quote</p></blockquote>
+→
+> A quote`</code>
+          </pre>
+          <p>
+            The tricky cases are nested structures: an <code >&lt;em&gt;</code> inside an <code >&lt;a&gt;</code> inside an <code >&lt;li&gt;</code> inside a <code >&lt;blockquote&gt;</code>. Each library handles these differently, and the differences become visible only when running against real-world content.
+          </p>
+        
+
+        
+          <h2>JavaScript: Turndown</h2>
+          <p>
+            <strong>Turndown</strong> (originally <code >to-markdown</code>) is the JavaScript standard for HTML-to-Markdown conversion. Per npm, it receives <strong>over 4 million weekly downloads</strong> — making it the dominant solution for browser and Node.js environments alike. It parses HTML into a DOM tree, applies a configurable rule set, and produces CommonMark-compatible Markdown.
+          </p>
+          <p>
+            <code >`import TurndownService from 'turndown'
+
+const turndown = new TurndownService(
+  headingStyle: 'atx',       // # H1, ## H2 (vs underline style)
+  codeBlockStyle: 'fenced',  // \`\`\` code blocks
+  bulletListMarker: '-',     // - item (vs * or +)
+  hr: '---',
+)
+
+// Enable GitHub Flavored Markdown (tables, strikethrough, task lists)
+turndown.use(gfm)
+
+// Custom rule: strip  and  elements entirely
+turndown.addRule('removeChrome', 
+  filter: ['nav', 'footer', 'aside', 'script', 'style'],
+  replacement: () => '',
+)
+
+// Custom rule: keep <figure> captions as italicized text
+turndown.addRule('figcaption', 
+  filter: 'figcaption',
+  replacement: (content) => \`_\$content_\n\n\`,
+)
+
+const markdown = turndown.turndown(htmlString)
+
+// With a real-world article page:
+// Input:  ~85KB HTML
+// Output: ~9KB Markdown (89% reduction)
+// Time:   ~12ms for a 50KB DOM in Node.js 20`</code>
+          </pre>
+          <p >
+            The custom rule API is Turndown&apos;s biggest advantage. You can strip entire element categories (navigation, ads, sidebars) by returning an empty string from the replacement function, or transform elements that have no native Markdown equivalent. This is how production web scrapers and LLM pipelines customize output quality.
+          </p>
+        
+
+        
+          <h2>Python: html2text vs trafilatura</h2>
+          <p>
+            Python offers two meaningfully different approaches depending on your use case:
+          </p>
+          <p>
+            <code >`# html2text: direct conversion, full control
+# Created by Aaron Swartz, maintained as OSS since 2004
+
+h = html2text.HTML2Text()
+h.ignore_links = False      # Keep [text](url) links
+h.ignore_images = False     # Keep ![alt](src) images
+h.body_width = 0            # No line wrapping (important for LLM input)
+h.unicode_snob = True       # Prefer unicode chars over ASCII equivalents
+h.ignore_emphasis = False
+
+markdown = h.handle(html_string)
+
+# trafilatura: content extraction + conversion
+# Identifies the main content zone (article body) before converting
+# Removes: navigation, headers, footers, sidebars, ads automatically
+
+# From a URL (handles fetch + extract):
+downloaded = trafilatura.fetch_url('https://example.com/article')
+markdown = trafilatura.extract(downloaded, output_format='markdown')
+
+# From raw HTML:
+markdown = trafilatura.extract(html_string, output_format='markdown',
+                               include_comments=False,
+                               include_tables=True)
+
+# trafilatura accuracy on news/blog content:
+# Per the trafilatura paper (Barbaresi 2021, ACL Anthology):
+# F1 score of 0.89 for content extraction vs 0.71 for boilerplate removal alone
+# Evaluated against 1,226 web pages from the C3 corpus`</code>
+          </pre>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Library</th>
+                  <th >Language</th>
+                  <th >Boilerplate Removal</th>
+                  <th >Best For</th>
+                  <th >Weekly Downloads</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Turndown</td>
+                  <td >JavaScript</td>
+                  <td >Manual (custom rules)</td>
+                  <td >Browser, Node.js, LLM pipelines</td>
+                  <td >~4M (npm)</td>
+                </tr>
+                <tr >
+                  <td >html2text</td>
+                  <td >Python</td>
+                  <td >None</td>
+                  <td >Known-clean HTML, migrations</td>
+                  <td >~2.3M (PyPI)</td>
+                </tr>
+                <tr >
+                  <td >trafilatura</td>
+                  <td >Python</td>
+                  <td >Automatic (ML-based)</td>
+                  <td >Web scraping, news extraction</td>
+                  <td >~600K (PyPI)</td>
+                </tr>
+                <tr >
+                  <td >markdownify</td>
+                  <td >Python</td>
+                  <td >None</td>
+                  <td >Custom logic via subclassing</td>
+                  <td >~800K (PyPI)</td>
+                </tr>
+                <tr >
+                  <td >html-to-markdown (Go)</td>
+                  <td >Go</td>
+                  <td >Plugin-based</td>
+                  <td >High-throughput servers</td>
+                  <td >~30K (pkg.go.dev)</td>
+                </tr>
+                <tr>
+                  <td >Pandoc</td>
+                  <td >Haskell (CLI)</td>
+                  <td >None</td>
+                  <td >Complex tables, academic docs</td>
+                  <td >System install</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>The Hard Cases: What No Library Handles Perfectly</h2>
+          <p >
+            Every converter has failure modes. Understanding them lets you decide where to add post-processing logic:
+          </p>
+
+          <h3>1. Complex Tables (colspan, rowspan)</h3>
+          <p>
+            GFM table syntax has no colspan or rowspan. A table cell spanning three columns in HTML becomes three identical-content cells in Markdown, losing the visual merge. The only correct handling is to keep the <code >&lt;table&gt;</code> as raw HTML inside the Markdown output. Pandoc does this for complex tables; Turndown drops the structure. If tables are critical, use Pandoc or keep raw HTML passthrough.
+          </p>
+
+          <h3>2. Nested Lists Beyond Three Levels</h3>
+          <p>
+            CommonMark supports theoretically infinite nesting via indentation, but real renderers often choke past four levels. More practically, HTML list nesting can include block elements (<code >&lt;div&gt;</code>, <code >&lt;p&gt;</code>) inside <code >&lt;li&gt;</code> elements, which Markdown handles only with blank-line-separated list items. Turndown gets this right; simpler converters produce invalid Markdown here.
+          </p>
+
+          <h3>3. Definition Lists</h3>
+          <p>
+            <code >`<!-- HTML definition list: no standard Markdown equivalent -->
+<dl>
+  <dt>REST</dt>
+  <dd>Representational State Transfer, a stateless API architecture</dd>
+  <dt>GraphQL</dt>
+  <dd>A query language for APIs with client-defined response shapes</dd>
+</dl>
+
+<!-- Most converters produce either: -->
+**REST**
+Representational State Transfer, a stateless API architecture
+
+**GraphQL**
+A query language for APIs with client-defined response shapes
+
+<!-- Or (Pandoc extended syntax): -->
+REST
+: Representational State Transfer, a stateless API architecture`</code>
+          </pre>
+
+          <h3>4. Relative URLs</h3>
+          <p >
+            HTML pages use relative links constantly: <code >href="/about"</code>, <code >src="../images/photo.jpg"</code>. When you convert to Markdown for use outside the original domain, these links break. Turndown does not resolve relative URLs automatically — you need to provide a base URL and resolve them in a custom rule:
+          </p>
+          <p>
+            <code >`import TurndownService from 'turndown'
+
+const BASE = 'https://example.com'
+
+const turndown = new TurndownService()
+turndown.addRule('absoluteLinks', 
+  filter: 'a',
+  replacement: (content, node) => 
+    const href = node.getAttribute('href') || ''
+    const absoluteHref = href.startsWith('http')
+      ? href
+      : new URL(href, BASE).toString()
+    const title = node.getAttribute('title')
+    return title
+      ? \`[\$content](\$absoluteHref "\$title")\`
+      : \`[\$content](\$absoluteHref)\`
+  ,
+)`</code>
+          </pre>
+        
+
+        
+          <h2>Production Pattern: LLM Content Pipeline</h2>
+          <p >
+            Here is a production-grade Node.js pipeline for converting arbitrary web pages to clean Markdown for LLM consumption:
+          </p>
+          <p>
+            <code >`import TurndownService from 'turndown'
+
+function htmlToLlmMarkdown(html: string, baseUrl: string): string 
+  // Step 1: Pre-process HTML with Cheerio to remove noise
+  const $ = cheerio.load(html)
+
+  // Remove elements that are never content
+  $('script, style, nav, header, footer, aside').remove()
+  $('[class*="cookie"], [class*="popup"], [class*="modal"]').remove()
+  $('[class*="social"], [class*="share"], [class*="subscribe"]').remove()
+  $('[aria-hidden="true"]').remove()
+
+  // Extract just the main content if present
+  const main = $('main, article, [role="main"]').first()
+  const contentHtml = main.length ? main.html() ?? '' : $('body').html() ?? ''
+
+  // Step 2: Convert to Markdown with Turndown
+  const turndown = new TurndownService(
+    headingStyle: 'atx',
+    codeBlockStyle: 'fenced',
+    bulletListMarker: '-',
+  )
+  turndown.use(gfm)
+
+  // Resolve relative URLs
+  turndown.addRule('absoluteLinks', 
+    filter: 'a',
+    replacement: (content, node) => 
+      const href = (node as HTMLAnchorElement).getAttribute('href') || ''
+      if (!href || href.startsWith('javascript:') || href.startsWith('#')) return content
+      const abs = href.startsWith('http') ? href : new URL(href, baseUrl).toString()
+      return \`[\$content](\$abs)\`
+    ,
+  )
+
+  let markdown = turndown.turndown(contentHtml)
+
+  // Step 3: Post-process — collapse excessive blank lines
+  markdown = markdown
+    .replace(/\n3,/g, '\n\n')  // max 2 consecutive newlines
+    .trim()
+
+  return markdown
+
+// Usage:
+const response = await fetch('https://example.com/article')
+const html = await response.text()
+const md = htmlToLlmMarkdown(html, 'https://example.com')
+
+// Result: typically 85-92% smaller than source HTML
+console.log(\`Reduced \$html.length → \$md.length chars (\$Math.round((1 - md.length/html.length) * 100)% reduction)\`)`</code>
+          </pre>
+        
+
+        
+          <h2>HTML Entities and Special Characters</h2>
+          <p >
+            HTML entities are a conversion minefield. The HTML specification defines over 2,200 named character references (<code >&amp;amp;</code>, <code >&amp;mdash;</code>, <code >&amp;rsquo;</code>), plus numeric references (<code >&amp;#8212;</code>, <code >&amp;#x2014;</code>). Good converters decode these to their Unicode equivalents in the output (<code >—</code> for em dash, <code >'</code> for right single quote). Bad converters pass the entity reference through literally, leaving <code >&amp;rsquo;</code> in the Markdown output where you expected an apostrophe.
+          </p>
+          <p>
+            Turndown decodes entities correctly because it operates on the parsed DOM where browsers have already resolved entities to Unicode code points. html2text decodes them explicitly via the <code >html.parser</code> backend. If you are writing a custom converter without a full parser, use the <code >he</code> library in Node.js or Python&apos;s <code >html.unescape()</code> as a post-processing step.
+          </p>
+          <p>
+            Markdown also has its own set of characters that need escaping: <code >* _ [ ] ( ) # + - . !</code>. If plain text in the HTML contains these characters, they must be backslash-escaped in the Markdown output to prevent unintended formatting. This is another reason regex-based converters produce corrupt output — they skip the escape step entirely. Use our <a href="/markdown-cheat-sheet/">Markdown cheat sheet</a> for a reference of all syntax rules and escape sequences.
+          </p>
+        
+
+        
+          <h2>Rust-Based Converters: Performance at Scale</h2>
+          <p>
+            For applications processing thousands of pages per hour, pure-JavaScript or pure-Python converters introduce throughput constraints. The <strong>kreuzberg html-to-markdown library</strong> ships a Rust core with native bindings for TypeScript/Node.js, Python, Go, Ruby, PHP, and 8 other runtimes, producing identical output across all of them from a single Rust parser.
+          </p>
+          <p>
+            <code >`# Reported throughput comparison (per kreuzberg benchmarks, 2025):
+# Processing 1,000 average news article pages (avg 85KB HTML each)
+
+# Turndown (Node.js):      ~12ms/page   → ~83 pages/sec
+# html2text (Python):      ~18ms/page   → ~56 pages/sec
+# kreuzberg (Rust/Node):   ~2ms/page    → ~500 pages/sec
+
+# For LLM batch processing at 10K pages/run:
+# Turndown:   ~120 seconds
+# kreuzberg:  ~20 seconds
+# 6x throughput improvement, same API surface
+
+// Node.js usage (same Turndown-compatible API):
+
+const markdown = await convert(html, 
+  headingStyle: 'atx',
+  codeBlockStyle: 'fenced',
+)`</code>
+          </pre>
+          <p >
+            For most use cases, Turndown&apos;s ~12ms/page is fast enough. Reach for a Rust-backed library when you are processing bulk batches on a schedule and the cumulative time matters for your pipeline&apos;s throughput.
+          </p>
+        
+
+        
+          <h2>Markdown Variants: CommonMark, GFM, and Pandoc</h2>
+          <p>
+            &quot;Markdown&quot; is not a single specification. Your output format choice affects what constructs the converter will use:
+          </p>
+          <ul>
+            <li><strong>CommonMark</strong>: the 2014 standardization of John Gruber&apos;s original Markdown. Defines exact parsing rules for ambiguous cases. Supported by GitHub, GitLab, Discourse, and most modern renderers. No tables, no strikethrough, no task lists.</li>
+            <li><strong>GitHub Flavored Markdown (GFM)</strong>: CommonMark + tables, strikethrough (<code >~~text~~</code>), task lists (<code >- [x]</code>), and autolinks. The de facto standard for developer-facing content.</li>
+            <li><strong>Pandoc Markdown</strong>: superset with definition lists, footnotes, math (LaTeX), tables with alignment, div/span containers. Best for academic and technical documentation.</li>
+            <li><strong>MDX</strong>: Markdown + JSX components. Not a conversion target for HTML; you write it directly.</li>
+          </ul>
+          <p>
+            For LLM context, target CommonMark or GFM — they are the most widely trained-on formats and produce the most predictable tokenization. For developer documentation and GitHub-rendered content, GFM is the right choice. You can <a href="/html-formatter-beautifier/">format and inspect raw HTML</a> before running conversion to catch malformed markup that would break edge cases.
+          </p>
+        
+
+        /* CTA */
+        
+          <h2>Format HTML Before Converting</h2>
+          <p>
+            Malformed HTML produces garbage Markdown. Before running your conversion pipeline, use BytePane&apos;s HTML Formatter to pretty-print and validate your source HTML, then convert. Works in-browser, zero setup.
+          </p>
+          
+            <a href="/html-formatter-beautifier/">
+              Open HTML Formatter
+            </a>
+            <a href="/markdown-cheat-sheet/">
+              Markdown Cheat Sheet
+            </a>
+          
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What is the best library to convert HTML to Markdown in JavaScript?',
+                a: "Turndown is the JavaScript standard with over 4 million weekly npm downloads. It handles CommonMark output, supports GFM tables via turndown-plugin-gfm, and exposes a rule-based API for custom element handling. For Node.js high-throughput use, the Rust-based kreuzberg html-to-markdown offers ~6x faster processing with compatible API surface.",
+              ,
+              
+                q: 'Why does HTML to Markdown conversion lose formatting?',
+                a: "Markdown is a subset of what HTML can express. Complex table layouts, colspan/rowspan, CSS styles, definition lists, and non-standard elements have no Markdown equivalent. Converters either drop these or keep them as raw HTML. Output quality depends on how structured the source HTML was and which converter handles the edge cases.",
+              ,
+              
+                q: 'How do I convert HTML to Markdown in Python?',
+                a: "html2text (created by Aaron Swartz) is the most common option. For web scraping with automatic boilerplate removal — navigation, footers, ads — use trafilatura instead. It identifies the main content zone before converting, producing much cleaner Markdown from news articles. Per the trafilatura paper (Barbaresi 2021, ACL Anthology), it achieves F1 of 0.89 for content extraction.",
+              ,
+              
+                q: 'Can I convert HTML to Markdown without losing links?',
+                a: "Yes, for standard anchor tags. Problems arise with javascript: hrefs (stripped), relative URLs (need a base URL to resolve), and link text containing inline HTML. Good converters handle these: Turndown preserves absolute URLs and lets you add a custom rule to resolve relative paths to absolute URLs before output.",
+              ,
+              
+                q: 'Is HTML to Markdown conversion reversible?',
+                a: "Not perfectly — the conversion is lossy by design. CSS classes, IDs, data attributes, inline styles, complex tables, forms, and scripts are discarded. Converting back produces valid HTML but structurally different from the original. Use the round-trip for content portability, not for preserving presentation.",
+              ,
+              
+                q: 'What is HTML to Markdown used for in LLM applications?',
+                a: "Web pages contain 60–80% noise (navigation, scripts, ads). Converting to Markdown before feeding to an LLM reduces token count by the same amount, cutting API costs and improving context quality. Most RAG pipelines and web agents use HTML-to-Markdown or plain-text extraction as a preprocessing step.",
+              ,
+              
+                q: 'How do I handle HTML tables when converting to Markdown?',
+                a: "Simple tables convert to GFM format via turndown-plugin-gfm. Complex tables (colspan, rowspan) cannot be represented in GFM and are best kept as raw HTML inside the Markdown output. Pandoc handles the widest table types but requires system-level installation.",
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            [
+               slug: 'markdown-cheat-sheet', title: 'Markdown Cheat Sheet', description: 'Complete Markdown syntax reference: headings, links, tables, code blocks, and GFM extensions.' ,
+               slug: 'html-formatter-beautifier', title: 'HTML Formatter & Beautifier', description: 'Format, indent, and validate HTML before running conversion pipelines.' ,
+               slug: 'json-to-csv-converter', title: 'JSON to CSV Converter', description: 'Convert JSON arrays to CSV with proper quoting and delimiter handling.' ,
+               slug: 'csv-to-json-converter', title: 'CSV to JSON Converter', description: 'Transform CSV data to JSON with type inference and nested object support.' ,
+            ].map((a) => (
+              <Link key=a.slug href=`/blog/$a.slug/` >
+                <h3>a.title</h3>
+                <p>a.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/html-to-markdown/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
