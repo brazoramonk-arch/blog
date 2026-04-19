@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket vs REST: When to Use Each API Protocol - BytePane</title>
+  <meta name="description" content="WebSocket vs REST: latency data, connection cost, scaling trade-offs, and exact decision criteria. Know which protocol to pick before writing a line of code.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/websocket-vs-rest/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; WebSocket vs REST: When to Use Each API Protocol
+  </nav>
+
+  <article>
+    <h1>WebSocket vs REST: When to Use Each API Protocol</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/websocket-vs-rest/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    WebSocket/SSE for real-time event delivery</li>
+          </ul>
+        
+
+        /* Opening: the wrong framing */
+        
+          <h2>The Wrong Question: &quot;Which Is Better?&quot;</h2>
+          <p>
+            Every few months, a developer rebuilds their entire REST API as WebSocket and then writes a blog post about how much worse it got. WebSocket is not a better REST. It is a fundamentally different communication primitive that solves a problem REST cannot: <strong>server-initiated message delivery</strong>.
+          </p>
+          <p>
+            REST is a request-response architecture built on HTTP. The client asks, the server answers. The server cannot speak unless spoken to. WebSocket is a persistent bidirectional channel: once the connection is established, either side can transmit at any time with minimal overhead. A message costs just 2–14 bytes of framing header, versus the hundreds of bytes of HTTP headers on every REST request.
+          </p>
+          <p>
+            The right question is: <strong>does your application need the server to push updates to clients without a client request?</strong> If yes, WebSocket (or SSE). If no, REST is almost certainly the better choice — simpler to build, scale, debug, and cache.
+          </p>
+        
+
+        
+          <h2>How WebSocket Works: The Upgrade Handshake</h2>
+          <p>
+            WebSocket starts as an HTTP/1.1 request and upgrades to a persistent TCP connection via the <code >Upgrade</code> header. This upgrade mechanism is defined in <strong>RFC 6455</strong> (the WebSocket Protocol specification, published 2011 by the IETF). After the handshake, the HTTP protocol is abandoned and the raw TCP socket is used for framed messages.
+          </p>
+          <p>
+            <code >`// WebSocket upgrade handshake (HTTP/1.1)
+// Client → Server:
+GET /ws HTTP/1.1
+Host: api.example.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
+Sec-WebSocket-Version: 13
+
+// Server → Client (101 Switching Protocols):
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+
+// After this: raw TCP socket, no more HTTP
+// Each message has a 2-14 byte frame header:
+//  - FIN bit (final fragment)
+//  - Opcode (text/binary/ping/pong/close)
+//  - Mask bit + masking key (client→server must be masked per RFC 6455)
+//  - Payload length (7, 16, or 64 bits)
+
+// Compare to HTTP REST message overhead:
+// HTTP/1.1 headers: ~400-800 bytes per request (cookies, user-agent, etc.)
+// WebSocket frame header: 2-14 bytes per message
+// For 100-byte messages: WS overhead = 2-12%, HTTP overhead = 400-800%`</code>
+          </pre>
+          <p >
+            The framing overhead difference is the source of WebSocket&apos;s throughput advantage for high-frequency small messages. For a 100-byte message payload, WebSocket adds 2–14 bytes (2–12% overhead) versus HTTP&apos;s 400–800 bytes of headers (400–800% overhead). Once your message rate drops below roughly one per second, this advantage disappears — HTTP/2 multiplexing over a persistent connection closes the gap significantly.
+          </p>
+        
+
+        
+          <h2>Performance Data: Real Numbers</h2>
+          <p>
+            The most-cited benchmark data comes from <strong>David Luecke&apos;s HTTP vs WebSockets comparison</strong> (published on the FeathersJS engineering blog), which compared Socket.io against HTTP REST on identical Node.js servers with identical payloads.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Metric</th>
+                  <th >HTTP REST</th>
+                  <th >Socket.io (WebSocket)</th>
+                  <th >WebSocket Advantage</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >50 requests completion</td>
+                  <td >~5,000ms</td>
+                  <td >~180ms</td>
+                  <td >27x faster</td>
+                </tr>
+                <tr >
+                  <td >Throughput (req/s)</td>
+                  <td >~10 req/s</td>
+                  <td >~4,000 msg/s</td>
+                  <td >400x higher</td>
+                </tr>
+                <tr >
+                  <td >Connection overhead</td>
+                  <td >Per request (TCP + TLS)</td>
+                  <td >Once per session</td>
+                  <td >Amortized to zero</td>
+                </tr>
+                <tr >
+                  <td >Message header overhead</td>
+                  <td >400–800 bytes</td>
+                  <td >2–14 bytes</td>
+                  <td >200–400x smaller</td>
+                </tr>
+                <tr >
+                  <td >CDN caching</td>
+                  <td >Full support (GET requests)</td>
+                  <td >Not applicable</td>
+                  <td >REST wins</td>
+                </tr>
+                <tr >
+                  <td >Horizontal scaling</td>
+                  <td >Trivial (stateless)</td>
+                  <td >Complex (sticky sessions + pubsub)</td>
+                  <td >REST wins</td>
+                </tr>
+                <tr>
+                  <td >Server push</td>
+                  <td >Impossible (polling required)</td>
+                  <td >Native</td>
+                  <td >WebSocket wins</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            These numbers represent the extreme high-frequency case. In real applications, the performance gap narrows considerably. HTTP/2 multiplexes multiple requests over a single TCP connection, reducing per-request TCP/TLS overhead significantly. For applications that make one API call per user action, REST over HTTP/2 and WebSocket are functionally equivalent in latency.
+          </p>
+        
+
+        
+          <h2>The Problem REST Cannot Solve: Server Push</h2>
+          <p>
+            Consider a collaborative text editor like Google Docs. User A types a character. User B&apos;s screen must update within 100ms to feel real-time. With REST:
+          </p>
+          <p>
+            <code >`// REST polling attempt at "real-time":
+// Client B must ask the server for changes, repeatedly
+setInterval(async () => 
+  const changes = await fetch('/api/docs/123/changes?since=' + lastTimestamp)
+  const data = await changes.json()
+  applyChanges(data)
+, 500) // Poll every 500ms
+
+// Problems with this approach:
+// 1. 500ms lag feels awful for collaborative editing
+// 2. At 100ms polling: 10 req/user/sec × 1000 users = 10,000 req/sec baseline
+//    before any actual work happens
+// 3. Each poll costs a full HTTP round trip even when nothing changed
+// 4. Under load, server queues fill, lag compounds
+
+// WebSocket approach: zero polling, zero lag
+const ws = new WebSocket('wss://api.example.com/docs/123')
+
+ws.onmessage = (event) => 
+  const change = JSON.parse(event.data)
+  applyChange(change)  // Called the moment the server has it
+
+// User A types → server broadcasts to all connected users immediately
+// Server cost: one WebSocket send per change, not 10K polls/sec`</code>
+          </pre>
+          <p >
+            At 1,000 concurrent users polling every 100ms, a REST server handles 10,000 requests per second at idle — generating no useful work. WebSocket eliminates idle traffic entirely: the server only transmits when there is a change. <strong>Figma, Miro, Google Docs, and Notion</strong> all use WebSocket-based real-time sync for this exact reason.
+          </p>
+        
+
+        
+          <h2>The Problem WebSocket Cannot Solve: Stateless Scaling</h2>
+          <p>
+            REST&apos;s statelessness is not a limitation — it is its most operationally valuable property. Each request carries everything the server needs (auth token, request body, query params). Any server instance can handle any request. Scale horizontally by adding instances behind a load balancer. Zero state synchronization required.
+          </p>
+          <p>
+            <code >`// REST scaling: trivially horizontal
+//
+//  Client A  ──┐
+//  Client B  ──┤── Load Balancer ──── Server 1
+//  Client C  ──┤                 └─── Server 2
+//  Client D  ──┘                 └─── Server 3
+//
+// Any request can go to any server. No shared state.
+// Add Server 4: zero configuration, starts handling requests immediately.
+
+// WebSocket scaling: stateful connections require coordination
+//
+//  Client A ──── Server 1 ─── Redis Pub/Sub ─── Server 2 ──── Client C
+//                              (message broker)
+//
+// Client A connects to Server 1. Connection is pinned (sticky sessions).
+// If Client A sends a message meant for Client C (on Server 2):
+//   Server 1 cannot directly reach Client C.
+//   Server 1 publishes to Redis. Server 2 subscribes, receives, forwards to C.
+//
+// What happens when Server 1 crashes?
+//   Client A's connection drops. Client must reconnect (with backoff).
+//   If using sticky sessions, load balancer must redistribute Client A.
+//
+// Tools: Socket.io Redis adapter, Ably, Pusher, AWS API Gateway WebSocket API`</code>
+          </pre>
+          <p >
+            According to <strong>Ably&apos;s WebSocket infrastructure report</strong>, teams that self-host WebSocket servers at scale universally encounter the same sequence: connection pinning, Redis pub/sub, Redis saturation, custom sharding. Most eventually migrate to a managed WebSocket service (Ably, Pusher, AWS API Gateway WebSockets). Budget for this operational complexity before choosing WebSocket.
+          </p>
+        
+
+        
+          <h2>WebSocket Authentication: The Browser Constraint</h2>
+          <p>
+            A production detail that catches teams off guard: the browser&apos;s <code >WebSocket</code> API does not allow custom headers on the initial upgrade request. You cannot do:
+          </p>
+          <p>
+            <code >`// ❌ This does NOT work in browsers (Node.js only):
+const ws = new WebSocket('wss://api.example.com/ws', 
+  headers:  Authorization: 'Bearer eyJhbGci...' 
+)
+// Browser WebSocket API ignores the options object
+
+// ✅ Option 1: Token in query string (most common browser pattern)
+const token = await getShortLivedToken() // expires in 60 seconds
+const ws = new WebSocket(\`wss://api.example.com/ws?token=\$token\`)
+// Server validates token on upgrade, rejects with 401 if invalid
+
+// ✅ Option 2: Authenticate after connection via first message
+const ws = new WebSocket('wss://api.example.com/ws')
+ws.onopen = () => 
+  ws.send(JSON.stringify( type: 'auth', token: localStorage.getItem('jwt') ))
+
+ws.onmessage = (event) => 
+  const msg = JSON.parse(event.data)
+  if (msg.type === 'auth_ok') 
+    // Now subscribed and authorized
+  
+
+// ✅ Option 3: Session cookie (same-origin only)
+// Browser automatically sends cookies with WebSocket upgrade request
+// Works if your WS server is on the same domain as your auth server
+const ws = new WebSocket('wss://api.example.com/ws')
+// Server reads the session cookie from the upgrade request headers`</code>
+          </pre>
+          <p >
+            The token-in-query-string pattern is fine as long as tokens are short-lived (60–300 seconds). Avoid long-lived JWTs in URLs — they appear in server access logs. Use your <a href="/jwt-decoder/">JWT Decoder</a> to verify token expiry and claims during development.
+          </p>
+        
+
+        
+          <h2>Server-Sent Events: The Overlooked Middle Ground</h2>
+          <p>
+            Before defaulting to WebSocket for any server-push requirement, evaluate <strong>Server-Sent Events (SSE)</strong>. SSE is unidirectional (server → client only) but has significant operational advantages over WebSocket for the right use cases:
+          </p>
+          <p>
+            <code >`// SSE: server side (Node.js/Express)
+app.get('/api/events', (req, res) => 
+  res.setHeader('Content-Type', 'text/event-stream')
+  res.setHeader('Cache-Control', 'no-cache')
+  res.setHeader('Connection', 'keep-alive')
+
+  // Send a heartbeat every 30s to keep connection alive
+  const heartbeat = setInterval(() => 
+    res.write(':heartbeat\n\n')  // comment line, not an event
+  , 30000)
+
+  // Push events whenever they occur
+  const unsubscribe = eventBus.on('order-updated', (order) => 
+    res.write(\`event: order\n\`)
+    res.write(\`data: \$JSON.stringify(order)\n\n\`)
+  )
+
+  req.on('close', () => 
+    clearInterval(heartbeat)
+    unsubscribe()
+  )
+)
+
+// SSE: browser client — EventSource has built-in reconnection
+const eventsource = new EventSource('/api/events')
+eventsource.addEventListener('order', (event) => 
+  const order = JSON.parse(event.data)
+  updateOrderStatus(order)
+)
+// EventSource reconnects automatically after network interruptions
+// Last-Event-ID header allows resuming from last received event
+
+// Compare to WebSocket client reconnection — manual:
+function connectWs() 
+  const ws = new WebSocket('wss://api.example.com/events')
+  ws.onclose = (event) => 
+    if (!event.wasClean) 
+      setTimeout(connectWs, Math.min(1000 * 2 ** retryCount++, 30000))
+    
+  
+`</code>
+          </pre>
+          <p >
+            SSE advantages over WebSocket: works natively through HTTP/2 multiplexing (multiple SSE streams share one TCP connection), uses standard HTTP infrastructure (no special CORS, no upgrade), provides automatic reconnection with <code >Last-Event-ID</code> replay, and allows normal REST authentication via <code >Authorization</code> headers. OpenAI&apos;s streaming API uses SSE. GitHub&apos;s live activity feed uses SSE. If your server only needs to push — not receive — start with SSE.
+          </p>
+        
+
+        
+          <h2>Production WebSocket Implementation</h2>
+          <p>
+            A minimal but production-ready WebSocket server in Node.js with authentication, ping/pong heartbeat, and graceful cleanup:
+          </p>
+          <p>
+            <code >`import  WebSocketServer, WebSocket  from 'ws'
+
+const server = http.createServer()
+const wss = new WebSocketServer( noServer: true )
+
+// Map of userId → Set<WebSocket> for fan-out broadcasting
+const connections = new Map<string, Set<WebSocket>>()
+
+server.on('upgrade', async (request, socket, head) => 
+  // Parse and validate token from query string
+  const url = new URL(request.url!, 'wss://example.com')
+  const token = url.searchParams.get('token')
+
+  const user = token ? await verifyToken(token) : null
+  if (!user) 
+    socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n')
+    socket.destroy()
+    return
+  
+
+  wss.handleUpgrade(request, socket, head, (ws) => 
+    wss.emit('connection', ws, user)
+  )
+)
+
+wss.on('connection', (ws, user) => 
+  // Register connection
+  if (!connections.has(user.id)) connections.set(user.id, new Set())
+  connections.get(user.id)!.add(ws)
+
+  // Heartbeat: detect stale connections (60s timeout)
+  let isAlive = true
+  ws.on('pong', () =>  isAlive = true )
+  const heartbeat = setInterval(() => 
+    if (!isAlive)  ws.terminate(); return 
+    isAlive = false
+    ws.ping()
+  , 30000)
+
+  ws.on('message', (data) => 
+    // Handle incoming messages from this client
+    const msg = JSON.parse(data.toString())
+    handleMessage(ws, user, msg)
+  )
+
+  ws.on('close', () => 
+    clearInterval(heartbeat)
+    connections.get(user.id)?.delete(ws)
+  )
+)
+
+// Broadcast to all connections for a user (multi-tab support)
+function broadcastToUser(userId: string, payload: object) 
+  const userConns = connections.get(userId)
+  if (!userConns) return
+  const message = JSON.stringify(payload)
+  for (const ws of userConns) 
+    if (ws.readyState === WebSocket.OPEN) ws.send(message)
+  
+
+server.listen(3001)`</code>
+          </pre>
+        
+
+        
+          <h2>The Hybrid Architecture: What Production Looks Like</h2>
+          <p >
+            The correct answer for most production applications in 2026 is not WebSocket versus REST — it is REST for everything except real-time event delivery, and WebSocket or SSE for event delivery.
+          </p>
+          <ul>
+            <li><strong>Authentication</strong>: REST. POST /auth/login, receive JWT. WebSocket tokens derived from this.</li>
+            <li><strong>Data fetching</strong>: REST. GET /api/orders, GET /api/user/profile. Benefits from HTTP caching, CDN, standard tooling.</li>
+            <li><strong>Mutations</strong>: REST. POST /api/orders, PATCH /api/orders/123. HTTP semantics, idempotency keys, standard error codes.</li>
+            <li><strong>Real-time events</strong>: WebSocket or SSE. &quot;Order status changed&quot;, &quot;new message arrived&quot;, &quot;collaborator moved cursor&quot;. Server-initiated, low-latency.</li>
+            <li><strong>Live data feeds</strong>: SSE if server-to-client only (stock prices, notifications, progress). WebSocket if bidirectional (trading execution, collaborative editing).</li>
+          </ul>
+          <p>
+            Companies like <strong>Slack</strong> use this exact split: REST API for loading channels, messages, and user data; WebSocket for receiving real-time message and presence updates. The REST surface covers 95% of the API, while WebSocket handles the 5% that requires push. Per <strong>Slack Engineering</strong>, this separation means their CDN handles the majority of API traffic (reads), while WebSocket servers handle only the event stream, which scales independently. Validate your REST responses with the <a href="/json-formatter/">JSON Formatter</a> while building your API layer.
+          </p>
+        
+
+        
+          <h2>Protocol Comparison Summary</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Property</th>
+                  <th >REST (HTTP)</th>
+                  <th >WebSocket</th>
+                  <th >Server-Sent Events</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Direction</td>
+                  <td >Client → Server</td>
+                  <td >Bidirectional</td>
+                  <td >Server → Client</td>
+                </tr>
+                <tr >
+                  <td >Connection</td>
+                  <td >Per request (HTTP/1.1) or multiplexed (HTTP/2)</td>
+                  <td >Persistent TCP socket</td>
+                  <td >Persistent HTTP stream</td>
+                </tr>
+                <tr >
+                  <td >Server push</td>
+                  <td >No (polling required)</td>
+                  <td >Yes</td>
+                  <td >Yes (server only)</td>
+                </tr>
+                <tr >
+                  <td >HTTP caching</td>
+                  <td >Full (CDN, browser)</td>
+                  <td >None</td>
+                  <td >None</td>
+                </tr>
+                <tr >
+                  <td >Horizontal scaling</td>
+                  <td >Trivial (stateless)</td>
+                  <td >Complex (sticky + pubsub)</td>
+                  <td >Moderate (sticky sessions)</td>
+                </tr>
+                <tr >
+                  <td >Auth headers</td>
+                  <td >Authorization: Bearer (standard)</td>
+                  <td >Token in URL / post-connect</td>
+                  <td >Authorization: Bearer (standard)</td>
+                </tr>
+                <tr >
+                  <td >Reconnection</td>
+                  <td >Automatic (stateless)</td>
+                  <td >Manual (implement backoff)</td>
+                  <td >Automatic (EventSource)</td>
+                </tr>
+                <tr >
+                  <td >Message overhead</td>
+                  <td >400–800 bytes/request</td>
+                  <td >2–14 bytes/message</td>
+                  <td >HTTP stream (moderate)</td>
+                </tr>
+                <tr>
+                  <td >Best for</td>
+                  <td >CRUD, data fetching, auth</td>
+                  <td >Chat, games, collab editing</td>
+                  <td >Notifications, feeds, streaming</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        
+          <h2>Decision Framework: Which Protocol to Use</h2>
+
+          <h3>Use REST when:</h3>
+          <ul>
+            <li>The client initiates all interactions (request-response pattern)</li>
+            <li>Data changes infrequently and can be fetched on demand</li>
+            <li>CDN caching is important (product listings, documentation)</li>
+            <li>Third-party developers will consume the API (standard tooling advantage)</li>
+            <li>Operations must be idempotent with standard HTTP error semantics</li>
+            <li>Horizontal scaling simplicity is a priority</li>
+          </ul>
+
+          <h3>Use WebSocket when:</h3>
+          <ul>
+            <li>The server must push updates without a client request</li>
+            <li>Message frequency exceeds ~10/second per connection</li>
+            <li>Both server and client need to initiate messages (true bidirectional)</li>
+            <li>Use cases: chat, multiplayer games, collaborative editing, trading terminals</li>
+            <li>Latency is critical and polling delay is unacceptable</li>
+          </ul>
+
+          <h3>Use SSE when:</h3>
+          <ul>
+            <li>The server pushes to client only (no bidirectional needed)</li>
+            <li>Use cases: live notifications, order status updates, AI streaming responses, progress bars</li>
+            <li>You want automatic reconnection without custom client code</li>
+            <li>You need standard HTTP auth headers (not token-in-URL)</li>
+            <li>Infrastructure operates behind HTTP/2 proxies (SSE multiplexes cleanly)</li>
+          </ul>
+
+          <p>
+            Review the <a href="/blog/rest-api-design-principles/">REST API design principles</a> guide if you are building the REST layer, and the <a href="/blog/api-authentication-methods/">API authentication methods</a> guide for securing both REST and WebSocket endpoints.
+          </p>
+        
+
+        /* CTA */
+        
+          <h2>Debug Your API Responses</h2>
+          <p>
+            Whether you are building REST or WebSocket APIs, use BytePane&apos;s tools to inspect payloads, decode tokens, and validate data structures — all in your browser with no signup required.
+          </p>
+          
+            <a href="/json-formatter/">
+              Open JSON Formatter
+            </a>
+            <a href="/jwt-decoder/">
+              Decode JWT Token
+            </a>
+          
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'When should I use WebSocket instead of REST?',
+                a: "Use WebSocket when your application requires bidirectional, low-latency communication where the server must push updates without client requests. Ideal cases: chat applications, live scores, collaborative document editing, financial trading dashboards, and multiplayer games. REST cannot push — every update requires the client to poll.",
+              ,
+              
+                q: 'Is WebSocket faster than REST?',
+                a: "For high-frequency exchange, yes — significantly. Per FeathersJS benchmarks, Socket.io handles ~4,000 messages/sec vs ~10 req/sec for HTTP REST, and 50 messages complete in ~180ms vs ~5 seconds over HTTP. For infrequent requests (one per second or less), REST over HTTP/2 is competitive and far simpler to operate.",
+              ,
+              
+                q: 'Can WebSocket replace REST entirely?',
+                a: "No — teams that try this regret it. REST has structural advantages for HTTP caching, stateless horizontal scaling, standard tooling, and authentication flows. WebSocket connections are stateful, bypass CDN caches, are harder to load-balance, and require custom reconnection logic. The consensus is hybrid: REST for data, WebSocket for events.",
+              ,
+              
+                q: 'How does WebSocket authentication work?',
+                a: "Browser WebSocket API cannot send custom headers on the upgrade request. Common patterns: (1) pass a short-lived token in the URL query string during handshake, (2) authenticate via a first message after connection opens, (3) use session cookies if on the same domain. Tokens in URLs must be short-lived (60–300s) to avoid log exposure.",
+              ,
+              
+                q: 'What is the difference between WebSocket and Server-Sent Events?',
+                a: "SSE is unidirectional (server → client) over HTTP. WebSocket is bidirectional over persistent TCP. SSE advantages: standard HTTP auth headers, automatic EventSource reconnection, works through HTTP/2 multiplexing. Use SSE for one-way feeds (notifications, AI streaming). Use WebSocket when clients also need to send messages frequently.",
+              ,
+              
+                q: 'How do you scale WebSocket servers?',
+                a: "WebSocket connections are stateful. Scale by: (1) sticky sessions at the load balancer so reconnections reach the same server, (2) Redis Pub/Sub to broadcast messages across server instances, (3) dedicated managed services (Ably, Pusher, AWS API Gateway WebSocket) to offload the complexity. Self-hosting at scale is non-trivial.",
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            [
+               slug: 'rest-api-design-principles', title: 'REST API Design Principles', description: 'Resource naming, HTTP methods, versioning, and error response patterns for REST APIs.' ,
+               slug: 'api-authentication-methods', title: 'API Authentication Methods', description: 'Compare API keys, OAuth, JWT, and mTLS for securing REST and WebSocket endpoints.' ,
+               slug: 'graphql-vs-rest-api', title: 'GraphQL vs REST API', description: 'When GraphQL\'s flexible queries justify the added complexity over REST.' ,
+               slug: 'http-status-codes-guide', title: 'HTTP Status Codes Guide', description: 'Complete reference for REST API response codes: 2xx, 3xx, 4xx, 5xx.' ,
+            ].map((a) => (
+              <Link key=a.slug href=`/blog/$a.slug/` >
+                <h3>a.title</h3>
+                <p>a.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/websocket-vs-rest/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
