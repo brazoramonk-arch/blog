@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Schema Validation: How to Validate JSON Data Structures - BytePane</title>
+  <meta name="description" content="Validate JSON data with JSON Schema draft 2020-12. AJV, Zod, type coercion traps, $ref composition, and production validation patterns with real code.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/json-schema-validation/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; JSON Schema Validation: How to Validate JSON Data Structures
+  </nav>
+
+  <article>
+    <h1>JSON Schema Validation: How to Validate JSON Data Structures</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/json-schema-validation/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    amount&quot;: &quot;150.00&quot;</code>). The payment service accepted the payload, coerced the string silently in one code path, and failed silently in another. Three days of reconciliation work later: <strong>an explicit JSON Schema validator at the ingestion point would have caught this in 50 milliseconds and rejected the malformed payload with a clear error message.</strong>
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸AJV has 145M weekly npm downloads — it is the Node.js standard for JSON Schema validation, compiling schemas to JIT-optimized functions</li>
+            <li>▸JSON Schema draft 2020-12 replaced <code >items</code>/<code >additionalItems</code> with <code >prefixItems</code>/<code >items</code> for tuple validation</li>
+            <li>▸Never enable AJV&apos;s <code >coerceTypes</code> on API inputs — it silently converts <code >&quot;150&quot;</code> → <code >150</code> and hides contract violations</li>
+            <li>▸Zod for TypeScript-first projects: one schema gives you both runtime validation AND compile-time types — zero duplication</li>
+            <li>▸Always use <code >additionalProperties: false</code> for request validation, never for response validation (breaks forward-compatibility)</li>
+          </ul>
+        
+
+        
+          <h2>What JSON Schema Is</h2>
+          <p>
+            JSON Schema is a vocabulary for describing the structure of JSON data. A schema is itself a JSON document that defines what valid instances must look like: which types are allowed, which properties are required, what value ranges are acceptable, what string patterns must match. The specification is maintained by the <strong>JSON Schema organization</strong> and the current stable draft is <strong>2020-12</strong>, published December 2020.
+          </p>
+          <p>
+            JSON Schema powers more infrastructure than most developers realize. The <strong>OpenAPI 3.x specification</strong> uses JSON Schema for request/response body definitions. <strong>VS Code&apos;s IntelliSense</strong> for JSON files (settings.json, package.json, tsconfig.json) is driven by JSON Schema definitions from the SchemaStore catalog, which hosts over 500 schemas. <strong>Kubernetes manifest validation</strong> uses JSON Schema. <strong>JSON Forms</strong> generates UI components from JSON Schema automatically.
+          </p>
+          <p>
+            The simplest valid schema is <code >''</code> — an empty object that accepts any valid JSON value. A schema of <code >true</code> also accepts everything; <code >false</code> rejects everything. This boolean schema form is used heavily in <code >additionalProperties</code> and <code >unevaluatedProperties</code>.
+          </p>
+        
+
+        
+          <h2>Core Keywords: The Building Blocks</h2>
+          <p>
+            <code >`
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.example.com/schemas/user.json",
+  "title": "User",
+  "description": "A registered user account",
+  "type": "object",
+
+  "properties": 
+    "id": 
+      "type": "string",
+      "format": "uuid",           // Validated with ajv-formats
+      "description": "UUID v4 user identifier"
+    ,
+    "email": 
+      "type": "string",
+      "format": "email",
+      "maxLength": 254            // RFC 5321 maximum email length
+    ,
+    "age": 
+      "type": "integer",
+      "minimum": 13,              // inclusive minimum
+      "maximum": 120
+    ,
+    "role": 
+      "type": "string",
+      "enum": ["admin", "editor", "viewer"]  // enumeration
+    ,
+    "tags": 
+      "type": "array",
+      "items":  "type": "string" ,
+      "minItems": 1,
+      "maxItems": 20,
+      "uniqueItems": true         // no duplicate tags
+    ,
+    "metadata": 
+      "type": "object",
+      "additionalProperties":  "type": "string"   // any string-valued keys
+    ,
+    "createdAt": 
+      "type": "string",
+      "format": "date-time"       // RFC 3339: "2026-04-19T10:30:00Z"
+    
+  ,
+
+  "required": ["id", "email", "role", "createdAt"],
+  "additionalProperties": false   // reject unknown fields
+`</code>
+          </pre>
+          <p >
+            The <code >required</code> keyword and <code >additionalProperties</code> behavior are two of the most misunderstood aspects of JSON Schema. <code >required</code> is a sibling of <code >properties</code> — not inside it. A property listed in <code >properties</code> but not in <code >required</code> is optional. A property in <code >required</code> but not in <code >properties</code> is required but can be any type.
+          </p>
+        
+
+        
+          <h2>AJV: The Production Standard</h2>
+          <p>
+            <strong>AJV (Another JSON Schema Validator)</strong> is the dominant Node.js implementation with <strong>145 million weekly npm downloads</strong> as of 2025. It compiles schemas to optimized JavaScript functions at startup — validation at runtime is just a function call, not tree traversal. This compilation approach puts AJV at 3–5 million validations per second for typical schemas.
+          </p>
+          <p>
+            <code >`import Ajv from 'ajv'
+
+// Initialize once at application startup — compilation is the expensive step
+const ajv = new Ajv(
+  allErrors: true,       // Collect ALL errors, not just the first
+  // coerceTypes: false  // NEVER enable for API input — hides contract violations
+  // useDefaults: true   // Optional: fill in default values during validation
+)
+addFormats(ajv)          // Enables: date-time, email, uri, uuid, ipv4, etc.
+addErrors(ajv)           // Enables custom error messages per keyword
+
+const userSchema = 
+  $schema: 'https://json-schema.org/draft/2020-12/schema',
+  type: 'object',
+  properties: 
+    id:     type: 'string', format: 'uuid' ,
+    email:  type: 'string', format: 'email' ,
+    role:   type: 'string', enum: ['admin', 'editor', 'viewer'] ,
+    age:    type: 'integer', minimum: 13, maximum: 120 ,
+  ,
+  required: ['id', 'email', 'role'],
+  additionalProperties: false,
+
+// Compile once
+const validate = ajv.compile(userSchema)
+
+// Validate at runtime — extremely fast (compiled function)
+function validateUser(data: unknown): asserts data is User 
+  if (!validate(data)) 
+    const errors = validate.errors!
+      .map(e => \`\$e.instancePath \$e.message\`)
+      .join('; ')
+    throw new Error(\`Invalid user: \$errors\`)
+  
+
+// Usage in Express middleware:
+app.post('/users', (req, res) => 
+  try 
+    validateUser(req.body)
+   catch (err) 
+    return res.status(422).json( error: err.message, errors: validate.errors )
+  
+  // req.body is now typed as User
+  createUser(req.body)
+)`</code>
+          </pre>
+          <p >
+            One critical AJV configuration decision: <code >coerceTypes</code>. When enabled, AJV silently converts <code >&quot;42&quot;</code> to <code >42</code>, <code >&quot;true&quot;</code> to <code >true</code>, and so on. This is the exact behavior that caused the production bug in the opening of this article. <strong>Never enable coerceTypes for API input validation.</strong> It is appropriate only for query string parameters (which are always strings) in server-side URL parsing.
+          </p>
+        
+
+        
+          <h2>Draft 2020-12: What Changed from Older Drafts</h2>
+          <p>
+            If you are reading older JSON Schema tutorials, be aware of the breaking changes introduced in draft 2019-09 and finalized in 2020-12. The most common migration trip:
+          </p>
+          <p>
+            <code >`// ❌ Draft 07 tuple validation (deprecated)
+
+  "type": "array",
+  "items": [                    // positional items = tuple
+     "type": "string" ,       // index 0: string
+     "type": "integer"        // index 1: integer
+  ],
+  "additionalItems": false      // no extra elements allowed
+
+// ✅ Draft 2020-12 tuple validation
+
+  "type": "array",
+  "prefixItems": [              // renamed: items → prefixItems for tuples
+     "type": "string" ,
+     "type": "integer" 
+  ],
+  "items": false                // renamed: additionalItems → items for extra
+
+// Other 2020-12 changes:
+// $defs instead of $definitions (though both work)
+// $dynamicRef / $dynamicAnchor replace $recursiveRef / $recursiveAnchor
+// unevaluatedProperties / unevaluatedItems keywords added
+// format is now only an annotation by default (opt-in validation)
+
+// AJV draft 2020-12 setup:
+
+const ajv = new Ajv2020( allErrors: true )`</code>
+          </pre>
+          <p >
+            The <code >unevaluatedProperties</code> keyword added in 2019-09 is a more powerful version of <code >additionalProperties</code> that works correctly with <code >allOf</code>/<code >oneOf</code>/<code >anyOf</code> composition. When composing schemas with <code >additionalProperties: false</code>, properties evaluated in sub-schemas are invisible to the parent&apos;s <code >additionalProperties</code>, causing false rejections. Use <code >unevaluatedProperties: false</code> for correct closed-object validation across composed schemas.
+          </p>
+        
+
+        
+          <h2>Schema Composition: $ref, $defs, allOf, anyOf, oneOf</h2>
+          <p>
+            Production schemas are not monolithic. They compose reusable type definitions using <code >$defs</code> and <code >$ref</code>:
+          </p>
+          <p>
+            <code >`
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": 
+    "Address": 
+      "type": "object",
+      "properties": 
+        "street":   "type": "string" ,
+        "city":     "type": "string" ,
+        "country":  "type": "string", "pattern": "^[A-Z]2$" 
+      ,
+      "required": ["street", "city", "country"]
+    ,
+    "Money": 
+      "type": "object",
+      "properties": 
+        "amount":    "type": "number", "minimum": 0 ,
+        "currency":  "type": "string", "pattern": "^[A-Z]3$" 
+      ,
+      "required": ["amount", "currency"]
+    
+  ,
+
+  "type": "object",
+  "properties": 
+    "billingAddress":   "$ref": "#/$defs/Address" ,
+    "shippingAddress":  "$ref": "#/$defs/Address" ,
+    "orderTotal":       "$ref": "#/$defs/Money" 
+  ,
+  "required": ["billingAddress", "orderTotal"]
+
+// anyOf: valid if at least one schema matches (overlapping union)
+
+  "anyOf": [
+     "type": "string", "format": "email" ,
+     "type": "string", "format": "uri" 
+  ]
+
+// Accepts: email addresses OR URLs (including both at once if valid as both)
+
+// oneOf: valid if EXACTLY one schema matches (exclusive union)
+
+  "oneOf": [
+     "type": "object", "properties":  "type":  "const": "card"  , "required": ["type", "cardNumber"] ,
+     "type": "object", "properties":  "type":  "const": "bank"  , "required": ["type", "accountNumber"] 
+  ]
+
+// Discriminated union — card OR bank payment, never both
+
+// allOf: all schemas must match (useful for extension/mixin)
+
+  "allOf": [
+     "$ref": "#/$defs/BaseEntity" ,    // has id, createdAt, updatedAt
+     "$ref": "#/$defs/UserFields"      // has email, role
+  ],
+  "unevaluatedProperties": false         // closed: no unknown fields
+`</code>
+          </pre>
+        
+
+        
+          <h2>AJV vs Zod: Which Should You Use?</h2>
+          <p >
+            This is not a pure performance question — it is a workflow question. The right answer depends on whether you are writing TypeScript, and whether you need language-agnostic schema sharing.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Property</th>
+                  <th >AJV</th>
+                  <th >Zod</th>
+                  <th >Joi</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Standard</td>
+                  <td >JSON Schema (all drafts)</td>
+                  <td >Proprietary (exports JSON Schema)</td>
+                  <td >Proprietary</td>
+                </tr>
+                <tr >
+                  <td >TypeScript inference</td>
+                  <td >Partial (manual type guards)</td>
+                  <td >First-class (z.infer&lt;T&gt;)</td>
+                  <td >Poor</td>
+                </tr>
+                <tr >
+                  <td >Performance</td>
+                  <td >~3–5M ops/sec (compiled)</td>
+                  <td >~300K–500K ops/sec</td>
+                  <td >~200K–400K ops/sec</td>
+                </tr>
+                <tr >
+                  <td >Weekly downloads</td>
+                  <td >~145M (npm)</td>
+                  <td >~30M (npm, fast growing)</td>
+                  <td >~17M (npm)</td>
+                </tr>
+                <tr >
+                  <td >Cross-language</td>
+                  <td >Yes (share schema as JSON)</td>
+                  <td >Via zod-to-json-schema</td>
+                  <td >JS only</td>
+                </tr>
+                <tr >
+                  <td >Error messages</td>
+                  <td >Technical (path + message)</td>
+                  <td >Human-friendly, customizable</td>
+                  <td >Human-friendly</td>
+                </tr>
+                <tr>
+                  <td >Best for</td>
+                  <td >High-throughput APIs, OpenAPI</td>
+                  <td >TypeScript-first apps, tRPC, Remix</td>
+                  <td >Express.js, simple validation</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            <code >`// Zod: one definition gives you runtime validation + TypeScript type
+
+const UserSchema = z.object(
+  id:        z.string().uuid(),
+  email:     z.string().email().max(254),
+  role:      z.enum(['admin', 'editor', 'viewer']),
+  age:       z.number().int().min(13).max(120).optional(),
+  createdAt: z.string().datetime(),
+)
+
+// TypeScript type inferred automatically — no duplication:
+type User = z.infer<typeof UserSchema>
+//  id: string; email: string; role: 'admin' | 'editor' | 'viewer'; age?: number; createdAt: string 
+
+// Parse (throws on invalid) or safeParse (returns result object):
+const result = UserSchema.safeParse(req.body)
+if (!result.success) 
+  return res.status(422).json( errors: result.error.flatten() )
+
+const user = result.data  // fully typed as User
+
+// Export as JSON Schema for OpenAPI or cross-service sharing:
+
+const jsonSchema = zodToJsonSchema(UserSchema, 'User')
+// → standard draft 2020-12 JSON Schema document`</code>
+          </pre>
+        
+
+        
+          <h2>Validation Patterns for Common Scenarios</h2>
+
+          <h3>Discriminated Unions (Polymorphic Payloads)</h3>
+          <pre >
+            <code >`// Payment event: card, bank transfer, or crypto wallet
+const PaymentEventSchema = 
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    
+      "type": "object",
+      "properties": 
+        "type":            "const": "card" ,
+        "last4":           "type": "string", "pattern": "^[0-9]4$" ,
+        "brand":           "type": "string", "enum": ["visa", "mastercard", "amex"] 
+      ,
+      "required": ["type", "last4", "brand"],
+      "additionalProperties": false
+    ,
+    
+      "type": "object",
+      "properties": 
+        "type":           "const": "bank_transfer" ,
+        "bankName":       "type": "string" ,
+        "accountLast4":   "type": "string", "pattern": "^[0-9]4$" 
+      ,
+      "required": ["type", "bankName", "accountLast4"],
+      "additionalProperties": false
+    
+  ]
+
+// AJV handles oneOf correctly — validates each schema, requires exactly one match
+// Error messages: "must match exactly one schema in oneOf"
+// For better errors, use discriminator keyword (OpenAPI extension in AJV):
+const ajv = new Ajv( discriminator: true )`</code>
+          </pre>
+
+          <h3>Conditional Validation (if/then/else)</h3>
+          <pre >
+            <code >`// Shipping address only required if order type is "physical"
+
+  "type": "object",
+  "properties": 
+    "orderType":  "type": "string", "enum": ["digital", "physical"] ,
+    "shippingAddress":  "$ref": "#/$defs/Address" 
+  ,
+  "required": ["orderType"],
+  "if": 
+    "properties":  "orderType":  "const": "physical"  
+  ,
+  "then": 
+    "required": ["shippingAddress"]
+  
+  // "else" is optional — omitting it means no extra constraints for non-physical
+
+// Multiple conditions with allOf:
+
+  "allOf": [
+    
+      "if":  "properties":  "role":  "const": "admin"   ,
+      "then":  "required": ["adminToken"] 
+    ,
+    
+      "if":  "properties":  "type":  "const": "business"   ,
+      "then":  "required": ["taxId", "companyName"] 
+    
+  ]
+`</code>
+          </pre>
+        
+
+        
+          <h2>Where to Validate in a Production API</h2>
+          <p >
+            Not every layer of your application should re-validate. Here is the right placement:
+          </p>
+          <ul>
+            <li><strong>Request ingestion (always)</strong>: Validate every incoming payload at the API boundary before it touches business logic. This is where AJV or Zod lives. Fail fast with 422 Unprocessable Content and a detailed error list. Never pass unvalidated data deeper.</li>
+            <li><strong>Configuration loading (always)</strong>: Validate config files and environment variables at startup. A misconfigured service should crash immediately on start, not fail silently mid-request. JSON Schema with AJV is the standard approach for Node.js config validation.</li>
+            <li><strong>Webhook ingestion (always)</strong>: Third-party systems change. Validate webhook payloads against a schema and alert on schema violations — this is your early warning system for upstream contract changes.</li>
+            <li><strong>Database reads (usually not)</strong>: Data coming out of your own database has already been validated on write. Re-validating every query result adds latency with no real benefit unless your DB schema and application schema have drifted.</li>
+            <li><strong>Inter-service calls (depends)</strong>: In a microservices environment, validate responses from other teams&apos; services at your service boundary. Assume nothing. Your compile-time types do not guarantee the other team&apos;s runtime behavior.</li>
+          </ul>
+          <p>
+            Use our <a href="/json-formatter/">JSON Formatter</a> to pretty-print and inspect JSON payloads during development before writing your schema — it is much faster to understand structure visually than from a raw response string.
+          </p>
+        
+
+        
+          <h2>Common Mistakes and How to Avoid Them</h2>
+
+          <h3>1. type: &quot;number&quot; vs type: &quot;integer&quot;</h3>
+          <p>
+            JSON Schema&apos;s <code >number</code> accepts any numeric value including floats. <code >integer</code> requires the value to be a whole number (no decimal component). <code >1.0</code> passes integer validation in most validators because mathematically it has no fractional part; <code >1.5</code> does not.
+          </p>
+
+          <h3>2. Missing additionalProperties: false on Request Schemas</h3>
+          <p>
+            Without <code >additionalProperties: false</code>, clients can send any extra fields. This can lead to mass assignment vulnerabilities if extra fields are passed directly to an ORM — for example, a client sending <code >""&quot;role&quot;: &quot;admin&quot;""</code> on a signup endpoint that does not explicitly allow <code >role</code>. Always close schemas on ingestion boundaries. See our <a href="/blog/rest-api-best-practices/">REST API best practices</a> guide for more security patterns.
+          </p>
+
+          <h3>3. Validating Response Schemas with additionalProperties: false</h3>
+          <p>
+            The reverse mistake: using strict closed-object schemas for responses or third-party data you do not control. If the server adds a new field, your validator rejects valid responses. Response schemas should allow extra properties (omit the keyword or set it to <code >true</code>) while validating only what you care about.
+          </p>
+
+          <h3>4. Schema Compilation in the Hot Path</h3>
+          <p>
+            <code >`// ❌ Do NOT compile schemas per-request — compilation is expensive
+app.post('/users', (req, res) => 
+  const validate = ajv.compile(userSchema)  // ~1-5ms overhead every request
+  validate(req.body)
+)
+
+// ✅ Compile once at module load time
+const validateUser = ajv.compile(userSchema)  // runs once on startup
+
+app.post('/users', (req, res) => 
+  validateUser(req.body)  // pure function call, <0.1ms
+)`</code>
+          </pre>
+        
+
+        /* CTA */
+        
+          <h2>Validate & Format Your JSON</h2>
+          <p >
+            Use BytePane&apos;s JSON Formatter to pretty-print, validate, and inspect JSON payloads before writing your schemas. Catch structural issues visually before coding validation logic.
+          </p>
+          
+            <a href="/json-formatter/">
+              Open JSON Formatter
+            </a>
+            <a href="/blog/json-formatting-guide/">
+              JSON Formatting Guide
+            </a>
+          
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What is JSON Schema and what is it used for?',
+                a: "JSON Schema is a vocabulary for describing the structure and constraints of JSON data. It defines valid types, required fields, value ranges, string patterns, and object shapes. It powers OpenAPI 3.x request/response definitions, VS Code IntelliSense for JSON files, Kubernetes manifest validation, and API contract testing. Current stable spec: draft 2020-12.",
+              ,
+              
+                q: 'What is the difference between JSON Schema and Zod?',
+                a: "JSON Schema is a language-agnostic spec stored as JSON, working across Python, Go, Java, and JavaScript. Zod is TypeScript-first with code-based schemas, providing superior TypeScript inference via z.infer<T>. Zod can export JSON Schema via zod-to-json-schema for interoperability. Use AJV for cross-language schemas; use Zod for TypeScript-first projects where type inference matters.",
+              ,
+              
+                q: 'Which is the fastest JSON Schema validator for Node.js?',
+                a: "AJV with 145 million weekly npm downloads. It compiles schemas to optimized JS functions at startup, achieving ~3–5 million validations per second for typical schemas. Zod is 5–10x slower (~300K–500K ops/sec) but provides better TypeScript DX. For high-throughput APIs validating thousands of requests per second, AJV's compiled validation is the right choice.",
+              ,
+              
+                q: 'How do I validate nested objects with JSON Schema?',
+                a: "Use the properties keyword for object shape and required array for mandatory fields. For reusable nested types, define them in $defs and reference with $ref: \"#/$defs/TypeName\". This allows circular references (e.g., a node containing an array of nodes) and avoids schema duplication across multiple endpoint schemas.",
+              ,
+              
+                q: 'What does additionalProperties: false do in JSON Schema?',
+                a: "It rejects objects containing keys not listed in properties. Use it for API request validation where unknown fields indicate client errors. Never use it for response validation — a new server field would break old client validators. For composed schemas (allOf/oneOf), use unevaluatedProperties: false instead, which works correctly across sub-schema boundaries.",
+              ,
+              
+                q: 'How do I validate that a JSON field matches one of several types?',
+                a: "Use oneOf (exactly one match, exclusive), anyOf (at least one match, overlapping), or allOf (all match simultaneously). For pure type unions, use \"type\": [\"string\", \"number\"] — simpler than anyOf for type-only checks. For discriminated unions (different shapes based on a type field), use oneOf with const on the discriminator property.",
+              ,
+              
+                q: 'Can JSON Schema validate date and datetime formats?',
+                a: "Yes via the format keyword. Draft 2020-12 defines date-time (RFC 3339, e.g. 2026-04-19T10:30:00Z), date, time, email, uri, uuid, and ipv4. Format validation is opt-in by default — enable with ajv-formats: addFormats(new Ajv()). Without the plugin, AJV treats format as a non-validating annotation.",
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* Related Articles */
+        
+          <h2>Related Articles</h2>
+          
+            [
+               slug: 'json-formatting-guide', title: 'JSON Formatting Guide', description: 'Pretty printing, parsing, and the exact rules of valid JSON syntax.' ,
+               slug: 'what-is-json', title: 'What Is JSON?', description: 'JSON data types, syntax rules, and why it became the universal interchange format.' ,
+               slug: 'openapi-swagger-guide', title: 'OpenAPI & Swagger Guide', description: 'OpenAPI 3.1 uses JSON Schema for request/response definitions — how it all connects.' ,
+               slug: 'rest-api-best-practices', title: 'REST API Best Practices', description: 'Input validation, error responses, and security patterns for production REST APIs.' ,
+            ].map((a) => (
+              <Link key=a.slug href=`/blog/$a.slug/` >
+                <h3>a.title</h3>
+                <p>a.description</p>
+              </Link>
+            ))
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/json-schema-validation/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
