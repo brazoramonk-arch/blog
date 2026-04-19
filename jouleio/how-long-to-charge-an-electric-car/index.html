@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Long to Charge an Electric Car? By Level &amp;amp; Battery Size (2026) - JouleIO</title>
+  <meta name="description" content="Exact EV charging times for every battery size and charging level. Tesla Model 3, Model Y, F-150 Lightning, Chevy Equinox, Lucid Air — real charge time calculations included.">
+  <link rel="canonical" href="https://www.jouleio.com/blog/how-long-to-charge-an-electric-car/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/jouleio/">JouleIO</a> &rarr; How Long to Charge an Electric Car? By Level &amp;amp; Battery Size (2026)
+  </nav>
+
+  <article>
+    <h1>How Long to Charge an Electric Car? By Level &amp;amp; Battery Size (2026)</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.jouleio.com/blog/how-long-to-charge-an-electric-car/">jouleio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How Long to Charge an Electric Car? By Level & Battery Size (2026)',
+  description: 'Precise EV charging time calculations by battery capacity and charging level, with model-specific data for 2026 electric vehicles.',
+  datePublished: '2026-04-18',
+  dateModified: '2026-04-18',
+  author:  '@type': 'Organization', name: 'JouleIO' ,
+  publisher: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+    logo:  '@type': 'ImageObject', url: 'https://jouleio.com/favicon.svg' ,
+  ,
+  mainEntityOfPage: 'https://jouleio.com/blog/how-long-to-charge-an-electric-car/',
+;
+
+const breadcrumbSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+     '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jouleio.com/' ,
+     '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://jouleio.com/blog/' ,
+     '@type': 'ListItem', position: 3, name: 'How Long to Charge an Electric Car', item: 'https://jouleio.com/blog/how-long-to-charge-an-electric-car/' ,
+  ],
+;
+
+const faqSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    
+      '@type': 'Question',
+      name: 'How long does it take to fully charge an electric car?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'It depends on battery size and charger type. On Level 1 (120V), charging a 75 kWh battery takes 45–60 hours. On Level 2 (7.2 kW), the same battery takes 10–11 hours. On a 150 kW DC fast charger, charging from 10% to 80% takes 25–35 minutes. Most EV owners charge at home on Level 2 overnight.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How long does it take to charge a Tesla Model Y?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'A Tesla Model Y Long Range (75 kWh usable) charges from 10% to 80% in about 30 minutes at a 250 kW V3 Supercharger. On a home Level 2 (11.5 kW Wall Connector), a full charge from 20% takes approximately 6 hours. Level 1 from empty would take 40–50 hours.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How long to charge a Ford F-150 Lightning?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'The F-150 Lightning Extended Range has a 123 kWh usable battery. At a 150 kW DCFC station, a 15%–80% charge takes about 41 minutes. On an 80A Level 2 home charger (19.2 kW), a full charge from empty takes about 7.5 hours. On a standard 40A Level 2 charger, it takes about 12–14 hours.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Is it OK to charge an EV every night?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes — and it is recommended. Daily Level 2 home charging to 80% (most vehicles default to this limit) is healthier than occasional deep charges. Keeping your EV plugged in does not overcharge it; the battery management system stops charging at your set limit. The U.S. DOE recommends daily top-ups over large charge swings.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How much does it cost to charge an EV at home overnight?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'At the U.S. average rate of $0.16/kWh (per EIA 2025 data), charging a 75 kWh battery from 20% to 80% (45 kWh added) costs $7.20. Off-peak rates in many states drop to $0.08–$0.12/kWh, cutting that to $3.60–$5.40. Annual home charging cost for a typical 12,000-mile driver: $450–$650.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Does a bigger battery always mean slower charging?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Not necessarily. Charging time depends on both battery size and maximum charge rate acceptance. The Hyundai IONIQ 6 with an 800V architecture charges its 77.4 kWh battery from 10% to 80% in just 18 minutes at a 350 kW charger. A larger battery with a slow max charge rate (like an older 40 kW DCFC max) will take longer despite the speed advantage.',
+      ,
+    ,
+  ],
+;
+
+  
+    <>
+      <Header />
+      
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>How Long to Charge an Electric Car</li>
+          </ol>
+        
+
+        
+          
+            Electric Vehicles
+            <h2>
+              How Long to Charge an Electric Car? By Level &amp; Battery Size (2026)
+            </h2>
+            
+              <time dateTime="2026-04-18">April 18, 2026</time>
+              13 min read
+            
+          
+
+          /* Scenario Opening */
+          
+            <p>
+              <strong>A scenario:</strong> You buy a 2026 Chevy Equinox EV and your garage has a standard 120V outlet. You plug in at 11 PM with a 30% charge. Your alarm goes off at 7 AM. How far can you drive? About 42 miles — the 8-hour Level 1 session added roughly 32–35 miles at 4 miles/hour. For most Americans who average 37 miles/day, that barely works. For anyone doing over 40 miles, it doesn't. That gap is why the Level 2 home charger decision matters.
+            </p>
+          
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>→Charging time = Battery size (kWh) ÷ Charger power (kW) × 1.1 (efficiency loss factor)</li>
+              <li>→A 75 kWh battery on Level 2 (7.2 kW): ~11.5 hours full; on Level 2 (11.5 kW): ~7.2 hours</li>
+              <li>→DC Fast Charging to 80%: 20–45 min for most EVs; the last 20% always takes as long as the first 70%</li>
+              <li>→The U.S. DOE reports 80% of EV charging happens at home — optimize your home setup first</li>
+              <li>→800V architecture vehicles (IONIQ 6, Kia EV6, Lucid Air) charge dramatically faster at high-power DCFC stations</li>
+            </ul>
+          
+
+          /* Table of Contents */
+          
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#the-formula" >1. The Charging Time Formula</a></li>
+              <li><a href="#level1-times" >2. Level 1 Charging Times by Battery Size</a></li>
+              <li><a href="#level2-times" >3. Level 2 Charging Times by Battery Size</a></li>
+              <li><a href="#dcfc-times" >4. DC Fast Charging Times by Vehicle</a></li>
+              <li><a href="#model-by-model" >5. Real Charging Times: 2026 EVs</a></li>
+              <li><a href="#what-slows-charging" >6. What Slows Down Your Charge Rate</a></li>
+              <li><a href="#daily-charging-math" >7. Daily Charging Math: What You Actually Need</a></li>
+              <li><a href="#faq" >8. Frequently Asked Questions</a></li>
+            </ol>
+          
+
+          
+
+            
+              <h2>The Charging Time Formula (And Why It's More Complicated in Practice)</h2>
+              <p>
+                The theoretical charging time formula is simple:
+              </p>
+              
+                Hours = Battery kWh × (1 - Current SOC%) ÷ Charger kW × 1.10
+              
+              <p>
+                The 1.10 multiplier accounts for roughly 10% charging efficiency losses — heat generated during conversion, onboard charger inefficiency, and cable resistance. For a 75 kWh battery at 20% state of charge (60 kWh needed) on a 7.2 kW Level 2 charger: 60 ÷ 7.2 × 1.10 = <strong>9.2 hours</strong>.
+              </p>
+              <p>
+                In practice, three additional variables complicate this:
+              </p>
+              <ol>
+                <li><strong>The vehicle's onboard charger capacity</strong> — If your car's onboard AC charger maxes out at 7.2 kW, plugging into an 11.5 kW Level 2 charger still only delivers 7.2 kW. You're limited by the car, not the charger.</li>
+                <li><strong>DCFC tapering above 80%</strong> — DC Fast Charging slows dramatically above 80% battery state of charge. Charging from 80% to 100% takes as long as 10% to 80%, which is why most road trippers charge to 80% and drive.</li>
+                <li><strong>Temperature</strong> — Cold batteries (below 50°F) charge significantly slower. Below 32°F, Level 2 charging can be 30–40% slower until the battery warms up. Per NREL's cold weather EV range study, charging time penalties in cold climates are real and often underestimated.</li>
+              </ol>
+            
+
+            
+              <h2>Level 1 Charging Times by Battery Size</h2>
+              <p>
+                Level 1 delivers 1.2–1.4 kW on a typical 12A circuit (some 15A circuits reach 1.8 kW). These times assume a full charge from empty on a 12A / 1.4 kW Level 1 connection:
+              </p>
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Battery Size</th>
+                      <th >Full Charge Time</th>
+                      <th >Overnight Recovery (8 hrs)</th>
+                      <th >Example Vehicle</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >8–12 kWh</td><td >6–10 hours</td><td >Full charge</td><td >Toyota Prius Prime, Kia Niro PHEV</td></tr>
+                    <tr ><td >18–22 kWh</td><td >14–18 hours</td><td >~50–60% charge</td><td >Jeep Wrangler 4xe, Ford Escape PHEV</td></tr>
+                    <tr ><td >40 kWh</td><td >30–35 hours</td><td >~25–30%</td><td >Nissan LEAF (base)</td></tr>
+                    <tr ><td >62–65 kWh</td><td >45–55 hours</td><td >~15–20%</td><td >Chevy Bolt EUV, VW ID.4 base</td></tr>
+                    <tr ><td >75–82 kWh</td><td >55–65 hours</td><td >~12–15%</td><td >Tesla Model 3, Model Y</td></tr>
+                    <tr ><td >100–123 kWh</td><td >75–95 hours</td><td >~9–11%</td><td >Ford F-150 Lightning, Tesla Model X</td></tr>
+                  </tbody>
+                </table>
+              
+              <p>
+                The conclusion from this table is stark: Level 1 is only truly viable for PHEVs and very short-commute BEV drivers. For any large-battery EV used as a primary vehicle, Level 1 is an emergency option, not a charging strategy. As the U.S. Department of Transportation notes, it can take "upward of 50 hours to charge a 60 kWh battery from empty" on Level 1 — a scenario that plays out for real owners who haven't yet installed Level 2.
+              </p>
+            
+
+            
+              <h2>Level 2 Charging Times by Battery Size</h2>
+              <p>
+                Level 2 transforms the EV experience. These times show how different charger amperages affect the same battery sizes. Note the "vehicle limit" column — your car's onboard charger caps what it can accept.
+              </p>
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Battery Size</th>
+                      <th >On 32A / 7.2 kW</th>
+                      <th >On 48A / 11.5 kW</th>
+                      <th >On 80A / 19.2 kW</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >18–22 kWh (PHEV)</td><td >2.5–3.5 hrs</td><td >2–2.5 hrs</td><td >~1.5 hrs</td></tr>
+                    <tr ><td >40 kWh</td><td >6–7 hrs</td><td >4–5 hrs</td><td >3–3.5 hrs</td></tr>
+                    <tr ><td >62 kWh</td><td >9.5–10.5 hrs</td><td >6–7 hrs</td><td >4–5 hrs</td></tr>
+                    <tr ><td >75–82 kWh</td><td >11.5–12.5 hrs</td><td >7–8 hrs</td><td >5–6 hrs</td></tr>
+                    <tr ><td >85 kWh</td><td >13–14 hrs</td><td >8–9 hrs</td><td >5.5–6.5 hrs</td></tr>
+                    <tr ><td >100 kWh</td><td >15–16 hrs</td><td >9.5–10.5 hrs</td><td >6–7 hrs</td></tr>
+                    <tr ><td >123 kWh</td><td >19–20 hrs</td><td >12–13 hrs</td><td >7–8 hrs</td></tr>
+                  </tbody>
+                </table>
+              
+              <p>
+                <strong>Important:</strong> The times in the 80A / 19.2 kW column only apply if your vehicle's onboard charger accepts that rate. Most EVs today accept 7.2–11.5 kW on AC Level 2. Only high-end vehicles like the Tesla Model S/X (11.5 kW), Ford F-150 Lightning (19.2 kW with the Pro Power Upgrade), and some Porsche Taycans accept higher rates. Always check your specific vehicle's AC charge rate limit in its manual.
+              </p>
+              <p>
+                Use our <a href="/ev-charging-cost/">EV Charging Cost Calculator</a> to find out the exact cost of any charging session for your vehicle — including time-of-use rate schedules.
+              </p>
+            
+
+            
+              <h2>DC Fast Charging Times: The 10–80% Standard</h2>
+              <p>
+                DCFC times are almost always quoted as 10% to 80% — not full charges — because charging slows dramatically above 80% to protect battery health. The table below shows time-to-80% at various station power levels:
+              </p>
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Battery (usable)</th>
+                      <th >At 50 kW DCFC</th>
+                      <th >At 150 kW DCFC</th>
+                      <th >At 350 kW DCFC</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >40 kWh</td><td >~38 min</td><td >~16 min</td><td >~10 min (vehicle limited)</td></tr>
+                    <tr ><td >62 kWh</td><td >~55 min</td><td >~22 min</td><td >~14 min (vehicle limited)</td></tr>
+                    <tr ><td >75–82 kWh</td><td >~70 min</td><td >~28–32 min</td><td >~20–25 min</td></tr>
+                    <tr ><td >85 kWh (800V)</td><td >~80 min</td><td >~22 min</td><td >~18 min</td></tr>
+                    <tr ><td >123 kWh</td><td >~100 min</td><td >~41 min</td><td >~28–32 min</td></tr>
+                  </tbody>
+                </table>
+              
+              <p>
+                The "vehicle limited" note in the 350 kW column is critical. Most EVs accept DC power at 50–150 kW maximum. Plugging a vehicle with a 50 kW DCFC limit into a 350 kW station charges at 50 kW — you're paying for the premium station but not benefiting from the speed. The exception is 800-volt architecture vehicles: the Hyundai IONIQ 6, Kia EV6, Porsche Taycan, Mercedes EQS, and Lucid Air can genuinely use 150–350 kW peak rates, charging dramatically faster.
+              </p>
+            
+
+            
+              <h2>Real Charging Times: 2026 Electric Vehicles</h2>
+              <p>
+                Here are the actual charging specs for the best-selling and most popular 2026 EVs. Data sourced from manufacturer specifications and Edmunds/Recurrent real-world testing:
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Vehicle</th>
+                      <th >Battery (usable)</th>
+                      <th >Max AC Rate</th>
+                      <th >Level 2 Full Charge</th>
+                      <th >Max DC Rate</th>
+                      <th >DCFC 10–80%</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr ><td >Tesla Model 3 RWD</td><td >62.4 kWh</td><td >11.5 kW</td><td >~6 hrs</td><td >170 kW</td><td >~25 min</td></tr>
+                    <tr ><td >Tesla Model Y LR AWD</td><td >75 kWh</td><td >11.5 kW</td><td >~7.5 hrs</td><td >250 kW</td><td >~30 min</td></tr>
+                    <tr ><td >Chevy Equinox EV</td><td >85 kWh</td><td >11.5 kW</td><td >~8 hrs</td><td >150 kW</td><td >~28 min</td></tr>
+                    <tr ><td >Hyundai IONIQ 6 LR RWD</td><td >77.4 kWh</td><td >11 kW</td><td >~8 hrs</td><td >350 kW (800V)</td><td >~18 min</td></tr>
+                    <tr ><td >Kia EV6 LR RWD</td><td >77.4 kWh</td><td >11 kW</td><td >~8 hrs</td><td >350 kW (800V)</td><td >~18 min</td></tr>
+                    <tr ><td >Ford F-150 Lightning Ext.</td><td >123 kWh</td><td >19.2 kW</td><td >~7.5 hrs</td><td >150 kW</td><td >~41 min</td></tr>
+                    <tr ><td >Rivian R1T Dual Max</td><td >~135 kWh</td><td >11.5 kW</td><td >~13 hrs</td><td >220 kW</td><td >~50 min</td></tr>
+                    <tr ><td >Lucid Air Grand Touring</td><td >~118 kWh</td><td >19.2 kW</td><td >~7 hrs</td><td >300 kW (800V)</td><td >~22 min</td></tr>
+                    <tr ><td >VW ID.4 Pro AWD</td><td >77 kWh</td><td >11 kW</td><td >~8 hrs</td><td >135 kW</td><td >~38 min</td></tr>
+                    <tr ><td >Tesla Model S</td><td >~100 kWh</td><td >11.5 kW</td><td >~10 hrs</td><td >250 kW</td><td >~25 min</td></tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                Notice the standout: the Hyundai IONIQ 6 and Kia EV6 charge from 10% to 80% in just 18 minutes at a 350 kW station. That's because their 800-volt architecture allows dramatically higher DC power acceptance — real 350 kW peak vs. the 150–250 kW peak of most other EVs. For frequent road trippers, 800V vehicles reduce charging stops from 35–40 minutes to 18–20 minutes — a meaningful quality-of-life difference on multi-day trips.
+              </p>
+            
+
+            
+              <h2>What Slows Down Your Actual Charge Rate</h2>
+              <p>
+                If your real-world charging feels slower than the specs above, here are the common culprits:
+              </p>
+
+              <h3>Cold Weather</h3>
+              <p>
+                Lithium-ion batteries charge more slowly below 50°F and significantly slower below 32°F. NREL's 2022 cold weather testing found that some EVs took 36% longer to charge at 20°F versus 70°F on Level 2. Most EVs now offer "battery preconditioning" — using grid power to warm the battery before you start charging or before arriving at a DCFC station. Enable this feature before winter trips.
+              </p>
+
+              <h3>Station Congestion and Power Sharing</h3>
+              <p>
+                Many DCFC stations share power between stalls. Two Teslas charging at adjacent 250 kW stalls may each receive only 125–150 kW. Third-party networks can be especially inconsistent — a 150 kW advertised station may deliver 50–80 kW under peak load conditions. If your charge seems slow at a DCFC station, moving to a different stall or returning later often helps.
+              </p>
+
+              <h3>State of Charge Effects</h3>
+              <p>
+                Even on DC fast charging, batteries don't accept maximum power throughout the session. Most EVs charge at full rated speed from 10% to 50% state of charge, then begin tapering. By 70%, charge rate is typically 60–80% of peak. Above 80%, it drops to 20–30% of peak. The practical implication: a 10–50% "top-up" at a DCFC station will always be faster per kWh than a 50–80% charge.
+              </p>
+
+              <h3>Circuit Capacity Limits at Home</h3>
+              <p>
+                If your home Level 2 charger is on a 40A circuit (8 kW), you can't get Level 2 speeds equivalent to a 50A (10 kW) or 60A (12 kW) circuit without an electrician upgrading the wire and breaker. Installing a 48A or 60A dedicated circuit from the start is worth the marginal extra cost at installation time — much cheaper than returning later for an upgrade. See our <a href="/blog/ev-home-charging-station-cost/">EV Home Charging Station Cost</a> guide for circuit planning details.
+              </p>
+            
+
+            
+              <h2>Daily Charging Math: What You Actually Need</h2>
+              <p>
+                Most EV anxiety is about charging time in abstract. The practical question is different: <em>can my charger restore the miles I use each day?</em> Here's how to answer it:
+              </p>
+
+              
+                <h3>Daily Charging Adequacy Check</h3>
+                <ol>
+                  <li>Your daily miles ÷ vehicle EPA efficiency (miles/kWh) = daily kWh needed</li>
+                  <li>Daily kWh ÷ charger power (kW) × 1.1 = hours of charging needed per day</li>
+                  <li>If hours needed &lt; hours plugged in nightly → your charger is sufficient</li>
+                </ol>
+                <p>
+                  <strong>Example:</strong> 50 miles/day at 3.5 miles/kWh = 14.3 kWh needed. On a 7.2 kW Level 2: 14.3 ÷ 7.2 × 1.1 = 2.2 hours. Easily recovered overnight. Even Level 1 (1.4 kW) would need 11.2 hours — borderline for a short overnight.
+                </p>
+              
+
+              <p>
+                The U.S. Energy Information Administration reports average U.S. residential electricity consumption of $0.1606/kWh in 2025 (latest annual data). Charging 14.3 kWh daily at this rate costs $2.30 per day, or roughly $839 per year — compared to $2,100+ annually in gasoline for a 30 MPG car at $3.50/gallon. Our <a href="/ev-savings-calculator/">EV Savings Calculator</a> shows your personalized fuel savings based on your actual mileage and electricity rate.
+              </p>
+
+              <p>
+                For solar homeowners, pairing a time-delayed Level 2 charging schedule with solar production midday can further cut costs. A 3 kW solar surplus from 11 AM to 2 PM generates 9 kWh — covering 30+ miles of EV range essentially for free. See our <a href="/blog/solar-panel-roi-ev-charging/">Solar Panel ROI with EV Charging</a> analysis for the full math.
+              </p>
+            
+
+            /* FAQ */
+            
+              <h2>Frequently Asked Questions</h2>
+              
+                
+                  <h3>How long does it take to fully charge an electric car?</h3>
+                  <p>It depends on battery size and charger type. On Level 1 (120V), charging a 75 kWh battery takes 45–60 hours. On Level 2 (7.2 kW), the same battery takes 10–11 hours from empty. On a 150 kW DC fast charger, charging from 10% to 80% takes 25–35 minutes. Most EV owners charge at home on Level 2 overnight, which easily handles daily driving needs.</p>
+                
+                
+                  <h3>How long does it take to charge a Tesla Model Y?</h3>
+                  <p>A Tesla Model Y Long Range (75 kWh usable) charges from 10% to 80% in about 30 minutes at a 250 kW V3 Supercharger. On a 48A / 11.5 kW Tesla Wall Connector at home, a full charge from 20% takes approximately 6–7 hours. Level 1 from empty would take 40–50 hours — impractical for daily use.</p>
+                
+                
+                  <h3>How long to charge a Ford F-150 Lightning?</h3>
+                  <p>The F-150 Lightning Extended Range has a 123 kWh usable battery. At a 150 kW DCFC station, a 15%–80% charge takes about 41 minutes per Ford's specifications. On an 80A / 19.2 kW Level 2 home charger (requires the available Pro Power upgrade), a full charge from empty takes about 7.5 hours. On a standard 40A Level 2, expect 12–14 hours.</p>
+                
+                
+                  <h3>Is it OK to charge an EV every night?</h3>
+                  <p>Yes — and it's recommended. Daily Level 2 home charging to 80% is healthier than letting the battery deplete deeply and charging infrequently. Keeping your EV plugged in does not overcharge it; the battery management system stops at your set limit. The U.S. DOE recommends routine top-ups over large, irregular charge swings for long-term battery health.</p>
+                
+                
+                  <h3>How much does it cost to charge an EV at home overnight?</h3>
+                  <p>At the U.S. average of $0.16/kWh (per EIA 2025 data), charging a 75 kWh battery from 20% to 80% (45 kWh added) costs $7.20. Off-peak rates in many states drop to $0.08–$0.12/kWh, cutting that to $3.60–$5.40. Annual home charging cost for a 12,000-mile driver: $450–$650, versus $1,500–$2,000 for a comparable gas vehicle.</p>
+                
+                
+                  <h3>Does a bigger battery always mean slower charging?</h3>
+                  <p>Not necessarily. The IONIQ 6 charges its 77.4 kWh battery from 10% to 80% in just 18 minutes at a 350 kW station thanks to 800V architecture. A larger battery with a slower maximum charge rate can take longer, but modern 800V EVs with larger packs often out-charge smaller-battery 400V EVs in real-world time-to-miles terms.</p>
+                
+              
+            
+          
+
+          /* CTA */
+          
+            <h2>See How Much You'll Save Charging at Home</h2>
+            <p>Enter your vehicle, daily miles, and electricity rate — get precise charging cost estimates, off-peak savings, and EV vs. gas comparison.</p>
+            
+              <a href="/ev-charging-cost/">
+                EV Charging Cost Calculator
+              </a>
+              <a href="/ev-savings-calculator/">
+                EV Savings Calculator
+              </a>
+            
+          
+
+          /* Related Articles */
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/ev-charging-levels-explained/">
+                Electric Vehicles
+                <h3>EV Charging Levels Explained: Level 1 vs Level 2 vs DC Fast</h3>
+                <p>Full comparison of all three charging levels — power, connectors, installation costs, and when to use each.</p>
+              </a>
+              <a href="/blog/ev-range-comparison/">
+                Electric Vehicles
+                <h3>EV Range Comparison 2026: Every Electric Vehicle Ranked</h3>
+                <p>512-mile Lucid Air to sub-$35K budget EVs — see which 2026 electric vehicles go farthest on a charge.</p>
+              </a>
+              <a href="/blog/electric-vehicle-battery-guide/">
+                Electric Vehicles
+                <h3>Electric Vehicle Battery Guide</h3>
+                <p>How EV batteries work, degrade, and what you can do to maximize their lifespan.</p>
+              </a>
+              <a href="/blog/best-ev-charger-for-home/">
+                Electric Vehicles
+                <h3>Best EV Chargers for Home 2026</h3>
+                <p>ChargePoint vs Emporia vs Wallbox — which Level 2 charger is right for your EV and home setup.</p>
+              </a>
+            
+          
+        
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema) 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+        />
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.jouleio.com/blog/how-long-to-charge-an-electric-car/">JouleIO</a>.
+      Explore more free tools at <a href="https://www.jouleio.com/">jouleio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.jouleio.com/">JouleIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
