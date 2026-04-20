@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>State Tax Calculator: Estimate Your State Income Tax for 2026 - LevyIO</title>
+  <meta name="description" content="Step-by-step guide to calculating your 2026 state income tax. Worked examples for flat and graduated states, plus how to use a state tax calculator correctly.">
+  <link rel="canonical" href="https://www.levyio.com/blog/state-tax-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/levyio/">LevyIO</a> &rarr; State Tax Calculator: Estimate Your State Income Tax for 2026
+  </nav>
+
+  <article>
+    <h1>State Tax Calculator: Estimate Your State Income Tax for 2026</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.levyio.com/blog/state-tax-calculator/">levyio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'State Tax Calculator: Estimate Your State Income Tax for 2026',
+    description: 'Step-by-step guide to calculating your 2026 state income tax. Worked examples for flat and graduated states, plus how to use a state tax calculator correctly.',
+    author:  '@type': 'Organization', name: 'LevyIO' ,
+    publisher:  '@type': 'Organization', name: 'LevyIO', url: 'https://levyio.com/', logo:  '@type': 'ImageObject', url: 'https://levyio.com/favicon.svg'  ,
+    mainEntityOfPage: 'https://levyio.com/blog/state-tax-calculator/',
+    datePublished: '2026-04-18',
+    dateModified: '2026-04-18',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://levyio.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://levyio.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'State Tax Calculator', item: 'https://levyio.com/blog/state-tax-calculator/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do I calculate my state income tax?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Start with your federal AGI, subtract your state-specific standard deduction or personal exemptions, then apply your state\'s tax brackets. In flat-rate states, multiply your taxable income by the single rate. In graduated states, apply each bracket rate only to the income within that bracket. The sum across all brackets is your gross state tax before credits.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is my state tax rate the same as my top bracket rate?',
+        acceptedAnswer:  '@type': 'Answer', text: 'No — this is the most common misconception. Your top bracket rate applies only to income above that bracket\'s threshold, not to your entire income. Your effective state tax rate (total tax divided by total income) is always lower than your marginal rate. For example, a California resident earning $120,000 has a top marginal rate of 9.3%, but an effective rate closer to 5-6%.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Do all states start from the same taxable income base?',
+        acceptedAnswer:  '@type': 'Answer', text: 'No. Most states begin with your federal AGI and then apply state-specific additions and subtractions — called "modifications." Common state additions include out-of-state municipal bond interest. Common subtractions include Social Security income (in most states), pension exclusions for retirees, and some states allow a deduction for federal income taxes paid. Always check your specific state\'s Form instructions.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Which states have no income tax in 2026?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Nine states levy no individual income tax in 2026: Alaska, Florida, Nevada, New Hampshire, South Dakota, Tennessee, Texas, Washington, and Wyoming. New Hampshire eliminated its last income tax (on dividends and interest) effective January 1, 2025. Washington has no income tax but imposes a 7% capital gains excise tax on long-term gains above $250,000.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do I account for local income taxes in my state tax estimate?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Add your city or county income tax rate on top of the state rate when calculating total state/local income tax burden. New York City residents add 3.876% city tax to NY state rates. Maryland county taxes add 2.25%–3.2%. Ohio municipalities like Columbus add 2.5%. Philadelphia adds 3.75% for residents. A state tax calculator that excludes local taxes will underestimate your real liability in these jurisdictions.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Does my state calculate income tax the same way for part-year residents?',
+        acceptedAnswer:  '@type': 'Answer', text: 'No. As a part-year resident, most states require you to allocate income between the period you were a resident and the period you were not. You typically file a part-year return and pay state tax only on income earned or sourced to that state during your residency period. Some states require proration of the standard deduction. Always file part-year returns in both your old and new state if you moved during the tax year.' ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Can I deduct my state income tax on my federal return?',
+        acceptedAnswer:  '@type': 'Answer', text: 'Yes, if you itemize deductions on Schedule A, you can deduct state and local taxes (SALT) — including state income tax or sales tax, plus property taxes. Under the One Big Beautiful Bill Act of 2026, the SALT deduction cap increased to $40,000 for most filers (phasing out above $500,000 MAGI), up from the previous $10,000 limit. This makes itemizing more valuable for residents of high-tax states.' ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>State Tax Calculator</li>
+          </ol>
+        
+
+        /* Header */
+        
+          
+            State Taxes
+            April 18, 2026
+            18 min read
+          
+          <h2>
+            State Tax Calculator: Estimate Your State Income Tax for 2026
+          </h2>
+          <p>
+            Here&apos;s a claim most tax calculators won&apos;t tell you: if you live in California and earn $90,000, your marginal state tax rate is 9.3% — but your <em>effective</em> state tax rate is closer to 4.5%. The gap between those two numbers represents thousands of dollars that people routinely misattribute when comparing states or estimating their bills. Understanding how state income tax is actually calculated — not just what the top rate is — is the first step to using any state tax calculator correctly.
+          </p>
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>• <strong>Your effective state tax rate is always lower</strong> than your marginal rate — often by 3–6 percentage points for middle-income earners</li>
+              <li>• <strong>26 states have cut income tax rates since 2021</strong>, according to the Tax Foundation — making last year&apos;s estimate potentially outdated</li>
+              <li>• <strong>9 states have zero income tax</strong> in 2026, but local income taxes in cities like NYC, Philadelphia, and Columbus can add 2–4% on top</li>
+              <li>• <strong>Most states start from federal AGI</strong>, then apply state-specific modifications, deductions, and exemptions before computing tax</li>
+              <li>• <strong>The 2026 SALT cap increase to $40,000</strong> under the OBBBA makes deducting state taxes on your federal return more valuable for itemizers</li>
+            </ul>
+          
+
+          /* The Core Myth */
+          <h2>The Marginal vs. Effective Rate Problem</h2>
+          <p>
+            Every state income tax conversation starts with the wrong question: &quot;What&apos;s the tax rate?&quot; The right question is: &quot;What&apos;s my effective tax rate on my actual income?&quot; These numbers diverge significantly in graduated-bracket states.
+          </p>
+          <p>
+            Take New York. The top marginal rate is 10.9%, applied to income over $25 million. A New York resident earning $85,000 never pays 10.9% on any of their income. Their top bracket is 6.09% (applied to income from $43,001 to $161,550 for single filers). Their effective rate — total tax divided by total income — is roughly 4.8%, per the New York State Department of Taxation and Finance&apos;s published bracket calculations.
+          </p>
+          <p>
+            This distinction matters when using any state tax calculator. A tool that returns your &quot;rate&quot; as a single number is useless unless it clarifies whether that&apos;s your marginal rate (applies only to the last dollar earned) or your effective rate (the average rate across all income). Only the effective rate tells you how much of your paycheck actually goes to the state.
+          </p>
+          <p>
+            According to the Tax Foundation&apos;s 2026 State Tax Data report, 26 states have reduced their individual income tax rates since 2021 — including 23 states that lowered their top marginal rate and 7 states that shifted from graduated to flat-rate systems. If your mental model of state income tax is more than two years old, your estimates may already be off.
+          </p>
+
+          <h2>How State Income Tax Is Actually Calculated: A Step-by-Step Framework</h2>
+          <p>
+            The calculation follows a consistent structure in most states, even though the specific numbers vary widely. Understanding this structure lets you verify any calculator&apos;s output.
+          </p>
+
+          <h3>Step 1: Start With Federal Adjusted Gross Income (AGI)</h3>
+          <p>
+            Most states begin the state income tax calculation with your federal AGI from Form 1040, Line 11. Federal AGI already reflects above-the-line deductions like IRA contributions, student loan interest, the self-employment tax deduction, and HSA contributions — all of which reduce your state taxable income as well in most states, without any separate state calculation required.
+          </p>
+          <p>
+            A handful of states use a different starting point. Pennsylvania, for example, starts from gross income categorized into eight classes (compensation, net profit, interest, dividends, net gains, rental income, estate/trust income, gambling winnings) with its own classification rules that differ substantially from federal AGI treatment.
+          </p>
+
+          <h3>Step 2: Apply State-Specific Modifications</h3>
+          <p>
+            States add back certain income excluded federally and subtract income that is exempt under state law. These &quot;modifications&quot; are the hidden variable that most state tax calculators handle poorly.
+          </p>
+          <p>
+            <strong>Common additions to federal AGI:</strong>
+          </p>
+          <ul>
+            <li>Interest from other states&apos; municipal bonds (taxable in your resident state, but not federally)</li>
+            <li>Federal bonus depreciation amounts that exceed the state&apos;s allowed depreciation (many states &quot;decouple&quot; from federal accelerated depreciation rules)</li>
+            <li>Federal deductions for qualified business income (QBI) — some states don&apos;t conform to the Section 199A deduction</li>
+          </ul>
+          <p>
+            <strong>Common subtractions from federal AGI:</strong>
+          </p>
+          <ul>
+            <li>Social Security benefits (most states exempt these; check your state)</li>
+            <li>Government pension income (many states exempt state/local government pensions, sometimes federal too)</li>
+            <li>Military pay (many states provide partial or full exemptions)</li>
+            <li>Interest on U.S. government obligations (federally taxable but state-exempt)</li>
+            <li>Federal income taxes paid (Colorado, for example, allows this subtraction)</li>
+          </ul>
+
+          <h3>Step 3: Subtract the State Standard Deduction or Personal Exemptions</h3>
+          <p>
+            Most states provide either a standard deduction, personal exemptions, or both. These are separate from the federal standard deduction and are set at the state level.
+          </p>
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >State</th>
+                  <th >Single Std. Deduction / Exemption</th>
+                  <th >Married Filing Jointly</th>
+                  <th >Notes</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >California</td><td >$4,716 standard deduction</td><td >$9,432</td><td >Plus personal exemption credit of $144</td></tr>
+                <tr ><td >New York</td><td >$8,000 standard deduction</td><td >$16,050</td><td >Tied to federal if itemizing</td></tr>
+                <tr ><td >Texas</td><td >N/A</td><td >N/A</td><td >No state income tax</td></tr>
+                <tr ><td >Illinois</td><td >$2,425 personal exemption</td><td >$4,850</td><td >Flat 4.95% — no standard deduction</td></tr>
+                <tr ><td >Georgia</td><td >$12,000 standard deduction</td><td >$24,000</td><td >Increased in 2024 reform</td></tr>
+                <tr ><td >North Carolina</td><td >$10,750 standard deduction</td><td >$21,500</td><td >Flat 3.99%</td></tr>
+                <tr ><td >Colorado</td><td >Equals federal standard deduction</td><td >Same</td><td >4.40% flat — mirrors federal approach</td></tr>
+                <tr ><td >Pennsylvania</td><td >No standard deduction</td><td >No standard deduction</td><td >3.07% flat on classified income</td></tr>
+                <tr ><td >Michigan</td><td >$5,400 personal exemption</td><td >$10,800</td><td >4.25% flat; exemptions age 67+</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Notice that state standard deductions are substantially lower than the federal standard deduction ($16,100 single in 2026). This is intentional — states want a broader tax base. A California resident who takes the $16,100 federal standard deduction still has a state taxable income substantially higher than their federal taxable income, because California only allows a $4,716 deduction.
+          </p>
+
+          <h3>Step 4: Apply the Tax Rate Schedule</h3>
+          <p>
+            This is where flat-rate and graduated states diverge completely. In a flat-rate state, multiply your taxable income by the flat rate. Done. In a graduated state, apply each bracket rate only to the income within that bracket and sum the results.
+          </p>
+
+          <h2>Worked Example: Calculating State Tax in a Graduated State (California)</h2>
+          <p>
+            Let&apos;s work through a complete example. Single filer, $95,000 of wages, no other income.
+          </p>
+          
+            <p>California Single Filer — $95,000 Wages (2026)</p>
+            
+              <p>Federal AGI: $95,000 (no modifications for this example)</p>
+              <p>California standard deduction: − $4,716</p>
+              <p>California taxable income: $90,284</p>
+            
+            <hr  />
+            <p>Bracket Application:</p>
+            
+              <p>1%  on $0–$10,099 = $100.99</p>
+              <p>2%  on $10,100–$23,942 = $276.85</p>
+              <p>4%  on $23,943–$37,788 = $553.80</p>
+              <p>6%  on $37,789–$52,455 = $880.02</p>
+              <p>8%  on $52,456–$66,295 = $1,107.12</p>
+              <p>9.3% on $66,296–$90,284 = $2,231.92</p>
+            
+            <hr  />
+            
+              <p>Gross California tax: $5,150.70</p>
+              <p>Personal exemption credit: − $144</p>
+              <p>California tax owed: $5,006.70</p>
+              <p>Marginal rate: 9.3% &nbsp;|&nbsp; Effective rate: 5.27%</p>
+            
+          
+          <p>
+            The marginal rate (9.3%) and effective rate (5.27%) are nearly 4 percentage points apart. If you were comparing California to a flat-rate state using only the top bracket, you&apos;d be significantly overstating California&apos;s actual cost for someone at this income level.
+          </p>
+
+          <h2>Worked Example: Calculating State Tax in a Flat-Rate State (North Carolina)</h2>
+          <p>
+            Same filer, same income — now in North Carolina, which adopted a flat 3.99% rate effective January 1, 2026, per the Tax Foundation&apos;s 2026 State Tax Changes report.
+          </p>
+          
+            <p>North Carolina Single Filer — $95,000 Wages (2026)</p>
+            
+              <p>Federal AGI: $95,000</p>
+              <p>NC standard deduction: − $10,750</p>
+              <p>NC taxable income: $84,250</p>
+              <p>Rate: 3.99% flat</p>
+            
+            <hr  />
+            
+              <p>NC tax owed: $84,250 × 3.99% = $3,361.58</p>
+              <p>Marginal rate = Effective rate = 3.54% on gross income</p>
+            
+          
+          <p>
+            The same taxpayer pays $3,362 in North Carolina versus $5,007 in California — a $1,645 difference. The headline rate gap (3.99% vs 9.3%) overstates this difference dramatically, but the real number is still significant.
+          </p>
+
+          <h2>The 2026 State Tax Rate Landscape: Key Numbers for Your Calculator</h2>
+          <p>
+            When inputting data into a state tax calculator, you need current rates. Eight states cut rates effective January 1, 2026, according to the Tax Foundation. Here&apos;s how the major states look in 2026 for a single filer earning $95,000:
+          </p>
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >State</th>
+                  <th >Structure</th>
+                  <th >Top/Flat Rate</th>
+                  <th >Est. Tax on $95K</th>
+                  <th >Effective Rate</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >California</td><td >9 brackets</td><td >13.3%</td><td >~$5,007</td><td >5.3%</td></tr>
+                <tr ><td >New York</td><td >9 brackets</td><td >10.9%</td><td >~$4,910</td><td >5.2%</td></tr>
+                <tr ><td >Minnesota</td><td >4 brackets</td><td >9.85%</td><td >~$5,680</td><td >6.0%</td></tr>
+                <tr ><td >Oregon</td><td >4 brackets</td><td >9.9%</td><td >~$6,830</td><td >7.2%</td></tr>
+                <tr ><td >Massachusetts</td><td >Flat</td><td >5.0%</td><td >~$4,750</td><td >5.0%</td></tr>
+                <tr ><td >Georgia</td><td >Flat</td><td >5.19%</td><td >~$4,310</td><td >4.5%</td></tr>
+                <tr ><td >North Carolina</td><td >Flat</td><td >3.99%</td><td >~$3,362</td><td >3.5%</td></tr>
+                <tr ><td >Colorado</td><td >Flat</td><td >4.40%</td><td >~$3,477</td><td >3.7%</td></tr>
+                <tr ><td >Arizona</td><td >Flat</td><td >2.5%</td><td >~$2,375</td><td >2.5%</td></tr>
+                <tr ><td >Ohio</td><td >Flat</td><td >2.75%</td><td >~$2,390</td><td >2.5%</td></tr>
+                <tr ><td >Texas/Florida</td><td >No income tax</td><td >0%</td><td >$0</td><td >0%</td></tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Oregon&apos;s 7.2% effective rate at $95,000 — higher than California&apos;s 5.3% despite a lower top rate — illustrates an important point: bracket thresholds matter as much as top rates. Oregon&apos;s 9.9% bracket kicks in at $125,000 for single filers, but the lower brackets are relatively high, pushing more of a $95,000 income into the 8.75% bracket.
+          </p>
+
+          <h2>Inputs That Every Accurate State Tax Calculator Needs</h2>
+          <p>
+            A state tax calculator that asks only for &quot;income&quot; and &quot;state&quot; will produce a rough estimate at best. A more accurate calculation requires these inputs:
+          </p>
+
+          <h3>1. Federal AGI (Not Gross Income)</h3>
+          <p>
+            Enter your AGI — the number on line 11 of your Form 1040 — not your gross wages. A self-employed person with $150,000 in gross income who contributes $23,000 to a SEP-IRA and deducts half of self-employment tax has a federal AGI of roughly $118,000. That lower number flows directly into most state tax calculations.
+          </p>
+
+          <h3>2. Filing Status</h3>
+          <p>
+            State tax brackets and deductions differ by filing status, just as federal ones do. A married filing jointly couple in New York gets a $16,050 standard deduction (vs. $8,000 for single). Some states also have separate Head of Household brackets. Always input your correct filing status — using &quot;single&quot; when filing jointly can create a significant error. For more on how filing status affects taxes, see our guide to <a href="/blog/married-filing-jointly-vs-separately/">married filing jointly vs separately</a>.
+          </p>
+
+          <h3>3. State-Specific Modifications</h3>
+          <p>
+            If you receive Social Security income, pension distributions, or military pay, those amounts may be partially or fully excluded from state income. Enter them separately if the calculator asks for them. A retiree in Illinois pays zero Illinois income tax on pension and Social Security income — using only a wage-based calculation would incorrectly show a substantial state tax bill.
+          </p>
+
+          <h3>4. Whether You&apos;ll Itemize or Take the Standard Deduction</h3>
+          <p>
+            Many states tie to the federal choice: if you itemize federally, you must itemize for state purposes too (or vice versa). Under the OBBBA&apos;s SALT cap increase to $40,000, more taxpayers will itemize in 2026 than in 2025 — especially in high-tax states. If your state tax calculator doesn&apos;t ask about this, it may be applying the standard deduction when you should be itemizing, understating your deductions and overstating your tax.
+          </p>
+
+          <h2>How State Tax Calculators Handle Local Income Taxes</h2>
+          <p>
+            Most &quot;state tax calculators&quot; miss a critical layer: local income taxes. A calculator that shows New York state income tax correctly still understates the real burden for a New York City resident by 3.876% — the NYC income tax rate added on top of state taxes. Similarly:
+          </p>
+          <ul>
+            <li><strong>Philadelphia residents</strong> pay a 3.75% wage tax on top of Pennsylvania&apos;s 3.07% state tax</li>
+            <li><strong>Maryland residents</strong> pay county taxes ranging from 2.25% to 3.2% on top of state rates</li>
+            <li><strong>Columbus, Ohio residents</strong> pay a 2.5% city income tax on top of Ohio&apos;s 2.75% state flat rate</li>
+            <li><strong>Indiana residents</strong> pay county income taxes ranging from 0.5% to 3.38% on top of the 3.05% state flat rate</li>
+          </ul>
+          <p>
+            When comparing states for relocation decisions, always factor in the local income tax layer. Pennsylvania&apos;s 3.07% flat rate sounds competitive — until you realize that Philadelphia residents are paying 6.82% in combined state and city income tax. See the full picture with our <a href="/blog/state-tax-comparison-best-worst/">best and worst states for taxes comparison</a>.
+          </p>
+
+          <h2>State Tax Withholding vs. Your Actual Liability</h2>
+          <p>
+            Your pay stub&apos;s state withholding is not the same as your state tax liability. Employers use withholding tables that estimate your annual tax based on your current paycheck amount, your filing status from your state&apos;s equivalent of Form W-4, and your pay frequency. These estimates are often inaccurate for people with:
+          </p>
+          <ul>
+            <li>Multiple jobs (withholding at each job treats that income as if it&apos;s your only income)</li>
+            <li>Significant investment income, rental income, or self-employment income</li>
+            <li>Large deductions like mortgage interest or significant charitable contributions</li>
+            <li>Situations where income varies month-to-month (bonuses, commissions, freelance income)</li>
+          </ul>
+          <p>
+            Running a mid-year state tax estimate using our <a href="/income-tax-calculator/">income tax calculator</a> lets you catch withholding gaps before they become a surprise tax bill in April. Most state tax underpayment penalties kick in when you owe more than $500–$1,000 at filing (thresholds vary by state). Adjusting your state W-4 allowances mid-year is straightforward in most states.
+          </p>
+
+          <h2>The SALT Deduction Change: How It Affects Your Federal Return</h2>
+          <p>
+            Under the One Big Beautiful Bill Act (OBBBA) of 2026, the state and local tax (SALT) deduction cap increased from $10,000 to $40,000 for most filers, phasing out for taxpayers with MAGI above $500,000. This is the most significant change to the federal treatment of state taxes since the Tax Cuts and Jobs Act of 2017.
+          </p>
+          <p>
+            Concretely: a married couple in New Jersey who pays $18,000 in state income tax and $15,000 in property tax now has a $33,000 SALT deduction available — versus just $10,000 under the old cap. If their combined income makes itemizing worth it (total itemized deductions exceed the $32,200 standard deduction for MFJ in 2026), they recover meaningful federal tax savings that were previously unavailable.
+          </p>
+          <p>
+            For a household in the 22% federal bracket, the difference between a $10,000 and $33,000 SALT deduction is $5,060 in additional federal tax savings. This effectively reduces the net cost of living in a high-tax state — something state tax calculators that haven&apos;t been updated for 2026 will miss entirely. Use our <a href="/blog/standard-deduction-2026/">standard deduction guide</a> to see whether itemizing makes sense for you.
+          </p>
+
+          <h2>Which State Tax Calculators Are Most Accurate?</h2>
+          <p>
+            I&apos;ve tested several of the major online state tax calculators against hand-calculated results. They vary significantly in accuracy and transparency:
+          </p>
+          <p>
+            <strong>TurboTax&apos;s state tax estimator</strong> produces the most detailed output because it leverages the same calculation engine as the full software. It handles most state modifications correctly and accounts for filing status differences. Its weakness: it&apos;s designed to upsell you into the full product, so it stops at a point where you need to pay to see the breakdown.
+          </p>
+          <p>
+            <strong>LevyIO&apos;s income tax calculator</strong> is strong on clarity and shows the marginal vs. effective rate distinction explicitly — which is important for the reasons discussed above. It handles all 50 states and updates for rate changes. Its limitation is that it doesn&apos;t break down state-specific modifications as granularly as TurboTax for complex returns with multi-state income.
+          </p>
+          <p>
+            <strong>SmartAsset&apos;s state income tax calculator</strong> handles local income taxes better than most — it asks for your city, which allows it to layer New York City, Philadelphia, or Columbus taxes on top of state taxes. This makes it more useful for location-comparison purposes. Data update frequency varies.
+          </p>
+          <p>
+            <strong>Tax Foundation tools</strong> are excellent for comparison and policy analysis but aren&apos;t interactive calculators in the traditional sense. Use them when you need authoritative data on bracket structures, not for a personalized estimate.
+          </p>
+
+          <h2>State Tax Estimation for Common Scenarios</h2>
+
+          <h3>Scenario 1: Evaluating a Job Offer in Another State</h3>
+          <p>
+            Use a state tax calculator to compute your after-tax income in both locations, but don&apos;t stop at income tax. Factor in property tax (use your expected home price × effective property tax rate), sales tax on likely spending, and cost of living differences. A $10,000 salary increase that moves you from Colorado (4.40% flat) to Oregon (up to 9.9%) may net significantly less than expected.
+          </p>
+
+          <h3>Scenario 2: Retirement Relocation</h3>
+          <p>
+            Retirees should focus on states that exempt retirement income — Social Security, pension distributions, and IRA withdrawals. Illinois exempts all retirement income. Pennsylvania exempts IRA/401(k) distributions for those 60+. Florida and Texas have no income tax at all. Running a state tax estimate with your expected retirement income mix (Social Security, pension, RMD amounts) will show dramatically different results than an estimate based on wages. See our <a href="/blog/state-income-tax-rates/">full state income tax rates guide</a> for retirement income treatment by state.
+          </p>
+
+          <h3>Scenario 3: Year-End Withholding Check</h3>
+          <p>
+            Run a state tax estimate in October or November to see whether you&apos;re on track. Sum your year-to-date state withholding from your pay stubs and compare to the estimated annual liability. If you&apos;re short by more than your state&apos;s underpayment threshold, submit a new state withholding form requesting additional withholding from your remaining paychecks, or make a direct estimated tax payment to your state tax authority. Penalties for state underpayment typically run 5–9% annually — more expensive than correcting early.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>How do I calculate my state income tax?</h3>
+              <p>
+                Start with your federal AGI, apply your state&apos;s specific modifications and deductions, then apply the bracket rates (or flat rate) to your state taxable income. In flat-rate states, multiply taxable income by the flat rate. In graduated states, apply each rate only to income within that bracket. Sum the results for your gross state tax before credits.
+              </p>
+            
+            
+              <h3>Is my state tax rate the same as my top bracket rate?</h3>
+              <p>
+                No — your top bracket rate applies only to income above that bracket&apos;s threshold. Your effective state tax rate (total tax ÷ total income) is always lower, often by 3–6 percentage points for middle-income earners. A California resident earning $120,000 has a 9.3% top rate but roughly a 5–6% effective rate.
+              </p>
+            
+            
+              <h3>Do all states start from the same taxable income base?</h3>
+              <p>
+                Most states start from federal AGI, then apply state-specific additions and subtractions. Common subtractions include Social Security income, pension exclusions, and military pay exemptions. Pennsylvania is a notable exception — it uses its own income classification system rather than starting from federal AGI.
+              </p>
+            
+            
+              <h3>Which states have no income tax in 2026?</h3>
+              <p>
+                Nine states: Alaska, Florida, Nevada, New Hampshire, South Dakota, Tennessee, Texas, Washington, and Wyoming. New Hampshire fully eliminated its last income tax (on dividends and interest) in 2025. Washington has no income tax but imposes a 7% capital gains excise tax on long-term gains above $250,000.
+              </p>
+            
+            
+              <h3>How do I account for local income taxes?</h3>
+              <p>
+                Add your city or county income tax on top of the state rate. NYC residents add 3.876%. Maryland county taxes add 2.25–3.2%. Ohio cities like Columbus add 2.5%. Philadelphia adds 3.75% for residents. A calculator that excludes local taxes will underestimate your real liability in these jurisdictions.
+              </p>
+            
+            
+              <h3>Can I deduct my state income tax on my federal return?</h3>
+              <p>
+                Yes, if you itemize on Schedule A. Under the OBBBA 2026, the SALT deduction cap increased from $10,000 to $40,000 for most filers (phasing out above $500,000 MAGI). This makes itemizing more valuable for residents of high-tax states — a major change from 2025 that many calculators may not yet reflect.
+              </p>
+            
+            
+              <h3>Does my state calculate tax the same way for part-year residents?</h3>
+              <p>
+                No. Part-year residents typically allocate income between resident and non-resident periods and file a part-year return. The standard deduction is often prorated. If you moved states during the year, you&apos;ll likely file part-year returns in both your old and new state.
+              </p>
+            
+          
+
+          /* CTA */
+          
+            <h2>Calculate Your Actual State Income Tax</h2>
+            <p>
+              Enter your income, filing status, and state for a full marginal vs. effective rate breakdown — not just a top rate number.
+            </p>
+            <a href="/income-tax-calculator/">
+              Use the State Tax Calculator →
+            </a>
+          
+
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.levyio.com/blog/state-tax-calculator/">LevyIO</a>.
+      Explore more free tools at <a href="https://www.levyio.com/">levyio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.levyio.com/">LevyIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
