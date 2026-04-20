@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Net Price Calculator: See What College Really Costs You - DegreeCalc</title>
+  <meta name="description" content="A net price calculator shows your actual college cost after grants and scholarships — not the sticker price. Learn how to use one, what it misses, and how to compare aid offers.">
+  <link rel="canonical" href="https://www.degreecalc.com/blog/net-price-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/degreecalc/">DegreeCalc</a> &rarr; Net Price Calculator: See What College Really Costs You
+  </nav>
+
+  <article>
+    <h1>Net Price Calculator: See What College Really Costs You</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.degreecalc.com/blog/net-price-calculator/">degreecalc.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://degreecalc.com/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://degreecalc.com/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Net Price Calculator', item: 'https://degreecalc.com/blog/net-price-calculator/' ,
+    ],
+  ;
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'What is a net price calculator?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A net price calculator is a federally mandated tool available on every college\'s website that estimates your out-of-pocket cost to attend that institution after subtracting grants and scholarships you are likely to receive. It is based on data from students with similar financial profiles who attended the prior year, not a guarantee of your actual aid award. Every college receiving federal aid is required by law to have one, per the Higher Education Opportunity Act.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is the net price calculator accurate?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Net price calculator estimates are directionally useful but not guaranteed. They use prior-year data from students with similar financial circumstances and cannot account for changes in your individual situation, institutional funding levels, or merit aid that requires additional applications. Studies have found estimates can vary from actual awards by $1,000–$4,000 in either direction. Use the net price calculator as a planning benchmark, not a firm commitment.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What information do I need to use a net price calculator?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Most net price calculators require your household\'s adjusted gross income (AGI) from the most recent tax return, the number of people in your household, the number of family members in college simultaneously, and basic asset information (savings, investments, home equity). Some calculators also ask about your GPA or test scores if merit aid is factored into the estimate.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the difference between net price and sticker price?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The sticker price is the published cost of attendance — tuition, fees, room, and board — before any aid is applied. For 2025–26, the average sticker price at public four-year colleges is $27,146 per year (in-state) and $56,290 at private four-year colleges, per College Board data. The net price is what you actually pay after subtracting grants and scholarships. For many private universities, the net price is 40–60% lower than the sticker price.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Can I use one calculator to compare multiple colleges?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The federal government\'s College Cost Estimator at collegecost.ed.gov links to all institutional net price calculators in one place. However, each school\'s calculator must be completed separately, as they collect different information and use different methodologies. The Department of Education\'s Federal Student Aid Estimator at studentaid.gov provides a general cross-school estimate using your FAFSA Student Aid Index (SAI).',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What does the net price calculator NOT include?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Net price calculators typically do not include: merit scholarships that require a separate application, outside scholarships from private organizations, work-study earnings (these are technically aid but require you to work for them), or cost increases between years. They also cannot predict whether institutional funding will change year-to-year. Always add a buffer and ask the financial aid office specifically whether your aid is renewed each year or only guaranteed for freshman year.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What should I do after using a net price calculator?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'After running a net price estimate: (1) Submit your FAFSA as early as possible — October 1 for the following academic year — to receive an official Student Aid Index; (2) Compare the net price estimate to your actual aid letter when it arrives; (3) If the actual award is significantly higher than estimated, ask the financial aid office about Professional Judgment appeals; (4) Do not commit to a school before comparing actual award letters from all schools you are considering.',
+        ,
+      ,
+    ],
+  ;
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+      <Header />
+      
+        
+
+          /* Breadcrumb */
+          
+            <a href="/">Home</a>
+            /
+            <a href="/blog/">Blog</a>
+            /
+            Net Price Calculator
+          
+
+          /* Header */
+          
+            Financial Aid
+            <h2>
+              Net Price Calculator: See What College Really Costs You
+            </h2>
+            
+              <time dateTime="2026-04-16">April 16, 2026</time>
+              13 min read
+            
+          
+
+          /* Content */
+          
+
+            /* Key Takeaways */
+            
+              <p>Key Takeaways</p>
+              <ul>
+                <li>&#x2022; Every college receiving federal aid must provide a net price calculator — required by the Higher Education Opportunity Act since 2011</li>
+                <li>&#x2022; The average sticker price at private four-year colleges is $58,610/year; the average net price paid is $32,250 — a 45% discount (College Board 2025)</li>
+                <li>&#x2022; Net price calculators use prior-year data and are estimates, not guarantees — actual awards can differ by $1,000–$4,000</li>
+                <li>&#x2022; A &quot;cheap&quot; public school is not always cheaper than an &quot;expensive&quot; private one — net price reverses the ranking surprisingly often</li>
+                <li>&#x2022; Running a net price calculator at every school you are applying to is one of the highest-ROI activities in the college search process</li>
+              </ul>
+            
+
+            /* Opening — problem-solution frame */
+            <p>
+              Here is the most common — and most expensive — mistake families make in the college search: they eliminate schools based on the sticker price. A family sees $62,000 on a private university&apos;s website, assumes it is unaffordable, and crosses it off the list. Meanwhile, they settle for a &quot;cheaper&quot; public school with a $28,000 sticker price, which ends up costing them $22,000 per year after minimal aid.
+            </p>
+            <p>
+              The family would have paid less at the private school.
+            </p>
+            <p>
+              This is not a rare edge case. According to College Board&apos;s <em>Trends in College Pricing and Student Aid 2025</em>, the average published sticker price at private four-year colleges is $58,610 per year — but the average net price paid by students is $32,250, a 45% reduction. At many elite institutions, the discount is even larger: MIT&apos;s average net price is approximately $19,500/year for families earning under $75,000. The tool that reveals this reality is the net price calculator. This guide explains how to use it correctly, what it misses, and how to turn the numbers into an informed decision.
+            </p>
+
+            <h2>What Is a Net Price Calculator?</h2>
+            <p>
+              A net price calculator is an online tool — required on every college website receiving federal financial aid — that estimates your out-of-pocket cost to attend a specific institution. It does this by subtracting the grants and scholarships you are likely to receive from that school&apos;s total cost of attendance.
+            </p>
+            <p>
+              The legal requirement comes from the Higher Education Opportunity Act of 2008, which mandated that all Title IV-participating institutions (those that accept federal student aid) make a net price calculator available by 2011. The law defines net price as:
+            </p>
+            
+              <p>
+                &quot;The average yearly price actually charged to first-year, full-time undergraduates receiving student aid at the institution after deducting such aid.&quot;
+              </p>
+              <p>— Higher Education Opportunity Act, Section 131(a)(3)</p>
+            
+            <p>
+              The key phrase is &quot;after deducting such aid.&quot; Net price includes grants (money you do not repay) and scholarships, but does <em>not</em> subtract student loans (which you do repay) or work-study earnings (which require you to work). This distinction matters enormously: two schools can show the same net price, but one might achieve it with grants while another achieves it primarily through loan packaging.
+            </p>
+
+            <h2>Sticker Price vs. Net Price: The Gap Is Larger Than You Think</h2>
+            <p>
+              The gap between sticker price and net price varies dramatically by institution type, selectivity, and family income. College Board data for 2025–26 reveals the scale of the discount:
+            </p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Institution Type</th>
+                    <th >Avg Sticker Price</th>
+                    <th >Avg Net Price</th>
+                    <th >Typical Discount</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr>
+                    <td >Private 4-Year (nonprofit)</td>
+                    <td >$58,610/yr</td>
+                    <td >$32,250/yr</td>
+                    <td >-45%</td>
+                  </tr>
+                  <tr>
+                    <td >Public 4-Year (in-state)</td>
+                    <td >$27,146/yr</td>
+                    <td >$15,600/yr</td>
+                    <td >-43%</td>
+                  </tr>
+                  <tr>
+                    <td >Public 4-Year (out-of-state)</td>
+                    <td >$44,150/yr</td>
+                    <td >$27,000/yr</td>
+                    <td >-39%</td>
+                  </tr>
+                  <tr>
+                    <td >Community College (2-Year)</td>
+                    <td >$19,860/yr</td>
+                    <td >$8,410/yr</td>
+                    <td >-58%</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            <p>Source: College Board <em>Trends in College Pricing and Student Aid 2025</em>. Net prices are averages for aid recipients — families with very high incomes may pay closer to sticker price.</p>
+
+            <p>
+              The reversal of ranking is common. A family earning $60,000 per year might receive $42,000 in annual grants from a private university with a $62,000 sticker price — paying a net price of $20,000/year. That same family might receive only $8,000 in grants from a public university with a $28,000 sticker price — paying $20,000 as well. Or more. This is why running the net price calculator at every school on your list is essential. Use our <a href="/college-cost-calculator/">college cost calculator</a> to model different aid scenarios.
+            </p>
+
+            <h2>How to Use a Net Price Calculator: Step by Step</h2>
+            <p>
+              Each institution has its own net price calculator, but most follow a similar pattern. Here is a practical walkthrough:
+            </p>
+            <ol>
+              <li>
+                <strong>Gather your financial documents before you start.</strong> Most calculators ask for the parent&apos;s (or student&apos;s, if independent) adjusted gross income (AGI) from the most recently filed federal tax return, total taxable and untaxed income, assets (bank accounts, investments — but typically not retirement accounts or primary home equity for federal aid), number of household members, and number of family members enrolled in college simultaneously.
+              </li>
+              <li>
+                <strong>Navigate to the school&apos;s net price calculator.</strong> The easiest way to find all calculators in one place is the Department of Education&apos;s College Cost Estimator at collegecost.ed.gov, which links to every institution&apos;s calculator. You can also go directly to each school&apos;s financial aid office website.
+              </li>
+              <li>
+                <strong>Enter your information carefully and honestly.</strong> The estimate is only as accurate as the data you provide. Rounding income down or omitting assets will give you an unrealistically low estimate — and a nasty surprise when the actual award letter arrives.
+              </li>
+              <li>
+                <strong>Note what the calculator does and does not include.</strong> Check whether merit aid is included in the estimate. Some calculators only estimate need-based grants; others include merit scholarships awarded at admission. If merit aid is excluded, the actual cost may be lower than the estimate if you are a strong academic applicant.
+              </li>
+              <li>
+                <strong>Record the result — both the gross figure and the component breakdown.</strong> The estimate should show you how much came from grants, how much from scholarships, and how much the school expects you to pay from savings, work, and loans. Compare this &quot;Expected Family Contribution&quot; (now called Student Aid Index or SAI under the new FAFSA rules) across multiple schools.
+              </li>
+              <li>
+                <strong>Run the calculator at every school on your list, not just your top choice.</strong> Financial aid packages vary enormously between institutions. A school you consider a &quot;safety&quot; school may offer the most generous aid package because they want to enroll you. Do the full comparison before making decisions.
+              </li>
+            </ol>
+
+            <h2>What the Net Price Calculator Cannot Tell You</h2>
+            <p>
+              Net price calculators are genuinely useful tools — but treating them as definitive answers leads to poor decisions. There are six significant limitations every family should understand:
+            </p>
+            
+              
+                <p>1. They use prior-year data</p>
+                <p>Calculators estimate your aid based on what students with similar profiles paid in the previous academic year. Cost of attendance changes, institutional funding changes, and program-specific scholarships can all shift from year to year. The estimate is backward-looking by design.</p>
+              
+              
+                <p>2. Merit aid requiring a separate application is usually excluded</p>
+                <p>Many colleges offer named merit scholarships ($5,000–$25,000+) that require a separate application, audition, portfolio, or essay. These are typically not included in net price calculator estimates. If you are a strong candidate, your actual cost may be significantly lower than what the calculator shows.</p>
+              
+              
+                <p>3. The estimate is an average, not your specific offer</p>
+                <p>A calculator that shows $18,000 is saying: &quot;Students like you paid an average of $18,000 last year.&quot; Your specific offer depends on your FAFSA results, the school&apos;s institutional policy, how much need-based funding remains when you apply, and factors the calculator cannot see.</p>
+              
+              
+                <p>4. Aid is rarely guaranteed beyond freshman year</p>
+                <p>Many schools package generous freshman-year aid to attract students, then reduce grants in subsequent years based on shifting institutional priorities. Ask explicitly: &quot;Is this aid package renewable for all four years, and under what conditions can it be reduced?&quot; This is a question the calculator cannot answer.</p>
+              
+              
+                <p>5. Outside scholarships are not factored in</p>
+                <p>Scholarships from community organizations, employers, foundations, and private programs are not reflected in the net price calculator. If you have won or expect to win outside scholarships, your true out-of-pocket cost will be lower — but some schools reduce institutional aid dollar-for-dollar when outside scholarships are received, eliminating the benefit.</p>
+              
+              
+                <p>6. The quality of calculators varies significantly</p>
+                <p>Some institutions have invested in sophisticated calculators that closely mirror their actual aid formulas; others provide legally compliant but minimally informative tools. Highly selective universities with strong financial aid programs (Harvard, Princeton, MIT, Amherst) tend to have the most accurate and detailed calculators. Less-resourced institutions may have significant gaps between the estimate and the actual award.</p>
+              
+            
+
+            <h2>Net Price Calculators Worth Knowing</h2>
+            <p>
+              Beyond individual school calculators, several broader tools help students compare costs across institutions:
+            </p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Tool</th>
+                    <th >Best For</th>
+                    <th >Limitations</th>
+                    <th >Accuracy</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr>
+                    <td >Individual school NPC (e.g., Harvard, Stanford)</td>
+                    <td >Best estimate for that specific school</td>
+                    <td >Only covers one school at a time</td>
+                    <td >High</td>
+                  </tr>
+                  <tr>
+                    <td >College Board BigFuture NPC</td>
+                    <td >Many schools using College Board&apos;s platform</td>
+                    <td >Varies by school data quality</td>
+                    <td >Medium-High</td>
+                  </tr>
+                  <tr>
+                    <td >Federal Student Aid Estimator (studentaid.gov)</td>
+                    <td >FAFSA SAI calculation, cross-school rough estimates</td>
+                    <td >Doesn&apos;t account for school-specific merit aid</td>
+                    <td >Medium</td>
+                  </tr>
+                  <tr>
+                    <td >collegecost.ed.gov (DOE center)</td>
+                    <td >Finding links to all institutional calculators</td>
+                    <td >Directory only — links to individual school tools</td>
+                    <td >Varies</td>
+                  </tr>
+                  <tr>
+                    <td >DegreeCalc College Cost Calculator</td>
+                    <td >Modeling scenarios, comparing housing/major choices</td>
+                    <td >Does not pull live institutional aid data</td>
+                    <td >Planning tool</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            <p>
+              As a financial aid counselor, I recommend a two-step approach: use the Federal Student Aid Estimator to calculate your Student Aid Index first, then go to each school&apos;s individual net price calculator for school-specific estimates. The SAI gives you a baseline for what federal need-based aid to expect; the school calculator tells you how that translates to that specific institution&apos;s aid package.
+            </p>
+            <p>
+              Our <a href="/college-cost-calculator/">college cost calculator</a> is useful for modeling total four-year costs under different scenarios — different housing arrangements, different loan levels, different family contribution amounts — but is not a substitute for running the official net price calculator at each school you are seriously considering.
+            </p>
+
+            <h2>How to Interpret Your Net Price Estimate</h2>
+            <p>
+              When a net price calculator gives you a number, it is not showing you a single cost — it is showing you the result of a formula. Understanding what went into the formula helps you interpret the result and identify opportunities:
+            </p>
+            
+              <p>The Net Price Formula</p>
+              
+                
+                  Cost of Attendance (tuition + fees + room + board + books + personal)
+                  $62,000
+                
+                
+                  – Institutional grants (need-based)
+                  – $24,000
+                
+                
+                  – Institutional merit scholarships
+                  – $8,000
+                
+                
+                  – Federal Pell Grant (need-based, up to $7,395)
+                  – $4,000
+                
+                
+                  = Estimated Net Price (what you pay)
+                  $26,000
+                
+              
+              <p>Note: Student loans and work-study are NOT subtracted in the official net price calculation — they represent money you borrow or earn, not free aid.</p>
+            
+            <p>
+              When comparing net price estimates across schools, always look at the breakdown, not just the total. A $26,000 net price built on $36,000 in grants is fundamentally different from a $26,000 net price built on $6,000 in grants plus $30,000 in recommended loans. Both show the same net price number, but one requires taking on $120,000 in debt over four years. This is exactly the kind of distinction our <a href="/blog/financial-aid/">financial aid guide</a> covers in detail.
+            </p>
+
+            <h2>Turning Estimates into Negotiation Leverage</h2>
+            <p>
+              Most families do not realize that financial aid awards are negotiable — particularly at schools below the very top tier of selectivity. If one school offers you a meaningfully better package than another school of comparable quality and fit, you can use that offer as leverage.
+            </p>
+            <p>
+              This process — formally called a Professional Judgment appeal or an aid reconsideration request — works best when:
+            </p>
+            <ul>
+              <li>You have a competing offer from a comparable institution that is meaningfully better (typically $3,000+ difference)</li>
+              <li>Your financial circumstances have changed since filing the FAFSA (job loss, medical expenses, divorce)</li>
+              <li>The school values your enrollment — meaning you are likely above their median academic profile</li>
+            </ul>
+            <p>
+              According to the National Association for College Admission Counseling (NACAC), approximately 67% of students who negotiate financial aid packages receive an improved offer. The request should be specific, professional, and submitted in writing to the financial aid office — not framed as a complaint, but as a request for reconsideration in light of a competing offer or changed circumstances.
+            </p>
+
+            <h2>A Practical Checklist: Before You Trust Any Net Price Estimate</h2>
+            <p>
+              Before making a financial commitment based on a net price calculation, confirm these questions with the financial aid office:
+            </p>
+            <ol>
+              <li><strong>Is the estimated aid renewable for all four years?</strong> If so, what are the renewal requirements (GPA threshold, credit load, FAFSA refiling)?</li>
+              <li><strong>Does receiving outside scholarships reduce institutional grants dollar-for-dollar?</strong> Some schools practice &quot;scholarship displacement,&quot; which eliminates the benefit of outside awards.</li>
+              <li><strong>Is merit aid included in the calculator estimate, or only need-based aid?</strong> If merit aid is not included, ask about the GPA and test score thresholds for automatic merit awards.</li>
+              <li><strong>What is the average net price actually paid by students in my income bracket?</strong> Ask for the school&apos;s IPEDS data showing net price by family income — this is public information required to be reported annually.</li>
+              <li><strong>Will a change in family income next year affect my aid?</strong> If a parent had an unusually high or low income year, your aid in subsequent years may change significantly.</li>
+            </ol>
+
+            /* FAQ Section */
+            <h2>Frequently Asked Questions</h2>
+            
+              
+                <h3>What is a net price calculator?</h3>
+                <p>
+                  A net price calculator is a federally mandated tool on every college website that estimates your out-of-pocket cost after grants and scholarships are subtracted from the total cost of attendance. It is based on data from prior-year students with similar financial profiles. Every college receiving federal aid has been required to provide one since 2011, per the Higher Education Opportunity Act. Use our <a href="/college-cost-calculator/">college cost calculator</a> alongside school-specific tools to model total four-year costs.
+                </p>
+              
+              
+                <h3>Is the net price calculator accurate?</h3>
+                <p>
+                  Net price estimates are directionally useful but not guaranteed. They use prior-year data from students with similar financial circumstances and cannot account for merit aid requiring separate applications, year-to-year funding changes, or individual circumstances. Estimates can differ from actual award letters by $1,000–$4,000 in either direction. Use the calculator as a planning benchmark, then verify with the actual award letter before committing.
+                </p>
+              
+              
+                <h3>What information do I need to use a net price calculator?</h3>
+                <p>
+                  Most calculators require your household adjusted gross income (AGI) from the most recent tax return, household size, number of family members in college, and basic asset information (savings and investments — typically not retirement accounts or primary home equity). Some also ask for GPA and test scores if the school factors merit aid into the estimate.
+                </p>
+              
+              
+                <h3>What is the difference between net price and sticker price?</h3>
+                <p>
+                  The sticker price is the published cost of attendance before any aid — averaging $27,146/year at public four-year colleges and $58,610 at private four-year colleges in 2025–26 (College Board). Net price is what you pay after subtracting grants and scholarships. At private universities, the average discount is 45%, meaning the average student pays $32,250 — not the $58,610 sticker price.
+                </p>
+              
+              
+                <h3>Can I use one calculator to compare multiple colleges?</h3>
+                <p>
+                  The Department of Education&apos;s College Cost Estimator at collegecost.ed.gov links to all institutional calculators in one place, but each must be completed separately. The Federal Student Aid Estimator at studentaid.gov provides general cross-school estimates using your FAFSA Student Aid Index (SAI). For scenario planning and total cost comparisons, also use our <a href="/college-cost-calculator/">college cost calculator</a>.
+                </p>
+              
+              
+                <h3>What does the net price calculator NOT include?</h3>
+                <p>
+                  Net price calculators typically exclude: merit scholarships requiring separate applications, outside scholarships from private organizations, work-study earnings (you must work to receive these), and year-over-year cost increases. They cannot predict whether institutional funding will change or whether your aid will be renewed. Always ask the financial aid office about renewal conditions and scholarship displacement policies. Read our <a href="/blog/financial-aid/">financial aid guide</a> for the full picture.
+                </p>
+              
+              
+                <h3>What should I do after using a net price calculator?</h3>
+                <p>
+                  After running estimates: (1) Submit your FAFSA as early as possible starting October 1; (2) Apply for merit scholarships requiring separate applications; (3) Compare your actual award letters when they arrive against the estimates; (4) If an award is significantly higher than estimated, request a Professional Judgment review — about 67% of students who ask receive an improved offer (NACAC). Never commit to a school before comparing actual award letters from all your options.
+                </p>
+              
+            
+
+            /* CTA */
+            
+              <h2>Model Your College Cost Scenarios</h2>
+              <p>
+                After running net price calculators at each school, use our tool to model total four-year costs, loan payments, and ROI — all in one place.
+              </p>
+              <a href="/college-cost-calculator/">
+                Open College Cost Calculator
+              </a>
+            
+
+            /* Related Articles */
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/financial-aid/">
+                <h3>Financial Aid Guide 2026</h3>
+                <p>Complete guide to grants, loans, work-study, and FAFSA strategy.</p>
+              </a>
+              <a href="/blog/college-cost-breakdown/">
+                <h3>College Cost Breakdown 2026</h3>
+                <p>Every cost in a college budget — what is fixed and what you can control.</p>
+              </a>
+              <a href="/blog/best-value-colleges/">
+                <h3>Best Value Colleges 2026</h3>
+                <p>Schools with the highest ROI relative to actual net cost paid.</p>
+              </a>
+              <a href="/blog/scholarship-tips/">
+                <h3>Scholarship Tips 2026</h3>
+                <p>How to find and win scholarships that reduce your net price further.</p>
+              </a>
+            
+          
+        
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.degreecalc.com/blog/net-price-calculator/">DegreeCalc</a>.
+      Explore more free tools at <a href="https://www.degreecalc.com/">degreecalc.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.degreecalc.com/">DegreeCalc</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
