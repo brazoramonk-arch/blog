@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webhook Guide: How Webhooks Work &amp;amp; How to Build One - BytePane</title>
+  <meta name="description" content="Learn how webhooks work, how to secure them with HMAC signatures, handle retries, and build a production webhook receiver in Node.js. Complete guide with real code examples.">
+  <link rel="canonical" href="https://www.bytepane.com/blog/webhook-guide/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Webhook Guide: How Webhooks Work &amp;amp; How to Build One
+  </nav>
+
+  <article>
+    <h1>Webhook Guide: How Webhooks Work &amp;amp; How to Build One</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/webhook-guide/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    webhooks are push-based. In practice, most integrations use both: an API to read current state and webhooks to receive real-time event notifications.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do I secure a webhook endpoint?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The standard approach is HMAC-SHA256 signature verification. The sender signs the raw request body with a shared secret key and sends the signature in a header (e.g., X-Hub-Signature-256). Your receiver computes the HMAC of the raw body using the same secret and compares it using a constant-time comparison. Additionally, reject events with timestamps older than 5 minutes to prevent replay attacks. Never trust the payload until the signature is verified.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What HTTP status code should a webhook endpoint return?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Return 200 OK (or 204 No Content) immediately after receiving and acknowledging the webhook — before doing any processing. If your response takes more than 5-30 seconds, most senders will time out and retry. For genuine failures where you want the sender to retry, return 5xx. For permanently unprocessable payloads, return 400. Never return 200 and then fail silently.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How does webhook retry logic work?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Most webhook platforms (Stripe, GitHub, Shopify) retry failed deliveries using exponential backoff — typically 5 attempts over 24-72 hours. A delivery is considered failed if your endpoint returns 5xx, times out, or is unreachable. To make your handler idempotent, use the event ID in the webhook payload as a deduplication key. Store processed event IDs to skip reprocessing retried events.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the CloudEvents specification?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'CloudEvents is a CNCF specification that standardizes the structure of event data across different providers. It defines common metadata fields like id, source, specversion, type, and time in a JSON envelope. Major platforms including Azure Event Grid, Google Cloud Eventarc, and Knative support CloudEvents. Adopting it means your webhook consumers can handle events from multiple sources with a single parser rather than per-provider parsers.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do I test webhooks locally during development?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Use a tunneling tool to expose your local server to the internet. ngrok and the Stripe CLI stripe listen --forward-to localhost:3000 are the most common approaches. The Stripe CLI decrypts and forwards real webhook events without needing ngrok. For development-only testing, webhook.site gives you a temporary URL that logs all incoming requests without running any code.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Should I process webhooks synchronously or with a queue?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'For production systems, always queue webhook processing. Return 200 immediately after signature verification, push the event to a job queue (BullMQ, SQS, Celery), and process it asynchronously. This handles spikes gracefully, provides built-in retry logic, and prevents your webhook endpoint from timing out during slow operations like database writes or downstream API calls.',
+        ,
+      ,
+    ],
+  
+
+  
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: 'Webhook Guide: How Webhooks Work & How to Build One',
+            description: 'Learn how webhooks work, how to secure them with HMAC signatures, handle retries, and build a production webhook receiver in Node.js.',
+            datePublished: '2026-04-16',
+            dateModified: '2026-04-16',
+            author:  '@type': 'Organization', name: 'BytePane Team' ,
+            publisher:  '@type': 'Organization', name: 'BytePane', url: 'https://bytepane.com/' ,
+            url: 'https://bytepane.com/blog/webhook-guide/',
+            mainEntityOfPage: 'https://bytepane.com/blog/webhook-guide/',
+            image: 'https://bytepane.com/og-image.png',
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML=
+          __html: JSON.stringify(
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+               '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bytepane.com/' ,
+               '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://bytepane.com/blog/' ,
+               '@type': 'ListItem', position: 3, name: 'Webhook Guide' ,
+            ],
+          ),
+        
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+      />
+
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Webhook Guide
+      
+
+      
+        <h2>
+          Webhook Guide: How Webhooks Work &amp; How to Build One
+        </h2>
+        
+          API Integration
+          <time dateTime="2026-04-16">April 16, 2026</time>
+          16 min read
+        
+      
+
+      
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸Webhooks are HTTP callbacks — the sender POSTs a JSON payload to your URL when an event occurs, eliminating polling overhead entirely.</li>
+            <li>▸Always verify HMAC-SHA256 signatures using the raw request body and constant-time comparison — never deserialize first, verify later.</li>
+            <li>▸Return 200 immediately after signature verification, then process asynchronously via a queue to avoid timeout retries.</li>
+            <li>▸Implement idempotency using the event ID as a deduplication key — every major platform retries on failure, so you will receive duplicates.</li>
+            <li>▸The CNCF CloudEvents 1.0 spec standardizes webhook payloads — supported by Azure Event Grid, Google Eventarc, and Knative.</li>
+          </ul>
+        
+
+        /* Scenario */
+        
+          <p>
+            It is 2 AM and your e-commerce server is processing 40 payments per minute during a flash sale. Each payment needs to update inventory, trigger a confirmation email, and notify the warehouse system. The naive implementation polls your payment processor every 5 seconds — a loop that fires 17,280 requests per day regardless of whether a single payment occurs. At 40 payments/minute this is an order of magnitude too slow anyway, and most requests return empty.
+          </p>
+          <p>
+            This is exactly the problem webhooks solve. When the payment succeeds, Stripe POSTs a <code >charge.succeeded</code> event to your endpoint within milliseconds. Your server handles the event, fans it out to inventory/email/warehouse, and finishes. No polling. No idle requests. Near-instant processing.
+          </p>
+          <p>
+            According to <a href="https://hookdeck.com/webhooks/guides/what-are-webhooks-how-they-work"  target="_blank" rel="noopener noreferrer">Hookdeck's 2025 State of Webhooks report</a>, over 83% of SaaS platforms now deliver real-time event notifications exclusively via webhooks rather than polling APIs — a figure that has grown from 61% in 2022 as the pattern has become the de facto standard for event-driven integrations.
+          </p>
+        
+
+        
+          <h2>How Webhooks Work: The Full Request Lifecycle</h2>
+          <p>
+            A webhook is an HTTP POST request. The "sender" (Stripe, GitHub, Shopify) makes the request; your server is the "receiver." Here is the complete sequence:
+          </p>
+          <ol>
+            <li><strong>Event occurs</strong> — a customer pays, a commit is pushed, an order ships</li>
+            <li><strong>Sender computes HMAC</strong> — signs the raw JSON body with your shared secret using SHA-256</li>
+            <li><strong>POST request fires</strong> — to the URL you registered in the sender's dashboard, with the signature in a header</li>
+            <li><strong>Your server receives</strong> — verifies the signature before reading the payload</li>
+            <li><strong>You return 200</strong> — within 5–30 seconds or the sender marks the delivery as failed</li>
+            <li><strong>Async processing</strong> — you enqueue the event and process it outside the HTTP request cycle</li>
+          </ol>
+          <p>
+            <code >`# Example Stripe webhook payload (charge.succeeded)
+POST /webhooks/stripe HTTP/1.1
+Host: yourapp.com
+Content-Type: application/json
+Stripe-Signature: t=1714084800,v1=a65d4f2...
+Content-Length: 842
+
+  "id": "evt_3Pz7j2LkdIwHu7ix0Yvz8kA1",
+  "object": "event",
+  "type": "charge.succeeded",
+  "created": 1714084800,
+  "livemode": true,
+  "data": 
+    "object": 
+      "id": "ch_3Pz7j2LkdIwHu7ix0a1b2c3d",
+      "amount": 4999,
+      "currency": "usd",
+      "customer": "cus_Abc123",
+      "receipt_email": "customer@example.com",
+      "status": "succeeded"
+    
+  
+`</code>
+          </pre>
+          <p >
+            Notice the <code >Stripe-Signature</code> header. That is the HMAC signature — the most critical part of any webhook implementation. Never skip verifying it.
+          </p>
+        
+
+        
+          <h2>Signature Verification: The Non-Negotiable Step</h2>
+          <p>
+            Without signature verification, any attacker can POST fake events to your endpoint. The OWASP API Security Top 10 lists broken object-level authorization as the #1 API risk — unverified webhooks are a direct attack surface for injecting fraudulent orders, triggering unauthorized privilege escalations, or exfiltrating data.
+          </p>
+          <p>
+            <strong>Critical detail:</strong> you must verify the signature against the <em>raw request body bytes</em>, before any JSON parsing. If you parse the JSON first and re-serialize it, whitespace differences will cause signature mismatches.
+          </p>
+          <p>
+            <code >`import express from 'express'
+
+const app = express()
+const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!
+
+// CRITICAL: Use express.raw() to get the raw body buffer
+// express.json() would parse it first, breaking HMAC verification
+app.post(
+  '/webhooks/stripe',
+  express.raw( type: 'application/json' ),
+  (req, res) => 
+    const signature = req.headers['stripe-signature'] as string
+    const rawBody = req.body as Buffer
+
+    if (!verifyStripeSignature(rawBody, signature, WEBHOOK_SECRET)) 
+      console.warn('Webhook signature verification failed')
+      return res.status(400).send('Invalid signature')
+    
+
+    // Signature is valid — safe to parse the payload
+    const event = JSON.parse(rawBody.toString())
+
+    // Return 200 IMMEDIATELY before processing
+    res.status(200).send('OK')
+
+    // Process asynchronously
+    eventQueue.push(event)
+  
+)
+
+function verifyStripeSignature(
+  payload: Buffer,
+  signatureHeader: string,
+  secret: string
+): boolean 
+  // Parse: "t=1714084800,v1=a65d4f2...,v0=legacy..."
+  const parts = Object.fromEntries(
+    signatureHeader.split(',').map(p => p.split('='))
+  )
+  const timestamp = parts['t']
+  const expectedSig = parts['v1']
+
+  if (!timestamp || !expectedSig) return false
+
+  // Reject events older than 5 minutes (replay attack prevention)
+  const tolerance = 300  // seconds
+  const eventAge = Math.floor(Date.now() / 1000) - parseInt(timestamp)
+  if (eventAge > tolerance) 
+    console.warn(\`Webhook timestamp too old: \$eventAges\`)
+    return false
+  
+
+  // Compute HMAC-SHA256 of "timestamp.payload"
+  const signedPayload = \`\$timestamp.\$payload.toString()\`
+  const computedSig = crypto
+    .createHmac('sha256', secret)
+    .update(signedPayload)
+    .digest('hex')
+
+  // Use timingSafeEqual to prevent timing attacks
+  const expected = Buffer.from(expectedSig)
+  const computed = Buffer.from(computedSig)
+  if (expected.length !== computed.length) return false
+  return crypto.timingSafeEqual(expected, computed)
+`</code>
+          </pre>
+          <p >
+            The <code >timingSafeEqual</code> function prevents timing attacks where an attacker could deduce the correct signature by measuring how long your string comparison takes. A naive <code >===</code> comparison short-circuits on the first mismatched byte — a measurable timing difference.
+          </p>
+        
+
+        
+          <h2>Building a Generic Webhook Receiver</h2>
+          <p>
+            The pattern above works for Stripe, but every platform uses slightly different header names and payload structures. Here is a generic receiver that normalizes inputs across multiple sources.
+          </p>
+          <p>
+            <code >`// Generic webhook receiver supporting multiple providers
+interface WebhookProvider 
+  name: string
+  signatureHeader: string
+  verify: (payload: Buffer, header: string, secret: string) => boolean
+  normalizeEvent: (payload: unknown) => NormalizedEvent
+
+interface NormalizedEvent 
+  id: string
+  type: string
+  source: string
+  timestamp: Date
+  data: unknown
+
+// Stripe provider
+const stripeProvider: WebhookProvider = 
+  name: 'stripe',
+  signatureHeader: 'stripe-signature',
+  verify: (payload, header, secret) => 
+    // ... HMAC verification from above
+    return verifyStripeSignature(payload, header, secret)
+  ,
+  normalizeEvent: (payload: any) => (
+    id: payload.id,
+    type: payload.type,
+    source: 'stripe',
+    timestamp: new Date(payload.created * 1000),
+    data: payload.data.object,
+  ),
+
+// GitHub provider (different header, different algo format)
+const githubProvider: WebhookProvider = 
+  name: 'github',
+  signatureHeader: 'x-hub-signature-256',
+  verify: (payload, header, secret) => 
+    const expected = header.replace('sha256=', '')
+    const computed = crypto
+      .createHmac('sha256', secret)
+      .update(payload)
+      .digest('hex')
+    return crypto.timingSafeEqual(
+      Buffer.from(expected),
+      Buffer.from(computed)
+    )
+  ,
+  normalizeEvent: (payload: any) => (
+    id: crypto.randomUUID(),
+    type: 'github.' + (payload.action ?? 'push'),
+    source: 'github',
+    timestamp: new Date(),
+    data: payload,
+  ),
+
+const providers: Record<string, WebhookProvider> = 
+  stripe: stripeProvider,
+  github: githubProvider,
+
+// Route: /webhooks/:provider
+app.post(
+  '/webhooks/:provider',
+  express.raw( type: 'application/json' ),
+  async (req, res) => 
+    const providerName = req.params.provider
+    const provider = providers[providerName]
+
+    if (!provider) 
+      return res.status(404).send('Unknown provider')
+    
+
+    const secret = process.env[\`\$providerName.toUpperCase()_WEBHOOK_SECRET\`]!
+    const signatureHeader = req.headers[provider.signatureHeader] as string
+
+    if (!provider.verify(req.body, signatureHeader, secret)) 
+      return res.status(400).send('Invalid signature')
+    
+
+    const payload = JSON.parse(req.body.toString())
+    const event = provider.normalizeEvent(payload)
+
+    res.status(200).send('OK')  // Acknowledge immediately
+    await eventQueue.enqueue(event)  // Process asynchronously
+  
+)`</code>
+          </pre>
+        
+
+        
+          <h2>Idempotency: Handling Duplicate Deliveries</h2>
+          <p >
+            Every webhook platform retries on failure. Stripe retries up to 3 times with exponential backoff over 3 days. GitHub retries for 72 hours. Shopify retries 19 times over 48 hours. This means your handler <strong>will</strong> receive the same event multiple times if your endpoint was temporarily unavailable.
+          </p>
+          <p>
+            The fix is idempotency: processing the same event twice produces the same result. Use the event ID as a deduplication key.
+          </p>
+          <p>
+            <code >`// Redis-based idempotency with 24-hour TTL
+
+const redis = new Redis()
+
+async function processEventIdempotently(event: NormalizedEvent) 
+  const key = \`webhook:processed:\$event.id\`
+
+  // Atomic set-if-not-exists with 24h TTL
+  const isNew = await redis.set(key, '1', 'EX', 86400, 'NX')
+
+  if (!isNew) 
+    console.log(\`Skipping duplicate event: \$event.id\`)
+    return  // Already processed
+  
+
+  try 
+    await handleEvent(event)
+   catch (err) 
+    // Delete the key so the event can be retried
+    await redis.del(key)
+    throw err
+  
+
+async function handleEvent(event: NormalizedEvent) 
+  switch (event.type) 
+    case 'charge.succeeded':
+      await Promise.all([
+        updateInventory(event.data),
+        sendConfirmationEmail(event.data),
+        notifyWarehouse(event.data),
+      ])
+      break
+    case 'customer.subscription.deleted':
+      await deactivateSubscription(event.data)
+      break
+    default:
+      console.log(\`Unhandled event type: \$event.type\`)
+  
+`</code>
+          </pre>
+        
+
+        
+          <h2>Webhook Delivery Comparison: Major Platforms</h2>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Platform</th>
+                  <th >Signature Header</th>
+                  <th >Algorithm</th>
+                  <th >Timeout</th>
+                  <th >Max Retries</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Stripe</td>
+                  <td >Stripe-Signature</td>
+                  <td >HMAC-SHA256</td>
+                  <td >30s</td>
+                  <td >3 (over 3 days)</td>
+                </tr>
+                <tr >
+                  <td >GitHub</td>
+                  <td >X-Hub-Signature-256</td>
+                  <td >HMAC-SHA256</td>
+                  <td >10s</td>
+                  <td >3 (over 72h)</td>
+                </tr>
+                <tr >
+                  <td >Shopify</td>
+                  <td >X-Shopify-Hmac-Sha256</td>
+                  <td >HMAC-SHA256 (base64)</td>
+                  <td >5s</td>
+                  <td >19 (over 48h)</td>
+                </tr>
+                <tr >
+                  <td >Twilio</td>
+                  <td >X-Twilio-Signature</td>
+                  <td >HMAC-SHA1 (base64)</td>
+                  <td >15s</td>
+                  <td >None (fire-and-forget)</td>
+                </tr>
+                <tr >
+                  <td >Slack</td>
+                  <td >X-Slack-Signature</td>
+                  <td >HMAC-SHA256 (v0=prefix)</td>
+                  <td >3s</td>
+                  <td >None</td>
+                </tr>
+                <tr>
+                  <td >Svix/CloudEvents</td>
+                  <td >svix-signature</td>
+                  <td >Ed25519 (asymmetric)</td>
+                  <td >30s</td>
+                  <td >5 (over 3 days)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p >
+            Note Slack's 3-second timeout — the most aggressive in the industry. If you're building a Slack app, you <em>must</em> queue work asynchronously. Svix uses Ed25519 (asymmetric cryptography) rather than HMAC, which allows receivers to verify signatures without a shared secret.
+          </p>
+        
+
+        
+          <h2>Sending Webhooks: Building the Delivery System</h2>
+          <p>
+            If you are building a platform that sends webhooks to customers, you need to handle delivery reliability. A missed webhook is data loss from your customer's perspective.
+          </p>
+          <p>
+            <code >`import crypto from 'crypto'
+
+interface WebhookSubscription 
+  id: string
+  endpointUrl: string
+  secret: string
+  events: string[]  // ['payment.succeeded', 'payment.failed']
+
+async function deliverWebhook(
+  subscription: WebhookSubscription,
+  eventType: string,
+  payload: unknown,
+  attempt = 1
+): Promise<void> 
+  const body = JSON.stringify(
+    id: crypto.randomUUID(),
+    type: eventType,
+    created: Math.floor(Date.now() / 1000),
+    data: payload,
+  )
+
+  const timestamp = Math.floor(Date.now() / 1000).toString()
+  const signedPayload = \`\$timestamp.\$body\`
+  const signature = crypto
+    .createHmac('sha256', subscription.secret)
+    .update(signedPayload)
+    .digest('hex')
+
+  try 
+    const response = await fetch(subscription.endpointUrl, 
+      method: 'POST',
+      headers: 
+        'Content-Type': 'application/json',
+        'X-Webhook-Signature': \`t=\$timestamp,v1=\$signature\`,
+        'X-Webhook-Attempt': attempt.toString(),
+      ,
+      body,
+      signal: AbortSignal.timeout(30_000),
+    )
+
+    if (!response.ok) 
+      throw new Error(\`HTTP \$response.status\`)
+    
+
+    console.log(\`Webhook delivered: \$subscription.id attempt \$attempt\`)
+   catch (err) 
+    const maxAttempts = 5
+    if (attempt >= maxAttempts) 
+      console.error(\`Webhook failed after \$maxAttempts attempts: \$subscription.id\`)
+      await markSubscriptionFailed(subscription.id)
+      return
+    
+
+    // Exponential backoff: 1m, 5m, 30m, 2h, 5h
+    const delays = [60, 300, 1800, 7200, 18000]
+    const delaySeconds = delays[attempt - 1]
+
+    console.log(\`Retrying in \$delaySecondss (attempt \$attempt + 1)\`)
+    await scheduleRetry(subscription, eventType, payload, attempt + 1, delaySeconds)
+  
+`</code>
+          </pre>
+        
+
+        
+          <h2>Testing Webhooks Locally</h2>
+          <p >
+            Your webhook endpoint needs to be reachable from the internet for the sender to reach it. During development, use one of these approaches:
+          </p>
+          <p>
+            <code >`# Option 1: Stripe CLI (best for Stripe integrations)
+# Automatically decrypts and forwards real Stripe events
+stripe listen --forward-to localhost:3000/webhooks/stripe
+# Output: Ready! Webhook signing secret: whsec_test_...
+
+# Option 2: ngrok (universal tunnel)
+ngrok http 3000
+# Output: https://abc123.ngrok-free.app → localhost:3000
+
+# Option 3: Cloudflare Tunnel (free, no account needed for local dev)
+cloudflared tunnel --url http://localhost:3000
+
+# Option 4: webhook.site (inspect only, no code)
+# Visit https://webhook.site → get a unique URL
+# All POSTs are logged in the browser — great for debugging payloads
+
+# Test a webhook manually with curl
+curl -X POST http://localhost:3000/webhooks/test \\
+  -H "Content-Type: application/json" \\
+  -H "X-Webhook-Signature: t=$(date +%s),v1=$(echo -n 'test' | openssl dgst -sha256 -hmac 'secret' | awk 'print $2')" \\
+  -d '"type":"test.event","data":"id":"123"'`</code>
+          </pre>
+          <p >
+            Use our <a href="/json-formatter/">JSON Formatter</a> to inspect and validate webhook payloads during development. Paste the raw JSON body to spot malformed structures before they hit your parser.
+          </p>
+        
+
+        
+          <h2>The CloudEvents Standard</h2>
+          <p>
+            The <a href="https://cloudevents.io/"  target="_blank" rel="noopener noreferrer">CNCF CloudEvents 1.0 specification</a> standardizes the envelope structure for webhook payloads. Instead of every platform inventing its own payload schema, CloudEvents defines a common set of required attributes. Major adopters include Azure Event Grid, Google Cloud Eventarc, Oracle Functions, and Knative.
+          </p>
+          <p>
+            <code >`// CloudEvents 1.0 structured content mode (JSON)
+
+  "specversion": "1.0",
+  "type": "com.example.payment.succeeded",
+  "source": "https://api.example.com/payments",
+  "id": "evt_3Pz7j2LkdIwHu7ix",
+  "time": "2026-04-16T12:00:00Z",
+  "datacontenttype": "application/json",
+  "data": 
+    "amount": 4999,
+    "currency": "usd",
+    "customerId": "cus_Abc123"
+  
+
+// Parsing a CloudEvents payload
+
+app.post('/webhooks/cloudevents', express.json(), (req, res) => 
+  const event = new CloudEvent(req.body)
+
+  // Guaranteed fields across all CloudEvents-compliant senders
+  console.log(event.id)         // Unique event ID
+  console.log(event.type)       // "com.example.payment.succeeded"
+  console.log(event.source)     // Source URI
+  console.log(event.time)       // ISO 8601 timestamp
+  console.log(event.data)       // Your domain payload
+
+  res.status(200).send()
+)`</code>
+          </pre>
+        
+
+        
+          <h2>Webhook vs Polling vs WebSockets</h2>
+          <p >
+            Webhooks are not always the right tool. Here is when each approach makes sense:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Approach</th>
+                  <th >Latency</th>
+                  <th >Best For</th>
+                  <th >Drawback</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Polling</td>
+                  <td >N × interval</td>
+                  <td >Simple reads, batch processing</td>
+                  <td >Wasted requests, delay proportional to interval</td>
+                </tr>
+                <tr >
+                  <td >Webhook</td>
+                  <td >&lt; 1 second</td>
+                  <td >Server-to-server integrations, B2B events</td>
+                  <td >Receiver must be publicly accessible; no built-in backpressure</td>
+                </tr>
+                <tr >
+                  <td >WebSocket</td>
+                  <td >&lt; 100ms</td>
+                  <td >Browser UIs, chat, live dashboards</td>
+                  <td >Stateful connections, harder to scale horizontally</td>
+                </tr>
+                <tr>
+                  <td >SSE</td>
+                  <td >&lt; 200ms</td>
+                  <td >Browser → server push (read-only)</td>
+                  <td >One-way, browser-only, connection limit of 6 per domain (HTTP/1.1)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            For a deep dive on WebSockets, see our <a href="/blog/websockets-guide/">WebSockets Guide</a>. For REST API design patterns that complement webhooks, see <a href="/blog/rest-api-best-practices/">REST API Best Practices</a>.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What is the difference between a webhook and an API?',
+                a: 'An API is pull-based: your code initiates the request and waits for a response. A webhook is push-based: the external service calls your endpoint when something happens. Most integrations use both — an API to read current state and webhooks to receive real-time event notifications.'
+              ,
+              
+                q: 'How do I secure a webhook endpoint?',
+                a: 'Verify the HMAC-SHA256 signature on the raw request body using the shared secret provided by the sender. Use timingSafeEqual for the comparison. Reject events with timestamps older than 5 minutes to prevent replay attacks. Never trust the payload before signature verification.'
+              ,
+              
+                q: 'What HTTP status code should a webhook endpoint return?',
+                a: 'Return 200 OK immediately after receiving and verifying the event — before any processing. If you need time to process, return 200 immediately and handle it asynchronously. Return 5xx only if you want the sender to retry. Return 400 for payloads you will never be able to process (e.g., signature verification failures).'
+              ,
+              
+                q: 'How does webhook retry logic work?',
+                a: 'Platforms like Stripe and GitHub retry failed deliveries using exponential backoff. Stripe retries 3 times over 3 days; Shopify retries 19 times over 48 hours. Make your handler idempotent using the event ID as a deduplication key to safely handle retries without double-processing.'
+              ,
+              
+                q: 'What is the CloudEvents specification?',
+                a: 'CloudEvents is a CNCF standard that defines a common JSON envelope structure for event data (id, source, type, time). It eliminates per-provider parsers by standardizing metadata. Azure Event Grid, Google Eventarc, and Knative all support it natively.'
+              ,
+              
+                q: 'How do I test webhooks locally during development?',
+                a: 'Use the Stripe CLI (stripe listen --forward-to localhost:3000) for Stripe events, ngrok for any HTTP tunnel, or webhook.site to inspect payloads without running code. Cloudflare Tunnel is a free alternative to ngrok with no rate limits.'
+              ,
+              
+                q: 'Should I process webhooks synchronously or with a queue?',
+                a: 'Always queue webhook processing in production. Return 200 immediately after signature verification, enqueue the event (BullMQ, SQS, Celery), and process asynchronously. This prevents timeout retries, handles traffic spikes, and provides built-in retry logic for downstream failures.'
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Debug Webhook Payloads with BytePane</h2>
+          <p>
+            Inspect and format incoming webhook JSON payloads with the <a href="/json-formatter/">JSON Formatter</a>. Decode JWT tokens from webhook auth headers with the <a href="/jwt-decoder/">JWT Decoder</a>. Validate your HMAC signatures with the <a href="/hash-generator/">Hash Generator</a>.
+          </p>
+          <a href="/json-formatter/">
+            Open JSON Formatter
+          </a>
+        
+
+        /* Related */
+        
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/websockets-guide/">
+              <h3>WebSockets Guide</h3>
+              <p>Persistent bidirectional connections vs webhook fire-and-forget.</p>
+            </a>
+            <a href="/blog/rest-api-best-practices/">
+              <h3>REST API Best Practices</h3>
+              <p>Design the API that powers your webhook event system.</p>
+            </a>
+            <a href="/blog/jwt-tokens-explained/">
+              <h3>JWT Tokens Explained</h3>
+              <p>Authentication tokens used alongside webhook signatures.</p>
+            </a>
+            <a href="/blog/api-authentication-methods/">
+              <h3>API Authentication Methods</h3>
+              <p>HMAC, OAuth, API keys — securing webhook and REST endpoints.</p>
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/webhook-guide/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
