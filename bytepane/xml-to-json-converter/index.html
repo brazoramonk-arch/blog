@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XML to JSON Converter: Transform XML Data to JSON - BytePane</title>
+  <meta name="description" content="XML to JSON Converter: Transform XML Data to JSON">
+  <link rel="canonical" href="https://www.bytepane.com/blog/xml-to-json-converter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; XML to JSON Converter: Transform XML Data to JSON
+  </nav>
+
+  <article>
+    <h1>XML to JSON Converter: Transform XML Data to JSON</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/xml-to-json-converter/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        XML to JSON Converter
+      
+
+      /* Article Header */
+      
+        <h2>
+          XML to JSON Converter: Transform XML Data to JSON
+        </h2>
+        
+          Data Formats
+          <time dateTime="2026-04-23">April 23, 2026</time>
+          15 min read
+        
+      
+
+      
+
+        /* Opening: Timeline/historical structure */
+        
+          <h2>From XML&apos;s Dominance to JSON&apos;s Takeover — and Why You Still Need to Convert Between Them</h2>
+
+          
+            
+              
+                1998
+              
+              
+                <p>
+                  <strong>W3C publishes XML 1.0.</strong> It becomes the universal format for data interchange. SOAP web services, RSS feeds, WSDL service descriptions, SVG graphics, and enterprise middleware all run on XML. Every major platform — Java, .NET, SAP — builds XML processing at its core.
+                </p>
+              
+            
+            
+              
+                2001–06
+              
+              
+                <p>
+                  <strong>JSON emerges.</strong> Douglas Crockford popularizes JSON as a lightweight alternative. json.org launches in 2002. RFC 4627 formalizes the format in 2006. Early adopters: Yahoo!, del.icio.us, Flickr.
+                </p>
+              
+            
+            
+              
+                2008–14
+              
+              
+                <p>
+                  <strong>JSON displaces XML in new APIs.</strong> Twitter, GitHub, Stripe, Twilio all launch with JSON APIs. REST replaces SOAP as the dominant API style. Stack Overflow&apos;s developer surveys begin tracking JSON as the most common data format.
+                </p>
+              
+            
+            
+              
+                2026
+              
+              
+                <p>
+                  <strong>XML remains entrenched in large swaths of the industry.</strong> Healthcare (HL7 FHIR XML, CDA documents), finance (FpML, XBRL financial reporting), publishing (DITA, DocBook), government (NIEM, GML geospatial data), and any enterprise system built before 2010 still run on XML. RSS and Atom feeds are XML. SVG is XML. Maven&apos;s <code >pom.xml</code> is XML. Android layouts are XML.
+                </p>
+              
+            
+          
+
+          <p>
+            The result: developers in 2026 regularly need to convert XML to JSON — reading a SOAP legacy API response, parsing an RSS feed, consuming an external partner&apos;s data in XML format, or migrating data from an enterprise system to a modern JSON API. The conversion is not always straightforward. XML has structural features that have no direct JSON equivalent, and the conversion decisions you make affect how downstream code consumes the data.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸XML-to-JSON conversion is inherently <strong>lossy for XML attributes, namespaces, comments, and processing instructions</strong> — JSON has no equivalent constructs for these.</li>
+            <li>▸The biggest conversion trap: an XML element with a <strong>single child becomes an object, but the same element with two children becomes an array</strong> — most libraries have an option to force arrays to avoid this inconsistency.</li>
+            <li>▸Use <strong>fast-xml-parser</strong> for Node.js (5–10× faster than xml2js), <strong>xmltodict</strong> for Python, and <code >encoding/xml</code> for Go.</li>
+            <li>▸For multi-GB XML files, <strong>never load the entire document into memory</strong> — use SAX-based streaming parsers (node-expat, saxes in Node.js; xml.sax in Python).</li>
+            <li>▸Always validate your JSON output against your intended schema — <strong>XML attributes and element values merge in unexpected ways</strong> depending on which library you use.</li>
+          </ul>
+        
+
+        /* Structural differences */
+        
+          <h2>XML vs. JSON: The Structural Mismatch</h2>
+          <p>
+            XML and JSON were designed for different purposes. XML was designed for document markup — it inherits from SGML and HTML, where mixed content (text interleaved with markup tags) is fundamental. JSON was designed for data interchange — pure data structures with no document semantics. This philosophical difference creates several structural mismatches:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >XML Feature</th>
+                  <th >JSON Equivalent</th>
+                  <th >Conversion Approach</th>
+                  <th >Information Loss?</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['Attributes', 'None', 'Prefix with @ or $, or merge into element object', 'No (if preserved)'],
+                  ['Namespaces', 'None', 'Keep prefix in key name, or strip prefixes entirely', 'Yes (if stripped)'],
+                  ['Comments', 'None', 'Dropped — JSON has no comment syntax', 'Yes (always)'],
+                  ['Processing instructions', 'None', 'Dropped — no JSON equivalent', 'Yes (always)'],
+                  ['Mixed content', 'None (complex)', 'Special "#text" key for text nodes alongside element children', 'Structural change'],
+                  ['CDATA sections', 'String', 'Delimiters stripped, content becomes string value', 'No'],
+                  ['Document type (DOCTYPE)', 'None', 'Dropped — JSON has no schema reference syntax', 'Yes (schema info)'],
+                  ['Element ordering', 'Preserved', 'JSON object keys are unordered (per spec)', 'Yes (order semantics)'],
+                  ['Multiple same-name children', 'Array', 'Collected into array', 'No (if done correctly)'],
+                  ['Text + attributes on same element', 'None', 'Special "#text" key + "@attr" keys', 'Structural change'],
+                ].map(([xml, json, approach, loss]) => (
+                  <tr key=xml >
+                    <td >xml</td>
+                    <td >json</td>
+                    <td >approach</td>
+                    <td className=`py-2.5 px-4 text-xs font-medium $loss === 'No' ? 'text-green-400' : 'text-amber-400'`>loss</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+        
+
+        /* The hardest conversion problems */
+        
+          <h2>The Three Conversion Problems That Break Downstream Code</h2>
+
+          <h3>Problem 1: The One-Child-vs-Many-Children Array Inconsistency</h3>
+          <p>
+            This is the most common source of bugs in XML-to-JSON conversion. When an XML element has a single child of a given type, most libraries represent it as an object. When it has multiple children, they become an array. The result: your JSON structure changes based on the data, not the schema.
+          </p>
+          
+            <p>`<!-- XML: one item vs many items -->
+<cart>
+  <item>Laptop</item>          <!-- single item -->
+</cart>
+
+<cart>
+  <item>Laptop</item>          <!-- multiple items -->
+  <item>Mouse</item>
+</cart>
+
+// xml2js default output — structure changes!
+// Single item → object:
+ cart:  item: "Laptop"  
+
+// Multiple items → array:
+ cart:  item: ["Laptop", "Mouse"]  
+
+// Your downstream code that worked for one item:
+cart.item.toUpperCase()  // works when item is a string
+cart.item.toUpperCase()  // TypeError: cart.item.toUpperCase is not a function
+                         // when item becomes an array`</pre>
+          
+          <p >
+            The fix: use the library&apos;s &quot;force array&quot; option, or normalize after conversion:
+          </p>
+          
+            <p>`// xml2js: explicitArray: true forces all values to arrays
+const xml2js = require('xml2js')
+const parser = new xml2js.Parser( explicitArray: true )
+
+// Result is always an array — consistent regardless of child count:
+ cart:  item: ["Laptop"]           // one item
+ cart:  item: ["Laptop", "Mouse"]   // two items
+
+// fast-xml-parser: isArray callback for targeted forcing
+const  XMLParser  = require('fast-xml-parser')
+const parser = new XMLParser(
+  isArray: (tagName) => ['item', 'product', 'order'].includes(tagName),
+  ignoreAttributes: false,
+  attributeNamePrefix: '@_',
+)`</pre>
+          
+
+          <h3>Problem 2: Attributes vs. Element Values on the Same Element</h3>
+          <p >
+            XML elements can have both attributes and text content simultaneously. JSON objects cannot natively express this:
+          </p>
+          
+            <p>`<!-- XML: element with attributes AND text content -->
+<price currency="USD" vat="false">19.99</price>
+
+<!-- The challenge: currency and vat are attributes; 19.99 is the element value.
+     JSON has no "element + attributes" concept. -->
+
+// Approach 1: @-prefix for attributes, #text for text content
+
+  "price": 
+    "@currency": "USD",
+    "@vat": "false",
+    "#text": "19.99"
+  
+
+// Approach 2: Flat merge (loses attribute/element distinction)
+
+  "price": 
+    "currency": "USD",
+    "vat": "false",
+    "_value": "19.99"
+  
+
+// Approach 3: Discard attributes (most lossy but simplest)
+ "price": "19.99" `</pre>
+          
+          <p >
+            The <code >@</code>-prefix convention (used by BadgerFish, JAXB, and many libraries) is the most portable choice — it preserves information while being predictable for downstream consumers.
+          </p>
+
+          <h3>Problem 3: XML Namespaces</h3>
+          
+            <p>`<!-- SOAP envelope with namespaces -->
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soap:Body>
+    <GetOrderResponse xmlns="http://example.com/orders">
+      <Order>
+        <xsi:type>StandardOrder</xsi:type>
+        <orderId>12345</orderId>
+      </Order>
+    </GetOrderResponse>
+  </soap:Body>
+</soap:Envelope>
+
+// If you strip namespace prefixes:
+
+  "Envelope": 
+    "Body": 
+      "GetOrderResponse": 
+        "Order":  "type": "StandardOrder", "orderId": "12345" 
+      
+    
+  
+
+// Problem: if another namespace uses a "type" element, it collides with xsi:type
+
+// If you preserve namespace prefixes as keys:
+
+  "soap:Envelope": 
+    "soap:Body": 
+      "GetOrderResponse": 
+        "Order":  "xsi:type": "StandardOrder", "orderId": "12345" 
+      
+    
+  
+
+// Problem: colon in JSON key requires bracket notation: obj["soap:Envelope"]
+//          Most languages handle this, but it's awkward`</pre>
+          
+          <p >
+            For SOAP API integration, the most practical approach is to parse the XML with a namespace-aware library and explicitly map the elements you care about to a clean JSON structure — rather than relying on generic XML-to-JSON conversion.
+          </p>
+        
+
+        /* Code examples */
+        
+          <h2>XML to JSON Conversion Code in Three Languages</h2>
+
+          <h3>Python: xmltodict</h3>
+          <p>
+            <code >xmltodict</code> is the most Pythonic XML-to-JSON library — it produces a dictionary that mirrors the XML structure using the <code >@</code>-prefix convention for attributes. Per its <strong>PyPI page</strong>, xmltodict has over 5 million monthly downloads.
+          </p>
+          
+            <p>`# pip install xmltodict
+
+def xml_to_json(xml_string: str, indent: int = 2) -> str:
+    """Convert XML string to JSON string using xmltodict."""
+    # force_list ensures elements always become lists, not dicts
+    # when there's only one child — prevents the inconsistency bug
+    force_list = ('item', 'product', 'order', 'entry', 'record')
+
+    data = xmltodict.parse(
+        xml_string,
+        force_list=force_list,
+        attr_prefix='@',    # attributes prefixed with @
+        cdata_key='#text',  # text content stored under #text key
+    )
+    return json.dumps(data, indent=indent, ensure_ascii=False)
+
+# Example: Parse an RSS feed
+rss_xml = """
+<rss version="2.0">
+  <channel>
+    <title>My Blog</title>
+    <item>
+      <title>First Post</title>
+      <li>https://example.com/post/1</link>
+      <pubDate>Mon, 21 Apr 2026 10:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Second Post</title>
+      <link>https://example.com/post/2</link>
+      <pubDate>Tue, 22 Apr 2026 10:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
+"""
+
+json_output = xml_to_json(rss_xml)
+data = json.loads(json_output)
+
+# Access feed items safely:
+items = data['rss']['channel']['item']  # always a list (due to force_list)
+for item in items:
+    print(item['title'], item['link'])
+
+# Convert from file:
+with open('feed.xml', 'rb') as f:
+    data = xmltodict.parse(f)
+json_output = json.dumps(data, indent=2)
+
+# Reverse: JSON dict back to XML
+xml_output = xmltodict.unparse(data, pretty=True, indent='  ')`</pre>
+          
+
+          <p >
+            For SOAP APIs, use <code >xml.etree.ElementTree</code> from the standard library — it gives you explicit namespace handling:
+          </p>
+          
+            <p>`import xml.etree.ElementTree as ET
+
+def parse_soap_order(xml_string: str) -> dict:
+    """Parse a SOAP GetOrderResponse without generic conversion."""
+    ns = 
+        'soap': 'http://schemas.xmlsoap.org/soap/envelope/',
+        'orders': 'http://example.com/orders'
+    
+    root = ET.fromstring(xml_string)
+
+    # Navigate with explicit namespace awareness
+    body = root.find('soap:Body', ns)
+    response = body.find('orders:GetOrderResponse', ns)
+    order = response.find('orders:Order', ns)
+
+    return 
+        'orderId': order.findtext('orders:orderId', namespaces=ns),
+        'status': order.findtext('orders:status', namespaces=ns),
+        'amount': float(order.findtext('orders:amount', namespaces=ns, default='0')),
+    `</pre>
+          
+
+          <h3>Node.js: fast-xml-parser</h3>
+          <p >
+            <strong>fast-xml-parser</strong> benchmarks 5–10× faster than the older xml2js library for large documents and has no external dependencies. It is the recommended choice for new Node.js projects. According to its <strong>npm page</strong>, it processes over 90 million downloads per month as of 2025.
+          </p>
+          
+            <p>`// npm install fast-xml-parser
+
+// Validate before parsing
+const isValid = XMLValidator.validate(xmlString)
+if (isValid !== true) 
+  throw new Error(\`Invalid XML: \$isValid.err.msg at line \$isValid.err.line\`)
+
+const parser = new XMLParser(
+  ignoreAttributes: false,        // preserve attributes
+  attributeNamePrefix: '@_',      // prefix attributes with @_
+  allowBooleanAttributes: true,
+  parseAttributeValue: true,      // parse "123" attribute values as numbers
+  parseTagValue: true,            // parse element text as numbers/booleans where appropriate
+
+  // Force specific tags to always be arrays — critical for stability
+  isArray: (tagName: string) =>
+    ['item', 'product', 'entry', 'record', 'row'].includes(tagName),
+)
+
+const result = parser.parse(xmlString)
+const json = JSON.stringify(result, null, 2)
+
+// xml2js (older, slower, but widely used in legacy code):
+
+const parser2 = new xml2js.Parser(
+  explicitArray: true,   // always arrays — avoids the one-child bug
+  mergeAttrs: false,     // keep attributes separate from element values
+  attrkey: '@',          // attribute key prefix
+  charkey: '#text',      // text content key
+  explicitCharkey: true, // always include #text even when no attributes
+)
+const result2 = await parser2.parseStringPromise(xmlString)
+
+// Streaming for large XML files (SAX-based):
+
+const saxStream = createReadStream('large-data.xml')
+const sax = new SAXParser(true, )  // strict mode
+
+sax.onopentag = (node) =>  /* handle element start */ 
+sax.ontext = (text) =>  /* handle text content */ 
+sax.onclosetag = (name) =>  /* handle element end */ 
+
+saxStream.pipe(sax)`</pre>
+          
+
+          <h3>Go: encoding/xml</h3>
+          <p >
+            Go&apos;s standard library <code >encoding/xml</code> provides the most control — you define Go structs that exactly match the XML structure, ensuring type-safe conversion. This is more code but produces the cleanest, most predictable JSON output:
+          </p>
+          
+            <p>`package main
+
+    "encoding/json"
+    "encoding/xml"
+    "fmt"
+    "strings"
+)
+
+// Define structs matching the XML structure
+type RSSFeed struct 
+    XMLName xml.Name   \`xml:"rss" json:"-"\`
+    Version string     \`xml:"version,attr" json:"version"\`
+    Channel Channel    \`xml:"channel" json:"channel"\`
+
+type Channel struct 
+    Title       string   \`xml:"title" json:"title"\`
+    Link        string   \`xml:"link" json:"link"\`
+    Description string   \`xml:"description" json:"description"\`
+    Items       []Item   \`xml:"item" json:"items"\`
+
+type Item struct 
+    Title       string   \`xml:"title" json:"title"\`
+    Link        string   \`xml:"link" json:"link"\`
+    Description string   \`xml:"description" json:"description"\`
+    PubDate     string   \`xml:"pubDate" json:"pubDate"\`
+    GUID        string   \`xml:"guid" json:"guid"\`
+
+func ConvertRSSToJSON(xmlData string) (string, error) 
+    var feed RSSFeed
+    if err := xml.NewDecoder(strings.NewReader(xmlData)).Decode(&feed); err != nil 
+        return "", fmt.Errorf("xml decode: %w", err)
+    
+
+    jsonData, err := json.MarshalIndent(feed, "", "  ")
+    if err != nil 
+        return "", fmt.Errorf("json marshal: %w", err)
+    
+    return string(jsonData), nil
+
+// Generic approach using xml.Token for unknown XML:
+func GenericXMLToJSON(xmlData string) (map[string]interface, error) 
+    decoder := xml.NewDecoder(strings.NewReader(xmlData))
+    // Note: generic XML-to-map conversion in Go requires building
+    // a recursive decoder — use the etree or xmlquery library for this:
+    // go get github.com/beevik/etree
+    // go get github.com/antchfx/xmlquery
+    return nil, nil  // implement with etree/xmlquery for production
+`</pre>
+          
+        
+
+        /* Online tools comparison */
+        
+          <h2>Online XML to JSON Converter Tools Compared</h2>
+          <p >
+            For one-off conversions or testing, online tools are faster than writing code. Here&apos;s an honest comparison of the main options based on features, not ranking:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool</th>
+                  <th >Strengths</th>
+                  <th >Weaknesses</th>
+                  <th >Privacy</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['FreeFormatter.com', 'Widely known, many output options, handles large inputs', 'Sends data to server; ad-heavy UI', 'Server-processed'],
+                  ['ConvertSimple.com', 'Clean UI, fast, handles CDATA and attributes', 'Limited error messages on malformed XML', 'Server-processed'],
+                  ['CodeBeautify.org', 'Many format tools in one place, batch conversion', 'Cluttered UI, slow on large files', 'Server-processed'],
+                  ['BytePane XML to JSON', 'In-browser processing (no upload), fast, clean output with attribute support', 'Less configurable than CLI tools; no namespace handling', 'Client-side only'],
+                  ['transform.tools', 'Open source, many format conversions, handles namespaces', 'Occasional inconsistencies with edge cases', 'Client-side'],
+                ].map(([tool, strengths, weak, priv]) => (
+                  <tr key=tool >
+                    <td >tool</td>
+                    <td >strengths</td>
+                    <td >weak</td>
+                    <td className=`py-2.5 px-4 text-xs font-medium $priv.includes('Client') ? 'text-green-400' : 'text-text-muted'`>priv</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+
+          <p>
+            For sensitive data (internal API responses, PII-containing XML), prefer client-side tools or local CLI conversion. Server-processed tools upload your data to a third-party server.
+          </p>
+          <p>
+            After converting XML to JSON, use the <a href="/json-formatter/">BytePane JSON formatter</a> to validate the JSON syntax and explore the structure. For the reverse operation, the <a href="/blog/yaml-to-json-converter/">YAML to JSON guide</a> covers similar conversion patterns with YAML-specific edge cases.
+          </p>
+        
+
+        /* Real-world use cases */
+        
+          <h2>Real-World XML to JSON Use Cases</h2>
+
+          <h3>RSS and Atom Feed Aggregation</h3>
+          <p>
+            RSS (Really Simple Syndication, now version 2.0) and Atom are XML formats. According to the <strong>W3C Validator service</strong>, RSS 2.0 remains the most widely deployed feed format in 2025, with millions of active feeds. Aggregators, podcast apps, and content pipeline tools all convert RSS XML to JSON for storage and APIs.
+          </p>
+          
+            <p>`# Fetch and convert an RSS feed to JSON
+
+# feedparser handles both RSS and Atom, normalizes the output
+feed = feedparser.parse('https://example.com/feed.xml')
+
+# feedparser already gives you a dict — just serialize to JSON
+articles = [
+    
+        'title': entry.title,
+        'link': entry.link,
+        'published': entry.published,
+        'summary': entry.summary,
+        'author': getattr(entry, 'author', None),
+    
+    for entry in feed.entries
+]
+
+print(json.dumps(articles, indent=2))`</pre>
+          
+
+          <h3>SOAP to REST API Migration</h3>
+          <p >
+            Enterprise integration projects frequently involve wrapping a SOAP (XML) service with a REST (JSON) facade — so modern frontend applications can consume legacy backend services. According to a <strong>MuleSoft Connectivity Benchmark 2025</strong>, 72% of enterprises still maintain at least one SOAP-based integration. A typical facade pattern:
+          </p>
+          
+            <p>`// Express REST endpoint wrapping a SOAP service
+
+const router = express.Router()
+const xmlParser = new XMLParser(
+  ignoreAttributes: false,
+  attributeNamePrefix: '@_',
+  isArray: (tagName) => ['Order', 'LineItem'].includes(tagName),
+)
+
+router.get('/orders/:id', async (req, res) => 
+  const soapEnvelope = \`
+    <?xml version="1.0" encoding="UTF-8"?>
+    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+        <GetOrder xmlns="http://example.com/orders">
+          <OrderId>\$req.params.id</OrderId>
+        </GetOrder>
+      </soap:Body>
+    </soap:Envelope>
+  \`
+
+  const soapResponse = await axios.post(process.env.SOAP_ENDPOINT!, soapEnvelope, 
+    headers:  'Content-Type': 'text/xml; charset=utf-8', 'SOAPAction': 'GetOrder' ,
+  )
+
+  const parsed = xmlParser.parse(soapResponse.data)
+
+  // Navigate to the response body, stripping SOAP envelope
+  const order = parsed?.['soap:Envelope']?.['soap:Body']?.GetOrderResponse?.Order
+
+  if (!order) 
+    return res.status(404).json( error: 'Order not found' )
+  
+
+  // Return clean JSON, not raw XML structure
+  res.json(
+    id: order.OrderId,
+    status: order.Status,
+    total: parseFloat(order.Total),
+    createdAt: order.CreatedDate,
+    items: (order.LineItem || []).map((item: any) => (
+      sku: item.SKU,
+      quantity: parseInt(item.Quantity),
+      unitPrice: parseFloat(item.UnitPrice),
+    ))
+  )
+)`</pre>
+          
+
+          <h3>Maven/Gradle Build Configuration Parsing</h3>
+          <p >
+            Maven&apos;s <code >pom.xml</code> files are XML. Build analysis tools, dependency audit systems, and monorepo management tools often convert pom.xml to JSON for programmatic inspection. The <strong>Apache Maven Project</strong> has over 400,000 published artifacts in Maven Central, all with XML descriptors.
+          </p>
+        
+
+        /* When not to convert */
+        
+          <h2>When NOT to Convert XML to JSON</h2>
+          <p>
+            Not every XML document should be converted to JSON. Some XML is genuinely document-centric and loses critical information in conversion:
+          </p>
+          <ul>
+            <li><strong>SVG files</strong> — SVG is XML, but converting SVG to JSON destroys the document. Browsers render SVG natively; embed it as-is.</li>
+            <li><strong>DocBook and DITA documentation</strong> — technical documentation formats where element ordering, mixed content, and semantic markup are all meaningful. Converting to JSON loses document structure.</li>
+            <li><strong>XHTML</strong> — HTML content in XML format. Use a DOM parser or HTML-specific tools, not generic XML-to-JSON conversion.</li>
+            <li><strong>XML with complex namespaces</strong> — When namespace URIs carry semantic meaning (XBRL financial data, HL7 CDA clinical documents), generic conversion loses the namespace information required to interpret the data correctly.</li>
+            <li><strong>XSD-validated enterprise XML</strong> — If the consuming system can accept XML natively, don&apos;t convert. Conversion introduces a transformation layer that can go wrong.</li>
+          </ul>
+          <p>
+            For a broader comparison of data formats including when XML, JSON, and YAML each make sense, the <a href="/blog/json-vs-yaml-vs-xml/">JSON vs YAML vs XML comparison</a> covers the trade-offs in detail. If you need to validate the XML before converting, use the <a href="/xml-formatter/">BytePane XML formatter</a> to check syntax first.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'Can all XML be converted to JSON?',
+                a: 'Not without loss. XML features with no JSON equivalent — attributes (handled via @-prefix conventions), namespaces (kept as key prefixes or stripped), comments (dropped), processing instructions (dropped), and mixed content (element text interleaved with child elements) — require lossy conversion decisions. Simple data-oriented XML converts cleanly; document-centric XML does not.',
+              ,
+              
+                q: 'How are XML attributes converted to JSON?',
+                a: 'No single standard exists. Common approaches: prefix with @ (most widely adopted — JAXB, BadgerFish, fast-xml-parser\'s attributeNamePrefix option), merge into the element object (flat), or create a special $ key for attributes. The @-prefix is recommended — it preserves information and is predictable for downstream consumers.',
+              ,
+              
+                q: 'Why do APIs still use XML in 2026?',
+                a: 'Enterprise systems built on SOAP and legacy middleware remain in production. Healthcare (HL7, CDA), finance (FpML, XBRL), government (NIEM), and publishing (DITA) standardized on XML before JSON existed. Per the MuleSoft Connectivity Benchmark 2025, 72% of enterprises maintain at least one SOAP integration. These ecosystems move slowly.',
+              ,
+              
+                q: 'What is the fastest XML to JSON converter for Node.js?',
+                a: 'fast-xml-parser benchmarks 5–10× faster than xml2js for large documents, processes ~40MB/s on typical XML, and has zero external dependencies. For multi-GB files, use a SAX-based streaming approach with node-expat or saxes to avoid loading the full document into memory. For most production workloads under 10MB, any maintained library works adequately.',
+              ,
+              
+                q: 'What is CDATA in XML and how does it convert to JSON?',
+                a: 'CDATA sections (written as <![CDATA[...]]>) mark text that should not be parsed as XML markup — useful for embedding HTML, JavaScript, or SQL inside XML. When converting to JSON, the CDATA delimiters are stripped and the content becomes a plain JSON string. No information is lost; only the CDATA wrapping disappears.',
+              ,
+              
+                q: 'How do XML namespaces affect JSON conversion?',
+                a: 'XML namespaces have no JSON equivalent. Converters either strip namespace prefixes (losing info when same local names exist across namespaces) or keep prefixes as part of key names ("soap:Body" becomes a JSON key "soap:Body"). For complex namespace usage like SOAP or XBRL, use a namespace-aware parser and explicitly map the fields you need rather than relying on generic conversion.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Convert XML to JSON Instantly</h2>
+          <p>
+            Paste your XML and get clean JSON output in your browser — no server uploads, processes entirely client-side. Handles attributes, CDATA, and nested elements.
+          </p>
+          
+            <a href="/xml-to-json/">
+              Open XML to JSON Converter →
+            </a>
+            <a href="/xml-formatter/">
+              XML Formatter
+            </a>
+            <a href="/json-formatter/">
+              JSON Formatter
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/xml-to-json-converter/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
