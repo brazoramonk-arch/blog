@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binary to Decimal Converter: Convert Binary Numbers Online - BytePane</title>
+  <meta name="description" content="Binary to Decimal Converter: Convert Binary Numbers Online">
+  <link rel="canonical" href="https://www.bytepane.com/blog/binary-to-decimal-converter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; Binary to Decimal Converter: Convert Binary Numbers Online
+  </nav>
+
+  <article>
+    <h1>Binary to Decimal Converter: Convert Binary Numbers Online</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/binary-to-decimal-converter/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        Binary to Decimal Converter
+      
+
+      /* Article Header */
+      
+        <h2>
+          Binary to Decimal Converter: Convert Binary Numbers Online
+        </h2>
+        
+          Number Systems
+          <time dateTime="2026-04-19">April 19, 2026</time>
+          14 min read
+        
+      
+
+      
+
+        /* Opening: Real-world scenario */
+        
+          <h2>The Subnet Mask Problem</h2>
+          <p>
+            You&apos;re debugging a network issue. A colleague says the server can&apos;t reach the database because they&apos;re on different subnets. The CIDR notation on the config reads <code >192.168.1.0/24</code>. The subnet mask is <code >255.255.255.0</code>. To understand what that mask actually means — which IP addresses are allowed through, what the broadcast address is, how many hosts fit in the subnet — you need to understand binary.
+          </p>
+          <p>
+            The <code >/24</code> means 24 bits are the network prefix. In binary: <code >11111111.11111111.11111111.00000000</code>. Three octets of all-ones (255 each), one octet of all-zeros (0). The zero bits are host space — 8 bits of host space means 2⁸ = 256 addresses, minus 2 reserved (network and broadcast) = 254 usable host IPs. That calculation only makes sense in binary.
+          </p>
+          <p>
+            Binary isn&apos;t just academic. File permissions (<code >chmod 755</code>), bitwise flags in low-level code, IEEE 754 floating-point representation, WebAssembly memory layout, TCP/IP packet headers — all of these demand binary literacy from working developers. This article covers the conversion math from first principles, the contexts where it matters, and the standard library calls for every common language.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸Binary (base 2) uses only digits 0 and 1. Each digit&apos;s value is <strong>2 raised to its position</strong>, starting at 0 from the right. Sum the positional values of all 1-bits to get the decimal equivalent.</li>
+            <li>▸<strong>8 bits = 1 byte = decimal range 0–255</strong>. This is why IPv4 octets, RGB channels, and ASCII character codes all max at 255.</li>
+            <li>▸Hex is compressed binary: <strong>one hex digit = 4 binary digits</strong>. Programmers use hex because it is vastly shorter while still mapping directly to bit patterns.</li>
+            <li>▸In JavaScript: <strong><code >parseInt(&apos;1101&apos;, 2)</code></strong> → 13. In Python: <code >int(&apos;1101&apos;, 2)</code> → 13. In Go: <code >strconv.ParseInt(&quot;1101&quot;, 2, 64)</code>.</li>
+            <li>▸<strong>Bitwise operations are binary operations</strong> — AND (&amp;), OR (|), XOR (^), NOT (~), and bit shifts (&lt;&lt;, &gt;&gt;) all operate on the binary representation of integers.</li>
+          </ul>
+        
+
+        /* The Math */
+        
+          <h2>Positional Notation: The Math Behind Binary</h2>
+          <p>
+            Every number system uses positional notation — each digit&apos;s contribution is its face value multiplied by the base raised to its position (starting at 0 from the right). Decimal uses base 10; binary uses base 2.
+          </p>
+          <p>
+            In decimal, the number 149 means:
+          </p>
+          
+            <p>`1 × 10² + 4 × 10¹ + 9 × 10⁰
+= 1 × 100 + 4 × 10 + 9 × 1
+= 100 + 40 + 9
+= 149`</pre>
+          
+          <p >
+            In binary, the same value 149 is written as <code >10010101</code>. To convert back to decimal, apply the same positional formula but with base 2:
+          </p>
+          
+            <p>`1  0  0  1  0  1  0  1   ← binary digits
+│  │  │  │  │  │  │  └─ position 0: 1 × 2⁰ =   1
+│  │  │  │  │  │  └──── position 1: 0 × 2¹ =   0
+│  │  │  │  │  └─────── position 2: 1 × 2² =   4
+│  │  │  │  └────────── position 3: 0 × 2³ =   0
+│  │  │  └───────────── position 4: 1 × 2⁴ =  16
+│  │  └──────────────── position 5: 0 × 2⁵ =   0
+│  └─────────────────── position 6: 0 × 2⁶ =   0
+└────────────────────── position 7: 1 × 2⁷ = 128
+                                              ───
+                                              149`</pre>
+          
+          <p >
+            The algorithm: read binary digits from right to left. If the digit is 1, add the corresponding power of 2. If it&apos;s 0, add nothing. Sum all the contributions.
+          </p>
+
+          <h3>Short-Cut: Powers of 2 You Should Know</h3>
+          <p>
+            Memorizing the first 16 powers of 2 makes mental binary-to-decimal conversion practical. You don&apos;t need all of them — just the ones you encounter regularly.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Position (n)</th>
+                  <th >2ⁿ</th>
+                  <th >Where you see this value</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['0', '1', 'Bit flag: off/on'],
+                  ['1', '2', 'Two states (binary digit)'],
+                  ['2', '4', 'UNIX permission group (read/write/execute = 4+2+1)'],
+                  ['3', '8', 'Nibble count, MIDI velocity steps'],
+                  ['4', '16', 'Hex digit range (0–F)'],
+                  ['5', '32', 'ASCII printable range start (space = 0x20)'],
+                  ['6', '64', '64-bit architecture, JWT default (HS256 secret min)'],
+                  ['7', '128', 'MSB of a byte, HTTP/2 frame flag mask'],
+                  ['8', '256', '1 byte — IPv4 octet, RGB channel, ASCII range'],
+                  ['10', '1,024', '1 KiB (kibibyte)'],
+                  ['16', '65,536', '2 bytes — TCP/UDP port range (0–65535)'],
+                  ['20', '1,048,576', '1 MiB'],
+                  ['24', '16,777,216', 'RGB color space (256³)'],
+                  ['32', '4,294,967,296', '4 bytes — IPv4 address space, 32-bit int range'],
+                  ['64', '1.84 × 10¹⁹', '8 bytes — 64-bit pointer, most modern integer types'],
+                ].map(([n, val, use]) => (
+                  <tr key=n >
+                    <td >n</td>
+                    <td >val</td>
+                    <td >use</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+        
+
+        /* Step-by-step examples */
+        
+          <h2>Step-by-Step Conversion Examples</h2>
+
+          <h3>Example 1: 1101 → 13</h3>
+          
+            <p>`1  1  0  1
+│  │  │  └─ position 0: 1 × 1 =  1
+│  │  └──── position 1: 0 × 2 =  0
+│  └─────── position 2: 1 × 4 =  4
+└────────── position 3: 1 × 8 =  8
+                                 ──
+                                 13`</pre>
+          
+
+          <h3>Example 2: 11111111 → 255 (one byte, all bits set)</h3>
+          
+            <pre >`1+2+4+8+16+32+64+128 = 255
+─ or equivalently: 2⁸ - 1 = 256 - 1 = 255
+
+This is the maximum value of a single byte.
+It is: the third octet in 255.255.255.0 subnet mask
+      the max RGB channel value (rgb(255,255,255) = white)
+      0xFF in hex
+      the signed -1 in two's complement (same bit pattern)`</pre>
+          
+
+          <h3>Example 3: 11000000.10101000.00000001.00000001 → 192.168.1.1</h3>
+          
+            <pre >`IPv4 addresses are four 8-bit octets separated by dots.
+Each octet converts independently:
+
+11000000 → 128+64 = 192
+10101000 → 128+32+8 = 168
+00000001 → 1
+00000001 → 1
+
+Result: 192.168.1.1   ← a typical home router default gateway`</pre>
+          
+
+          <h3>Example 4: 0111 1111 1111 1111 1111 1111 1111 1111 → 2,147,483,647</h3>
+          
+            <pre >`This 32-bit value is 0x7FFFFFFF — the maximum signed 32-bit integer.
+MSB (bit 31) = 0 → positive number in two's complement.
+Bits 0–30 all set → 2³¹ - 1 = 2,147,483,647.
+
+You'll see this value as Integer.MAX_VALUE in Java,
+INT_MAX in C/C++, and i32::MAX in Rust.
+Adding 1 causes integer overflow → -2,147,483,648 (or undefined behavior in C).`</pre>
+          
+        
+
+        /* Where binary appears in real dev work */
+        
+          <h2>Where Binary Shows Up in Real Development Work</h2>
+
+          <h3>IPv4 Addresses and Subnet Masks</h3>
+          <p >
+            Every IPv4 address is a 32-bit binary number. Per <strong>IANA (Internet Assigned Numbers Authority)</strong>, the entire IPv4 address space contains exactly 2³² = 4,294,967,296 addresses — a number only meaningful in binary. Subnet masks use consecutive 1-bits to define the network portion:
+          </p>
+          
+            <p>`# CIDR notation and its binary subnet mask
+/8   → 11111111.00000000.00000000.00000000 → 255.0.0.0
+/16  → 11111111.11111111.00000000.00000000 → 255.255.0.0
+/24  → 11111111.11111111.11111111.00000000 → 255.255.255.0
+/25  → 11111111.11111111.11111111.10000000 → 255.255.255.128
+/30  → 11111111.11111111.11111111.11111100 → 255.255.255.252
+
+# Usable hosts in /25: 2^7 - 2 = 126
+# Usable hosts in /30: 2^2 - 2 = 2 (point-to-point links)
+
+# JavaScript: check if IP is in subnet
+function inSubnet(ip, network, prefix) 
+  const ipBits = ip.split('.').map(Number)
+    .reduce((acc, octet) => (acc << 8) | octet, 0) >>> 0
+  const netBits = network.split('.').map(Number)
+    .reduce((acc, octet) => (acc << 8) | octet, 0) >>> 0
+  const mask = prefix === 0 ? 0 : (~0 << (32 - prefix)) >>> 0
+  ipBits & mask) === (netBits & mask)
+
+inSubnet('192.168.1.100', '192.168.1.0', 24)  // true
+inSubnet('192.168.2.1', '192.168.1.0', 24)    // false`</pre>
+          
+
+          <h3>Unix File Permissions</h3>
+          <p >
+            Unix permission bits are a 12-bit field. The lower 9 bits control read (4), write (2), and execute (1) for owner, group, and others. According to the <strong>POSIX specification (IEEE Std 1003.1)</strong>, these values are deliberately chosen to be non-overlapping powers of 2 so they can be combined with bitwise OR and tested with bitwise AND:
+          </p>
+          
+            <p>`# chmod 755 in binary
+7 = 111  (owner: read=4 + write=2 + execute=1)
+5 = 101  (group: read=4 + execute=1)
+5 = 101  (others: read=4 + execute=1)
+
+Binary: 111 101 101 = 0b111101101 = decimal 493 = octal 0755
+
+# ls -la output   Octal  Binary
+# -rwxr-xr-x      0755   111 101 101
+# -rw-r--r--      0644   110 100 100
+# -rw-------      0600   110 000 000
+# drwxrwxr-x      0775   111 111 101
+
+# Python: check if file is executable by owner
+
+mode = os.stat('/usr/bin/python3').st_mode
+is_executable = bool(mode & stat.S_IXUSR)  # 0o100 = 0b001000000`</pre>
+          
+
+          <h3>Bitwise Operations in Application Code</h3>
+          <p >
+            Bitwise operations are essential in feature flags, permissions systems, color manipulation, and protocol parsing. The <strong>Stack Overflow Developer Survey 2025</strong> reports that 38% of developers regularly work with systems programming or embedded code, where bitwise operations are routine:
+          </p>
+          
+            <p>`// Feature flags packed into a single integer — common in low-memory embedded systems
+const FEATURE_DARK_MODE   = 0b00000001  // bit 0
+const FEATURE_ANALYTICS   = 0b00000010  // bit 1
+const FEATURE_BETA_API    = 0b00000100  // bit 2
+const FEATURE_ADMIN_PANEL = 0b00001000  // bit 3
+
+// User has dark mode + beta API:
+let userFlags = FEATURE_DARK_MODE | FEATURE_BETA_API  // 0b00000101 = 5
+
+// Check if dark mode is enabled:
+const hasDarkMode = (userFlags & FEATURE_DARK_MODE) !== 0  // true
+
+// Toggle analytics:
+userFlags ^= FEATURE_ANALYTICS  // XOR flips the bit → 0b00000111 = 7
+
+// Disable beta API:
+userFlags &= ~FEATURE_BETA_API  // AND with NOT → clears bit 2 → 0b00000101 = 5
+
+// How many features are enabled? (Hamming weight / popcount)
+const popcount = (n: number) => 
+  let count = 0
+  while (n)  count += n & 1; n >>>= 1; 
+  return count
+
+popcount(userFlags)  // 2`</pre>
+          
+
+          <h3>IEEE 754 Floating-Point: Binary Beneath the Decimal</h3>
+          <p >
+            The reason <code >0.1 + 0.2 !== 0.3</code> in JavaScript (and every other language using IEEE 754) is binary. The <strong>IEEE 754-2008 standard</strong> defines a 64-bit double-precision float as 1 sign bit + 11 exponent bits + 52 mantissa bits. The decimal fraction 0.1 cannot be represented exactly in binary — the closest binary approximation is 0.100000000000000005551115… which accumulates error in addition:
+          </p>
+          
+            <p>`// 0.1 in binary (64-bit IEEE 754)
+// Sign: 0  Exponent: 01111111011  Mantissa: 1001100110011001... (repeating)
+//
+// Just like 1/3 = 0.333... repeating in decimal,
+// 1/10 = 0.0001100110011... repeating in binary.
+
+// The classic JavaScript gotcha:
+0.1 + 0.2  // 0.30000000000000004 — NOT 0.3
+
+// Safe comparison: use tolerance (epsilon)
+const EPSILON = Number.EPSILON  // 2.220446049250313e-16
+Math.abs(0.1 + 0.2 - 0.3) < EPSILON  // true
+
+// For financial calculations, use integer arithmetic:
+// Store $12.99 as integer cents: 1299
+// Never store currency as floating-point
+const price = 1299  // cents
+const tax = Math.round(price * 0.0825)  // 107 cents
+const total = price + tax  // 1406 cents = $14.06
+
+// Or use a decimal library: npm install decimal.js
+
+new Decimal('0.1').plus('0.2').toString()  // '0.3' — exact`</pre>
+          
+
+          <h3>Binary in TCP/IP Protocol Headers</h3>
+          <p >
+            Network protocol headers are densely packed binary structures. The TCP header, defined in <strong>RFC 793</strong>, packs port numbers, sequence numbers, flags, and window size into a minimum 20-byte binary field. Parsing network packets requires understanding exactly which bits represent which fields:
+          </p>
+          
+            <p>`# TCP flags byte (9 bits — last 9 bits of the control field):
+# Bit 8: NS  (ECN-nonce concealment)
+# Bit 7: CWR (Congestion Window Reduced)
+# Bit 6: ECE (ECN-Echo)
+# Bit 5: URG (Urgent pointer field significant)
+# Bit 4: ACK (Acknowledgment field significant)
+# Bit 3: PSH (Push function)
+# Bit 2: RST (Reset the connection)
+# Bit 1: SYN (Synchronize sequence numbers)
+# Bit 0: FIN (No more data from sender)
+
+# A SYN packet (TCP handshake first step): flags = 0b000000010 = 2
+# A SYN-ACK packet: flags = 0b000010010 = 18
+# A FIN-ACK packet: flags = 0b000010001 = 17
+
+# Python: parse TCP flags from raw packet bytes
+
+def parse_tcp_flags(raw_header: bytes) -> dict:
+    # Unpack bytes 12-13 of TCP header (data offset + flags)
+    data_offset_flags = struct.unpack('!H', raw_header[12:14])[0]
+    flags = data_offset_flags & 0x1FF  # mask lower 9 bits
+    return 
+        'FIN': bool(flags & 0x001),
+        'SYN': bool(flags & 0x002),
+        'RST': bool(flags & 0x004),
+        'PSH': bool(flags & 0x008),
+        'ACK': bool(flags & 0x010),
+        'URG': bool(flags & 0x020),
+    `</pre>
+          
+        
+
+        /* Conversion Code */
+        
+          <h2>Binary ↔ Decimal Conversion Code in Every Language</h2>
+
+          <h3>JavaScript / TypeScript</h3>
+          
+            <pre >`// Binary string → decimal number
+parseInt('1101', 2)           // 13
+parseInt('11111111', 2)       // 255
+parseInt('10010101', 2)       // 149
+parseInt('0b1101', 2)         // handles 0b prefix — returns 13
+
+// Decimal number → binary string
+(13).toString(2)              // '1101'
+(255).toString(2)             // '11111111'
+(149).toString(2)             // '10010101'
+
+// Pad to fixed width (e.g., always 8 bits for a byte display)
+(13).toString(2).padStart(8, '0')   // '00001101'
+(255).toString(2).padStart(8, '0')  // '11111111'
+
+// For 64-bit values, use BigInt (Number only safely handles 53 bits)
+BigInt('0b' + '1'.repeat(53)).toString()  // OK for 53-bit numbers
+parseInt('1'.repeat(54), 2)  // UNSAFE — beyond Number.MAX_SAFE_INTEGER
+
+// Correct 64-bit approach:
+const binary64 = '1'.repeat(64)
+BigInt('0b' + binary64)  // 18446744073709551615n
+
+// Convert IPv4 address to binary representation
+function ipToBinary(ip: string): string 
+  return ip.split('.').map(octet =>
+    parseInt(octet).toString(2).padStart(8, '0')
+  ).join('.')
+
+ipToBinary('192.168.1.1')
+// '11000000.10101000.00000001.00000001'`</pre>
+          
+
+          <h3>Python</h3>
+          
+            <pre >`# Binary string → int
+int('1101', 2)          # 13
+int('11111111', 2)      # 255
+int('0b1101', 2)        # 13 — 0b prefix handled
+int('0b1101', 0)        # 13 — base 0 auto-detects 0b prefix
+
+# Binary literal → int (evaluated at parse time)
+value = 0b1101          # int 13
+
+# int → binary string
+bin(13)                 # '0b1101'
+bin(13)[2:]             # '1101' — strip 0b prefix
+f'13:b'               # '1101'
+f'13:08b'             # '00001101' — zero-padded to 8 chars
+f'255:08b'            # '11111111'
+f'149:08b'            # '10010101'
+
+# bytes object → binary string
+data = b'\xde\xad'
+' '.join(f'byte:08b' for byte in data)
+# '11011110 10101101'
+
+# int → bytes (big-endian)
+(255).to_bytes(4, 'big')      # b'\x00\x00\x00\xff'
+(255).to_bytes(4, 'little')   # b'\xff\x00\x00\x00'
+
+# bytes → int
+int.from_bytes(b'\x00\x00\x00\xff', 'big')  # 255
+
+# IPv4 address ↔ integer
+
+int(ipaddress.IPv4Address('192.168.1.1'))   # 3232235777
+ipaddress.IPv4Address(3232235777)           # IPv4Address('192.168.1.1')`</pre>
+          
+
+          <h3>Go</h3>
+          
+            <pre >`import (
+    "fmt"
+    "strconv"
+)
+
+// Binary string → int64
+n, err := strconv.ParseInt("1101", 2, 64)    // 13, nil
+n, err := strconv.ParseInt("11111111", 2, 64) // 255, nil
+
+// Unsigned binary string → uint64
+u, err := strconv.ParseUint("10000000", 2, 64) // 128, nil
+
+// int → binary string
+s := strconv.FormatInt(13, 2)   // "1101"
+s := strconv.FormatInt(255, 2)  // "11111111"
+
+// With fmt (Sprintf)
+s := fmt.Sprintf("%b", 13)      // "1101"
+s := fmt.Sprintf("%08b", 13)    // "00001101" — zero-padded to 8 chars
+
+// Binary literal (Go 1.13+)
+n := 0b1101  // int 13
+
+// Bit manipulation: set, clear, toggle, check
+func setBit(n int, pos uint) int     return n | (1 << pos) 
+func clearBit(n int, pos uint) int   return n &^ (1 << pos) 
+func toggleBit(n int, pos uint) int  return n ^ (1 << pos) 
+func hasBit(n int, pos uint) bool    return n&(1<<pos) != 0 
+
+n := 0b00000101  // 5
+n = setBit(n, 1)    // 0b00000111 = 7 (set bit 1)
+n = clearBit(n, 0)  // 0b00000110 = 6 (clear bit 0)
+hasBit(n, 2)         // true`</pre>
+          
+
+          <h3>Rust</h3>
+          
+            <pre >`// Binary literal (Rust uses _ as visual separator)
+let n: u32 = 0b1101;            // 13
+let byte: u8 = 0b1111_1111;     // 255 — readable grouping
+
+// Binary string → integer
+let n = u32::from_str_radix("1101", 2).unwrap();    // 13
+let n = u8::from_str_radix("11111111", 2).unwrap(); // 255
+
+// integer → binary string
+let s = format!(":b", 13u32);     // "1101"
+let s = format!(":08b", 13u32);   // "00001101"
+let s = format!(":032b", 149u32); // zero-padded to 32 bits
+
+// Bit counting (hardware intrinsic when available)
+let n: u32 = 0b1101;
+n.count_ones()   // 3 (popcount)
+n.count_zeros()  // 29
+n.leading_zeros()  // 28
+n.trailing_zeros() // 0
+
+// Rotate bits (useful in hashing, cryptography)
+let n: u32 = 0b1000_0000_0000_0000_0000_0000_0000_0001;
+n.rotate_right(1)  // 0b1100_0000_0000_0000_0000_0000_0000_0000`</pre>
+          
+        
+
+        /* Common mistakes */
+        
+          <h2>Common Binary Conversion Mistakes</h2>
+
+          
+            
+              <h3>JavaScript: 32-bit Ceiling on Bitwise Operators</h3>
+              <p >
+                JavaScript&apos;s bitwise operators (<code >&amp;</code>, <code >|</code>, <code >^</code>, <code >~</code>, <code >&lt;&lt;</code>, <code >&gt;&gt;</code>) convert their operands to <em>signed</em> 32-bit integers, even though JavaScript numbers are 64-bit floats. This means any bitwise operation on a value above 2³¹ − 1 (2,147,483,647) will produce unexpected results. Use <code >BigInt</code> for 64-bit flag fields.
+              </p>
+              
+                <p>`// WRONG — truncates to 32 bits, loses bit 32+
+parseInt('1'.repeat(64), 2)  // 18446744073709552000 — WRONG (precision lost)
+(2**32) | 0                  // 0 — truncated to 32-bit signed
+
+// CORRECT — use BigInt for large binary values
+BigInt('0b' + '1'.repeat(64))  // 18446744073709551615n — correct`</pre>
+              
+            
+
+            
+              <h3>Signed vs. Unsigned: Two&apos;s Complement</h3>
+              <p >
+                The binary pattern <code >11111111</code> is 255 as an unsigned byte but −1 as a signed byte (two&apos;s complement). Context determines interpretation. In C, <code >unsigned char</code> gives 255; <code >signed char</code> gives −1. JavaScript&apos;s <code >&gt;&gt;</code> does signed shift; <code >&gt;&gt;&gt;</code> does unsigned shift.
+              </p>
+            
+
+            
+              <h3>Byte Order (Endianness)</h3>
+              <p>
+                Multi-byte values can be stored with the most significant byte first (big-endian) or least significant byte first (little-endian). Network protocols (TCP/IP) use big-endian (&quot;network byte order&quot;). x86/x64 CPUs use little-endian. The integer 256 in little-endian bytes is <code >00 01</code>; in big-endian it&apos;s <code >01 00</code>. This matters when parsing binary file formats or network packets across architectures.
+              </p>
+            
+          
+        
+
+        /* Binary vs Hex comparison */
+        
+          <h2>Binary vs. Hex vs. Decimal: When to Use Each</h2>
+          <p>
+            Binary, hexadecimal, and decimal are different representations of the same underlying values. The choice of representation is purely about human readability and convenience for the context. For number system conversions beyond binary and decimal, the <a href="/number-converter/">BytePane number converter</a> handles all bases simultaneously.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Context</th>
+                  <th >Best Format</th>
+                  <th >Why</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['Bit flags, permission masks', 'Binary', 'Each bit is directly visible — easy to see which flags are set'],
+                  ['Memory addresses, hash digests', 'Hex', 'Far more compact than binary; still maps 1:1 to nibbles'],
+                  ['IP addresses (human-readable)', 'Decimal', 'Convention: 192.168.1.1 is easier to type than 11000000.10101000.00000001.00000001'],
+                  ['IPv6 addresses', 'Hex', '128 bits in hex = 32 hex chars; in decimal = 39 chars; in binary = 128 chars'],
+                  ['Byte values (network protocols)', 'Hex', 'Each byte = 2 hex chars — clean visual grouping'],
+                  ['File permissions (Unix)', 'Octal', 'Each 3-bit group = one octal digit — convenient for the rwx triad'],
+                  ['Floating-point bit layout', 'Binary/Hex', 'Both expose the sign/exponent/mantissa structure; decimal obscures it'],
+                  ['User-visible numbers', 'Decimal', 'Humans are trained on base 10; all other formats need translation'],
+                ].map(([ctx, fmt, why]) => (
+                  <tr key=ctx >
+                    <td >ctx</td>
+                    <td >fmt</td>
+                    <td >why</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+
+          <p>
+            For the hex side of number conversions, the <a href="/blog/hex-to-decimal-converter/">hex to decimal guide</a> covers the math and every common use case — CSS colors, memory addresses, cryptographic hashes, and IPv6.
+          </p>
+        
+
+        /* Base64 connection */
+        
+          <h2>Binary and Base64: Encoding Binary Data for Text Transmission</h2>
+          <p>
+            Base64 encoding takes binary data (arbitrary bytes) and encodes it as printable ASCII text. According to the <strong>RFC 4648 specification</strong>, Base64 groups input bytes into 6-bit chunks (2⁶ = 64 possible values, hence &quot;base 64&quot;) and maps each to one of 64 printable characters. This 6-bits-per-character encoding inflates the size by 4/3 (3 bytes → 4 characters).
+          </p>
+          
+            <p>`# How Base64 works — binary grouping
+Input: "Man" = bytes 77, 97, 110
+Binary: 01001101 01100001 01101110
+
+Group into 6-bit chunks:
+010011 010110 000101 101110
+  19     22     5     46
+
+Map to Base64 alphabet (A=0, B=1, ..., Z=25, a=26, ..., z=51, 0=52, ..., 9=61, +=62, /=63):
+  19 → T
+  22 → W
+   5 → F
+  46 → u
+
+Result: "TWFu"
+
+# Every 3 bytes of binary → 4 Base64 characters
+# 24 bits binary → 24 bits encoded (no loss), just different alphabet`</pre>
+          
+          <p >
+            Base64 is used to embed binary assets in JSON (images in data URIs, PDF attachments in email), in JWT tokens (header and payload are Base64url-encoded), and in TLS certificates. See the <a href="/blog/base64-encoding-explained/">Base64 encoding guide</a> for the full treatment.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'How do you convert binary to decimal?',
+                a: 'Multiply each binary digit by 2 raised to its positional power (starting at 0 from the right), then sum the results. For 1101: (1 × 8) + (1 × 4) + (0 × 2) + (1 × 1) = 13. In JavaScript: parseInt("1101", 2) → 13. In Python: int("1101", 2) → 13.',
+              ,
+              
+                q: 'How many decimal values can 8 binary bits represent?',
+                a: '8 bits (one byte) represent 256 distinct values: 0 through 255 (2⁸ = 256). As a signed integer using two\'s complement, the range is −128 to +127. This 0–255 range is why IPv4 octets max at 255, RGB color channels max at 255, and ASCII characters fit in a single byte.',
+              ,
+              
+                q: 'What is an IPv4 subnet mask in binary?',
+                a: 'A subnet mask is a 32-bit binary number where all network bits are 1 and all host bits are 0. The /24 mask (255.255.255.0) is 11111111.11111111.11111111.00000000 — 24 consecutive 1-bits. ANDing an IP address with the mask extracts the network portion, determining if two addresses are on the same subnet.',
+              ,
+              
+                q: 'Why does a computer use binary instead of decimal?',
+                a: 'Computer hardware is built from transistors with exactly two states: on (1) and off (0). Binary maps directly to these physical states. Decimal would require analog circuitry (10 distinct voltage levels) that is far less reliable and harder to manufacture. Binary\'s simplicity enables billions of reliable transistor switches in a modern CPU.',
+              ,
+              
+                q: 'What is the difference between binary and hexadecimal?',
+                a: 'Binary (base 2) uses digits 0–1. Hexadecimal (base 16) uses digits 0–9 and A–F. One hex digit = exactly 4 binary digits. So 0xFF = 11111111 in binary = 255 in decimal. Hex is compressed binary — humans use hex because it is much shorter while still mapping directly to bit patterns.',
+              ,
+              
+                q: 'How does chmod 755 relate to binary?',
+                a: 'Unix file permissions are stored as binary flags. chmod 755 is octal — each octal digit represents 3 bits: 7 = 111 (read+write+execute), 5 = 101 (read+execute). The full 9-bit permission mask for 755 is 111 101 101 in binary. Three groups of three bits — one group each for owner, group, and others.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Convert Binary Numbers Instantly</h2>
+          <p>
+            Paste any binary number and get the decimal, hex, and octal equivalents with a step-by-step breakdown. Also handles IP address binary conversion.
+          </p>
+          <a href="/number-converter/">
+            Open Number Converter →
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/binary-to-decimal-converter/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
