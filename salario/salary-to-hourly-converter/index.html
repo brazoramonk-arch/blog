@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salary to Hourly Converter: Calculate Your Hourly Rate - Salario</title>
+  <meta name="description" content="Convert any annual salary to an hourly rate instantly. Formulas, worked examples, and a complete table of salary-to-hourly equivalents from $30K to $300K.">
+  <link rel="canonical" href="https://www.salario.io/blog/salary-to-hourly-converter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/salario/">Salario</a> &rarr; Salary to Hourly Converter: Calculate Your Hourly Rate
+  </nav>
+
+  <article>
+    <h1>Salary to Hourly Converter: Calculate Your Hourly Rate</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.salario.io/blog/salary-to-hourly-converter/">salario.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Salary to Hourly Converter: Calculate Your Hourly Rate',
+    description: 'Convert any annual salary to an hourly rate instantly. Formulas, worked examples, and a complete table of salary-to-hourly equivalents from $30K to $300K.',
+    datePublished: '2026-04-21',
+    dateModified: '2026-04-21',
+    author:  '@type': 'Organization', name: 'Salario' ,
+    publisher:  '@type': 'Organization', name: 'Salario', url: 'https://salario.io/', logo:  '@type': 'ImageObject', url: 'https://salario.io/favicon.svg'  ,
+    mainEntityOfPage: 'https://salario.io/blog/salary-to-hourly-converter/',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://salario.io/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://salario.io/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'Salary to Hourly Converter', item: 'https://salario.io/blog/salary-to-hourly-converter/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'How do I convert an annual salary to an hourly rate?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Divide your annual salary by 2,080 (the standard full-time hours in a year: 40 hours/week × 52 weeks). A $60,000 salary equals $28.85/hour. If you work fewer hours — say 37.5/week — use 1,950 as your divisor instead (37.5 × 52). This gives you the gross hourly equivalent before taxes. For paid-time-off scenarios, only divide by hours you actually work, not total calendar hours.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How many hours are in a work year?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The standard U.S. full-time work year is 2,080 hours (40 hours/week × 52 weeks). However, this includes all weeks — even those where you take vacation. If your employer pays out PTO separately or if you want your true worked hours, subtract your vacation weeks. With 2 weeks of vacation, effective worked hours drop to 2,000; with 3 weeks, to 1,960. Most payroll systems use 2,080 as the standard annual hours figure for salaried employees.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the hourly rate for a $50,000 salary?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A $50,000 annual salary equals $24.04 per hour based on a 2,080-hour work year (40 hrs/week × 52 weeks). Per biweekly pay period of 80 hours, that\'s $1,923.08 gross. On a weekly basis: $961.54 gross. Note that these are pre-tax figures. After federal income tax, FICA (7.65%), and state tax, a $50,000 earner in a state with ~5% income tax takes home approximately $38,500–$40,000 annually, or $17.98–$18.74/hr net.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What hourly rate is equivalent to $100,000 per year?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A $100,000 annual salary equals $48.08 per hour (gross) based on 2,080 standard work hours. On a biweekly paycheck basis, that is $3,846.15 before taxes. After federal income tax, FICA, and average state taxes, a $100,000 earner typically takes home $70,000–$76,000 annually — approximately $33.65–$36.54/hr net. In a no-income-tax state like Texas, net hourly rate rises to about $37.50–$38.50/hr.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do I convert hourly to annual salary?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Multiply your hourly rate by 2,080 (40 hrs/week × 52 weeks) for the standard full-time annual equivalent. A $25/hr job pays $52,000/year gross. For part-time: $20/hr × 25 hrs/week × 52 weeks = $26,000 annually. For shift workers with overtime: calculate regular hours at straight time and overtime hours at 1.5× separately, then add them together. The FLSA defines overtime as anything over 40 hours in a workweek for non-exempt employees.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Why does the salary-to-hourly conversion matter when comparing job offers?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Converting to hourly reveals hidden differences between offers. A $95,000 salaried job with 55-hour average weeks is effectively $33.17/hr. A $85,000 job with a firm 40-hour cap is $40.87/hr — 23% more per hour of your time. Additionally, hourly comparison exposes the real cost of unpaid overtime, which the Bureau of Labor Statistics estimates costs salaried workers an average of $4,000–$8,000 annually in foregone compensation at professional wage levels.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the difference between salary and hourly from a tax perspective?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Salaried and hourly employees are taxed identically by the IRS — there is no tax rate difference based on pay type. Both pay federal income tax, Social Security (6.2% up to $176,100 in 2026), and Medicare (1.45%). The practical difference is withholding predictability: salaried employees have consistent paychecks making tax planning easier. Hourly workers with variable hours experience fluctuating withholding, which can result in year-end surprises if not managed with W-4 adjustments.',
+        ,
+      ,
+    ],
+  
+
+  
+    <>
+      
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          Salary to Hourly Converter
+        
+
+        
+          Salary Tools
+          <h2>Salary to Hourly Converter: Calculate Your Hourly Rate</h2>
+          
+            <time dateTime="2026-04-21">April 21, 2026</time>
+            
+            12 min read
+          
+        
+
+        
+
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>→The standard formula: divide annual salary by 2,080 (40 hrs/week × 52 weeks) to get gross hourly rate. A $75,000 salary = $36.06/hr.</li>
+              <li>→The 2,080-hour standard assumes every week is a full paid workweek. If you use actual worked hours (excluding PTO), divide by 2,000 (50 weeks) or 1,960 (49 weeks) for a more accurate picture.</li>
+              <li>→Hourly conversion is essential for comparing salaried vs. hourly job offers — a salaried role with 50-hour weeks may pay less per actual hour of your time than a lower-headline hourly job.</li>
+              <li>→Freelance and contract workers should target an hourly rate 30–40% higher than equivalent salaried work to account for self-employment tax (15.3%), no benefits, and unpaid administrative time.</li>
+              <li>→The IRS Social Security wage base is $176,100 for 2026 — the 6.2% FICA withholding stops above this threshold, effectively raising net hourly pay for high earners mid-year.</li>
+            </ul>
+          
+
+          
+            <h2>The Core Formula: Salary to Hourly</h2>
+            <p>There is one myth to dispense with immediately: many people use the &quot;divide by 2,000&quot; shortcut, and it consistently produces slightly inflated hourly rates. The correct base for a standard full-time salaried employee in the U.S. is 2,080 hours per year — 40 hours per week multiplied by 52 weeks.</p>
+
+            
+              <p>Salary to Hourly Formula</p>
+              
+                
+                  <p>Hourly Rate = Annual Salary ÷ (Hours Per Week × 52)</p>
+                  <p>Standard full-time: Hourly Rate = Annual Salary ÷ 2,080</p>
+                
+                
+                  <p>Worked Examples:</p>
+                  
+                    $45,000 ÷ 2,080
+                    = $21.63/hr
+                  
+                  
+                    $60,000 ÷ 2,080
+                    = $28.85/hr
+                  
+                  
+                    $75,000 ÷ 2,080
+                    = $36.06/hr
+                  
+                  
+                    $100,000 ÷ 2,080
+                    = $48.08/hr
+                  
+                  
+                    $150,000 ÷ 2,080
+                    = $72.12/hr
+                  
+                
+              
+              <p>These are gross (pre-tax) hourly rates. Net hourly rate after taxes will be lower — see the after-tax table below. Source: U.S. Department of Labor standard work year definition; IRS Publication 15-T confirms 2,080 hours as the standard full-time annual hours basis for payroll calculations.</p>
+            
+
+            <p>Why does the 2,080 vs. 2,000 distinction matter? On a $100,000 salary, dividing by 2,000 gives $50.00/hr while dividing by 2,080 gives $48.08/hr — a $1.92/hour difference. For contract rate negotiations, this 3.9% variance compounds: if you are setting a freelance rate based on a $100,000 salary equivalent and use the wrong divisor, you leave roughly $4,000 on the table annually.</p>
+            <p>For the most precise individual calculation — including your specific state tax, filing status, and deductions — use our <a href="/blog/hourly-to-salary-conversion/">hourly to salary conversion tool</a>.</p>
+          
+
+          
+            <h2>Complete Salary to Hourly Conversion Table: $30K to $300K</h2>
+            <p>The table below shows gross hourly rates (pre-tax) for common annual salaries at standard 40-hour/week schedules. It also includes the approximate annual take-home pay and effective net hourly rate for a single filer in a state with ~5% income tax in 2026 — to give you a realistic picture of what each salary actually delivers per hour of your time.</p>
+
+            
+              <p>Salary to Hourly Conversion Table 2026 — 40 hrs/week, 52 weeks</p>
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Annual Salary</th>
+                      <th >Gross Hourly</th>
+                      <th >Monthly Gross</th>
+                      <th >Biweekly Gross</th>
+                      <th >Est. Net Hourly*</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr><td >$30,000</td><td >$14.42</td><td >$2,500</td><td >$1,153.85</td><td >$11.73</td></tr>
+                    <tr><td >$35,000</td><td >$16.83</td><td >$2,917</td><td >$1,346.15</td><td >$13.47</td></tr>
+                    <tr><td >$40,000</td><td >$19.23</td><td >$3,333</td><td >$1,538.46</td><td >$15.19</td></tr>
+                    <tr><td >$45,000</td><td >$21.63</td><td >$3,750</td><td >$1,730.77</td><td >$16.88</td></tr>
+                    <tr><td >$50,000</td><td >$24.04</td><td >$4,167</td><td >$1,923.08</td><td >$18.40</td></tr>
+                    <tr><td >$55,000</td><td >$26.44</td><td >$4,583</td><td >$2,115.38</td><td >$20.00</td></tr>
+                    <tr><td >$60,000</td><td >$28.85</td><td >$5,000</td><td >$2,307.69</td><td >$21.54</td></tr>
+                    <tr><td >$65,000</td><td >$31.25</td><td >$5,417</td><td >$2,500.00</td><td >$23.01</td></tr>
+                    <tr><td >$70,000</td><td >$33.65</td><td >$5,833</td><td >$2,692.31</td><td >$24.47</td></tr>
+                    <tr><td >$75,000</td><td >$36.06</td><td >$6,250</td><td >$2,884.62</td><td >$25.87</td></tr>
+                    <tr><td >$80,000</td><td >$38.46</td><td >$6,667</td><td >$3,076.92</td><td >$27.18</td></tr>
+                    <tr><td >$90,000</td><td >$43.27</td><td >$7,500</td><td >$3,461.54</td><td >$29.78</td></tr>
+                    <tr><td >$100,000</td><td >$48.08</td><td >$8,333</td><td >$3,846.15</td><td >$32.32</td></tr>
+                    <tr><td >$110,000</td><td >$52.88</td><td >$9,167</td><td >$4,230.77</td><td >$34.77</td></tr>
+                    <tr><td >$125,000</td><td >$60.10</td><td >$10,417</td><td >$4,807.69</td><td >$38.41</td></tr>
+                    <tr><td >$150,000</td><td >$72.12</td><td >$12,500</td><td >$5,769.23</td><td >$44.67</td></tr>
+                    <tr><td >$175,000</td><td >$84.13</td><td >$14,583</td><td >$6,730.77</td><td >$50.47</td></tr>
+                    <tr><td >$200,000</td><td >$96.15</td><td >$16,667</td><td >$7,692.31</td><td >$55.82</td></tr>
+                    <tr><td >$250,000</td><td >$120.19</td><td >$20,833</td><td >$9,615.38</td><td >$67.12</td></tr>
+                    <tr><td >$300,000</td><td >$144.23</td><td >$25,000</td><td >$11,538.46</td><td >$77.40</td></tr>
+                  </tbody>
+                </table>
+              
+              <p>*Net hourly rate estimated for single filer, standard deduction ($16,100 for 2026 per IRS Rev. Proc. 2025-32), state with ~5% income tax, no pre-tax deductions. Includes federal income tax, FICA (7.65% up to SS wage base of $176,100, 1.45% Medicare above), and approximate state tax. For exact net pay, use the Paycheck Calculator which accounts for your specific state and deductions.</p>
+            
+          
+
+          
+            <h2>When 2,080 Hours Is the Wrong Number to Use</h2>
+            <p>The 2,080-hour standard is the right starting point for most salaried employees — but there are important situations where it produces a misleading result:</p>
+
+            <h3>Part-Time Schedules</h3>
+            <p>A 30-hour/week employee works 1,560 hours annually. A salaried employee on a 37.5-hour schedule (common in many government and nonprofit roles) works 1,950 hours. Always adjust the divisor to match actual weekly hours:</p>
+            
+              
+                
+                  Weekly Hours
+                  Annual Hours
+                  Hourly Rate on $60K
+                
+                25 hrs/week1,300$46.15/hr
+                30 hrs/week1,560$38.46/hr
+                37.5 hrs/week1,950$30.77/hr
+                40 hrs/week2,080$28.85/hr
+                45 hrs/week2,340$25.64/hr
+              
+            
+
+            <h3>When You Work More Than 40 Hours</h3>
+            <p>This is the calculation that most salaried professionals never bother to run — and probably should. If you are consistently working 50 hours per week at a $100,000 salary, your effective hourly rate is $100,000 ÷ 2,600 = $38.46/hr. The same salary at 40 hours is $48.08/hr. You are effectively being paid 20% less per unit of your time than the headline salary suggests.</p>
+            <p>The Bureau of Labor Statistics American Time Use Survey 2024 found that full-time salaried workers at the management/professional level average 42.3 hours of work per week — meaning the true effective hourly rate for a $100,000 salary in those roles is approximately $45.62/hr rather than the nominal $48.08/hr. The gap is modest at 42 hours, but becomes significant at 50+ hours, which is common in investment banking, law, consulting, and startup environments.</p>
+
+            <h3>Freelance and Contract Rate Calculation</h3>
+            <p>Freelancers and independent contractors should never use the salaried employee formula to set their rates — and most undercharge significantly as a result. The correct freelance hourly rate calculation adds back several costs that salaried employment provides:</p>
+            
+              <p>Freelance Rate Calculator: Equivalent to $80,000 Salaried Position</p>
+              
+                Base salary equivalent hourly$38.46/hr
+                Self-employment tax premium (+7.65%)+$2.94/hr
+                Benefits replacement (health, dental, 401k match)+$8.00–12.00/hr
+                Unpaid admin time (20% of billable hours)+$7.69/hr
+                Business expenses, tools, insurance+$3.00–5.00/hr
+                Minimum freelance rate to break even$60–$65/hr
+              
+              <p>Assumes 20 billable days of vacation/sick time per year, employer health insurance value of ~$8,000/year, 401(k) match equivalent of ~$2,400/year. SE tax is the employer + employee combined 15.3% rate; self-employed workers pay the full amount. See our <a href="/blog/freelance-rate-calculator-guide/">freelance rate calculator guide</a> for the full breakdown.</p>
+            
+            <p>The rule of thumb from the Bureau of Labor Statistics Employer Costs for Employee Compensation survey (March 2025): total compensation for a private-sector worker averages 32% more than base wages alone — meaning wages represent only 69.2% of total employment cost. Freelancers who don&apos;t add back this premium are subsidizing their clients&apos; compensation budgets.</p>
+          
+
+          
+            <h2>Salary vs. Hourly Employment: The Hidden Trade-Offs</h2>
+            <p>Converting between salary and hourly isn&apos;t just an arithmetic exercise — it exposes real structural differences in how the two pay types work under U.S. labor law and tax code.</p>
+
+            <h3>The FLSA Distinction: Exempt vs. Non-Exempt</h3>
+            <p>The Fair Labor Standards Act (FLSA) classifies workers as either exempt or non-exempt from overtime protections. Non-exempt employees — whether hourly or salaried below the $35,568 exemption threshold as of 2026 (following the court vacatur of the Biden-era rule) — must be paid 1.5× their regular rate for all hours over 40 in a workweek. Exempt salaried employees have no such protection.</p>
+            <p>This is why the hourly conversion matters so much for exempt salaried workers: there is no floor on the hours an employer can require of an exempt employee without additional compensation. According to the Department of Labor Wage and Hour Division, the effective hourly rate calculation becomes critical when evaluating whether a salaried role actually pays a fair wage once all hours are accounted for.</p>
+
+            <h3>The Real Value of Salaried Employment: Benefits</h3>
+            <p>The BLS Employer Costs for Employee Compensation report from March 2025 found that for private-sector workers, total compensation averaged $46.14 per hour — of which $31.92 was wages and $14.22 was benefits (30.8%). For a $70,000 salaried employee, this implies employer-paid benefits worth approximately $30,000 annually on top of wages.</p>
+
+            
+              <p>Average Employer-Paid Benefits Value by Salary Level (BLS 2025)</p>
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Annual Salary</th>
+                      <th >Est. Benefits Value</th>
+                      <th >True Total Comp</th>
+                      <th >True Hourly Value</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr><td >$50,000</td><td >~$15,400</td><td >~$65,400</td><td >$31.44/hr</td></tr>
+                    <tr><td >$70,000</td><td >~$21,600</td><td >~$91,600</td><td >$44.04/hr</td></tr>
+                    <tr><td >$100,000</td><td >~$30,800</td><td >~$130,800</td><td >$62.88/hr</td></tr>
+                    <tr><td >$150,000</td><td >~$46,200</td><td >~$196,200</td><td >$94.33/hr</td></tr>
+                  </tbody>
+                </table>
+              
+              <p>Source: Bureau of Labor Statistics, Employer Costs for Employee Compensation, March 2025. Benefits include paid leave, supplemental pay, insurance, retirement/savings, and legally required benefits (FICA, workers&apos; comp, unemployment insurance). Percentages applied from BLS overall private-sector average (30.8% of compensation). Actual benefits vary widely by employer, industry, and plan design.</p>
+            
+
+            <p>This is why the salary-vs-hourly decision isn&apos;t purely about the number on the paycheck. See our <a href="/blog/salary-vs-hourly-which-is-better/">salary vs. hourly: which is better</a> guide for a full analysis of when each pay structure works in your favor — including overtime implications, benefit eligibility, and job security differences.</p>
+          
+
+          
+            <h2>The Tax Twist: When Your Effective Hourly Rate Changes Mid-Year</h2>
+            <p>For higher earners, there is an unusual paycheck dynamic that the salary-to-hourly conversion doesn&apos;t capture in an annual view: the Social Security wage base cutoff.</p>
+            <p>The 2026 Social Security taxable wage base is $176,100 per the IRS Revenue Procedure 2025-32. Employees earning above this threshold stop paying the 6.2% Social Security tax on wages above the cap mid-year. For a worker earning $200,000 annually, Social Security withholding stops around early September — their net paycheck increases by approximately $480 every two weeks for the remainder of the year.</p>
+            <p>Practically, this means a $200,000 salaried employee&apos;s effective net hourly rate increases during Q4 of each year. Planning your major financial moves (Roth conversions, 401k contributions, large purchases) around this increase can meaningfully improve your cash flow management.</p>
+            <p>For the most accurate picture of your take-home pay at any salary level, use our <a href="/paycheck-calculator/">Paycheck Calculator</a> — it accounts for FICA ceilings, your filing status, and state-specific tax rules. For comparing two job offers on a true net-pay basis, our <a href="/blog/job-offer-comparison-guide/">job offer comparison guide</a> walks through the full framework.</p>
+          
+
+          
+            <h2>Frequently Asked Questions</h2>
+            
+              
+                <h3>How do I convert an annual salary to an hourly rate?</h3>
+                <p>Divide your annual salary by 2,080 (the standard full-time annual hours: 40 hrs/week × 52 weeks). A $60,000 salary equals $28.85/hr gross. For non-standard schedules, replace 2,080 with your actual annual hours (weekly hours × 52). These figures are gross — net hourly rate after federal income tax, FICA, and state taxes will typically be 30–45% lower depending on income level and state.</p>
+              
+              
+                <h3>How many hours are in a work year?</h3>
+                <p>The standard U.S. full-time work year is 2,080 hours (40 hours/week × 52 weeks) — the figure used by the IRS and most payroll systems. With 2 weeks PTO, actual worked hours drop to 2,000. With 3 weeks PTO, to 1,960. For hourly equivalent calculations comparing salaried vs. hourly roles, most compensation analysts use 2,080 as the standard basis.</p>
+              
+              
+                <h3>What is the hourly rate for a $50,000 salary?</h3>
+                <p>$50,000 ÷ 2,080 hours = $24.04/hr gross. Biweekly gross paycheck: $1,923.08 (before taxes). After federal income tax, FICA, and state income tax (~5%), a $50,000 single filer takes home approximately $38,500–$40,000 annually — about $18.51–$19.23/hr net. In a no-income-tax state like Texas, net hourly rises to approximately $19.80–$20.40/hr.</p>
+              
+              
+                <h3>What hourly rate is equivalent to $100,000 per year?</h3>
+                <p>$100,000 ÷ 2,080 = $48.08/hr gross. Biweekly gross: $3,846.15. After taxes (~32% total effective rate for a single filer in a moderate-tax state), take-home is approximately $67,000–$72,000/year — or $32.21–$34.62/hr net. In a no-income-tax state, net hourly rises to approximately $36.50–$38.00/hr.</p>
+              
+              
+                <h3>How do I convert hourly to annual salary?</h3>
+                <p>Multiply hourly rate × 40 hours × 52 weeks = annual salary. A $25/hr full-time job pays $52,000/year gross. For overtime-heavy roles, calculate regular hours at straight time and overtime hours at 1.5× rate separately, then add. Part-time: multiply hourly rate × weekly hours × 52. The FLSA requires overtime for non-exempt employees working over 40 hours per workweek.</p>
+              
+              
+                <h3>Why does the salary-to-hourly conversion matter when comparing job offers?</h3>
+                <p>It reveals hidden differences. A $95,000 job with 55-hour weeks is $33.17/hr; a $85,000 job with a firm 40-hour policy is $40.87/hr — 23% higher per hour of your time. The BLS estimates that unpaid overtime costs salaried professionals $4,000–$8,000 annually in foregone compensation. Converting to hourly lets you compare offers on equal terms.</p>
+              
+              
+                <h3>What is the difference between salary and hourly from a tax perspective?</h3>
+                <p>The IRS taxes salaried and hourly workers identically — there is no rate difference based on pay type. Both pay federal income tax, Social Security (6.2% up to $176,100 in 2026), and Medicare (1.45%). The practical difference is withholding predictability: salaried employees have consistent paychecks, while hourly workers with variable hours experience fluctuating withholding. Use Form W-4 adjustments to manage year-end tax surprises.</p>
+              
+            
+          
+
+          
+            <h2>Calculate Your Exact Take-Home Pay</h2>
+            <p>The table above shows estimates. Get your precise biweekly net pay — with your specific state, filing status, and deductions — in under 60 seconds.</p>
+            
+              <a href="/paycheck-calculator/">Paycheck Calculator</a>
+              <a href="/salary-calculator/">Salary Calculator</a>
+            
+          
+
+        
+      
+
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.salario.io/blog/salary-to-hourly-converter/">Salario</a>.
+      Explore more free tools at <a href="https://www.salario.io/">salario.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.salario.io/">Salario</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
