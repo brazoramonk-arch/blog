@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YAML Validator: Check &amp;amp; Fix YAML Syntax Online - BytePane</title>
+  <meta name="description" content="YAML Validator: Check &amp;amp; Fix YAML Syntax Online">
+  <link rel="canonical" href="https://www.bytepane.com/blog/yaml-validator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; YAML Validator: Check &amp;amp; Fix YAML Syntax Online
+  </nav>
+
+  <article>
+    <h1>YAML Validator: Check &amp;amp; Fix YAML Syntax Online</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/yaml-validator/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb Navigation */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        YAML Validator
+      
+
+      /* Article Header */
+      
+        <h2>
+          YAML Validator: Check &amp; Fix YAML Syntax Online
+        </h2>
+        
+          DevOps
+          <time dateTime="2026-04-21">April 21, 2026</time>
+          13 min read
+        
+      
+
+      
+
+        /* Opening: Problem-solution */
+        
+          <h2>The CI Pipeline Was Fine — Until It Wasn&apos;t</h2>
+          <p>
+            It&apos;s 4pm on a Friday. A developer pushes a change to a Kubernetes deployment manifest. The CI/CD pipeline starts. Three minutes later, <code >kubectl apply</code> fails with: <code >error: error parsing deployment.yaml: error converting YAML to JSON: yaml: line 47: did not find expected &apos;:&apos;</code>.
+          </p>
+          <p>
+            The culprit: a two-space indentation became three spaces on one line due to a copy-paste from a Stack Overflow answer. YAML parsed it as a different structure entirely. The actual syntax error was five lines above line 47 — YAML&apos;s error reporting is notoriously imprecise about the true location of the problem.
+          </p>
+          <p>
+            This scenario plays out constantly in teams that rely on YAML-heavy tooling. According to the <strong>CNCF Annual Survey 2025</strong>, Kubernetes is used in production by 84% of respondents — and every Kubernetes workload is defined in YAML. GitHub Actions, the most popular CI platform per <strong>State of the Octoverse 2025</strong> with over 90 million workflow runs daily, is entirely YAML-configured. Helm charts, Ansible playbooks, Docker Compose files — all YAML.
+          </p>
+          <p>
+            YAML validation is not optional infrastructure. It&apos;s a prerequisite for stable deployments.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸YAML validation has <strong>two distinct layers</strong>: syntax validation (is the YAML parseable?) and schema validation (does the parsed data match the expected structure?).</li>
+            <li>▸The most dangerous YAML errors are <strong>silent type coercions</strong> — &quot;NO&quot; becoming <code >false</code>, &quot;0755&quot; becoming integer 493, unquoted version strings becoming floats.</li>
+            <li>▸<strong>yamllint</strong> catches syntax and style problems parsers ignore: duplicate keys, trailing spaces, missing document start markers.</li>
+            <li>▸For Kubernetes manifests, use <strong>kubeconform</strong> — it validates against official Kubernetes JSON Schema definitions, not just YAML syntax.</li>
+            <li>▸YAML tabs are <strong>always an error</strong> — the YAML spec forbids tabs for indentation. Configure your editor to use spaces only for YAML files.</li>
+          </ul>
+        
+
+        /* Why YAML is hard */
+        
+          <h2>Why YAML Is Uniquely Error-Prone</h2>
+          <p>
+            JSON and XML have explicit delimiters — braces, brackets, and angle brackets make structure unambiguous. YAML replaces all of these with indentation and inference. That makes it easier to write by hand, but it introduces an entirely new class of errors:
+          </p>
+
+          <h3>1. Indentation-as-Structure</h3>
+          <p>
+            In YAML, adding or removing one space changes the data structure — not just the formatting. Consider:
+          </p>
+          
+            <p>`# VALID: env is a child of container
+spec:
+  containers:
+    - name: app
+      image: myapp:latest
+      env:
+        - name: PORT
+          value: "8080"
+
+# BROKEN: off-by-one-space — env is now a sibling of containers, not a child
+spec:
+  containers:
+    - name: app
+      image: myapp:latest
+     env:           # ← 5 spaces instead of 6
+       - name: PORT
+         value: "8080"
+# Error: yaml: line 8: mapping values are not allowed in this context`</pre>
+          
+          <p >
+            The YAML spec forbids using tabs for indentation entirely (Section 8.1 of the YAML 1.2 specification). Most text editors allow tabs, and a visually identical tab character causes a parser error. Configure your editor:
+          </p>
+          
+            <p>`# .editorconfig — prevents tabs in YAML files
+[*.yaml,yml]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# VS Code settings.json
+
+  "[yaml]": 
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false
+  
+`</pre>
+          
+
+          <h3>2. Implicit Type Coercion</h3>
+          <p >
+            YAML automatically infers types from unquoted values. What looks like a string might be parsed as a boolean, integer, float, or null. The <strong>YAML 1.1 specification</strong> (still the default in PyYAML, many Ruby gems, and older Java libraries) is particularly aggressive with coercion:
+          </p>
+          
+            <p>`# YAML 1.1 type coercions that bite developers
+
+# Version strings → floats (the most common config bug)
+version: 1.10       # → float 1.1 (not "1.10"!) — this is a major version, broken
+version: "1.10"     # → string "1.10" (safe)
+
+# Country codes / environment names → booleans (Norway Problem)
+country: NO         # → false  (YAML 1.1)
+country: "NO"       # → "NO"   (safe)
+env: ON             # → true   (YAML 1.1)
+env: "ON"           # → "ON"   (safe)
+
+# Octal numbers (YAML 1.1 only)
+mode: 0755          # → integer 493 (octal interpretation)
+mode: "0755"        # → string "0755" (safe)
+
+# Null coercion
+key: ~              # → null
+key: null           # → null (both YAML 1.1 and 1.2)
+key: Null           # → null (YAML 1.1 only; string in YAML 1.2)
+
+# Infinity and NaN
+value: .inf         # → +Infinity (float)
+value: .nan         # → NaN (float) — breaks JSON serialization`</pre>
+          
+
+          <h3>3. Multiline String Gotchas</h3>
+          
+            <pre >`# Literal block (|) — preserves all newlines
+sql_query: |
+  SELECT id, name
+  FROM users
+  WHERE active = true
+# Value: "SELECT id, name\nFROM users\nWHERE active = true\n" (trailing newline included)
+
+# Folded block (>) — newlines become spaces (except blank lines)
+description: >
+  This is a long
+  description that wraps
+  across multiple lines.
+# Value: "This is a long description that wraps across multiple lines.\n"
+
+# Chomping modifiers (often forgotten):
+key: |    # default: keep one trailing newline
+key: |-   # strip all trailing newlines
+key: |+   # keep all trailing newlines
+
+# Flow scalars: be careful with special characters
+command: kubectl apply -f config.yaml  # fine
+command: kubectl apply -f "file:name"  # YAML parses the colon as a key!
+command: "kubectl apply -f \"file:name\""  # must escape inner quotes`</pre>
+          
+        
+
+        /* Validation layers */
+        
+          <h2>Two Layers of YAML Validation</h2>
+
+          <h3>Layer 1: Syntax Validation</h3>
+          <p >
+            Syntax validation answers: &quot;Can this YAML be parsed?&quot; It catches malformed YAML — wrong indentation, invalid characters, unclosed quotes, duplicate keys (when the parser is strict). You can syntax-validate with any YAML parser:
+          </p>
+          
+            <p>`# Python — basic syntax check
+python3 -c "
+
+try:
+    yaml.safe_load(open(sys.argv[1]).read())
+    print('Valid YAML')
+except yaml.YAMLError as e:
+    print(f'Error: e')
+    sys.exit(1)
+" config.yaml
+
+# Node.js — with js-yaml
+node -e "
+const yaml = require('js-yaml');
+const fs = require('fs');
+try 
+  yaml.load(fs.readFileSync(process.argv[2], 'utf8'));
+  console.log('Valid YAML');
+ catch(e) 
+  console.error('Error at line', e.mark?.line + 1 + ':', e.reason);
+  process.exit(1);
+
+" config.yaml
+
+# yq — simplest one-liner
+yq eval config.yaml > /dev/null && echo "Valid" || echo "Invalid"`</pre>
+          
+
+          <h3>Layer 2: Schema Validation</h3>
+          <p >
+            Schema validation answers: &quot;Does this YAML contain the right fields with the right values?&quot; A syntactically valid YAML file can still be semantically wrong — missing a required field, a string where an integer is expected, an invalid enum value. Schema validation catches these:
+          </p>
+          
+            <p>`# Python: YAML + JSON Schema validation with jsonschema
+
+# JSON Schema defining the expected structure
+schema = 
+    "type": "object",
+    "required": ["version", "services"],
+    "properties": 
+        "version": "type": "string", "pattern": "^[0-9]+\\.[0-9]+$",
+        "services": 
+            "type": "object",
+            "additionalProperties": 
+                "type": "object",
+                "required": ["image"],
+                "properties": 
+                    "image": "type": "string",
+                    "ports": "type": "array", "items": "type": "string",
+                    "environment": "type": "object"
+                
+            
+        
+    
+
+with open("docker-compose.yaml") as f:
+    data = yaml.safe_load(f)
+
+try:
+    jsonschema.validate(data, schema)
+    print("Valid!")
+except jsonschema.ValidationError as e:
+    print(f"Schema error at ' -> '.join(str(p) for p in e.absolute_path):")
+    print(f"  e.message")`</pre>
+          
+
+          
+            <pre >`// TypeScript: YAML + Zod schema validation
+
+const ServiceSchema = z.object(
+  image: z.string(),
+  ports: z.array(z.string()).optional(),
+  environment: z.record(z.string()).optional(),
+  restart: z.enum(['no', 'always', 'on-failure', 'unless-stopped']).optional(),
+)
+
+const ComposeSchema = z.object(
+  version: z.string().regex(/^\d+\.\d+$/),
+  services: z.record(ServiceSchema),
+  networks: z.record(z.object( driver: z.string() )).optional(),
+)
+
+const raw = yaml.load(fs.readFileSync('docker-compose.yaml', 'utf-8'))
+const result = ComposeSchema.safeParse(raw)
+
+if (!result.success) 
+  console.error('Validation errors:')
+  result.error.issues.forEach(issue => 
+    console.error(\`  \$issue.path.join('.'): \$issue.message\`)
+  )
+  process.exit(1)
+
+console.log('Config valid:', result.data)`</pre>
+          
+        
+
+        /* yamllint */
+        
+          <h2>yamllint: Beyond Parser-Level Validation</h2>
+          <p >
+            A YAML parser only catches errors that prevent parsing. <strong>yamllint</strong> is a Python-based linter that catches problems the parser ignores — style inconsistencies, dangerous patterns, and structural issues that cause silent bugs:
+          </p>
+          
+            <p>`# Install
+pip install yamllint
+
+# Lint a single file
+yamllint config.yaml
+
+# Lint all YAML in a directory
+yamllint .
+
+# Output example:
+# config.yaml
+#   5:1     warning  missing document start "---"  (document-start)
+#   12:17   error    trailing spaces  (trailing-spaces)
+#   23:3    error    duplication of key "name" in mapping  (key-duplicates)
+#   31:1    warning  too many blank lines (3 > 2)  (empty-lines)
+#   47:82   warning  line too long (85 > 80 characters)  (line-length)`</pre>
+          
+
+          <p >
+            Configure yamllint with a <code >.yamllint</code> or <code >.yamllint.yaml</code> file:
+          </p>
+          
+            <p>`# .yamllint — project-level yamllint configuration
+extends: default
+
+rules:
+  # Catch dangerous boolean coercion (YES/NO/ON/OFF as values)
+  truthy:
+    allowed-values: ['true', 'false']
+    check-keys: false   # don't flag truthy-looking keys
+
+  # Catch duplicate keys (silently overwritten)
+  key-duplicates: enable
+
+  # Line length — adjust for your team's preference
+  line-length:
+    max: 120
+    allow-non-breakable-words: true
+
+  # Kubernetes manifests don't need document start markers
+  document-start: disable
+
+  # Allow multi-document YAML files
+  document-end: disable
+
+  # Enforce consistent indentation
+  indentation:
+    spaces: 2
+    indent-sequences: consistent`</pre>
+          
+        
+
+        /* YAML validators comparison */
+        
+          <h2>YAML Validation Tools Compared</h2>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Tool</th>
+                  <th >What It Validates</th>
+                  <th >Best For</th>
+                  <th >Limitations</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['yaml.safe_load() (PyYAML)', 'Syntax only', 'Quick script-level checks', 'No style rules; YAML 1.1 only'],
+                  ['js-yaml yaml.load()', 'Syntax only', 'Node.js pipelines', 'No style rules; YAML 1.2-ish'],
+                  ['yq eval', 'Syntax only', 'Shell script pipelines', 'No style rules; single-file focus'],
+                  ['yamllint', 'Syntax + style + structure', 'CI pre-commit hooks, code review', 'No domain-specific schema'],
+                  ['kubeconform', 'Kubernetes schema', 'K8s GitOps pipelines', 'Kubernetes-specific only'],
+                  ['kubeval (deprecated)', 'Kubernetes schema', '(Use kubeconform instead)', 'Unmaintained since 2022'],
+                  ['Redocly CLI', 'OpenAPI schema (YAML/JSON)', 'API spec validation', 'OpenAPI-specific'],
+                  ['jsonschema + PyYAML', 'Custom JSON Schema', 'Application config validation', 'Requires schema authoring'],
+                  ['Zod + js-yaml', 'TypeScript-first schema', 'TS/Node.js config validation', 'Requires schema authoring'],
+                  ['BytePane YAML Validator', 'Syntax (online, in-browser)', 'Quick one-off validation', 'No schema support; manual'],
+                ].map(([tool, what, best, limits]) => (
+                  <tr key=tool >
+                    <td >tool</td>
+                    <td >what</td>
+                    <td >best</td>
+                    <td >limits</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+
+          <p >
+            For most teams, the right validation stack is: <strong>yamllint</strong> as a pre-commit hook for syntax/style, domain-specific validators (kubeconform for K8s, Redocly for OpenAPI) in CI, and JSON Schema/Zod for application-level config validation.
+          </p>
+        
+
+        /* Kubernetes-specific */
+        
+          <h2>Kubernetes Manifest Validation with kubeconform</h2>
+          <p>
+            kubeconform validates Kubernetes manifests against the official Kubernetes JSON Schema — it catches not just YAML syntax errors but semantic errors: invalid API versions, unknown fields, missing required fields, and incorrect value types. According to <strong>kubeconform&apos;s GitHub repository</strong>, it processes schemas up to 10× faster than kubeval and handles multi-document YAML correctly:
+          </p>
+          
+            <p>`# Install kubeconform
+# macOS: brew install kubeconform
+# Go: go install github.com/yannh/kubeconform/cmd/kubeconform@latest
+
+# Validate a single manifest
+kubeconform -strict deployment.yaml
+
+# Validate all manifests in a directory
+kubeconform -strict k8s/
+
+# Specify Kubernetes version for schema
+kubeconform -strict -kubernetes-version 1.29.0 k8s/
+
+# Output as JSON for CI reporting
+kubeconform -strict -output json k8s/ | jq '.summary'
+
+# In a GitHub Actions workflow:
+# .github/workflows/validate.yml
+- name: Validate Kubernetes manifests
+  uses: docker://ghcr.io/yannh/kubeconform:latest
+  with:
+    args: -strict -kubernetes-version 1.29.0 k8s/
+
+# Example output for invalid manifest:
+# deployment.yaml - Deployment api-server is invalid:
+#   spec.template.spec.containers[0].image: Required value: must have an image`</pre>
+          
+
+          <p >
+            For teams using Helm, validate the rendered manifests before deployment — not just the templates:
+          </p>
+          
+            <p>`# Render Helm chart and pipe to kubeconform
+helm template my-release ./my-chart --values values.yaml \
+  | kubeconform -strict -kubernetes-version 1.29.0 -
+
+# With kubeval (older approach, still common):
+# helm template my-release ./my-chart | kubeval --strict --ignore-missing-schemas`</pre>
+          
+        
+
+        /* CI/CD integration */
+        
+          <h2>YAML Validation in CI/CD Pipelines</h2>
+          <p >
+            Validation should run in two places: locally as a pre-commit hook (fast feedback loop) and in CI (enforced gate before merge). The <strong>pre-commit framework</strong> (installed on 8+ million developer machines per PyPI download stats) makes this straightforward:
+          </p>
+          
+            <p>`# .pre-commit-config.yaml
+repos:
+  # YAML syntax and style linting
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [-c=.yamllint]
+
+  # Kubernetes manifest validation
+  - repo: https://github.com/yannh/kubeconform
+    rev: v0.6.4
+    hooks:
+      - id: kubeconform
+        args:
+          - -strict
+          - -kubernetes-version=1.29.0
+
+# Install: pip install pre-commit && pre-commit install
+# Run manually: pre-commit run --all-files`</pre>
+          
+
+          <p >
+            For GitHub Actions, add validation as a required check on pull requests:
+          </p>
+          
+            <p>`# .github/workflows/validate-yaml.yml
+name: Validate YAML
+
+on:
+  pull_request:
+    paths: ['**.yaml', '**.yml', 'k8s/**']
+
+jobs:
+  yaml-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint YAML files
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config_file: .yamllint
+          file_or_dir: .
+          strict: true  # fail on warnings too
+
+  k8s-validate:
+    runs-on: ubuntu-latest
+    needs: yaml-lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Kubernetes manifests
+        run: |
+          curl -sLo kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
+          tar xf kubeconform.tar.gz
+          ./kubeconform -strict -kubernetes-version 1.29.0 k8s/`</pre>
+          
+
+          <p >
+            For understanding how YAML fits into the broader CI/CD picture, the <a href="/blog/ci-cd-pipeline-guide/">CI/CD pipeline guide</a> covers GitHub Actions, GitLab CI, and Jenkins in detail.
+          </p>
+        
+
+        /* Validating in code */
+        
+          <h2>Programmatic YAML Validation</h2>
+          <p>
+            When your application loads a YAML config file at startup, validation should happen immediately — fail loud and early rather than silently loading wrong values.
+          </p>
+
+          <h3>Go: Strict Struct Unmarshaling</h3>
+          <p>
+            Go&apos;s <code >gopkg.in/yaml.v3</code> can unmarshal directly into typed structs, with <code >KnownFields(true)</code> rejecting unknown fields:
+          </p>
+          
+            <p>`package main
+
+    "fmt"
+    "os"
+
+    "gopkg.in/yaml.v3"
+)
+
+type Config struct 
+    Server   ServerConfig   \`yaml:"server"\`
+    Database DatabaseConfig \`yaml:"database"\`
+    LogLevel string         \`yaml:"log_level"\`
+
+type ServerConfig struct 
+    Port    int    \`yaml:"port"\`
+    Host    string \`yaml:"host"\`
+    Timeout int    \`yaml:"timeout_seconds"\`
+
+type DatabaseConfig struct 
+    URL         string \`yaml:"url"\`
+    MaxConns    int    \`yaml:"max_connections"\`
+    SSLMode     string \`yaml:"ssl_mode"\`
+
+func LoadConfig(path string) (*Config, error) 
+    data, err := os.ReadFile(path)
+    if err != nil 
+        return nil, fmt.Errorf("read config: %w", err)
+    
+
+    dec := yaml.NewDecoder(bytes.NewReader(data))
+    dec.KnownFields(true)  // error on unknown fields
+
+    var cfg Config
+    if err := dec.Decode(&cfg); err != nil 
+        return nil, fmt.Errorf("parse config: %w", err)
+    
+
+    // Additional business-logic validation
+    if cfg.Server.Port < 1 || cfg.Server.Port > 65535 
+        return nil, fmt.Errorf("server.port must be 1-65535, got %d", cfg.Server.Port)
+    
+    if cfg.Database.MaxConns < 1 
+        return nil, fmt.Errorf("database.max_connections must be >= 1")
+    
+
+    return &cfg, nil
+`</pre>
+          
+        
+
+        /* Common YAML errors reference */
+        
+          <h2>Quick Reference: Most Common YAML Errors and Fixes</h2>
+
+          
+            [
+              
+                error: 'yaml: line N: did not find expected \':\'',
+                cause: 'A colon inside an unquoted value is interpreted as a key-value separator',
+                fix: 'Quote the value: value: "http://example.com" instead of value: http://example.com',
+              ,
+              
+                error: 'yaml: line N: found character that cannot start any token',
+                cause: 'A tab character used for indentation (YAML forbids tabs)',
+                fix: 'Replace all tab characters with spaces. Configure your editor to use spaces for YAML.',
+              ,
+              
+                error: 'yaml: line N: mapping values are not allowed in this context',
+                cause: 'Indentation error — a key-value pair is at the wrong nesting level',
+                fix: 'Check the indentation of the flagged line and the lines above it. Off-by-one-space is the usual cause.',
+              ,
+              
+                error: 'yaml: line N: did not find expected \'-\' indicator',
+                cause: 'An item in a sequence list is missing its leading dash, or the dash is misaligned',
+                fix: 'Ensure every list item starts with "- " at the correct indentation level.',
+              ,
+              
+                error: 'Silent: string "1.0" becomes float 1.0',
+                cause: 'YAML parses unquoted numeric strings as numbers',
+                fix: 'Quote version strings and any value that should remain a string: version: "1.0"',
+              ,
+              
+                error: 'Silent: duplicate key overwrites earlier value',
+                cause: 'Most parsers accept duplicate keys silently, keeping the last value',
+                fix: 'Use yamllint with key-duplicates: enable to catch duplicates before they cause bugs.',
+              ,
+            ].map(( error, cause, fix ) => (
+              
+                <code >error</code>
+                <p ><strong>Cause:</strong> cause</p>
+                <p><strong>Fix:</strong> fix</p>
+              
+            ))
+          
+        
+
+        /* YAML to JSON connection */
+        
+          <h2>YAML Validation vs. YAML-to-JSON Conversion</h2>
+          <p>
+            A common debugging workflow: when a YAML file produces unexpected behavior, convert it to JSON to see exactly how the parser interpreted it. If the JSON output looks wrong (strings became numbers, keys are missing, structure is nested differently than expected), you&apos;ve found the bug.
+          </p>
+          <p>
+            Use the <a href="/yaml-to-json/">BytePane YAML to JSON converter</a> to convert your YAML and inspect the parsed output. The converted JSON reveals exactly what your YAML parser sees — no more guessing about type coercions. For a deep-dive on YAML-to-JSON conversion edge cases including the Norway Problem, anchors, and multi-document files, see the <a href="/blog/yaml-to-json-converter/">YAML to JSON converter guide</a>.
+          </p>
+          <p>
+            And for quick JSON formatting and validation after conversion, the <a href="/json-formatter/">BytePane JSON formatter</a> validates JSON syntax and pretty-prints the output.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'How do I validate YAML syntax on the command line?',
+                a: 'With Python: python3 -c "import yaml; yaml.safe_load(open(\'config.yaml\').read()); print(\'Valid\')" — raises YAMLError on syntax errors. With yq: yq eval config.yaml returns non-zero on error. With yamllint: yamllint config.yaml provides line-by-line diagnostics with configurable rules.',
+              ,
+              
+                q: 'What is the difference between YAML syntax validation and schema validation?',
+                a: 'Syntax validation checks that YAML is parseable — correct indentation, valid types, no duplicate keys. Schema validation checks that the parsed data matches expected structure — required fields, value ranges, correct types. A file can be syntactically valid but semantically wrong. Use yamllint for syntax; JSON Schema or Zod for structure.',
+              ,
+              
+                q: 'Why does YAML indentation matter so much?',
+                a: 'YAML uses indentation to define structure — there are no delimiters like braces or brackets. Inconsistent indentation changes the data structure silently or raises a parser error. The YAML spec forbids tabs for indentation entirely. Most YAML errors in practice are indentation-related: off-by-one-space mistakes, tabs from copy-paste.',
+              ,
+              
+                q: 'How do I validate Kubernetes YAML manifests?',
+                a: 'Use kubeconform — it validates Kubernetes manifests against the official Kubernetes JSON Schema, catching invalid API versions, unknown fields, and missing required fields. Install: go install github.com/yannh/kubeconform/cmd/kubeconform@latest. Run: kubeconform -strict -kubernetes-version 1.29.0 k8s/. Kubeconform replaced the unmaintained kubeval.',
+              ,
+              
+                q: 'Can YAML have duplicate keys?',
+                a: 'The YAML spec says duplicate keys in a mapping are an error, but most parsers handle them permissively — typically keeping the last value. PyYAML and js-yaml both accept duplicates silently. This is dangerous: a duplicate key in a Kubernetes manifest silently overwrites the earlier value. yamllint with forbid-duplicated-keys: true catches this.',
+              ,
+              
+                q: 'What is yamllint and how do I configure it?',
+                a: 'yamllint is a Python YAML linter that checks syntax, style, and common mistakes beyond what parsers catch — trailing spaces, line length, truthy value coercions, duplicate keys. Configure with .yamllint file. Install: pip install yamllint. Integrates with pre-commit hooks and GitHub Actions for CI enforcement.',
+              ,
+              
+                q: 'How do I validate YAML against a JSON Schema?',
+                a: 'Parse YAML to a dict/object first, then validate against JSON Schema. Python: yaml.safe_load() then jsonschema.validate(data, schema). Node.js: yaml.load() then ajv.validate(schema, data). The YAML parser handles syntax; JSON Schema handles structure. This two-step approach handles both validation layers cleanly.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* CTA */
+        
+          <h2>Validate Your YAML Instantly</h2>
+          <p>
+            Paste your YAML and get syntax validation in your browser — no server uploads, no file size limits. Also convert YAML to JSON to inspect exactly how your parser interprets the values.
+          </p>
+          
+            <a href="/yaml-to-json/">
+              YAML Validator &amp; Converter →
+            </a>
+            <a href="/json-formatter/">
+              JSON Formatter
+            </a>
+          
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/yaml-validator/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
