@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Can Solar Panels Power a Whole House? What It Actually Takes - JouleIO</title>
+  <meta name="description" content="Yes, solar can power a whole house — but most systems are undersized. The math, battery storage requirements, and what installers often leave out of their estimates.">
+  <link rel="canonical" href="https://www.jouleio.com/blog/can-solar-panels-power-a-whole-house/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/jouleio/">JouleIO</a> &rarr; Can Solar Panels Power a Whole House? What It Actually Takes
+  </nav>
+
+  <article>
+    <h1>Can Solar Panels Power a Whole House? What It Actually Takes</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.jouleio.com/blog/can-solar-panels-power-a-whole-house/">jouleio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Can Solar Panels Power a Whole House? What It Takes',
+  description: 'Yes, solar can power a whole house — but most systems are undersized. The math, battery storage requirements, and what installers often leave out of their estimates.',
+  datePublished: '2026-04-22',
+  dateModified: '2026-04-22',
+  author:  '@type': 'Organization', name: 'JouleIO' ,
+  publisher: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+    logo:  '@type': 'ImageObject', url: 'https://jouleio.com/favicon.svg' ,
+  ,
+  mainEntityOfPage: 'https://jouleio.com/blog/can-solar-panels-power-a-whole-house/',
+;
+
+const breadcrumbSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+     '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jouleio.com/' ,
+     '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://jouleio.com/blog/' ,
+     '@type': 'ListItem', position: 3, name: 'Can Solar Panels Power a Whole House', item: 'https://jouleio.com/blog/can-solar-panels-power-a-whole-house/' ,
+  ],
+;
+
+const faqSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    
+      '@type': 'Question',
+      name: 'Can solar panels power a whole house?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes. A correctly sized solar system can cover 100% of a home\'s electricity consumption on an annual basis. The average U.S. home using 10,332 kWh/year (per EIA) needs approximately 20-25 solar panels at 400 watts each. However, solar only produces electricity when the sun shines — battery storage or grid connection is needed for nighttime and cloudy days.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How many solar panels does it take to power a 2,000 square foot house?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'A 2,000 sq ft house typically uses 10,000-12,000 kWh/year depending on climate and appliances. At 400 watts per panel and 4.5 peak sun hours with an 80% efficiency factor, each panel produces about 526 kWh/year. Powering a 2,000 sq ft home requires approximately 19-23 panels (a 7.6-9.2 kW system), plus more if you have an EV or electric heating.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Do you need batteries for solar panels to power a house at night?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Not necessarily. Most grid-connected solar homes use net metering: excess daytime solar is sent to the grid for credits, which offset nighttime grid electricity use. Battery storage becomes essential if you want true energy independence or resilience during outages. A 13.5 kWh battery (like the Tesla Powerwall) covers average nighttime needs for most homes.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How much does it cost to power a whole house with solar?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'A system sized to cover 100% of an average U.S. home\'s electricity costs $18,000-$35,000 before incentives in 2026. System costs vary by location, roof complexity, and equipment choice. Without the federal ITC (which expired December 31, 2025), state incentives and SREC income are the primary tools for reducing net cost.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Can solar panels run AC and heating?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes, but HVAC is the biggest driver of solar system size. Central air conditioning draws 3,000-3,500 watts; a heat pump draws 2,000-4,000 watts. Running AC 8 hours/day adds 720-840 kWh/month to your solar sizing requirement — equivalent to roughly 13-16 additional 400W panels. Factor HVAC into your sizing calculation, not just baseline usage.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'What is the biggest mistake homeowners make when sizing solar?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Sizing to today\'s electricity bill without accounting for electrification. If you plan to add an EV (adds 2,400-5,500 kWh/year), heat pump, or electric water heater in the next 5 years, include that future load now. Oversizing slightly is far cheaper upfront than adding panels later. Most installers undersize because lower system cost closes more sales.',
+      ,
+    ,
+  ],
+;
+
+  
+    <>
+      <Header />
+      
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Can Solar Power a Whole House</li>
+          </ol>
+        
+
+        
+          
+            Solar
+            <h2>
+              Can Solar Panels Power a Whole House? What It Actually Takes
+            </h2>
+            <p>
+              The short answer is yes — but with an important asterisk. Solar panels can produce enough electricity annually to cover 100% of a typical home&apos;s usage. The complication is timing: panels generate electricity only when the sun shines, while your home demands power around the clock. Solving that mismatch is what determines whether you get a system that mostly powers your house or one that genuinely does. Here&apos;s the complete picture, including the calculations, the battery math, and what most solar sales presentations strategically leave out.
+            </p>
+            
+              <time dateTime="2026-04-22">April 22, 2026</time>
+              15 min read
+            
+          
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>•The average U.S. home (10,332 kWh/year per EIA) needs 20-25 panels at 400W to cover 100% of electricity on an annual net basis.</li>
+              <li>•Grid-tied solar with net metering achieves effective whole-home coverage without batteries — excess daytime production offsets nighttime grid use.</li>
+              <li>•True energy independence (off-grid or outage-proof) requires 2-3 days of battery backup: typically 27-40 kWh of storage for an average home.</li>
+              <li>•The biggest sizing mistake: calculating based on today&apos;s bill without factoring in future EVs, heat pumps, or electric appliances.</li>
+              <li>•Location matters enormously — Phoenix homes need 30% fewer panels than Seattle homes to produce the same annual kWh.</li>
+            </ul>
+          
+
+          /* Table of Contents */
+          
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#the-math" >1. The Panel Count Math: Start With Your kWh</a></li>
+              <li><a href="#sizing-by-home" >2. Panel Count by Home Size and Location</a></li>
+              <li><a href="#battery-question" >3. Do You Need Batteries? The Night Power Problem</a></li>
+              <li><a href="#hvac-factor" >4. The HVAC Factor: Why AC Changes Everything</a></li>
+              <li><a href="#future-loads" >5. Future-Proofing: EVs, Heat Pumps & Electrification</a></li>
+              <li><a href="#roof-limits" >6. Roof Space and Shading Constraints</a></li>
+              <li><a href="#off-grid-vs-grid" >7. Fully Off-Grid vs. Grid-Tied Solar</a></li>
+              <li><a href="#real-example" >8. A Real Homeowner Sizing Case Study</a></li>
+              <li><a href="#faq" >9. Frequently Asked Questions</a></li>
+            </ol>
+          
+
+          
+
+            
+              <h2>The Panel Count Math: Start With Your kWh</h2>
+              <p>
+                Every solar sizing calculation starts with one number: your annual electricity consumption in kilowatt-hours. Pull it from your last 12 months of utility bills. The U.S. Energy Information Administration reports the national residential average is 10,332 kWh/year (861 kWh/month), but your home may vary significantly from that figure.
+              </p>
+              <p>
+                Once you have your annual kWh, three additional variables determine how many panels you need:
+              </p>
+              <ul>
+                <li><strong>Panel wattage:</strong> The 2026 standard for residential installations is 400-430W per panel. This is not a coincidence — panel efficiency improvements have made 400W a broadly available baseline at mainstream price points. Per EnergySage market data, 97% of panels sold for residential use in 2026 are 400W or higher.</li>
+                <li><strong>Peak sun hours:</strong> The number of hours per day when sunlight is strong enough (≥1,000 W/m²) to produce rated output. This ranges from 3.5 hours in Seattle to 6.5 hours in Phoenix. NREL&apos;s PVWatts calculator provides zip-code-level data.</li>
+                <li><strong>System efficiency factor:</strong> Real-world losses from heat, wiring, inverter conversion, and dust typically reduce output by 15-23%. The standard derate factor is 0.77-0.83. Use 0.80 for most residential estimates.</li>
+              </ul>
+
+              
+                <p>Core Sizing Formula:</p>
+                <p>Annual production per panel (kWh) = Panel kW × Peak sun hours × 365 × System efficiency</p>
+                <p>Example (National Average Home, 4.5 peak sun hours):</p>
+                <p>Per panel = 0.4 kW × 4.5 hrs × 365 × 0.80 = 526 kWh/year</p>
+                <p>Panels needed = 10,332 kWh ÷ 526 kWh/panel = 19.6 → 20 panels</p>
+                <p>System size = 20 × 400W = 8.0 kW</p>
+              
+              <p>
+                For a quicker calculation without the arithmetic, our <a href="/solar-panel-calculator/">Solar Panel Calculator</a> handles this from your address and annual bill. But understanding the formula lets you verify any installer&apos;s proposal — which is valuable, because installer incentives don&apos;t always align with sizing your system adequately.
+              </p>
+            
+
+            
+              <h2>Panel Count by Home Size and Location</h2>
+              <p>
+                The following table shows estimated panel requirements for homes of different sizes across four climate zones. These assume a 400W panel, 0.80 system efficiency, and typical appliance loads without EVs or heat pumps. All kWh figures reflect EIA Residential Energy Consumption Survey regional data.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Home Size</th>
+                      <th >Avg kWh/Year</th>
+                      <th >Phoenix, AZ (6.5 hrs)</th>
+                      <th >Dallas, TX (5.0 hrs)</th>
+                      <th >Chicago, IL (4.0 hrs)</th>
+                      <th >Seattle, WA (3.8 hrs)</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr >
+                      <td >1,000 sq ft</td>
+                      <td >6,000 kWh</td>
+                      <td >7 panels</td>
+                      <td >9 panels</td>
+                      <td >12 panels</td>
+                      <td >12 panels</td>
+                    </tr>
+                    <tr >
+                      <td >1,500 sq ft</td>
+                      <td >8,500 kWh</td>
+                      <td >10 panels</td>
+                      <td >13 panels</td>
+                      <td >16 panels</td>
+                      <td >17 panels</td>
+                    </tr>
+                    <tr >
+                      <td >2,000 sq ft</td>
+                      <td >11,000 kWh</td>
+                      <td >13 panels</td>
+                      <td >17 panels</td>
+                      <td >21 panels</td>
+                      <td >22 panels</td>
+                    </tr>
+                    <tr >
+                      <td >2,500 sq ft</td>
+                      <td >14,000 kWh</td>
+                      <td >17 panels</td>
+                      <td >21 panels</td>
+                      <td >27 panels</td>
+                      <td >28 panels</td>
+                    </tr>
+                    <tr>
+                      <td >3,000 sq ft</td>
+                      <td >17,500 kWh</td>
+                      <td >21 panels</td>
+                      <td >26 panels</td>
+                      <td >34 panels</td>
+                      <td >35 panels</td>
+                    </tr>
+                  </tbody>
+                </table>
+              
+              <p>Panel counts rounded up to nearest whole panel. These are baseline estimates for gas-heated homes without EVs. Add 5-8 panels for a single EV and 6-12 panels if switching to electric heating (depending on heat pump vs. resistance).</p>
+              <p>
+                The Phoenix versus Seattle comparison illustrates why location is as important as roof size. A homeowner in Phoenix needs roughly 40% fewer panels than a Seattle homeowner for the same energy coverage — the difference between a $16,000 system and a $26,000 system on the same 2,000 sq ft house.
+              </p>
+            
+
+            
+              <h2>Do You Need Batteries? The Night Power Problem</h2>
+              <p>
+                This is where the &ldquo;solar can power your whole house&rdquo; claim needs precision. Solar panels produce electricity only when the sun shines. The average U.S. home uses roughly 40% of its electricity after sunset. If panels are off and there&apos;s no battery, you&apos;re buying grid power for those hours.
+              </p>
+              <p>
+                Most residential solar systems solve this with <strong>net metering</strong>, not batteries. Net metering lets you export excess daytime solar to the grid and receive bill credits at the retail rate (or close to it). If your system produces 50 kWh on a sunny Tuesday and you only use 30 kWh, the 20 kWh excess goes to the grid as a credit. You draw on that credit at night. Over a year, a well-sized system nets to near-zero grid usage.
+              </p>
+              <p>
+                Net metering policies vary by state. California&apos;s NEM 3.0 (introduced 2023) significantly reduced export credits, making the net metering math less favorable and battery storage more attractive. Massachusetts, New York, New Jersey, and most Midwest and Southeast states maintain more generous full-retail-rate net metering. Before sizing a system, verify your utility&apos;s net metering policy — it fundamentally changes the economics.
+              </p>
+
+              <h3>When Battery Storage Makes Sense</h3>
+              <p>
+                Battery storage is the path to genuine energy independence — or at minimum, outage resilience. The Tesla Powerwall (13.5 kWh usable) is the most common residential battery. A single Powerwall covers approximately 50-65% of an average home&apos;s nighttime electricity needs. Two Powerwalls provide 27 kWh — enough for most homes to make it through a 24-hour outage without running out.
+              </p>
+              <p>
+                For true off-grid capability — meaning zero grid reliance even during a week of cloudy weather — you need 3-5 days of battery backup. For a home using 34 kWh/day on average, that means 102-170 kWh of battery storage. At current battery costs of $800-$1,100 per kWh installed, this represents $82,000-$187,000 in batteries alone, which is economically impractical for most homeowners.
+              </p>
+              <p>
+                The realistic battery recommendation for grid-tied homeowners: one battery for outage resilience (critical loads for 12-18 hours), especially in areas prone to wildfires, hurricanes, or extended grid outages. Two batteries if you want to ride out 24-36 hours or have high-priority medical equipment. Full off-grid is a niche case suited to rural properties where grid connection costs $50,000+. Explore battery options with our <a href="/blog/best-home-battery/">Best Home Battery guide</a>.
+              </p>
+            
+
+            
+              <h2>The HVAC Factor: Why Air Conditioning Changes Everything</h2>
+              <p>
+                Here is the calculation that most solar sales presentations skip. Heating and cooling account for approximately 31% of U.S. residential electricity per the EIA&apos;s Residential Energy Consumption Survey. In the South — where electric resistance heating and high air conditioning loads are common — HVAC can represent 60-70% of annual consumption.
+              </p>
+              <p>
+                A central 3-ton air conditioner draws 3,000-3,500 watts when the compressor is running. On a hot summer day, it might cycle on for 8 hours — consuming 24-28 kWh in a single day. Over a three-month summer peak, that&apos;s 2,160-2,520 kWh — equivalent to the output of 4-5 additional solar panels.
+              </p>
+              <p>
+                The practical implication: if you size your solar system to your winter electricity bill and then have a hot summer, you&apos;ll fall short of 100% coverage. Proper sizing uses your highest-consumption month&apos;s annualized rate, not the annual average. Look at your July or August utility bill in hot climates — that month&apos;s consumption, multiplied by 12, gives a conservative sizing target that ensures summer coverage.
+              </p>
+              <p>
+                The highest-leverage efficiency move before going solar: if you have electric resistance heating, upgrade to a heat pump first. A heat pump can heat your home using 2-3x less electricity than resistance heating for the same comfort level. This efficiency improvement directly reduces your solar system size requirement — and therefore your upfront solar cost.
+              </p>
+            
+
+            
+              <h2>Future-Proofing: EVs, Heat Pumps, and Whole-Home Electrification</h2>
+              <p>
+                The biggest sizing mistake I see homeowners make: calculating solar based on today&apos;s electricity bill without thinking about the next 5-10 years. Solar panels last 25-30 years. Adding panels years later is significantly more expensive per watt than including them in the original installation (you pay mobilization costs, permit fees, and often a higher per-panel price for a small add-on job).
+              </p>
+              <p>
+                Electrification loads to factor into your system size:
+              </p>
+              <ul>
+                <li><strong>Electric vehicle:</strong> The average EV driver adds 2,400-5,500 kWh/year depending on miles driven and vehicle efficiency. A Tesla Model 3 driving 12,000 miles/year consumes approximately 3,600 kWh. That&apos;s 7 additional 400W panels worth of production.</li>
+                <li><strong>Heat pump heating (replacing gas):</strong> Converting from natural gas heat to a heat pump adds 3,000-7,000 kWh/year, depending on climate and home size. In cold climates, heat pumps work harder and consume more electricity — though still far less than electric resistance heating.</li>
+                <li><strong>Heat pump water heater:</strong> Replacing a gas water heater with a heat pump water heater adds approximately 1,000-1,500 kWh/year (less than the 4,500 kWh of electric resistance water heating it replaces, but still additive to your solar requirement).</li>
+                <li><strong>Induction cooking:</strong> Replacing a gas range with induction adds roughly 300-600 kWh/year — modest, but worth factoring in.</li>
+              </ul>
+              <p>
+                A fully electrified home (heat pump heat, heat pump water heater, induction cooking, EV) that previously used 6,000 kWh/year on electricity (gas for everything else) could easily reach 14,000-18,000 kWh/year post-electrification. Installing solar sized for 6,000 kWh and then adding all these loads is an expensive mistake. Size for your electrified future, not your gas-burning present.
+              </p>
+            
+
+            
+              <h2>Roof Space and Shading: The Physical Constraints</h2>
+              <p>
+                Physics sometimes overrules math. Even if your energy consumption calls for 30 panels, your roof may only accommodate 20 due to space, shading, or structural limits. This is not a deal-breaker — it means your system will offset 60-70% of your consumption rather than 100%, which may still be economically excellent — but it&apos;s a reality to assess early.
+              </p>
+              <p>
+                Roof area requirements: a 400W panel measures approximately 21 square feet (about 6.5 ft × 3.3 ft). A 20-panel system requires roughly 420 square feet of usable roof area. Usable area excludes setbacks required by local fire codes (typically 18 inches from roof edges and ridge lines), HVAC equipment, vents, skylights, and unusable north-facing sections.
+              </p>
+              <p>
+                Shading is a more serious issue than most installers acknowledge upfront. Trees, chimneys, dormers, and neighboring buildings can dramatically reduce panel output. Before any installation, a reputable installer should conduct a solar pathfinder or drone-based shading analysis. Ask to see the annual shade report — not just summer solstice numbers, which show minimal shading — because winter sun angles produce much more shading from nearby obstructions.
+              </p>
+              <p>
+                Microinverters (Enphase) and power optimizers (SolarEdge) reduce the impact of partial shading by allowing each panel to operate independently rather than having a shaded panel drag down the entire string. In heavily shaded installations, these technologies can recover 10-25% of lost production compared to traditional string inverters.
+              </p>
+              <p>
+                When roof space is genuinely insufficient, three alternatives deserve consideration: ground-mounted systems (if you have yard space), community solar subscriptions, or high-efficiency panels (which produce more per square foot at higher cost per watt).
+              </p>
+            
+
+            
+              <h2>Fully Off-Grid vs. Grid-Tied Solar: The Honest Trade-off</h2>
+              <p>
+                &ldquo;Power a whole house with solar&rdquo; means something different depending on whether you want to eliminate your electricity bill on net or literally cut the grid connection. Most homeowners want the former; very few genuinely need the latter.
+              </p>
+
+              
+                <table >
+                  <thead>
+                    <tr >
+                      <th >Factor</th>
+                      <th >Grid-Tied Solar</th>
+                      <th >Grid-Tied + Battery</th>
+                      <th >Off-Grid Solar</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr >
+                      <td >Annual bill offset</td>
+                      <td >80-100% (net metering)</td>
+                      <td >90-100%</td>
+                      <td >100%</td>
+                    </tr>
+                    <tr >
+                      <td >Outage protection</td>
+                      <td >None (grid-dependent)</td>
+                      <td >12-48 hours critical loads</td>
+                      <td >Full (weather-dependent)</td>
+                    </tr>
+                    <tr >
+                      <td >System cost (8 kW)</td>
+                      <td >$20,000-$28,000</td>
+                      <td >$33,000-$45,000</td>
+                      <td >$55,000-$120,000+</td>
+                    </tr>
+                    <tr >
+                      <td >Monthly grid charge</td>
+                      <td >$10-$30 (connection fee)</td>
+                      <td >$10-$30 (connection fee)</td>
+                      <td >$0</td>
+                    </tr>
+                    <tr >
+                      <td >Best for</td>
+                      <td >Most suburban/urban homeowners</td>
+                      <td >Outage-prone areas, CA NEM 3.0</td>
+                      <td >Rural properties, remote cabins</td>
+                    </tr>
+                    <tr>
+                      <td >Payback period</td>
+                      <td >7-12 years</td>
+                      <td >10-15 years</td>
+                      <td >15-25+ years</td>
+                    </tr>
+                  </tbody>
+                </table>
+              
+
+              <p>
+                The off-grid premium is real and significant. Full energy independence requires massive battery banks (sizing for 3-5 cloudy days), a generator backup, and a larger panel array to account for worst-case winter production. For most homeowners connected to a utility grid, off-grid solar is financially irrational. The monthly utility connection fee ($10-$30) buys unlimited backup power — cheaper than the battery bank needed to replace it.
+              </p>
+            
+
+            
+              <h2>A Real Homeowner Sizing Case Study</h2>
+              <p>
+                To make this concrete, here&apos;s a worked example for a real scenario: a 2,200 sq ft home in Nashville, Tennessee.
+              </p>
+              <p>
+                <strong>Current situation:</strong> Gas heat, gas water heater, electric appliances and AC. Annual electricity: 13,800 kWh (well above average due to heavy summer AC use in the South). Monthly high: 1,900 kWh in July. Monthly low: 650 kWh in March.
+              </p>
+              <p>
+                <strong>Planned additions in 3 years:</strong> One electric vehicle (estimated 3,600 kWh/year). Converting water heater to heat pump (adds ~1,200 kWh/year over current gas usage). Total future consumption estimate: 18,600 kWh/year.
+              </p>
+              <p>
+                <strong>Sizing calculation</strong> (Nashville gets 4.9 peak sun hours; using 0.80 efficiency):
+              </p>
+              
+                <p>Production per 400W panel = 0.4 × 4.9 × 365 × 0.80 = 573 kWh/year</p>
+                <p>Panels for future load = 18,600 ÷ 573 = 32.5 → 33 panels</p>
+                <p>System size = 33 × 400W = 13.2 kW</p>
+                <p>Estimated system cost = ~$39,000-$46,000 (before incentives)</p>
+              
+              <p>
+                <strong>What the installer initially proposed:</strong> 24 panels (9.6 kW) sized for today&apos;s 13,800 kWh. This covers the current home adequately but would fall 25% short after EV and water heater additions. The right system is 33 panels — a $10,000-$15,000 larger investment upfront that saves the homeowner from an expensive add-on project later.
+              </p>
+              <p>
+                Tennessee has limited state solar incentives — no state tax credit and modest SREC activity. At average Tennessee utility rates of approximately $0.13/kWh, annual electricity savings on the 18,600 kWh system would be about $2,418. With a $42,000 net system cost (after standard discounts), the payback period is approximately 17 years — longer than in high-rate states, but still likely within the 25-30 year panel lifespan. Use our <a href="/solar-savings-calculator/">Solar Savings Calculator</a> to model your specific location and utility rate.
+              </p>
+            
+
+            
+              <h2>Frequently Asked Questions</h2>
+              
+                
+                  <h3>Can solar panels power a whole house?</h3>
+                  <p>Yes. A correctly sized system can cover 100% of a home&apos;s electricity on an annual net basis. The average U.S. home (10,332 kWh/year per EIA) needs approximately 20-25 panels at 400W. Solar only generates when the sun shines — net metering or battery storage handles nighttime and cloudy periods.</p>
+                
+                
+                  <h3>How many solar panels does it take to power a 2,000 square foot house?</h3>
+                  <p>A 2,000 sq ft house typically uses 10,000-12,000 kWh/year. At 400W panels, 4.5 peak sun hours, and 80% efficiency, each panel produces about 526 kWh/year. You need 19-23 panels (a 7.6-9.2 kW system) for current loads — add 5-8 more if you plan an EV within the next few years.</p>
+                
+                
+                  <h3>Do you need batteries for solar panels to power a house at night?</h3>
+                  <p>Not necessarily. Most grid-tied solar homes use net metering: excess daytime production exports to the grid as credits, which offset nighttime grid use. Batteries become essential only for outage resilience or in states with poor net metering (like California post-NEM 3.0). A 13.5 kWh Powerwall covers average nighttime needs for most homes.</p>
+                
+                
+                  <h3>How much does it cost to power a whole house with solar?</h3>
+                  <p>A system sized to cover 100% of an average home&apos;s electricity costs $18,000-$35,000 installed in 2026. The federal solar ITC expired December 31, 2025, so state incentives and SREC income are now the primary tools for reducing net cost. High-electricity-rate states (CA, MA, NY) still offer compelling economics.</p>
+                
+                
+                  <h3>Can solar panels run AC and heating?</h3>
+                  <p>Yes, but HVAC is the biggest driver of system size. Central AC draws 3,000-3,500W; running it 8 hours/day adds 720-840 kWh/month to your sizing requirement — roughly 13-16 additional 400W panels. Factor your full HVAC load into sizing, especially if you plan to switch from gas heating to a heat pump.</p>
+                
+                
+                  <h3>What is the biggest mistake homeowners make when sizing solar?</h3>
+                  <p>Sizing to today&apos;s electricity bill without accounting for electrification. Planning an EV (adds 2,400-5,500 kWh/year), heat pump, or electric water heater in the next 5 years? Include that future load now. Oversizing is far cheaper upfront than adding panels in a separate project later, and most installers intentionally undersize because lower system cost closes more sales.</p>
+                
+              
+            
+          
+
+          /* CTA */
+          
+            <h2>Calculate Exactly How Many Panels Your Home Needs</h2>
+            <p>Enter your address, annual kWh, and future loads to get a precise system size — including EV and heat pump additions.</p>
+            
+              <a href="/solar-panel-calculator/">
+                Solar Panel Calculator
+              </a>
+              <a href="/solar-savings-calculator/">
+                Savings Calculator
+              </a>
+            
+          
+
+          
+            <h2>Related Articles</h2>
+            
+              <a href="/blog/how-many-solar-panels-do-i-need/">
+                Solar
+                <h3>How Many Solar Panels Do I Need? Complete 2026 Guide</h3>
+                <p>Detailed panel count guide with state-by-state sun hour data and worked examples for different home sizes.</p>
+              </a>
+              <a href="/blog/best-home-battery/">
+                Battery Storage
+                <h3>Best Home Batteries 2026: Powerwall, Enphase, Franklin &amp; More</h3>
+                <p>Head-to-head comparison of home battery systems, capacity, cost, and which pairing works best with rooftop solar.</p>
+              </a>
+            
+          
+        
+
+        <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+        <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+        <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.jouleio.com/blog/can-solar-panels-power-a-whole-house/">JouleIO</a>.
+      Explore more free tools at <a href="https://www.jouleio.com/">jouleio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.jouleio.com/">JouleIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
