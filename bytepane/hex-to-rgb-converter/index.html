@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEX to RGB Converter: Convert Color Codes Instantly - BytePane</title>
+  <meta name="description" content="HEX to RGB Converter: Convert Color Codes Instantly">
+  <link rel="canonical" href="https://www.bytepane.com/blog/hex-to-rgb-converter/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; HEX to RGB Converter: Convert Color Codes Instantly
+  </nav>
+
+  <article>
+    <h1>HEX to RGB Converter: Convert Color Codes Instantly</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/hex-to-rgb-converter/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        HEX to RGB Converter
+      
+
+      /* Header */
+      
+        <h2>
+          HEX to RGB Converter: Convert Color Codes Instantly
+        </h2>
+        
+          CSS & Colors
+          <time dateTime="2026-04-22">April 22, 2026</time>
+          12 min read
+        
+      
+
+      
+
+        /* Opening: case study */
+        
+          <h2>The Copy-Paste That Breaks Your Animation</h2>
+          <p>
+            You copy a brand color from Figma: <code >#4F46E5</code>. CSS? Works fine. Now you need to animate it — fade from 30% opacity to 100% on hover. You reach for rgba()... and realize HEX doesn&apos;t take an alpha parameter directly. Or you&apos;re writing a canvas animation and the drawing API only accepts separate R, G, B integers. Or you need to darken a color by 20% in JavaScript without pulling in a library.
+          </p>
+          <p>
+            Every frontend developer hits this at least weekly. The fix is trivial once you understand it — and understanding the math means you can implement it in any language, any context, without a dependency. This article covers the full HEX-to-RGB conversion: the formula, every edge case (3-digit shorthand, 8-digit alpha), and production-ready code for JavaScript, TypeScript, Python, and Go.
+          </p>
+          <p>
+            Need a quick conversion right now? Use BytePane&apos;s <a href="/color-converter/">color converter tool</a> — supports HEX, RGB, HSL, and OKLCH with live preview.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸HEX and RGB are the <strong>same color model</strong> — just different notations. Both represent red, green, and blue channels. No visual difference whatsoever.</li>
+            <li>▸Conversion: split 6-digit HEX into three 2-char pairs, <strong>parse each as base-16</strong>. <code >parseInt(&apos;FF&apos;, 16)</code> → 255.</li>
+            <li>▸3-digit shorthand: <code >#F53</code> expands to <code >#FF5533</code> by doubling each digit <strong>before parsing</strong>.</li>
+            <li>▸8-digit codes include alpha: <code >#FF573380</code> → alpha = 128/255 ≈ <strong>0.502</strong>. Not a percentage — a fraction of 255.</li>
+            <li>▸According to the <strong>HTTP Archive 2025 Web Almanac</strong>, HEX is present in over 90% of CSS stylesheets — it&apos;s the dominant web color format by usage volume.</li>
+          </ul>
+        
+
+        /* The Math */
+        
+          <h2>The Math: Why HEX and RGB Are the Same Thing</h2>
+          <p>
+            A CSS color is three values: <strong>red intensity</strong>, <strong>green intensity</strong>, and <strong>blue intensity</strong>. Each channel ranges from 0 (none) to 255 (maximum). That&apos;s 256 possible values per channel — exactly one byte, exactly two hexadecimal digits.
+          </p>
+          <p>
+            A 6-digit HEX color is just those three byte values concatenated in hex encoding: <code >#RRGGBB</code>. The <code >#</code> is a prefix, not data. To recover the integers, parse each pair:
+          </p>
+          
+            <p>`#4F46E5
+
+#  4F   46   E5
+   │    │    └── Blue:  0xE5 = 14×16 + 5 = 224 + 5  = 229
+   │    └─────── Green: 0x46 =  4×16 + 6 =  64 + 6  =  70
+   └──────────── Red:   0x4F =  4×16 + 15 = 64 + 15 =  79
+
+→ rgb(79, 70, 229)  ← Indigo 600 in Tailwind CSS`</pre>
+          
+          <p >
+            That&apos;s the complete algorithm. For a 6-digit HEX, there are exactly three steps: strip the <code >#</code>, split into three 2-character substrings, convert each from hex to decimal. Everything else is just handling variants.
+          </p>
+
+          <h3>HEX Character Map</h3>
+          <p>
+            Hexadecimal uses 16 digits: 0–9 map directly to their decimal values, and A–F (or a–f) represent 10–15. HEX is case-insensitive — <code >#ff5733</code> and <code >#FF5733</code> are identical.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Hex</th>
+                  <th >0–9</th>
+                  <th >A</th>
+                  <th >B</th>
+                  <th >C</th>
+                  <th >D</th>
+                  <th >E</th>
+                  <th >F</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Decimal</td>
+                  <td >0–9</td>
+                  <td >10</td>
+                  <td >11</td>
+                  <td >12</td>
+                  <td >13</td>
+                  <td >14</td>
+                  <td >15</td>
+                </tr>
+                <tr >
+                  <td >Range per pair</td>
+                  <td  colSpan=7>00 (=0) to FF (=255) — one byte, 256 possible values</td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+
+        /* Edge Cases */
+        
+          <h2>Every HEX Format You&apos;ll Encounter</h2>
+
+          <h3>3-Digit Shorthand (#RGB)</h3>
+          <p>
+            The 3-digit shorthand is valid only when each channel value is a repeated digit pair — like <code >#AABBCC</code> → <code >#ABC</code>. To expand: double each digit, <em>then</em> convert. <code >#F53</code> → <code >#FF5533</code> → rgb(255, 85, 51).
+          </p>
+          <p>
+            A common mistake is treating <code >#F53</code> as if F=0xF0=240, 5=0x50=80, 3=0x30=48 — i.e., padding on the right instead of repeating. That&apos;s wrong. The CSS spec defines it as duplication, not zero-padding: F → FF, not F0.
+          </p>
+          
+            <p>`// 3-digit HEX examples
+#F53 → #FF5533 → rgb(255, 85, 51)   ← coral
+#0AF → #00AAFF → rgb(0, 170, 255)   ← sky blue
+#FFF → #FFFFFF → rgb(255, 255, 255) ← white
+#000 → #000000 → rgb(0, 0, 0)       ← black
+#ABC → #AABBCC → rgb(170, 187, 204) ← blue-gray`</pre>
+          
+
+          <h3>8-Digit HEX with Alpha (#RRGGBBAA)</h3>
+          <p >
+            CSS Color Level 4 (supported in all modern browsers) adds an optional alpha byte as the last two hex digits. The alpha value is <strong>not a percentage</strong> — it&apos;s another 0–255 range. To convert to the 0.0–1.0 CSS alpha scale, divide by 255.
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Alpha Hex</th>
+                  <th >Decimal</th>
+                  <th >÷ 255</th>
+                  <th >Opacity</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['FF', '255', '1.000', '100% (fully opaque)'],
+                  ['CC', '204', '0.800', '80%'],
+                  ['80', '128', '0.502', '~50%'],
+                  ['40', '64', '0.251', '25%'],
+                  ['1A', '26', '0.102', '~10%'],
+                  ['00', '0', '0.000', '0% (fully transparent)'],
+                ].map(([hex, dec, fraction, label]) => (
+                  <tr key=hex >
+                    <td >hex</td>
+                    <td >dec</td>
+                    <td >fraction</td>
+                    <td >label</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+          
+            <p>`#4F46E5CC
+  │    │    │  └─ Alpha: CC = 204 → 204/255 = 0.80
+  │    │    └──── Blue:  E5 = 229
+  │    └───────── Green: 46 = 70
+  └────────────── Red:   4F = 79
+
+→ rgba(79, 70, 229, 0.8)  ← 80% opaque indigo`</pre>
+          
+
+          <h3>4-Digit Shorthand (#RGBA)</h3>
+          <p >
+            Like 3-digit RGB shorthand but includes alpha. <code >#F53C</code> expands to <code >#FF5533CC</code> → rgba(255, 85, 51, 0.8). Less commonly seen than the 3-digit form but fully valid per the CSS spec.
+          </p>
+
+          <h3>Format Variants at a Glance</h3>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Format</th>
+                  <th >Example</th>
+                  <th >Expands To</th>
+                  <th >Alpha?</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['#RRGGBB', '#4F46E5', 'rgb(79, 70, 229)', 'No'],
+                  ['#RGB', '#F53', '#FF5533 → rgb(255, 85, 51)', 'No'],
+                  ['#RRGGBBAA', '#4F46E5CC', 'rgba(79, 70, 229, 0.8)', 'Yes (last 2 digits)'],
+                  ['#RGBA', '#F53C', '#FF5533CC → rgba(255, 85, 51, 0.8)', 'Yes (last digit)'],
+                ].map(([fmt, ex, expands, alpha]) => (
+                  <tr key=fmt >
+                    <td >fmt</td>
+                    <td >ex</td>
+                    <td >expands</td>
+                    <td >alpha</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+        
+
+        /* Code */
+        
+          <h2>Production Code: HEX to RGB in Every Language</h2>
+
+          <h3>JavaScript / TypeScript</h3>
+          <p>
+            The standard approach uses a regex to capture the three (or four) hex pairs, with a normalization step for 3-digit shorthand. The function below handles all four HEX variants and returns null for invalid input rather than throwing.
+          </p>
+          
+            <p>`// TypeScript — handles all HEX variants
+interface RgbColor 
+  r: number
+  g: number
+  b: number
+  a?: number  // 0.0 – 1.0, only present for 8-digit / 4-digit HEX
+
+function hexToRgb(hex: string): RgbColor | null 
+  // Normalize: strip leading # and expand 3/4-digit shorthand
+  const normalized = hex
+    .replace(/^#/, '')
+    .replace(/^([a-f\d])([a-f\d])([a-f\d])([a-f\d])?$/i, '$1$1$2$2$3$3$4$4')
+
+  const match = normalized.match(/^([a-f\d]2)([a-f\d]2)([a-f\d]2)([a-f\d]2)?$/i)
+  if (!match) return null
+
+  const result: RgbColor = 
+    r: parseInt(match[1], 16),
+    g: parseInt(match[2], 16),
+    b: parseInt(match[3], 16),
+  
+
+  if (match[4]) 
+    result.a = Math.round((parseInt(match[4], 16) / 255) * 1000) / 1000
+  
+
+  return result
+
+// Examples
+hexToRgb('#4F46E5')     //  r: 79, g: 70, b: 229 
+hexToRgb('#F53')        //  r: 255, g: 85, b: 51 
+hexToRgb('#4F46E5CC')   //  r: 79, g: 70, b: 229, a: 0.8 
+hexToRgb('#F53C')       //  r: 255, g: 85, b: 51, a: 0.8 
+hexToRgb('invalid')     // null
+
+// Format as CSS string
+function hexToCss(hex: string): string | null 
+  const c = hexToRgb(hex)
+  if (!c) return null
+  return c.a !== undefined
+    ? \`rgba(\$c.r, \$c.g, \$c.b, \$c.a)\`
+    : \`rgb(\$c.r, \$c.g, \$c.b)\`
+
+hexToCss('#4F46E5')    // "rgb(79, 70, 229)"
+hexToCss('#4F46E5CC')  // "rgba(79, 70, 229, 0.8)"
+
+// Inverse: RGB to HEX
+function rgbToHex(r: number, g: number, b: number, a?: number): string 
+  const hex = [r, g, b, ...(a !== undefined ? [Math.round(a * 255)] : [])]
+    .map(v => v.toString(16).padStart(2, '0'))
+    .join('')
+  return '#' + hex.toUpperCase()
+
+rgbToHex(79, 70, 229)         // '#4F46E5'
+rgbToHex(79, 70, 229, 0.8)    // '#4F46E5CC'`</pre>
+          
+
+          <h3>Python</h3>
+          
+            <pre >`from dataclasses import dataclass
+from typing import Optional
+
+@dataclass
+class RgbColor:
+    r: int
+    g: int
+    b: int
+    a: Optional[float] = None  # 0.0 – 1.0
+
+def hex_to_rgb(hex_str: str) -> Optional[RgbColor]:
+    # Normalize: strip #, expand 3/4-digit shorthand
+    h = hex_str.lstrip('#')
+    if len(h) in (3, 4):
+        h = ''.join(c * 2 for c in h)
+
+    match = re.fullmatch(r'([0-9a-fA-F]2)' * (4 if len(h) == 8 else 3), h)
+    if not match:
+        return None
+
+    r, g, b = (int(match.group(i), 16) for i in range(1, 4))
+    a = round(int(match.group(4), 16) / 255, 3) if len(h) == 8 else None
+    return RgbColor(r=r, g=g, b=b, a=a)
+
+def hex_to_css(hex_str: str) -> Optional[str]:
+    c = hex_to_rgb(hex_str)
+    if c is None:
+        return None
+    if c.a is not None:
+        return f"rgba(c.r, c.g, c.b, c.a)"
+    return f"rgb(c.r, c.g, c.b)"
+
+# Examples
+hex_to_rgb('#4F46E5')    # RgbColor(r=79, g=70, b=229, a=None)
+hex_to_rgb('#F53')       # RgbColor(r=255, g=85, b=51, a=None)
+hex_to_rgb('#4F46E5CC')  # RgbColor(r=79, g=70, b=229, a=0.8)
+
+hex_to_css('#4F46E5CC')  # "rgba(79, 70, 229, 0.8)"
+
+# Inverse: RGB to HEX
+def rgb_to_hex(r: int, g: int, b: int, a: Optional[float] = None) -> str:
+    parts = [r, g, b]
+    if a is not None:
+        parts.append(round(a * 255))
+    return '#' + ''.join(f'v:02X' for v in parts)`</pre>
+          
+
+          <h3>Go</h3>
+          
+            <pre >`package color
+
+    "fmt"
+    "strconv"
+    "strings"
+)
+
+type RGBColor struct 
+    R, G, B int
+    A       float64  // -1 means not set; 0.0–1.0 otherwise
+
+func HexToRGB(hex string) (RGBColor, error) 
+    hex = strings.TrimPrefix(hex, "#")
+
+    // Expand 3/4-digit shorthand
+    if len(hex) == 3 || len(hex) == 4 
+        expanded := make([]byte, len(hex)*2)
+        for i, c := range []byte(hex) 
+            expanded[i*2] = c
+            expanded[i*2+1] = c
+        
+        hex = string(expanded)
+    
+
+    if len(hex) != 6 && len(hex) != 8 
+        return RGBColor, fmt.Errorf("invalid hex color: #%s", hex)
+    
+
+    parse := func(s string) (int, error) 
+        n, err := strconv.ParseInt(s, 16, 32)
+        return int(n), err
+    
+
+    r, err := parse(hex[0:2])
+    if err != nil  return RGBColor, err 
+    g, err := parse(hex[2:4])
+    if err != nil  return RGBColor, err 
+    b, err := parse(hex[4:6])
+    if err != nil  return RGBColor, err 
+
+    result := RGBColorR: r, G: g, B: b, A: -1
+
+    if len(hex) == 8 
+        a, err := parse(hex[6:8])
+        if err != nil  return RGBColor, err 
+        result.A = float64(a) / 255.0
+    
+
+    return result, nil
+
+func (c RGBColor) CSS() string 
+    if c.A >= 0 
+        return fmt.Sprintf("rgba(%d, %d, %d, %.3f)", c.R, c.G, c.B, c.A)
+    
+    return fmt.Sprintf("rgb(%d, %d, %d)", c.R, c.G, c.B)
+`</pre>
+          
+        
+
+        /* Practical Use Cases */
+        
+          <h2>Real-World Use Cases Where You Need RGB Values</h2>
+
+          <h3>Canvas and WebGL Drawing APIs</h3>
+          <p >
+            The HTML Canvas API&apos;s <code >fillStyle</code> and <code >strokeStyle</code> accept CSS strings, so you can pass HEX directly. But when you&apos;re building a color interpolation function for animations or drawing pixel buffers into <code >ImageData</code>, you need raw integers.
+          </p>
+          
+            <p>`// Interpolate between two HEX colors for animation
+function interpolateHex(hex1: string, hex2: string, t: number): string 
+  const c1 = hexToRgb(hex1)!
+  const c2 = hexToRgb(hex2)!
+
+  const r = Math.round(c1.r + (c2.r - c1.r) * t)
+  const g = Math.round(c1.g + (c2.g - c1.g) * t)
+  const b = Math.round(c1.b + (c2.b - c1.b) * t)
+
+  return \`rgb(\$r, \$g, \$b)\`
+
+// Fade from indigo to coral over 60 frames
+for (let frame = 0; frame < 60; frame++) 
+  const color = interpolateHex('#4F46E5', '#FF5733', frame / 59)
+  ctx.fillStyle = color
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+// Writing to ImageData (pixel buffer) — needs raw integers
+const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+const  r, g, b  = hexToRgb('#4F46E5')!
+for (let i = 0; i < imageData.data.length; i += 4) 
+  imageData.data[i]     = r  // Red
+  imageData.data[i + 1] = g  // Green
+  imageData.data[i + 2] = b  // Blue
+  imageData.data[i + 3] = 255  // Alpha (0–255, not 0.0–1.0)
+`</pre>
+          
+
+          <h3>Dynamic Transparency in CSS Custom Properties</h3>
+          <p >
+            CSS doesn&apos;t let you add transparency to a HEX color directly using <code >opacity</code> on the color (that property affects the element, not just the background). The modern pattern is to store color channels as CSS custom properties, then compose with rgba():
+          </p>
+          
+            <p>`/* Old approach: can't easily add transparency to HEX */
+:root  --brand: #4F46E5; 
+.overlay  background: var(--brand); opacity: 0.8;   /* Affects WHOLE element */
+
+/* Better: store as R, G, B channels */
+:root 
+  --brand-r: 79;
+  --brand-g: 70;
+  --brand-b: 229;
+
+.overlay    background: rgb(var(--brand-r) var(--brand-g) var(--brand-b)); 
+.overlay-80  background: rgb(var(--brand-r) var(--brand-g) var(--brand-b) / 0.8); 
+.overlay-40  background: rgb(var(--brand-r) var(--brand-g) var(--brand-b) / 0.4); 
+
+/* Modern CSS Color Level 4 — even cleaner */
+:root  --brand: #4F46E5; 
+.overlay-50  background: color-mix(in srgb, var(--brand) 50%, transparent); `</pre>
+          
+
+          <h3>Programmatic Color Darkening / Lightening</h3>
+          <p >
+            Common in component libraries: hover states that darken a brand color by 15%. Without a color library, you need RGB values to clamp-adjust each channel:
+          </p>
+          
+            <p>`function darkenHex(hex: string, amount: number): string 
+  const  r, g, b  = hexToRgb(hex)!
+  const clamp = (v: number) => Math.max(0, Math.min(255, v))
+  return rgbToHex(
+    clamp(r - amount),
+    clamp(g - amount),
+    clamp(b - amount),
+  )
+
+darkenHex('#4F46E5', 30)   // Darken by 30: '#301CE3' ← slightly darker indigo
+
+// Note: for perceptually uniform darkening, convert to HSL and reduce L,
+// or use OKLCH. Simple RGB subtraction works but is not perceptually linear.`</pre>
+          
+        
+
+        /* Performance and Libraries */
+        
+          <h2>Do You Need a Color Library?</h2>
+          <p >
+            For simple HEX↔RGB conversion, the native code above is sufficient — no dependency needed. Color libraries become worthwhile when you need perceptually uniform transformations (lightening, darkening, mixing that looks right across hues), conversion to HSL/OKLCH/CMYK, or accessibility contrast calculations per WCAG.
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Library</th>
+                  <th >Weekly Downloads (npm)</th>
+                  <th >Gzipped Size</th>
+                  <th >Best For</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['chroma.js', '~5M', '~13 KB', 'Full-featured: many color spaces, interpolation'],
+                  ['tinycolor2', '~11M', '~5 KB', 'Broad format support, legacy compatibility'],
+                  ['color', '~8M', '~3 KB', 'Simple manipulation, good TypeScript types'],
+                  ['culori', '~1.5M', '~3 KB tree-shakeable', 'OKLCH/P3 support, modern color spaces'],
+                  ['Native code', 'N/A', '0 KB', 'HEX↔RGB only, no dependencies needed'],
+                ].map(([lib, dl, size, desc]) => (
+                  <tr key=lib >
+                    <td >lib</td>
+                    <td >dl</td>
+                    <td >size</td>
+                    <td >desc</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+          <p>
+            Per npm download data (April 2026), tinycolor2 leads the simple color manipulation space at ~11M weekly installs, mostly due to its age and broad ecosystem support. For new projects, <strong>culori</strong> is worth considering if you&apos;re working with OKLCH or wide-gamut P3 displays. For HEX↔RGB only, write the 15-line function — it&apos;s not worth a dependency.
+          </p>
+          <p>
+            For a deeper dive into all CSS color formats — including HSL, OKLCH, and display-p3 — see the <a href="/blog/color-formats-hex-rgb-hsl/">CSS color formats guide</a>.
+          </p>
+        
+
+        /* Common Errors */
+        
+          <h2>Bugs Developers Actually Ship</h2>
+
+          
+            
+              <h3>Forgetting 3-Digit Expansion</h3>
+              <p>
+                <code >parseInt(&apos;F3&apos;, 16)</code> works fine for 6-digit HEX. But slicing <code >#F53</code> at positions 1, 3, 5 gives you single characters &apos;F&apos;, &apos;5&apos;, &apos;3&apos;. <code >parseInt(&apos;F&apos;, 16)</code> returns 15, not 255. Always expand shorthand first.
+              </p>
+            
+            
+              <h3>Treating Alpha as a Percentage</h3>
+              <p>
+                In an 8-digit HEX, <code >80</code> doesn&apos;t mean 80%. It means decimal 128 out of 255, which is ~50.2% opacity. <code >CC</code> = 204/255 = ~80%. Use the lookup table above when in doubt.
+              </p>
+            
+            
+              <h3>Not Clamping When Writing Back to HEX</h3>
+              <p>
+                If you darken a color by subtracting from each channel, you can underflow below 0 or overflow above 255. <code >(-5).toString(16)</code> in JavaScript returns <code >&apos;-5&apos;</code>, not a valid HEX byte. Always clamp: <code >Math.max(0, Math.min(255, value))</code>.
+              </p>
+            
+            
+              <h3>Zero-Padding Output</h3>
+              <p>
+                <code >(14).toString(16)</code> returns <code >&apos;e&apos;</code>, not <code >&apos;0e&apos;</code>. When building a HEX string from RGB values, always pad to two digits: <code >n.toString(16).padStart(2, &apos;0&apos;)</code>. Otherwise <code >#0e0000</code> becomes <code >#e00</code>, which expands to #EE0000 — a completely different color.
+              </p>
+            
+          
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'How do you convert HEX to RGB?',
+                a: 'Split the 6-digit HEX code into three 2-character pairs and convert each from base-16 to base-10. For #FF5733: FF = 255, 57 = 87, 33 = 51 → rgb(255, 87, 51). In JavaScript: parseInt(hex.slice(1,3), 16) for red, parseInt(hex.slice(3,5), 16) for green, parseInt(hex.slice(5,7), 16) for blue.',
+              ,
+              
+                q: 'What is the difference between HEX and RGB colors?',
+                a: 'HEX and RGB represent identical colors in different notations. HEX uses hexadecimal encoding — compact and standard in design tools. RGB uses decimal integers 0–255 per channel — easier for programmatic manipulation. The browser converts both to the same internal representation. #FF5733 and rgb(255, 87, 51) render identically.',
+              ,
+              
+                q: 'How do you convert 3-digit HEX shorthand to RGB?',
+                a: 'Expand by doubling each digit before parsing: #F53 → #FF5533. Then convert as normal: FF=255, 55=85, 33=51 → rgb(255, 85, 51). A common mistake is padding with zeros (#F530) — the CSS spec defines it as digit duplication, not zero-padding.',
+              ,
+              
+                q: 'What does the alpha channel mean in 8-digit HEX codes?',
+                a: 'The last two hex digits in an 8-digit code are the alpha (opacity) channel. The range is 00–FF (0–255), divided by 255 to get a 0.0–1.0 fraction. #FF573380 → 0x80 = 128 → 128/255 ≈ 0.502 → ~50% opacity → rgba(255, 87, 51, 0.502). Note: 80 means ~50%, not 80%.',
+              ,
+              
+                q: 'Is there a performance difference between HEX and RGB in CSS?',
+                a: 'No. According to MDN Web Docs, the browser\'s CSS parser normalizes all color formats to the same internal sRGB representation. Any parsing difference is microseconds. Choose based on readability and tooling — not performance.',
+              ,
+              
+                q: 'How do you convert HEX to RGBA with a custom opacity?',
+                a: 'Parse the HEX to get R, G, B values, then supply the opacity separately: function hexToRgba(hex, alpha)  const r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16); return `rgba($r,$g,$b,$alpha)`;  — hexToRgba("#FF5733", 0.5) → "rgba(255, 87, 51, 0.5)".',
+              ,
+              
+                q: 'Why does Figma export colors as HEX but CSS uses rgb()?',
+                a: 'Figma uses HEX for compactness (#4F46E5 is 7 chars vs 18 for rgb(79, 70, 229)). CSS supports both equally. When you need programmatic manipulation — tweening, darkening, mixing — RGB integers are easier to work with mathematically. Most developers convert at the API boundary.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* Related links */
+        
+          <h2>Related Developer Tools</h2>
+          
+            <a href="/blog/color-formats-hex-rgb-hsl/">
+              <h3>CSS Color Formats Guide</h3>
+              <p>HEX, RGB, HSL, OKLCH — when to use each and conversion formulas.</p>
+            </a>
+            <a href="/blog/hex-to-decimal-converter/">
+              <h3>HEX to Decimal Converter</h3>
+              <p>The math behind hexadecimal — powers of 16, bitmasks, memory addresses.</p>
+            </a>
+            <a href="/blog/css-has-selector-guide/">
+              <h3>CSS :has() Selector Guide</h3>
+              <p>Parent selectors, complex conditions, and browser support.</p>
+            </a>
+            <a href="/blog/web-accessibility-testing-guide/">
+              <h3>Web Accessibility Testing</h3>
+              <p>WCAG 2.1 contrast ratios and color accessibility audit tools.</p>
+            </a>
+          
+        
+
+        /* CTA */
+        
+          <h2>Convert Any Color Instantly</h2>
+          <p>
+            Paste a HEX code and get RGB, HSL, OKLCH, and CSS output instantly. Live preview, copy-to-clipboard, no signup required.
+          </p>
+          <a href="/color-converter/">
+            Open Color Converter →
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/hex-to-rgb-converter/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
