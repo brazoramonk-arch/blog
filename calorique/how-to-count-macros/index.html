@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Count Macros: Step-by-Step Guide for Beginners - Calorique</title>
+  <meta name="description" content="A practical, evidence-based beginner guide to counting macronutrients. Covers TDEE calculation, goal-specific macro splits, converting calories to grams, and tracking accurately without obsessing.">
+  <link rel="canonical" href="https://www.calorique.io/blog/how-to-count-macros/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/calorique/">Calorique</a> &rarr; How to Count Macros: Step-by-Step Guide for Beginners
+  </nav>
+
+  <article>
+    <h1>How to Count Macros: Step-by-Step Guide for Beginners</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.calorique.io/blog/how-to-count-macros/">calorique.io</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'How to Count Macros: Step-by-Step Guide for Beginners',
+    description: 'A practical, evidence-based beginner guide to counting macronutrients. Covers TDEE calculation, goal-specific macro splits, converting calories to grams, and tracking accurately without obsessing.',
+    author:  '@type': 'Organization', name: 'Calorique' ,
+    publisher:  '@type': 'Organization', name: 'Calorique', url: 'https://calorique.io/' ,
+    mainEntityOfPage: 'https://calorique.io/blog/how-to-count-macros/',
+    datePublished: '2026-04-20',
+    dateModified: '2026-04-20',
+  
+
+  const breadcrumbSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+       '@type': 'ListItem', position: 1, name: 'Home', item: 'https://calorique.io/' ,
+       '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://calorique.io/blog/' ,
+       '@type': 'ListItem', position: 3, name: 'How to Count Macros', item: 'https://calorique.io/blog/how-to-count-macros/' ,
+    ],
+  
+
+  const faqSchema = 
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      
+        '@type': 'Question',
+        name: 'What are macros and why do they matter?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Macros (macronutrients) are the three main calorie-providing nutrients: protein (4 cal/g), carbohydrates (4 cal/g), and fat (9 cal/g). They matter because the ratio in which you eat them shapes body composition outcomes beyond what total calories alone predict. Higher protein preserves lean mass during fat loss; carb and fat distribution affects hormones, energy, and adherence.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How do I calculate my macro targets in grams?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Start with your total daily calorie target (TDEE minus your deficit). Set protein at 1.6–2.2g per kg of body weight, multiply by 4 to get protein calories. Allocate 20–35% of total calories to fat, multiply by 9 to get grams. Remaining calories go to carbohydrates, divided by 4 for grams. Example: 2,000 calories, 160g protein (640 cal), 55g fat (495 cal), leaves 216g carbs (865 cal).',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Do I need to hit my macros exactly every day?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'No. A ±5g tolerance on protein and ±10g on carbs and fat is negligible in practice. Weekly averages matter more than daily precision. Research consistently shows that consistency over weeks produces body composition changes, not hitting exact numbers on any individual day. Getting close daily is sufficient, especially in the first month of tracking.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'What is the best macro ratio for weight loss?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'A 2020 meta-analysis in Obesity Reviews found no significant difference in long-term fat loss between high-carb/low-fat and low-carb/high-fat diets when total calories and protein are equated. The "best" split is the one you can sustain. A practical default for fat loss: 30–35% protein, 30–40% carbs, 25–35% fat — protein is the only macro worth prioritizing above preference.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Should I weigh food raw or cooked?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'Weigh protein sources (meat, fish) raw and log the raw weight, since cooking causes water loss that changes weight without changing calorie content — 100g raw chicken has 165 calories whether you weigh it before or after cooking, but cooked it may weigh only 70g and appear lower-calorie per gram than it actually is. Rice and pasta are the opposite: log cooked weight if using cooked food database entries.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'How accurate are nutrition labels?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'The FDA allows a 20% margin of error on nutrition labels. A 2010 study in the Journal of the American Dietetic Association measured actual calories in restaurant meals and found discrepancies averaging 18% — with some items having 100% more calories than listed. This is why self-reported food diaries systematically underestimate intake, and why a food scale is significantly more accurate than eyeballing portions.',
+        ,
+      ,
+      
+        '@type': 'Question',
+        name: 'Is counting macros sustainable long-term?',
+        acceptedAnswer: 
+          '@type': 'Answer',
+          text: 'It depends on the person. Research on flexible dieting (IIFYM — If It Fits Your Macros) shows fewer signs of dietary restraint and disordered eating compared to rigid rules-based approaches. Most practitioners find that after 8–12 weeks, they develop an intuitive sense of portion sizes and macro content without needing to weigh every meal. Transition to estimated tracking once calibration is solid.',
+        ,
+      ,
+    ],
+  
+
+  
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema)  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema)  />
+
+      
+        
+          <a href="/">Home</a>
+          /
+          <a href="/blog/">Blog</a>
+          /
+          How to Count Macros
+        
+
+        
+          
+            Nutrition
+            April 20, 2026
+            16 min read
+          
+          <h2>How to Count Macros: Step-by-Step Guide for Beginners</h2>
+          <p>
+            Counting macros sounds complicated until you realize it is just calorie counting with one extra layer of information. Once you understand that protein, carbohydrates, and fat each have a fixed calorie value per gram, the math becomes straightforward — and the results become dramatically more predictable.
+          </p>
+        
+
+        
+
+          /* Key Takeaways */
+          
+            <p>Key Takeaways</p>
+            <ul>
+              <li>• Macros are protein (4 cal/g), carbohydrates (4 cal/g), and fat (9 cal/g) — every food is some combination of these three</li>
+              <li>• Protein is the only macro worth prioritizing above preference: 1.6–2.2g per kg of body weight protects muscle during fat loss</li>
+              <li>• A 2020 Obesity Reviews meta-analysis found no meaningful fat-loss difference between high-carb and high-fat diets when protein and calories are equated</li>
+              <li>• FDA labels can be off by 20%; a food scale is the single biggest accuracy upgrade for new trackers</li>
+              <li>• After 8–12 weeks of tracked eating, most people develop accurate intuition and can reduce tracking frequency</li>
+            </ul>
+          
+
+          /* Myth-busting opening */
+          <h2>The Myth: "Macros Are Too Complicated"</h2>
+          <p>
+            Spend ten minutes on fitness social media and macro tracking looks like a full-time job — precise kitchen scales, color-coded apps, spreadsheets. The reality is simpler. Macros are just a way of describing where your calories come from, and that description provides information that raw calorie counts alone cannot: whether you are eating enough protein to preserve muscle, whether your energy substrate balance matches your training demands, and why two people eating 2,000 calories can have dramatically different body composition results.
+          </p>
+          <p>
+            The Dietary Reference Intakes (DRI), established by the National Academies of Sciences, Engineering, and Medicine, recommend that adults get 45–65% of calories from carbohydrates, 20–35% from fat, and 10–35% from protein. These wide ranges exist because individual variation in preferences, metabolic needs, and activity levels is enormous. Macro tracking narrows that range to what works specifically for you and your goals.
+          </p>
+          <p>
+            This guide walks through the five steps to count macros accurately, covers the research on macro ratios for specific goals, and explains the most common tracking errors that cause people to plateau despite following a plan.
+          </p>
+
+          <h2>Step 1: Calculate Your TDEE (Your Calorie Starting Point)</h2>
+          <p>
+            Macro tracking without a calorie target is like budgeting without knowing your income. Your total daily energy expenditure (TDEE) is the foundation everything else rests on. It represents the total calories you burn in a day, including physical activity, and is calculated from your basal metabolic rate (BMR) multiplied by an activity factor.
+          </p>
+          <p>
+            The Mifflin-St Jeor equation is the most validated formula for estimating BMR in non-athletic adults. The American Dietetic Association considers it the preferred clinical tool over the older Harris-Benedict equation:
+          </p>
+          
+            <p>Mifflin-St Jeor BMR:</p>
+            <p>Men: (10 × weight in kg) + (6.25 × height in cm) − (5 × age) + 5</p>
+            <p>Women: (10 × weight in kg) + (6.25 × height in cm) − (5 × age) − 161</p>
+          
+          <p>
+            Multiply BMR by your activity factor: 1.2 (sedentary, desk job), 1.375 (light exercise 1–3 days/week), 1.55 (moderate exercise 3–5 days/week), 1.725 (hard training 6–7 days/week), 1.9 (athlete or physical labor). The result is your TDEE — your maintenance calories.
+          </p>
+          <p>
+            Use the <a href="/tdee-calculator/">TDEE Calculator</a> to get your number instantly without doing the math manually. For weight loss, subtract 300–500 calories. For muscle gain, add 200–300 calories. For maintenance, eat at TDEE.
+          </p>
+
+          <h2>Step 2: Choose Your Macro Split Based on Your Goal</h2>
+          <p>
+            Once you have your calorie target, you need to decide what percentage of those calories comes from each macronutrient. Here is the research-backed breakdown by goal:
+          </p>
+
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Goal</th>
+                  <th >Protein</th>
+                  <th >Carbs</th>
+                  <th >Fat</th>
+                  <th >Key Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >Fat loss</td>
+                  <td >30–35%</td>
+                  <td >35–45%</td>
+                  <td >20–30%</td>
+                  <td >High protein (1.8–2.2 g/kg) to spare muscle</td>
+                </tr>
+                <tr >
+                  <td >Muscle gain</td>
+                  <td >25–30%</td>
+                  <td >45–55%</td>
+                  <td >20–25%</td>
+                  <td >Carbs fuel training; protein for MPS</td>
+                </tr>
+                <tr>
+                  <td >Body recomposition</td>
+                  <td >35–40%</td>
+                  <td >30–40%</td>
+                  <td >20–25%</td>
+                  <td >Very high protein; moderate everything else</td>
+                </tr>
+                <tr >
+                  <td >Endurance performance</td>
+                  <td >20–25%</td>
+                  <td >55–65%</td>
+                  <td >15–20%</td>
+                  <td >Carbs as primary fuel for sustained output</td>
+                </tr>
+                <tr>
+                  <td >Maintenance</td>
+                  <td >20–30%</td>
+                  <td >40–55%</td>
+                  <td >25–35%</td>
+                  <td >Personal preference within DRI guidelines</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The critical finding from research: a 2020 meta-analysis of 121 randomized controlled trials published in <em>Obesity Reviews</em> (Naude et al.) found no clinically meaningful difference in fat loss between low-carb and low-fat diets at 12 months when total calorie intake and protein were equated. In plain terms: the carb-to-fat ratio is largely a preference call. Protein content, however, does make a measurable difference to body composition, and higher protein (≥1.6 g/kg body weight) is consistently superior during periods of caloric restriction.
+          </p>
+          <p>
+            A practical default for beginners targeting fat loss: 35% protein, 40% carbs, 25% fat. Adjust carbs and fat up or down based on how you feel and perform. Leave protein at the high end until you have been tracking for at least 12 weeks.
+          </p>
+
+          <h2>Step 3: Convert Your Percentages to Grams</h2>
+          <p>
+            Apps track macros in grams, not percentages. The conversion is simple once you know the caloric value of each macronutrient:
+          </p>
+          
+            <p>Caloric Values:</p>
+            <ul>
+              <li>• Protein = 4 calories per gram</li>
+              <li>• Carbohydrates = 4 calories per gram</li>
+              <li>• Fat = 9 calories per gram</li>
+            </ul>
+          
+          <p>
+            Example calculation for a 175 lb (79.5 kg) person targeting 2,000 calories/day for fat loss (35% protein / 40% carbs / 25% fat):
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Macro</th>
+                  <th >% of Calories</th>
+                  <th >Calories from Macro</th>
+                  <th >Grams Per Day</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >Protein</td>
+                  <td >35%</td>
+                  <td >700 cal</td>
+                  <td >175g</td>
+                </tr>
+                <tr >
+                  <td >Carbohydrates</td>
+                  <td >40%</td>
+                  <td >800 cal</td>
+                  <td >200g</td>
+                </tr>
+                <tr>
+                  <td >Fat</td>
+                  <td >25%</td>
+                  <td >500 cal</td>
+                  <td >56g</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            At 79.5 kg body weight, 175g protein equals approximately 2.2 g/kg — right at the upper range of research-supported protein for fat loss. This example also confirms the math: 700 + 800 + 500 = 2,000 calories total. Use the <a href="/macro-calculator/">Macro Calculator</a> to run these numbers automatically for your own stats and goals.
+          </p>
+
+          <h2>Step 4: Log Your Food Accurately</h2>
+          <p>
+            This is where most beginners lose accuracy, and where the biggest gains in tracking precision are available. Several studies have examined how accurately people self-report food intake: a widely cited 1992 New England Journal of Medicine study (Lichtman et al.) found that obese participants who reported diet failure underestimated calorie intake by an average of 47% and overestimated physical activity by 51%. The USDA's Continuing Survey of Food Intakes found average underreporting of approximately 12–20% in the general adult population.
+          </p>
+
+          <h3>The Four Biggest Tracking Errors</h3>
+
+          
+            
+              <p>Error 1: Estimating instead of weighing</p>
+              <p>A "tablespoon" of peanut butter from a jar can range from 12g to 30g depending on how heaped it is. At 9 cal/g fat, that is the difference between 108 and 270 calories from a single condiment. A food scale costs under $15 and is the single highest-ROI nutrition investment for beginners.</p>
+            
+            
+              <p>Error 2: Logging cooked weight for foods best measured raw</p>
+              <p>100g raw chicken breast has approximately 165 calories. After grilling, the same chicken may weigh 70g due to water loss — but it still has 165 calories. Logging 70g of cooked chicken using a "cooked" database entry gives you accurate data. Logging 70g of raw chicken data gives you a significant undercount. Know which database entry you are using.</p>
+            
+            
+              <p>Error 3: Skipping cooking oils and condiments</p>
+              <p>One tablespoon of olive oil is 119 calories and 14g fat. Two tablespoons used for cooking a dinner and not logged adds 238 calories that are invisible in the app but present in your body. Oils, sauces, dressings, and butter are the most commonly omitted tracking category.</p>
+            
+            
+              <p>Error 4: Trusting restaurant calorie counts</p>
+              <p>A 2010 study in the Journal of the American Dietetic Association (Urban et al.) measured actual vs. stated calories in restaurant meals from 42 restaurants across the U.S. The average discrepancy was 18%, with 19% of foods containing more than twice the stated calories. When eating out, use conservative estimates and add a 20–25% buffer to logged totals.</p>
+            
+          
+
+          <h3>Macro Tracking Apps: A Practical Comparison</h3>
+          <p>
+            Three apps dominate the macro tracking space, each with distinct strengths:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >App</th>
+                  <th >Database Size</th>
+                  <th >Best For</th>
+                  <th >Main Limitation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >MyFitnessPal</td>
+                  <td >14M+ foods</td>
+                  <td >Largest database; restaurant chains</td>
+                  <td >User-submitted entries are often inaccurate</td>
+                </tr>
+                <tr >
+                  <td >Cronometer</td>
+                  <td >~1M verified foods</td>
+                  <td >Micronutrient tracking; USDA entries</td>
+                  <td >Smaller restaurant database</td>
+                </tr>
+                <tr>
+                  <td >MacroFactor</td>
+                  <td >~1M foods + adaptive</td>
+                  <td >Adaptive TDEE updates from weigh-ins</td>
+                  <td >Paid subscription (~$10/mo)</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            For beginners: start with Cronometer or MacroFactor. Cronometer's database leans heavily on USDA-verified data, reducing the risk of hitting a user-submitted entry with phantom macro numbers. MacroFactor's adaptive TDEE feature corrects for metabolic differences between individuals — making it particularly useful once you have 2–3 weeks of consistent weight data.
+          </p>
+
+          <h2>Step 5: Build Meals That Hit Your Targets</h2>
+          <p>
+            The most sustainable approach to macro tracking is not logging everything at the end of the day and hoping it works out — it is pre-logging meals the night before or building a bank of "template meals" that you know hit your targets.
+          </p>
+
+          <h3>Sample Full Day at 2,000 kcal / 175g Protein / 200g Carbs / 56g Fat</h3>
+          
+            <ul>
+              <li>
+                <strong>Breakfast — 480 kcal | 48g P | 42g C | 14g F:</strong><br />
+                5 large egg whites + 2 whole eggs scrambled (30g P) · ½ cup oats cooked with water (27g C) · 1 tbsp almond butter (3g P, 8g F) · 1 medium banana (27g C)
+              </li>
+              <li>
+                <strong>Lunch — 530 kcal | 52g P | 52g C | 10g F:</strong><br />
+                200g grilled chicken breast (44g P) · 1 cup cooked quinoa (8g P, 40g C) · 1 cup steamed broccoli (3g P, 6g C) · 1 tsp olive oil (5g F) · lemon + herbs
+              </li>
+              <li>
+                <strong>Afternoon snack — 190 kcal | 30g P | 12g C | 3g F:</strong><br />
+                1 scoop whey protein (25g P) blended with 250ml skim milk (8g P, 12g C) · ½ cup strawberries
+              </li>
+              <li>
+                <strong>Dinner — 620 kcal | 42g P | 68g C | 20g F:</strong><br />
+                175g salmon fillet (35g P, 14g F) · 1 large sweet potato roasted (37g C) · 1 cup brown rice (5g P, 31g C) · large garden salad with 1 tbsp olive oil dressing (3g P, 6g F)
+              </li>
+              <li>
+                <strong>Evening — 180 kcal | 20g P | 15g C | 4g F:</strong><br />
+                ¾ cup low-fat cottage cheese (17g P) · ½ cup mixed berries (12g C) · cinnamon
+              </li>
+              <li>
+                Total: ~2,000 kcal · 192g P · 189g C · 51g F (within tolerance of targets)
+              </li>
+            </ul>
+          
+
+          <h2>The Research on Flexible Dieting vs. Rigid Rules</h2>
+          <p>
+            Macro tracking is the foundation of "flexible dieting" — eating any foods that fit your macro targets rather than following a prescribed meal plan or eliminating food groups. The psychological evidence for this approach is meaningful.
+          </p>
+          <p>
+            A 2011 study by Stewart and colleagues published in <em>Eating Behaviors</em> found that rigid dietary control was positively associated with eating disorder symptoms, while flexible control was associated with lower BMI and better psychological outcomes. A 2015 study in the <em>International Journal of Obesity</em> (Smith et al.) found that flexible eating was associated with lower levels of depression, anxiety, and disordered eating compared to rigid all-or-nothing approaches.
+          </p>
+          <p>
+            The practical implication: if a food fits your macro budget for the day, eating it does not "ruin" your diet. A slice of pizza on a Saturday can be accommodated by adjusting surrounding meals. This flexibility is precisely what makes macro tracking more sustainable long-term than most elimination-based dietary approaches.
+          </p>
+          <p>
+            The important boundary: calorie control still matters. Flexible dieting does not mean unlimited quantities of any food — it means no food is forbidden, provided it fits within your energy and macronutrient budget. Track <a href="/blog/calorie-deficit/">your calorie deficit</a> alongside macros for a complete picture of progress.
+          </p>
+
+          <h2>How Long Until You See Results from Tracking Macros?</h2>
+          <p>
+            First week: expect weight fluctuations from water retention changes as glycogen and sodium levels shift. This is normal and not representative of fat loss or gain.
+          </p>
+          <p>
+            Weeks 2–4: weight should trend in the direction of your calorie target (down in a deficit, up in a surplus). Body composition changes in the form of visual changes in muscle fullness or fat distribution may take 6–8 weeks to become noticeable.
+          </p>
+          <p>
+            Weeks 8–12: this is where most people develop tracking intuition — the ability to estimate macro content of common meals without logging. The calibration period is worth every gram you weigh in the first two months.
+          </p>
+          <p>
+            If weight is not moving after 3 weeks of consistent tracking: first audit your tracking accuracy (particularly cooking oils, sauces, and restaurant meals), then recalculate your TDEE — NEAT can vary enough between individuals that the activity multiplier assumptions may not match your reality. Use our <a href="/calorie-calculator/">Calorie Calculator</a> to recalibrate your starting point.
+          </p>
+
+          <h2>Protein Sources by Macro Density</h2>
+          <p>
+            Building your meals around high-protein, low-calorie foods makes hitting protein targets far easier without blowing your carb or fat budgets. Here are the most efficient protein sources per 100g:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Food (100g)</th>
+                  <th >Calories</th>
+                  <th >Protein</th>
+                  <th >Fat</th>
+                  <th >Carbs</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td >Chicken breast (raw)</td>
+                  <td >165 kcal</td>
+                  <td >31g</td>
+                  <td >3.6g</td>
+                  <td >0g</td>
+                </tr>
+                <tr >
+                  <td >Egg whites</td>
+                  <td >52 kcal</td>
+                  <td >11g</td>
+                  <td >0.2g</td>
+                  <td >0.7g</td>
+                </tr>
+                <tr>
+                  <td >Greek yogurt (0% fat)</td>
+                  <td >59 kcal</td>
+                  <td >10g</td>
+                  <td >0.4g</td>
+                  <td >3.6g</td>
+                </tr>
+                <tr >
+                  <td >Canned tuna (in water)</td>
+                  <td >128 kcal</td>
+                  <td >29g</td>
+                  <td >1g</td>
+                  <td >0g</td>
+                </tr>
+                <tr>
+                  <td >Cottage cheese (1% fat)</td>
+                  <td >72 kcal</td>
+                  <td >12g</td>
+                  <td >1g</td>
+                  <td >2.7g</td>
+                </tr>
+                <tr >
+                  <td >Whey protein powder</td>
+                  <td >~380 kcal</td>
+                  <td >~80g</td>
+                  <td >~5g</td>
+                  <td >~10g</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            Notice that egg whites and Greek yogurt provide protein at under 60 calories per 100g — making them among the most calorie-efficient protein sources available. Compare this to cheddar cheese (402 cal/100g, 25g protein) or peanut butter (588 cal/100g, 25g protein): both valid foods, but they come with far more calorie overhead per gram of protein.
+          </p>
+
+          <h2>When to Adjust Your Macros</h2>
+          <p>
+            Macro targets are not static. They should be reviewed when: your body weight changes by 10+ lbs (TDEE shifts), your goal changes (moving from fat loss to maintenance), your training volume changes significantly, or you have been in a deficit for 12+ weeks and need a maintenance break to reset leptin and thyroid signaling.
+          </p>
+          <p>
+            The recalibration process is identical to the initial setup — recalculate TDEE based on current body weight, choose your split, convert to grams. Think of it as quarterly maintenance for your nutrition plan. To understand how to use the <a href="/blog/body-recomposition-guide/">body recomposition approach</a> once you are comfortable with macro tracking fundamentals.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>What are macros and why do they matter?</h3>
+              <p>Macros (macronutrients) are the three main calorie-providing nutrients: protein (4 cal/g), carbohydrates (4 cal/g), and fat (9 cal/g). They matter because the ratio in which you eat them shapes body composition beyond what total calories predict. Higher protein preserves lean mass during fat loss; carb and fat distribution affects hormones, energy, and dietary adherence.</p>
+            
+            
+              <h3>How do I calculate my macro targets in grams?</h3>
+              <p>Start with your total daily calorie target. Set protein at 1.6–2.2g per kg of body weight, multiply by 4 for protein calories. Allocate 20–35% of total calories to fat, divide by 9 for grams. Remaining calories go to carbohydrates, divided by 4 for grams. Example: 2,000 calories — 160g protein (640 cal), 55g fat (495 cal), 216g carbs (865 cal).</p>
+            
+            
+              <h3>Do I need to hit my macros exactly every day?</h3>
+              <p>No. A ±5g tolerance on protein and ±10g on carbs and fat is negligible. Weekly averages matter more than daily precision. Research consistently shows that consistency over weeks produces body composition changes, not hitting exact numbers on any individual day. Getting close is sufficient, especially in the first month.</p>
+            
+            
+              <h3>What is the best macro ratio for weight loss?</h3>
+              <p>A 2020 meta-analysis in Obesity Reviews found no significant difference in long-term fat loss between high-carb/low-fat and low-carb/high-fat diets when calories and protein are equated. The "best" split is the one you sustain. Practical default for fat loss: 30–35% protein, 30–40% carbs, 25–35% fat. Protein is the only macro worth prioritizing above preference.</p>
+            
+            
+              <h3>Should I weigh food raw or cooked?</h3>
+              <p>Weigh meat raw and log the raw weight using a raw food database entry — cooking causes water loss that changes weight without changing calorie content. For starches like rice and pasta, log cooked weight if using a cooked food entry. The rule: match your database entry type (raw or cooked) to when you weigh your food.</p>
+            
+            
+              <h3>How accurate are nutrition labels?</h3>
+              <p>The FDA allows a 20% margin of error on nutrition labels. A 2010 study in the Journal of the American Dietetic Association found restaurant meals averaged 18% more calories than stated, with some items at 100% over. This is why a food scale and conservative restaurant estimates are the most reliable accuracy tools available to home trackers.</p>
+            
+            
+              <h3>Is counting macros sustainable long-term?</h3>
+              <p>Research on flexible dieting shows fewer signs of dietary restraint and disordered eating compared to rigid rule-based approaches. Most practitioners find that after 8–12 weeks of tracking, they develop accurate intuition for portions and macro content without needing to weigh every meal. Tracking intensively short-term to calibrate, then tracking loosely long-term, is a sustainable pattern.</p>
+            
+          
+
+          
+            <h2>Get Your Personalized Macro Targets</h2>
+            <p>Enter your stats and goal. Get protein, carb, and fat grams in under a minute.</p>
+            
+              <a href="/macro-calculator/">
+                Macro Calculator
+              </a>
+              <a href="/tdee-calculator/">
+                TDEE Calculator
+              </a>
+              <a href="/calorie-calculator/">
+                Calorie Calculator
+              </a>
+            
+          
+
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/calorie-deficit/">
+              <h3>Calorie Deficit Guide</h3>
+              <p>How to size your deficit correctly and avoid the most common fat loss mistakes.</p>
+            </a>
+            <a href="/blog/body-recomposition-guide/">
+              <h3>Body Recomposition Guide</h3>
+              <p>Lose fat and build muscle simultaneously — the advanced macro strategy.</p>
+            </a>
+            <a href="/blog/best-exercises-for-weight-loss/">
+              <h3>Best Exercises for Weight Loss</h3>
+              <p>Pair your macro plan with the most effective training methods for fat loss.</p>
+            </a>
+            <a href="/blog/bmr-explained/">
+              <h3>BMR Explained</h3>
+              <p>Understand your base metabolic rate — the foundation of every macro calculation.</p>
+            </a>
+          
+        
+      
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.calorique.io/blog/how-to-count-macros/">Calorique</a>.
+      Explore more free tools at <a href="https://www.calorique.io/">calorique.io</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.calorique.io/">Calorique</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
