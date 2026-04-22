@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MD5 Hash Generator: Create &amp;amp; Verify MD5 Checksums - BytePane</title>
+  <meta name="description" content="MD5 Hash Generator: Create &amp;amp; Verify MD5 Checksums">
+  <link rel="canonical" href="https://www.bytepane.com/blog/md5-hash-generator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/bytepane/">BytePane</a> &rarr; MD5 Hash Generator: Create &amp;amp; Verify MD5 Checksums
+  </nav>
+
+  <article>
+    <h1>MD5 Hash Generator: Create &amp;amp; Verify MD5 Checksums</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.bytepane.com/blog/md5-hash-generator/">bytepane.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    /* Breadcrumb */
+      
+        <a href="/">Home</a>
+        /
+        <a href="/blog/">Blog</a>
+        /
+        MD5 Hash Generator
+      
+
+      /* Header */
+      
+        <h2>
+          MD5 Hash Generator: Create &amp; Verify MD5 Checksums
+        </h2>
+        
+          Security
+          <time dateTime="2026-04-18">April 18, 2026</time>
+          14 min read
+        
+      
+
+      
+
+        /* Opening: myth-busting */
+        
+          <h2>The Myth: &ldquo;MD5 Is Dead, Never Use It&rdquo;</h2>
+          <p>
+            MD5 has been &ldquo;cryptographically broken&rdquo; since 2004 — that&apos;s twenty-two years of the security community repeating the same warning. And the warning is entirely correct for passwords, certificates, and digital signatures. But the message has been garbled in transmission: many developers now believe MD5 is worthless for <em>any</em> use case, which is wrong.
+          </p>
+          <p>
+            MD5 remains appropriate for <strong>non-adversarial integrity checks</strong>: verifying that a file downloaded correctly, generating deterministic cache keys, HTTP ETags, content-addressable storage, partitioning data in distributed systems. In these contexts, collision resistance is irrelevant — no attacker is crafting inputs to produce matching hashes. What matters is detecting accidental corruption, and MD5 does that perfectly well.
+          </p>
+          <p>
+            The security issue is specific: MD5 should not be trusted when an <em>adversary</em> might control the input. This article explains exactly what&apos;s broken, what isn&apos;t, and gives you production code for generating and verifying MD5 hashes across languages. To generate an MD5 hash immediately, try BytePane&apos;s <a href="/hash-generator/">hash generator tool</a> — supports MD5, SHA-1, SHA-256, and SHA-512.
+          </p>
+        
+
+        /* Key Takeaways */
+        
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li>▸MD5 produces a <strong>128-bit (32 hex character) hash</strong>. Designed by Ronald Rivest (MIT) in 1991, standardized as RFC 1321.</li>
+            <li>▸<strong>Broken for security</strong>: collision attacks are practical in seconds. NIST deprecated MD5 for digital signatures in 2008. Never use for passwords, certificates, or signatures.</li>
+            <li>▸<strong>Still valid</strong>: file download integrity checks, HTTP ETag generation, cache keys, content deduplication — any use where no adversary controls the input.</li>
+            <li>▸For <strong>passwords</strong>: use bcrypt, scrypt, or Argon2id. Never any raw hash algorithm — even SHA-256 is dangerously fast for brute-force.</li>
+            <li>▸Per <strong>npm download stats (April 2026)</strong>, the <code >md5</code> package still gets ~2.5M weekly downloads — most for legitimate non-security uses.</li>
+          </ul>
+        
+
+        /* What MD5 is */
+        
+          <h2>What MD5 Is: The Algorithm</h2>
+          <p>
+            MD5 (Message Digest Algorithm 5) is a cryptographic hash function designed by Ronald Rivest at MIT and published as <strong>RFC 1321</strong> in 1992. It takes arbitrary-length input and produces a fixed 128-bit (16-byte) digest, typically represented as 32 lowercase hexadecimal characters.
+          </p>
+          <p>
+            The algorithm works in four stages: padding the input to a multiple of 512 bits, processing each 512-bit block through four rounds of bitwise operations using constants derived from the sine function, and producing a 128-bit state from four 32-bit registers (A, B, C, D) initialized to specific constants. The core is a Merkle–Damgård construction — the same structural approach used by SHA-1 and SHA-2.
+          </p>
+
+          <h3>Properties of MD5</h3>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Property</th>
+                  <th >MD5</th>
+                  <th >SHA-256</th>
+                  <th >SHA-3-256</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['Output size', '128 bits (32 hex chars)', '256 bits (64 hex chars)', '256 bits (64 hex chars)'],
+                  ['Collision resistance', '❌ Broken (2004)', '✅ No known attacks', '✅ No known attacks'],
+                  ['Preimage resistance', '✅ Intact (practically)', '✅ Intact', '✅ Intact'],
+                  ['Password storage', '❌ Never (use bcrypt)', '❌ Too fast (use bcrypt)', '❌ Too fast (use bcrypt)'],
+                  ['File checksums', '✅ Appropriate', '✅ Appropriate', '✅ Appropriate'],
+                  ['Digital signatures', '❌ Deprecated (NIST 2008)', '✅ Safe', '✅ Safe'],
+                  ['HTTP ETags', '✅ Standard use', '✅ Standard use', 'Rare (longer string)'],
+                  ['Throughput (software)', '~600–800 MB/s', '~300–400 MB/s', '~200–300 MB/s'],
+                ].map(([prop, md5, sha256, sha3]) => (
+                  <tr key=prop >
+                    <td >prop</td>
+                    <td >md5</td>
+                    <td >sha256</td>
+                    <td >sha3</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+          <p>
+            Throughput figures are approximate software benchmarks from <strong>OpenSSL 3.x speed tests</strong> on modern x86-64 hardware. MD5 is genuinely faster because it operates on 32-bit words with fewer rounds, which is why it is still used for checksums where security is not a concern but speed is.
+          </p>
+        
+
+        /* The Collision Problem */
+        
+          <h2>The Collision Attack: What Exactly Is Broken</h2>
+          <p>
+            A hash collision means two different inputs produce the same hash output. For a 128-bit hash, the birthday bound gives a theoretical probability — you&apos;d expect to find a collision after about 2⁶⁴ random trials. That&apos;s roughly 18 quintillion operations — impractical to brute-force.
+          </p>
+          <p>
+            In 2004, <strong>Xiaoyun Wang and Hongbo Yu</strong> (Shandong University) published a cryptanalysis paper demonstrating that MD5&apos;s internal structure allows differential collisions to be found far faster than the birthday bound. Their attack found collisions in roughly 2³⁹ operations — computable in an hour on commodity hardware at the time, and in seconds today using tools like <strong>HashClash</strong>.
+          </p>
+          <p>
+            The practical consequences were severe:
+          </p>
+          <ul>
+            <li><strong>2008</strong>: Researchers created a rogue Certificate Authority certificate by exploiting MD5 collisions in SSL certificate signing — proving they could impersonate any HTTPS site.</li>
+            <li><strong>2012</strong>: The <strong>Flame malware</strong> (attributed to nation-state actors) used an MD5 collision to fake a Microsoft Windows Update digital signature, allowing it to spread as an apparently legitimate update.</li>
+          </ul>
+          <p>
+            Following these incidents, <strong>NIST formally deprecated MD5 for digital signatures</strong> in Special Publication 800-131A (2011). The CA/Browser Forum prohibited MD5 in SSL certificates. Git transitioned from SHA-1 to SHA-256 for commit hashes (though SHA-1 also has known collision attacks — the SHAttered attack in 2017).
+          </p>
+
+          <h3>What &ldquo;Broken&rdquo; Means Practically</h3>
+          
+            <p>`# Two different files with the same MD5 — a real collision example
+# Generated using the HashClash chosen-prefix collision tool
+# (these are actual collision blocks, not made up)
+
+File 1:
+d131dd02c5e6eec4693d9a0698aff95c 2fcab58712467eab4004583eb8fb7f89
+55ad340609f4b30283e488832571415a 085125e8f7cdc99fd91dbdf280373c5b
+
+File 2:
+d131dd02c5e6eec4693d9a0698aff95c 2fcab50712467eab4004583eb8fb7f89
+55ad340609f4b30283e4888325f1415a 085125e8f7cdc99fd91dbdf280373c5b
+
+# Both produce MD5: 79054025255fb1a26e4bc422aef54eb4
+
+# But SHA-256 differs completely:
+# File 1: a87ff679a2f3e71d9181a67b7542122c...
+# File 2: e4da3b7fbbce2345d7772b0674a318d5...`</pre>
+          
+        
+
+        /* When MD5 Is Still OK */
+        
+          <h2>Where MD5 Is Still Appropriate in 2026</h2>
+          <p >
+            Collision resistance matters only when an adversary can craft inputs. In these categories, that threat model does not apply:
+          </p>
+
+          <h3>File Download Integrity Verification</h3>
+          <p>
+            When you download a package from a trusted server and verify the MD5 matches the published checksum, the goal is detecting <em>accidental</em> corruption in transit — bit flips, truncated downloads, CDN caching bugs. No adversary is crafting a corrupted file designed to match the checksum. MD5 is completely sufficient here, and it is faster than SHA-256. Many Linux distributions and open-source projects still publish MD5 checksums alongside SHA-256 for legacy tool compatibility.
+          </p>
+          
+            <p>`# Linux (md5sum is part of GNU coreutils)
+md5sum ubuntu-22.04-server.iso
+# 84aea60b36e2f80b2c9e02ff7a7a1e5f  ubuntu-22.04-server.iso
+
+# Verify against published checksum
+echo "84aea60b36e2f80b2c9e02ff7a7a1e5f  ubuntu-22.04-server.iso" | md5sum -c
+# ubuntu-22.04-server.iso: OK
+
+# macOS
+md5 ubuntu-22.04-server.iso
+
+# Windows PowerShell
+Get-FileHash ubuntu-22.04-server.iso -Algorithm MD5`</pre>
+          
+
+          <h3>HTTP ETags and Cache Keys</h3>
+          <p >
+            ETags identify a specific version of a resource for HTTP caching. <strong>RFC 7232</strong> defines ETags as opaque strings — any format works. Using an MD5 of the file content is a common implementation because it&apos;s deterministic (same content = same ETag across server restarts), compact (32 chars), and fast to compute. Apache&apos;s default ETag uses inode+size+mtime; Nginx uses size+mtime; many application servers use content hashes.
+          </p>
+          
+            <p>`// Express.js: MD5-based ETag generation
+
+function generateETag(filePath: string): string 
+  const content = readFileSync(filePath)
+  return '"' + createHash('md5').update(content).digest('hex') + '"'
+
+// Middleware that handles conditional GET
+app.get('/assets/:file', (req, res) => 
+  const filePath = \`./static/\$req.params.file\`
+  const etag = generateETag(filePath)
+
+  if (req.headers['if-none-match'] === etag) 
+    return res.status(304).send()  // Not Modified
+  
+
+  res.setHeader('ETag', etag)
+  res.sendFile(filePath)
+)`</pre>
+          
+
+          <h3>Content Deduplication and Sharding</h3>
+          <p >
+            Many blob storage systems use content hashes for deduplication. Git uses SHA-1 (transitioning to SHA-256) for this purpose. Cassandra uses MD5 to partition data evenly across nodes. S3&apos;s ETag for single-part uploads is the MD5 of the object content. In all these cases, the property needed is <em>determinism</em> and <em>avalanche effect</em> (small input changes → completely different hash), not collision resistance. MD5 has both.
+          </p>
+          
+            <p>`// Deterministic sharding with MD5
+// Maps a user_id to one of N shards, consistently
+function getShardIndex(userId: string, shardCount: number): number 
+  const hash = createHash('md5').update(userId).digest('hex')
+  // Take the first 8 hex chars as a 32-bit int
+  const n = parseInt(hash.slice(0, 8), 16)
+  return n % shardCount
+
+getShardIndex('user_12345', 16)   // always same shard for same userId
+getShardIndex('user_12346', 16)   // likely different shard`</pre>
+          
+        
+
+        /* Code in languages */
+        
+          <h2>Generating MD5 Hashes: Code in Every Language</h2>
+
+          <h3>JavaScript / Node.js</h3>
+          <p >
+            Node.js&apos;s built-in <code >crypto</code> module has native MD5 support. The browser Web Crypto API does <em>not</em> support MD5 (it was intentionally omitted for security reasons), so for browser-side MD5 you need a library.
+          </p>
+          
+            <p>`// Node.js — built-in crypto (no dependencies)
+
+// String → MD5
+function md5(input: string): string 
+  return createHash('md5').update(input, 'utf8').digest('hex')
+
+md5('hello')         // "5d41402abc4b2a76b9719d911017c592"
+md5('Hello')         // "8b1a9953c4611296a827abf8c47804d7"  ← different!
+md5('')              // "d41d8cd98f00b204e9800998ecf8427e"  ← empty string hash
+
+// File → MD5 (streaming, handles large files efficiently)
+
+async function md5File(filePath: string): Promise<string> 
+  return new Promise((resolve, reject) => 
+    const hash = createHash('md5')
+    const stream = createReadStream(filePath)
+    stream.on('data', chunk => hash.update(chunk))
+    stream.on('end', () => resolve(hash.digest('hex')))
+    stream.on('error', reject)
+  )
+
+await md5File('./package.json')  // hex hash of the file
+
+// Buffer → MD5 (binary data)
+const buf = Buffer.from([0x00, 0xFF, 0xDE, 0xAD])
+createHash('md5').update(buf).digest('hex')
+
+// Browser — using the 'md5' npm package (pure JS implementation)
+// npm install md5
+
+md5('hello')  // "5d41402abc4b2a76b9719d911017c592"
+
+// Browser — using SubtleCrypto (SHA-256 only — no MD5)
+// const hash = await crypto.subtle.digest('MD5', data)  ← NOT supported`</pre>
+          
+
+          <h3>Python</h3>
+          <p >
+            Python&apos;s <code >hashlib</code> is the standard library for all hash algorithms. Since Python 3.9, it includes a <code >usedforsecurity</code> parameter — pass <code >False</code> when using MD5 for non-security purposes to silence FIPS compliance warnings.
+          </p>
+          
+            <p>`import hashlib
+
+# String → MD5
+def md5_string(s: str) -> str:
+    return hashlib.md5(s.encode('utf-8'), usedforsecurity=False).hexdigest()
+
+md5_string('hello')  # '5d41402abc4b2a76b9719d911017c592'
+
+# File → MD5 (streaming for large files)
+def md5_file(path: str) -> str:
+    h = hashlib.md5(usedforsecurity=False)
+    with open(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(65536), b''):
+            h.update(chunk)
+    return h.hexdigest()
+
+md5_file('/path/to/ubuntu.iso')  # file hash
+
+# Bytes → MD5
+hashlib.md5(b'\x00\xff\xde\xad', usedforsecurity=False).hexdigest()
+
+# Compare two files for equality (without reading both into memory)
+def files_identical(path1: str, path2: str) -> bool:
+    return md5_file(path1) == md5_file(path2)`</pre>
+          
+
+          <h3>Go</h3>
+          
+            <pre >`import (
+    "crypto/md5"
+    "encoding/hex"
+    "fmt"
+    "io"
+    "os"
+)
+
+// String → MD5
+func MD5String(s string) string 
+    h := md5.Sum([]byte(s))
+    return hex.EncodeToString(h[:])
+
+fmt.Println(MD5String("hello"))
+// 5d41402abc4b2a76b9719d911017c592
+
+// File → MD5 (streaming)
+func MD5File(path string) (string, error) 
+    f, err := os.Open(path)
+    if err != nil  return "", err 
+    defer f.Close()
+
+    h := md5.New()
+    if _, err := io.Copy(h, f); err != nil 
+        return "", err
+    
+    return hex.EncodeToString(h.Sum(nil)), nil
+
+hash, err := MD5File("./go.sum")
+// checksum of file`</pre>
+          
+
+          <h3>Bash (Linux / macOS)</h3>
+          
+            <pre >`# String → MD5
+echo -n "hello" | md5sum
+# 5d41402abc4b2a76b9719d911017c592  -
+
+# File → MD5
+md5sum /path/to/file.tar.gz
+# 84aea60b36e2f80b2c9e02ff7a7a1e5f  file.tar.gz
+
+# macOS (md5 instead of md5sum, different output format)
+echo -n "hello" | md5
+# 5d41402abc4b2a76b9719d911017c592
+
+md5 file.tar.gz
+# MD5 (file.tar.gz) = 84aea60b36e2f80b2c9e02ff7a7a1e5f
+
+# Verify a checksums file
+md5sum -c checksums.md5
+
+# Generate checksums for multiple files
+md5sum *.iso > checksums.md5`</pre>
+          
+        
+
+        /* Password hashing */
+        
+          <h2>Passwords: Why No Hash Is Appropriate Without a Password-Hashing Function</h2>
+          <p >
+            Storing passwords as MD5 hashes is catastrophic — but the reason is not just the collision vulnerability. It&apos;s that <em>speed itself is the problem</em>. MD5 can compute over 100 billion hashes per second on modern GPU hardware (per published Hashcat benchmarks). That makes brute-force and dictionary attacks trivially fast.
+          </p>
+          <p>
+            SHA-256 is faster than MD5 on modern hardware with AES-NI — and equally unsuitable for passwords. <strong>Any fast hash algorithm is wrong for passwords</strong>. The right tools are purpose-built slow algorithms:
+          </p>
+          
+            <table >
+              <thead>
+                <tr >
+                  <th >Algorithm</th>
+                  <th >Recommended?</th>
+                  <th >Memory-Hard?</th>
+                  <th >Notes</th>
+                </tr>
+              </thead>
+              <tbody >
+                [
+                  ['Argon2id', '✅ Best choice', 'Yes', 'PHC winner (2015). Recommended by NIST SP 800-63B (2020 update). Configurable memory + time + parallelism.'],
+                  ['bcrypt', '✅ Good', 'No', 'Industry standard since 1999. Max 72-byte input. 10+ rounds for web apps. Supported everywhere.'],
+                  ['scrypt', '✅ Good', 'Yes', 'Memory-hard. Use when you want stronger GPU resistance than bcrypt.'],
+                  ['PBKDF2-SHA256', '⚠️ Acceptable', 'No', 'FIPS-compliant. Use 600,000+ iterations (NIST SP 800-132 2023 recommendation). Not memory-hard.'],
+                  ['SHA-256 (raw)', '❌ Never', 'No', 'Too fast. Billions of attempts/second on GPU.'],
+                  ['MD5 (raw)', '❌ Never', 'No', 'Too fast AND collisions. LinkedIn breach (2012) used unsalted SHA-1 — 6.5M passwords cracked in hours.'],
+                ].map(([alg, rec, mem, notes]) => (
+                  <tr key=alg >
+                    <td >alg</td>
+                    <td >rec</td>
+                    <td >mem</td>
+                    <td >notes</td>
+                  </tr>
+                ))
+              </tbody>
+            </table>
+          
+          
+            <p>`// Node.js — Argon2id (argon2 package)
+
+// Hash a password
+const hash = await argon2.hash('user_password', 
+  type: argon2.argon2id,
+  memoryCost: 65536,   // 64 MB
+  timeCost: 3,         // 3 iterations
+  parallelism: 4,
+)
+// "$argon2id$v=19$m=65536,t=3,p=4$..."  ← includes salt
+
+// Verify
+const isValid = await argon2.verify(hash, 'user_password')  // true
+
+// Node.js — bcrypt (bcryptjs, pure JS)
+
+const hashed = await bcrypt.hash('user_password', 12)  // cost factor 12
+const matches = await bcrypt.compare('user_password', hashed)  // true`</pre>
+          
+        
+
+        /* Hash comparison */
+        
+          <h2>MD5 vs. SHA Family: When to Upgrade</h2>
+          <p >
+            If you&apos;re using MD5 for checksums and want to upgrade, the cost is minimal: SHA-256 is roughly 1.5–2× slower on software, and produces a 64-character hex string instead of 32. The code change is a one-line substitution in most languages. Whether the upgrade is worth it depends on your threat model:
+          </p>
+          <ul>
+            <li><strong>File download verification</strong>: MD5 is fine unless an attacker could compromise the download server (in which case the checksum itself is compromised regardless). SHA-256 costs you 64-char strings and a tiny performance hit.</li>
+            <li><strong>ETags</strong>: MD5 is fine. RFC 7232 says ETags are opaque. SHA-256 would make ETags longer — a minor HTTP overhead.</li>
+            <li><strong>Content deduplication in internal systems</strong>: MD5 is fine unless attackers can craft inputs (unlikely in most internal contexts). If in doubt, use SHA-256.</li>
+            <li><strong>Any public-facing or security-sensitive context</strong>: Always SHA-256 or better.</li>
+          </ul>
+          <p>
+            For a broader look at hash functions and their security properties, see BytePane&apos;s <a href="/blog/hash-functions-explained/">hash functions explained</a> article — covers MD5, SHA-1, SHA-2, SHA-3, and BLAKE3.
+          </p>
+        
+
+        /* FAQ */
+        
+          <h2>Frequently Asked Questions</h2>
+          
+            [
+              
+                q: 'What is an MD5 hash?',
+                a: 'MD5 (Message Digest Algorithm 5) produces a 128-bit hash from any input, represented as 32 hex characters. For example, MD5 of "hello" is 5d41402abc4b2a76b9719d911017c592. Designed by Ronald Rivest (MIT) in 1991, standardized in RFC 1321. It is cryptographically broken for security use but still used for checksums.',
+              ,
+              
+                q: 'Is MD5 safe to use in 2026?',
+                a: 'MD5 is NOT safe for passwords, digital signatures, or certificates — cryptographically broken since 2004, and deprecated by NIST in 2008. But it is still appropriate for non-adversarial checksums: file download verification, ETags, cache keys, and data deduplication where no attacker controls the input.',
+              ,
+              
+                q: 'What should I use instead of MD5 for passwords?',
+                a: 'Never use any hash algorithm directly for passwords — even SHA-256 is too fast (billions of attempts/second on GPUs). Use Argon2id (NIST SP 800-63B recommended), bcrypt (cost factor 12+), or scrypt. These are intentionally slow and salted, preventing rainbow table and brute-force attacks.',
+              ,
+              
+                q: 'How do I verify an MD5 checksum on Linux/macOS?',
+                a: 'Linux: md5sum file.tar.gz — compares against published hash. Verify a checksums file: md5sum -c checksums.md5. macOS: md5 file.tar.gz (different output format). Python: hashlib.md5(open("file","rb").read(), usedforsecurity=False).hexdigest().',
+              ,
+              
+                q: 'What is an MD5 collision attack?',
+                a: 'A collision finds two different inputs with the same hash. In 2004, Xiaoyun Wang and Hongbo Yu demonstrated practical MD5 collisions. By 2008, researchers forged SSL certificates using MD5 collisions. In 2012, Flame malware faked a Microsoft digital signature via MD5 collision. Collisions take seconds on consumer hardware using tools like HashClash.',
+              ,
+              
+                q: 'What is the difference between MD5 and SHA-256?',
+                a: 'MD5 produces 128 bits (32 hex chars); SHA-256 produces 256 bits (64 hex chars). MD5 is cryptographically broken — collisions found in seconds. SHA-256 has no known practical collisions and is NIST-recommended for all new security applications. MD5 is ~2× faster in software, which makes it suitable for non-security checksums.',
+              ,
+            ].map(( q, a ) => (
+              
+                <h3>q</h3>
+                <p>a</p>
+              
+            ))
+          
+        
+
+        /* Related links */
+        
+          <h2>Related Security Articles</h2>
+          
+            <a href="/blog/hash-functions-explained/">
+              <h3>Hash Functions Explained</h3>
+              <p>MD5, SHA-1, SHA-2, SHA-3, BLAKE3 — internals and security properties.</p>
+            </a>
+            <a href="/blog/jwt-tokens-explained/">
+              <h3>JWT Tokens Explained</h3>
+              <p>How JSON Web Tokens use HMAC-SHA256 and RSA signatures.</p>
+            </a>
+            <a href="/blog/ssh-keys-guide/">
+              <h3>SSH Keys Guide</h3>
+              <p>Ed25519 vs RSA, key generation, and fingerprint verification.</p>
+            </a>
+            <a href="/blog/base64-encoding-explained/">
+              <h3>Base64 Encoding Explained</h3>
+              <p>Binary-to-text encoding used in JWTs, email attachments, and data URIs.</p>
+            </a>
+          
+        
+
+        /* CTA */
+        
+          <h2>Generate MD5, SHA-256 &amp; More</h2>
+          <p>
+            Compute MD5, SHA-1, SHA-256, and SHA-512 hashes instantly in your browser. Paste text or upload a file — no data leaves your machine.
+          </p>
+          <a href="/hash-generator/">
+            Open Hash Generator →
+          </a>
+        
+
+      
+    
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.bytepane.com/blog/md5-hash-generator/">BytePane</a>.
+      Explore more free tools at <a href="https://www.bytepane.com/">bytepane.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.bytepane.com/">BytePane</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
