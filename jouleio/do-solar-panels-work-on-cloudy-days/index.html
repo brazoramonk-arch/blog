@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Do Solar Panels Work on Cloudy Days? Output &amp;amp; Efficiency Data - JouleIO</title>
+  <meta name="description" content="Solar panels produce 10–25% of rated output on fully overcast days. Germany gets 40% less sun than Arizona yet leads the world in solar adoption. Real data inside.">
+  <link rel="canonical" href="https://www.jouleio.com/blog/do-solar-panels-work-on-cloudy-days/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/jouleio/">JouleIO</a> &rarr; Do Solar Panels Work on Cloudy Days? Output &amp;amp; Efficiency Data
+  </nav>
+
+  <article>
+    <h1>Do Solar Panels Work on Cloudy Days? Output &amp;amp; Efficiency Data</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.jouleio.com/blog/do-solar-panels-work-on-cloudy-days/">jouleio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    const articleSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Do Solar Panels Work on Cloudy Days? Output & Efficiency Data (2026)',
+  description: 'How solar panels respond to cloud cover — diffuse irradiance science, real output measurements on overcast days, city-by-city cloud impact data, and the Germany proof-of-concept.',
+  datePublished: '2026-04-23',
+  dateModified: '2026-04-23',
+  author:  '@type': 'Organization', name: 'JouleIO' ,
+  publisher: 
+    '@type': 'Organization',
+    name: 'JouleIO',
+    url: 'https://jouleio.com/',
+    logo:  '@type': 'ImageObject', url: 'https://jouleio.com/favicon.svg' ,
+  ,
+  mainEntityOfPage: 'https://jouleio.com/blog/do-solar-panels-work-on-cloudy-days/',
+;
+
+const breadcrumbSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+     '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jouleio.com/' ,
+     '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://jouleio.com/blog/' ,
+     '@type': 'ListItem', position: 3, name: 'Solar Panels on Cloudy Days', item: 'https://jouleio.com/blog/do-solar-panels-work-on-cloudy-days/' ,
+  ],
+;
+
+const faqSchema = 
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    
+      '@type': 'Question',
+      name: 'Do solar panels work on cloudy days?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes — solar panels produce electricity on cloudy days, but at reduced output. Light cloud cover (thin, partial clouds) allows 50–80% of normal production. Heavy, uniform overcast skies drop output to 10–25% of rated capacity. Solar panels respond to diffuse irradiance — the scattered light that reaches Earth even when the sun is hidden — so they never produce zero on a cloudy day unless it\'s extremely dense fog or heavy storm clouds.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'How much do solar panels produce on a cloudy day?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Output depends on cloud density. NREL irradiance data shows that partly cloudy days (scattered clouds) typically deliver 50–80% of clear-sky production. Overcast days with continuous cloud cover reduce output to 10–25%. Thick storm clouds with heavy rain can drop production to 5–10% of rated capacity. A 400W panel that would produce 320W on a clear day might produce 200–280W under light clouds, or as little as 40–100W under heavy overcast.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Do solar panels work in the rain?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes — rain doesn\'t prevent solar production, though heavy rain usually coincides with dense cloud cover that reduces output to 5–15% of rated capacity. Light rain under partial clouds can still generate 30–50% of normal output. On the positive side, rain is free panel cleaning — it washes off dust and pollen, typically recovering 1–3% of output that was lost to soiling.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Which solar panels work best in cloudy conditions?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Amorphous thin-film panels (like those used in some CdTe and CIGS designs) have historically shown better diffuse light response, but modern high-efficiency monocrystalline silicon panels — particularly HJT and TOPCon designs — perform extremely well in diffuse light conditions. The most meaningful specification for cloudy-day performance is low-light efficiency (often listed as efficiency at 200 W/m² irradiance), which top monocrystalline panels handle at 95–97% of their proportional rated efficiency.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Are solar panels worth it in a cloudy climate like Seattle or Portland?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes — Seattle and Portland have payback periods of 8–11 years, which is longer than Arizona\'s 10–12 years but still financially attractive over a 25-year panel life. Washington state has an electricity rate of about 11¢/kWh — lower than the national average — which reduces the financial benefit somewhat. Oregon\'s higher rates (~13¢/kWh) improve the math. Both cities are better markets than residents typically assume, largely because annual production is higher than cloudy-day experience suggests.',
+      ,
+    ,
+    
+      '@type': 'Question',
+      name: 'Can solar panels charge a battery on a cloudy day?',
+      acceptedAnswer: 
+        '@type': 'Answer',
+        text: 'Yes — even at 15–25% output, solar panels generate enough current to slowly charge a home battery on an overcast day. Charging speed is proportional to production: a system that normally pushes 10kW into a battery on a clear day might push 1.5–2.5kW on a heavily overcast day. This is enough to maintain battery state of charge during extended cloudy periods if consumption is low, though you should not expect to fully recharge a depleted battery from 0–100% on a single heavily overcast day.',
+      ,
+    ,
+  ],
+;
+
+  
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(articleSchema) 
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(breadcrumbSchema) 
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML= __html: JSON.stringify(faqSchema) 
+      />
+      <Header />
+      
+        /* Breadcrumb */
+        
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>/</li>
+            <li><a href="/blog/">Blog</a></li>
+            <li>/</li>
+            <li>Solar Panels on Cloudy Days</li>
+          </ol>
+        
+
+        
+
+          /* Stat-led header */
+          
+            Solar
+            
+              <p>The Germany argument</p>
+              <p>#1</p>
+              <p>Germany&apos;s ranking in per-capita solar capacity installed — a country that gets roughly the same sunshine as Alaska</p>
+              
+                
+                  <p>1,650</p>
+                  <p>Avg sun hours/yr: Frankfurt</p>
+                
+                
+                  <p>3,850</p>
+                  <p>Avg sun hours/yr: Phoenix</p>
+                
+                
+                  <p>10–25%</p>
+                  <p>Panel output on heavy overcast</p>
+                
+              
+            
+            <h2>
+              Do Solar Panels Work on Cloudy Days? Output &amp; Efficiency Data
+            </h2>
+            <p>
+              Yes — but not at full capacity. On a heavily overcast day, solar panels produce roughly 10–25% of their rated output. On a partly cloudy day with scattered clouds, production falls to about 50–80%. Understanding this spectrum, and the underlying physics of diffuse irradiance, is essential for realistic expectations of what a solar system delivers in non-ideal weather.
+            </p>
+            
+              <time dateTime="2026-04-23">April 23, 2026</time>
+              13 min read
+            
+          
+
+          /* Key Takeaways */
+          
+            <h2>Key Takeaways</h2>
+            <ul>
+              <li>→Solar panels produce electricity on cloudy days via <strong>diffuse irradiance</strong> — scattered light that passes through clouds even when the sun is hidden.</li>
+              <li>→Heavy overcast reduces output to <strong>10–25%</strong> of rated capacity; light/partial clouds allow <strong>50–80%</strong> of normal production.</li>
+              <li>→Germany installs more solar per capita than any other major nation, despite receiving only <strong>1,600–1,900 annual sun hours</strong> — proving cloudy climates can be profitable solar markets.</li>
+              <li>→Cloud cover is already factored into NREL production estimates — your installer&apos;s <strong>annual kWh projection accounts for cloudy days</strong> in your specific climate.</li>
+              <li>→The &ldquo;edge-of-cloud&rdquo; effect can briefly boost output <strong>above rated capacity</strong> when direct sun appears at cloud edges — microinverter systems capture this most effectively.</li>
+            </ul>
+          
+
+          /* Table of Contents */
+          
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#how-it-works" >1. How Solar Panels Generate Power Without Direct Sunlight</a></li>
+              <li><a href="#output-by-cloud-type" >2. Cloud Type Matters: Output by Weather Condition</a></li>
+              <li><a href="#germany-proof" >3. The Germany Proof: Cloudy Climate, Profitable Solar</a></li>
+              <li><a href="#city-comparison" >4. City-by-City Cloud Impact on Annual Production</a></li>
+              <li><a href="#edge-of-cloud" >5. The Edge-of-Cloud Effect: When Clouds Boost Output</a></li>
+              <li><a href="#diffuse-panel-types" >6. Which Solar Panel Technologies Perform Best in Diffuse Light</a></li>
+              <li><a href="#battery-cloudy" >7. Solar + Battery Storage in Cloudy Climates</a></li>
+              <li><a href="#installer-estimates" >8. What Your Installer&apos;s Production Estimate Already Includes</a></li>
+              <li><a href="#faq" >9. Frequently Asked Questions</a></li>
+            </ol>
+          
+
+          /* Section 1 */
+          
+            <h2>How Solar Panels Generate Power Without Direct Sunlight</h2>
+            <p>
+              To understand why panels work on cloudy days, you need to understand the difference between <strong>direct irradiance</strong> and <strong>diffuse irradiance</strong>.
+            </p>
+            <p>
+              Direct Normal Irradiance (DNI) is the beam of sunlight coming directly from the solar disc. This is what&apos;s blocked when clouds cover the sky. But clouds don&apos;t absorb all incoming solar energy — they scatter it. <strong>Diffuse Horizontal Irradiance (DHI)</strong> is the scattered, omnidirectional light that comes from the entire sky dome rather than from the solar disc specifically.
+            </p>
+            <p>
+              On a clear day in most U.S. locations, roughly 70–80% of solar energy arrives as direct irradiance and 20–30% as diffuse. On a heavily overcast day, direct irradiance drops to near-zero, but diffuse irradiance remains — typically at 10–25% of the total clear-sky value. Solar panels respond to both types of irradiance; the photovoltaic effect is triggered by photons, regardless of whether those photons arrive in a direct beam or scattered from the sky.
+            </p>
+            <p>
+              This is why a 400W solar panel, despite producing essentially zero output in a pitch-dark room, generates 40–100 watts on a uniformly overcast day with adequate diffuse sky brightness. The light is still there — just scattered and reduced in intensity.
+            </p>
+            <p>
+              NREL measures diffuse irradiance at dozens of sites across the U.S. through its National Solar Radiation Database (NSRDB). These measurements, captured in 30-minute intervals across 18+ years of hourly weather data, are the foundation of the PVWatts production modeling tool. When your solar installer quotes an annual production estimate, that figure already incorporates every hour of cloudy, rainy, and overcast weather in your location&apos;s historical record.
+            </p>
+          
+
+          /* Section 2 */
+          
+            <h2>Cloud Type Matters: Output by Weather Condition</h2>
+            <p>
+              &ldquo;Cloudy&rdquo; is not a single condition — it spans a wide spectrum of sky states that dramatically affect solar output. The following table summarizes typical output reductions, based on NREL irradiance data and DOE Solar Energy Technologies Office research on real-world panel performance.
+            </p>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Sky Condition</th>
+                    <th >Typical GHI</th>
+                    <th >% of Clear Sky</th>
+                    <th >400W Panel Output</th>
+                    <th >10kW System (kWh/day)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td >Clear sky (peak)</td>
+                    <td >900–1,000 W/m²</td>
+                    <td >100%</td>
+                    <td >360–400W</td>
+                    <td >50–60 kWh</td>
+                  </tr>
+                  <tr >
+                    <td >Hazy / thin cirrus</td>
+                    <td >700–850 W/m²</td>
+                    <td >80–90%</td>
+                    <td >288–360W</td>
+                    <td >40–52 kWh</td>
+                  </tr>
+                  <tr >
+                    <td >Partly cloudy (scattered)</td>
+                    <td >500–700 W/m²</td>
+                    <td >55–75%</td>
+                    <td >220–300W</td>
+                    <td >30–42 kWh</td>
+                  </tr>
+                  <tr >
+                    <td >Mostly cloudy (broken)</td>
+                    <td >200–450 W/m²</td>
+                    <td >20–50%</td>
+                    <td >80–180W</td>
+                    <td >12–25 kWh</td>
+                  </tr>
+                  <tr >
+                    <td >Heavy overcast (stratus)</td>
+                    <td >80–200 W/m²</td>
+                    <td >10–20%</td>
+                    <td >32–80W</td>
+                    <td >4–12 kWh</td>
+                  </tr>
+                  <tr >
+                    <td >Heavy storm / thick cumulonimbus</td>
+                    <td >30–80 W/m²</td>
+                    <td >3–8%</td>
+                    <td >12–32W</td>
+                    <td >1–4 kWh</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            <p>Sources: NREL National Solar Radiation Database (NSRDB); DOE Solar Energy Technologies Office; manufacturer low-light performance data. GHI = Global Horizontal Irradiance.</p>
+            <p>
+              The most practically useful insight from this table: <strong>truly zero solar output requires essentially total darkness</strong>. Even the heaviest practical cloud cover still passes 3–8% of clear-sky irradiance. Your panels almost always generate something.
+            </p>
+            <p>
+              The second insight: cloud cover in most U.S. climates is not uniform. Even famously cloudy cities like Seattle average fewer than 250 days per year of completely overcast skies — meaning the other 115 days involve some combination of clear sky and partial clouds. Annual production is the weighted sum of all these sky states, not just the heavy overcast days.
+            </p>
+          
+
+          /* Section 3 */
+          
+            <h2>The Germany Proof: Cloudy Climate, Profitable Solar</h2>
+            <p>
+              The strongest empirical case that solar works in cloudy climates is Germany. By any solar climate metric, Germany is not a solar powerhouse: Frankfurt receives about 1,650 annual sun hours; Munich, in the sunniest part of the country, gets roughly 1,850. Compare that to Phoenix (3,850), Miami (3,100), or even Seattle (2,100) — Germany gets substantially less solar irradiance than most of the continental United States.
+            </p>
+            <p>
+              Despite this, Germany consistently ranks as one of the world&apos;s leading solar markets. According to the <strong>International Energy Agency (IEA) Renewables 2025 report</strong>, Germany had approximately 81 GW of installed solar PV capacity as of 2024, with residential rooftop installations being a major component. Germany has generated as much as 9–12% of its total electricity from solar in peak years — from a country where the sun is never particularly strong.
+            </p>
+            <p>
+              How is this possible? The economics work for the same reason they work in cloudy parts of the United States: <strong>electricity prices in Germany are extremely high</strong>, exceeding €0.30/kWh (roughly $0.33/kWh) for residential consumers in 2024. Every kWh of solar output, even from a cloudy-day system operating at 15% capacity, displaces expensive grid electricity. The math favors solar even when the sun rarely shines.
+            </p>
+            
+              <p>Germany vs. U.S. Southwest: Solar by the Numbers</p>
+              
+                
+                  <p>Frankfurt, Germany</p>
+                  <p>Annual sun hours: 1,650</p>
+                  <p>Electricity rate: ~$0.33/kWh</p>
+                  <p>10kW annual production: ~8,800 kWh</p>
+                  <p>Annual savings: ~$2,900</p>
+                  <p>Payback: ~8–10 years</p>
+                
+                
+                  <p>Phoenix, AZ (USA)</p>
+                  <p>Annual sun hours: 3,850</p>
+                  <p>Electricity rate: ~$0.14/kWh</p>
+                  <p>10kW annual production: ~17,200 kWh</p>
+                  <p>Annual savings: ~$2,400</p>
+                  <p>Payback: ~10–12 years</p>
+                
+              
+            
+            <p>
+              Notice that Frankfurt&apos;s annual savings exceed Phoenix&apos;s despite producing almost half as much electricity, because electricity costs more than twice as much. If you live in a U.S. city with high electricity rates — Connecticut ($0.26/kWh), Massachusetts ($0.29/kWh), Rhode Island ($0.27/kWh) — the analogy to Germany is even stronger. High electricity costs transform modest solar production into excellent financial returns.
+            </p>
+          
+
+          /* Section 4 */
+          
+            <h2>City-by-City: Annual Production and Cloud Impact</h2>
+            <p>
+              The following comparison uses NREL PVWatts data for a standard 10kW system to show how cloud cover varies across U.S. cities and its impact on annual production and financial returns.
+            </p>
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >City</th>
+                    <th >Avg Cloudy Days/Yr</th>
+                    <th >Peak Sun Hrs/Day</th>
+                    <th >Annual kWh (10kW)</th>
+                    <th >Electricity Rate</th>
+                    <th >Annual Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td >Phoenix, AZ</td>
+                    <td >73</td>
+                    <td >5.8</td>
+                    <td >17,200</td>
+                    <td >$0.14</td>
+                    <td >$2,408</td>
+                  </tr>
+                  <tr >
+                    <td >Denver, CO</td>
+                    <td >115</td>
+                    <td >4.7</td>
+                    <td >15,200</td>
+                    <td >$0.15</td>
+                    <td >$2,280</td>
+                  </tr>
+                  <tr >
+                    <td >Boston, MA</td>
+                    <td >157</td>
+                    <td >4.2</td>
+                    <td >12,600</td>
+                    <td >$0.29</td>
+                    <td >$3,654</td>
+                  </tr>
+                  <tr >
+                    <td >New York, NY</td>
+                    <td >152</td>
+                    <td >4.3</td>
+                    <td >12,800</td>
+                    <td >$0.25</td>
+                    <td >$3,200</td>
+                  </tr>
+                  <tr >
+                    <td >Chicago, IL</td>
+                    <td >183</td>
+                    <td >3.8</td>
+                    <td >11,800</td>
+                    <td >$0.16</td>
+                    <td >$1,888</td>
+                  </tr>
+                  <tr >
+                    <td >Portland, OR</td>
+                    <td >222</td>
+                    <td >3.4</td>
+                    <td >10,600</td>
+                    <td >$0.13</td>
+                    <td >$1,378</td>
+                  </tr>
+                  <tr >
+                    <td >Seattle, WA</td>
+                    <td >226</td>
+                    <td >3.2</td>
+                    <td >10,200</td>
+                    <td >$0.11</td>
+                    <td >$1,122</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            <p>Sources: NREL PVWatts v8, 10kW system, 20° tilt south-facing; NOAA cloudy days data; EIA Electric Power Monthly Q1 2026.</p>
+            <p>
+              This table illustrates why Seattle and Portland are the genuinely challenging U.S. solar markets — not because they&apos;re cloudy (Chicago and Boston are also very cloudy), but because they combine cloudiness with <em>low electricity rates</em>. Washington and Oregon&apos;s cheap hydroelectric power (11–13¢/kWh) means that solar kWh are worth less than in New England or California, making payback periods longer.
+            </p>
+            <p>
+              Even in Seattle, however, a 10kW system generates $1,122/year in electricity value — enough to pay back a $22,000–$25,000 installed system in about 18–20 years, well within the panel&apos;s 25–30 year life. For a complete ROI breakdown by your location, use our <a href="/solar-panel-calculator/">solar panel calculator</a>.
+            </p>
+          
+
+          /* Section 5 */
+          
+            <h2>The Edge-of-Cloud Effect: When Clouds Briefly Boost Output</h2>
+            <p>
+              Here&apos;s something most homeowners don&apos;t know: on partly cloudy days, solar panels can briefly produce <em>more</em> than their rated output. This phenomenon — called the <strong>edge-of-cloud effect</strong> or cloud enhancement — occurs when the sun&apos;s direct beam reaches the panel simultaneously with diffuse light reflected off nearby cloud edges.
+            </p>
+            <p>
+              The mechanism: when the sun emerges at the edge of a passing cloud, it receives both direct irradiance from the solar disc and additional scattered irradiance from the bright, reflective surface of the cloud. Momentarily, total irradiance at the panel surface can reach 1,100–1,400 W/m² — significantly above the 1,000 W/m² standard test condition. During these brief spikes, a 400W panel can produce 440–560W.
+            </p>
+            <p>
+              Research published in the <strong>Progress in Photovoltaics journal</strong> documented cloud enhancement events exceeding 1,200 W/m² at monitoring stations across Germany, Scandinavia, and the UK — the cloudiest solar markets in the developed world. These peaks are typically brief (seconds to minutes), but on a day with scattered cumulus clouds, they can occur dozens of times, adding meaningfully to daily production.
+            </p>
+            <p>
+              For homeowners with <a href="/blog/solar-panel-installation/">microinverter-based systems</a> (like Enphase IQ8), each panel operates independently and can respond instantly to brief irradiance spikes. String inverter systems may not fully capture these peaks due to MPPT response time. This is one genuine operational advantage of microinverter systems in climates with variable, partly cloudy weather — they harvest more of these enhancement events.
+            </p>
+          
+
+          /* Section 6 */
+          
+            <h2>Which Solar Panels Perform Best in Diffuse Light?</h2>
+            <p>
+              Not all solar panels respond equally to diffuse irradiance. Several factors influence how well a panel captures scattered, omnidirectional light versus direct beam sunlight.
+            </p>
+
+            <h3>Low-Light Efficiency Rating</h3>
+            <p>
+              Many panel datasheets include a &ldquo;low-light efficiency&rdquo; specification — typically the efficiency at 200 W/m² irradiance versus the standard 1,000 W/m². The best monocrystalline panels maintain 95–97% of their proportional efficiency at 200 W/m², meaning a panel rated 22% efficiency at 1,000 W/m² achieves roughly 21–21.4% at 200 W/m². This matters in cloudy climates because a significant fraction of daily production comes from low-irradiance morning and evening hours.
+            </p>
+
+            <h3>HJT Panels: Best Low-Light Performance in Silicon</h3>
+            <p>
+              Heterojunction (HJT) panels — including REC Alpha Pure-R and Panasonic EverVolt H — consistently demonstrate the best low-light efficiency among silicon-based panels. Their amorphous silicon layers respond well to diffuse, indirect light, and their low temperature coefficient means they maintain efficiency on cool, overcast days better than conventional PERC panels.
+            </p>
+            <p>
+              According to REC Group&apos;s product documentation, the Alpha Pure-R achieves 98.2% of proportional efficiency at 200 W/m² — essentially no low-light penalty. This matters in practice: a REC Alpha system in Seattle produces proportionally more electricity on its many overcast days than an equivalent-rated PERC system would.
+            </p>
+
+            <h3>Thin-Film CdTe: Good in Diffuse Light, Limited Residential Use</h3>
+            <p>
+              Cadmium Telluride (CdTe) thin-film panels, primarily made by First Solar, have well-documented advantages in diffuse irradiance environments and humid, hazy conditions. Their response to the blue end of the spectrum is particularly good. However, First Solar primarily serves utility-scale projects; residential CdTe panels are not readily available.
+            </p>
+
+            
+              <table >
+                <thead>
+                  <tr >
+                    <th >Technology</th>
+                    <th >Low-Light Efficiency (200 W/m²)</th>
+                    <th >Cloudy Performance</th>
+                    <th >Residential Availability</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td >HJT (REC, Panasonic)</td>
+                    <td >97–99%</td>
+                    <td >Excellent</td>
+                    <td >Yes — premium cost</td>
+                  </tr>
+                  <tr >
+                    <td >TOPCon n-type (Jinko, LONGi)</td>
+                    <td >96–98%</td>
+                    <td >Very good</td>
+                    <td >Yes — mainstream</td>
+                  </tr>
+                  <tr >
+                    <td >Mono PERC (Qcells, Canadian Solar)</td>
+                    <td >94–96%</td>
+                    <td >Good</td>
+                    <td >Yes — value tier</td>
+                  </tr>
+                  <tr >
+                    <td >Thin-film CdTe (First Solar)</td>
+                    <td >96–98%</td>
+                    <td >Very good</td>
+                    <td >No — utility-scale only</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            <p>Source: Manufacturer datasheets; DNV GL PV Module Testing reports 2025; NREL comparative performance studies.</p>
+            <p>
+              The practical takeaway: if you live in a cloudy climate and are comparing panels, ask for the low-light efficiency specification (often listed as &ldquo;efficiency at 200 W/m² irradiance&rdquo;). A 2–3 percentage point difference in low-light efficiency translates to roughly 3–5% more annual production in heavily cloudy markets — meaningful over 25 years. HJT panels carry a 15–25% cost premium over PERC, but their performance advantage in cloudy conditions partially justifies that premium in Seattle or Portland.
+            </p>
+          
+
+          /* Section 7 */
+          
+            <h2>Solar + Battery Storage in Cloudy Climates</h2>
+            <p>
+              The combination of solar panels and battery storage is particularly valuable in cloudy climates, for a specific reason: on partly cloudy days with variable output, a battery smooths the production curve and maximizes self-consumption.
+            </p>
+            <p>
+              On a day with alternating sun and clouds, solar production fluctuates between 50W and 400W for a single panel — sometimes within minutes. Without a battery, this variability means you draw from the grid during cloud shadows and export to the grid during sunny periods. Net metering credits this back, but at retail-rate export prices rather than the full grid import rate (in states like California under NEM 3.0, export rates can be quite low during off-peak hours).
+            </p>
+            <p>
+              A battery acts as a buffer: during the sunny spikes between cloud shadows, surplus production charges the battery rather than exporting to the grid at potentially low compensation rates. When cloud shadows reduce panel output below home consumption, the battery discharges to cover the gap rather than importing from the grid at retail rates.
+            </p>
+            <p>
+              The charge rate during heavy overcast (1.5–2.5kW for a 10kW system) is usually insufficient to fully recharge a depleted battery in a single day. According to data from <strong>Enphase Energy&apos;s 2025 Annual Performance Report</strong>, systems in Seattle averaged 2.4 consecutive cloudy days before a sufficient charging event occurred — meaning battery backup for consecutive cloudy days requires careful system sizing in the Pacific Northwest.
+            </p>
+            <p>
+              For cloudy-climate battery sizing guidance and cost data, see our <a href="/blog/home-battery-storage-guide/">home battery storage guide</a>.
+            </p>
+          
+
+          /* Section 8 */
+          
+            <h2>What Your Installer&apos;s Production Estimate Already Includes</h2>
+            <p>
+              When a solar installer quotes you an expected annual production figure — say, &ldquo;your 10kW system will produce 11,500 kWh/year in Portland&rdquo; — that number already accounts for every cloudy, rainy, and overcast day in Portland&apos;s historical weather record. There is no separate &ldquo;cloud adjustment&rdquo; you need to make.
+            </p>
+            <p>
+              The industry standard tool for U.S. production estimates is NREL&apos;s PVWatts Calculator, which draws on the National Solar Radiation Database (NSRDB) — a 30-minute-resolution dataset of measured irradiance across all sky conditions at thousands of U.S. monitoring stations. PVWatts simulates your system hour by hour across a Typical Meteorological Year (TMY) — a synthetic year built from actual historical data that represents long-term average weather, including all cloudy days at their historically correct frequencies.
+            </p>
+            <p>
+              Any reputable installer uses PVWatts or equivalent tools (Aurora, Helioscope, SolarDesignTool) that incorporate the same underlying NSRDB data. If an installer quotes a production number without specifying the tool or methodology, ask which software they used and whether it uses TMY data — it&apos;s a basic quality indicator.
+            </p>
+            <p>
+              The bottom line: the annual production estimate you receive is already a cloudy-day-inclusive projection. Concerns about &ldquo;but what about cloudy days?&rdquo; are already embedded in that number. The question isn&apos;t whether cloudy days reduce output — they do — but whether the annual production figure accounts for those days correctly. A reputable installer using NREL methodology will have that covered.
+            </p>
+          
+
+          /* FAQ */
+          
+            <h2>Frequently Asked Questions</h2>
+            
+              
+                <h3>Do solar panels work on cloudy days?</h3>
+                <p>Yes — solar panels produce electricity on cloudy days via diffuse irradiance (scattered light). Light cloud cover allows 50–80% of normal production. Heavy, uniform overcast drops output to 10–25% of rated capacity. Output only approaches zero during the densest storm clouds.</p>
+              
+              
+                <h3>How much do solar panels produce on a cloudy day?</h3>
+                <p>Output depends on cloud density. Partly cloudy (scattered clouds) typically delivers 50–80% of clear-sky production. Overcast days with continuous cloud cover reduce output to 10–25%. Thick storm clouds can drop production to 5–10%. A 400W panel that produces 320W on a clear day might produce 200–280W under light clouds, or 40–100W under heavy overcast.</p>
+              
+              
+                <h3>Do solar panels work in the rain?</h3>
+                <p>Yes — rain doesn&apos;t prevent solar production, though heavy rain usually coincides with dense cloud cover that reduces output to 5–15% of rated capacity. On the positive side, rain is free panel cleaning — it washes off dust and pollen, typically recovering 1–3% of output that was lost to soiling.</p>
+              
+              
+                <h3>Which solar panels work best in cloudy conditions?</h3>
+                <p>HJT panels (like REC Alpha Pure-R) maintain 97–99% of proportional efficiency at low irradiance levels (200 W/m²), making them the best performers in cloudy conditions. TOPCon n-type panels are close behind at 96–98%. The most meaningful specification is &ldquo;low-light efficiency at 200 W/m²&rdquo; — ask for this figure when comparing panels in a cloudy climate.</p>
+              
+              
+                <h3>Are solar panels worth it in a cloudy climate like Seattle or Portland?</h3>
+                <p>Seattle and Portland have payback periods of 18–22 years due to their combination of cloudiness AND low electricity rates (~11–13¢/kWh). They&apos;re viable solar markets — panels pay back within their 25-year warranty — but not the strongest ones. Boston (cloudy but expensive electricity at $0.29/kWh) has a much shorter 6–8 year payback despite similar cloud cover.</p>
+              
+              
+                <h3>Can solar panels charge a battery on a cloudy day?</h3>
+                <p>Yes — even at 15–25% output, solar panels generate enough current to slowly charge a home battery on overcast days. A system that normally pushes 10kW might push 1.5–2.5kW on a heavily overcast day. This maintains battery state of charge during cloudy periods but won&apos;t fully recharge a depleted battery from a single heavily overcast day.</p>
+              
+            
+          
+
+          /* CTA */
+          
+            <h2>Calculate What Solar Produces in Your Climate</h2>
+            <p>Our solar calculator uses NREL PVWatts methodology — already accounting for every cloudy day in your location&apos;s climate history — to show annual production, monthly output, and payback period.</p>
+            <a href="/solar-panel-calculator/">
+              Calculate My Solar Output →
+            </a>
+          
+
+          /* Internal Links */
+          
+            <h3>Related Solar Guides</h3>
+            
+              <a href="/blog/do-solar-panels-work-in-winter/">Do Solar Panels Work in Winter?</a>
+              <a href="/blog/solar-panel-efficiency/">Solar Panel Efficiency: PERC vs TOPCon vs HJT</a>
+              <a href="/blog/best-states-for-solar-panels/">Best States for Solar Panels 2026</a>
+              <a href="/blog/solar-panel-roi/">Solar Panel ROI: Payback Period by State</a>
+              <a href="/blog/home-battery-storage-guide/">Home Battery Storage Guide 2026</a>
+              <a href="/blog/is-solar-worth-it/">Is Solar Worth It in 2026?</a>
+            
+          
+        
+      
+      <Footer />
+    </>
+  );
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.jouleio.com/blog/do-solar-panels-work-on-cloudy-days/">JouleIO</a>.
+      Explore more free tools at <a href="https://www.jouleio.com/">jouleio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.jouleio.com/">JouleIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
