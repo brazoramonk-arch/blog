@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depreciation Calculator: MACRS, Straight-Line &amp; Section 179 Explained - LevyIO</title>
+  <meta name="description" content="Calculate depreciation using MACRS, straight-line, or Section 179 expensing. 2026 limits: $2,560,000 Section 179, 100% bonus depreciation. Form 4562 walkthrough included.">
+  <link rel="canonical" href="https://www.levyio.com/blog/depreciation-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/levyio/">LevyIO</a> &rarr; Depreciation Calculator: MACRS, Straight-Line &amp; Section 179 Explained
+  </nav>
+
+  <article>
+    <h1>Depreciation Calculator: MACRS, Straight-Line &amp; Section 179 Explained</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.levyio.com/blog/depreciation-calculator/">levyio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    the mid-month convention applies to real property (27.5-year residential, 39-year commercial)</li>
+              <li>•When you sell a depreciated asset, you may owe depreciation recapture tax at rates up to 25% (unrecaptured Section 1250 gain) or ordinary rates (Section 1245)</li>
+            </ul>
+          
+
+          <h2>The Three Depreciation Methods: When Each Applies</h2>
+          <p>
+            The IRS does not give businesses a free choice of depreciation method. The applicable method is determined by the type of asset, when it was placed in service, and elections made by the taxpayer. Understanding the hierarchy prevents costly errors on Form 4562.
+          </p>
+          <p>
+            <strong>IRS Publication 946</strong> ("How To Depreciate Property") is the authoritative source. It runs over 100 pages, but the practical rules for most small business assets fit within a much simpler framework. The three methods you'll encounter most often are:
+          </p>
+          <ol>
+            <li><strong>Section 179 expensing</strong> — immediate deduction in the year of purchase, subject to dollar caps and income limits</li>
+            <li><strong>Bonus depreciation (Section 168(k))</strong> — first-year deduction of 100% of qualified property cost, applied after Section 179</li>
+            <li><strong>MACRS regular depreciation</strong> — IRS-prescribed recovery periods with accelerated declining-balance rates, applied to whatever cost basis remains after Section 179 and bonus</li>
+          </ol>
+          <p>
+            The IRS applies deductions in this exact sequence: Section 179 first, then bonus depreciation, then regular MACRS. You can mix and match — elect Section 179 on some assets, bonus on others, and take regular MACRS on the rest. But you cannot take Section 179 and bonus depreciation on the same dollar of cost.
+          </p>
+
+          <h2>Section 179: Immediate Expensing Rules for 2026</h2>
+          <p>
+            Section 179 of the Internal Revenue Code lets businesses deduct the full purchase price of qualifying assets in the year they're placed in service, rather than depreciating them over several years. Per IRS Revenue Procedure 2025-45, the 2026 limits are:
+          </p>
+          <ul>
+            <li><strong>Maximum deduction:</strong> $2,560,000 (up from $1,220,000 in 2024)</li>
+            <li><strong>Phase-out threshold:</strong> Begins when total qualifying property placed in service exceeds $4,090,000</li>
+            <li><strong>Phase-out mechanics:</strong> Dollar-for-dollar reduction — if you placed $4,590,000 in qualifying property in service, your maximum Section 179 is $1,560,000</li>
+            <li><strong>Income limitation:</strong> Section 179 cannot create a net loss — the deduction is limited to the business's taxable income from active trades or businesses</li>
+            <li><strong>SUV limitation:</strong> Section 179 on SUVs over 6,000 lbs GVWR is capped at $32,000 (2026), even if the total vehicle cost is higher</li>
+          </ul>
+
+          <h3>What Qualifies for Section 179?</h3>
+          <p>
+            Qualifying Section 179 property includes:
+          </p>
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Asset Type</th>
+                  <th >Qualifies for Sec. 179?</th>
+                  <th >MACRS Recovery Period</th>
+                  <th >Notes</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Machinery & equipment</td>
+                  <td >Yes</td>
+                  <td >5–7 years</td>
+                  <td >Must be used &gt;50% for business</td>
+                </tr>
+                <tr >
+                  <td >Computers & software</td>
+                  <td >Yes</td>
+                  <td >5 years</td>
+                  <td >Off-the-shelf software: 3 years or immediate</td>
+                </tr>
+                <tr >
+                  <td >Office furniture</td>
+                  <td >Yes</td>
+                  <td >7 years</td>
+                  <td >Desks, chairs, file cabinets</td>
+                </tr>
+                <tr >
+                  <td >Business vehicles</td>
+                  <td >Yes (with limits)</td>
+                  <td >5 years</td>
+                  <td >Luxury auto limits; SUV cap $32,000</td>
+                </tr>
+                <tr >
+                  <td >Qualified improvement property</td>
+                  <td >Yes</td>
+                  <td >15 years</td>
+                  <td >Interior improvements to nonresidential buildings</td>
+                </tr>
+                <tr >
+                  <td >Residential real property</td>
+                  <td >No</td>
+                  <td >27.5 years</td>
+                  <td >Must use straight-line under GDS</td>
+                </tr>
+                <tr >
+                  <td >Commercial real property</td>
+                  <td >No</td>
+                  <td >39 years</td>
+                  <td >Must use straight-line under GDS</td>
+                </tr>
+                <tr >
+                  <td >Land</td>
+                  <td >No</td>
+                  <td >Not depreciable</td>
+                  <td >Land does not wear out</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h2>Bonus Depreciation: 100% First-Year Expensing in 2026</h2>
+          <p>
+            Bonus depreciation under IRC §168(k) was scheduled to phase down after 2022 (80% in 2023, 60% in 2024, 40% in 2025) following the Tax Cuts and Jobs Act's original timeline. However, the One Big Beautiful Bill Act of 2025 restored bonus depreciation to 100% permanently for property placed in service after January 19, 2025.
+          </p>
+          <p>
+            Key differences between Section 179 and bonus depreciation:
+          </p>
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Feature</th>
+                  <th >Section 179</th>
+                  <th >Bonus Depreciation</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >2026 Dollar Cap</td>
+                  <td >$2,560,000</td>
+                  <td >No cap</td>
+                </tr>
+                <tr >
+                  <td >Can Create a Loss?</td>
+                  <td >No — limited to taxable income</td>
+                  <td >Yes — can create or increase a loss</td>
+                </tr>
+                <tr >
+                  <td >Used Property Eligible?</td>
+                  <td >Yes</td>
+                  <td >Yes (new to taxpayer)</td>
+                </tr>
+                <tr >
+                  <td >Applies to Listed Property</td>
+                  <td >Yes, if &gt;50% business use</td>
+                  <td >Yes, if &gt;50% business use</td>
+                </tr>
+                <tr >
+                  <td >Partial Deduction Allowed?</td>
+                  <td >Yes — elect any dollar amount</td>
+                  <td >No — applies to entire asset class</td>
+                </tr>
+                <tr >
+                  <td >Loss Carryforward</td>
+                  <td >Unused Sec. 179 carries forward indefinitely</td>
+                  <td >Excess loss subject to §461(l) EBL rules</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The ability to create a tax loss with bonus depreciation is powerful — but it triggers the excess business loss rules under IRC §461(l). For 2026, individual taxpayers can deduct no more than $313,000 (single) or $626,000 (married) in excess business losses. Losses beyond those amounts convert to a Net Operating Loss (NOL) carryforward.
+          </p>
+
+          <h2>MACRS Depreciation: Recovery Periods and Rates</h2>
+          <p>
+            When you don't fully expense property under Section 179 or bonus depreciation, you depreciate the remaining basis under the Modified Accelerated Cost Recovery System (MACRS). MACRS uses the General Depreciation System (GDS) for most property, with an Alternative Depreciation System (ADS) required in certain circumstances (like property used outside the U.S., or property financed with tax-exempt bonds).
+          </p>
+          <p>
+            MACRS GDS uses the 200% declining balance method switching to straight-line for personal property, and straight-line for real property. The IRS publishes percentage tables in Appendix A of Publication 946 — you don't need to calculate the rates yourself, just look them up.
+          </p>
+
+          <h3>MACRS Recovery Periods for Common Assets</h3>
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Asset Category</th>
+                  <th >GDS Recovery Period</th>
+                  <th >Method</th>
+                  <th >Examples</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >3-year property</td>
+                  <td >3 years</td>
+                  <td >200% DB → SL</td>
+                  <td >Tractor units, horses &lt;12 yrs, small tools</td>
+                </tr>
+                <tr >
+                  <td >5-year property</td>
+                  <td >5 years</td>
+                  <td >200% DB → SL</td>
+                  <td >Cars, computers, R&D equipment, appliances</td>
+                </tr>
+                <tr >
+                  <td >7-year property</td>
+                  <td >7 years</td>
+                  <td >200% DB → SL</td>
+                  <td >Office furniture, most machinery, agricultural equipment</td>
+                </tr>
+                <tr >
+                  <td >10-year property</td>
+                  <td >10 years</td>
+                  <td >200% DB → SL</td>
+                  <td >Boats, trees/vines bearing fruit, certain equipment</td>
+                </tr>
+                <tr >
+                  <td >15-year property</td>
+                  <td >15 years</td>
+                  <td >150% DB → SL</td>
+                  <td >Land improvements, shrubbery, QIP (store renovations)</td>
+                </tr>
+                <tr >
+                  <td >20-year property</td>
+                  <td >20 years</td>
+                  <td >150% DB → SL</td>
+                  <td >Farm buildings, certain utilities</td>
+                </tr>
+                <tr >
+                  <td >Residential rental</td>
+                  <td >27.5 years</td>
+                  <td >Straight-line</td>
+                  <td >Residential rental property</td>
+                </tr>
+                <tr >
+                  <td >Nonresidential real</td>
+                  <td >39 years</td>
+                  <td >Straight-line</td>
+                  <td >Office buildings, commercial property</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h3>MACRS Depreciation Rate Tables (5-Year and 7-Year Property)</h3>
+          <p>
+            The following are the IRS Publication 946 MACRS percentage tables for the most common recovery periods under the half-year convention. Apply these percentages to the original cost basis (not reduced for salvage value — MACRS assumes zero salvage value).
+          </p>
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Year</th>
+                  <th >3-Year Rate</th>
+                  <th >5-Year Rate</th>
+                  <th >7-Year Rate</th>
+                  <th >10-Year Rate</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ><td >1</td><td >33.33%</td><td >20.00%</td><td >14.29%</td><td >10.00%</td></tr>
+                <tr ><td >2</td><td >44.45%</td><td >32.00%</td><td >24.49%</td><td >18.00%</td></tr>
+                <tr ><td >3</td><td >14.81%</td><td >19.20%</td><td >17.49%</td><td >14.40%</td></tr>
+                <tr ><td >4</td><td >7.41%</td><td >11.52%</td><td >12.49%</td><td >11.52%</td></tr>
+                <tr ><td >5</td><td >—</td><td >11.52%</td><td >8.93%</td><td >9.22%</td></tr>
+                <tr ><td >6</td><td >—</td><td >5.76%</td><td >8.92%</td><td >7.37%</td></tr>
+                <tr ><td >7</td><td >—</td><td >—</td><td >8.93%</td><td >6.55%</td></tr>
+                <tr ><td >8</td><td >—</td><td >—</td><td >4.46%</td><td >6.55%</td></tr>
+              </tbody>
+            </table>
+          
+
+          <h2>Worked Examples: Calculating Depreciation Three Ways</h2>
+
+          <h3>Example 1: $45,000 CNC Machine (7-Year Property)</h3>
+          <p>
+            A manufacturing business buys a $45,000 CNC machine in April 2026. The machine is 7-year MACRS property. The business owner has three options:
+          </p>
+          
+            <p>Option A — Section 179 (Full Immediate Expense):</p>
+            <p>2026 deduction: $45,000 | Years 2–8: $0</p>
+            <p>Requires sufficient business taxable income in 2026</p>
+            <p>Option B — 100% Bonus Depreciation:</p>
+            <p>2026 deduction: $45,000 | Years 2–8: $0</p>
+            <p>Can create a net loss, unlike Section 179</p>
+            <p>Option C — Regular MACRS (7-Year, Half-Year Convention):</p>
+            <p>Year 1: $45,000 × 14.29% = $6,431</p>
+            <p>Year 2: $45,000 × 24.49% = $11,021</p>
+            <p>Year 3: $45,000 × 17.49% = $7,871</p>
+            <p>Year 4: $45,000 × 12.49% = $5,621</p>
+            <p>Year 5: $45,000 × 8.93% = $4,019</p>
+            <p>Year 6: $45,000 × 8.92% = $4,014</p>
+            <p>Year 7: $45,000 × 8.93% = $4,019</p>
+            <p>Year 8: $45,000 × 4.46% = $2,007 (half-year in final year)</p>
+          
+
+          <h3>Example 2: $280,000 Rental Property Building (27.5-Year)</h3>
+          <p>
+            A landlord buys a rental property for $320,000, allocates $40,000 to land (non-depreciable) and $280,000 to the building. The building is residential rental property, so it depreciates under straight-line MACRS over 27.5 years with the mid-month convention.
+          </p>
+          
+            <p>Annual depreciation: $280,000 ÷ 27.5 = $10,182/year</p>
+            <p>Month placed in service: August (Month 8)</p>
+            <p>Mid-month convention: asset deemed placed in service August 15</p>
+            <p>Year 1 deduction: $10,182 × (4.5 months ÷ 12) = $3,818</p>
+            <p>Years 2–27: $10,182/year</p>
+            <p>Year 28 (partial): $10,182 × (7.5 ÷ 12) = $6,364</p>
+            <p>Section 179 and bonus depreciation do NOT apply to residential or commercial real property</p>
+          
+          <p>
+            This is a critical point that trips up many rental property owners: you cannot use Section 179 or bonus depreciation on the residential building itself. You can, however, use bonus depreciation on qualified improvement property (interior renovations) and separate personal property within the building. A cost segregation study can identify components of a building that qualify for shorter recovery periods and bonus depreciation — the average cost segregation study on a $2M+ commercial property saves $150,000–$350,000 in present value according to the American Society of Cost Segregation Professionals (ASCSP). See our <a href="/blog/rental-property-tax-deductions/">Rental Property Tax Deductions guide</a> for depreciation strategies specific to landlords.
+          </p>
+
+          <h3>Example 3: $8,500 Business Laptop (5-Year Property)</h3>
+          
+            <p>Option A — Section 179: Deduct $8,500 immediately (most common choice for small purchases)</p>
+            <p>Option B — MACRS Regular (5-Year, Half-Year Convention):</p>
+            <p>Year 1: $8,500 × 20.00% = $1,700</p>
+            <p>Year 2: $8,500 × 32.00% = $2,720</p>
+            <p>Year 3: $8,500 × 19.20% = $1,632</p>
+            <p>Year 4: $8,500 × 11.52% = $979</p>
+            <p>Year 5: $8,500 × 11.52% = $979</p>
+            <p>Year 6: $8,500 × 5.76% = $490</p>
+          
+          <p>
+            For small-dollar assets, Section 179 is almost always the better choice — the administrative simplicity and time-value of the immediate deduction far outweigh any reason to spread it over 6 tax years.
+          </p>
+
+          <h2>Form 4562: Where Depreciation Gets Reported</h2>
+          <p>
+            All depreciation, amortization, and Section 179 deductions are reported on IRS Form 4562 (Depreciation and Amortization). The form must be filed in any year you claim a new Section 179 deduction, bonus depreciation, or depreciation on listed property (vehicles, computers, entertainment). It's also required in the year you place any new depreciable asset in service.
+          </p>
+          <p>
+            Key Form 4562 sections:
+          </p>
+          <ul>
+            <li><strong>Part I (Lines 1–12):</strong> Section 179 election — list assets, elect dollar amounts, apply income limitation</li>
+            <li><strong>Part II (Lines 14–15):</strong> Special depreciation allowance (bonus depreciation) for new and used property</li>
+            <li><strong>Part III (Lines 17–19):</strong> MACRS regular depreciation for assets placed in service in 2026</li>
+            <li><strong>Part IV (Line 21):</strong> Summary of all depreciation from all parts</li>
+            <li><strong>Part V (Lines 23–36):</strong> Listed property (vehicles, computers) — requires additional documentation</li>
+            <li><strong>Part VI (Lines 42–44):</strong> Amortization of intangibles (startup costs, organization costs, patents, etc.)</li>
+          </ul>
+          <p>
+            The total depreciation from Form 4562 flows to Schedule C (Line 13), Schedule E (Line 20), or Schedule F (Line 14) depending on the nature of the business. For business expense deductions beyond depreciation, see our <a href="/blog/business-expense-deductions/">Business Expense Deductions guide</a>.
+          </p>
+
+          <h2>Depreciation Recapture: The Tax You Pay When You Sell</h2>
+          <p>
+            Depreciation deductions reduce your tax basis in an asset. When you sell the asset, the IRS "recaptures" those deductions — meaning you pay tax on the gain attributable to depreciation at potentially higher rates than long-term capital gains. This surprises many business owners who expected to pay only 15% or 20% on their gain.
+          </p>
+          <p>
+            There are two types of depreciation recapture:
+          </p>
+          <ul>
+            <li><strong>Section 1245 recapture (personal property):</strong> All depreciation taken on personal property (machinery, equipment, computers) is recaptured as ordinary income, regardless of the capital gains rate. If you bought equipment for $50,000, took $30,000 in depreciation, and sell it for $40,000, the $20,000 gain above adjusted basis is ordinary income; only gains above original cost are capital gains.</li>
+            <li><strong>Section 1250 recapture (real property):</strong> For straight-line depreciated real property, "unrecaptured Section 1250 gain" is taxed at a maximum 25% rate — higher than the typical 15% or 20% long-term capital gains rate. The depreciation itself (not any appreciation above original cost) drives this recapture.</li>
+          </ul>
+          <p>
+            This interaction with depreciation recapture means that accelerating all depreciation through Section 179 or bonus may not always be optimal. If you expect to sell the asset at a gain within a few years, spreading depreciation over MACRS may result in lower total tax because regular MACRS depreciation beyond ADS amounts triggers less recapture under §1250.
+          </p>
+
+          <h2>Listed Property Rules: Extra Restrictions for Vehicles and Computers</h2>
+          <p>
+            "Listed property" under IRC §280F gets special scrutiny because it's susceptible to personal use. In 2026, listed property includes passenger automobiles, other transportation vehicles, computers used away from a regular business establishment, and property used for entertainment or recreation.
+          </p>
+          <p>
+            For passenger automobiles, the IRS imposes luxury auto limits that cap annual depreciation regardless of actual cost. Per Rev. Proc. 2026-13, the 2026 limits for passenger automobiles (under 6,000 lb GVWR) are:
+          </p>
+          <ul>
+            <li><strong>Year 1 (with bonus depreciation claimed):</strong> $12,400</li>
+            <li><strong>Year 1 (no bonus depreciation):</strong> $12,400</li>
+            <li><strong>Year 2:</strong> $19,800</li>
+            <li><strong>Year 3:</strong> $11,900</li>
+            <li><strong>Year 4 and beyond:</strong> $7,160 per year</li>
+          </ul>
+          <p>
+            Vehicles over 6,000 lbs GVWR (heavy SUVs, trucks, vans) are not subject to the luxury auto caps — that's why the heavy SUV is a popular business purchase. But Section 179 for SUVs over 6,000 lbs is still limited to $32,000 in 2026 under the "SUV cap" in §179(b)(5).
+          </p>
+
+          <h2>Strategic Depreciation Planning: When to Accelerate vs. Spread</h2>
+          <p>
+            The conventional wisdom is always to accelerate depreciation — take Section 179 and bonus immediately, maximize the time value of money. That's generally correct, but the right strategy depends on your specific situation:
+          </p>
+          <p>
+            <strong>Accelerate when:</strong> You're in a high tax bracket now and expect to be in a lower bracket in future years; you need to offset a particularly large income year; you're certain you won't sell the asset soon; or you have positive taxable income that the deduction can reduce (critical for Section 179, which cannot create a loss).
+          </p>
+          <p>
+            <strong>Spread depreciation when:</strong> Your business is early-stage with net operating losses (additional deductions don't help in loss years); you expect income to grow substantially (a deduction in year 5 at 37% is worth more than in year 1 at 22%); or you plan to sell the asset and want to manage recapture exposure.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          
+            
+              <h3>What is the Section 179 limit for 2026?</h3>
+              <p>The 2026 Section 179 deduction limit is $2,560,000. This begins to phase out dollar-for-dollar when total qualifying property placed in service exceeds $4,090,000. The deduction cannot exceed the taxable income from active business operations — but unused amounts carry forward indefinitely to future tax years. The SUV-specific cap is $32,000 for vehicles over 6,000 lbs GVWR.</p>
+            
+            
+              <h3>What's the difference between MACRS and straight-line depreciation?</h3>
+              <p>MACRS is the IRS-required method for most business property and front-loads deductions using a 200% declining balance that switches to straight-line at the optimal point. Straight-line spreads the deduction evenly over the recovery period. MACRS generates larger deductions in early years — for 7-year property, MACRS generates about 62% of total deductions in the first 4 years versus 57% under straight-line. Residential and commercial real property must use straight-line under MACRS GDS.</p>
+            
+            
+              <h3>Is bonus depreciation 100% in 2026?</h3>
+              <p>Yes. Bonus depreciation under IRC §168(k) was restored to 100% for property placed in service after January 19, 2025, under the One Big Beautiful Bill Act of 2025. This applies to new and used qualifying property with a GDS recovery period of 20 years or less, computer software, and qualified improvement property. Unlike Section 179, bonus depreciation can create or increase a net operating loss.</p>
+            
+            
+              <h3>Can I depreciate a vehicle I use for both business and personal purposes?</h3>
+              <p>Yes, but only the business-use portion is deductible. If you drive 15,000 miles annually and 9,000 are for business, you can deduct 60% of depreciation. Listed property (including passenger vehicles) that falls below 50% business use cannot use Section 179 or bonus depreciation — it must use the straight-line ADS method. You must keep a contemporaneous mileage log to substantiate the business percentage under Treas. Reg. §1.274-5.</p>
+            
+            
+              <h3>What is depreciation recapture and when does it apply?</h3>
+              <p>When you sell a depreciated asset for more than its adjusted basis, the IRS recaptures the deductions you took. Section 1245 recapture (personal property) is taxed at ordinary income rates up to 37%. Section 1250 unrecaptured gain (real property) is taxed at a maximum 25% rate. You cannot avoid recapture by holding the asset longer — the 1250 rate is fixed regardless of holding period.</p>
+            
+            
+              <h3>Do I have to file Form 4562 if I'm only claiming prior-year depreciation?</h3>
+              <p>No. Form 4562 is only required in years when you place new depreciable property in service, claim a new Section 179 deduction, or depreciate listed property. If you're only carrying forward depreciation on assets already placed in service in prior years, the depreciation flows from your depreciation schedule (often maintained in tax software) without filing a new Form 4562.</p>
+            
+          
+
+          /* CTA */
+          
+            <h2>Calculate Your Business Tax Deductions</h2>
+            <p>Depreciation is one piece of your total business tax picture. Use our tax calculator to estimate your complete business tax liability for 2026.</p>
+            <a href="/tax-calculator/">
+              Open Tax Calculator
+            </a>
+          
+
+          /* Related Articles */
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/business-expense-deductions/">
+              Business Taxes
+              <h3>Business Expense Deductions: Complete List for Small Businesses</h3>
+            </a>
+            <a href="/blog/small-business-tax-deductions/">
+              Business Taxes
+              <h3>25 Small Business Tax Deductions You Should Not Miss</h3>
+            </a>
+          
+        
+      
+
+      /* JSON-LD Schema */
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: 'Depreciation Calculator: MACRS, Straight-Line & Section 179 Explained',
+        description: 'Complete 2026 guide to calculating depreciation: MACRS recovery periods and rate tables, Section 179 ($2,560,000 limit), 100% bonus depreciation, luxury auto caps, Form 4562 line numbers, and depreciation recapture rules.',
+        datePublished: '2026-04-25',
+        dateModified: '2026-04-25',
+        author:  '@type': 'Organization', name: 'LevyIO' ,
+        publisher:  '@type': 'Organization', name: 'LevyIO', url: 'https://levyio.com/', logo:  '@type': 'ImageObject', url: 'https://levyio.com/favicon.svg'  ,
+        mainEntityOfPage:  '@type': 'WebPage', '@id': 'https://levyio.com/blog/depreciation-calculator/' ,
+      )  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+           '@type': 'ListItem', position: 1, name: 'Home', item: 'https://levyio.com/' ,
+           '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://levyio.com/blog/' ,
+           '@type': 'ListItem', position: 3, name: 'Depreciation Calculator', item: 'https://levyio.com/blog/depreciation-calculator/' ,
+        ],
+      )  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          
+            '@type': 'Question',
+            name: 'What is the Section 179 limit for 2026?',
+            acceptedAnswer:  '@type': 'Answer', text: 'The 2026 Section 179 deduction limit is $2,560,000. It phases out dollar-for-dollar above $4,090,000 in total qualifying property placed in service. Unused amounts carry forward indefinitely.' ,
+          ,
+          
+            '@type': 'Question',
+            name: 'Is bonus depreciation 100% in 2026?',
+            acceptedAnswer:  '@type': 'Answer', text: 'Yes. Bonus depreciation was restored to 100% for property placed in service after January 19, 2025 under the One Big Beautiful Bill Act. It applies to qualifying property with a recovery period of 20 years or less.' ,
+          ,
+          
+            '@type': 'Question',
+            name: 'What is depreciation recapture?',
+            acceptedAnswer:  '@type': 'Answer', text: 'When you sell a depreciated asset for more than its adjusted basis, the IRS recaptures deductions taken. Section 1245 recapture (personal property) is taxed at ordinary income rates. Section 1250 unrecaptured gain (real property) is taxed at a maximum 25%.' ,
+          ,
+        ],
+      )  />
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.levyio.com/blog/depreciation-calculator/">LevyIO</a>.
+      Explore more free tools at <a href="https://www.levyio.com/">levyio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.levyio.com/">LevyIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
