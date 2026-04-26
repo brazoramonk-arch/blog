@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RMD Calculator: Calculate Your Required Minimum Distribution - LevyIO</title>
+  <meta name="description" content="Required minimum distributions start at age 73 (age 75 if born 1960+). Use the IRS Uniform Lifetime Table formula to calculate your exact 2026 RMD and avoid the 25% excise tax penalty.">
+  <link rel="canonical" href="https://www.levyio.com/blog/rmd-calculator/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #111; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: #222; }
+    h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #333; }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .source-notice { background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1rem 1.25rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    .source-notice a { font-weight: 600; }
+    hr { border: none; border-top: 1px solid #e5e5e5; margin: 2rem 0; }
+    .footer { color: #666; font-size: 0.9rem; margin-top: 2rem; }
+    strong { color: #111; }
+    .breadcrumb { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+    .breadcrumb a { color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="https://brazoramonk-arch.github.io/blog/">Blog</a> &rarr; <a href="https://brazoramonk-arch.github.io/blog/levyio/">LevyIO</a> &rarr; RMD Calculator: Calculate Your Required Minimum Distribution
+  </nav>
+
+  <article>
+    <h1>RMD Calculator: Calculate Your Required Minimum Distribution</h1>
+
+    <div class="source-notice">
+      This article was originally published on <a href="https://www.levyio.com/blog/rmd-calculator/">levyio.com</a>.
+      Visit the original for interactive tools and calculators.
+    </div>
+
+    at age 75 for those born 1960 or later (SECURE 2.0 Act change).</li>
+              <li>• Formula: prior December 31 account balance ÷ IRS life expectancy factor (Uniform Lifetime Table) = annual RMD.</li>
+              <li>• Missing or underpaying an RMD triggers a 25% excise tax on the shortfall under IRC §4974 — reduced to 10% if corrected within a two-year correction window.</li>
+              <li>• Roth IRAs have no RMDs during the owner's lifetime; Roth 401(k)s eliminated RMDs under SECURE 2.0 starting in 2024.</li>
+              <li>• Multiple IRAs can be aggregated — take the combined RMD from any one or combination of accounts.</li>
+            </ul>
+          
+
+          <h2>Why RMDs Exist: The Policy Logic</h2>
+          <p>
+            Traditional IRAs, 401(k)s, 403(b)s, SEP-IRAs, and SIMPLE IRAs were created with a government subsidy: contributions reduce taxable income, and growth inside the account is never taxed until withdrawal. The subsidy was intended to encourage retirement savings — not to create tax-deferred estates for heirs. Required minimum distributions force those accounts to pay back the deferred taxes during the owner's lifetime (or shortly after). The IRS life expectancy tables are calibrated to drain most of the account balance as ordinary income over the owner's remaining expected lifespan.
+          </p>
+          <p>
+            According to the Investment Company Institute's 2024 data, Americans held approximately $13.6 trillion in IRAs and $7.4 trillion in defined contribution plans. A significant portion of these assets is held in pre-tax accounts by individuals approaching or past RMD age. The Congressional Budget Office estimates that RMD-driven income contributes tens of billions annually to federal tax receipts.
+          </p>
+
+          <h2>RMD Age Rules: SECURE Act and SECURE 2.0</h2>
+          <p>
+            The age at which RMDs must begin has changed twice in recent years, and the correct starting age depends entirely on your birth year:
+          </p>
+
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Birth Year</th>
+                  <th >RMD Starting Age</th>
+                  <th >Governing Law</th>
+                  <th >First RMD Deadline</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Born before 1951</td>
+                  <td >Age 70½</td>
+                  <td >Pre-SECURE Act (before 2020)</td>
+                  <td >April 1 of year after turning 70½</td>
+                </tr>
+                <tr >
+                  <td >Born 1951–1959</td>
+                  <td >Age 73</td>
+                  <td >SECURE 2.0 Act (2022)</td>
+                  <td >April 1 of year after turning 73</td>
+                </tr>
+                <tr >
+                  <td >Born 1960 or later</td>
+                  <td >Age 75</td>
+                  <td >SECURE 2.0 Act (2022)</td>
+                  <td >April 1 of year after turning 75</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <p>
+            The April 1 deadline for the first RMD is a one-time grace period — it applies only to the very first required distribution. All subsequent RMDs must be taken by December 31 of each year. If you delay the first RMD to April 1 of the following year, you will take two RMDs in a single tax year: the first-year RMD (taken by April 1) and the second-year RMD (taken by December 31). This double-distribution year can significantly increase taxable income and may push you into a higher bracket or trigger additional Social Security taxation — a consideration many retirees overlook when making this election.
+          </p>
+
+          <h2>The RMD Formula: Division by a Life Expectancy Factor</h2>
+          <p>
+            The IRS RMD formula is simple in structure:
+          </p>
+          
+            <p>RMD Calculation Formula</p>
+            
+              <p>RMD = Account Balance ÷ Distribution Period</p>
+              <p>Where: Account Balance = value as of December 31 of the prior year</p>
+              <p>Distribution Period = life expectancy factor from IRS Table III (Uniform Lifetime Table)</p>
+            
+          
+          <p>
+            The "Uniform Lifetime Table" (Table III) from IRS Publication 590-B is the table most account owners use. It provides a distribution period based on age that assumes a beneficiary 10 years younger — even if your actual beneficiary is older, younger, or you have no named beneficiary. The sole exception: if your spouse is your only beneficiary AND your spouse is more than 10 years younger, you use the IRS Joint and Last Survivor Table, which produces a longer distribution period (lower RMD).
+          </p>
+
+          <h2>IRS Uniform Lifetime Table: Key Life Expectancy Factors</h2>
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Age</th>
+                  <th >Distribution Period (Factor)</th>
+                  <th >% of Account Withdrawn at This Age</th>
+                  <th >Example: $500,000 Balance</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >73</td>
+                  <td >26.5</td>
+                  <td >3.77%</td>
+                  <td >$18,868</td>
+                </tr>
+                <tr >
+                  <td >74</td>
+                  <td >25.5</td>
+                  <td >3.92%</td>
+                  <td >$19,608</td>
+                </tr>
+                <tr >
+                  <td >75</td>
+                  <td >24.6</td>
+                  <td >4.07%</td>
+                  <td >$20,325</td>
+                </tr>
+                <tr >
+                  <td >76</td>
+                  <td >23.7</td>
+                  <td >4.22%</td>
+                  <td >$21,097</td>
+                </tr>
+                <tr >
+                  <td >77</td>
+                  <td >22.9</td>
+                  <td >4.37%</td>
+                  <td >$21,834</td>
+                </tr>
+                <tr >
+                  <td >78</td>
+                  <td >22.0</td>
+                  <td >4.55%</td>
+                  <td >$22,727</td>
+                </tr>
+                <tr >
+                  <td >79</td>
+                  <td >21.1</td>
+                  <td >4.74%</td>
+                  <td >$23,697</td>
+                </tr>
+                <tr >
+                  <td >80</td>
+                  <td >20.2</td>
+                  <td >4.95%</td>
+                  <td >$24,752</td>
+                </tr>
+                <tr >
+                  <td >82</td>
+                  <td >18.5</td>
+                  <td >5.41%</td>
+                  <td >$27,027</td>
+                </tr>
+                <tr >
+                  <td >85</td>
+                  <td >16.0</td>
+                  <td >6.25%</td>
+                  <td >$31,250</td>
+                </tr>
+                <tr >
+                  <td >90</td>
+                  <td >12.2</td>
+                  <td >8.20%</td>
+                  <td >$40,984</td>
+                </tr>
+                <tr >
+                  <td >95</td>
+                  <td >8.9</td>
+                  <td >11.24%</td>
+                  <td >$56,180</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          <p>
+            The distribution period decreases each year — meaning the percentage of the account that must be withdrawn increases with age. At 73, you must withdraw roughly 3.77% of the prior year-end balance. At 90, you must withdraw roughly 8.2%. At 100, the factor drops to 6.3 (over 15% withdrawal required). The IRS updated these tables in 2022 to reflect longer life expectancies from updated actuarial data — the current tables produce slightly lower RMDs than the prior tables, which were last updated in 2002.
+          </p>
+
+          <h2>Step-by-Step RMD Calculation: Three Examples</h2>
+
+          <h3>Example 1: Standard Calculation, Single IRA</h3>
+          
+            <p>Carol, born March 1952. Age: 74 in 2026. Traditional IRA balance December 31, 2025: $420,000</p>
+            
+              <p><strong>Step 1:</strong> Confirm RMD requirement. Born 1952 → age 73 RMD rule → first RMD was in 2025. Carol is in her second RMD year.</p>
+              <p><strong>Step 2:</strong> Get the December 31, 2025 account balance from the custodian Form 5498 or year-end statement: $420,000.</p>
+              <p><strong>Step 3:</strong> Look up age 74 in the IRS Uniform Lifetime Table: factor = 25.5</p>
+              <p><strong>Step 4:</strong> Divide: $420,000 ÷ 25.5 = <strong>$16,471</strong></p>
+              <p>Carol must withdraw at least $16,471 by December 31, 2026. Tax withheld from this distribution will appear on her 2026 Form 1099-R.</p>
+            
+          
+
+          <h3>Example 2: Multiple IRAs — Aggregation Rule</h3>
+          
+            <p>James, age 78. Three traditional IRAs: IRA-A ($200,000), IRA-B ($150,000), IRA-C ($80,000)</p>
+            
+              <p>Total IRA balance: $430,000. Age 78 factor: 22.0</p>
+              <p>Total RMD: $430,000 ÷ 22.0 = <strong>$19,545</strong></p>
+              <p><strong>Key rule:</strong> IRA owners can aggregate multiple IRAs and take the combined RMD from any single account or any combination. James could withdraw the entire $19,545 from IRA-A, split it across accounts, or take $10,000 from IRA-B and $9,545 from IRA-C.</p>
+              <p>Exception: 401(k), 403(b), and 457(b) accounts are NOT eligible for IRA aggregation. Each plan must satisfy its own RMD separately.</p>
+            
+          
+
+          <h3>Example 3: Spouse More Than 10 Years Younger</h3>
+          
+            <p>Howard, age 76. Wife Linda, age 62. Traditional IRA balance December 31, 2025: $800,000. Linda is sole beneficiary.</p>
+            
+              <p>Age difference: 14 years &gt; 10 years → qualifies for IRS Joint and Last Survivor Table</p>
+              <p>Joint and Last Survivor Table factor for ages 76/62: approximately 28.0</p>
+              <p>RMD using joint table: $800,000 ÷ 28.0 = <strong>$28,571</strong></p>
+              <p>RMD using standard Uniform Lifetime Table (factor 23.7): $800,000 ÷ 23.7 = $33,755</p>
+              <p>Savings from using joint table: $5,184 less RMD per year → less income tax, less Social Security taxation exposure</p>
+            
+          
+
+          <h2>Which Accounts Are Subject to RMDs?</h2>
+          
+            <table >
+              <thead >
+                <tr>
+                  <th >Account Type</th>
+                  <th >RMD Required?</th>
+                  <th >Notes</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr >
+                  <td >Traditional IRA</td>
+                  <td >Yes</td>
+                  <td >Can aggregate with other Traditional IRAs</td>
+                </tr>
+                <tr >
+                  <td >SEP-IRA</td>
+                  <td >Yes</td>
+                  <td >Treated same as traditional IRA; can aggregate</td>
+                </tr>
+                <tr >
+                  <td >SIMPLE IRA</td>
+                  <td >Yes</td>
+                  <td >Can aggregate after conversion to traditional IRA</td>
+                </tr>
+                <tr >
+                  <td >Traditional 401(k) / 403(b)</td>
+                  <td >Yes</td>
+                  <td >Each plan calculates and distributes separately; no aggregation with IRAs</td>
+                </tr>
+                <tr >
+                  <td >Roth IRA (owner)</td>
+                  <td >No</td>
+                  <td >Never — no RMDs during the owner's lifetime</td>
+                </tr>
+                <tr >
+                  <td >Roth 401(k) / Roth 403(b)</td>
+                  <td >No (from 2024)</td>
+                  <td >SECURE 2.0 eliminated RMDs for Roth 401(k)s starting 2024</td>
+                </tr>
+                <tr >
+                  <td >Inherited IRA (non-spouse)</td>
+                  <td >Yes (10-year rule)</td>
+                  <td >SECURE Act: inherited IRAs generally must be emptied within 10 years</td>
+                </tr>
+                <tr >
+                  <td >Still working at RMD age</td>
+                  <td >Maybe not</td>
+                  <td >Current employer 401(k) may be exempt if still employed; ask plan administrator</td>
+                </tr>
+              </tbody>
+            </table>
+          
+
+          <h2>The RMD Penalty: 25% Excise Tax Under IRC §4974</h2>
+          <p>
+            Failing to take the full required minimum distribution — whether by missing the deadline entirely or by withdrawing less than the calculated amount — triggers an excise tax under Internal Revenue Code §4974. The penalty is <strong>25% of the shortfall</strong>: the difference between what you were required to withdraw and what you actually withdrew, multiplied by 0.25.
+          </p>
+          <p>
+            SECURE 2.0 reduced this penalty from 50% to 25% for RMDs due after December 29, 2022. More importantly, the penalty is reduced further to <strong>10%</strong> if corrected within a two-year correction window. To qualify for the 10% rate, you must: (1) take the missed distribution as soon as possible, and (2) file Form 5329 and pay the corrected excise tax. The IRS also has an automatic RMD waiver process for first-time errors made in good faith.
+          </p>
+          <p>
+            The excise tax is in addition to — not instead of — ordinary income tax on the withdrawal. A retiree who misses a $20,000 RMD owes: $5,000 excise tax (25%) plus income tax on the eventual $20,000 withdrawal at their marginal rate. At 22%, that is an additional $4,400 in income tax. Total cost: $9,400 on a $20,000 withdrawal, plus interest on the late tax payment.
+          </p>
+
+          <h2>RMD Strategies: Minimize the Tax Impact</h2>
+
+          <h3>Qualified Charitable Distributions (QCDs)</h3>
+          <p>
+            The most powerful RMD tax strategy is the Qualified Charitable Distribution. Under IRC §408(d)(8), taxpayers age 70½ or older can transfer up to $105,000 directly from an IRA to a qualified charity (as of 2026, indexed for inflation). The QCD satisfies part or all of the RMD but is excluded from gross income — it never appears in AGI. This simultaneously reduces: (1) federal income tax on the RMD, (2) combined income for Social Security taxation, (3) MAGI for Medicare IRMAA surcharge calculations, and (4) exposure to the 0.5% AGI floor on charitable deductions.
+          </p>
+          <p>
+            A retiree with a $25,000 RMD who donates $15,000 to charity can route that $15,000 as a QCD, include only the remaining $10,000 in AGI, and claim no charitable deduction (since no deduction is allowed on a QCD). Net effect: $15,000 less in taxable income compared to withdrawing the full RMD and donating cash.
+          </p>
+
+          <h3>Pre-RMD Roth Conversions: The "Golden Window"</h3>
+          <p>
+            The years between retirement and RMD age are a critical planning window. Converting traditional IRA or 401(k) balances to Roth IRA during this period reduces the pre-tax balance that generates future RMDs. Every $50,000 converted before age 73 (for those born 1951–1959) is $50,000 that will never generate a future RMD.
+          </p>
+          <p>
+            The conversion itself is taxable in the year executed — so the strategy works best when conversions are sized to fill up lower tax brackets without pushing into higher rates. For a retiree in the 22% bracket with room to convert before hitting the 24% bracket threshold, targeted annual conversions can significantly reduce lifetime RMD obligations and the associated income tax. For the full framework, see our <a href="/blog/roth-ira-taxes/">Roth IRA Taxes guide</a>.
+          </p>
+
+          <h3>Aggregating Multiple IRAs to Choose the Best Source Account</h3>
+          <p>
+            Because IRA RMDs can be aggregated, you have flexibility in which account to take the distribution from. If one of your IRAs holds assets you prefer not to sell (for example, a concentrated real estate position or an illiquid investment), you can satisfy the RMD requirement entirely from another IRA that holds more liquid assets — as long as the total distributed amount equals or exceeds the combined RMD. This flexibility does not apply to 401(k) plans.
+          </p>
+
+          <h3>Withdrawing Before RMD Age to Smooth Income</h3>
+          <p>
+            Some retirees benefit from taking voluntary distributions from traditional IRAs before RMD age begins — particularly in years when taxable income is low. By drawing down pre-tax balances early (at 12% or 22% marginal rates), they reduce the account balance that will generate mandatory future RMDs at potentially higher rates. This strategy is called "bracket filling" and is most effective for retirees with modest pension income, delayed Social Security, and large traditional IRA balances.
+          </p>
+          <p>
+            For the complementary perspective on Social Security taxation and how RMDs interact with the combined income calculation, see our <a href="/blog/social-security-tax-calculator/">Social Security Tax Calculator guide</a>.
+          </p>
+
+          <h2>RMDs From Inherited IRAs: The 10-Year Rule</h2>
+          <p>
+            The SECURE Act (2019) fundamentally changed inherited IRA rules for most non-spouse beneficiaries. Before 2020, beneficiaries could "stretch" inherited IRA distributions over their own life expectancy — potentially deferring tax for decades. The SECURE Act replaced this with a 10-year rule: non-eligible beneficiaries must empty the inherited account within 10 years of the original owner's death (by December 31 of the 10th year following death).
+          </p>
+          <p>
+            Eligible designated beneficiaries — who can still use the life expectancy stretch — include: surviving spouses, minor children of the account owner (until they reach majority), disabled individuals, chronically ill individuals, and beneficiaries not more than 10 years younger than the deceased. For all other beneficiaries, the 10-year rule applies, with no required annual distributions in years 1–9 (the entire balance just needs to be distributed by the end of year 10). IRS regulations issued in 2024 clarified annual RMD requirements for certain inherited account situations.
+          </p>
+
+          <h2>How to Report RMDs on Your Tax Return</h2>
+          <p>
+            IRA and 401(k) distributions appear on <strong>Form 1099-R</strong>, issued by the custodian by January 31 of the following year. Box 1 shows the gross distribution; Box 2a shows the taxable amount. The distribution code in Box 7 indicates the type of distribution (Code 7 is normal distribution from an account where the participant is at least 59½).
+          </p>
+          <p>
+            Report the taxable amount from Form 1099-R on Line 5b of Form 1040 (IRA distributions) or Line 5b (pensions and annuities). If you took more than the RMD, the entire distribution is taxable (for traditional IRAs with no after-tax basis). If you took less than the RMD, you must file <strong>Form 5329</strong> to report the shortfall and calculate the excise tax — even if you believe you qualify for a waiver. Attach a written explanation of the reasonable cause to the return.
+          </p>
+          <p>
+            For retirement income planning that incorporates both RMDs and Social Security taxation, the <a href="/blog/retirement-income-tax-calculator/">Retirement Income Tax Calculator</a> models both simultaneously.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          
+            <details >
+              <summary >What happens if I take more than my RMD in a given year?</summary>
+              
+                <p>No penalty — you can always take more than the minimum. The extra distribution is taxable as ordinary income but does not affect future RMD calculations (except by reducing the account balance). You cannot "bank" excess distributions against future years — each year's RMD is calculated independently based on that year's starting balance and age factor. Taking larger distributions voluntarily can be a strategic tax move in low-income years.</p>
+              
+            </details>
+            <details >
+              <summary >Can I reinvest my RMD back into a retirement account?</summary>
+              
+                <p>No — once distributed as an RMD, the funds cannot be rolled back into an IRA or 401(k). Per IRS rules, RMDs are not eligible for rollover treatment. However, after-tax RMD proceeds can be invested in a taxable brokerage account or used to fund a Roth IRA if you have earned income and qualify under the income limits. Some retirees use QCDs to redirect RMD funds to charity without the funds ever passing through their taxable income.</p>
+              
+            </details>
+            <details >
+              <summary >Do Roth IRAs have required minimum distributions?</summary>
+              
+                <p>No — Roth IRAs have no RMDs during the owner's lifetime. Under SECURE 2.0, Roth 401(k) and Roth 403(b) accounts also eliminated RMDs starting January 1, 2024. This makes Roth accounts uniquely powerful for wealth accumulation and transfer — assets can compound tax-free indefinitely without forced distributions. Inherited Roth IRAs are subject to the 10-year rule for most non-spouse beneficiaries, but distributions remain tax-free.</p>
+              
+            </details>
+            <details >
+              <summary >If I'm still working at age 73, do I have to take RMDs from my current employer's 401(k)?</summary>
+              
+                <p>Not necessarily. The "still working exception" allows participants who are still employed and are not 5%-or-more owners of the company to delay RMDs from their current employer's plan until April 1 after they retire. This exception does not apply to IRAs or to old 401(k) plans from former employers — those require RMDs at the standard age regardless of current employment status. Rolling an old 401(k) into your current employer's plan (if the plan accepts incoming rollovers) can extend the delay to your current plan balance as well.</p>
+              
+            </details>
+            <details >
+              <summary >How do I calculate the RMD for the year I turn 73?</summary>
+              
+                <p>Use the December 31 account balance from the year before you turn 73, divided by the age-73 life expectancy factor (26.5 under the current Uniform Lifetime Table). For example, if you turn 73 in 2026, you use the December 31, 2025 account balance. The deadline for this first RMD is April 1, 2027. If you delay to April 2027, you must also take the 2027 RMD (based on the December 31, 2026 balance, using the age-74 factor) by December 31, 2027 — meaning two taxable distributions in 2027.</p>
+              
+            </details>
+            <details >
+              <summary >Does taking a QCD count toward my RMD?</summary>
+              
+                <p>Yes — a Qualified Charitable Distribution counts dollar-for-dollar toward satisfying your RMD for the year. If your RMD is $18,000 and you make a $18,000 QCD directly to a qualified charity, your RMD is fully satisfied and the $18,000 is excluded from your gross income entirely. You must be age 70½ or older to make a QCD, even though RMDs don't start until 73 — meaning you can start using QCDs up to 2.5 years before RMDs are required.</p>
+              
+            </details>
+          
+
+          /* CTA */
+          
+            <h2>Plan Your Retirement Withdrawals</h2>
+            <p>Use our retirement income tax calculator to model RMD amounts, Social Security taxation, and Roth conversion strategies for your specific situation.</p>
+            <a href="/blog/retirement-income-tax-calculator/">
+              Retirement Income Tax Calculator
+            </a>
+          
+
+          /* Related Articles */
+          <h2>Related Articles</h2>
+          
+            <a href="/blog/social-security-tax-calculator/">
+              Retirement
+              <h3>Social Security Tax Calculator: How Much of Your Benefits Are Taxed</h3>
+            </a>
+            <a href="/blog/roth-ira-taxes/">
+              Retirement
+              <h3>Roth IRA Taxes: Contributions, Withdrawals & Conversions Explained</h3>
+            </a>
+            <a href="/blog/traditional-ira-vs-roth-ira/">
+              Retirement
+              <h3>Traditional IRA vs Roth IRA: Which Is Right for You?</h3>
+            </a>
+            <a href="/blog/401k-tax/">
+              Retirement
+              <h3>401(k) Tax Rules Explained</h3>
+            </a>
+          
+
+        
+      
+
+      /* JSON-LD Schema */
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: 'RMD Calculator: Calculate Your Required Minimum Distribution',
+        description: 'Required minimum distributions start at age 73 under SECURE 2.0. Complete guide to the IRS Uniform Lifetime Table formula, step-by-step calculations, the 25% excise tax penalty, and RMD reduction strategies.',
+        datePublished: '2026-04-22',
+        dateModified: '2026-04-22',
+        author:  '@type': 'Organization', name: 'LevyIO' ,
+        publisher:  '@type': 'Organization', name: 'LevyIO', url: 'https://levyio.com/', logo:  '@type': 'ImageObject', url: 'https://levyio.com/favicon.svg'  ,
+        mainEntityOfPage:  '@type': 'WebPage', '@id': 'https://levyio.com/blog/rmd-calculator/' ,
+      )  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+           '@type': 'ListItem', position: 1, name: 'Home', item: 'https://levyio.com/' ,
+           '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://levyio.com/blog/' ,
+           '@type': 'ListItem', position: 3, name: 'RMD Calculator', item: 'https://levyio.com/blog/rmd-calculator/' ,
+        ],
+      )  />
+      <script type="application/ld+json" dangerouslySetInnerHTML= __html: JSON.stringify(
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          
+            '@type': 'Question',
+            name: 'What is the penalty for missing an RMD?',
+            acceptedAnswer:  '@type': 'Answer', text: 'The IRS charges a 25% excise tax on the shortfall (the RMD amount not withdrawn). This was reduced from 50% by SECURE 2.0. If corrected within a two-year window, the penalty is further reduced to 10%. The excise tax is separate from ordinary income tax on the withdrawal. Report on Form 5329.' ,
+          ,
+          
+            '@type': 'Question',
+            name: 'Do Roth IRAs have required minimum distributions?',
+            acceptedAnswer:  '@type': 'Answer', text: 'No — Roth IRAs have no RMDs during the owner\'s lifetime. Under SECURE 2.0, Roth 401(k) and Roth 403(b) accounts also eliminated RMDs starting January 1, 2024. Assets in Roth accounts can compound indefinitely without forced distributions.' ,
+          ,
+          
+            '@type': 'Question',
+            name: 'How do I calculate my required minimum distribution?',
+            acceptedAnswer:  '@type': 'Answer', text: 'Divide your account balance as of December 31 of the prior year by your life expectancy factor from the IRS Uniform Lifetime Table (IRS Publication 590-B, Table III). For example, at age 73, the factor is 26.5. A $500,000 balance produces an RMD of $500,000 ÷ 26.5 = $18,868.' ,
+          ,
+          
+            '@type': 'Question',
+            name: 'Can I take my RMD from multiple IRAs?',
+            acceptedAnswer:  '@type': 'Answer', text: 'Yes — IRA owners can aggregate the RMDs from all traditional IRAs and take the combined total from any single IRA or any combination. However, 401(k) and 403(b) plans must each satisfy their own RMD separately — they cannot be aggregated with IRAs.' ,
+          ,
+        ],
+      )  />
+    </>
+  )
+
+    <hr>
+
+    <div class="source-notice">
+      Read the full article with interactive tools on <a href="https://www.levyio.com/blog/rmd-calculator/">LevyIO</a>.
+      Explore more free tools at <a href="https://www.levyio.com/">levyio.com</a>.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <p>&copy; 2026 <a href="https://www.levyio.com/">LevyIO</a>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
